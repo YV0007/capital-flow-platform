@@ -1,0 +1,40 @@
+{
+  "_comment": "Tracker companies — pure metadata only. Function references (config, memoBaseline, seededObservations, etc.) live in the component layer and get wired up there. To add a new company, add an entry here; data files (seed config, observations, memo baseline) for each company live as separate JSON files referenced by `dataKeys`.",
+  "activeCompanyKey": "app:active-company",
+  "companies": [
+    {
+      "id": "zeely",
+      "name": "Zeely.ai",
+      "legalName": "Zeely Inc.",
+      "accent": "cyan",
+      "storagePrefix": "zeely",
+      "memoBaselineKey": "zeely:memo-baseline:apr2026",
+      "dataKeys": {
+        "config": "SEEDED_CONFIG",
+        "memoBaseline": "MEMO_BASELINE",
+        "seededObservations": "SEEDED_OBSERVATIONS",
+        "memoObservations": "MEMO_OBSERVATIONS",
+        "seededSyndicateLog": "SEEDED_SYNDICATE_LOG",
+        "triangulationTasksSeed": "TRIANGULATION_TASKS_SEED",
+        "derivedMetrics": "DERIVED_METRICS"
+      }
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "legalName": "Anysphere Inc.",
+      "accent": "amber",
+      "storagePrefix": "cursor",
+      "memoBaselineKey": "cursor:memo-baseline:feb2026",
+      "dataKeys": {
+        "config": "CFG_CURSOR",
+        "memoBaseline": "MEMO_BASELINE_CURSOR",
+        "seededObservations": "SEEDED_OBSERVATIONS_CURSOR",
+        "memoObservations": "MEMO_OBSERVATIONS_CURSOR",
+        "seededSyndicateLog": "SEEDED_SYNDICATE_LOG_CURSOR",
+        "triangulationTasksSeed": "TRIANGULATION_TASKS_SEED_CURSOR",
+        "derivedMetrics": "DERIVED_METRICS_CURSOR"
+      }
+    }
+  ]
+}
