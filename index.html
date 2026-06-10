@@ -9,7 +9,7 @@
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        background: #09090b;
+        background: #0A0A0B;
         color: #e4e4e7;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
@@ -17,6 +17,27 @@
          Mirrors the monolith's tw-ready pattern so users don't see unstyled flash. */
       #root { opacity: 0; transition: opacity 200ms ease-out; }
       body.tw-ready #root { opacity: 1; }
+
+      /* Bento color palette — ported verbatim from index_slim.html lines 304–340.
+         The monolith ships with `body[data-variant="bento"]` and overrides every
+         zinc-tier background/border so the dashboard reads near-black with
+         hairline alpha borders. We apply the override unconditionally because
+         the migrated app deploys as the bento variant. Reference colors come
+         from the original monolith. */
+      body .bg-zinc-950        { background-color: #0A0A0B !important; }
+      body .bg-zinc-950\/40    { background-color: rgba(10,10,11,.40) !important; }
+      body .bg-zinc-950\/60    { background-color: rgba(10,10,11,.60) !important; }
+      body .bg-zinc-900        { background-color: #0E0E12 !important; }
+      body .bg-zinc-900\/40    { background-color: rgba(14,14,18,.55) !important; }
+      body .bg-zinc-900\/60    { background-color: rgba(14,14,18,.75) !important; }
+      body .bg-zinc-800        { background-color: #14141A !important; }
+      body .bg-zinc-800\/50    { background-color: rgba(20,20,26,.50) !important; }
+      body .border-zinc-600,
+      body .border-zinc-700    { border-color: rgba(255,255,255,0.10) !important; }
+      body .border-zinc-800,
+      body .border-zinc-900    { border-color: rgba(255,255,255,0.06) !important; }
+      body .hover\:border-zinc-600:hover,
+      body .hover\:border-zinc-700:hover { border-color: rgba(255,255,255,0.16) !important; }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
