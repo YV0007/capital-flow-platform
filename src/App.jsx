@@ -50,6 +50,16 @@ import * as _stage3ScoringView from './components/tracker/ScoringTrajectoryView.
 import * as _stage3Heatmap from './components/tracker/MetricHeatmapView.jsx';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3Position from './components/tracker/PositionView.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Hiring from './components/tracker/signals/HiringVelocityPanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Competitor from './components/tracker/signals/CompetitorSharePanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Sentiment from './components/tracker/signals/SentimentPanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3App from './components/tracker/signals/AppDownloadsPanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Ad from './components/tracker/signals/AdLibraryPanel.jsx';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
