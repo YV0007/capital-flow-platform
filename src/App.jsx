@@ -384,7 +384,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-200">
+    <div className="min-h-screen text-zinc-200" style={{ background: '#0A0A0B' }}>
       {/* App-level focus modal — listens for window event from any Open button */}
       {appFocusedItem && (() => {
         const sev = severityFromImportance(appFocusedItem.importance);
@@ -422,7 +422,7 @@ export default function App() {
       <div
         className="sticky top-0 z-30"
         style={{
-          background: '#0E0E12',
+          background: '#0A0A0B',
           borderBottom: '1px solid rgba(255,255,255,0.06)',
         }}>
         <div className="px-4 py-3 flex items-center justify-between gap-4">
