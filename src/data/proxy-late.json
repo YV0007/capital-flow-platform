@@ -1,0 +1,15 @@
+{
+  "_note": "6-месячная доходность прокси: дек 2025 → июнь 2026. Цены округлены к источнику block5_late_to_trade.md.",
+  "data": [
+    { "ticker": "SATS",  "name": "EchoStar",          "underlying": "SpaceX",    "ret":  100, "trigger": "$17B сделка + IPO SpaceX" },
+    { "ticker": "SKM",   "name": "SK Telecom",        "underlying": "Anthropic", "ret":   86, "trigger": "Series G+H, IPO filing"   },
+    { "ticker": "MNTN",  "name": "Schiehallion",      "underlying": "SpaceX+Anthropic", "ret":   65, "trigger": "NAV +32.6% + дисконт -19% → +0.4%" },
+    { "ticker": "9984",  "name": "SoftBank",          "underlying": "OpenAI",    "ret":   45, "trigger": "OpenAI $300B → $852B"     },
+    { "ticker": "SMT",   "name": "Scottish Mortgage", "underlying": "SpaceX",    "ret":   42, "trigger": "SpaceX вес 17.9% → 21.0%" },
+    { "ticker": "ZM",    "name": "Zoom",              "underlying": "Anthropic", "ret":   32, "trigger": "$1.3B доля раскрыта"      },
+    { "ticker": "MSFT",  "name": "Microsoft",         "underlying": "OpenAI",    "ret":   10, "trigger": "OpenAI разбавлен"         },
+    { "ticker": "GOOGL", "name": "Alphabet",          "underlying": "Anthropic+SpaceX", "ret":   10, "trigger": "AI-доли разбавлены"  },
+    { "ticker": "S&P 500","name": "Бенчмарк",         "underlying": "—",         "ret":   -2, "trigger": "Боковик / лёгкая коррекция" },
+    { "ticker": "CRM",   "name": "Salesforce",        "underlying": "Anthropic", "ret":  -32, "trigger": "Слабость core-бизнеса перевесила" }
+  ]
+}
