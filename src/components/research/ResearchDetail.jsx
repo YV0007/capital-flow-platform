@@ -4,7 +4,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 import React from 'react';
 import researchLibrary from '../../data/research-library.json';
-import { ResearchCover } from './ResearchCovers.jsx';
+import ResearchCover from './ResearchCovers.jsx';
 import HoldingsTab from './HoldingsTab.jsx';
 import DataCentersAI from './DataCentersAI.jsx';
 
