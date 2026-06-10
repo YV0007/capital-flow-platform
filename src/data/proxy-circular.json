@@ -1,0 +1,15 @@
+{
+  "_note": "Equity numbers from block6_circular_deals.md. Revenue-back numbers are author's annualized estimates: Microsoft → ~$10B/yr Azure revenue from OpenAI (compass: ~20–30% of $13B investment back annually); Amazon → ~$5B/yr (significant AWS+Trainium share from $13B Anthropic spend); Google → ~$8B/yr (5GW capacity over 5y, prepaid via $43B equity); Nvidia → ~$25B/yr (multi-year chip orders, lock-in to H200/B100); Nvidia → Anthropic: revenue routed through Azure, ~$7B/yr indirect. Clean proxies: Salesforce $300M, Zoom + SK Telecom near-zero direct compute revenue. Circularity ratio = annualized revenue / equity invested.",
+  "circular": [
+    { "investor": "Nvidia",     "ticker": "NVDA", "startup": "OpenAI",    "equity": 30, "revenue": 25, "ratio": "83%+",  "channel": "Multi-year H200/B100 orders" },
+    { "investor": "Google",     "ticker": "GOOGL","startup": "Anthropic", "equity": 43, "revenue":  8, "ratio": "~80%+", "channel": "5 GW GCP capacity over 5 лет"      },
+    { "investor": "Microsoft",  "ticker": "MSFT", "startup": "OpenAI",    "equity": 13, "revenue": 10, "ratio": "~77%",  "channel": "Azure compute ($30B+ commitment)" },
+    { "investor": "Nvidia",     "ticker": "NVDA", "startup": "Anthropic", "equity": 10, "revenue":  7, "ratio": "~70%",  "channel": "Через Azure (тройная циркулярность)"  },
+    { "investor": "Amazon",     "ticker": "AMZN", "startup": "Anthropic", "equity": 14, "revenue":  5, "ratio": "50–70%", "channel": "AWS + Trainium chips"                  }
+  ],
+  "clean": [
+    { "investor": "Salesforce", "ticker": "CRM",  "startup": "Anthropic", "equity":  5,    "revenue": 0.3, "ratio": "~6%",  "channel": "Закупка токенов Anthropic" },
+    { "investor": "Zoom",       "ticker": "ZM",   "startup": "Anthropic", "equity":  0.05, "revenue": 0,   "ratio": "<5%",  "channel": "Минимальные Claude-фичи"  },
+    { "investor": "SK Telecom", "ticker": "SKM",  "startup": "Anthropic", "equity":  0.1,  "revenue": 0,   "ratio": "0%",   "channel": "Нет direct compute revenue" }
+  ]
+}
