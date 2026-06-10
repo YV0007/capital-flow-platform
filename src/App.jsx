@@ -343,7 +343,7 @@ export default function App() {
   // ─── Home / Research modes ───────────────────────────────────────
   if (mode === 'home') {
     return (
-      <div style={{ minHeight: '100vh', background: '#09090b', color: '#e4e4e7' }}>
+      <div style={{ minHeight: '100vh', background: '#0A0A0B', color: '#e4e4e7' }}>
         <Header mode={mode} onChangeMode={updateMode} />
         <HomeLanding onChoose={updateMode} />
       </div>
@@ -352,7 +352,7 @@ export default function App() {
 
   if (mode === 'research') {
     return (
-      <div style={{ minHeight: '100vh', background: '#09090b', color: '#e4e4e7' }}>
+      <div style={{ minHeight: '100vh', background: '#0A0A0B', color: '#e4e4e7' }}>
         <Header mode={mode} onChangeMode={updateMode} />
         {activeResearchId
           ? <ResearchDetail researchId={activeResearchId} onBack={() => setActiveResearchId(null)} />
@@ -364,7 +364,7 @@ export default function App() {
   // ─── Tracker mode ─────────────────────────────────────────────────
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#09090b' }}>
+      <div style={{ minHeight: '100vh', background: '#0A0A0B' }}>
         <Header mode={mode} onChangeMode={updateMode} />
         <div className="min-h-screen bg-zinc-950 text-zinc-400 flex items-center justify-center font-mono text-sm">
           <Activity className="w-4 h-4 animate-pulse mr-2" />Loading {company.name} monitoring dashboard…

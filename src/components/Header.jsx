@@ -6,8 +6,8 @@ export default function Header({ mode, onChangeMode }) {
   return (
     <div
       style={{
-        background: '#18181b',
-        borderBottom: '1px solid #27272a',
+        background: '#0A0A0B',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
         position: 'sticky',
         top: 0,
         zIndex: 40,
