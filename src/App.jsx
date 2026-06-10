@@ -373,10 +373,18 @@ export default function App() {
     );
   }
 
+  // Inline mode-switcher segments — used inside the unified tracker top bar.
+  // Same shape as the segmented control in Header.jsx; inlined here so the
+  // brand wordmark, company switcher, DATA chip, and mode switcher all sit
+  // on one row (matches the Netlify reference vcdashboard11.netlify.app).
+  const modeOptions = [
+    { id: 'home',     label: 'Home' },
+    { id: 'tracker',  label: 'Tracker' },
+    { id: 'research', label: 'Research' },
+  ];
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-200">
-      <Header mode={mode} onChangeMode={updateMode} />
-
       {/* App-level focus modal — listens for window event from any Open button */}
       {appFocusedItem && (() => {
         const sev = severityFromImportance(appFocusedItem.importance);
@@ -404,22 +412,38 @@ export default function App() {
         );
       })()}
 
-      {/* Tracker sub-header — company switcher (left) + obs/comms/version
-          counters (right). Matches the monolith's non-bento layout (line
-          17552 + 17660). The bento branch and its centered DATA chip are
-          intentionally not rendered — the monolith ships with
-          window.__BENTO__ = true and ends up in the centered-chip layout,
-          but the migrated app preserves the analyst-facing non-bento
-          arrangement that the user expects. */}
+      {/* Unified tracker top bar — AB Investment wordmark + company switcher
+          (left) · DATA freshness chip (center) · Home/Tracker/Research mode
+          switcher (right). Single row matching vcdashboard11.netlify.app. */}
       <div className="bg-zinc-900 border-b border-zinc-800 sticky top-0 z-30">
-        <div className="px-3 py-2 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <CompanyLogo brand={company.name} size={20} />
+        <div className="px-4 py-3 flex items-center justify-between gap-4">
+          {/* Left: brand wordmark + company switcher */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => updateMode('home')}
+              title="Back to home"
+              style={{
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '4px 6px 4px 0',
+                fontSize: 14,
+                fontWeight: 700,
+                color: '#fafafa',
+                letterSpacing: '-0.01em',
+                fontFamily: 'inherit',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.75')}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+            >
+              AB Investment
+            </button>
+            <CompanyLogo brand={company.name} size={28} />
             <div className="relative">
               <select
                 value={companyId}
                 onChange={(e) => switchCompany(e.target.value)}
-                className="bg-zinc-900 border border-zinc-700 rounded px-2 py-0.5 text-sm font-mono uppercase tracking-wider text-zinc-200 hover:border-zinc-600 focus:outline-none focus:border-cyan-600 cursor-pointer pr-7 appearance-none"
+                className="bg-zinc-900 border border-zinc-700 rounded px-3 py-1 text-base font-medium tracking-tight text-zinc-200 hover:border-zinc-600 focus:outline-none focus:border-cyan-600 cursor-pointer pr-7 appearance-none"
                 title="Switch company"
               >
                 {COMPANIES.map(c => (
@@ -428,15 +452,99 @@ export default function App() {
               </select>
               <ChevronDown className="w-3.5 h-3.5 text-zinc-500 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
-            <span className="text-[10px] text-zinc-500">·  {cfg.is_position === false ? 'Research Tracker' : 'Single-Position VC Monitor'}</span>
           </div>
 
-          <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500">
-            <span title="Observations — data points logged from research and signals">{observations.filter(o => !o.superseded).length} obs</span>
-            <span>·</span>
-            <span title="Communications — syndicate touchpoints logged">{syndicateLog.length} comms</span>
-            <span>·</span>
-            <span title="Dashboard version">v1.1</span>
+          {/* Center: DATA freshness chip (monolith bento branch, line 17609) */}
+          {(() => {
+            const isPublicTab = tab === 'signals';
+            const memoDate = memoBaseline?.meta?.received || '—';
+            let dateText, isLive;
+            if (isPublicTab) {
+              if (publicDataAt) {
+                dateText = new Date(publicDataAt).toISOString().slice(0, 10);
+                isLive = true;
+              } else {
+                dateText = memoDate;
+                isLive = false;
+              }
+            } else {
+              dateText = memoDate;
+              isLive = false;
+            }
+            const scopeLabel = isPublicTab ? 'PUBLIC' : 'DATA';
+            return (
+              <div
+                title={isPublicTab
+                  ? (isLive
+                      ? `Public-tab data refreshed live from the news worker on ${dateText}.`
+                      : `Worker timestamp unavailable — showing memo data date instead (${dateText}).`)
+                  : `Data sourced from the issuer's investment memo dated ${dateText}. Will be updated when the company sends a new investor update.`}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  padding: '5px 12px',
+                  background: '#18181b',
+                  border: '1px solid #27272a',
+                  borderRadius: 6,
+                  fontSize: 10,
+                  fontFamily: 'ui-monospace,monospace',
+                  cursor: 'help',
+                }}>
+                <span style={{
+                  width: 6, height: 6, borderRadius: '50%',
+                  background: isLive ? '#10b981' : '#52525b',
+                  boxShadow: isLive ? '0 0 6px rgba(16,185,129,0.6)' : 'none',
+                }}></span>
+                <span style={{ color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
+                  {scopeLabel}
+                </span>
+                <span style={{ color: '#d4d4d8', fontWeight: 600 }}>
+                  {dateText}
+                </span>
+              </div>
+            );
+          })()}
+
+          {/* Right: Home / Tracker / Research segmented mode switcher */}
+          <div
+            role="tablist"
+            aria-label="App mode"
+            style={{
+              display: 'inline-flex',
+              background: '#18181b',
+              border: '1px solid #27272a',
+              borderRadius: 8,
+              padding: 3,
+              gap: 2,
+            }}>
+            {modeOptions.map(opt => {
+              const active = mode === opt.id;
+              return (
+                <button
+                  key={opt.id}
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => { if (mode !== opt.id) updateMode(opt.id); }}
+                  style={{
+                    padding: '6px 14px',
+                    fontSize: 11,
+                    fontFamily: 'ui-monospace,monospace',
+                    fontWeight: 600,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    background: active ? '#27272a' : 'transparent',
+                    color: active ? '#fafafa' : '#71717a',
+                    border: 'none',
+                    borderRadius: 6,
+                    cursor: 'pointer',
+                    transition: 'all 160ms',
+                    boxShadow: active ? '0 1px 2px rgba(0,0,0,0.4), inset 0 0 0 1px #3f3f46' : 'none',
+                  }}
+                  onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = '#d4d4d8'; }}
+                  onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = '#71717a'; }}>
+                  {opt.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
