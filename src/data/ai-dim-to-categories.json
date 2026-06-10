@@ -1,0 +1,6 @@
+{
+  "model_concentration":   ["qual", "product"],
+  "inference_compression": ["financial", "unit_econ"],
+  "data_moat":             ["retention", "product", "growth"],
+  "feature_stickiness":    ["retention", "product"]
+}

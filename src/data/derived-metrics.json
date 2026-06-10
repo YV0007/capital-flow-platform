@@ -1,0 +1,13 @@
+{
+  "arr_cagr_3y":                  { "value": 1.91,  "formula": "(39/3)^(1/3) - 1",   "confidence": "med", "label": "ARR CAGR 2023→Jan 2026",          "note": "~191%/yr over 3 years" },
+  "arr_multiple_2024_to_2026":    { "value": 6.19,  "formula": "39 / 6.3",           "confidence": "med", "label": "ARR multiple 2024→Jan 2026",      "note": "6.2x in ~14 months" },
+  "arr_growth_yoy_2025":          { "value": 0.364, "formula": "39 / 28.6 - 1",      "confidence": "med", "label": "YoY ARR growth (year-end 2025)",  "note": "~36% YoY at year-end 2025; sharp deceleration vs prior-year trajectory" },
+  "capital_efficiency_zeely":     { "value": 7.09,  "formula": "39 / 5.5",           "confidence": "med", "label": "Capital efficiency (Zeely)",      "note": "$39M ARR / $5.5M raised — exceptional" },
+  "capital_efficiency_creatify":  { "value": 0.43,  "formula": "10 / 23",            "confidence": "med", "label": "Capital efficiency (Creatify)",   "note": "Comp benchmark" },
+  "capital_efficiency_arcads":    { "value": 0.75,  "formula": "12 / 16",            "confidence": "med", "label": "Capital efficiency (Arcads)",     "note": "Comp benchmark" },
+  "capital_efficiency_mirage":    { "value": 0.30,  "formula": "30 / 100",           "confidence": "med", "label": "Capital efficiency (Mirage)",     "note": "Comp benchmark" },
+  "anton_entry_arr_multiple":     { "value": 3.08,  "formula": "120 / 39",           "confidence": "med", "label": "Anton entry ARR multiple",        "note": "3.1x ARR vs memo ceiling 5.1x — favorable tier" },
+  "paid_conversion":              { "value": 0.05,  "formula": "50000 / 1000000",    "confidence": "med", "label": "Paid conversion",                 "note": "5% — plausible SMB SaaS rate" },
+  "arpu_annual_usd":              { "value": 780,   "formula": "39000000 / 50000",   "confidence": "med", "label": "ARPU (annual)",                   "note": "$65/month average per paying user" },
+  "arr_per_fte_usd":              { "value": 260000, "formula": "39000000 / 150",    "confidence": "med", "label": "ARR per FTE",                     "note": "$260K/FTE — top-quartile range for SaaS Series A" }
+}

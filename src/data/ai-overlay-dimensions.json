@@ -1,0 +1,6 @@
+[
+  { "id": "model_concentration", "label": "Model-provider concentration risk", "why": "Reliance on one foundation model provider exposes pricing and outage risk." },
+  { "id": "inference_compression", "label": "Inference cost / GM compression", "why": "Falling inference costs help; rising user intensity hurts. Net direction matters." },
+  { "id": "data_moat", "label": "Proprietary data moat", "why": "Without proprietary data, AI features commoditize as base models improve." },
+  { "id": "feature_stickiness", "label": "AI feature stickiness", "why": "Engagement and retention specifically attributable to AI features." }
+]

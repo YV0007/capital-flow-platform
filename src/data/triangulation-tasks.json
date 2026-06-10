@@ -1,0 +1,23 @@
+[
+  {
+    "id": "tri_arr_39m",
+    "label": "Triangulate $39M ARR claim",
+    "detail": "Cross-check against headcount (150 → $260K ARR/FTE), Similarweb traffic, and hiring volume. ARR/FTE in top-quartile range — plausible but should be confirmed.",
+    "completed": false,
+    "completedAt": null
+  },
+  {
+    "id": "tri_users_1m",
+    "label": "Triangulate 1M registered / 50K paying claim",
+    "detail": "Cross-check against app/web traffic estimates and signup-page inflow. 5% paid conversion is plausible for SMB SaaS; absolute volumes need triangulation.",
+    "completed": false,
+    "completedAt": null
+  },
+  {
+    "id": "tri_us_share_68",
+    "label": "Triangulate 'US 68% share' competitive claim",
+    "detail": "Cross-check against Similarweb US-traffic share for zeely.ai vs creatify.ai vs arcads.ai vs mirage.app.",
+    "completed": false,
+    "completedAt": null
+  }
+]

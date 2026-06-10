@@ -1,0 +1,72 @@
+[
+  { "id": "financial", "label": "Financial Performance", "metrics": [
+    { "id": "arr", "label": "ARR", "source": "I", "why": "Annualized recurring revenue. The headline value indicator at SaaS Series A.", "benchmark": "$3–10M typical Series A" },
+    { "id": "mrr", "label": "MRR", "source": "I", "why": "Monthly recurring revenue, used to derive growth velocity in months not years.", "benchmark": "15–25% MoM at ≤$1M MRR" },
+    { "id": "rev_growth_qoq", "label": "Revenue growth QoQ", "source": "I", "why": "The single most VC-watched metric at Series A. Compounds into \"T2D3\" trajectories.", "benchmark": "≥30% QoQ" },
+    { "id": "gross_margin", "label": "Gross margin", "source": "I", "why": "AI products under inference-cost pressure. <60% GM raises long-term unit economics flags.", "benchmark": "≥70% software, ≥55% AI-heavy" },
+    { "id": "burn", "label": "Net burn (monthly)", "source": "I", "why": "Indicates capital efficiency and runway. Burn multiple = burn / new ARR.", "benchmark": "Burn multiple <1.5x" },
+    { "id": "runway", "label": "Runway months", "source": "I", "why": "Months of cash at current burn. <12 months triggers fundraise pressure.", "benchmark": "≥18 months" }
+  ]},
+  { "id": "growth", "label": "Growth", "metrics": [
+    { "id": "users_total", "label": "Total users", "source": "B", "why": "Top-line user count. Usually triangulable through reviews + downloads + traffic.", "benchmark": "Stage-dependent" },
+    { "id": "mau", "label": "Monthly active users", "source": "B", "why": "MAU separates real engagement from registration vanity.", "benchmark": "≥40% of total in active products" },
+    { "id": "paying_customers", "label": "Paying customers", "source": "I", "why": "Number of accounts paying. Conversion lever for SMB-AI products.", "benchmark": "Stage-dependent" },
+    { "id": "logo_growth", "label": "Logo growth QoQ", "source": "I", "why": "Net new logos quarter-over-quarter, separates expansion from new acquisition.", "benchmark": "≥20% QoQ" },
+    { "id": "self_serve_share", "label": "Self-serve revenue share", "source": "I", "why": "High self-serve share = scalable economics; low = sales-led with higher CAC.", "benchmark": "≥60% for SMB-AI" }
+  ]},
+  { "id": "acquisition", "label": "Customer Acquisition", "metrics": [
+    { "id": "web_traffic", "label": "Web traffic (monthly visits)", "source": "P", "why": "Top-of-funnel demand signal, requires Similarweb + Semrush corroboration.", "benchmark": "Trend > level" },
+    { "id": "branded_search", "label": "Branded search index", "source": "P", "why": "Google Trends index for the brand name, removes paid distortion.", "benchmark": "Sustained YoY > 1.0" },
+    { "id": "app_downloads", "label": "App downloads (monthly)", "source": "P", "why": "For mobile-first products, this is the cleanest acquisition signal.", "benchmark": "Trend > level" },
+    { "id": "cac_blended", "label": "Blended CAC", "source": "I", "why": "Cost to acquire one paying customer across all channels.", "benchmark": "CAC payback <12mo" },
+    { "id": "channel_mix", "label": "Channel mix (organic vs paid)", "source": "I", "why": "Healthy products show ≥50% organic share at scale.", "benchmark": "≥40% organic" }
+  ]},
+  { "id": "retention", "label": "Retention & Engagement", "metrics": [
+    { "id": "grr", "label": "Gross revenue retention", "source": "I", "why": "Revenue retained excluding upsell. Below 80% signals product-market problems.", "benchmark": "≥85%" },
+    { "id": "nrr", "label": "Net revenue retention", "source": "I", "why": "Most-watched SaaS metric. Above 120% signals expansion-led growth.", "benchmark": "≥110%" },
+    { "id": "dau_mau", "label": "DAU/MAU ratio", "source": "I", "why": "Engagement intensity. <20% in B2B SMB is a warning, ≥40% is excellent.", "benchmark": "≥30%" },
+    { "id": "cohort_retention_m6", "label": "6-month cohort retention", "source": "I", "why": "Real durability test, smooth out monthly noise.", "benchmark": "≥60% paid retention" },
+    { "id": "logo_churn", "label": "Logo churn (monthly)", "source": "I", "why": "Account-level churn. >3%/mo at SMB is concerning, <2% is healthy.", "benchmark": "≤2.5%/mo SMB" },
+    { "id": "review_velocity", "label": "Review velocity (count)", "source": "P", "why": "Public proxy for active-customer growth via G2/App Store cadence.", "benchmark": "Trend" },
+    { "id": "avg_rating", "label": "Average rating", "source": "P", "why": "Avg star rating across major review surfaces, weighted by recency.", "benchmark": "≥4.4" }
+  ]},
+  { "id": "unit_econ", "label": "Unit Economics", "metrics": [
+    { "id": "ltv", "label": "LTV", "source": "I", "why": "Customer lifetime value. At SMB use 24-month forward ARR estimate.", "benchmark": "Context-dependent" },
+    { "id": "ltv_cac", "label": "LTV / CAC", "source": "I", "why": "Capital efficiency proxy. <3 weak, ≥4 strong.", "benchmark": "≥3.0" },
+    { "id": "gm_per_unit", "label": "Gross margin per customer", "source": "I", "why": "Per-customer GM exposes product-mix issues hidden in blended GM.", "benchmark": "≥70%" },
+    { "id": "inference_cost_ratio", "label": "Inference cost / revenue", "source": "I", "why": "AI-specific. >25% is structural margin risk.", "benchmark": "<20%" },
+    { "id": "cac_payback", "label": "CAC payback months", "source": "I", "why": "Time to recover acquisition cost. <12mo healthy SaaS, <18mo acceptable.", "benchmark": "<12mo" }
+  ]},
+  { "id": "product", "label": "Product & Market", "metrics": [
+    { "id": "release_cadence", "label": "Release cadence (per month)", "source": "P", "why": "Velocity is a proxy for engineering health and product-market urgency.", "benchmark": "≥4/mo" },
+    { "id": "feature_velocity", "label": "Notable feature ships (Q)", "source": "P", "why": "Number of notable features shipped per quarter, from changelog or PR.", "benchmark": "Trend" },
+    { "id": "product_hunt_rank", "label": "Product Hunt #/launches", "source": "P", "why": "Launch ranking + reception. Top-3 Day signals strong indie distribution.", "benchmark": "Top 5" },
+    { "id": "competitive_share", "label": "Competitive share signal", "source": "P", "why": "Relative traffic and reviews vs top 3 competitors.", "benchmark": "Stable or gaining" }
+  ]},
+  { "id": "team", "label": "Team & Hiring", "metrics": [
+    { "id": "headcount", "label": "Headcount (LinkedIn)", "source": "P", "why": "Most reliable public scale indicator. QoQ delta is the trend signal.", "benchmark": "Stage-dependent" },
+    { "id": "headcount_qoq", "label": "Headcount QoQ %", "source": "P", "why": "≥10% QoQ at Series A is healthy, ≥20% is strong, contraction is a flag.", "benchmark": "≥10% QoQ" },
+    { "id": "senior_hires_q", "label": "Senior hires (Q)", "source": "P", "why": "VP/Director/Head-of hires signal scaling discipline and capital deployment.", "benchmark": "≥1/Q" },
+    { "id": "open_roles", "label": "Open roles", "source": "P", "why": "Forward-looking hiring intent. Function mix shows strategic priorities.", "benchmark": "Trend" },
+    { "id": "voluntary_departures", "label": "Senior departures (Q)", "source": "P", "why": "Multiple senior departures within 60d is a serious red flag.", "benchmark": "≤1/Q" },
+    { "id": "eng_ratio", "label": "Engineering ratio", "source": "P", "why": "Engineering as % of headcount. AI-heavy companies typically 50–65%.", "benchmark": "50–65%" }
+  ]},
+  { "id": "fundraise", "label": "Fundraising Readiness", "metrics": [
+    { "id": "months_since_round", "label": "Months since last priced round", "source": "P", "why": "Most companies raise on 18–24 month cycles. Lengthening signals bridge risk.", "benchmark": "<24mo" },
+    { "id": "cash_position", "label": "Cash position", "source": "I", "why": "Absolute USD on balance sheet. Combine with burn for runway.", "benchmark": "Runway dependent" },
+    { "id": "inv_signaling", "label": "Lead investor signaling", "source": "P", "why": "Recent partner posts/podcasts about portfolio = bullish; silence/disposal = bearish.", "benchmark": "Active" },
+    { "id": "term_sheet_activity", "label": "Term sheet activity", "source": "I", "why": "Insider-only. Indicates fundraise tempo and pricing trajectory.", "benchmark": "N/A" }
+  ]},
+  { "id": "momentum", "label": "External Public Momentum", "metrics": [
+    { "id": "gtrends_index", "label": "Google Trends (12mo idx)", "source": "P", "why": "Branded search interest, normalized 0–100. Sustained >50 = mindshare.", "benchmark": "Sustained" },
+    { "id": "social_followers", "label": "Aggregate social followers", "source": "P", "why": "LinkedIn + X + TikTok + YouTube combined. Velocity > level.", "benchmark": "Trend" },
+    { "id": "tier1_press", "label": "Tier-1 press mentions (Q)", "source": "P", "why": "TC/Bloomberg/WSJ/FT/Information mentions per quarter.", "benchmark": "≥2/Q" },
+    { "id": "founder_visibility", "label": "Founder posting cadence", "source": "P", "why": "Public posting cadence reveals fundraise/hiring posture.", "benchmark": "Sustained" }
+  ]},
+  { "id": "qual", "label": "Qualitative & Governance", "metrics": [
+    { "id": "board_composition", "label": "Board composition", "source": "B", "why": "Director changes filed in Delaware. Board adds = capital event signals.", "benchmark": "N/A" },
+    { "id": "founder_commitment", "label": "Founder commitment signals", "source": "B", "why": "Equity sales, side ventures, public posture toward Zeely.", "benchmark": "Engaged" },
+    { "id": "litigation", "label": "Litigation / legal exposure", "source": "P", "why": "PACER + state court filings. Any active litigation requires triangulation.", "benchmark": "None" },
+    { "id": "ip_filings", "label": "IP filings (TM/patent)", "source": "P", "why": "USPTO trademark and patent filings. Forward-looking product/branding signal.", "benchmark": "Trend" }
+  ]}
+]

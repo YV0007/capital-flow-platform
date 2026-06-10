@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Інвестиційний Меморандум Zeely.ai",
+    "issuer": "Toloka.vc",
+    "received": "2026-04",
+    "language": "Ukrainian",
+    "classification": "Insider via Syndicate",
+    "biasNote": "Underwriting/marketing material — figures support investment thesis; triangulate with public signals."
+  },
+  "growth": {
+    "arr_trajectory": [
+      { "period": "2023", "arr": 3000000 },
+      { "period": "2024", "arr": 6300000 },
+      { "period": "2025", "arr": 28600000 },
+      { "period": "Jan 2026", "arr": 39000000 }
+    ],
+    "rev_growth_q4_2025_pct": 90,
+    "mom_q4_2025_pct": 29.8,
+    "mrr_trajectory": [
+      { "period": "Oct 2025", "mrr": 1500000 },
+      { "period": "Nov 2025", "mrr": 2000000 },
+      { "period": "Dec 2025", "mrr": 2400000 },
+      { "period": "Jan 2026", "mrr": 3300000 }
+    ],
+    "gross_margin_pct": 78.4,
+    "cash_usd": 3440000,
+    "total_raised_usd": 5500000
+  },
+  "unit_econ": { "cac_usd": 70, "ltv_usd": 230, "ltv_cac": 3.3, "ltv_cac_target_2026": 4.0 },
+  "users": {
+    "registered": 1000000,
+    "paying": 50000,
+    "all_paid_m3_retention_pct": 50,
+    "all_paid_m6_retention_pct": 29,
+    "power_users_m6_retention_pct": 80,
+    "trustpilot_rating": 4.0,
+    "trustpilot_review_count": 1673,
+    "cohorts_all_paid": [
+      { "cohort": "Jun 2025", "n": 8341, "m": [75.5, 54.6, 40.9, 33.6, 29.4, 27.0] },
+      { "cohort": "Jul 2025", "n": 9068, "m": [75.1, 53.2, 40.1, 33.0, 29.5, 29.3] },
+      { "cohort": "Aug 2025", "n": 13092, "m": [74.8, 53.8, 39.2, 33.7, 33.3] },
+      { "cohort": "Sep 2025", "n": 11759, "m": [74.7, 53.0, 41.8, 40.9] },
+      { "cohort": "Oct 2025", "n": 17825, "m": [70.9, 57.2, 55.9] },
+      { "cohort": "Nov 2025", "n": 22292, "m": [75.8, 74.9] },
+      { "cohort": "Dec 2025", "n": 9029, "m": [93.1] }
+    ],
+    "cohorts_power": [
+      { "cohort": "Jun 2025", "n": 1808, "m": [86.6, 83.2, 81.7, 80.8, 80.1, 79.8, 79.7] },
+      { "cohort": "Jul 2025", "n": 1917, "m": [88.4, 85.4, 83.9, 83.1, 82.4, 82.4] },
+      { "cohort": "Aug 2025", "n": 2760, "m": [88.1, 84.7, 82.6, 82.0, 81.8] },
+      { "cohort": "Sep 2025", "n": 2380, "m": [86.4, 83.4, 81.7, 81.7] },
+      { "cohort": "Oct 2025", "n": 3564, "m": [85.2, 82.9, 82.8] },
+      { "cohort": "Nov 2025", "n": 4295, "m": [84.4, 84.3] },
+      { "cohort": "Dec 2025", "n": 1836, "m": [91.2] }
+    ]
+  },
+  "team": {
+    "headcount": 150,
+    "forbes30u30": true,
+    "origin": "100% Ukrainian",
+    "founders": [
+      { "name": "Dmytro Samoiliuk", "role": "Co-founder & CEO", "bio": "Product visionary; previously 7 years CEO of digital agency, 3000+ marketing projects for SMBs.", "linkedin": "https://ae.linkedin.com/in/samoiliuk" },
+      { "name": "Alina Bondarenko", "role": "Co-founder & Director of Communications", "bio": "Journalism + MBA from Taras Shevchenko Kyiv National University." },
+      { "name": "Yaroslav Samoiliuk", "role": "Co-founder & COO", "bio": "Operations/finance/legal; previously CSO at same digital agency." }
+    ],
+    "investors": ["Vesna Capital", "ZAS Ventures", "Angel One", "MA7 Ventures", "TA Ventures"],
+    "grants": ["Ukrainian Startup Fund (USF)", "Google for Startups"]
+  },
+  "market": {
+    "us_share_pct": 68,
+    "competitor_us_share": { "creatify": 24, "mirage": 15 },
+    "category": "Generative AI Marketing / MarTech (SMB segment)"
+  },
+  "competitive": [
+    { "name": "Creatify.ai", "raised_usd": 23000000, "arr_usd": 10000000, "focus": "E-com video; lacks static creatives, ad tools, deep analytics" },
+    { "name": "Arcads.ai",   "raised_usd": 16000000, "arr_usd": 12000000, "focus": "B2B video/avatar; no native ad-launch capability" },
+    { "name": "Mirage",      "raised_usd": 100000000, "arr_usd": 30000000, "focus": "B2C subtitling/dubbing; no ad/analytics features" }
+  ],
+  "product": {
+    "layers": [
+      "AI creative generation (avatars, image-to-video, brand remix)",
+      "Native campaign launch on Meta + TikTok",
+      "Real-time campaign optimization & analytics"
+    ],
+    "distribution": [
+      "Paid: Meta, Google, TikTok Ads",
+      "Organic: Brand, Content, SEO, CRM",
+      "Social + influencer marketing"
+    ]
+  },
+  "deal": {
+    "pre_money_ceiling_usd": 200000000,
+    "pre_money_ceiling_arr_multiple": 5.1,
+    "toloka_allocation_usd": 2000000,
+    "min_check_usd": 5000,
+    "commitment_window": "2 weeks",
+    "anton_entry_pre_money_usd": 120000000,
+    "anton_entry_arr_multiple": 3.1,
+    "anton_tier_note": "Tiered valuation; Anton entered at $120M tier — favorable vs $200M memo ceiling."
+  },
+  "exit_scenarios": [
+    { "tier": "Conservative",          "arr_2027_usd": 69000000,  "exit_5x_usd": 343000000,   "exit_6x_usd": 412000000,   "exit_7x_usd": 480000000 },
+    { "tier": "Base",                  "arr_2027_usd": 160000000, "exit_5x_usd": 800000000,   "exit_6x_usd": 960000000,   "exit_7x_usd": 1120000000 },
+    { "tier": "Optimistic (target)",   "arr_2027_usd": 300000000, "exit_5x_usd": 1500000000, "exit_6x_usd": 1800000000, "exit_7x_usd": 2100000000 }
+  ],
+  "risks": [
+    { "id": "competition",   "label": "Canva & Adobe are catching up",     "note": "They’re adding AI marketing features into tools SMBs already use. Less reason to switch to Zeely." },
+    { "id": "platform_dep", "label": "Depends on Meta & TikTok",           "note": "Zeely launches ads through their APIs. If Meta or TikTok change rules or pricing, the product breaks." },
+    { "id": "ai_regulatory", "label": "AI laws could restrict the product", "note": "EU AI Act + US laws in 2026 may limit what Zeely can do or add compliance costs." }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "team":             ["team"],
+  "market":           ["momentum", "qual"],
+  "product_velocity": ["product"],
+  "demand_growth":    ["growth", "acquisition"],
+  "cac_efficiency":   ["acquisition", "unit_econ"],
+  "retention":        ["retention"],
+  "unit_econ":        ["unit_econ", "financial"],
+  "hiring_signal":    ["team"],
+  "capital":          ["fundraise", "financial"],
+  "governance":       ["qual"]
+}

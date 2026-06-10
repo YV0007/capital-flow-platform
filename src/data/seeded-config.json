@@ -1,0 +1,83 @@
+{
+  "company_legal_name": "Zeely Inc.",
+  "company_brand_name": "Zeely.ai",
+  "position_type": "Secondary",
+  "entry_date": "2026-04-09",
+  "gross_investment_usd": 51213.59,
+  "syndicate_lead_fee_pct": 3,
+  "syndicate_lead_fee_usd": 1536.41,
+  "net_deployed_usd": 49677.18,
+  "price_per_share_usd": 12000.00,
+  "shares_held": 4.2678,
+  "round_size_usd": 2000000,
+  "round_type": "Secondaries",
+  "security_type": "Common/ordinary shares",
+  "pre_money_valuation_usd": 120000000,
+  "implied_economic_interest_pct": 0.0427,
+  "syndicate_lead": "Toloka LLC / Shoifot Igor",
+  "nominee": "TOLOKA SYNDICATE LTD",
+  "carry_on_exit_pct": 10,
+  "hurdle_on_exit_pct": 10,
+  "carry_on_distribution_pct": 10,
+  "hurdle_on_distribution_pct": 0,
+  "information_rights": "Indirect via syndicate lead only",
+  "default_stage_classification": "Series A",
+  "ai_overlay_enabled": true,
+  "is_position": true,
+  "documents": [
+    {
+      "name": "Subscription Form (signed)",
+      "type": "subscription-form",
+      "date": "2026-04-09",
+      "signed_by": "Anton Bolshakov",
+      "size_bytes": null,
+      "url": "zeely_subscription.pdf",
+      "notes": "Schedule 2 · Zeely Inc. · $51,213.59 · 4.2678 shares @ $12,000"
+    }
+  ],
+  "subscription_form": {
+    "document_ref": "DEAL_SUBSCRIPTION_FORM_AMENDED — AB_Fourstars_Holding_ltd",
+    "schedule": "Schedule 2 — Subscription Form",
+    "signed_date": "2026-04-09",
+    "signed_time": "10:49:32 GMT+0",
+    "signed_by": "Anton Bolshakov",
+    "signed_email": "anton.41060@gmail.com",
+    "applicant": {
+      "investor_name": "AB Fourstars Holding ltd",
+      "investor_address": "Tzon Kennety Street, Iris House, Limassol, Cyprus, 3106",
+      "registration_number": "HE391741",
+      "individual_investment_amount_usd": 51213.59
+    },
+    "deal_terms": {
+      "issuer": "Zeely Inc.",
+      "round_size_usd": 2000000,
+      "funding_round_type": "Zeely Secondaries",
+      "type_of_security": "Common/ordinary shares",
+      "price_per_security_usd": 12000.00,
+      "pre_money_valuation_usd": 120000000,
+      "tax_relief": null,
+      "valuation_cap": null,
+      "discount": null,
+      "interest": null,
+      "proxy_appointment": "Syndicate lead(s)"
+    },
+    "syndicate_legal": {
+      "syndicate_title": "Zeely - Secondaries",
+      "syndicate_lead": "Toloka LLC, Shoifot Igor",
+      "carried_interest_recipient": "Toloka LLC (100%)",
+      "nominee": "TOLOKA SYNDICATE LTD"
+    },
+    "syndicate_fees": {
+      "syndicate_lead_fee_pct": 3,
+      "syndicate_lead_fee_usd": 1536.41,
+      "carried_interest_on_exit_pct": 10,
+      "hurdle_on_exit_pct": 10,
+      "carried_interest_on_distribution_pct": 10,
+      "hurdle_on_distribution_pct": 0
+    },
+    "investment_receipt": null
+  },
+  "news_query": "Zeely.ai",
+  "news_youtube_api_key": "",
+  "news_reddit_subs": ["dropshipping", "shopify", "smallbusiness", "Entrepreneur"]
+}

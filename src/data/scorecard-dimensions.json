@@ -1,0 +1,12 @@
+[
+  { "id": "team", "label": "Team", "weight_seriesA": 15, "why": "Founder/leadership track record, key-person risk, completeness of bench." },
+  { "id": "market", "label": "Market", "weight_seriesA": 10, "why": "TAM, segment growth, regulatory exposure, AI commoditization risk." },
+  { "id": "product_velocity", "label": "Product Velocity", "weight_seriesA": 10, "why": "Release cadence, feature shipping rate, evidence of product depth." },
+  { "id": "demand_growth", "label": "Demand & Growth", "weight_seriesA": 20, "why": "Triangulated traffic + downloads + branded search + reviews." },
+  { "id": "cac_efficiency", "label": "CAC Efficiency", "weight_seriesA": 15, "why": "Channel mix, organic share, branded search ratio, paid burn ratio." },
+  { "id": "retention", "label": "Retention", "weight_seriesA": 15, "why": "NRR/GRR, cohort retention, app rating durability, review-velocity health." },
+  { "id": "unit_econ", "label": "Unit Economics", "weight_seriesA": 10, "why": "Gross margin, LTV/CAC, payback, inference cost compression." },
+  { "id": "hiring_signal", "label": "Hiring Signal", "weight_seriesA": 5, "why": "QoQ headcount delta, senior hires, open roles, departures." },
+  { "id": "capital", "label": "Capital", "weight_seriesA": 5, "why": "Runway, time since last round, lead-investor activity, dilution trajectory." },
+  { "id": "governance", "label": "Governance", "weight_seriesA": 5, "why": "Board composition, founder commitment, legal exposure, info rights." }
+]

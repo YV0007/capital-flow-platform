@@ -1,0 +1,7 @@
+{
+  "obs_seed_headcount_pitchbook":    { "by": "obs_memo_headcount",     "reason": "Memo (Apr 2026) reports 150 FTEs as of memo date — supersedes earlier PitchBook 95-employee figure. Likely PitchBook lag." },
+  "obs_seed_total_raised":           { "by": "obs_memo_total_raised",  "reason": "Memo reports $5.5M cumulative raised — supersedes PitchBook $1.4M figure. Gap reflects unlisted bridge/extension financing not visible to public databases." },
+  "obs_seed_claim_650k_sellers":     { "by": "obs_memo_users_paying",  "reason": "Memo resolves the 650k-sellers vs 1M-users definitional puzzle: 1M registered, 50K paying. Self-claim superseded by structured memo disclosure." },
+  "obs_seed_claim_4x_yoy":           { "by": "obs_memo_arr_jan2026",   "reason": "Memo provides precise ARR trajectory ($3M → $6.3M → $28.6M → $39M). Vague \"4x YoY\" self-claim from job-posting language is superseded by structured insider data." },
+  "obs_seed_claim_1m_users":         { "by": "obs_memo_users_registered", "reason": "Memo confirms 1M+ registered users. LinkedIn employee-post citation superseded by primary syndicate disclosure." }
+}

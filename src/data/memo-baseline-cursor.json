@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "title": "Інвестиційний Меморандум Cursor (Anysphere)",
+    "issuer": "Toloka.vc",
+    "received": "2026-02",
+    "language": "Ukrainian",
+    "classification": "Insider via Syndicate",
+    "biasNote": "Underwriting/marketing material — figures support investment thesis; triangulate with public signals.",
+    "documentRef": "cursor:memo-baseline:feb2026"
+  },
+  "growth": {
+    "arr_trajectory": [
+      { "period": "2023",     "arr":    1000000 },
+      { "period": "Apr 2024", "arr":    4000000 },
+      { "period": "Oct 2024", "arr":   48000000 },
+      { "period": "Dec 2024", "arr":  100000000 },
+      { "period": "Mar 2025", "arr":  200000000 },
+      { "period": "May 2025", "arr":  500000000 },
+      { "period": "Oct 2025", "arr": 1000000000 },
+      { "period": "Feb 2026", "arr": 2000000000 }
+    ],
+    "rev_growth_yoy_pct": 1900,
+    "arr_per_employee_usd": 6700000,
+    "mrr_trajectory": [],
+    "gross_margin_pct": null,
+    "cash_usd": 1000000000,
+    "total_raised_usd": 3380000000
+  },
+  "unit_econ": {
+    "cac_usd": null,
+    "ltv_usd": null,
+    "ltv_cac": null,
+    "ltv_cac_target_2026": null,
+    "free_to_paid_conversion_pct": 36
+  },
+  "users": {
+    "registered": null,
+    "paying": 1000000,
+    "monthly_active": 7000000,
+    "enterprise_customers": 50000,
+    "enterprise_revenue_share_pct": 60,
+    "fortune500_pct": 64,
+    "fortune1000_pct": 67,
+    "enterprise_code_lines_per_day": 100000000,
+    "trustpilot_rating": 1.7,
+    "trustpilot_review_count": 191,
+    "cohorts_all_paid": [],
+    "cohorts_power": []
+  },
+  "team": {
+    "headcount": 400,
+    "forbes30u30": false,
+    "origin": "US (Anysphere Inc., Delaware)",
+    "founders": [
+      { "name": "Michael Truell",    "role": "Co-founder & CEO",  "bio": "MIT; Neo Fellow; ex-Google (recommendation models). Youngest CEO of a $45B+ company." },
+      { "name": "Aman Sengar",        "role": "Co-founder",        "bio": "MIT; Neo Fellow. Technical leadership." },
+      { "name": "Sualeh Asif",        "role": "Co-founder & CPO",  "bio": "MIT; IMO contestant from Pakistan. Leads product." },
+      { "name": "Arvid Lunnemark",    "role": "Co-founder (departed Oct 2025)", "bio": "Former CTO; left to found Integrous Research (AI safety lab)." },
+      { "name": "Jordan Topoleski",   "role": "COO (since 2024)",  "bio": "Harvard; previously founded fintech startup ($10M+ raised). Selected from 200K candidates as Adecco \"CEO for one month\". Leads enterprise GTM." }
+    ],
+    "investors": ["Thrive Capital", "a16z", "Accel", "Coatue", "Nvidia", "Alphabet"],
+    "angel_investors": ["Patrick Collison (Stripe)", "Nat Friedman (ex-CEO GitHub)", "Jeff Dean (Google)"],
+    "grants": []
+  },
+  "market": {
+    "us_share_pct": null,
+    "competitor_us_share": {},
+    "category": "AI coding tools / IDEs (developer segment)",
+    "tam_2024_usd": 6000000000,
+    "tam_2030_usd": 24000000000,
+    "tam_cagr_pct": 26,
+    "supporting_market_2025_usd": 824000000000,
+    "supporting_market_2034_usd": 2200000000000,
+    "vibe_coding_2025_usd": 4700000000,
+    "vibe_coding_2027_usd": 12300000000,
+    "vibe_coding_cagr_pct": 38,
+    "developers_global": 50000000,
+    "developers_using_ai_pct": 84
+  },
+  "competitive": [
+    { "name": "Lovable",         "parent": null,        "valuation_usd": 6600000000,   "arr_usd":   400000000, "raised_usd":   648000000, "type": "independent", "focus": "Fastest EU startup; pure vibe-coding. 10% of apps had security flaws.", "note": "Sacra Feb 2026 estimate; some sources still cite $200M ARR from Nov 2025" },
+    { "name": "Replit",          "parent": null,        "valuation_usd": 9000000000,   "arr_usd":   240000000, "raised_usd":   922000000, "type": "independent", "focus": "Browser-native, non-developer friendly. Lower enterprise penetration.", "note": "2025 actual revenue $240M; company targets $1B ARR by end-2026" },
+    { "name": "Cognition (Devin + Windsurf)", "parent": null, "valuation_usd": null,      "arr_usd":   200000000, "raised_usd":   939000000, "type": "independent", "focus": "Devin + Windsurf combined after July 2025 acquisition.", "note": "Cognition $696M + Windsurf $243M pre-acquisition; combined ARR ~$155M at acquisition, since \"more than doubled\"" },
+    { "name": "GitHub Copilot",  "parent": "Microsoft", "valuation_usd": null,            "arr_usd": 1000000000, "raised_usd": null,           "type": "subsidiary", "focus": "Distribution moat: 90% F100, bundling. Plugin model — less codebase awareness.", "note": "Microsoft does not disclose Copilot ARR separately; analyst estimates based on 4.7M paid subscribers" },
+    { "name": "Claude Code",     "parent": "Anthropic", "valuation_usd": null,            "arr_usd": 2500000000, "raised_usd": null, "parent_raised_usd": 64000000000, "type": "subsidiary", "focus": "Model-native, agentic. No IDE; terminal-only.", "note": "Anthropic raised $64B+ total; Claude Code is a product line, not a separately funded entity" },
+    { "name": "OpenAI Codex",    "parent": "OpenAI",    "valuation_usd": null,            "arr_usd": null,           "raised_usd": null,           "type": "subsidiary", "focus": "2M+ weekly users; +70% MoM growth as of March 2026.", "note": "OpenAI does not break out Codex ARR" },
+    { "name": "Kiro",            "parent": "AWS",       "valuation_usd": null,            "arr_usd": null,           "raised_usd": null,           "type": "subsidiary", "focus": "AWS-owned, successor to Amazon Q Developer; not separately funded.", "note": "Niche, currently small" }
+  ],
+  "product": {
+    "features": [
+      { "name": "Composer",         "description": "In-house coding model / agent that operates on the entire codebase across multiple files." },
+      { "name": "Codebase Indexing", "description": "AI builds full project context — structure, dependencies, patterns — improving recommendation quality." },
+      { "name": "Tab Autocomplete", "description": "Real-time code prediction on Cursor proprietary model (4× faster than competitors)." },
+      { "name": "Agent Mode",       "description": "Autonomous: uses terminal, installs deps, fixes errors, iterates until task is complete." },
+      { "name": "Custom Rules",     "description": "Teams define coding standards once — AI follows them across all projects." },
+      { "name": "Cloud Agents",     "description": "Tasks run in background on Cursor servers; developer returns to completed work." },
+      { "name": "Bugbot",           "description": "AI code review on every pull request ($40/user, add-on)." }
+    ],
+    "pricing": [
+      { "tier": "Pro",       "price_per_user_usd": 20 },
+      { "tier": "Business",  "price_per_user_usd": 40 },
+      { "tier": "Free",      "price_per_user_usd": 0 }
+    ],
+    "distribution": [
+      "PLG: $100M ARR with $0 marketing spend (Bloomberg)",
+      "Freemium → Pro/Business; 36% free-to-paid conversion (vs 2-5% typical SaaS)",
+      "Bottom-up enterprise: dev → team → org adoption"
+    ]
+  },
+  "deal": {
+    "pre_money_ceiling_usd": 45000000000,
+    "pre_money_ceiling_arr_multiple": 22,
+    "toloka_allocation_usd": 2000000,
+    "min_check_usd": 5000,
+    "commitment_window": "2 weeks",
+    "anton_entry_pre_money_usd": null,
+    "anton_entry_arr_multiple": null,
+    "anton_tier_note": "Research only — no position taken. Toloka offered $45B pre-money tier."
+  },
+  "exit_scenarios": [
+    { "tier": "Conservative",        "arr_2029_usd":  6800000000, "exit_8x_usd":  54000000000, "exit_12x_usd": null,            "exit_15x_usd": null,             "roi": 1.1, "irr_pct": -3 },
+    { "tier": "Base (Realistic)",    "arr_2029_usd": 10700000000, "exit_8x_usd": null,            "exit_12x_usd": 128000000000, "exit_15x_usd": null,             "roi": 2.6, "irr_pct": 37 },
+    { "tier": "Optimistic",          "arr_2029_usd": 16000000000, "exit_8x_usd": null,            "exit_12x_usd": null,            "exit_15x_usd": 240000000000, "roi": 4.8, "irr_pct": 69 }
+  ],
+  "risks": [
+    { "id": "multiple_compression", "label": "Growth slowdown breaks the math", "note": "At $45B entry, you need hypergrowth to keep going. If growth halves, you barely get your money back in 3 years." },
+    { "id": "vertical_integration", "label": "AI model makers are building rival tools", "note": "Anthropic (Claude Code), OpenAI (Codex), Google (Windsurf) all sell coding tools now. Cursor relies on their models." },
+    { "id": "microsoft_distribution", "label": "Microsoft Copilot wins by default", "note": "Free with GitHub, VS Code, Azure. 100M+ developers get it without choosing. Cursor has to fight for every one." },
+    { "id": "margin_pressure",      "label": "Still burning cash at scale", "note": "AI features need expensive GPUs. Revenue grows fast, profit doesn’t keep up." },
+    { "id": "key_person",           "label": "Founder and engineers leaving", "note": "CTO left in 2025, key engineers went to xAI. Four remaining co-founders are 25-26 with no prior experience." },
+    { "id": "user_trust",           "label": "One bad incident triggers churn", "note": "Prompt injection, data leaks, or surprise pricing could push developers to alternatives. Switching is easy." }
+  ],
+  "enterprise_signals": {
+    "fortune500_logos": ["Samsung", "OpenAI", "NVIDIA", "Datadog", "Adobe", "Stripe", "PwC", "Figma", "Carlyle", "Sanofi", "Deloitte", "British Airways", "Hilton", "FOX", "BP", "Budweiser"],
+    "quoted_clients": [
+      { "name": "Patrick Collison",  "role": "Co-founder & CEO, Stripe",          "quote": "Cursor quickly grew from hundreds to thousands of extremely enthusiastic Stripe employees." },
+      { "name": "Jensen Huang",      "role": "President & CEO, NVIDIA",           "quote": "My favorite enterprise AI service is Cursor. Every one of our engineers, some 40,000, are now assisted by AI." },
+      { "name": "Brian Armstrong",   "role": "CEO, Coinbase",                     "quote": "By February 2025, every Coinbase engineer had utilized Cursor." },
+      { "name": "Albert Strasheim",  "role": "CTO, Rippling",                     "quote": "Cursor has transformed the way our engineering teams write and ship code, from 150 to over 500 engineers (~60% of org!) in just a few weeks." },
+      { "name": "Aleksey Stukalov",  "role": "Head of IDEs, JetBrains",           "quote": "JetBrains has always seen its mission as bringing the best of the industry to our users. We're excited about Cursor becoming a special guest in the family of ACP-compliant agents in JetBrains IDEs." },
+      { "name": "Cody De Arkland",   "role": "Senior Director, Sentry",           "quote": "Watching a dozen agent branches merge every day has become normal. Cursor isn't a convenience add-on; it's a scale-multiplier for the whole org." }
+    ]
+  }
+}
