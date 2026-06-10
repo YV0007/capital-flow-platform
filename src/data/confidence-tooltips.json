@@ -1,0 +1,5 @@
+{
+  "high": "HIGH — Strong corroboration: multiple independent sources agree, recent, or syndicate-disclosed insider figure. Safe to act on.",
+  "med":  "MED — Meets minimum corroboration: ≥2 distinct tools/sources within the staleness window. Directional signal.",
+  "low":  "LOW — Single source, partial data, or value unknown / paywalled. Do not act on alone."
+}

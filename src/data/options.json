@@ -1,0 +1,20 @@
+{
+  "STAGE_OPTIONS": ["Pre-seed", "Seed", "Series A", "Series B", "Series C", "Series D", "Series E", "Growth"],
+  "CONFIDENCE_OPTIONS": [
+    { "value": "high", "label": "High", "color": "bg-emerald-900 text-emerald-300 border-emerald-700" },
+    { "value": "med",  "label": "Med",  "color": "bg-amber-900 text-amber-300 border-amber-700" },
+    { "value": "low",  "label": "Low",  "color": "bg-rose-900 text-rose-300 border-rose-700" }
+  ],
+  "SOURCE_TYPE_OPTIONS": [
+    { "value": "P", "label": "Public",  "color": "bg-sky-900 text-sky-300 border-sky-700" },
+    { "value": "I", "label": "Insider", "color": "bg-violet-900 text-violet-300 border-violet-700" },
+    { "value": "B", "label": "Both",    "color": "bg-teal-900 text-teal-300 border-teal-700" }
+  ],
+  "MATERIALITY_OPTIONS": [
+    { "value": "routine",  "label": "Routine",  "color": "bg-zinc-800 text-zinc-300 border-zinc-700" },
+    { "value": "material", "label": "Material", "color": "bg-amber-900 text-amber-300 border-amber-700" },
+    { "value": "adverse",  "label": "Adverse",  "color": "bg-rose-900 text-rose-300 border-rose-700" }
+  ],
+  "SYNDICATE_SOURCES": ["Toloka LLC / Shoifot Igor", "TOLOKA SYNDICATE LTD", "Zeely direct", "Other"],
+  "SYNDICATE_CHANNELS": ["Email", "Call", "Portal", "WhatsApp", "Telegram", "In-person", "Other"]
+}
