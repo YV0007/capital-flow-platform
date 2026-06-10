@@ -1,0 +1,39 @@
+{
+  "_note": "Дни до IPO считаются от 10 июня 2026. OpenAI Q4 2026 (сент–нояб) трактуется как медианный ~Oct 2026 = ~120 дней; Anthropic ~Oct 2026 = ~122 дня. Статусы — авторская интерпретация по запасу до IPO и наличию свободного дисконта.",
+  "horizonDays": 180,
+  "companies": [
+    {
+      "id": "spacex",
+      "name": "SpaceX",
+      "ticker": "SPCX",
+      "ipoDate": "12 июня 2026",
+      "daysToIpo": 2,
+      "status": "dead",
+      "statusLabel": "Окно закрыто",
+      "bestProxy": "EchoStar (SATS) — премия уже в цене",
+      "verdict": "Прокси-трейд исполнен. Покупатель сейчас платит за уже отыгранный re-rating."
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "ticker": "OPENAI",
+      "ipoDate": "Q4 2026 (сент–нояб)",
+      "daysToIpo": 120,
+      "status": "narrowing",
+      "statusLabel": "Сужается",
+      "bestProxy": "SoftBank (9984.T) — единственный значимый прокси",
+      "verdict": "Окно ~3–5 месяцев. Решение о выходе — июль–сентябрь. Маржинальный кредит $6B+ под залог доли OpenAI — ключевой риск."
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "ticker": "ANTHROPIC",
+      "ipoDate": "~Октябрь 2026",
+      "daysToIpo": 122,
+      "status": "open",
+      "statusLabel": "Открыто",
+      "bestProxy": "SK Telecom (SKM) — ждать откат до ~$35",
+      "verdict": "Самое привлекательное окно. SKM переоценён после ралли +86%; ZM и CRM — умеренные варианты с дисконтом на основной бизнес."
+    }
+  ]
+}
