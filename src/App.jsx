@@ -48,6 +48,8 @@ import * as _stage3ScoreEditor from './components/tracker/scoring/ScoreEditor.js
 import * as _stage3ScoringView from './components/tracker/ScoringTrajectoryView.jsx';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3Heatmap from './components/tracker/MetricHeatmapView.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Position from './components/tracker/PositionView.jsx';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
