@@ -88,7 +88,7 @@ export default function Proxy() {
         @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}} .rise{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;}
         .navlink{transition:color .15s,border-color .15s;cursor:pointer;}`}</style>
 
-      <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: '224px 1fr' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '224px 1fr' }}>
         {/* Sticky section nav */}
         <aside style={{ position: 'sticky', top: 0, height: '100vh', padding: '36px 22px 36px 30px', borderRight: `1px solid ${C.line}` }}>
           <div style={{ fontSize: 10.5, letterSpacing: '.16em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 8 }}>Отчёт</div>

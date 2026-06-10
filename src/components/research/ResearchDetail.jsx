@@ -24,8 +24,8 @@ export default function ResearchDetail({ researchId, onBack }) {
     );
   }
   return (
-    <div style={{ minHeight: 'calc(100vh - 80px)', padding: '32px 32px 96px 32px', background: '#09090b' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+    <div style={{ minHeight: 'calc(100vh - 80px)', padding: '32px 32px 96px 32px', background: '#0A0A0B' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         {/* Back link */}
         <button onClick={onBack}
           style={{
