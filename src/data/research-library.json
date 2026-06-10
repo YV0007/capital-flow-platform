@@ -20,5 +20,16 @@
     "sectionCount": 2,
     "accent": "#2FD9C4",
     "summary": "Nine names that behave like roughly five or six independent bets. A relationship map showing real AI-infrastructure exposure, hidden overlaps, and the ballast that balances the book."
+  },
+  {
+    "id": "proxy",
+    "title": "Proxy",
+    "subtitle": "Анализ прокси-инвестиций в частные AI-компании через публичные холдинги — окно возможностей, концентрация, риски и проекции",
+    "sector": "Конгломераты / Прокси",
+    "dateCompleted": "Июнь 2026",
+    "companyCount": 25,
+    "sectionCount": 6,
+    "accent": "#F59E0B",
+    "summary": "Карта публичных прокси на SpaceX, OpenAI и Anthropic накануне трёх IPO 2026 года: окно дисконта, концентрация по проксям, конгломератный налог и круговые денежные потоки между стратегами и стартапами."
   }
 ]
