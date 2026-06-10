@@ -30,6 +30,10 @@ import * as _stage3BuildFlags from './lib/build-flags.js';
 import * as _stage3ObsForm from './components/tracker/forms/ObservationForm.jsx';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3SynForm from './components/tracker/forms/SyndicateCommForm.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Settings from './components/tracker/SettingsView.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3QuickStart from './components/tracker/shared/QuickStartPanel.jsx';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
