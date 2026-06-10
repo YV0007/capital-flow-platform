@@ -24,7 +24,6 @@ import { COMPANIES, getCompanyById, ACTIVE_COMPANY_KEY } from './data/companies.
 
 import Modal from './components/tracker/shared/Modal.jsx';
 import { FocusOverlay } from './components/tracker/shared/FocusOverlay.jsx';
-import { IS_BENTO } from './components/tracker/shared/chrome.jsx';
 import AlertBar from './components/tracker/shared/AlertBar.jsx';
 import CompanyLogo from './components/tracker/position/CompanyLogo.jsx';
 
@@ -405,16 +404,22 @@ export default function App() {
         );
       })()}
 
-      {/* Tracker top bar — company switcher + tabs + alerts */}
+      {/* Tracker sub-header — company switcher (left) + obs/comms/version
+          counters (right). Matches the monolith's non-bento layout (line
+          17552 + 17660). The bento branch and its centered DATA chip are
+          intentionally not rendered — the monolith ships with
+          window.__BENTO__ = true and ends up in the centered-chip layout,
+          but the migrated app preserves the analyst-facing non-bento
+          arrangement that the user expects. */}
       <div className="bg-zinc-900 border-b border-zinc-800 sticky top-0 z-30">
-        <div className={IS_BENTO ? "px-4 py-3 flex items-center justify-between" : "px-3 py-2 flex items-center justify-between"}>
+        <div className="px-3 py-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CompanyLogo brand={company.name} size={IS_BENTO ? 28 : 20} />
+            <CompanyLogo brand={company.name} size={20} />
             <div className="relative">
               <select
                 value={companyId}
                 onChange={(e) => switchCompany(e.target.value)}
-                className={`bg-zinc-900 border border-zinc-700 rounded ${IS_BENTO ? 'px-3 py-1 text-base font-medium tracking-tight' : 'px-2 py-0.5 text-sm font-mono uppercase tracking-wider'} text-zinc-200 hover:border-zinc-600 focus:outline-none focus:border-cyan-600 cursor-pointer pr-7 appearance-none`}
+                className="bg-zinc-900 border border-zinc-700 rounded px-2 py-0.5 text-sm font-mono uppercase tracking-wider text-zinc-200 hover:border-zinc-600 focus:outline-none focus:border-cyan-600 cursor-pointer pr-7 appearance-none"
                 title="Switch company"
               >
                 {COMPANIES.map(c => (
@@ -423,68 +428,16 @@ export default function App() {
               </select>
               <ChevronDown className="w-3.5 h-3.5 text-zinc-500 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
-            {!IS_BENTO && <span className="text-[10px] text-zinc-500">·  {cfg.is_position === false ? 'Research Tracker' : 'Single-Position VC Monitor'}</span>}
+            <span className="text-[10px] text-zinc-500">·  {cfg.is_position === false ? 'Research Tracker' : 'Single-Position VC Monitor'}</span>
           </div>
 
-          {/* Data freshness pill — bento only */}
-          {IS_BENTO && (() => {
-            const isPublicTab = tab === 'signals';
-            const memoDate = memoBaseline?.meta?.received || '—';
-            let dateText, isLive;
-            if (isPublicTab) {
-              if (publicDataAt) {
-                dateText = new Date(publicDataAt).toISOString().slice(0, 10);
-                isLive = true;
-              } else {
-                dateText = memoDate;
-                isLive = false;
-              }
-            } else {
-              dateText = memoDate;
-              isLive = false;
-            }
-            const scopeLabel = isPublicTab ? 'PUBLIC' : 'DATA';
-            return (
-              <div
-                title={isPublicTab
-                  ? (isLive
-                      ? `Public-tab data refreshed live from the news worker on ${dateText}.`
-                      : `Worker timestamp unavailable — showing memo data date instead (${dateText}).`)
-                  : `Data sourced from the issuer's investment memo dated ${dateText}. Will be updated when the company sends a new investor update.`}
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 8,
-                  padding: '5px 12px',
-                  background: '#18181b',
-                  border: '1px solid #27272a',
-                  borderRadius: 6,
-                  fontSize: 10,
-                  fontFamily: 'ui-monospace,monospace',
-                  cursor: 'help',
-                }}>
-                <span style={{
-                  width: 6, height: 6, borderRadius: '50%',
-                  background: isLive ? '#10b981' : '#52525b',
-                  boxShadow: isLive ? '0 0 6px rgba(16,185,129,0.6)' : 'none',
-                }}></span>
-                <span style={{ color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
-                  {scopeLabel}
-                </span>
-                <span style={{ color: '#d4d4d8', fontWeight: 600 }}>
-                  {dateText}
-                </span>
-              </div>
-            );
-          })()}
-
-          {!IS_BENTO && (
-            <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500">
-              <span title="Observations — data points logged from research and signals">{observations.filter(o => !o.superseded).length} obs</span>
-              <span>·</span>
-              <span title="Communications — syndicate touchpoints logged">{syndicateLog.length} comms</span>
-              <span>·</span>
-              <span title="Dashboard version">v1.1</span>
-            </div>
-          )}
+          <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500">
+            <span title="Observations — data points logged from research and signals">{observations.filter(o => !o.superseded).length} obs</span>
+            <span>·</span>
+            <span title="Communications — syndicate touchpoints logged">{syndicateLog.length} comms</span>
+            <span>·</span>
+            <span title="Dashboard version">v1.1</span>
+          </div>
         </div>
 
         {/* Tabs */}
