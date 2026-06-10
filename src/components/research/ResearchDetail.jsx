@@ -7,6 +7,7 @@ import researchLibrary from '../../data/research-library.json';
 import ResearchCover from './ResearchCovers.jsx';
 import HoldingsTab from './HoldingsTab.jsx';
 import DataCentersAI from './DataCentersAI.jsx';
+import Proxy from './Proxy.jsx';
 
 const RESEARCH_LIBRARY = researchLibrary;
 
@@ -82,6 +83,8 @@ export default function ResearchDetail({ researchId, onBack }) {
           <DataCentersAI />
         ) : researchId === 'holdings' ? (
           <HoldingsTab />
+        ) : researchId === 'proxy' ? (
+          <Proxy />
         ) : (
           <div style={{
             padding: '64px 32px', textAlign: 'center',
