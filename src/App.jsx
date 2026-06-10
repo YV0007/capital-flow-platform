@@ -70,6 +70,18 @@ import * as _stage3WeeklyBrief from './components/tracker/news/WeeklyBriefPanel.
 import * as _stage3NewsFeed from './components/tracker/news/NewsMentionsFeed.jsx';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3Signals from './components/tracker/SignalTrackerView.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3AlertBar from './components/tracker/shared/AlertBar.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3MemoBaseline from './components/tracker/memo/MemoBaselineCard.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Triangulation from './components/tracker/memo/TriangulationTasksPanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3MemoOverview from './components/tracker/memo/MemoOverviewPage.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Investor from './components/tracker/memo/InvestorPanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Summary from './components/tracker/PositionSummaryView.jsx';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
