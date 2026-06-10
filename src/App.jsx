@@ -60,6 +60,14 @@ import * as _stage3Sentiment from './components/tracker/signals/SentimentPanel.j
 import * as _stage3App from './components/tracker/signals/AppDownloadsPanel.jsx';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3Ad from './components/tracker/signals/AdLibraryPanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3WeeklyTakeaway from './components/tracker/news/WeeklyTakeaway.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3BriefStack from './components/tracker/news/BriefStack.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3WeeklyBrief from './components/tracker/news/WeeklyBriefPanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3NewsFeed from './components/tracker/news/NewsMentionsFeed.jsx';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
