@@ -4,6 +4,16 @@ import HomeLanding from './components/HomeLanding.jsx';
 import TrackerPlaceholder from './components/tracker/TrackerPlaceholder.jsx';
 import ResearchLanding from './components/research/ResearchLanding.jsx';
 import ResearchDetail from './components/research/ResearchDetail.jsx';
+// Stage 3 parse-only sanity imports. Forces Vite/Rollup to crawl the new
+// tracker modules so we catch syntax errors during the per-batch build,
+// even before App.jsx wires them up. These imports collapse into real
+// usage in batch 17.
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Utils from './lib/utils.js';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Companies from './data/companies.js';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3CorrobSources from './data/corrob-sources.js';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
