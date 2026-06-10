@@ -34,6 +34,10 @@ import * as _stage3SynForm from './components/tracker/forms/SyndicateCommForm.js
 import * as _stage3Settings from './components/tracker/SettingsView.jsx';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3QuickStart from './components/tracker/shared/QuickStartPanel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Log from './components/tracker/ObservationLogView.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Syn from './components/tracker/SyndicateCommsView.jsx';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
