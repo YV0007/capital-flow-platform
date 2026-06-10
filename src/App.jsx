@@ -38,6 +38,14 @@ import * as _stage3QuickStart from './components/tracker/shared/QuickStartPanel.
 import * as _stage3Log from './components/tracker/ObservationLogView.jsx';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3Syn from './components/tracker/SyndicateCommsView.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3CompositeGauge from './components/tracker/scoring/CompositeGauge.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3ScoringTrend from './components/tracker/scoring/ScoringTrendChart.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3ScoreEditor from './components/tracker/scoring/ScoreEditor.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3ScoringView from './components/tracker/ScoringTrajectoryView.jsx';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
