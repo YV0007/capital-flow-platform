@@ -7,12 +7,19 @@
 
 import circular from '../../../data/proxy-circular.json';
 
-function Loop({ C, row }) {
-  // Толщина дуг пропорциональна суммам, нормирована к 24px max.
+function Loop({ C, row, rowIdx }) {
+  // Толщина дуг пропорциональна суммам, но капается небольшими значениями,
+  // чтобы маркер-стрелка и сама дуга не "пожирали" соседние боксы. Маркеры
+  // ниже имеют markerUnits="userSpaceOnUse" — фиксированный размер,
+  // не зависит от stroke-width.
   const equityMax  = Math.max(...circular.circular.map((r) => r.equity));
   const revenueMax = Math.max(...circular.circular.map((r) => r.revenue));
-  const equityW  = Math.max(4, (row.equity  / equityMax)  * 20);
-  const revenueW = Math.max(3, (row.revenue / revenueMax) * 18);
+  const equityW  = Math.max(2.4, (row.equity  / equityMax)  * 7);
+  const revenueW = Math.max(2,   (row.revenue / revenueMax) * 6);
+
+  // Уникальные id маркеров на индекс строки (без не-ASCII символов).
+  const eqId = `proxy-arrow-eq-${rowIdx}`;
+  const rvId = `proxy-arrow-rv-${rowIdx}`;
 
   return (
     <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column' }}>
@@ -31,10 +38,12 @@ function Loop({ C, row }) {
       {/* Loop SVG */}
       <svg viewBox="0 0 320 110" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: 110, display: 'block' }}>
         <defs>
-          <marker id={`arrow-eq-${row.investor}-${row.startup}`} viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          {/* markerUnits="userSpaceOnUse" — иначе маркеры масштабируются вместе
+              со stroke-width дуги и при $30B+ становятся гигантскими треугольниками. */}
+          <marker id={eqId} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
             <path d="M 0 0 L 10 5 L 0 10 Z" fill={C.teal} />
           </marker>
-          <marker id={`arrow-rv-${row.investor}-${row.startup}`} viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <marker id={rvId} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
             <path d="M 0 0 L 10 5 L 0 10 Z" fill={C.emerald} />
           </marker>
         </defs>
@@ -47,12 +56,14 @@ function Loop({ C, row }) {
         <rect x="236" y="38" width="78" height="34" rx="6" fill={C.cardAlt} stroke={C.line} strokeWidth="1" />
         <text x="275" y="58" textAnchor="middle" fontFamily="var(--sans)" fontSize="11" fontWeight="600" fill={C.ink}>{row.startup}</text>
 
-        {/* Top arc: equity outbound (amber) */}
-        <path d="M 84 44 Q 160 4, 236 44" fill="none" stroke={C.teal} strokeWidth={equityW} strokeOpacity="0.85" strokeLinecap="round" markerEnd={`url(#arrow-eq-${row.investor}-${row.startup})`} />
+        {/* Top arc: equity outbound (amber) — короче на 14px справа, чтобы
+            наконечник стрелки приземлился у границы целевого box, а не
+            пробил его насквозь. */}
+        <path d="M 84 44 Q 160 4, 226 44" fill="none" stroke={C.teal} strokeWidth={equityW} strokeOpacity="0.9" strokeLinecap="round" markerEnd={`url(#${eqId})`} />
         <text x="160" y="14" textAnchor="middle" fontFamily="var(--mono)" fontSize="10.5" fill={C.teal} fontWeight="600">equity ${row.equity}B</text>
 
         {/* Bottom arc: revenue inbound (emerald) */}
-        <path d="M 236 66 Q 160 106, 84 66" fill="none" stroke={C.emerald} strokeWidth={revenueW} strokeOpacity="0.85" strokeLinecap="round" markerEnd={`url(#arrow-rv-${row.investor}-${row.startup})`} />
+        <path d="M 236 66 Q 160 106, 94 66" fill="none" stroke={C.emerald} strokeWidth={revenueW} strokeOpacity="0.9" strokeLinecap="round" markerEnd={`url(#${rvId})`} />
         <text x="160" y="102" textAnchor="middle" fontFamily="var(--mono)" fontSize="10.5" fill={C.emerald} fontWeight="600">
           revenue ~${row.revenue}B / год
         </text>
@@ -84,7 +95,7 @@ export default function CircularBlock({ C, card, subLabel }) {
       <div style={subLabel}>5 крупнейших циркулярных сделок · equity → compute revenue → обратно</div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 14 }}>
-        {circular.circular.map((row, i) => <Loop key={i} C={C} row={row} />)}
+        {circular.circular.map((row, i) => <Loop key={i} C={C} row={row} rowIdx={i} />)}
       </div>
 
       {/* Annotation */}
