@@ -1,0 +1,18 @@
+{
+  "_note": "Модель из block4_proxy_vs_direct.md. Базовый конгломератный дисконт 40% для SoftBank → capture ratio ~62–66% от роста OpenAI. Сценарии: рост OpenAI 0 / +50 / +100 / +200 / +300%.",
+  "scenarios": [
+    { "openaiGrowth":   0, "scenarioLabel": "Стагнация",  "direct":   0, "softBank":   3, "gap":   3 },
+    { "openaiGrowth":  50, "scenarioLabel": "Умеренный",  "direct":  50, "softBank":  33, "gap":  17 },
+    { "openaiGrowth": 100, "scenarioLabel": "Сильный",    "direct": 100, "softBank":  63, "gap":  37 },
+    { "openaiGrowth": 200, "scenarioLabel": "Mag 7",      "direct": 200, "softBank": 125, "gap":  75 },
+    { "openaiGrowth": 300, "scenarioLabel": "Mega-cap",   "direct": 300, "softBank": 186, "gap": 114 }
+  ],
+  "captureRatios": [
+    { "proxy": "SoftBank",   "asset": "OpenAI",    "concentration": "~85%",   "captureRatio": "62–66%", "verdict": "Лучший capture среди крупных прокси" },
+    { "proxy": "EchoStar",   "asset": "SpaceX",    "concentration": "~63%",   "captureRatio": "50–55%", "verdict": "Только до IPO 12 июня — потом lock-up" },
+    { "proxy": "SK Telecom", "asset": "Anthropic", "concentration": "~17%",   "captureRatio": "12–14%", "verdict": "Только при re-rating телекома" },
+    { "proxy": "Microsoft",  "asset": "OpenAI",    "concentration": "~7%",    "captureRatio": "<3%",    "verdict": "Никогда — слишком разбавлен" },
+    { "proxy": "Zoom",       "asset": "Anthropic", "concentration": "~4.5%",  "captureRatio": "~5%",    "verdict": "Только при росте core-бизнеса" },
+    { "proxy": "Alphabet",   "asset": "Anthropic + SpaceX", "concentration": "~5%", "captureRatio": "<3%", "verdict": "Никогда — двойная экспозиция разбавлена" }
+  ]
+}
