@@ -68,6 +68,8 @@ import * as _stage3BriefStack from './components/tracker/news/BriefStack.jsx';
 import * as _stage3WeeklyBrief from './components/tracker/news/WeeklyBriefPanel.jsx';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3NewsFeed from './components/tracker/news/NewsMentionsFeed.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Signals from './components/tracker/SignalTrackerView.jsx';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
