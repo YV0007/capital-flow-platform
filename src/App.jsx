@@ -414,8 +414,17 @@ export default function App() {
 
       {/* Unified tracker top bar — AB Investment wordmark + company switcher
           (left) · DATA freshness chip (center) · Home/Tracker/Research mode
-          switcher (right). Single row matching vcdashboard11.netlify.app. */}
-      <div className="bg-zinc-900 border-b border-zinc-800 sticky top-0 z-30">
+          switcher (right). Single row matching vcdashboard11.netlify.app.
+          Background hex is the monolith's bento override for bg-zinc-900
+          (`#0E0E12`) and border alpha is rgba(255,255,255,0.06) — see
+          index_slim.html lines 309–322. Inlined here instead of relying on
+          a global `[data-variant="bento"]` rule so only the chrome darkens. */}
+      <div
+        className="sticky top-0 z-30"
+        style={{
+          background: '#0E0E12',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+        }}>
         <div className="px-4 py-3 flex items-center justify-between gap-4">
           {/* Left: brand wordmark + company switcher */}
           <div className="flex items-center gap-3">
@@ -549,7 +558,7 @@ export default function App() {
         </div>
 
         {/* Tabs */}
-        <div className="flex border-t border-zinc-800 overflow-x-auto">
+        <div className="flex overflow-x-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           {TABS.filter(t => !HIDDEN_TABS.has(t.id)).map(t => {
             const Icon = t.icon;
             const label = t.id === 'summary' ? company.name.toUpperCase() : t.label;
