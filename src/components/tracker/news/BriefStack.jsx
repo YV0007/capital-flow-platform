@@ -200,7 +200,7 @@ function MetadataChips({ chips, category }) {
 // ────────────────────────────────────────────────────────────────
 // BriefTile — one news item, fully expanded
 // ────────────────────────────────────────────────────────────────
-function BriefTileBody({ item, severity, direction, category, chips, dateRel, dateTitle, onRemove, onFocus, focused = false, hideRemove = false }) {
+export function BriefTileBody({ item, severity, direction, category, chips, dateRel, dateTitle, onRemove, onFocus, focused = false, hideRemove = false }) {
   // In inline (non-focused) mode, summary is truncated to first sentence
   // and "why it matters" gets a line-clamp. Full prose only in focus.
   const previewSummary = (text) => {
