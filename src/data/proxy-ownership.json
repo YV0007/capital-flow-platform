@@ -1,0 +1,58 @@
+{
+  "_note": "Структура долей собрана из публичных источников (compass file): S-1 SpaceX, восстановительная заметка OpenAI 2025, пресс-релизы Series H Anthropic. Точные доли (особенно сотрудники / VC) официально не раскрываются — приведены наиболее устойчивые оценки. SpaceX: Musk ~42% equity (>82% voting); компании Alphabet 7%, EchoStar 2.8%, BAC <1%. OpenAI: Microsoft 27%, Foundation 26%, employees ~47% — суммируют не строго 100% (recap трактуется по-разному). Anthropic: Amazon ~21%, Alphabet ~14%; остальные доли — оценочные.",
+  "companies": [
+    {
+      "id": "spacex",
+      "name": "SpaceX",
+      "subtitle": "оценка $1.77T на IPO 12 июня 2026",
+      "slices": [
+        { "key": "insiders",  "label": "Маск и инсайдеры",   "value": 42, "tint": "amber" },
+        { "key": "employees", "label": "Сотрудники",          "value": 10, "tint": "neutral" },
+        { "key": "vc",        "label": "VC / PE",             "value": 28, "tint": "violet" },
+        { "key": "strategic", "label": "Стратеги-корпорации", "value": 13, "tint": "blue"   },
+        { "key": "sovereign", "label": "Суверенные фонды",    "value":  5, "tint": "gold"   },
+        { "key": "funds",     "label": "Публичные фонды",     "value":  2, "tint": "teal"   }
+      ],
+      "details": [
+        "Alphabet ~7% · EchoStar ~2.8% · Cisco / Nvidia (через xAI) н/р · BAC <1%",
+        "Founders Fund, Sequoia, a16z, Valor, StepStone, Gigafund, Baron",
+        "QIA, MGX — оба наследованы через xAI"
+      ]
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "subtitle": "конфиденциальная заявка, цель Q4 2026, оценка $1T+",
+      "slices": [
+        { "key": "microsoft",  "label": "Microsoft",           "value": 27, "tint": "blue"    },
+        { "key": "foundation", "label": "OpenAI Foundation",   "value": 26, "tint": "emerald" },
+        { "key": "employees",  "label": "Сотрудники",          "value": 30, "tint": "neutral" },
+        { "key": "strategic",  "label": "Прочие стратеги",     "value": 10, "tint": "violet"  },
+        { "key": "vc",         "label": "VC / PE",             "value":  7, "tint": "amber"   }
+      ],
+      "details": [
+        "Nvidia $30B (Feb 2026) · Amazon $50B commit · Eightco (ORBS) $90M",
+        "SoftBank ~11% · BlackRock, TPG, T. Rowe Price, Blackstone — через аффилиаты",
+        "Thrive, Sequoia, a16z, Founders Fund, Tiger, Khosla, Coatue"
+      ]
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "subtitle": "конфиденциальная заявка 1 июня 2026, оценка $965B (Series H)",
+      "slices": [
+        { "key": "amazon",     "label": "Amazon",                "value": 21, "tint": "amber"   },
+        { "key": "alphabet",   "label": "Alphabet",              "value": 14, "tint": "blue"    },
+        { "key": "employees",  "label": "Основатели + сотрудники","value": 30, "tint": "neutral" },
+        { "key": "strategic",  "label": "Прочие стратеги",       "value":  5, "tint": "violet"  },
+        { "key": "vc",         "label": "VC / PE",               "value": 25, "tint": "emerald" },
+        { "key": "sovereign",  "label": "Суверенные фонды",      "value":  5, "tint": "gold"    }
+      ],
+      "details": [
+        "Salesforce $5B · Zoom $1.3B · SK Telecom 0.3% · Samsung / SK Hynix / Micron — Series H",
+        "Altimeter, Dragoneer, Greenoaks, Sequoia (Series H lead) · Blackstone $1B",
+        "GIC, Temasek, MGX, QIA — все участвовали в Series F+"
+      ]
+    }
+  ]
+}
