@@ -14,6 +14,18 @@ import * as _stage3Utils from './lib/utils.js';
 import * as _stage3Companies from './data/companies.js';
 // eslint-disable-next-line no-unused-vars
 import * as _stage3CorrobSources from './data/corrob-sources.js';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Panel from './components/tracker/shared/Panel.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Modal from './components/tracker/shared/Modal.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Focus from './components/tracker/shared/FocusOverlay.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Chrome from './components/tracker/shared/chrome.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3Badges from './components/tracker/shared/badges.jsx';
+// eslint-disable-next-line no-unused-vars
+import * as _stage3BuildFlags from './lib/build-flags.js';
 
 // App-wide mode: 'home' (default landing), 'tracker' (VC position monitor),
 // or 'research' (sector library). Persisted across reloads via localStorage.
