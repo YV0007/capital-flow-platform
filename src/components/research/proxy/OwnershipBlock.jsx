@@ -67,7 +67,7 @@ function Donut({ C, company }) {
   const active = activeIndex != null ? data[activeIndex] : null;
 
   return (
-    <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, padding: '18px 18px 20px', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, padding: '18px 18px 20px', display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* Header */}
       <div style={{ marginBottom: 14 }}>
         <div style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: C.ink, lineHeight: 1.15 }}>{company.name}</div>
@@ -173,7 +173,10 @@ function Top3List({ C, items }) {
   const rankColors = [C.emerald, C.teal, C.blue];
 
   return (
-    <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${C.lineSoft}`, display: 'flex', flexDirection: 'column', gap: 7 }}>
+    // marginTop: 'auto' прижимает блок к нижней границе flex-колонки карточки —
+    // независимо от того, сколько строк в легенде сверху (5 у OpenAI vs 6 у
+    // SpaceX/Anthropic), Top 3 у всех карточек оказываются на одном уровне.
+    <div style={{ marginTop: 'auto', paddingTop: 14, borderTop: `1px solid ${C.lineSoft}`, display: 'flex', flexDirection: 'column', gap: 7 }}>
       <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, fontWeight: 600, marginBottom: 2 }}>
         Top 3 держателей · по размеру стейка
       </div>
@@ -244,7 +247,7 @@ export default function OwnershipBlock({ C, subLabel }) {
         .proxy-donut .recharts-sector { outline: none; }
       `}</style>
       <div style={subLabel}>Три cap-table, нормализованные к 100% (оценочно) · наведите курсор на сектор</div>
-      <div className="proxy-donut" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+      <div className="proxy-donut" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, alignItems: 'stretch' }}>
         {ownership.companies.map((c) => <Donut key={c.id} C={C} company={c} />)}
       </div>
       <div style={{ marginTop: 16, fontSize: 11.5, color: C.inkFaint, fontStyle: 'italic', lineHeight: 1.55 }}>
