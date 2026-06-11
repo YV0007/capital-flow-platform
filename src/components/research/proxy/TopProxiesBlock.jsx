@@ -12,11 +12,15 @@ import table from '../../../data/proxy-table.json';
 // Универсальный вид плохо читается: одни прокси работают только для
 // SpaceX, другие — для Anthropic, и смешивание превращает таблицу в кашу.
 const ASSETS = ['SpaceX', 'OpenAI', 'Anthropic'];
+// Top Picks first, потом стандартные рейтинги по убыванию качества, "Все" в конце.
+// Top Picks — это отдельная авторская выборка из 5 имён на актив, маркируется
+// флагом topPickRank на строке.
 const RATINGS = [
-  { id: 'all',      label: 'Все' },
-  { id: 'best',     label: 'Лучшие'   },
-  { id: 'moderate', label: 'Средние'  },
-  { id: 'avoid',    label: 'Избегать' },
+  { id: 'top',      label: 'Top Picks' },
+  { id: 'best',     label: 'Лучшие'    },
+  { id: 'moderate', label: 'Средние'   },
+  { id: 'avoid',    label: 'Избегать'  },
+  { id: 'all',      label: 'Все'       },
 ];
 
 const RATING_BORDER = {
@@ -35,7 +39,7 @@ const HEAD_COLS = [
 
 export default function TopProxiesBlock({ C, subLabel }) {
   const [asset, setAsset] = useState('SpaceX');
-  const [rating, setRating] = useState('all');
+  const [rating, setRating] = useState('top');         // Top Picks по умолчанию — самый ценный вид
   const [search, setSearch] = useState('');
   const [sortCol, setSortCol] = useState('stakeUsdNum');
   const [sortDir, setSortDir] = useState('desc');
@@ -51,10 +55,16 @@ export default function TopProxiesBlock({ C, subLabel }) {
 
   const rows = useMemo(() => {
     let r = table.rows.filter((x) => x.asset === asset);
-    if (rating !== 'all') r = r.filter((x) => x.rating === rating);
+    if (rating === 'top')       r = r.filter((x) => x.topPickRank);
+    else if (rating !== 'all')  r = r.filter((x) => x.rating === rating);
     if (search) {
       const q = search.toLowerCase();
       r = r.filter((x) => x.ticker.toLowerCase().includes(q) || x.name.toLowerCase().includes(q));
+    }
+    // В режиме Top Picks сортируем по ранку asc (1→5), независимо от выбранной
+    // колонки — это авторская очерёдность, она не должна теряться.
+    if (rating === 'top') {
+      return [...r].sort((a, b) => (a.topPickRank || 99) - (b.topPickRank || 99));
     }
     const dir = sortDir === 'asc' ? 1 : -1;
     return [...r].sort((a, b) => {
@@ -200,7 +210,20 @@ function Row({ C, row, i, isOpen, onToggle }) {
         onMouseLeave={(e) => { if (!isOpen) e.currentTarget.style.background = baseBg; }}>
         {/* rating stripe */}
         <td style={{ width: 4, padding: 0, background: stripeColor, borderBottom: `1px solid ${C.line}` }} />
-        <td style={{ padding: '12px 14px', fontFamily: 'var(--mono)', fontSize: 13, color: isOpen ? stripeColor : C.ink, fontWeight: 600, borderBottom: `1px solid ${C.line}`, transition: 'color .12s' }}>{row.ticker}</td>
+        <td style={{ padding: '12px 14px', fontFamily: 'var(--mono)', fontSize: 13, color: isOpen ? stripeColor : C.ink, fontWeight: 600, borderBottom: `1px solid ${C.line}`, transition: 'color .12s' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            {row.ticker}
+            {row.topPickRank && (
+              <span style={{
+                fontFamily: 'var(--mono)', fontSize: 9.5, fontWeight: 700,
+                letterSpacing: '.08em', textTransform: 'uppercase',
+                padding: '2px 6px', borderRadius: 3,
+                background: `${C.teal}22`, color: C.teal,
+                border: `1px solid ${C.teal}55`,
+              }}>TOP {row.topPickRank}</span>
+            )}
+          </span>
+        </td>
         <td style={{ padding: '12px 14px', fontSize: 13, color: C.ink, borderBottom: `1px solid ${C.line}` }}>{row.name}</td>
         <td style={{ padding: '12px 14px', borderBottom: `1px solid ${C.line}` }}>
           <span style={{
@@ -248,8 +271,16 @@ function Drawer({ C, row, stripeColor }) {
 
   return (
     <div style={{ padding: '18px 20px 20px' }}>
-      {/* Top meta row: rating pill + ticker repeat for clarity */}
+      {/* Top meta row: rating pill + optional Top Pick pill + ticker repeat */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
+        {row.topPickRank && (
+          <span style={{
+            fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 700,
+            padding: '3px 9px', borderRadius: 10,
+            background: `${C.teal}22`, color: C.teal,
+            border: `1px solid ${C.teal}55`,
+          }}>Top Pick · #{row.topPickRank} на {row.asset}</span>
+        )}
         <span style={{
           fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 700,
           padding: '3px 9px', borderRadius: 10,

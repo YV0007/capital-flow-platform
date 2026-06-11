@@ -77,9 +77,10 @@
       "premiumLabel": "Дисконт ~30–40%",
       "premiumNum": -35,
       "rating": "best",
-      "note": "Чистейшая экспозиция + конгломератный дисконт. Маржинальный кредит $6B+ — ключевой риск.",
+      "note": "Единственный значимый прокси на OpenAI. Конгломератный дисконт 30–40% даёт буфер. Главный риск — маржинальный кредит $6B+.",
       "description": "Японский конгломерат: ARM, Vision Fund, OpenAI ~11%, телеком.",
-      "sector": "Конгломерат"
+      "sector": "Конгломерат",
+      "topPickRank": 1
     },
     {
       "ticker": "NVDA",
@@ -125,9 +126,10 @@
       "premiumLabel": "Премия в цене",
       "premiumNum": 25,
       "rating": "best",
-      "note": "Чистейший прокси на SpaceX, риск lock-up после IPO 12 июня.",
+      "note": "Чистейший pure-play на SpaceX из всех публичных компаний. EchoStar Capital создан специально под эту позицию. Главный риск — lock-up 6 месяцев после IPO.",
       "description": "Спутниковая связь (Hughes/Dish); 2.8% SpaceX, marked $11.1B @ $212/share.",
-      "sector": "Спутник связь"
+      "sector": "Спутник связь",
+      "topPickRank": 1
     },
     {
       "ticker": "NVDA",
@@ -189,9 +191,10 @@
       "premiumLabel": "CRM -20% YTD",
       "premiumNum": -20,
       "rating": "moderate",
-      "note": "Дисконт на core-бизнес, не на Anthropic-кикер.",
+      "note": "Контртрендовый pick: core-бизнес упал на 32% YTD, что даёт двойной дисконт — на сам бизнес плюс непризнанная Anthropic-стоимость. Высокий риск, высокий потенциал re-rating.",
       "description": "Enterprise CRM-платформа; $5B стейк через Salesforce Ventures.",
-      "sector": "Enterprise SaaS"
+      "sector": "Enterprise SaaS",
+      "topPickRank": 5
     },
     {
       "ticker": "SMT",
@@ -221,9 +224,10 @@
       "premiumLabel": "FV $44.7 vs $41 (~8% disc.)",
       "premiumNum": -8,
       "rating": "moderate",
-      "note": "Самый концентрированный прокси на Anthropic, но дисконт закрылся после ралли +86%.",
+      "note": "Самый концентрированный публичный прокси на Anthropic. Дивиденд 4%+. Лучший risk-reward при откате до $35.",
       "description": "Крупнейший корейский телеком (~50M абонентов); стейк через SKT Ventures.",
-      "sector": "Телеком"
+      "sector": "Телеком",
+      "topPickRank": 1
     },
     {
       "ticker": "BPTRX",
@@ -237,9 +241,10 @@
       "premiumLabel": "Не торгуется на бирже",
       "premiumNum": 0,
       "rating": "best",
-      "note": "Самая высокая концентрация SpaceX, но взаимный фонд — только через US-брокера.",
+      "note": "Highest conviction среди публичных фондов. Не биржевой, но доступен через брокера США. Если бы был ETF — был бы №1.",
       "description": "Concentrated growth mutual fund от Baron Capital; ~$8B AUM.",
-      "sector": "Mutual Fund"
+      "sector": "Mutual Fund",
+      "topPickRank": 3
     },
     {
       "ticker": "ZM",
@@ -253,9 +258,10 @@
       "premiumLabel": "12x P/E + $7.8B кэш",
       "premiumNum": -12,
       "rating": "best",
-      "note": "Anthropic как скрытый kicker при дешёвом core-бизнесе.",
+      "note": "Лучший value-плей с Anthropic-кикером. 12x P/E, $7.8B кэша. Защита через дешёвый core-бизнес.",
       "description": "Видеоконф. платформа; $51M в Series C → ~$1.3B сейчас (~25x).",
-      "sector": "Видеоконф."
+      "sector": "Видеоконф.",
+      "topPickRank": 2
     },
     {
       "ticker": "BX",
@@ -317,9 +323,10 @@
       "premiumLabel": "Н/п",
       "premiumNum": 0,
       "rating": "avoid",
-      "note": "Первая инвестиция Series H (Apr 2026), малый стейк.",
+      "note": "Series H entrant с broader AI-infrastructure thesis (датацентры, энергия). Не чистый прокси, но леверидж на всю инфраструктуру AI.",
       "description": "Канадский asset manager: infra, real estate, renewables, credit.",
-      "sector": "Asset Mgmt"
+      "sector": "Asset Mgmt",
+      "topPickRank": 4
     },
     {
       "ticker": "000660",
@@ -381,9 +388,10 @@
       "premiumLabel": "Н/п",
       "premiumNum": 0,
       "rating": "avoid",
-      "note": "Аффилированные фонды в $122B раунде OpenAI.",
+      "note": "Не чистый прокси, но T. Rowe — публичный asset manager, который сам зарабатывает на росте OpenAI (AUM расширяется). Двойной эффект.",
       "description": "Asset manager с фокусом на active equity (~$1.6T AUM); OpenAI через аффилированные фонды.",
-      "sector": "Asset Mgmt"
+      "sector": "Asset Mgmt",
+      "topPickRank": 5
     },
     {
       "ticker": "TROW",
@@ -477,9 +485,10 @@
       "premiumLabel": "Умеренный дисконт",
       "premiumNum": -10,
       "rating": "moderate",
-      "note": "~$278M в SpaceX/xAI/X (2022-23); рекорд Q1 2026 от SpaceX. Bookrunner IPO.",
+      "note": "Underappreciated кейс: SpaceX/xAI инвестиции дали ₩900B в Q1 2026, плюс Mirae — joint bookrunner на IPO (двойная экономика).",
       "description": "Корейский брокер-дилер; раннее VC-владение SpaceX/xAI/X.",
-      "sector": "Брокер"
+      "sector": "Брокер",
+      "topPickRank": 5
     },
     {
       "ticker": "EWI",
@@ -525,9 +534,10 @@
       "premiumLabel": "Дисконт ~5–8%",
       "premiumNum": -6.5,
       "rating": "best",
-      "note": "Двойная экспозиция SpaceX + Anthropic.",
+      "note": "Лучший UK-траст по SpaceX-концентрации с активным дисконтом ~5–8%. Также даёт бонус-экспозицию на Anthropic (7.4%).",
       "description": "UK инвест. траст Baillie Gifford US Growth (~£700M NAV); SpaceX — 14.9% NAV.",
-      "sector": "Инвест. траст"
+      "sector": "Инвест. траст",
+      "topPickRank": 4
     },
     {
       "ticker": "QCOM",
@@ -557,9 +567,10 @@
       "premiumLabel": "Микрокэп, низкая ликв.",
       "premiumNum": 0,
       "rating": "moderate",
-      "note": "Спекулятивный 10x при IPO, структурные риски.",
+      "note": "Асимметричный микрокэп. При IPO OpenAI на $1.5T+ может дать 5–10x. Только для спекулятивного слива портфеля.",
       "description": "Микрокэп с treasury-стратегией: $90M в OpenAI (~30% казначейства).",
-      "sector": "Микрокэп"
+      "sector": "Микрокэп",
+      "topPickRank": 2
     },
     {
       "ticker": "ARKVX",
@@ -637,9 +648,10 @@
       "premiumLabel": "Дисконт ~5–8%",
       "premiumNum": -6.5,
       "rating": "best",
-      "note": "Лучший фонд-прокси на Anthropic с активным дисконтом.",
+      "note": "Двойная экспозиция: SpaceX (14.9%) + Anthropic (7.4%). Активный дисконт траста.",
       "description": "UK инвест. траст Baillie Gifford US Growth; Anthropic — 7.4% NAV, лучший фонд-прокси с дисконтом.",
-      "sector": "Инвест. траст"
+      "sector": "Инвест. траст",
+      "topPickRank": 3
     },
     {
       "ticker": "ARKVX",
@@ -653,9 +665,10 @@
       "premiumLabel": "По NAV (квартальный выход)",
       "premiumNum": 0,
       "rating": "moderate",
-      "note": "Вторая по размеру позиция фонда.",
+      "note": "Единственный fund-vehicle с весомой долей OpenAI без экстремальной премии. Интервальный фонд, квартальный выход.",
       "description": "Cathy Wood; interval fund (~$400M AUM). OpenAI — вторая по размеру позиция 9–11%.",
-      "sector": "Интервал. фонд"
+      "sector": "Интервал. фонд",
+      "topPickRank": 3
     },
     {
       "ticker": "DXYZ",
@@ -941,9 +954,10 @@
       "premiumLabel": "Н/п",
       "premiumNum": 0,
       "rating": "moderate",
-      "note": "18.99M акций SpaceX × $135 fixed IPO price = ~$2.56B. Musk overlap (CEO обеих компаний) — двойной key-person risk.",
+      "note": "Прямая equity-позиция SpaceX через 18.99M акций. Хотя % от капы маленький, это подтверждённая прямая доля, а не косвенная экспозиция. Бонус: общая структура Musk-экосистемы.",
       "description": "EV + Energy + Robotics + FSD; 18.99M акций SpaceX (~$2.56B), Musk overlap.",
-      "sector": "Авто / EV"
+      "sector": "Авто / EV",
+      "topPickRank": 2
     },
     {
       "ticker": "DIS",
@@ -957,9 +971,10 @@
       "premiumLabel": "Н/п",
       "premiumNum": 0,
       "rating": "avoid",
-      "note": "Стратегическое партнёрство для контент-генерации (декабрь 2025), не основной тезис DIS.",
+      "note": "Underappreciated: $1B инвестиция в декабре 2025 даёт стратегическую экспозицию плюс контентная синергия. Не чистый прокси, но качественная компания с AI-кикером.",
       "description": "Медиа-холдинг (Disney+, ESPN, Parks, Studios); $1B equity в OpenAI (Dec 2025).",
-      "sector": "Медиа"
+      "sector": "Медиа",
+      "topPickRank": 4
     }
   ]
 }
