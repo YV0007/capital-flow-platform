@@ -26,10 +26,11 @@ const RATING_BORDER = {
 };
 
 const HEAD_COLS = [
-  { id: 'ticker',       label: 'Ticker',     align: 'left',  width: 100 },
-  { id: 'name',         label: 'Название',   align: 'left',  width: 260 },
-  { id: 'asset',        label: 'Актив',      align: 'left',  width: 130 },
-  { id: 'stakeUsdNum',  label: 'Стейк USD',  align: 'right', width: 140 },
+  { id: 'ticker',       label: 'Ticker',     align: 'left',  width: 90  },
+  { id: 'name',         label: 'Название',   align: 'left',  width: 210 },
+  { id: 'sector',       label: 'Сектор',     align: 'left',  width: 150 },
+  { id: 'asset',        label: 'Актив',      align: 'left',  width: 110 },
+  { id: 'stakeUsdNum',  label: 'Стейк USD',  align: 'right', width: 130 },
 ];
 
 export default function TopProxiesBlock({ C, subLabel }) {
@@ -109,7 +110,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
 
       {/* Table */}
       <div style={{ overflowX: 'auto', border: `1px solid ${C.line}`, borderRadius: 10 }}>
-        <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 720, fontFamily: 'var(--sans)' }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 820, fontFamily: 'var(--sans)' }}>
           <thead style={{ position: 'sticky', top: 0, background: C.card, zIndex: 2 }}>
             <tr>
               {/* gutter for rating stripe */}
@@ -157,6 +158,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
                 </td>
               </tr>
             )}
+            {/* min-width of the table widened because we added a sector column */}
           </tbody>
         </table>
       </div>
@@ -200,6 +202,16 @@ function Row({ C, row, i, isOpen, onToggle }) {
         <td style={{ width: 4, padding: 0, background: stripeColor, borderBottom: `1px solid ${C.line}` }} />
         <td style={{ padding: '12px 14px', fontFamily: 'var(--mono)', fontSize: 13, color: isOpen ? stripeColor : C.ink, fontWeight: 600, borderBottom: `1px solid ${C.line}`, transition: 'color .12s' }}>{row.ticker}</td>
         <td style={{ padding: '12px 14px', fontSize: 13, color: C.ink, borderBottom: `1px solid ${C.line}` }}>{row.name}</td>
+        <td style={{ padding: '12px 14px', borderBottom: `1px solid ${C.line}` }}>
+          <span style={{
+            display: 'inline-block',
+            padding: '3px 9px', borderRadius: 4,
+            background: `${C.teal}10`, color: C.inkSoft,
+            border: `1px solid ${C.teal}30`,
+            fontSize: 10.5, fontFamily: 'var(--mono)', fontWeight: 500,
+            letterSpacing: '.02em', whiteSpace: 'nowrap',
+          }}>{row.sector || '—'}</span>
+        </td>
         <td style={{ padding: '12px 14px', fontSize: 12.5, color: C.inkSoft, borderBottom: `1px solid ${C.line}` }}>{row.asset}</td>
         <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 13.5, color: C.ink, fontWeight: 600, borderBottom: `1px solid ${C.line}` }}>{row.stakeUsdLabel}</td>
         <td style={{ padding: '12px 10px', textAlign: 'right', fontSize: 12, color: isOpen ? stripeColor : C.inkFaint, borderBottom: `1px solid ${C.line}`, transition: 'color .12s' }}>
@@ -210,7 +222,7 @@ function Row({ C, row, i, isOpen, onToggle }) {
         <tr>
           {/* mirror rating stripe down through the drawer for a continuous colour bar */}
           <td style={{ width: 4, padding: 0, background: stripeColor, borderBottom: `1px solid ${C.line}` }} />
-          <td colSpan={5} style={{
+          <td colSpan={6} style={{
             padding: 0,
             background: C.paper,                              // darker than the rows → drawer "sinks in"
             borderBottom: `1px solid ${C.line}`,
