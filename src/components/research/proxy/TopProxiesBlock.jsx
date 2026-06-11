@@ -6,7 +6,10 @@
 import { useMemo, useState } from 'react';
 import table from '../../../data/proxy-table.json';
 
-const ASSETS = ['Все', 'SpaceX', 'OpenAI', 'Anthropic'];
+// Без "Все" — таблица всегда отфильтрована по одному базовому активу.
+// Универсальный вид плохо читается: одни прокси работают только для
+// SpaceX, другие — для Anthropic, и смешивание превращает таблицу в кашу.
+const ASSETS = ['SpaceX', 'OpenAI', 'Anthropic'];
 const RATINGS = [
   { id: 'all',      label: 'Все' },
   { id: 'best',     label: 'Лучшие'   },
@@ -30,15 +33,22 @@ const HEAD_COLS = [
 ];
 
 export default function TopProxiesBlock({ C, subLabel }) {
-  const [asset, setAsset] = useState('Все');
+  const [asset, setAsset] = useState('SpaceX');
   const [rating, setRating] = useState('all');
   const [search, setSearch] = useState('');
   const [sortCol, setSortCol] = useState('concentrationNum');
   const [sortDir, setSortDir] = useState('desc');
 
+  // Подсчёт строк по каждому активу — нужен для chip-счётчиков.
+  const assetCounts = useMemo(() => {
+    const counts = {};
+    for (const a of ASSETS) counts[a] = 0;
+    for (const r of table.rows) counts[r.asset] = (counts[r.asset] || 0) + 1;
+    return counts;
+  }, []);
+
   const rows = useMemo(() => {
-    let r = table.rows;
-    if (asset !== 'Все')  r = r.filter((x) => x.asset === asset);
+    let r = table.rows.filter((x) => x.asset === asset);
     if (rating !== 'all') r = r.filter((x) => x.rating === rating);
     if (search) {
       const q = search.toLowerCase();
@@ -57,13 +67,19 @@ export default function TopProxiesBlock({ C, subLabel }) {
     else { setSortCol(id); setSortDir('desc'); }
   };
 
-  const chip = (active, onClick, label) => (
+  const chip = (active, onClick, label, count) => (
     <button onClick={onClick} style={{
       padding: '6px 12px', borderRadius: 16, border: `1px solid ${active ? C.teal : C.line}`,
       background: active ? `${C.teal}18` : 'transparent', color: active ? C.teal : C.inkSoft,
       cursor: 'pointer', fontSize: 12, fontFamily: 'var(--sans)', fontWeight: active ? 600 : 400,
       transition: 'all .15s',
-    }}>{label}</button>
+      display: 'inline-flex', alignItems: 'center', gap: 6,
+    }}>
+      {label}
+      {count != null && (
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 10.5, opacity: 0.7 }}>{count}</span>
+      )}
+    </button>
   );
 
   return (
@@ -74,7 +90,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
       <div style={{ marginBottom: 14, padding: '12px 16px', background: C.card, border: `1px solid ${C.line}`, borderRadius: 10 }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', rowGap: 10 }}>
           <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, marginRight: 4 }}>Актив:</span>
-          {ASSETS.map((a) => chip(asset === a, () => setAsset(a), a))}
+          {ASSETS.map((a) => chip(asset === a, () => setAsset(a), a, assetCounts[a]))}
           <span style={{ width: 1, height: 20, background: C.line, margin: '0 6px' }} />
           <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, marginRight: 4 }}>Точка входа:</span>
           {RATINGS.map((r) => chip(rating === r.id, () => setRating(r.id), r.label))}
