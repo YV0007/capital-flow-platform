@@ -179,34 +179,45 @@ export default function TopProxiesBlock({ C, subLabel }) {
 
 // ─── Row + Drawer ────────────────────────────────────────────────
 function Row({ C, row, i, isOpen, onToggle }) {
-  const rowBg = isOpen ? C.cardAlt : (i % 2 ? C.cardAlt : C.card);
+  // Чередуем фон строк сильнее: C.card vs C.cardAlt — разница маленькая,
+  // но накладываем дополнительный alpha-tint, чтобы строки читались как
+  // ритм. При наведении подсвечиваем accent-color'ом отчёта.
+  const baseBg = i % 2 ? C.cardAlt : C.card;
+  const stripeColor = RATING_BORDER[row.rating];
+
   return (
     <>
       <tr
         onClick={onToggle}
         style={{
-          background: rowBg,
+          background: isOpen ? `${stripeColor}10` : baseBg,
           cursor: 'pointer',
           transition: 'background .12s',
         }}
-        onMouseEnter={(e) => e.currentTarget.style.background = `${C.teal}10`}
-        onMouseLeave={(e) => e.currentTarget.style.background = rowBg}>
+        onMouseEnter={(e) => { if (!isOpen) e.currentTarget.style.background = `${C.teal}14`; }}
+        onMouseLeave={(e) => { if (!isOpen) e.currentTarget.style.background = baseBg; }}>
         {/* rating stripe */}
-        <td style={{ width: 4, padding: 0, background: RATING_BORDER[row.rating], borderBottom: `1px solid ${C.lineSoft}` }} />
-        <td style={{ padding: '11px 14px', fontFamily: 'var(--mono)', fontSize: 12.5, color: C.ink, fontWeight: 500, borderBottom: `1px solid ${C.lineSoft}` }}>{row.ticker}</td>
-        <td style={{ padding: '11px 14px', fontSize: 13, color: C.ink, borderBottom: `1px solid ${C.lineSoft}` }}>{row.name}</td>
-        <td style={{ padding: '11px 14px', fontSize: 12.5, color: C.inkSoft, borderBottom: `1px solid ${C.lineSoft}` }}>{row.asset}</td>
-        <td style={{ padding: '11px 14px', textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 13, color: C.ink, fontWeight: 500, borderBottom: `1px solid ${C.lineSoft}` }}>{row.stakeUsdLabel}</td>
-        <td style={{ padding: '11px 10px', textAlign: 'right', fontSize: 11, color: C.inkFaint, borderBottom: `1px solid ${C.lineSoft}` }}>
+        <td style={{ width: 4, padding: 0, background: stripeColor, borderBottom: `1px solid ${C.line}` }} />
+        <td style={{ padding: '12px 14px', fontFamily: 'var(--mono)', fontSize: 13, color: isOpen ? stripeColor : C.ink, fontWeight: 600, borderBottom: `1px solid ${C.line}`, transition: 'color .12s' }}>{row.ticker}</td>
+        <td style={{ padding: '12px 14px', fontSize: 13, color: C.ink, borderBottom: `1px solid ${C.line}` }}>{row.name}</td>
+        <td style={{ padding: '12px 14px', fontSize: 12.5, color: C.inkSoft, borderBottom: `1px solid ${C.line}` }}>{row.asset}</td>
+        <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 13.5, color: C.ink, fontWeight: 600, borderBottom: `1px solid ${C.line}` }}>{row.stakeUsdLabel}</td>
+        <td style={{ padding: '12px 10px', textAlign: 'right', fontSize: 12, color: isOpen ? stripeColor : C.inkFaint, borderBottom: `1px solid ${C.line}`, transition: 'color .12s' }}>
           {isOpen ? '▾' : '▸'}
         </td>
       </tr>
       {isOpen && (
         <tr>
-          {/* mirror rating stripe down to keep the colour bar continuous */}
-          <td style={{ width: 4, padding: 0, background: RATING_BORDER[row.rating], borderBottom: `1px solid ${C.lineSoft}` }} />
-          <td colSpan={5} style={{ padding: '14px 18px 18px', background: C.cardAlt, borderBottom: `1px solid ${C.lineSoft}` }}>
-            <Drawer C={C} row={row} />
+          {/* mirror rating stripe down through the drawer for a continuous colour bar */}
+          <td style={{ width: 4, padding: 0, background: stripeColor, borderBottom: `1px solid ${C.line}` }} />
+          <td colSpan={5} style={{
+            padding: 0,
+            background: C.paper,                              // darker than the rows → drawer "sinks in"
+            borderBottom: `1px solid ${C.line}`,
+            borderTop: `2px solid ${stripeColor}`,            // strong rating-coloured cap on top of drawer
+            boxShadow: `inset 0 8px 18px -8px ${C.paper}`,    // soft inner shadow on the upper edge
+          }}>
+            <Drawer C={C} row={row} stripeColor={stripeColor} />
           </td>
         </tr>
       )}
@@ -214,44 +225,78 @@ function Row({ C, row, i, isOpen, onToggle }) {
   );
 }
 
-function Drawer({ C, row }) {
-  const KV = ({ label, value, valueColor }) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, minWidth: 0 }}>
-      <span style={{ fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint }}>{label}</span>
-      <span style={{ fontSize: 12.5, color: valueColor || C.ink, fontFamily: 'var(--mono)' }}>{value || '—'}</span>
-    </div>
-  );
-
+function Drawer({ C, row, stripeColor }) {
   const premiumColor = row.premiumNum > 30 ? C.rose
                      : row.premiumNum < -3 ? C.emerald
                      : C.ink;
 
+  const ratingLabel = row.rating === 'best'     ? 'Лучшая точка входа'
+                    : row.rating === 'moderate' ? 'Средняя'
+                    : 'Избегать';
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+    <div style={{ padding: '18px 20px 20px' }}>
+      {/* Top meta row: rating pill + ticker repeat for clarity */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
+        <span style={{
+          fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 700,
+          padding: '3px 9px', borderRadius: 10,
+          background: `${stripeColor}22`, color: stripeColor,
+          border: `1px solid ${stripeColor}55`,
+        }}>{ratingLabel}</span>
+        <span style={{ fontSize: 11, color: C.inkFaint, fontFamily: 'var(--mono)' }}>
+          {row.ticker} · {row.asset}
+        </span>
+      </div>
+
       {/* Description */}
       {row.description && (
-        <div style={{ fontSize: 13, color: C.ink, lineHeight: 1.55, fontFamily: 'var(--sans)' }}>
-          {row.description}
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 6 }}>О компании</div>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: 15, color: C.ink, lineHeight: 1.5 }}>
+            {row.description}
+          </div>
         </div>
       )}
 
-      {/* KV grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12, paddingTop: 10, borderTop: `1px solid ${C.lineSoft}` }}>
-        <KV label="Биржа"          value={row.exchange} />
-        <KV label="Концентрация"   value={row.concentrationLabel} />
-        <KV label="Премия / диск." value={row.premiumLabel} valueColor={premiumColor} />
+      {/* KV grid — three cells with vertical separators */}
+      <div style={{
+        display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+        background: C.card, border: `1px solid ${C.line}`, borderRadius: 8, overflow: 'hidden',
+        marginBottom: row.note ? 14 : 0,
+      }}>
+        <DrawerKV C={C} label="Биржа"          value={row.exchange}            border />
+        <DrawerKV C={C} label="Концентрация"   value={row.concentrationLabel}  border />
+        <DrawerKV C={C} label="Премия / диск." value={row.premiumLabel}        valueColor={premiumColor} />
       </div>
 
       {/* Note */}
       {row.note && (
         <div style={{
-          fontSize: 12, color: C.inkSoft, lineHeight: 1.55, fontStyle: 'italic',
-          padding: '10px 12px', background: C.card, border: `1px solid ${C.lineSoft}`, borderRadius: 6,
-          borderLeft: `3px solid ${RATING_BORDER[row.rating]}`,
+          fontSize: 12.5, color: C.ink, lineHeight: 1.6,
+          padding: '12px 14px',
+          background: `${stripeColor}10`,
+          border: `1px solid ${stripeColor}33`,
+          borderLeft: `3px solid ${stripeColor}`,
+          borderRadius: 6,
         }}>
-          {row.note}
+          <span style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: stripeColor, fontWeight: 700, marginRight: 8 }}>Комментарий</span>
+          <span style={{ fontStyle: 'italic', color: C.inkSoft }}>{row.note}</span>
         </div>
       )}
+    </div>
+  );
+}
+
+function DrawerKV({ C, label, value, valueColor, border }) {
+  return (
+    <div style={{
+      padding: '12px 16px',
+      borderRight: border ? `1px solid ${C.line}` : 'none',
+      display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0,
+    }}>
+      <span style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, fontWeight: 600 }}>{label}</span>
+      <span style={{ fontFamily: 'var(--mono)', fontSize: 13, color: valueColor || C.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{value || '—'}</span>
     </div>
   );
 }
