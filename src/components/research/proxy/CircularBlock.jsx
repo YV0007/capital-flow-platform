@@ -7,19 +7,47 @@
 
 import circular from '../../../data/proxy-circular.json';
 
-function Loop({ C, row, rowIdx }) {
+// Compute the three vertices of an arrow-head triangle drawn as a plain
+// polygon. The tip sits at (tipX, tipY); the base sits `length` units
+// behind, perpendicular spread = `width`. Tangent direction comes from
+// (ctrlX, ctrlY) → (tipX, tipY) — for a quadratic Bézier the end-tangent
+// is parallel to that segment. Replacing SVG `<marker>` with a static
+// polygon dodges every browser-quirk around `markerUnits` / stroke-width
+// scaling — the arrow head stays a fixed size no matter how thick the
+// arc gets.
+function arrowHeadPoints(ctrlX, ctrlY, tipX, tipY, length = 7, width = 6) {
+  const dx = tipX - ctrlX;
+  const dy = tipY - ctrlY;
+  const mag = Math.hypot(dx, dy) || 1;
+  const ux = dx / mag;          // tangent unit
+  const uy = dy / mag;
+  const px = -uy;               // perpendicular unit
+  const py = ux;
+  const baseX = tipX - length * ux;
+  const baseY = tipY - length * uy;
+  const leftX  = baseX + (width / 2) * px;
+  const leftY  = baseY + (width / 2) * py;
+  const rightX = baseX - (width / 2) * px;
+  const rightY = baseY - (width / 2) * py;
+  return `${tipX},${tipY} ${leftX.toFixed(2)},${leftY.toFixed(2)} ${rightX.toFixed(2)},${rightY.toFixed(2)}`;
+}
+
+function Loop({ C, row }) {
   // Толщина дуг пропорциональна суммам, но капается небольшими значениями,
-  // чтобы маркер-стрелка и сама дуга не "пожирали" соседние боксы. Маркеры
-  // ниже имеют markerUnits="userSpaceOnUse" — фиксированный размер,
-  // не зависит от stroke-width.
+  // чтобы дуга не пожирала соседние боксы. Сами наконечники — статические
+  // полигоны (см. arrowHeadPoints), их размер не зависит от stroke-width.
   const equityMax  = Math.max(...circular.circular.map((r) => r.equity));
   const revenueMax = Math.max(...circular.circular.map((r) => r.revenue));
-  const equityW  = Math.max(2.4, (row.equity  / equityMax)  * 7);
-  const revenueW = Math.max(2,   (row.revenue / revenueMax) * 6);
+  const equityW  = Math.max(2.4, (row.equity  / equityMax)  * 6);
+  const revenueW = Math.max(2,   (row.revenue / revenueMax) * 5);
 
-  // Уникальные id маркеров на индекс строки (без не-ASCII символов).
-  const eqId = `proxy-arrow-eq-${rowIdx}`;
-  const rvId = `proxy-arrow-rv-${rowIdx}`;
+  // Геометрия дуг — фиксированная. Equity: верхняя дуга от правого края
+  // box-инвестора (84,44) через контрольную точку (160,4) к точке у левого
+  // края box-стартапа (226,44). Наконечник = треугольник в (226,44).
+  const eqCtrl = { x: 160, y: 4   };
+  const eqTip  = { x: 226, y: 44  };
+  const rvCtrl = { x: 160, y: 106 };
+  const rvTip  = { x: 94,  y: 66  };
 
   return (
     <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column' }}>
@@ -37,17 +65,6 @@ function Loop({ C, row, rowIdx }) {
 
       {/* Loop SVG */}
       <svg viewBox="0 0 320 110" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: 110, display: 'block' }}>
-        <defs>
-          {/* markerUnits="userSpaceOnUse" — иначе маркеры масштабируются вместе
-              со stroke-width дуги и при $30B+ становятся гигантскими треугольниками. */}
-          <marker id={eqId} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
-            <path d="M 0 0 L 10 5 L 0 10 Z" fill={C.teal} />
-          </marker>
-          <marker id={rvId} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
-            <path d="M 0 0 L 10 5 L 0 10 Z" fill={C.emerald} />
-          </marker>
-        </defs>
-
         {/* Investor box (left) */}
         <rect x="6" y="38" width="78" height="34" rx="6" fill={C.cardAlt} stroke={C.line} strokeWidth="1" />
         <text x="45" y="58" textAnchor="middle" fontFamily="var(--sans)" fontSize="11" fontWeight="600" fill={C.ink}>{row.ticker}</text>
@@ -56,14 +73,17 @@ function Loop({ C, row, rowIdx }) {
         <rect x="236" y="38" width="78" height="34" rx="6" fill={C.cardAlt} stroke={C.line} strokeWidth="1" />
         <text x="275" y="58" textAnchor="middle" fontFamily="var(--sans)" fontSize="11" fontWeight="600" fill={C.ink}>{row.startup}</text>
 
-        {/* Top arc: equity outbound (amber) — короче на 14px справа, чтобы
-            наконечник стрелки приземлился у границы целевого box, а не
-            пробил его насквозь. */}
-        <path d="M 84 44 Q 160 4, 226 44" fill="none" stroke={C.teal} strokeWidth={equityW} strokeOpacity="0.9" strokeLinecap="round" markerEnd={`url(#${eqId})`} />
+        {/* Top arc: equity outbound (amber). Stop ~4px before the tip so the
+            stroke's roundCap doesn't peek out beyond the arrow-head fill. */}
+        <path d={`M 84 44 Q ${eqCtrl.x} ${eqCtrl.y}, ${eqTip.x - 4} ${eqTip.y - 2}`}
+          fill="none" stroke={C.teal} strokeWidth={equityW} strokeOpacity="0.9" strokeLinecap="round" />
+        <polygon points={arrowHeadPoints(eqCtrl.x, eqCtrl.y, eqTip.x, eqTip.y)} fill={C.teal} />
         <text x="160" y="14" textAnchor="middle" fontFamily="var(--mono)" fontSize="10.5" fill={C.teal} fontWeight="600">equity ${row.equity}B</text>
 
-        {/* Bottom arc: revenue inbound (emerald) */}
-        <path d="M 236 66 Q 160 106, 94 66" fill="none" stroke={C.emerald} strokeWidth={revenueW} strokeOpacity="0.9" strokeLinecap="round" markerEnd={`url(#${rvId})`} />
+        {/* Bottom arc: revenue inbound (emerald). Same tip-shortening trick. */}
+        <path d={`M 236 66 Q ${rvCtrl.x} ${rvCtrl.y}, ${rvTip.x + 4} ${rvTip.y + 2}`}
+          fill="none" stroke={C.emerald} strokeWidth={revenueW} strokeOpacity="0.9" strokeLinecap="round" />
+        <polygon points={arrowHeadPoints(rvCtrl.x, rvCtrl.y, rvTip.x, rvTip.y)} fill={C.emerald} />
         <text x="160" y="102" textAnchor="middle" fontFamily="var(--mono)" fontSize="10.5" fill={C.emerald} fontWeight="600">
           revenue ~${row.revenue}B / год
         </text>
@@ -95,7 +115,7 @@ export default function CircularBlock({ C, card, subLabel }) {
       <div style={subLabel}>5 крупнейших циркулярных сделок · equity → compute revenue → обратно</div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 14 }}>
-        {circular.circular.map((row, i) => <Loop key={i} C={C} row={row} rowIdx={i} />)}
+        {circular.circular.map((row, i) => <Loop key={i} C={C} row={row} />)}
       </div>
 
       {/* Annotation */}
