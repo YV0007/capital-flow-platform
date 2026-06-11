@@ -1,7 +1,9 @@
-// Block 3 — Топ прокси по концентрации. Сортируемая, фильтруемая
-// таблица из ~30 строк. Колонки: ticker / биржа / актив / концентрация /
-// премия–дисконт / комментарий. Левая полоска маркирует точки входа:
-// best (зелёная), moderate (янтарная), avoid (красная).
+// Block 3 — Топ прокси по концентрации (compact view).
+// Сжатая таблица: ticker / название / актив / долларовая оценка стейка.
+// По клику на строку открывается drawer с остальными метриками
+// (концентрация, премия/дисконт, биржа, комментарий, описание).
+// Сортировка по умолчанию — по убыванию долларовой стоимости стейка.
+// Зеркалит UX из ExtendedHoldings в Holdings.
 
 import { useMemo, useState } from 'react';
 import table from '../../../data/proxy-table.json';
@@ -24,20 +26,19 @@ const RATING_BORDER = {
 };
 
 const HEAD_COLS = [
-  { id: 'ticker',           label: 'Ticker',         align: 'left',  width: 90 },
-  { id: 'name',             label: 'Название',       align: 'left',  width: 200 },
-  { id: 'exchange',         label: 'Биржа',          align: 'left',  width: 90 },
-  { id: 'asset',            label: 'Актив',          align: 'left',  width: 100 },
-  { id: 'concentrationNum', label: 'Концентрация',   align: 'right', width: 150 },
-  { id: 'premiumNum',       label: 'Премия / диск.', align: 'right', width: 180 },
+  { id: 'ticker',       label: 'Ticker',     align: 'left',  width: 100 },
+  { id: 'name',         label: 'Название',   align: 'left',  width: 260 },
+  { id: 'asset',        label: 'Актив',      align: 'left',  width: 130 },
+  { id: 'stakeUsdNum',  label: 'Стейк USD',  align: 'right', width: 140 },
 ];
 
 export default function TopProxiesBlock({ C, subLabel }) {
   const [asset, setAsset] = useState('SpaceX');
   const [rating, setRating] = useState('all');
   const [search, setSearch] = useState('');
-  const [sortCol, setSortCol] = useState('concentrationNum');
+  const [sortCol, setSortCol] = useState('stakeUsdNum');
   const [sortDir, setSortDir] = useState('desc');
+  const [openRow, setOpenRow] = useState(null);
 
   // Подсчёт строк по каждому активу — нужен для chip-счётчиков.
   const assetCounts = useMemo(() => {
@@ -65,6 +66,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
   const onSort = (id) => {
     if (sortCol === id) setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
     else { setSortCol(id); setSortDir('desc'); }
+    setOpenRow(null);
   };
 
   const chip = (active, onClick, label, count) => (
@@ -84,18 +86,18 @@ export default function TopProxiesBlock({ C, subLabel }) {
 
   return (
     <div>
-      <div style={subLabel}>{rows.length} строк · сортировка по любой колонке</div>
+      <div style={subLabel}>{rows.length} строк · сортировка по любой колонке · клик по строке — детали</div>
 
       {/* Filter bar */}
       <div style={{ marginBottom: 14, padding: '12px 16px', background: C.card, border: `1px solid ${C.line}`, borderRadius: 10 }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', rowGap: 10 }}>
           <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, marginRight: 4 }}>Актив:</span>
-          {ASSETS.map((a) => chip(asset === a, () => setAsset(a), a, assetCounts[a]))}
+          {ASSETS.map((a) => chip(asset === a, () => { setAsset(a); setOpenRow(null); }, a, assetCounts[a]))}
           <span style={{ width: 1, height: 20, background: C.line, margin: '0 6px' }} />
           <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, marginRight: 4 }}>Точка входа:</span>
-          {RATINGS.map((r) => chip(rating === r.id, () => setRating(r.id), r.label))}
+          {RATINGS.map((r) => chip(rating === r.id, () => { setRating(r.id); setOpenRow(null); }, r.label))}
           <div style={{ marginLeft: 'auto' }}>
-            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск ticker / название…"
+            <input value={search} onChange={(e) => { setSearch(e.target.value); setOpenRow(null); }} placeholder="Поиск ticker / название…"
               style={{
                 padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`,
                 background: C.paper, color: C.ink, fontSize: 12, fontFamily: 'var(--sans)',
@@ -107,7 +109,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
 
       {/* Table */}
       <div style={{ overflowX: 'auto', border: `1px solid ${C.line}`, borderRadius: 10 }}>
-        <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 880, fontFamily: 'var(--sans)' }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 720, fontFamily: 'var(--sans)' }}>
           <thead style={{ position: 'sticky', top: 0, background: C.card, zIndex: 2 }}>
             <tr>
               {/* gutter for rating stripe */}
@@ -129,30 +131,25 @@ export default function TopProxiesBlock({ C, subLabel }) {
                   </th>
                 );
               })}
-              <th style={{ textAlign: 'left', padding: '10px 14px', fontSize: 10.5, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkFaint, fontWeight: 600, borderBottom: `1px solid ${C.line}` }}>
-                Комментарий
-              </th>
+              {/* chevron column */}
+              <th style={{ width: 32, padding: 0, background: C.card, borderBottom: `1px solid ${C.line}` }} />
             </tr>
           </thead>
           <tbody>
-            {rows.map((r, i) => (
-              <tr key={i} style={{
-                background: i % 2 ? C.cardAlt : C.card,
-                transition: 'background .12s',
-              }}
-                onMouseEnter={(e) => e.currentTarget.style.background = `${C.teal}08`}
-                onMouseLeave={(e) => e.currentTarget.style.background = i % 2 ? C.cardAlt : C.card}>
-                {/* rating stripe */}
-                <td style={{ width: 4, padding: 0, background: RATING_BORDER[r.rating], borderBottom: `1px solid ${C.lineSoft}` }} />
-                <td style={{ padding: '11px 14px', fontFamily: 'var(--mono)', fontSize: 12.5, color: C.ink, fontWeight: 500, borderBottom: `1px solid ${C.lineSoft}` }}>{r.ticker}</td>
-                <td style={{ padding: '11px 14px', fontSize: 13, color: C.ink, borderBottom: `1px solid ${C.lineSoft}` }}>{r.name}</td>
-                <td style={{ padding: '11px 14px', fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft, borderBottom: `1px solid ${C.lineSoft}` }}>{r.exchange}</td>
-                <td style={{ padding: '11px 14px', fontSize: 12.5, color: C.inkSoft, borderBottom: `1px solid ${C.lineSoft}` }}>{r.asset}</td>
-                <td style={{ padding: '11px 14px', textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12.5, color: C.ink, borderBottom: `1px solid ${C.lineSoft}` }}>{r.concentrationLabel}</td>
-                <td style={{ padding: '11px 14px', textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: r.premiumNum > 30 ? C.rose : r.premiumNum < -3 ? C.emerald : C.inkSoft, borderBottom: `1px solid ${C.lineSoft}` }}>{r.premiumLabel}</td>
-                <td style={{ padding: '11px 14px', fontSize: 11.5, color: C.inkSoft, lineHeight: 1.5, borderBottom: `1px solid ${C.lineSoft}`, fontStyle: 'italic' }}>{r.note}</td>
-              </tr>
-            ))}
+            {rows.map((r, i) => {
+              const key = `${r.ticker}-${r.asset}-${i}`;
+              const isOpen = openRow === key;
+              return (
+                <Row
+                  key={key}
+                  C={C}
+                  row={r}
+                  i={i}
+                  isOpen={isOpen}
+                  onToggle={() => setOpenRow(isOpen ? null : key)}
+                />
+              );
+            })}
             {rows.length === 0 && (
               <tr>
                 <td colSpan={HEAD_COLS.length + 2} style={{ padding: 28, textAlign: 'center', color: C.inkFaint, fontSize: 12.5, fontStyle: 'italic' }}>
@@ -176,6 +173,85 @@ export default function TopProxiesBlock({ C, subLabel }) {
           <span style={{ width: 4, height: 12, background: RATING_BORDER.avoid, borderRadius: 1 }} /> Избегать
         </span>
       </div>
+    </div>
+  );
+}
+
+// ─── Row + Drawer ────────────────────────────────────────────────
+function Row({ C, row, i, isOpen, onToggle }) {
+  const rowBg = isOpen ? C.cardAlt : (i % 2 ? C.cardAlt : C.card);
+  return (
+    <>
+      <tr
+        onClick={onToggle}
+        style={{
+          background: rowBg,
+          cursor: 'pointer',
+          transition: 'background .12s',
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.background = `${C.teal}10`}
+        onMouseLeave={(e) => e.currentTarget.style.background = rowBg}>
+        {/* rating stripe */}
+        <td style={{ width: 4, padding: 0, background: RATING_BORDER[row.rating], borderBottom: `1px solid ${C.lineSoft}` }} />
+        <td style={{ padding: '11px 14px', fontFamily: 'var(--mono)', fontSize: 12.5, color: C.ink, fontWeight: 500, borderBottom: `1px solid ${C.lineSoft}` }}>{row.ticker}</td>
+        <td style={{ padding: '11px 14px', fontSize: 13, color: C.ink, borderBottom: `1px solid ${C.lineSoft}` }}>{row.name}</td>
+        <td style={{ padding: '11px 14px', fontSize: 12.5, color: C.inkSoft, borderBottom: `1px solid ${C.lineSoft}` }}>{row.asset}</td>
+        <td style={{ padding: '11px 14px', textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 13, color: C.ink, fontWeight: 500, borderBottom: `1px solid ${C.lineSoft}` }}>{row.stakeUsdLabel}</td>
+        <td style={{ padding: '11px 10px', textAlign: 'right', fontSize: 11, color: C.inkFaint, borderBottom: `1px solid ${C.lineSoft}` }}>
+          {isOpen ? '▾' : '▸'}
+        </td>
+      </tr>
+      {isOpen && (
+        <tr>
+          {/* mirror rating stripe down to keep the colour bar continuous */}
+          <td style={{ width: 4, padding: 0, background: RATING_BORDER[row.rating], borderBottom: `1px solid ${C.lineSoft}` }} />
+          <td colSpan={5} style={{ padding: '14px 18px 18px', background: C.cardAlt, borderBottom: `1px solid ${C.lineSoft}` }}>
+            <Drawer C={C} row={row} />
+          </td>
+        </tr>
+      )}
+    </>
+  );
+}
+
+function Drawer({ C, row }) {
+  const KV = ({ label, value, valueColor }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, minWidth: 0 }}>
+      <span style={{ fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint }}>{label}</span>
+      <span style={{ fontSize: 12.5, color: valueColor || C.ink, fontFamily: 'var(--mono)' }}>{value || '—'}</span>
+    </div>
+  );
+
+  const premiumColor = row.premiumNum > 30 ? C.rose
+                     : row.premiumNum < -3 ? C.emerald
+                     : C.ink;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      {/* Description */}
+      {row.description && (
+        <div style={{ fontSize: 13, color: C.ink, lineHeight: 1.55, fontFamily: 'var(--sans)' }}>
+          {row.description}
+        </div>
+      )}
+
+      {/* KV grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12, paddingTop: 10, borderTop: `1px solid ${C.lineSoft}` }}>
+        <KV label="Биржа"          value={row.exchange} />
+        <KV label="Концентрация"   value={row.concentrationLabel} />
+        <KV label="Премия / диск." value={row.premiumLabel} valueColor={premiumColor} />
+      </div>
+
+      {/* Note */}
+      {row.note && (
+        <div style={{
+          fontSize: 12, color: C.inkSoft, lineHeight: 1.55, fontStyle: 'italic',
+          padding: '10px 12px', background: C.card, border: `1px solid ${C.lineSoft}`, borderRadius: 6,
+          borderLeft: `3px solid ${RATING_BORDER[row.rating]}`,
+        }}>
+          {row.note}
+        </div>
+      )}
     </div>
   );
 }
