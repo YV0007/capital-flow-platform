@@ -30,7 +30,7 @@
       "premiumNum": 0,
       "rating": "moderate",
       "note": "Крупнейшая доля (~21%), но разбавлена.",
-      "description": "AWS + e-commerce; крупнейший backer Anthropic ($13B + $20B pledged).",
+      "description": "AWS + e-commerce; крупнейший backer Anthropic ($13B + $20B pledged) + ~21% доли.",
       "sector": "Облако / E-com"
     },
     {
@@ -46,7 +46,7 @@
       "premiumNum": 0,
       "rating": "moderate",
       "note": "Двойная экспозиция (Anthropic 14% + SpaceX 7%), но сильно разбавлена.",
-      "description": "Google Search/Ads + GCP; партнёр Anthropic с 5GW compute over 5 лет.",
+      "description": "Google Search/Ads + GCP; партнёр Anthropic с 5 GW compute over 5 лет + ~14% доли.",
       "sector": "Поиск / GCP"
     },
     {
@@ -62,7 +62,7 @@
       "premiumNum": 0,
       "rating": "moderate",
       "note": "Старейший стратег в SpaceX (с 2015), ~7% доли. Разбавлено $2.5T капитализацией.",
-      "description": "Тот же Alphabet с двойной экспозицией: 7% SpaceX (с 2015) + 14% Anthropic.",
+      "description": "Google Search/Ads + GCP; старейший корпоративный стейк в SpaceX (~7% доли с 2015 года).",
       "sector": "Поиск / GCP"
     },
     {
@@ -94,7 +94,7 @@
       "premiumNum": 0,
       "rating": "avoid",
       "note": "$30B инвестиция теряется в общей капитализации (~$3T).",
-      "description": "Производитель GPU (H200/B100); $30B equity в OpenAI + chip-lock.",
+      "description": "Производитель GPU (H200/B100); $30B equity в OpenAI (Feb 2026) + multi-year chip-lock.",
       "sector": "Полупроводники"
     },
     {
@@ -110,7 +110,7 @@
       "premiumNum": 0,
       "rating": "avoid",
       "note": "$50B обязательство, в основном compute credits, прямой equity — ~$15B.",
-      "description": "AWS + e-commerce; $50B compute commitment к OpenAI.",
+      "description": "AWS + e-commerce; $50B compute commitment к OpenAI (преимущественно credits).",
       "sector": "Облако / E-com"
     },
     {
@@ -142,7 +142,7 @@
       "premiumNum": 0,
       "rating": "avoid",
       "note": "Series G+H участник. Тройная циркулярность через Azure compute.",
-      "description": "Тот же Nvidia с экспозицией на Anthropic (~$10B Series G+H).",
+      "description": "Производитель GPU (H200/B100); ~$10B в Anthropic Series G+H, тройная циркулярность через Azure.",
       "sector": "Полупроводники"
     },
     {
@@ -174,7 +174,7 @@
       "premiumNum": 0,
       "rating": "avoid",
       "note": "Стейк через xAI merger (Feb 2026), точный размер не раскрыт.",
-      "description": "Тот же Nvidia; SpaceX-экспозиция через xAI merger.",
+      "description": "Производитель GPU (H200/B100); SpaceX-экспозиция унаследована через xAI merger (Feb 2026).",
       "sector": "Полупроводники"
     },
     {
@@ -206,7 +206,7 @@
       "premiumNum": 0,
       "rating": "avoid",
       "note": "Дисконт закрылся; re-rating отыгран после повышения mark на $1.6T.",
-      "description": "Старейший UK инвест. траст (£17B NAV); SpaceX — top-холдинг.",
+      "description": "Старейший UK инвест. траст Baillie Gifford (£17B NAV); SpaceX — top-холдинг 21% NAV.",
       "sector": "Инвест. траст"
     },
     {
@@ -286,7 +286,7 @@
       "premiumNum": 0,
       "rating": "avoid",
       "note": "Слишком разбавлен SpaceX-весом.",
-      "description": "Тот же SMT; Anthropic-вес 2.5% NAV (поднялся с 1.1%).",
+      "description": "UK инвест. траст Baillie Gifford; Anthropic — 2.5% NAV (поднялся с 1.1% в апреле).",
       "sector": "Инвест. траст"
     },
     {
@@ -382,7 +382,7 @@
       "premiumNum": 0,
       "rating": "avoid",
       "note": "Аффилированные фонды в $122B раунде OpenAI.",
-      "description": "Asset manager с фокусом на active equity (~$1.6T AUM).",
+      "description": "Asset manager с фокусом на active equity (~$1.6T AUM); OpenAI через аффилированные фонды.",
       "sector": "Asset Mgmt"
     },
     {
@@ -398,7 +398,7 @@
       "premiumNum": 0,
       "rating": "avoid",
       "note": "Series H участник через аффилированные фонды.",
-      "description": "Тот же T. Rowe Price с двойной экспозицией.",
+      "description": "Asset manager с фокусом на active equity (~$1.6T AUM); Series H участник Anthropic.",
       "sector": "Asset Mgmt"
     },
     {
@@ -510,7 +510,7 @@
       "premiumNum": 0.4,
       "rating": "avoid",
       "note": "Дисконт полностью закрылся за 6 месяцев.",
-      "description": "UK траст Baillie Gifford для late-stage private growth (~£900M NAV).",
+      "description": "UK траст Baillie Gifford для late-stage private growth (~£900M NAV); SpaceX — 12.8% NAV.",
       "sector": "Инвест. траст"
     },
     {
@@ -526,7 +526,7 @@
       "premiumNum": -6.5,
       "rating": "best",
       "note": "Двойная экспозиция SpaceX + Anthropic.",
-      "description": "UK инвест. траст от Baillie Gifford с фокусом на US growth (~£700M NAV).",
+      "description": "UK инвест. траст Baillie Gifford US Growth (~£700M NAV); SpaceX — 14.9% NAV.",
       "sector": "Инвест. траст"
     },
     {
@@ -574,7 +574,7 @@
       "premiumNum": 0,
       "rating": "moderate",
       "note": "Интервальный фонд, ликвидность раз в квартал, fee ~2.9%.",
-      "description": "Cathy Wood; interval fund (~$400M AUM) с фокусом на private innovation.",
+      "description": "Cathy Wood; interval fund (~$400M AUM) с фокусом на private innovation. SpaceX — top-холдинг 17%.",
       "sector": "Интервал. фонд"
     },
     {
@@ -590,7 +590,7 @@
       "premiumNum": 0.4,
       "rating": "avoid",
       "note": "Те же ворота закрылись (премия после ралли +65%).",
-      "description": "Тот же MNTN с двойной экспозицией: 12.8% SpaceX + 7.2% Anthropic.",
+      "description": "UK траст Baillie Gifford для late-stage private growth; Anthropic — 7.2% NAV (поднялся с 3.2%).",
       "sector": "Инвест. траст"
     },
     {
@@ -606,7 +606,7 @@
       "premiumNum": 390,
       "rating": "avoid",
       "note": "Гигантская концентрация при экстремальной премии — переплата 4–5x.",
-      "description": "Listed interval fund от Fundrise с pre-IPO unicorns.",
+      "description": "Listed interval fund от Fundrise с pre-IPO unicorns. Anthropic — 20.7% NAV, top-холдинг.",
       "sector": "Интервал. фонд"
     },
     {
@@ -638,7 +638,7 @@
       "premiumNum": -6.5,
       "rating": "best",
       "note": "Лучший фонд-прокси на Anthropic с активным дисконтом.",
-      "description": "Тот же BG US Growth с двойной экспозицией (14.9% SpaceX + 7.4% Anthropic).",
+      "description": "UK инвест. траст Baillie Gifford US Growth; Anthropic — 7.4% NAV, лучший фонд-прокси с дисконтом.",
       "sector": "Инвест. траст"
     },
     {
@@ -654,7 +654,7 @@
       "premiumNum": 0,
       "rating": "moderate",
       "note": "Вторая по размеру позиция фонда.",
-      "description": "Тот же ARKVX с тройной экспозицией.",
+      "description": "Cathy Wood; interval fund (~$400M AUM). OpenAI — вторая по размеру позиция 9–11%.",
       "sector": "Интервал. фонд"
     },
     {
@@ -670,7 +670,7 @@
       "premiumNum": 53,
       "rating": "avoid",
       "note": "Переплата за доступ через CEF.",
-      "description": "Closed-end fund от Sohn; топ-100 private tech companies.",
+      "description": "Closed-end fund от Sohn; топ-100 private tech companies. SpaceX — top-позиция 16.2% NAV.",
       "sector": "CEF"
     },
     {
@@ -718,7 +718,7 @@
       "premiumNum": 390,
       "rating": "avoid",
       "note": "Переплата 4–5x — категорически избегать.",
-      "description": "Тот же VCX с двойной экспозицией (OpenAI + Anthropic).",
+      "description": "Listed interval fund от Fundrise с pre-IPO unicorns. OpenAI — 9.9% NAV.",
       "sector": "Интервал. фонд"
     },
     {
@@ -750,7 +750,7 @@
       "premiumNum": 53,
       "rating": "avoid",
       "note": "Премия закрывает любой потенциальный upside.",
-      "description": "Тот же DXYZ с тройной экспозицией.",
+      "description": "Closed-end fund от Sohn; топ-100 private tech. OpenAI — 3.5–9.3% NAV.",
       "sector": "CEF"
     },
     {
@@ -766,7 +766,7 @@
       "premiumNum": 0,
       "rating": "moderate",
       "note": "Малая позиция, но единственный listed-вариант с тройной экспозицией.",
-      "description": "Тот же ARKVX.",
+      "description": "Cathy Wood; interval fund (~$400M AUM). Anthropic — малая позиция 3–4%.",
       "sector": "Интервал. фонд"
     },
     {
@@ -798,7 +798,7 @@
       "premiumNum": 53,
       "rating": "avoid",
       "note": "Малая концентрация при высокой премии.",
-      "description": "Тот же DXYZ.",
+      "description": "Closed-end fund от Sohn; топ-100 private tech. Anthropic добавили $100M SPV (Feb 2026), ~3% NAV.",
       "sector": "CEF"
     },
     {
