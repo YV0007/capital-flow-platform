@@ -132,16 +132,16 @@ export default function Proxy() {
             <OwnershipBlock C={C} card={card} subLabel={subLabel} />
           </section>
 
-          {/* 02 WINDOW */}
-          <section id="window" ref={(e) => (refs.current.window = e)} style={{ marginBottom: 54, scrollMarginTop: 24 }}>
+          {/* 02 TOP PROXIES */}
+          <section id="top" ref={(e) => (refs.current.top = e)} style={{ marginBottom: 54, scrollMarginTop: 24 }}>
             <SectionHead n="02" title={proxyBlocks.sections[1].title} sub={proxyBlocks.sections[1].sub} />
-            <WindowBlock C={C} card={card} subLabel={subLabel} />
+            <TopProxiesBlock C={C} card={card} subLabel={subLabel} />
           </section>
 
-          {/* 03 TOP PROXIES */}
-          <section id="top" ref={(e) => (refs.current.top = e)} style={{ marginBottom: 54, scrollMarginTop: 24 }}>
+          {/* 03 WINDOW */}
+          <section id="window" ref={(e) => (refs.current.window = e)} style={{ marginBottom: 54, scrollMarginTop: 24 }}>
             <SectionHead n="03" title={proxyBlocks.sections[2].title} sub={proxyBlocks.sections[2].sub} />
-            <TopProxiesBlock C={C} card={card} subLabel={subLabel} />
+            <WindowBlock C={C} card={card} subLabel={subLabel} />
           </section>
 
           {/* 04 PROJECTION */}
