@@ -6,6 +6,19 @@
 import { useState } from 'react';
 import { PieChart, Pie, Cell, Sector, ResponsiveContainer } from 'recharts';
 import ownership from '../../../data/proxy-ownership.json';
+import proxyTable from '../../../data/proxy-table.json';
+
+// id блока ownership.json → asset name в proxy-table.json
+const ASSET_MAP = { spacex: 'SpaceX', openai: 'OpenAI', anthropic: 'Anthropic' };
+
+// Возвращает топ-3 держателя по долларовой стоимости стейка для актива.
+function getTop3(companyId) {
+  const assetName = ASSET_MAP[companyId];
+  return [...proxyTable.rows]
+    .filter((r) => r.asset === assetName)
+    .sort((a, b) => (b.stakeUsdNum || 0) - (a.stakeUsdNum || 0))
+    .slice(0, 3);
+}
 
 // Палитра тонов слайсов — мапим короткие ключи на токены темы и
 // акцентный жёлтый отчёта Proxy.
@@ -145,12 +158,71 @@ function Donut({ C, company }) {
         })}
       </div>
 
-      {/* Detail bullets */}
-      <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${C.lineSoft}`, display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {company.details.map((d, i) => (
-          <div key={i} style={{ fontSize: 11, color: C.inkFaint, lineHeight: 1.45 }}>· {d}</div>
-        ))}
+      {/* Top 3 держателей — заменяет старый текстовый список деталей */}
+      <Top3List C={C} items={getTop3(company.id)} />
+    </div>
+  );
+}
+
+// Top 3 list — цветовая градация по рангу:
+// #1 — emerald (зелёный), #2 — accent (янтарный), #3 — blue (синий).
+// Фон-полоса слева пропорциональна размеру стейка относительно #1.
+function Top3List({ C, items }) {
+  if (!items || !items.length) return null;
+  const max = items[0].stakeUsdNum || 1;
+  const rankColors = [C.emerald, C.teal, C.blue];
+
+  return (
+    <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${C.lineSoft}`, display: 'flex', flexDirection: 'column', gap: 7 }}>
+      <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, fontWeight: 600, marginBottom: 2 }}>
+        Top 3 держателей · по размеру стейка
       </div>
+      {items.map((row, i) => {
+        const accent = rankColors[i] || C.inkFaint;
+        const pct = Math.min(100, ((row.stakeUsdNum || 0) / max) * 100);
+        return (
+          <div key={`${row.ticker}-${i}`} style={{
+            position: 'relative',
+            padding: '9px 12px',
+            background: `${accent}0C`,
+            border: `1px solid ${accent}40`,
+            borderLeft: `3px solid ${accent}`,
+            borderRadius: 6,
+            overflow: 'hidden',
+          }}>
+            {/* relative-size bar (фон-плашка пропорциональна размеру стейка) */}
+            <div style={{
+              position: 'absolute', top: 0, bottom: 0, left: 0,
+              width: `${pct}%`,
+              background: `linear-gradient(90deg, ${accent}1C 0%, ${accent}05 100%)`,
+              pointerEvents: 'none',
+            }} />
+
+            {/* content */}
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{
+                fontFamily: 'var(--mono)', fontSize: 10, fontWeight: 700,
+                color: accent, letterSpacing: '.08em', minWidth: 20,
+              }}>#{i + 1}</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 600, color: C.ink }}>{row.ticker}</span>
+                  <span style={{ fontSize: 11, color: C.inkSoft, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, minWidth: 0 }}>{row.name}</span>
+                </div>
+                {row.sector && (
+                  <div style={{ fontSize: 9.5, color: C.inkFaint, letterSpacing: '.04em', marginTop: 2, fontFamily: 'var(--mono)' }}>
+                    {row.sector}
+                  </div>
+                )}
+              </div>
+              <span style={{
+                fontFamily: 'var(--mono)', fontSize: 13, fontWeight: 700,
+                color: accent, whiteSpace: 'nowrap',
+              }}>{row.stakeUsdLabel}</span>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
