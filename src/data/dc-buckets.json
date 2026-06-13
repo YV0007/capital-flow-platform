@@ -17,24 +17,24 @@
   "DC_BUCKETS": {
     "Power & Grid": {
       "color": "#22d3ee",
-      "sectors": ["Transformers", "Power", "Power Mgmt", "Fuel Cells", "Switchgear", "Nuclear/SMR", "SMR"],
+      "sectors": ["Transformers", "Power", "Power Mgmt", "Fuel Cells", "Switchgear", "Nuclear/SMR", "SMR", "Gas Pipelines", "Gas Turbines"],
       "topCompany": "GE Vernova",
       "topTicker": "NYSE: GEV",
       "why": "Transformers, switchgear, gas turbines, fuel cells, SMRs — where the buildout actually hits the physical world. Transformer lead times of 30–40 months and PJM interconnection queues over 8 years make this the single most binding constraint in the stack."
     },
     "Compute & Silicon": {
       "color": "#a78bfa",
-      "sectors": ["Adv Packaging", "AI Silicon", "AI Compute Infra", "AI Compute Infra (pivot)", "EDA", "Frontier Lab", "IP/Bonding"],
+      "sectors": ["Adv Packaging", "AI Silicon", "AI Compute Infra", "AI Compute Infra (pivot)", "EDA", "Frontier Lab", "IP/Bonding", "Wide-Bandgap", "PCB"],
       "topCompany": "BESI",
       "topTicker": "AMS: BESI",
       "why": "Where capital is most concentrated and most exposed. The HBM hybrid-bonding monopoly (BESI/ASMPT) and the EDA duopoly (Synopsys/Cadence) are durable. Merchant AI accelerators and frontier labs are not — post-Groq, the exit math is brutal."
     },
     "Materials & Chemicals": {
       "color": "#f59e0b",
-      "sectors": ["GOES Steel", "Specialty Chem", "Photoresist"],
+      "sectors": ["GOES Steel", "Specialty Chem", "Photoresist", "InP/GaAs", "Titanium"],
       "topCompany": "Cleveland-Cliffs",
       "topTicker": "NYSE: CLF",
-      "why": "Quiet near-monopolies. GOES electrical steel (Cleveland-Cliffs is the sole North American producer), EUV photoresists, and high-purity wafer materials (Japanese near-monopoly via Shin-Etsu, Tokyo Ohka, JSR)."
+      "why": "Quiet near-monopolies. GOES electrical steel (Cleveland-Cliffs is the sole North American producer), EUV photoresists, high-purity silicon wafers, InP / GaAs substrates for photonics, and titanium alloys for gas-turbine generators that now power AI campuses."
     },
     "Connectivity & Photonics": {
       "color": "#10b981",
@@ -56,6 +56,20 @@
       "topCompany": "Vertiv",
       "topTicker": "NYSE: VRT",
       "why": "GB200/GB300 racks at 120+ kW exceed air-cooling limits. Microsoft made liquid cooling the default for its Maia accelerators; Nvidia Vera Rubin is designed for 45°C hot-water cooling. Air→liquid retrofit cycle is forced, not optional."
+    },
+    "Fab & Test Equipment": {
+      "color": "#84cc16",
+      "sectors": ["Litho Tools", "Test"],
+      "topCompany": "Applied Materials",
+      "topTicker": "NASDAQ: AMAT",
+      "why": "The picks and shovels behind every chip. Litho tools (ASML for EUV, AMAT/LRCX for deposition and etch, KLA for inspection) print the transistors; test handlers (Teradyne, AEHR) prove the wafers and packages survive. A narrow oligopoly the entire foundry universe runs through — and the part of the stack still being repriced."
+    },
+    "Software & Apps": {
+      "color": "#ec4899",
+      "sectors": ["AI Apps"],
+      "topCompany": "ServiceNow",
+      "topTicker": "NYSE: NOW",
+      "why": "The demand layer. Enterprise AI integration is where model output becomes revenue, and where the trillion-dollar capex bill ultimately gets paid for. ServiceNow leads the front-office integration race; multiple-X upside remains even with the name in the open."
     }
   },
   "DC_DOMAINS": {

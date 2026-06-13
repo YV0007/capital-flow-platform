@@ -39,5 +39,46 @@
   { "company": "Tokyo Ohka",           "ticker": "TYO: 4186",          "sector": "Photoresist",               "conviction": "Med-High", "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "JP" },
   { "company": "Entegris",             "ticker": "NASDAQ: ENTG",       "sector": "Specialty Chem",            "conviction": "Medium",   "riskTier": "Core",       "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
   { "company": "HD Hyundai Electric",  "ticker": "KRX: 267260",        "sector": "Transformers",              "conviction": "High",     "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "KR" },
-  { "company": "Adeia",                "ticker": "NASDAQ: ADEA",       "sector": "IP/Bonding",                "conviction": "Medium",   "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "US" }
+  { "company": "Adeia",                "ticker": "NASDAQ: ADEA",       "sector": "IP/Bonding",                "conviction": "Medium",   "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+
+  { "company": "SIFCO Industries",     "ticker": "NYSE: SIF",          "sector": "Titanium",                  "conviction": "Med-High", "riskTier": "Aggressive", "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+  { "company": "Carpenter Technology", "ticker": "NYSE: CRS",          "sector": "Titanium",                  "conviction": "High",     "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+  { "company": "ATI Inc",              "ticker": "NYSE: ATI",          "sector": "Titanium",                  "conviction": "High",     "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+
+  { "company": "AXT Inc",              "ticker": "NASDAQ: AXTI",       "sector": "InP/GaAs",                  "conviction": "Med-High", "riskTier": "Aggressive", "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+  { "company": "Sumitomo Electric",    "ticker": "OTC: SMTOY",         "sector": "InP/GaAs",                  "conviction": "Medium",   "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "JP" },
+
+  { "company": "Applied Materials",    "ticker": "NASDAQ: AMAT",       "sector": "Litho Tools",               "conviction": "High",     "riskTier": "Core",       "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+  { "company": "Lam Research",         "ticker": "NASDAQ: LRCX",       "sector": "Litho Tools",               "conviction": "High",     "riskTier": "Core",       "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+  { "company": "KLA Corporation",      "ticker": "NASDAQ: KLAC",       "sector": "Litho Tools",               "conviction": "Med-High", "riskTier": "Core",       "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+  { "company": "ASML",                 "ticker": "NASDAQ: ASML",       "sector": "Litho Tools",               "conviction": "Medium",   "riskTier": "Core",       "horizon": "5y+",  "ppr": "Pub", "geo": "NL" },
+
+  { "company": "Teradyne",             "ticker": "NASDAQ: TER",        "sector": "Test",                      "conviction": "High",     "riskTier": "Growth",     "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+  { "company": "AEHR Test Systems",    "ticker": "NASDAQ: AEHR",       "sector": "Test",                      "conviction": "Med-High", "riskTier": "Aggressive", "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+
+  { "company": "Wolfspeed",            "ticker": "NYSE: WOLF",         "sector": "Wide-Bandgap",              "conviction": "Med-High", "riskTier": "Aggressive", "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+  { "company": "ON Semiconductor",     "ticker": "NASDAQ: ON",         "sector": "Wide-Bandgap",              "conviction": "Med-High", "riskTier": "Growth",     "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+  { "company": "Power Integrations",   "ticker": "NASDAQ: POWI",       "sector": "Wide-Bandgap",              "conviction": "Medium",   "riskTier": "Growth",     "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+  { "company": "Navitas Semiconductor","ticker": "NASDAQ: NVTS",       "sector": "Wide-Bandgap",              "conviction": "Med-High", "riskTier": "Aggressive", "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+  { "company": "X-FAB",                "ticker": "EPA: XFAB",          "sector": "Wide-Bandgap",              "conviction": "Med-High", "riskTier": "Aggressive", "horizon": "3–5y", "ppr": "Pub", "geo": "FR" },
+
+  { "company": "ASE Technology",       "ticker": "NYSE: ASX",          "sector": "Adv Packaging",             "conviction": "High",     "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "TW" },
+  { "company": "Amkor Technology",     "ticker": "NASDAQ: AMKR",       "sector": "Adv Packaging",             "conviction": "High",     "riskTier": "Growth",     "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+  { "company": "Intel",                "ticker": "NASDAQ: INTC",       "sector": "Adv Packaging",             "conviction": "Med-High", "riskTier": "Aggressive", "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+
+  { "company": "TTM Technologies",     "ticker": "NASDAQ: TTMI",       "sector": "PCB",                       "conviction": "Med-High", "riskTier": "Growth",     "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+  { "company": "Unimicron",            "ticker": "TPE: 3037",          "sector": "PCB",                       "conviction": "Med-High", "riskTier": "Aggressive", "horizon": "3–5y", "ppr": "Pub", "geo": "TW" },
+  { "company": "Ibiden",               "ticker": "TYO: 4062",          "sector": "PCB",                       "conviction": "High",     "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "JP" },
+  { "company": "Unitika",              "ticker": "TYO: 3103",          "sector": "PCB",                       "conviction": "Medium",   "riskTier": "Aggressive", "horizon": "3–5y", "ppr": "Pub", "geo": "JP" },
+
+  { "company": "Lumentum",             "ticker": "NASDAQ: LITE",       "sector": "Photonics",                 "conviction": "Med-High", "riskTier": "Growth",     "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+  { "company": "Fabrinet",             "ticker": "NYSE: FN",           "sector": "Photonics",                 "conviction": "High",     "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "TH" },
+  { "company": "Tower Semiconductor",  "ticker": "NASDAQ: TSEM",       "sector": "Photonics",                 "conviction": "Medium",   "riskTier": "Aggressive", "horizon": "3–5y", "ppr": "Pub", "geo": "IL" },
+  { "company": "Marvell Technology",   "ticker": "NASDAQ: MRVL",       "sector": "Photonics",                 "conviction": "High",     "riskTier": "Core",       "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+
+  { "company": "Energy Transfer",      "ticker": "NYSE: ET",           "sector": "Gas Pipelines",             "conviction": "High",     "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "US" },
+
+  { "company": "CoreWeave",            "ticker": "NASDAQ: CRWV",       "sector": "AI Compute Infra",          "conviction": "High",     "riskTier": "Aggressive", "horizon": "2–4y", "ppr": "Pub", "geo": "US" },
+
+  { "company": "ServiceNow",           "ticker": "NYSE: NOW",          "sector": "AI Apps",                   "conviction": "High",     "riskTier": "Growth",     "horizon": "3–5y", "ppr": "Pub", "geo": "US" }
 ]
