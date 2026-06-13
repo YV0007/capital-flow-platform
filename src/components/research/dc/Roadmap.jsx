@@ -18,11 +18,23 @@ const PAD_X_LEFT     = 130;   // room for vertical layer labels
 const PAD_X_RIGHT    = 50;
 const PAD_Y_TOP      = 70;
 const PAD_Y_BOTTOM   = 70;
-const LAYER_GAP      = 108;
-const NODE_W         = 138;
-const NODE_H         = 44;
-const BIG_NODE_W     = 196;
-const BIG_NODE_H     = 62;
+const LAYER_GAP      = 112;
+const NODE_W         = 152;
+const NODE_H         = 48;
+const BIG_NODE_W     = 210;
+const BIG_NODE_H     = 64;
+
+// ─ Bucket short-codes — shown on every node for instant group recognition.
+const BUCKET_TAGS = {
+  'Power & Grid':             'PWR',
+  'Compute & Silicon':        'CMP',
+  'Materials & Chemicals':    'MAT',
+  'Connectivity & Photonics': 'NET',
+  'Construction & Labor':     'BLD',
+  'Cooling & Thermal':        'CLD',
+  'Fab & Test Equipment':     'FAB',
+  'Software & Apps':          'APP',
+};
 
 // ─ Layer definitions ──────────────────────────────────────────────────────
 const LAYERS = [
@@ -197,12 +209,20 @@ const NEIGHBOURS = (() => {
 export default function Roadmap() {
   const [selected, setSelected] = useState(null);
   const [hovered,  setHovered]  = useState(null);
+  const [bucketFilter, setBucketFilter] = useState(null);
 
-  const active = hovered || selected;
+  // Active set decides which nodes/edges are "lit" vs dimmed. Priority:
+  // selected node > hovered node > bucket filter > none.
+  const activeNode = hovered || selected;
   const activeSet = useMemo(() => {
-    if (!active) return null;
-    return new Set([active, ...NEIGHBOURS[active].in, ...NEIGHBOURS[active].out]);
-  }, [active]);
+    if (activeNode) {
+      return new Set([activeNode, ...NEIGHBOURS[activeNode].in, ...NEIGHBOURS[activeNode].out]);
+    }
+    if (bucketFilter) {
+      return new Set(Object.values(NODES).filter(n => n.bucket === bucketFilter).map(n => n.id));
+    }
+    return null;
+  }, [activeNode, bucketFilter]);
 
   const selectedNode = selected ? NODES[selected] : null;
   const selectedBucket = selectedNode ? DC_BUCKETS[selectedNode.bucket] : null;
@@ -343,9 +363,17 @@ export default function Roadmap() {
             const isSelected = selected === n.id;
             const isHovered  = hovered  === n.id;
             const bucket = DC_BUCKETS[n.bucket];
-            const companyCount = DC_COMPANIES.filter(c =>
-              c.sector === n.sector ||
-              (n.secondarySector && c.sector === n.secondarySector)).length;
+            const c = bucket?.color || '#52525b';
+            const tag = BUCKET_TAGS[n.bucket] || '';
+            const companyCount = DC_COMPANIES.filter(co =>
+              co.sector === n.sector ||
+              (n.secondarySector && co.sector === n.secondarySector)).length;
+
+            // Tint strengths step up by state. Base nodes get a soft tinted
+            // background so same-bucket nodes pop as a group at a glance.
+            const baseTint   = isSelected ? '2e' : isHovered ? '1f' : '14';
+            const baseBorder = isSelected ? c          : isHovered ? c + 'cc' : c + '66';
+            const stripeW    = isSelected ? 6 : isHovered ? 5 : 4;
 
             return (
               <button
@@ -357,37 +385,33 @@ export default function Roadmap() {
                   position: 'absolute',
                   left: n.x - n.w/2, top: n.y - n.h/2,
                   width: n.w, height: n.h,
-                  background: isSelected
-                    ? `linear-gradient(180deg, ${bucket?.color}26, #18181b)`
-                    : '#18181b',
-                  border: `1px solid ${
-                    isSelected ? bucket?.color :
-                    isHovered  ? bucket?.color + 'aa' :
-                    isLive     ? '#3f3f46' : '#27272a'
-                  }`,
-                  borderRadius: n.big ? 10 : 8,
-                  padding: '0 12px 0 14px',
+                  background: `linear-gradient(135deg, ${c}${baseTint} 0%, #18181b 80%)`,
+                  border: `1px solid ${baseBorder}`,
+                  borderRadius: n.big ? 11 : 9,
+                  padding: `0 10px 0 ${stripeW + 9}px`,
                   cursor: 'pointer',
-                  opacity: isLive ? 1 : 0.25,
+                  opacity: isLive ? 1 : 0.20,
                   transform: isSelected ? 'scale(1.06)' : isHovered ? 'scale(1.03)' : 'scale(1)',
                   transition: 'all 200ms cubic-bezier(0.4,0,0.2,1)',
                   boxShadow: isSelected
-                    ? `0 0 0 4px ${bucket?.color}22, 0 8px 28px rgba(0,0,0,0.55)`
+                    ? `0 0 0 4px ${c}33, 0 10px 28px rgba(0,0,0,0.55), inset 0 0 0 1px ${c}55`
                     : isHovered
-                      ? `0 4px 16px ${bucket?.color}40`
-                      : '0 2px 8px rgba(0,0,0,0.35)',
+                      ? `0 6px 20px ${c}55`
+                      : `0 2px 8px rgba(0,0,0,0.35)`,
                   display: 'flex', alignItems: 'center', gap: 10,
                   color: '#fafafa', font: 'inherit', textAlign: 'left',
                   zIndex: isSelected ? 4 : isHovered ? 3 : 2,
+                  overflow: 'hidden',
                 }}
               >
-                {/* Bucket dot */}
+                {/* Solid bucket-color left stripe (always at full saturation) */}
                 <div style={{
-                  width: n.big ? 10 : 8, height: n.big ? 10 : 8,
-                  borderRadius: '50%',
-                  background: bucket?.color,
-                  flexShrink: 0,
-                  boxShadow: `0 0 8px ${bucket?.color}88`,
+                  position: 'absolute',
+                  left: 0, top: 0, bottom: 0,
+                  width: stripeW,
+                  background: c,
+                  boxShadow: `${stripeW}px 0 12px ${c}66`,
+                  transition: 'width 200ms',
                 }} />
 
                 {/* Label + count */}
@@ -405,7 +429,7 @@ export default function Roadmap() {
                   </div>
                   {companyCount > 0 && (
                     <div style={{
-                      fontSize: 9, color: '#71717a',
+                      fontSize: 9, color: '#a1a1aa',
                       fontFamily: 'ui-monospace,monospace',
                       letterSpacing: '0.05em', marginTop: 2,
                     }}>
@@ -414,13 +438,29 @@ export default function Roadmap() {
                   )}
                 </div>
 
+                {/* Bucket monogram — small chip on the right */}
+                <div style={{
+                  fontSize: 8.5, fontWeight: 800,
+                  fontFamily: 'ui-monospace,monospace',
+                  letterSpacing: '0.08em',
+                  color: c,
+                  background: `${c}22`,
+                  border: `1px solid ${c}55`,
+                  padding: '2px 5px',
+                  borderRadius: 3,
+                  lineHeight: 1,
+                  flexShrink: 0,
+                }}>
+                  {tag}
+                </div>
+
                 {/* Selection pulse */}
                 {isSelected && (
                   <span style={{
                     position: 'absolute', inset: -6,
-                    borderRadius: n.big ? 14 : 12,
-                    border: `1px solid ${bucket?.color}`,
-                    opacity: 0.5,
+                    borderRadius: n.big ? 15 : 13,
+                    border: `1px solid ${c}`,
+                    opacity: 0.55,
                     pointerEvents: 'none',
                   }} />
                 )}
@@ -447,30 +487,85 @@ export default function Roadmap() {
 
       </div>
 
-      {/* Legend */}
+      {/* Legend — clickable bucket filter */}
       <div style={{
         margin: '40px auto 8px', maxWidth: CANVAS_W,
-        padding: '16px 20px',
+        padding: '14px 18px',
         background: '#0d0d0e',
         border: '1px solid #27272a',
         borderRadius: 10,
-        display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center',
+        display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center',
       }}>
         <div style={{
           fontSize: 9.5, color: '#71717a',
           fontFamily: 'ui-monospace,monospace',
-          letterSpacing: '0.16em', fontWeight: 700,
-        }}>BUCKETS</div>
-        {Object.entries(DC_BUCKETS).map(([name, def]) => (
-          <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            <span style={{
-              width: 9, height: 9, borderRadius: '50%',
-              background: def.color,
-              boxShadow: `0 0 8px ${def.color}66`,
-            }} />
-            <span style={{ fontSize: 11, color: '#d4d4d8' }}>{name}</span>
-          </div>
-        ))}
+          letterSpacing: '0.16em', fontWeight: 700, marginRight: 4,
+        }}>
+          FILTER BY BUCKET
+        </div>
+        {Object.entries(DC_BUCKETS).map(([name, def]) => {
+          const active = bucketFilter === name;
+          const dim    = bucketFilter && !active;
+          return (
+            <button
+              key={name}
+              onClick={() => setBucketFilter(active ? null : name)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '6px 11px 6px 9px',
+                background: active ? `${def.color}22` : 'rgba(255,255,255,0.02)',
+                border: `1px solid ${active ? def.color : def.color + '40'}`,
+                borderRadius: 999,
+                cursor: 'pointer',
+                opacity: dim ? 0.45 : 1,
+                color: '#fafafa', font: 'inherit',
+                transition: 'all 160ms',
+              }}
+              onMouseEnter={e => { if (!active) e.currentTarget.style.background = `${def.color}14`; }}
+              onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
+            >
+              <span style={{
+                width: 9, height: 9, borderRadius: '50%',
+                background: def.color,
+                boxShadow: `0 0 8px ${def.color}88`,
+              }} />
+              <span style={{ fontSize: 11, color: '#e4e4e7', fontWeight: active ? 700 : 500 }}>
+                {name}
+              </span>
+              <span style={{
+                fontSize: 8.5, fontWeight: 800,
+                fontFamily: 'ui-monospace,monospace',
+                letterSpacing: '0.08em',
+                color: def.color,
+                background: `${def.color}22`,
+                border: `1px solid ${def.color}55`,
+                padding: '1.5px 4px',
+                borderRadius: 3,
+              }}>
+                {BUCKET_TAGS[name]}
+              </span>
+            </button>
+          );
+        })}
+        {bucketFilter && (
+          <button
+            onClick={() => setBucketFilter(null)}
+            style={{
+              padding: '6px 12px',
+              background: 'transparent',
+              border: '1px solid #3f3f46',
+              borderRadius: 999,
+              fontSize: 10.5, color: '#a1a1aa',
+              fontFamily: 'ui-monospace,monospace',
+              letterSpacing: '0.08em', fontWeight: 700,
+              cursor: 'pointer', font: 'inherit',
+            }}
+            onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
+            onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}
+          >
+            CLEAR
+          </button>
+        )}
       </div>
 
     </div>
