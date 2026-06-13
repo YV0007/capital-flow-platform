@@ -8,12 +8,12 @@
 // ══════════════════════════════════════════════════════════════════════════
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  Target, PieChart, Table2, Share2, Activity, AlertTriangle, TrendingUp, FileText, ChevronDown,
+  Target, Table2, Share2, Activity, AlertTriangle, TrendingUp, FileText, ChevronDown,
 } from 'lucide-react';
 import dcCompaniesData from '../../data/dc-companies.json';
 import dcBucketsData from '../../data/dc-buckets.json';
 import AssetMap from './dc/AssetMap.jsx';
-import { BucketPie, BucketSidePanel } from './dc/BucketPie.jsx';
+import Roadmap from './dc/Roadmap.jsx';
 
 // Reconstitute the JSON layer at module scope — same pattern as HoldingsTab.
 const DC_COMPANIES        = dcCompaniesData;
@@ -58,7 +58,6 @@ export default function DataCentersAI() {
   const [fPpr, setFPpr]           = useState('');
   const [sortKey, setSortKey]     = useState('conviction');
   const [sortDir, setSortDir]     = useState('asc');     // 'asc' | 'desc'
-  const [hoveredBucket, setHoveredBucket] = useState(null);
   const [matrixView, setMatrixView] = useState('table');  // 'table' | 'map'
 
   // ─ derived data ─────────────────────────────────────────────────────────
@@ -66,19 +65,6 @@ export default function DataCentersAI() {
     ...c,
     bucket: dcBucketFor(c.sector),
   })), []);
-
-  // Bucket counts for the pie + side panel
-  const bucketStats = useMemo(() => {
-    const tally = {};
-    enriched.forEach(c => { tally[c.bucket] = (tally[c.bucket] || 0) + 1; });
-    const total = enriched.length;
-    return Object.keys(DC_BUCKETS).map(name => ({
-      name,
-      count: tally[name] || 0,
-      pct: ((tally[name] || 0) / total) * 100,
-      ...DC_BUCKETS[name],
-    })).sort((a, b) => b.count - a.count);
-  }, [enriched]);
 
   // Filter + sort the table
   const visibleRows = useMemo(() => {
@@ -184,8 +170,11 @@ export default function DataCentersAI() {
   return (
     <div style={{ marginTop: 8 }}>
 
+      {/* ══════════════ 00. The Stack — Value-chain Roadmap ══════════════ */}
+      <Roadmap />
+
       {/* ══════════════ 01. Investment Thesis ══════════════ */}
-      <SectionHeader icon={Target} num="1" title="Investment Thesis" sub="Bottleneck capture · structural edge, not informational" accent="#22D3EE" noDivider />
+      <SectionHeader icon={Target} num="1" title="Investment Thesis" sub="Bottleneck capture · structural edge, not informational" accent="#22D3EE" />
 
       <div style={{
         background: 'linear-gradient(135deg, rgba(34,211,238,0.06) 0%, #18181b 50%, rgba(167,139,250,0.04) 100%)',
@@ -285,21 +274,8 @@ export default function DataCentersAI() {
         </div>
       </div>
 
-      {/* ══════════════ 02. Coverage by Sector ══════════════ */}
-      <SectionHeader icon={PieChart} num="2" title="Coverage by Sector" sub="6 broad buckets · hover for top company per bucket" accent="#a78bfa" />
-
-      <div style={{
-        background: '#18181b', border: '1px solid #27272a',
-        borderRadius: 10, padding: '28px 30px',
-      }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 36, alignItems: 'center' }}>
-          <BucketPie buckets={bucketStats} hovered={hoveredBucket} setHovered={setHoveredBucket} />
-          <BucketSidePanel buckets={bucketStats} hovered={hoveredBucket} setHovered={setHoveredBucket} />
-        </div>
-      </div>
-
-      {/* ══════════════ 03. Company Matrix ══════════════ */}
-      <SectionHeader icon={Table2} num="3" title="Company Matrix" sub={`${visibleRows.length} of ${enriched.length} companies · sortable & filterable`} accent="#22D3EE" />
+      {/* ══════════════ 02. Company Matrix ══════════════ */}
+      <SectionHeader icon={Table2} num="2" title="Company Matrix" sub={`${visibleRows.length} of ${enriched.length} companies · sortable & filterable`} accent="#22D3EE" />
 
       <div style={{
         background: '#0d0d0e',
@@ -544,8 +520,8 @@ export default function DataCentersAI() {
         )}
       </div>
 
-      {/* ══════════════ 04. Key Metrics ══════════════ */}
-      <SectionHeader icon={Activity} num="4" title="Key Metrics — AI Data Center Infrastructure Cycle" sub="The numbers that anchor the thesis" accent="#10b981" />
+      {/* ══════════════ 03. Key Metrics ══════════════ */}
+      <SectionHeader icon={Activity} num="3" title="Key Metrics — AI Data Center Infrastructure Cycle" sub="The numbers that anchor the thesis" accent="#10b981" />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
         {[
@@ -581,8 +557,8 @@ export default function DataCentersAI() {
         ))}
       </div>
 
-      {/* ══════════════ 05. Key Risks ══════════════ */}
-      <SectionHeader icon={AlertTriangle} num="5" title="Key Risks" sub="What would break the thesis or the named positions" accent="#ef4444" />
+      {/* ══════════════ 04. Key Risks ══════════════ */}
+      <SectionHeader icon={AlertTriangle} num="4" title="Key Risks" sub="What would break the thesis or the named positions" accent="#ef4444" />
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
         {[
@@ -636,8 +612,8 @@ export default function DataCentersAI() {
         ))}
       </div>
 
-      {/* ══════════════ 06. Forward-Looking Scenarios ══════════════ */}
-      <SectionHeader icon={TrendingUp} num="6" title="Forward-Looking Scenarios" sub="Three paths · probability-weighted" accent="#a78bfa" />
+      {/* ══════════════ 05. Forward-Looking Scenarios ══════════════ */}
+      <SectionHeader icon={TrendingUp} num="5" title="Forward-Looking Scenarios" sub="Three paths · probability-weighted" accent="#a78bfa" />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
         {[
@@ -707,8 +683,8 @@ export default function DataCentersAI() {
         ))}
       </div>
 
-      {/* ══════════════ 07. Executive Summary ══════════════ */}
-      <SectionHeader icon={FileText} num="7" title="Executive Summary" sub="The whole report in 90 seconds" accent="#22D3EE" />
+      {/* ══════════════ 06. Executive Summary ══════════════ */}
+      <SectionHeader icon={FileText} num="6" title="Executive Summary" sub="The whole report in 90 seconds" accent="#22D3EE" />
 
       <div style={{
         background: '#18181b', border: '1px solid #27272a',
