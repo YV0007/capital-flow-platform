@@ -1,23 +1,32 @@
-// Single source of truth for sector → accent colour. Chosen so each is
-// distinct, none clash with the YC orange used in the detail hero batch
-// pill, and the semantic ties feel right (emerald for health, amber for
-// money, cyan for infra, etc.). Cards, chips and pills all import from
-// here so swapping a colour propagates everywhere.
-export const YC_SECTOR_COLORS = {
-  'AI Infrastructure':  '#22D3EE',  // cyan
-  'AI Agents':          '#a78bfa',  // violet
-  'Healthcare':         '#10b981',  // emerald
-  'FinTech & Risk':     '#f59e0b',  // amber
-  'Commerce':           '#ec4899',  // pink
-  'Industrial':         '#fb923c',  // orange
-  'Logistics':          '#0ea5e9',  // sky
-  'Climate Tech':       '#84cc16',  // lime
-  'Developer Tools':    '#60a5fa',  // blue
-  'Generative Media':   '#d946ef',  // fuchsia
+// Per-sector icon — the one visual cue that distinguishes sectors after
+// we stripped the colour. Shapes carry the meaning (server, factory,
+// truck, leaf, …) so recognition happens at a glance without any chips
+// having to scream colour.
+import { Server, Bot, HeartPulse, TrendingUp, ShoppingBag, Factory, Truck, Leaf, Code2, Sparkles } from 'lucide-react';
+
+export const YC_SECTOR_ICONS = {
+  'AI Infrastructure':  Server,
+  'AI Agents':          Bot,
+  'Healthcare':         HeartPulse,
+  'FinTech & Risk':     TrendingUp,
+  'Commerce':           ShoppingBag,
+  'Industrial':         Factory,
+  'Logistics':          Truck,
+  'Climate Tech':       Leaf,
+  'Developer Tools':    Code2,
+  'Generative Media':   Sparkles,
 };
 
-export const YC_SECTOR_FALLBACK = '#71717a';  // muted zinc for any unknown sector
-
-export function colorForSector(sector) {
-  return YC_SECTOR_COLORS[sector] || YC_SECTOR_FALLBACK;
+export function iconForSector(sector) {
+  return YC_SECTOR_ICONS[sector] || null;
 }
+
+// Subtle dotted background texture — applied to each company card so the
+// surface has some depth without resorting to colour. The dot is white
+// at 3.5% alpha over the card's flat #18181b base.
+export const CARD_TEXTURE = {
+  backgroundColor: '#18181b',
+  backgroundImage: 'radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px)',
+  backgroundSize: '14px 14px',
+  backgroundPosition: '0 0',
+};

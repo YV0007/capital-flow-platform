@@ -2,7 +2,7 @@
 // YC orange (#FF6600) is used here for the batch badge — and ONLY here.
 import React from 'react';
 import { Logo, domainFromUrl } from './YCCompanyCard.jsx';
-import { colorForSector } from './yc-sector-colors.js';
+import { iconForSector } from './yc-sector-colors.js';
 
 const STATUS_LABELS = {
   Active:   'Активна',
@@ -68,14 +68,15 @@ export default function YCDetailHero({ company }) {
             />
           )}
           {(company.sectors || []).map(s => {
-            const c = colorForSector(s);
+            const Icon = iconForSector(s);
             return (
               <Pill
                 key={s}
-                color={c}
-                bg={`${c}14`}
-                border={`${c}44`}
+                color="#d4d4d8"
+                bg="transparent"
+                border="#3f3f46"
                 text={s}
+                icon={Icon}
                 mono
                 tiny
               />
@@ -87,7 +88,7 @@ export default function YCDetailHero({ company }) {
   );
 }
 
-function Pill({ color, bg, border, text, mono, tiny }) {
+function Pill({ color, bg, border, text, icon: Icon, mono, tiny }) {
   return (
     <span style={{
       fontSize: tiny ? 10.5 : 11.5,
@@ -99,7 +100,9 @@ function Pill({ color, bg, border, text, mono, tiny }) {
       fontFamily: mono ? 'ui-monospace,monospace' : 'inherit',
       letterSpacing: mono ? '0.04em' : '0',
       whiteSpace: 'nowrap',
+      display: 'inline-flex', alignItems: 'center', gap: 5,
     }}>
+      {Icon && <Icon size={tiny ? 11 : 12} style={{ flexShrink: 0 }} />}
       {text}
     </span>
   );

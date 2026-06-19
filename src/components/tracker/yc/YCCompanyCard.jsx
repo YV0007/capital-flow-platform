@@ -1,13 +1,11 @@
 // Single company card in the landing grid.
 import React, { useMemo, useState } from 'react';
-import { colorForSector } from './yc-sector-colors.js';
+import { iconForSector, CARD_TEXTURE } from './yc-sector-colors.js';
 
 export default function YCCompanyCard({ company, onClick }) {
   const [hover, setHover] = useState(false);
   const visibleSectors = (company.sectors || []).slice(0, 2);
   const extraCount = (company.sectors?.length || 0) - visibleSectors.length;
-  // Card accent = colour of the primary (first) sector.
-  const accent = colorForSector(company.sectors?.[0]);
 
   return (
     <button
@@ -16,8 +14,8 @@ export default function YCCompanyCard({ company, onClick }) {
       onMouseLeave={() => setHover(false)}
       style={{
         position: 'relative',
-        background: '#18181b',
-        border: `1px solid ${hover ? accent + '66' : '#27272a'}`,
+        ...CARD_TEXTURE,
+        border: `1px solid ${hover ? '#3f3f46' : '#27272a'}`,
         borderRadius: 10,
         padding: '18px 18px 16px',
         cursor: 'pointer',
@@ -27,7 +25,7 @@ export default function YCCompanyCard({ company, onClick }) {
         minHeight: 168,
         transition: 'border-color 160ms, box-shadow 160ms, transform 160ms',
         boxShadow: hover
-          ? `0 8px 24px rgba(0,0,0,0.45), 0 0 0 1px ${accent}22 inset`
+          ? '0 8px 24px rgba(0,0,0,0.45)'
           : '0 2px 8px rgba(0,0,0,0.25)',
         transform: hover ? 'translateY(-1px)' : 'translateY(0)',
         overflow: 'hidden',
@@ -57,15 +55,17 @@ export default function YCCompanyCard({ company, onClick }) {
       {visibleSectors.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 'auto' }}>
           {visibleSectors.map(s => {
-            const c = colorForSector(s);
+            const Icon = iconForSector(s);
             return (
               <span key={s} style={{
-                fontSize: 10.5, color: c,
-                padding: '3px 8px', borderRadius: 4,
-                background: `${c}14`, border: `1px solid ${c}44`,
+                fontSize: 10.5, color: '#d4d4d8',
+                padding: '4px 9px 4px 7px', borderRadius: 4,
+                background: '#27272a', border: '1px solid #3f3f46',
                 fontFamily: 'ui-monospace,monospace',
-                fontWeight: 600,
+                fontWeight: 500,
+                display: 'inline-flex', alignItems: 'center', gap: 5,
               }}>
+                {Icon && <Icon size={11} style={{ flexShrink: 0, color: '#a1a1aa' }} />}
                 {s}
               </span>
             );
@@ -73,7 +73,7 @@ export default function YCCompanyCard({ company, onClick }) {
           {extraCount > 0 && (
             <span style={{
               fontSize: 10.5, color: '#71717a',
-              padding: '3px 8px', borderRadius: 4,
+              padding: '4px 8px', borderRadius: 4,
               background: 'transparent', border: '1px solid #27272a',
               fontFamily: 'ui-monospace,monospace',
             }}>

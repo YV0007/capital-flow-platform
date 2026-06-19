@@ -1,6 +1,6 @@
 // Horizontal multi-select sector chips. Scrollable on narrow viewports.
 import React from 'react';
-import { colorForSector } from './yc-sector-colors.js';
+import { iconForSector } from './yc-sector-colors.js';
 
 export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
   if (!sectors || sectors.length === 0) return null;
@@ -29,7 +29,7 @@ export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
       </div>
       {sectors.map(s => {
         const isActive = active.has(s);
-        const c = colorForSector(s);
+        const Icon = iconForSector(s);
         return (
           <button
             key={s}
@@ -39,10 +39,10 @@ export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
               padding: '6px 12px 6px 10px',
               fontSize: 11.5,
               fontFamily: 'ui-monospace,monospace',
-              background: isActive ? `${c}1f` : 'transparent',
-              border: `1px solid ${isActive ? c : c + '40'}`,
+              background: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
+              border: `1px solid ${isActive ? '#52525b' : '#27272a'}`,
               borderRadius: 999,
-              color: isActive ? '#fafafa' : '#d4d4d8',
+              color: isActive ? '#fafafa' : '#a1a1aa',
               fontWeight: isActive ? 700 : 500,
               cursor: 'pointer',
               whiteSpace: 'nowrap',
@@ -51,17 +51,13 @@ export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
               transition: 'all 140ms',
             }}
             onMouseEnter={e => {
-              if (!isActive) e.currentTarget.style.background = `${c}10`;
+              if (!isActive) e.currentTarget.style.borderColor = '#3f3f46';
             }}
             onMouseLeave={e => {
-              if (!isActive) e.currentTarget.style.background = 'transparent';
+              if (!isActive) e.currentTarget.style.borderColor = '#27272a';
             }}
           >
-            <span style={{
-              width: 7, height: 7, borderRadius: '50%',
-              background: c,
-              boxShadow: isActive ? `0 0 6px ${c}aa` : 'none',
-            }} />
+            {Icon && <Icon size={12} style={{ flexShrink: 0 }} />}
             {s}
           </button>
         );
