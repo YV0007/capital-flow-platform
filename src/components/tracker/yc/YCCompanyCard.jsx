@@ -119,11 +119,10 @@ export default function YCCompanyCard({ company, onClick }) {
                   display: 'inline-flex', alignItems: 'center', gap: 5,
                   fontSize: 10.5, color: '#c4c4c8',
                   padding: '3px 8px 3px 7px', borderRadius: 6,
-                  // Trace of sector colour at low alpha — chip has a subtle
-                  // tint instead of plain gray. Combined with the white-ish
-                  // base, gives just enough colour pop without screaming.
-                  background: `${iconColor}14`,
-                  border: `1px solid ${iconColor}22`,
+                  // Trace of sector colour, kept very low-saturation so the
+                  // chip reads as nearly-neutral with a hint of sector hue.
+                  background: `${iconColor}08`,
+                  border: `1px solid ${iconColor}14`,
                   fontFamily: 'ui-monospace,monospace',
                   whiteSpace: 'nowrap',
                   transition: 'background 200ms',
