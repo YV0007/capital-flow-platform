@@ -95,10 +95,13 @@ export function domainFromUrl(url) {
 export function Logo({ name, url, domain, size = 60, square = true }) {
   const [idx, setIdx] = useState(0);
 
+  // Clearbit's free Logo API is dead (returns nothing as of 2024+).
+  // Google s2 favicons works for any live domain and serves up to 256px
+  // when the site provides one — good enough scaled to 60–92px.
   const sources = useMemo(() => {
     const arr = [];
     if (url) arr.push(url);
-    if (domain) arr.push(`https://logo.clearbit.com/${domain}`);
+    if (domain) arr.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
     return arr;
   }, [url, domain]);
 
