@@ -33,15 +33,6 @@ export default function YCCompanyCard({ company, onClick }) {
         overflow: 'hidden',
       }}
     >
-      {/* Thin colored top stripe — accent of the primary sector */}
-      <span style={{
-        position: 'absolute',
-        top: 0, left: 0, right: 0, height: 2,
-        background: accent,
-        opacity: hover ? 1 : 0.7,
-        transition: 'opacity 160ms',
-      }} />
-
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
         <Logo name={company.name} url={company.logo} domain={domainFromUrl(company.website)} size={60} />
         <div style={{ flex: 1, minWidth: 0, paddingTop: 2 }}>
