@@ -1,5 +1,6 @@
 // Horizontal multi-select sector chips. Scrollable on narrow viewports.
 import React from 'react';
+import { colorForSector } from './yc-sector-colors.js';
 
 export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
   if (!sectors || sectors.length === 0) return null;
@@ -28,19 +29,21 @@ export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
       </div>
       {sectors.map(s => {
         const isActive = active.has(s);
+        const c = colorForSector(s);
         return (
           <button
             key={s}
             onClick={() => onToggle(s)}
             style={{
-              padding: '6px 12px',
+              display: 'inline-flex', alignItems: 'center', gap: 7,
+              padding: '6px 12px 6px 10px',
               fontSize: 11.5,
               fontFamily: 'ui-monospace,monospace',
-              background: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
-              border: `1px solid ${isActive ? '#52525b' : '#27272a'}`,
+              background: isActive ? `${c}1f` : 'transparent',
+              border: `1px solid ${isActive ? c : c + '40'}`,
               borderRadius: 999,
-              color: isActive ? '#fafafa' : '#a1a1aa',
-              fontWeight: isActive ? 600 : 500,
+              color: isActive ? '#fafafa' : '#d4d4d8',
+              fontWeight: isActive ? 700 : 500,
               cursor: 'pointer',
               whiteSpace: 'nowrap',
               flexShrink: 0,
@@ -48,12 +51,17 @@ export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
               transition: 'all 140ms',
             }}
             onMouseEnter={e => {
-              if (!isActive) e.currentTarget.style.borderColor = '#3f3f46';
+              if (!isActive) e.currentTarget.style.background = `${c}10`;
             }}
             onMouseLeave={e => {
-              if (!isActive) e.currentTarget.style.borderColor = '#27272a';
+              if (!isActive) e.currentTarget.style.background = 'transparent';
             }}
           >
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%',
+              background: c,
+              boxShadow: isActive ? `0 0 6px ${c}aa` : 'none',
+            }} />
             {s}
           </button>
         );

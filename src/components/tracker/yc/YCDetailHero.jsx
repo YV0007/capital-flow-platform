@@ -2,6 +2,7 @@
 // YC orange (#FF6600) is used here for the batch badge — and ONLY here.
 import React from 'react';
 import { Logo, domainFromUrl } from './YCCompanyCard.jsx';
+import { colorForSector } from './yc-sector-colors.js';
 
 const STATUS_LABELS = {
   Active:   'Активна',
@@ -66,17 +67,20 @@ export default function YCDetailHero({ company }) {
               text={company.location}
             />
           )}
-          {(company.sectors || []).map(s => (
-            <Pill
-              key={s}
-              color="#d4d4d8"
-              bg="transparent"
-              border="#3f3f46"
-              text={s}
-              mono
-              tiny
-            />
-          ))}
+          {(company.sectors || []).map(s => {
+            const c = colorForSector(s);
+            return (
+              <Pill
+                key={s}
+                color={c}
+                bg={`${c}14`}
+                border={`${c}44`}
+                text={s}
+                mono
+                tiny
+              />
+            );
+          })}
         </div>
       </div>
     </div>
