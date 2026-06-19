@@ -11,8 +11,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "AI Infrastructure",
-      "DevOps"
+      "AI Infrastructure"
     ],
     "website": "https://bentolabs.ai",
     "linkedin": "",
@@ -37,8 +36,8 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Industrial AI",
-      "Voice AI"
+      "Industrial",
+      "AI Agents"
     ],
     "website": "https://pairio.com",
     "linkedin": "",
@@ -63,7 +62,6 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Biotech",
       "Healthcare"
     ],
     "website": "https://finaldose.bio",
@@ -89,8 +87,8 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "DataCenter",
-      "Climate Tech"
+      "Climate Tech",
+      "AI Infrastructure"
     ],
     "website": "",
     "linkedin": "",
@@ -115,7 +113,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "FinTech",
+      "FinTech & Risk",
       "AI Agents"
     ],
     "website": "https://cohesion.ai",
@@ -141,8 +139,8 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Market Research",
-      "Consumer AI"
+      "Commerce",
+      "AI Agents"
     ],
     "website": "https://foresight.ai",
     "linkedin": "",
@@ -167,8 +165,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Space",
-      "Manufacturing"
+      "Industrial"
     ],
     "website": "https://dispatch.space",
     "linkedin": "",
@@ -219,8 +216,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "AI Infrastructure",
-      "Data"
+      "AI Infrastructure"
     ],
     "website": "https://perfectbit.ai",
     "linkedin": "",
@@ -245,8 +241,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "InsurTech",
-      "AI"
+      "FinTech & Risk"
     ],
     "website": "https://gethedge.com",
     "linkedin": "",
@@ -271,8 +266,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Logistics",
-      "Computer Vision"
+      "Logistics"
     ],
     "website": "https://transload.io",
     "linkedin": "",
@@ -297,8 +291,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "AI Infrastructure",
-      "DePIN"
+      "AI Infrastructure"
     ],
     "website": "https://zibra.ai",
     "linkedin": "",
@@ -323,7 +316,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "B2B Sales",
+      "Commerce",
       "AI Agents"
     ],
     "website": "https://gojiberry.ai",
@@ -349,7 +342,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "E-commerce",
+      "Commerce",
       "AI Agents"
     ],
     "website": "https://withkinect.com",
@@ -375,8 +368,8 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Biotech",
-      "Healthcare"
+      "Healthcare",
+      "AI Agents"
     ],
     "website": "https://astraea.bio",
     "linkedin": "",
@@ -401,7 +394,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Mental Health",
+      "Healthcare",
       "AI Agents"
     ],
     "website": "https://klarify.app",
@@ -427,8 +420,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Developer Tools",
-      "AI"
+      "Developer Tools"
     ],
     "website": "https://lightsprint.dev",
     "linkedin": "",
@@ -453,8 +445,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "AI Infrastructure",
-      "Document AI"
+      "AI Infrastructure"
     ],
     "website": "https://interfaze.ai",
     "linkedin": "",
@@ -479,8 +470,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Compliance",
-      "Retail"
+      "FinTech & Risk"
     ],
     "website": "https://complir.com",
     "linkedin": "",
@@ -505,8 +495,7 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Generative AI",
-      "Video"
+      "Generative Media"
     ],
     "website": "https://keyframelabs.com",
     "linkedin": "",
@@ -531,7 +520,6 @@
     "team_size": null,
     "location": "",
     "sectors": [
-      "Medical Devices",
       "Healthcare"
     ],
     "website": "https://adialante.com",
