@@ -38,6 +38,7 @@ import PositionView from './components/tracker/PositionView.jsx';
 import ObservationLogView from './components/tracker/ObservationLogView.jsx';
 import SyndicateCommsView from './components/tracker/SyndicateCommsView.jsx';
 import SettingsView from './components/tracker/SettingsView.jsx';
+import YCombinator from './components/tracker/yc/YCombinator.jsx';
 
 import {
   severityFromImportance,
@@ -137,19 +138,28 @@ export default function App() {
 
   const switchCompany = useCallback((nextId) => {
     if (nextId === companyId) return;
-    if (!COMPANIES.find(c => c.id === nextId)) return;
+    const next = COMPANIES.find(c => c.id === nextId);
+    if (!next) return;
     try {
       if (typeof window !== 'undefined' && window.localStorage) {
         window.localStorage.setItem(ACTIVE_COMPANY_KEY, nextId);
       }
     } catch {}
-    setLoading(true);
+    // Directory-type companies (e.g. Y Combinator) skip the heavy data load.
+    if (!next.isDirectory) setLoading(true);
+    else setLoading(false);
     setCompanyId(nextId);
     setTab('summary');
   }, [companyId]);
 
   // Initial load + per-company seeding & memo back-fill. Monolith line 17258.
   useEffect(() => {
+    // Directory-type companies (e.g. Y Combinator) have no per-company state
+    // to seed — they manage their own internal mini-app. Skip the whole load.
+    if (company.isDirectory) {
+      setLoading(false);
+      return;
+    }
     (async () => {
       setLoading(true);
       const SEEDED_OBS_FOR_COMPANY  = company.seededObservations();
@@ -557,32 +567,37 @@ export default function App() {
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex overflow-x-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          {TABS.filter(t => !HIDDEN_TABS.has(t.id)).map(t => {
-            const Icon = t.icon;
-            const label = t.id === 'summary' ? company.name.toUpperCase() : t.label;
-            const isActive = tab === t.id;
-            const activeBorder = company.accent === 'amber' ? 'border-amber-400' : 'border-cyan-400';
-            const activeBg     = company.accent === 'amber' ? 'bg-amber-950/30'   : 'bg-cyan-950/30';
-            const activeText   = company.accent === 'amber' ? 'text-amber-200'    : 'text-cyan-200';
-            return (
-              <button key={t.id} onClick={() => setTab(t.id)}
-                className={`px-3 py-2 text-xs font-mono uppercase tracking-wider inline-flex items-center gap-1.5 border-b-[3px] whitespace-nowrap transition-colors ${
-                  isActive
-                    ? `${activeBorder} ${activeBg} ${activeText} font-bold`
-                    : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-950/40'
-                }`}>
-                <Icon className="w-3.5 h-3.5" />{label}
-              </button>
-            );
-          })}
-        </div>
+        {/* Tabs — hidden for directory-type companies (YC) */}
+        {!company.isDirectory && (
+          <div className="flex overflow-x-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+            {TABS.filter(t => !HIDDEN_TABS.has(t.id)).map(t => {
+              const Icon = t.icon;
+              const label = t.id === 'summary' ? company.name.toUpperCase() : t.label;
+              const isActive = tab === t.id;
+              const activeBorder = company.accent === 'amber' ? 'border-amber-400' : 'border-cyan-400';
+              const activeBg     = company.accent === 'amber' ? 'bg-amber-950/30'   : 'bg-cyan-950/30';
+              const activeText   = company.accent === 'amber' ? 'text-amber-200'    : 'text-cyan-200';
+              return (
+                <button key={t.id} onClick={() => setTab(t.id)}
+                  className={`px-3 py-2 text-xs font-mono uppercase tracking-wider inline-flex items-center gap-1.5 border-b-[3px] whitespace-nowrap transition-colors ${
+                    isActive
+                      ? `${activeBorder} ${activeBg} ${activeText} font-bold`
+                      : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-950/40'
+                  }`}>
+                  <Icon className="w-3.5 h-3.5" />{label}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
-        {!PRESENTATION_MODE && <AlertBar alerts={alerts} onJumpTo={jumpToAlert} />}
+        {!PRESENTATION_MODE && !company.isDirectory && <AlertBar alerts={alerts} onJumpTo={jumpToAlert} />}
       </div>
 
-      {/* Tab body */}
+      {/* Body — directory short-circuits the tab dispatch entirely. */}
+      {company.isDirectory ? (
+        <YCombinator />
+      ) : (
       <div className="p-3 max-w-7xl mx-auto">
         {tab === 'summary' && (
           <PositionSummaryView
@@ -613,6 +628,7 @@ export default function App() {
           <SettingsView cfg={cfg} onSaveConfig={saveCfg} observations={observations} syndicateLog={syndicateLog} scores={scores} capEvents={capEvents} onResetAll={resetAll} onImport={importData} onAddCapEvent={addCapEvent} />
         )}
       </div>
+      )}
 
       <Modal open={obsModalOpen} onClose={() => setObsModalOpen(false)} title="Add Observation" wide>
         <ObservationForm initial={obsModalInitial} onSave={addObservation} onCancel={() => setObsModalOpen(false)} />

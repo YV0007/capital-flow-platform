@@ -1,0 +1,78 @@
+// Horizontal multi-select sector chips. Scrollable on narrow viewports.
+import React from 'react';
+
+export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
+  if (!sectors || sectors.length === 0) return null;
+
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 8,
+      overflowX: 'auto', paddingBottom: 4,
+      borderBottom: '1px solid #18181b',
+    }}>
+      <div style={{
+        fontSize: 10, color: '#71717a',
+        fontFamily: 'ui-monospace,monospace',
+        letterSpacing: '0.12em', fontWeight: 700,
+        flexShrink: 0, marginRight: 4,
+      }}>
+        СЕКТОР
+      </div>
+      {sectors.map(s => {
+        const isActive = active.has(s);
+        return (
+          <button
+            key={s}
+            onClick={() => onToggle(s)}
+            style={{
+              padding: '6px 12px',
+              fontSize: 11.5,
+              fontFamily: 'ui-monospace,monospace',
+              background: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
+              border: `1px solid ${isActive ? '#52525b' : '#27272a'}`,
+              borderRadius: 999,
+              color: isActive ? '#fafafa' : '#a1a1aa',
+              fontWeight: isActive ? 600 : 500,
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              font: 'inherit',
+              transition: 'all 140ms',
+            }}
+            onMouseEnter={e => {
+              if (!isActive) e.currentTarget.style.borderColor = '#3f3f46';
+            }}
+            onMouseLeave={e => {
+              if (!isActive) e.currentTarget.style.borderColor = '#27272a';
+            }}
+          >
+            {s}
+          </button>
+        );
+      })}
+      {active.size > 0 && (
+        <button
+          onClick={onClear}
+          style={{
+            padding: '6px 10px',
+            fontSize: 10.5,
+            fontFamily: 'ui-monospace,monospace',
+            background: 'transparent',
+            border: 'none',
+            color: '#71717a',
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
+            letterSpacing: '0.08em', fontWeight: 700,
+            marginLeft: 4,
+            font: 'inherit',
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
+          onMouseLeave={e => e.currentTarget.style.color = '#71717a'}
+        >
+          ОЧИСТИТЬ
+        </button>
+      )}
+    </div>
+  );
+}

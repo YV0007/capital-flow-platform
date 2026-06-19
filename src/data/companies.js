@@ -50,6 +50,25 @@ export const COMPANIES = [
     triangulationTasksSeed: () => triangulationTasksSeedCursor,
     derivedMetrics: () => derivedMetricsCursor,
   },
+  // YC is a portfolio directory, not a single-company deep-dive. The
+  // `isDirectory: true` flag tells App.jsx to skip the heavy tracker load
+  // path and render `<YCombinator />` instead of the 7-tab structure.
+  {
+    id: 'yc',
+    name: 'Y Combinator',
+    legalName: 'Y Combinator portfolio',
+    accent: 'orange',
+    storagePrefix: 'yc',
+    isDirectory: true,
+    config: () => null,
+    memoBaseline: () => null,
+    memoBaselineKey: 'yc:memo-baseline',
+    seededObservations: () => [],
+    memoObservations: () => [],
+    seededSyndicateLog: () => [],
+    triangulationTasksSeed: () => [],
+    derivedMetrics: () => ({}),
+  },
 ];
 
 export const ACTIVE_COMPANY_KEY = 'app:active-company';
