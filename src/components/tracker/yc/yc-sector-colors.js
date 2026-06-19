@@ -48,11 +48,25 @@ export const YC_STATUS_LABELS = {
   Acquired: 'Куплена',
 };
 
-// Hover-only dot texture — fine 4px grid, white at 2.5% alpha (matches the
-// `bg-[length:4px_4px]` radial-gradient pattern from the reference). Apply
-// as an absolute-positioned overlay with `opacity` transitioning 0 → 1.
+// Card surface — always-on. The card sits visibly above the page bg via
+// (a) a lighter base colour, (b) a soft top→bottom lighting gradient, and
+// (c) a low-alpha dotted texture at the same 4px grid as the reference.
+export const CARD_BASE = {
+  backgroundColor: '#15151a',
+  backgroundImage: [
+    'linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0) 42%, rgba(0,0,0,0.08) 100%)',
+    'radial-gradient(circle at center, rgba(255,255,255,0.020) 1px, transparent 1px)',
+  ].join(', '),
+  backgroundSize: 'auto, 4px 4px',
+  backgroundPosition: '0 0, 0 0',
+  backgroundRepeat: 'no-repeat, repeat',
+};
+
+// Extra dot layer that fades in ON TOP of the base texture when hovered —
+// so dots get noticeably crisper on interaction without being absent at
+// rest. Pair with `opacity: 0 → 1` on an absolutely-positioned overlay.
 export const HOVER_DOT_TEXTURE = {
   backgroundImage:
-    'radial-gradient(circle at center, rgba(255,255,255,0.025) 1px, transparent 1px)',
+    'radial-gradient(circle at center, rgba(255,255,255,0.028) 1px, transparent 1px)',
   backgroundSize: '4px 4px',
 };

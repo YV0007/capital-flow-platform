@@ -6,6 +6,7 @@ import {
   iconForSector,
   iconColorForSector,
   YC_STATUS_LABELS,
+  CARD_BASE,
   HOVER_DOT_TEXTURE,
 } from './yc-sector-colors.js';
 
@@ -21,8 +22,8 @@ export default function YCCompanyCard({ company, onClick }) {
       onMouseLeave={() => setHover(false)}
       style={{
         position: 'relative',
-        background: '#0a0a0c',
-        border: `1px solid ${hover ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.06)'}`,
+        ...CARD_BASE,
+        border: `1px solid ${hover ? 'rgba(255,255,255,0.16)' : 'rgba(255,255,255,0.08)'}`,
         borderRadius: 14,
         padding: 16,
         cursor: 'pointer',
@@ -32,8 +33,8 @@ export default function YCCompanyCard({ company, onClick }) {
         transition: 'border-color 300ms, transform 300ms, box-shadow 300ms',
         transform: hover ? 'translateY(-2px)' : 'translateY(0)',
         boxShadow: hover
-          ? '0 6px 18px rgba(0,0,0,0.45), 0 2px 12px rgba(255,255,255,0.03)'
-          : '0 1px 0 rgba(255,255,255,0.02) inset',
+          ? '0 8px 22px rgba(0,0,0,0.50), 0 2px 12px rgba(255,255,255,0.04), 0 1px 0 rgba(255,255,255,0.05) inset'
+          : '0 1px 0 rgba(255,255,255,0.03) inset, 0 2px 6px rgba(0,0,0,0.35)',
       }}
     >
       {/* Hover dot texture — fades in only on hover, matches the reference's
@@ -116,9 +117,13 @@ export default function YCCompanyCard({ company, onClick }) {
               return (
                 <span key={s} style={{
                   display: 'inline-flex', alignItems: 'center', gap: 5,
-                  fontSize: 10.5, color: '#a1a1aa',
+                  fontSize: 10.5, color: '#c4c4c8',
                   padding: '3px 8px 3px 7px', borderRadius: 6,
-                  background: 'rgba(255,255,255,0.05)',
+                  // Trace of sector colour at low alpha — chip has a subtle
+                  // tint instead of plain gray. Combined with the white-ish
+                  // base, gives just enough colour pop without screaming.
+                  background: `${iconColor}14`,
+                  border: `1px solid ${iconColor}22`,
                   fontFamily: 'ui-monospace,monospace',
                   whiteSpace: 'nowrap',
                   transition: 'background 200ms',
