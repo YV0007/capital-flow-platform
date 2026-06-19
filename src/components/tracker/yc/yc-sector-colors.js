@@ -1,7 +1,7 @@
-// Per-sector icon — the one visual cue that distinguishes sectors after
-// we stripped the colour. Shapes carry the meaning (server, factory,
-// truck, leaf, …) so recognition happens at a glance without any chips
-// having to scream colour.
+// Per-sector icon — single visual cue that distinguishes sectors after we
+// stripped global colour. Shapes carry the meaning (server, factory, truck,
+// leaf, …) and only the icon glyph itself gets a soft tint, like the bento
+// reference's text-blue-500 / text-purple-500 icons.
 import { Server, Bot, HeartPulse, TrendingUp, ShoppingBag, Factory, Truck, Leaf, Code2, Sparkles } from 'lucide-react';
 
 export const YC_SECTOR_ICONS = {
@@ -17,27 +17,42 @@ export const YC_SECTOR_ICONS = {
   'Generative Media':   Sparkles,
 };
 
+// Muted tints applied ONLY to the icon glyph stroke — single small accent
+// per card, the way the reference's icon colours read on dark.
+export const YC_SECTOR_ICON_COLORS = {
+  'AI Infrastructure':  '#22d3ee',
+  'AI Agents':          '#a78bfa',
+  'Healthcare':         '#10b981',
+  'FinTech & Risk':     '#f59e0b',
+  'Commerce':           '#ec4899',
+  'Industrial':         '#fb923c',
+  'Logistics':          '#0ea5e9',
+  'Climate Tech':       '#84cc16',
+  'Developer Tools':    '#60a5fa',
+  'Generative Media':   '#d946ef',
+};
+
 export function iconForSector(sector) {
   return YC_SECTOR_ICONS[sector] || null;
 }
 
-// Card surface — vertical "lit from above" gradient (white highlight at the
-// top, soft black wash at the bottom) layered under a subtle dotted texture
-// so cards feel like elevated objects, matching the reference dashboard.
-export const CARD_TEXTURE = {
-  backgroundColor: '#18181b',
-  backgroundImage: [
-    'linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0) 38%, rgba(0,0,0,0.10) 100%)',
-    'radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1.2px)',
-  ].join(', '),
-  backgroundSize: 'auto, 14px 14px',
-  backgroundPosition: '0 0, 0 0',
-  backgroundRepeat: 'no-repeat, repeat',
+export function iconColorForSector(sector) {
+  return YC_SECTOR_ICON_COLORS[sector] || '#a1a1aa';
+}
+
+// Status → Russian label, used on both the card status badge and the
+// metadata card on the detail screen.
+export const YC_STATUS_LABELS = {
+  Active:   'Активна',
+  Inactive: 'Неактивна',
+  Acquired: 'Куплена',
 };
 
-// Optional inset top-rim highlight — pair with the gradient above by adding
-// it to a card's `boxShadow` to mimic the reference's edge-lit corners.
-export const CARD_RIM_SHADOW =
-  '0 2px 10px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.04) inset';
-export const CARD_RIM_SHADOW_HOVER =
-  '0 10px 28px rgba(0,0,0,0.50), 0 1px 0 rgba(255,255,255,0.06) inset';
+// Hover-only dot texture — fine 4px grid, white at 2.5% alpha (matches the
+// `bg-[length:4px_4px]` radial-gradient pattern from the reference). Apply
+// as an absolute-positioned overlay with `opacity` transitioning 0 → 1.
+export const HOVER_DOT_TEXTURE = {
+  backgroundImage:
+    'radial-gradient(circle at center, rgba(255,255,255,0.025) 1px, transparent 1px)',
+  backgroundSize: '4px 4px',
+};
