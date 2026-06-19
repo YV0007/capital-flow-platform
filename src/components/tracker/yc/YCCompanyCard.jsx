@@ -6,7 +6,6 @@ import {
   iconForSector,
   iconColorForSector,
   YC_STATUS_LABELS,
-  CARD_BASE,
   HOVER_DOT_TEXTURE,
 } from './yc-sector-colors.js';
 
@@ -22,8 +21,8 @@ export default function YCCompanyCard({ company, onClick }) {
       onMouseLeave={() => setHover(false)}
       style={{
         position: 'relative',
-        ...CARD_BASE,
-        border: `1px solid ${hover ? 'rgba(255,255,255,0.16)' : 'rgba(255,255,255,0.08)'}`,
+        background: '#0a0a0c',
+        border: `1px solid ${hover ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.06)'}`,
         borderRadius: 14,
         padding: 16,
         cursor: 'pointer',
@@ -33,8 +32,8 @@ export default function YCCompanyCard({ company, onClick }) {
         transition: 'border-color 300ms, transform 300ms, box-shadow 300ms',
         transform: hover ? 'translateY(-2px)' : 'translateY(0)',
         boxShadow: hover
-          ? '0 8px 22px rgba(0,0,0,0.50), 0 2px 12px rgba(255,255,255,0.04), 0 1px 0 rgba(255,255,255,0.05) inset'
-          : '0 1px 0 rgba(255,255,255,0.03) inset, 0 2px 6px rgba(0,0,0,0.35)',
+          ? '0 6px 18px rgba(0,0,0,0.45), 0 2px 12px rgba(255,255,255,0.03)'
+          : '0 1px 0 rgba(255,255,255,0.02) inset',
       }}
     >
       {/* Hover dot texture — fades in only on hover, matches the reference's
@@ -117,12 +116,9 @@ export default function YCCompanyCard({ company, onClick }) {
               return (
                 <span key={s} style={{
                   display: 'inline-flex', alignItems: 'center', gap: 5,
-                  fontSize: 10.5, color: '#c4c4c8',
+                  fontSize: 10.5, color: '#a1a1aa',
                   padding: '3px 8px 3px 7px', borderRadius: 6,
-                  // Trace of sector colour, kept very low-saturation so the
-                  // chip reads as nearly-neutral with a hint of sector hue.
-                  background: `${iconColor}08`,
-                  border: `1px solid ${iconColor}14`,
+                  background: 'rgba(255,255,255,0.05)',
                   fontFamily: 'ui-monospace,monospace',
                   whiteSpace: 'nowrap',
                   transition: 'background 200ms',
