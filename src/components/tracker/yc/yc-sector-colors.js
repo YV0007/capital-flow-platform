@@ -21,12 +21,23 @@ export function iconForSector(sector) {
   return YC_SECTOR_ICONS[sector] || null;
 }
 
-// Subtle dotted background texture — applied to each company card so the
-// surface has some depth without resorting to colour. The dot is white
-// at 3.5% alpha over the card's flat #18181b base.
+// Card surface — vertical "lit from above" gradient (white highlight at the
+// top, soft black wash at the bottom) layered under a subtle dotted texture
+// so cards feel like elevated objects, matching the reference dashboard.
 export const CARD_TEXTURE = {
   backgroundColor: '#18181b',
-  backgroundImage: 'radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px)',
-  backgroundSize: '14px 14px',
-  backgroundPosition: '0 0',
+  backgroundImage: [
+    'linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0) 38%, rgba(0,0,0,0.10) 100%)',
+    'radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1.2px)',
+  ].join(', '),
+  backgroundSize: 'auto, 14px 14px',
+  backgroundPosition: '0 0, 0 0',
+  backgroundRepeat: 'no-repeat, repeat',
 };
+
+// Optional inset top-rim highlight — pair with the gradient above by adding
+// it to a card's `boxShadow` to mimic the reference's edge-lit corners.
+export const CARD_RIM_SHADOW =
+  '0 2px 10px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.04) inset';
+export const CARD_RIM_SHADOW_HOVER =
+  '0 10px 28px rgba(0,0,0,0.50), 0 1px 0 rgba(255,255,255,0.06) inset';

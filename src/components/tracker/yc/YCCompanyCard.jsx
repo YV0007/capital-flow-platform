@@ -1,6 +1,6 @@
 // Single company card in the landing grid.
 import React, { useMemo, useState } from 'react';
-import { iconForSector, CARD_TEXTURE } from './yc-sector-colors.js';
+import { iconForSector, CARD_TEXTURE, CARD_RIM_SHADOW, CARD_RIM_SHADOW_HOVER } from './yc-sector-colors.js';
 
 export default function YCCompanyCard({ company, onClick }) {
   const [hover, setHover] = useState(false);
@@ -15,8 +15,8 @@ export default function YCCompanyCard({ company, onClick }) {
       style={{
         position: 'relative',
         ...CARD_TEXTURE,
-        border: `1px solid ${hover ? '#3f3f46' : '#27272a'}`,
-        borderRadius: 10,
+        border: `1px solid ${hover ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.06)'}`,
+        borderRadius: 14,
         padding: '18px 18px 16px',
         cursor: 'pointer',
         textAlign: 'left',
@@ -24,9 +24,7 @@ export default function YCCompanyCard({ company, onClick }) {
         display: 'flex', flexDirection: 'column', gap: 12,
         minHeight: 168,
         transition: 'border-color 160ms, box-shadow 160ms, transform 160ms',
-        boxShadow: hover
-          ? '0 8px 24px rgba(0,0,0,0.45)'
-          : '0 2px 8px rgba(0,0,0,0.25)',
+        boxShadow: hover ? CARD_RIM_SHADOW_HOVER : CARD_RIM_SHADOW,
         transform: hover ? 'translateY(-1px)' : 'translateY(0)',
         overflow: 'hidden',
       }}
