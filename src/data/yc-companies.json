@@ -10,8 +10,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["AI Infrastructure", "DevOps"],
-    "website": "",
+    "sectors": [
+      "AI Infrastructure",
+      "DevOps"
+    ],
+    "website": "https://bentolabs.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -33,8 +36,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Industrial AI", "Voice AI"],
-    "website": "",
+    "sectors": [
+      "Industrial AI",
+      "Voice AI"
+    ],
+    "website": "https://pairio.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -56,8 +62,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Biotech", "Healthcare"],
-    "website": "",
+    "sectors": [
+      "Biotech",
+      "Healthcare"
+    ],
+    "website": "https://finaldose.bio",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -79,8 +88,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["DataCenter", "Climate Tech"],
-    "website": "",
+    "sectors": [
+      "DataCenter",
+      "Climate Tech"
+    ],
+    "website": "https://madrone.systems",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -102,8 +114,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["FinTech", "AI Agents"],
-    "website": "",
+    "sectors": [
+      "FinTech",
+      "AI Agents"
+    ],
+    "website": "https://cohesion.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -125,8 +140,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Market Research", "Consumer AI"],
-    "website": "",
+    "sectors": [
+      "Market Research",
+      "Consumer AI"
+    ],
+    "website": "https://foresight.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -148,8 +166,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Space", "Manufacturing"],
-    "website": "",
+    "sectors": [
+      "Space",
+      "Manufacturing"
+    ],
+    "website": "https://dispatch.space",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -171,8 +192,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Logistics", "AI Agents"],
-    "website": "",
+    "sectors": [
+      "Logistics",
+      "AI Agents"
+    ],
+    "website": "https://dayjob.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -194,8 +218,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["AI Infrastructure", "Data"],
-    "website": "",
+    "sectors": [
+      "AI Infrastructure",
+      "Data"
+    ],
+    "website": "https://perfectbit.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -217,8 +244,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["InsurTech", "AI"],
-    "website": "",
+    "sectors": [
+      "InsurTech",
+      "AI"
+    ],
+    "website": "https://gethedge.com",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -240,8 +270,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Logistics", "Computer Vision"],
-    "website": "",
+    "sectors": [
+      "Logistics",
+      "Computer Vision"
+    ],
+    "website": "https://transload.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -263,8 +296,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["AI Infrastructure", "DePIN"],
-    "website": "",
+    "sectors": [
+      "AI Infrastructure",
+      "DePIN"
+    ],
+    "website": "https://zibralabs.com",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -286,8 +322,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["B2B Sales", "AI Agents"],
-    "website": "",
+    "sectors": [
+      "B2B Sales",
+      "AI Agents"
+    ],
+    "website": "https://gojiberry.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -309,8 +348,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["E-commerce", "AI Agents"],
-    "website": "",
+    "sectors": [
+      "E-commerce",
+      "AI Agents"
+    ],
+    "website": "https://withkinect.com",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -332,8 +374,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Biotech", "Healthcare"],
-    "website": "",
+    "sectors": [
+      "Biotech",
+      "Healthcare"
+    ],
+    "website": "https://astraea.bio",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -355,8 +400,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Mental Health", "AI Agents"],
-    "website": "",
+    "sectors": [
+      "Mental Health",
+      "AI Agents"
+    ],
+    "website": "https://klarify.health",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -378,8 +426,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Developer Tools", "AI"],
-    "website": "",
+    "sectors": [
+      "Developer Tools",
+      "AI"
+    ],
+    "website": "https://lightsprint.dev",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -401,8 +452,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["AI Infrastructure", "Document AI"],
-    "website": "",
+    "sectors": [
+      "AI Infrastructure",
+      "Document AI"
+    ],
+    "website": "https://interfaze.ai",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -424,8 +478,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Compliance", "Retail"],
-    "website": "",
+    "sectors": [
+      "Compliance",
+      "Retail"
+    ],
+    "website": "https://complir.com",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -447,8 +504,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Generative AI", "Video"],
-    "website": "",
+    "sectors": [
+      "Generative AI",
+      "Video"
+    ],
+    "website": "https://keyframelabs.com",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",
@@ -470,8 +530,11 @@
     "founded_year": 2026,
     "team_size": null,
     "location": "",
-    "sectors": ["Medical Devices", "Healthcare"],
-    "website": "",
+    "sectors": [
+      "Medical Devices",
+      "Healthcare"
+    ],
+    "website": "https://adialante.com",
     "linkedin": "",
     "twitter": "",
     "crunchbase": "",

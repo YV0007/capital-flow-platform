@@ -5,11 +5,19 @@ export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
   if (!sectors || sectors.length === 0) return null;
 
   return (
-    <div style={{
-      display: 'flex', alignItems: 'center', gap: 8,
-      overflowX: 'auto', paddingBottom: 4,
-      borderBottom: '1px solid #18181b',
-    }}>
+    <div
+      className="yc-sector-scroll"
+      style={{
+        display: 'flex', alignItems: 'center', gap: 8,
+        overflowX: 'auto', paddingBottom: 4,
+        borderBottom: '1px solid #18181b',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
+      }}
+    >
+      <style>{`
+        .yc-sector-scroll::-webkit-scrollbar { display: none; height: 0; width: 0; }
+      `}</style>
       <div style={{
         fontSize: 10, color: '#71717a',
         fontFamily: 'ui-monospace,monospace',

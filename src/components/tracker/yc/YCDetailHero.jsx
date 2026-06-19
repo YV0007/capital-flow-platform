@@ -1,7 +1,7 @@
 // Big logo + name + tagline + pill row (batch, status, location, sectors).
 // YC orange (#FF6600) is used here for the batch badge — and ONLY here.
 import React from 'react';
-import { Logo } from './YCCompanyCard.jsx';
+import { Logo, domainFromUrl } from './YCCompanyCard.jsx';
 
 const STATUS_LABELS = {
   Active:   'Активна',
@@ -21,7 +21,7 @@ export default function YCDetailHero({ company }) {
 
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: 22 }}>
-      <Logo name={company.name} url={company.logo} size={92} />
+      <Logo name={company.name} url={company.logo} domain={domainFromUrl(company.website)} size={92} />
 
       <div style={{ flex: 1, minWidth: 0, paddingTop: 4 }}>
         <h1 style={{

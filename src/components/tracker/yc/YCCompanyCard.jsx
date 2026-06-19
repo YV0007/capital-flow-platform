@@ -1,5 +1,5 @@
 // Single company card in the landing grid.
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 export default function YCCompanyCard({ company, onClick }) {
   const [hover, setHover] = useState(false);
@@ -29,7 +29,7 @@ export default function YCCompanyCard({ company, onClick }) {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-        <Logo name={company.name} url={company.logo} size={60} />
+        <Logo name={company.name} url={company.logo} domain={domainFromUrl(company.website)} size={60} />
         <div style={{ flex: 1, minWidth: 0, paddingTop: 2 }}>
           <div style={{
             fontSize: 17, fontWeight: 700, color: '#fafafa',
@@ -77,24 +77,49 @@ export default function YCCompanyCard({ company, onClick }) {
   );
 }
 
-export function Logo({ name, url, size = 60, square = true }) {
-  const [failed, setFailed] = useState(false);
-  if (url && !failed) {
+// Strip protocol and "www." from a URL → bare domain. Returns null on failure.
+export function domainFromUrl(url) {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    return u.hostname.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+}
+
+// Logo component with multi-source fallback chain:
+// 1. explicit `url` (if provided)
+// 2. Clearbit logo for `domain`
+// 3. letter-circle fallback (always works)
+export function Logo({ name, url, domain, size = 60, square = true }) {
+  const [idx, setIdx] = useState(0);
+
+  const sources = useMemo(() => {
+    const arr = [];
+    if (url) arr.push(url);
+    if (domain) arr.push(`https://logo.clearbit.com/${domain}`);
+    return arr;
+  }, [url, domain]);
+
+  if (idx < sources.length) {
     return (
       <img
-        src={url}
+        src={sources[idx]}
         alt={name}
-        onError={() => setFailed(true)}
+        onError={() => setIdx(idx + 1)}
         style={{
           width: size, height: size,
           borderRadius: square ? 10 : '50%',
-          objectFit: 'cover',
-          background: '#27272a',
+          objectFit: 'contain',
+          background: '#fafafa',
           flexShrink: 0,
+          padding: 4,
         }}
       />
     );
   }
+
   const letter = (name || '?').trim().charAt(0).toUpperCase();
   return (
     <div style={{
