@@ -1,11 +1,18 @@
-// Per-company detail screen: back button + hero + 2-col body + founders strip.
+// Per-company detail screen: back button + hero + 2-col body + research
+// sections (funding, traction, team, moat, market, competition, risks,
+// momentum, unit economics, customer voice, data gaps, sources).
 import React from 'react';
 import YCDetailHero from './YCDetailHero.jsx';
 import YCMetadataCard from './YCMetadataCard.jsx';
 import YCFoundersStrip from './YCFoundersStrip.jsx';
+import YCResearchSections from './YCResearchSections.jsx';
 
-export default function YCDetail({ company, onBack }) {
-  const hasFounders = (company.founders || []).length > 0;
+export default function YCDetail({ company, research, onBack }) {
+  // Show the legacy founders strip only when the basic company record has
+  // founders AND the research bundle doesn't (the research has its own
+  // richer pedigree block).
+  const hasResearchFounders = research?.team?.founders?.length > 0;
+  const hasLegacyFounders = (company.founders || []).length > 0 && !hasResearchFounders;
 
   return (
     <div>
@@ -64,8 +71,8 @@ export default function YCDetail({ company, onBack }) {
         </div>
       </div>
 
-      {/* Founders */}
-      {hasFounders && (
+      {/* Legacy founders strip — only when no research-bundle founders */}
+      {hasLegacyFounders && (
         <div style={{ marginTop: 40 }}>
           <div style={{
             fontSize: 11, color: '#71717a',
@@ -79,6 +86,11 @@ export default function YCDetail({ company, onBack }) {
           <YCFoundersStrip founders={company.founders} />
         </div>
       )}
+
+      {/* Rich research bundle — funding, traction, team, moat, market,
+          competition, risks, momentum, unit economics, customer voice,
+          data gaps, sources. */}
+      <YCResearchSections research={research} />
     </div>
   );
 }
