@@ -82,32 +82,90 @@ export default function YCResearchSections({ research }) {
     );
   }
 
-  // Compose the section list with their non-empty checks. Each entry only
-  // renders when it carries at least one meaningful value — this is what
-  // keeps the page from being a wall of "—".
+  // Cards grouped into named sections so the page reads as logical
+  // chapters instead of a single 9-card grid. Empty group renders nothing.
   return (
-    <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <Row>
+    <div style={{ marginTop: 44, display: 'flex', flexDirection: 'column', gap: 40 }}>
+      <Group title="Сделка">
         <FundingSection data={research.funding} />
-        <TractionSection data={research.traction} />
-      </Row>
+      </Group>
 
-      <Row>
+      <Group title="Что есть у компании">
+        <TractionSection data={research.traction} />
         <MoatSection data={research.moat} />
         <MarketSection data={research.market} />
-      </Row>
-
-      <Row>
         <CompetitionSection data={research.competition} />
+      </Group>
+
+      <Group title="Команда">
         <TeamSection data={research.team} />
-      </Row>
+        {research.team?.founders?.length > 0 && (
+          <FullWidth>
+            <FoundersBlock founders={research.team.founders} />
+          </FullWidth>
+        )}
+      </Group>
 
-      {research.team?.founders?.length > 0 && (
-        <FoundersBlock founders={research.team.founders} />
-      )}
+      <Group title="Активность">
+        {research.momentum?.length > 0 && (
+          <FullWidth>
+            <MomentumSection events={research.momentum} />
+          </FullWidth>
+        )}
+      </Group>
 
-      {research.momentum?.length > 0 && <MomentumSection events={research.momentum} />}
-      {research.sources?.length > 0 && <SourcesSection sources={research.sources} />}
+      <Group title="Источники">
+        {research.sources?.length > 0 && (
+          <FullWidth>
+            <SourcesSection sources={research.sources} />
+          </FullWidth>
+        )}
+      </Group>
+    </div>
+  );
+}
+
+// Section group with header rule + auto-fit grid of cards inside. Drops
+// out entirely when every child resolved to null (so e.g. "Активность"
+// disappears for a company with no momentum events).
+function Group({ title, children }) {
+  const items = React.Children.toArray(children).filter(Boolean);
+  if (items.length === 0) return null;
+  return (
+    <section>
+      <header style={{
+        display: 'flex', alignItems: 'center', gap: 14,
+        marginBottom: 16,
+      }}>
+        <span style={{
+          fontSize: 11, color: '#a1a1aa',
+          fontFamily: 'ui-monospace,monospace',
+          letterSpacing: '0.22em', fontWeight: 700,
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+        }}>
+          {title}
+        </span>
+        <span style={{ flex: 1, height: 1, background: '#18181b' }} />
+      </header>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gap: 14,
+      }}>
+        {items}
+      </div>
+    </section>
+  );
+}
+
+// Wrapper that forces its child to span every column of the parent grid —
+// used for the founders pedigree block, momentum timeline, and sources
+// list which want to read full-width inside their group.
+function FullWidth({ children }) {
+  return (
+    <div style={{ gridColumn: '1 / -1' }}>
+      {children}
     </div>
   );
 }
@@ -115,21 +173,6 @@ export default function YCResearchSections({ research }) {
 // ─────────────────────────────────────────────────────────────────────────
 // Layout primitives
 // ─────────────────────────────────────────────────────────────────────────
-function Row({ children }) {
-  // Drop nulls so empty sections don't leave gaps in the grid.
-  const items = React.Children.toArray(children).filter(Boolean);
-  if (items.length === 0) return null;
-  return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-      gap: 16,
-    }}>
-      {items}
-    </div>
-  );
-}
-
 function Card({ icon: Icon, title, children, accent = '#a1a1aa' }) {
   return (
     <section style={{
