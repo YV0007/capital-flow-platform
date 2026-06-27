@@ -25,6 +25,7 @@ const TRACKERS = [
       { label: 'Стадия',     value: 'Seed' },
       { label: 'Меморандум', value: 'Apr 2026' },
     ],
+    lifecycle: { status: 'active' },
   },
   {
     id: 'cursor',
@@ -38,6 +39,14 @@ const TRACKERS = [
       { label: 'Стадия',     value: 'Series C' },
       { label: 'Меморандум', value: 'Feb 2026' },
     ],
+    // SpaceX закрыл сделку на $60B — позиция реализована, продолжаем
+    // держать карточку для истории и финального отчёта.
+    lifecycle: {
+      status: 'acquired',
+      buyer: 'SpaceX',
+      amount: '$60B',
+      date: 'Dec 2026',
+    },
   },
   {
     id: 'yc',
@@ -51,8 +60,53 @@ const TRACKERS = [
       { label: 'Батч',     value: 'Summer 2026' },
       { label: 'Компаний', value: String(ycCompaniesData.length) },
     ],
+    lifecycle: { status: 'active' },
   },
 ];
+
+// ─ Lifecycle visual system — extend by adding a key to this map. Each entry
+// can override: the pill label & accent, an optional diagonal corner ribbon
+// stamp, an optional `desaturate` flag (greys the card to signal "no longer
+// in motion"), and a stats override (e.g. show Exit / Сумма / Дата instead
+// of Стадия / Меморандум when the position has been realised).
+// ─────────────────────────────────────────────────────────────────────────
+const LIFECYCLE_STYLES = {
+  active: {
+    // Default — no overrides. Card uses the tracker's own accent & stats.
+  },
+  acquired: {
+    accentOverride: '#10b981',
+    pillLabel: (lc) => `Выход · ${lc.buyer}`,
+    ribbonLabel: 'EXITED',
+    desaturate: true,
+    statsOverride: (lc) => [
+      { label: 'Выход',  value: lc.amount || 'realised' },
+      { label: 'Сделка', value: lc.date   || '—'        },
+    ],
+  },
+  ipo: {
+    accentOverride: '#22D3EE',
+    pillLabel: (lc) => `IPO${lc.ticker ? ' · ' + lc.ticker : ''}`,
+    ribbonLabel: 'IPO',
+    desaturate: false,
+    statsOverride: (lc) => [
+      { label: 'IPO цена', value: lc.amount || '—' },
+      { label: 'Дата',     value: lc.date   || '—' },
+    ],
+  },
+  shutdown: {
+    accentOverride: '#71717a',
+    pillLabel: () => 'Закрыта',
+    ribbonLabel: 'CLOSED',
+    desaturate: true,
+    statsOverride: () => [],
+  },
+};
+
+function lifecycleStyle(tracker) {
+  const status = tracker.lifecycle?.status || 'active';
+  return LIFECYCLE_STYLES[status] || LIFECYCLE_STYLES.active;
+}
 
 export default function TrackerLanding({ onOpen }) {
   const [query, setQuery] = useState('');
@@ -168,6 +222,16 @@ function TrackerCard({ tracker, index, onOpen }) {
   const [hover, setHover] = useState(false);
   const [logoFailed, setLogoFailed] = useState(false);
   const showLogo = !!tracker.domain && !logoFailed;
+
+  // Lifecycle — drives pill, ribbon, desaturation, and stats override.
+  const lcStyle = lifecycleStyle(tracker);
+  const lc = tracker.lifecycle || { status: 'active' };
+  const accent = lcStyle.accentOverride || tracker.accent;
+  const pillLabel = lcStyle.pillLabel ? lcStyle.pillLabel(lc) : tracker.typeLabel;
+  const stats = lcStyle.statsOverride ? lcStyle.statsOverride(lc) : tracker.stats;
+  const ribbon = lcStyle.ribbonLabel || null;
+  const desaturate = !!lcStyle.desaturate;
+
   return (
     <button
       onClick={() => onOpen(tracker.id)}
@@ -176,7 +240,7 @@ function TrackerCard({ tracker, index, onOpen }) {
       style={{
         position: 'relative',
         background: 'linear-gradient(135deg, rgba(24,24,27,0.95), rgba(9,9,11,0.95))',
-        border: `1px solid ${hover ? tracker.accent + '60' : '#27272a'}`,
+        border: `1px solid ${hover ? accent + '60' : '#27272a'}`,
         borderRadius: 16,
         padding: '22px 24px 20px',
         cursor: 'pointer',
@@ -188,14 +252,45 @@ function TrackerCard({ tracker, index, onOpen }) {
         gap: 16,
         minHeight: 230,
         overflow: 'hidden',
-        transition: 'transform 280ms cubic-bezier(0.2,0.8,0.2,1), border-color 220ms, box-shadow 280ms',
+        // Desaturate the realised / closed cards so they visually step
+        // back from the live trackers without becoming invisible.
+        filter: desaturate ? (hover ? 'saturate(0.85)' : 'saturate(0.55)') : 'none',
+        transition: 'transform 280ms cubic-bezier(0.2,0.8,0.2,1), border-color 220ms, box-shadow 280ms, filter 220ms',
         transform: hover ? 'translateY(-4px)' : 'translateY(0)',
         boxShadow: hover
-          ? `0 20px 40px -12px ${tracker.accent}33, 0 0 0 1px ${tracker.accent}1a`
+          ? `0 20px 40px -12px ${accent}33, 0 0 0 1px ${accent}1a`
           : 'none',
         animation: `trackerCardIn 600ms cubic-bezier(0.2,0.8,0.2,1) ${index * 90}ms backwards`,
       }}
     >
+      {/* Diagonal corner ribbon — only renders when lifecycle has one */}
+      {ribbon && (
+        <div style={{
+          position: 'absolute',
+          top: 0, right: 0,
+          width: 110, height: 110,
+          overflow: 'hidden',
+          pointerEvents: 'none',
+          zIndex: 2,
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: 18, right: -36,
+            transform: 'rotate(45deg)',
+            background: accent,
+            color: '#0a0a0a',
+            fontSize: 9.5,
+            fontWeight: 800,
+            letterSpacing: '0.20em',
+            padding: '4px 40px',
+            textAlign: 'center',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.55)',
+            fontFamily: 'ui-monospace,monospace',
+          }}>
+            {ribbon}
+          </div>
+        </div>
+      )}
       {/* Top — logo block + type pill */}
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12,
@@ -212,7 +307,7 @@ function TrackerCard({ tracker, index, onOpen }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0,
           overflow: 'hidden',
-          boxShadow: hover ? `0 0 24px ${tracker.accent}33` : 'none',
+          boxShadow: hover ? `0 0 24px ${accent}33` : 'none',
           transition: 'box-shadow 280ms',
         }}>
           {showLogo ? (
@@ -228,7 +323,7 @@ function TrackerCard({ tracker, index, onOpen }) {
           ) : (
             <span style={{
               fontSize: tracker.initials.length === 1 ? 24 : 18,
-              fontWeight: 800, color: tracker.accent,
+              fontWeight: 800, color: accent,
               letterSpacing: '-0.02em',
               fontFamily: 'ui-monospace,monospace',
             }}>
@@ -238,21 +333,21 @@ function TrackerCard({ tracker, index, onOpen }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{
-            fontSize: 9.5, color: tracker.accent,
+            fontSize: 9.5, color: accent,
             fontFamily: 'ui-monospace,monospace',
             padding: '4px 10px', borderRadius: 4,
-            background: `${tracker.accent}14`,
-            border: `1px solid ${tracker.accent}33`,
+            background: `${accent}14`,
+            border: `1px solid ${accent}33`,
             letterSpacing: '0.12em', fontWeight: 700,
             textTransform: 'uppercase',
             whiteSpace: 'nowrap',
           }}>
-            {tracker.typeLabel}
+            {pillLabel}
           </span>
           <ArrowUpRight
             size={14}
             style={{
-              color: hover ? tracker.accent : '#52525b',
+              color: hover ? accent : '#52525b',
               opacity: hover ? 1 : 0.6,
               transition: 'all 220ms',
               transform: hover ? 'translate(2px, -2px)' : 'none',
@@ -274,33 +369,37 @@ function TrackerCard({ tracker, index, onOpen }) {
         </div>
       </div>
 
-      {/* Bottom — stats row */}
-      <div style={{
-        marginTop: 'auto', paddingTop: 14,
-        borderTop: '1px solid #27272a',
-        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12,
-      }}>
-        {tracker.stats.map((s, i) => (
-          <div key={i}>
-            <div style={{
-              fontSize: 9.5, color: '#71717a',
-              fontFamily: 'ui-monospace,monospace',
-              letterSpacing: '0.08em', textTransform: 'uppercase',
-              marginBottom: 4,
-            }}>
-              {s.label}
+      {/* Bottom — stats row (lifecycle can override what's shown here) */}
+      {stats && stats.length > 0 && (
+        <div style={{
+          marginTop: 'auto', paddingTop: 14,
+          borderTop: '1px solid #27272a',
+          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12,
+        }}>
+          {stats.map((s, i) => (
+            <div key={i}>
+              <div style={{
+                fontSize: 9.5, color: '#71717a',
+                fontFamily: 'ui-monospace,monospace',
+                letterSpacing: '0.08em', textTransform: 'uppercase',
+                marginBottom: 4,
+              }}>
+                {s.label}
+              </div>
+              <div style={{
+                fontSize: 14, color: '#fafafa', fontWeight: 600,
+              }}>
+                {s.value}
+              </div>
             </div>
-            <div style={{ fontSize: 14, color: '#fafafa', fontWeight: 600 }}>
-              {s.value}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Hover-only accent glow at the bottom edge */}
       <div style={{
         position: 'absolute', left: 0, right: 0, bottom: 0, height: 2,
-        background: `linear-gradient(to right, transparent, ${tracker.accent}, transparent)`,
+        background: `linear-gradient(to right, transparent, ${accent}, transparent)`,
         opacity: hover ? 0.8 : 0,
         transition: 'opacity 220ms',
       }} />
