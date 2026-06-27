@@ -19,7 +19,7 @@ const TRACKERS = [
     initials: 'Z',
     domain: 'zeely.ai',
     accent: '#22D3EE',
-    typeLabel: 'Глубокий трекер',
+    typeLabel: 'Активная позиция',
     subtitle: 'Активный мониторинг сид-позиции в Zeely.ai — наблюдения, скоринг, синдикат.',
     stats: [
       { label: 'Стадия',     value: 'Seed' },
@@ -33,7 +33,7 @@ const TRACKERS = [
     initials: 'C',
     domain: 'cursor.com',
     accent: '#f59e0b',
-    typeLabel: 'Глубокий трекер',
+    typeLabel: 'Активная позиция',
     subtitle: 'Мониторинг позиции в Anysphere — ARR, бенчмарки, конкурентная динамика.',
     stats: [
       { label: 'Стадия',     value: 'Series C' },
@@ -54,7 +54,7 @@ const TRACKERS = [
     initials: 'YC',
     domain: 'ycombinator.com',
     accent: '#FF6600',
-    typeLabel: 'Портфолио',
+    typeLabel: 'Батч YC',
     subtitle: 'Y Combinator Summer 2026 — каталог стартапов с research-картой по каждому.',
     stats: [
       { label: 'Батч',     value: 'Summer 2026' },
