@@ -1,18 +1,42 @@
-// Single company card — bento-grid style ported from the reference spec.
+// Single company card — bento-grid style with at-a-glance tracking info.
 // Icon box top-left · status badge top-right · title + meta inline ·
-// tagline · # tag chips + "Открыть →" CTA. Dot texture fades in on hover.
+// tagline · cap + founders + website micro-row · # tag chips + "Открыть →"
+// CTA. Dot texture fades in on hover.
 import React, { useMemo, useState } from 'react';
+import { ExternalLink } from 'lucide-react';
 import {
   iconForSector,
   iconColorForSector,
   YC_STATUS_LABELS,
   HOVER_DOT_TEXTURE,
 } from './yc-sector-colors.js';
+import ycResearchData from '../../../data/yc-research.json';
+
+// Lookup founders by company name so the listing card can show a compact
+// founder line without plumbing through props.
+const RESEARCH_BY_NAME = ycResearchData.reduce((acc, r) => {
+  acc[r.company_name.trim().toLowerCase()] = r;
+  return acc;
+}, {});
+
+// "Abhinav Soni" → "A. Soni". Compact byline for the card footer.
+function shortFounder(fullName) {
+  if (!fullName) return '';
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0];
+  return `${parts[0][0]}. ${parts.slice(1).join(' ')}`;
+}
 
 export default function YCCompanyCard({ company, onClick }) {
   const [hover, setHover] = useState(false);
   const visibleSectors = (company.sectors || []).slice(0, 3);
   const statusLabel = YC_STATUS_LABELS[company.status] || company.status || 'Активна';
+
+  // Pull just-enough research for the card footer.
+  const research = RESEARCH_BY_NAME[company.name.trim().toLowerCase()];
+  const founders = (research?.team?.founders || []).map(f => shortFounder(f.name)).filter(Boolean);
+  const foundersLine = founders.slice(0, 2).join(' · ');
+  const cap = company.yc_cap && company.yc_cap !== 'MFN' ? `cap ${company.yc_cap}` : company.yc_cap || null;
 
   return (
     <button
@@ -103,6 +127,46 @@ export default function YCCompanyCard({ company, onClick }) {
         }}>
           {company.tagline}
         </p>
+
+        {/* Micro-row — founders · cap · website link. Renders only when any
+            of the three has a value, so cards without research stay clean. */}
+        {(foundersLine || cap || company.website) && (
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
+            fontSize: 11, color: '#71717a',
+            fontFamily: 'ui-monospace,monospace',
+            letterSpacing: '0.02em',
+          }}>
+            {foundersLine && (
+              <span style={{ color: '#a1a1aa' }}>{foundersLine}</span>
+            )}
+            {cap && (
+              <>
+                {foundersLine && <span style={{ color: '#3f3f46' }}>·</span>}
+                <span>{cap}</span>
+              </>
+            )}
+            {company.website && (
+              <>
+                {(foundersLine || cap) && <span style={{ color: '#3f3f46' }}>·</span>}
+                <a
+                  href={company.website} target="_blank" rel="noopener noreferrer"
+                  onClick={e => e.stopPropagation()}
+                  title={company.website}
+                  style={{
+                    color: '#71717a', textDecoration: 'none',
+                    display: 'inline-flex', alignItems: 'center', gap: 3,
+                    transition: 'color 160ms',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
+                  onMouseLeave={e => e.currentTarget.style.color = '#71717a'}
+                >
+                  сайт <ExternalLink size={10} />
+                </a>
+              </>
+            )}
+          </div>
+        )}
 
         {/* Bottom row — # tag chips with small coloured sector icon + CTA */}
         <div style={{
