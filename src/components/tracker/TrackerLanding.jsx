@@ -17,6 +17,7 @@ const TRACKERS = [
     id: 'zeely',
     name: 'Zeely.ai',
     initials: 'Z',
+    domain: 'zeely.ai',
     accent: '#22D3EE',
     typeLabel: 'Глубокий трекер',
     subtitle: 'Активный мониторинг сид-позиции в Zeely.ai — наблюдения, скоринг, синдикат.',
@@ -29,6 +30,7 @@ const TRACKERS = [
     id: 'cursor',
     name: 'Cursor',
     initials: 'C',
+    domain: 'cursor.com',
     accent: '#f59e0b',
     typeLabel: 'Глубокий трекер',
     subtitle: 'Мониторинг позиции в Anysphere — ARR, бенчмарки, конкурентная динамика.',
@@ -41,6 +43,7 @@ const TRACKERS = [
     id: 'yc',
     name: 'Y Combinator',
     initials: 'YC',
+    domain: 'ycombinator.com',
     accent: '#FF6600',
     typeLabel: 'Портфолио',
     subtitle: 'Y Combinator Summer 2026 — каталог стартапов с research-картой по каждому.',
@@ -163,6 +166,8 @@ export default function TrackerLanding({ onOpen }) {
 
 function TrackerCard({ tracker, index, onOpen }) {
   const [hover, setHover] = useState(false);
+  const [logoFailed, setLogoFailed] = useState(false);
+  const showLogo = !!tracker.domain && !logoFailed;
   return (
     <button
       onClick={() => onOpen(tracker.id)}
@@ -197,21 +202,39 @@ function TrackerCard({ tracker, index, onOpen }) {
       }}>
         <div style={{
           width: 56, height: 56, borderRadius: 14,
-          background: `linear-gradient(135deg, ${tracker.accent}26, ${tracker.accent}08)`,
-          border: `1px solid ${tracker.accent}40`,
+          // White frame when we render the real brand favicon so logos with
+          // transparent backgrounds read cleanly; tinted gradient when we
+          // fall back to monogram initials.
+          background: showLogo
+            ? '#fafafa'
+            : `linear-gradient(135deg, ${tracker.accent}26, ${tracker.accent}08)`,
+          border: `1px solid ${showLogo ? '#e4e4e7' : tracker.accent + '40'}`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0,
+          overflow: 'hidden',
           boxShadow: hover ? `0 0 24px ${tracker.accent}33` : 'none',
           transition: 'box-shadow 280ms',
         }}>
-          <span style={{
-            fontSize: tracker.initials.length === 1 ? 24 : 18,
-            fontWeight: 800, color: tracker.accent,
-            letterSpacing: '-0.02em',
-            fontFamily: 'ui-monospace,monospace',
-          }}>
-            {tracker.initials}
-          </span>
+          {showLogo ? (
+            <img
+              src={`https://www.google.com/s2/favicons?domain=${tracker.domain}&sz=128`}
+              alt={tracker.name}
+              onError={() => setLogoFailed(true)}
+              style={{
+                width: 40, height: 40, objectFit: 'contain',
+                display: 'block',
+              }}
+            />
+          ) : (
+            <span style={{
+              fontSize: tracker.initials.length === 1 ? 24 : 18,
+              fontWeight: 800, color: tracker.accent,
+              letterSpacing: '-0.02em',
+              fontFamily: 'ui-monospace,monospace',
+            }}>
+              {tracker.initials}
+            </span>
+          )}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{
