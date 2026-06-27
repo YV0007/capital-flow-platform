@@ -7,7 +7,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
-  Activity, BookOpen, ChevronDown,
+  Activity, BookOpen, ChevronDown, ChevronLeft,
   Target, Layers, Gauge, DollarSign, MessageSquare, Settings as SettingsIcon,
 } from 'lucide-react';
 
@@ -15,6 +15,7 @@ import Header from './components/Header.jsx';
 import HomeLanding from './components/HomeLanding.jsx';
 import ResearchLanding from './components/research/ResearchLanding.jsx';
 import ResearchDetail from './components/research/ResearchDetail.jsx';
+import TrackerLanding from './components/tracker/TrackerLanding.jsx';
 
 import { loadKey, saveKey } from './lib/storage.js';
 import { useWorkerUrl } from './lib/workerUrl.js';
@@ -76,12 +77,24 @@ function loadInitialMode() {
 export default function App() {
   const [mode, setMode] = useState(loadInitialMode);
   const [activeResearchId, setActiveResearchId] = useState(null);
+  // Tracker landing page is shown when `trackerOpen` is false. Entering
+  // tracker mode always lands here; clicking a card flips this true and
+  // the existing company-tracker UI takes over.
+  const [trackerOpen, setTrackerOpen] = useState(false);
 
   const updateMode = (next) => {
     setMode(next);
     setActiveResearchId(null);
+    // Always land on the tracker home when (re-)entering tracker mode.
+    setTrackerOpen(false);
     try { window.localStorage.setItem(MODE_KEY, next); } catch {}
   };
+
+  const openTrackerFor = (companyId) => {
+    setTrackerOpen(true);
+    if (companyId) switchCompany(companyId);
+  };
+  const closeTracker = () => setTrackerOpen(false);
 
   // ─── Tracker app state ────────────────────────────────────────────
   const [publicDataAt, setPublicDataAt] = useState(null);
@@ -372,6 +385,17 @@ export default function App() {
   }
 
   // ─── Tracker mode ─────────────────────────────────────────────────
+  // Tracker home — a chooser between Zeely / Cursor / Y Combinator and any
+  // future tracker. Shown before any specific tracker is opened.
+  if (!trackerOpen) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0A0A0B', color: '#e4e4e7' }}>
+        <Header mode={mode} onChangeMode={updateMode} />
+        <TrackerLanding onOpen={openTrackerFor} />
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: '#0A0A0B' }}>
@@ -436,7 +460,7 @@ export default function App() {
           borderBottom: '1px solid rgba(255,255,255,0.06)',
         }}>
         <div className="px-4 py-3 flex items-center justify-between gap-4">
-          {/* Left: brand wordmark + company switcher */}
+          {/* Left: brand wordmark + back-to-landing + company switcher */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => updateMode('home')}
@@ -456,6 +480,28 @@ export default function App() {
               onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
             >
               AB Investment
+            </button>
+            <button
+              onClick={closeTracker}
+              title="Все трекеры"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 4,
+                background: 'transparent',
+                border: '1px solid #27272a',
+                borderRadius: 6,
+                cursor: 'pointer',
+                padding: '4px 9px 4px 6px',
+                fontSize: 11, fontWeight: 600,
+                color: '#a1a1aa',
+                fontFamily: 'ui-monospace,monospace',
+                letterSpacing: '0.05em',
+                transition: 'all 140ms',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#fafafa'; e.currentTarget.style.borderColor = '#3f3f46'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#a1a1aa'; e.currentTarget.style.borderColor = '#27272a'; }}
+            >
+              <ChevronLeft size={13} />
+              Трекеры
             </button>
             <CompanyLogo brand={company.name} size={28} />
             <div className="relative">
