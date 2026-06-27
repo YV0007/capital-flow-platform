@@ -67,7 +67,7 @@ export default function YCDetail({ company, research, onBack }) {
 
         {/* Right: sticky metadata */}
         <div style={{ position: 'sticky', top: 140 }}>
-          <YCMetadataCard company={company} />
+          <YCMetadataCard company={company} research={research} />
         </div>
       </div>
 

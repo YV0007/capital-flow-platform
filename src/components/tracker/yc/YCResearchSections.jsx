@@ -112,7 +112,6 @@ export default function YCResearchSections({ research }) {
         <FoundersBlock founders={research.team.founders} />
       )}
 
-      {research.risks?.length > 0 && <RisksSection risks={research.risks} />}
       {research.momentum?.length > 0 && <MomentumSection events={research.momentum} />}
       {research.sources?.length > 0 && <SourcesSection sources={research.sources} />}
     </div>
