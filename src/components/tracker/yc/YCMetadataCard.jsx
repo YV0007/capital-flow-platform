@@ -12,13 +12,6 @@ const STATUS_LABELS = {
   Acquired: 'Куплена',
 };
 
-const HIRING_VELOCITY_LABELS = {
-  fast:   'быстрый',
-  steady: 'устойчивый',
-  slow:   'медленный',
-  paused: 'на паузе',
-};
-
 const isBlank = (v) =>
   v === null || v === undefined || (typeof v === 'string' && v.trim() === '');
 
@@ -49,7 +42,6 @@ export default function YCMetadataCard({ company, research }) {
 
   const headcount   = team?.headcount_current;
   const hcDelta     = headcountDelta(headcount, team?.headcount_6mo_ago);
-  const velocity    = HIRING_VELOCITY_LABELS[team?.hiring_velocity] || team?.hiring_velocity;
   const lead        = funding?.last_round_lead_investor || company.yc_round_lead;
   const stage       = funding?.last_round_stage;
   const sector      = market?.sub_sector || market?.sector;
@@ -61,7 +53,6 @@ export default function YCMetadataCard({ company, research }) {
     { label: 'Команда',      value: headcount != null
                                 ? (hcDelta ? `${headcount} · ${hcDelta}` : String(headcount))
                                 : null },
-    { label: 'Темп найма',   value: velocity },
     { label: 'Основана',     value: company.founded_year ? String(company.founded_year) : null },
     { label: 'Батч',         value: company.batch },
     { label: 'Статус',       value: STATUS_LABELS[company.status] || company.status },

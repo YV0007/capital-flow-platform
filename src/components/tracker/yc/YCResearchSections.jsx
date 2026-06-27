@@ -66,12 +66,6 @@ const MOMENTUM_TYPE_LABELS = {
   milestone:   'веха',
 };
 
-const HIRING_VELOCITY_LABELS = {
-  fast:   'быстрый',
-  steady: 'устойчивый',
-  slow:   'медленный',
-  paused: 'на паузе',
-};
 
 // ─────────────────────────────────────────────────────────────────────────
 export default function YCResearchSections({ research }) {
@@ -279,25 +273,95 @@ function FundingSection({ data }) {
   );
 }
 
+// Treat as a "clean" metric (gets the big Headline treatment) only when
+// it looks like a number/figure — starts with a digit or $, short, no
+// Russian/English prose. Anything else falls through to a labeled
+// sub-block so we never render a 60-character hedge sentence as a giant
+// monospace headline.
+function isCleanMetric(value) {
+  if (isBlank(value)) return false;
+  const v = String(value).trim();
+  if (v.length > 24) return false;
+  return /^[\$\d]/.test(v) && !/\s.*\s.*\s/.test(v);
+}
+
 function TractionSection({ data }) {
   if (!data) return null;
-  const anything = !isBlank(data.primary_metric_value)
-    || !isBlank(data.primary_metric_type)
+  const metricVal = data.primary_metric_value;
+  const metricLabel = data.primary_metric_type || 'Метрика';
+  const cleanMetric = isCleanMetric(metricVal);
+
+  const anything = !isBlank(metricVal)
     || !isBlank(data.growth_rate)
     || hasItems(data.notable_customers)
     || !isBlank(data.milestones);
   if (!anything) return null;
 
   return (
-    <Card icon={Activity} title="Что показывают" accent="#22D3EE">
-      {!isBlank(data.primary_metric_value) && (
-        <Headline label={data.primary_metric_type || 'основная метрика'} value={data.primary_metric_value} accent="#22D3EE" />
+    <Card icon={Activity} title="Прогресс" accent="#22D3EE">
+      {cleanMetric && (
+        <Headline label={metricLabel} value={metricVal} accent="#22D3EE" />
       )}
-      <Stat label="Рост" value={data.growth_rate} mono />
-      <TagRow label="Заметные клиенты" items={data.notable_customers} />
-      {!isBlank(data.milestones) && <Para>{data.milestones}</Para>}
-      {!isBlank(data.notes) && <Para dim>{data.notes}</Para>}
+
+      {!cleanMetric && !isBlank(metricVal) && (
+        <SubBlock label={metricLabel}>
+          <Para>{metricVal}</Para>
+        </SubBlock>
+      )}
+
+      {!isBlank(data.growth_rate) && (
+        <SubBlock label="Рост">
+          <span style={{
+            fontSize: 14, color: '#22D3EE', fontWeight: 700,
+            fontFamily: 'ui-monospace,monospace',
+          }}>
+            {data.growth_rate}
+          </span>
+        </SubBlock>
+      )}
+
+      {hasItems(data.notable_customers) && (
+        <SubBlock label="Клиенты">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            {data.notable_customers.map((c, i) => <Tag key={i} text={c} small />)}
+          </div>
+        </SubBlock>
+      )}
+
+      {!isBlank(data.milestones) && (
+        <SubBlock label="Вехи">
+          <Para>{data.milestones}</Para>
+        </SubBlock>
+      )}
+
+      {!isBlank(data.notes) && (
+        <div style={{
+          fontSize: 11, color: '#71717a', fontStyle: 'italic',
+          lineHeight: 1.6, paddingTop: 8,
+          borderTop: '1px dashed #18181b',
+        }}>
+          NB · {data.notes}
+        </div>
+      )}
     </Card>
+  );
+}
+
+// Labeled sub-section inside a card — small uppercase mono label above
+// the content. Used to give each fact its own clear container.
+function SubBlock({ label, children }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <div style={{
+        fontSize: 9.5, color: '#71717a',
+        fontFamily: 'ui-monospace,monospace',
+        letterSpacing: '0.14em', fontWeight: 700,
+        textTransform: 'uppercase',
+      }}>
+        {label}
+      </div>
+      {children}
+    </div>
   );
 }
 
@@ -383,10 +447,9 @@ function CompetitionSection({ data }) {
 function TeamSection({ data }) {
   if (!data) return null;
   const anything = !isNil(data.headcount_current) || !isNil(data.headcount_6mo_ago)
-    || !isBlank(data.hiring_velocity) || hasItems(data.key_hires);
+    || hasItems(data.key_hires);
   if (!anything) return null;
 
-  const velocityLabel = HIRING_VELOCITY_LABELS[data.hiring_velocity] || data.hiring_velocity;
   const headcount = data.headcount_current;
   const headcount6 = data.headcount_6mo_ago;
   const delta = (!isNil(headcount) && !isNil(headcount6))
@@ -398,7 +461,6 @@ function TeamSection({ data }) {
       {!isNil(headcount) && (
         <Headline label={delta || 'человек в команде'} value={String(headcount)} accent="#ec4899" />
       )}
-      <Stat label="Темп найма" value={velocityLabel} />
       <TagRow label="Ключевые наймы" items={data.key_hires} />
     </Card>
   );
