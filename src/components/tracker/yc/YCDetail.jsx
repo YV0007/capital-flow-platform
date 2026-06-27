@@ -39,10 +39,9 @@ export default function YCDetail({ company, research, onBack }) {
       {/* Hero */}
       <YCDetailHero company={company} />
 
-      {/* Two-column body — description AND every research section live
-          in the left column so the page reads top-to-bottom while the
-          metadata card stays pinned on the right and never leaves an
-          empty gutter under the description. */}
+      {/* Body — description on the left, sticky metadata card on the
+          right. Research sections live full-width below the body so
+          they get the breathing room each group needs. */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'minmax(0, 2fr) minmax(280px, 1fr)',
@@ -61,32 +60,35 @@ export default function YCDetail({ company, research, onBack }) {
           </div>
           <div style={{
             fontSize: 15, color: '#e4e4e7', lineHeight: 1.75,
+            maxWidth: 720,
           }}>
             {company.description}
           </div>
-
-          {hasLegacyFounders && (
-            <div style={{ marginTop: 32 }}>
-              <div style={{
-                fontSize: 11, color: '#71717a',
-                fontFamily: 'ui-monospace,monospace',
-                letterSpacing: '0.14em', fontWeight: 700,
-                marginBottom: 14,
-                textTransform: 'uppercase',
-              }}>
-                Основатели
-              </div>
-              <YCFoundersStrip founders={company.founders} />
-            </div>
-          )}
-
-          <YCResearchSections research={research} />
         </div>
 
         <div style={{ position: 'sticky', top: 140 }}>
           <YCMetadataCard company={company} research={research} />
         </div>
       </div>
+
+      {hasLegacyFounders && (
+        <div style={{ marginTop: 48 }}>
+          <div style={{
+            fontSize: 11, color: '#71717a',
+            fontFamily: 'ui-monospace,monospace',
+            letterSpacing: '0.14em', fontWeight: 700,
+            marginBottom: 14,
+            textTransform: 'uppercase',
+          }}>
+            Основатели
+          </div>
+          <YCFoundersStrip founders={company.founders} />
+        </div>
+      )}
+
+      {/* Research bundle — sits below the body, full canvas width so the
+          groups can breathe and the 2-up card grid has room to read. */}
+      <YCResearchSections research={research} />
     </div>
   );
 }

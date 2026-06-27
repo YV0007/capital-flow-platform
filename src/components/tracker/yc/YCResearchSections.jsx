@@ -82,10 +82,11 @@ export default function YCResearchSections({ research }) {
     );
   }
 
-  // Cards grouped into named sections so the page reads as logical
-  // chapters instead of a single 9-card grid. Empty group renders nothing.
+  // Cards grouped into named chapters so the page reads as sections
+  // instead of a single 9-card grid. Each Group is separated by a wide
+  // 64px gap and its own header rule. Empty group renders nothing.
   return (
-    <div style={{ marginTop: 44, display: 'flex', flexDirection: 'column', gap: 40 }}>
+    <div style={{ marginTop: 56, display: 'flex', flexDirection: 'column', gap: 64 }}>
       <Group title="Сделка">
         <FundingSection data={research.funding} />
       </Group>
@@ -134,14 +135,12 @@ function Group({ title, children }) {
   return (
     <section>
       <header style={{
-        display: 'flex', alignItems: 'center', gap: 14,
-        marginBottom: 16,
+        display: 'flex', alignItems: 'baseline', gap: 18,
+        marginBottom: 22,
       }}>
         <span style={{
-          fontSize: 11, color: '#a1a1aa',
-          fontFamily: 'ui-monospace,monospace',
-          letterSpacing: '0.22em', fontWeight: 700,
-          textTransform: 'uppercase',
+          fontSize: 18, color: '#fafafa',
+          fontWeight: 700, letterSpacing: '-0.01em',
           whiteSpace: 'nowrap',
         }}>
           {title}
@@ -150,8 +149,8 @@ function Group({ title, children }) {
       </header>
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: 14,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+        gap: 16,
       }}>
         {items}
       </div>
