@@ -1,0 +1,241 @@
+{
+  "id": "berkshire",
+  "asOf": "28.06.2026",
+  "summary": "Berkshire Hathaway — true holdco, который зарабатывает на четырёх блоках одновременно: страховое ядро (GEICO + Gen Re + BHRG) генерирует float $176.9 млрд для бесплатного инвестирования; полностью контролируемые операционные бизнесы (BNSF, Berkshire Hathaway Energy, Manufacturing/Service/Retailing) дают основную часть стабильной operating-прибыли; публичный equity-портфель на $263.1 млрд (13F, fair value на балансе $288.0 млрд) сконцентрирован в Apple, American Express, Coca-Cola; и рекордные $373.5 млрд cash + US Treasuries (net) — dry powder, который при символическом buyback ($235 млн/квартал) сигнализирует, что новый CEO Greg Abel не видит ни дешёвой собственной акции, ни дешёвых крупных сделок. Деньги реально текут в operating earnings ($44.5 млрд FY2025, Berkshire-defined), а не в новые сделки; единственная прямая AI-точка — capex-цикл BHE под спрос data-центров и утроение позиции Alphabet в 13F.",
+  "allocation": {
+    "byPlatform": [
+      { "name": "Публичный equity-портфель (13F)", "value": "$263.1 млрд", "pct": 28, "assetCount": 29, "note": "Market value 13F-HR на 31.03.2026; fair value акций на балансе $288.0 млрд" },
+      { "name": "Wholly-owned бизнесы (10-K сегменты)", "value": "не раскрыто (market value)", "pct": 38, "assetCount": 30, "note": "BNSF + BHE + MSR + страховые underwriting-операции; рыночной оценки нет, только segment earnings" },
+      { "name": "Cash & US Treasuries", "value": "$373.5 млрд", "pct": 39, "assetCount": 2, "note": "Net of unsettled T-Bill purchases (10-Q MD&A); рекордный dry powder" },
+      { "name": "Insurance float", "value": "$176.9 млрд", "pct": null, "assetCount": 3, "note": "Не отдельный актив, а источник бесплатного капитала; не суммируется в 100% — фондирует остальные блоки" }
+    ],
+    "bySector": [
+      { "name": "Cash / US Treasuries", "pct": 39, "note": "Крупнейший блок; T-Bills под падающую ставку → кэш-дрэг" },
+      { "name": "Технологии (публичные)", "pct": 6, "note": "Apple $57.8 млрд + Alphabet ~$16.6 млрд = единственная AI-экспозиция в equity" },
+      { "name": "Финансы / платежи (публичные)", "pct": 8, "note": "AmEx, BAC, Moody's, Capital One, Ally" },
+      { "name": "Потреб-стейплы (публичные)", "pct": 4, "note": "Coca-Cola, Kraft Heinz" },
+      { "name": "Энергетика (публичная + OXY)", "pct": 4, "note": "Chevron + Occidental common/preferred" },
+      { "name": "Железная дорога (BNSF)", "pct": 12, "note": "After-tax earnings $5.5 млрд FY2025" },
+      { "name": "Utilities & energy (BHE)", "pct": 10, "note": "Регулируемые utility + pipelines; AI/power capex-цикл" },
+      { "name": "Manufacturing/Service/Retailing", "pct": 17, "note": "Крупнейший по operating earnings: $13.6 млрд FY2025" }
+    ],
+    "byGeography": [
+      { "region": "Северная Америка (США + Канада)", "pct": 88 },
+      { "region": "Япония (5 торговых домов)", "pct": 5 },
+      { "region": "Великобритания (Northern Powergrid, BHRG)", "pct": 4 },
+      { "region": "Прочие (Chubb/Швейцария, ISCAR/Израиль)", "pct": 3 }
+    ],
+    "byTheme": [
+      { "theme": "AI / data-центры / power", "value": "~$16.6 млрд (Alphabet) + BHE capex-цикл (не раскрыто отдельно)", "note": "Утроение Alphabet в 13F + рост спроса на электроэнергию от AI-вычислений у BHE (data-center спрос ~8% пикового потребления в Айове). Прямой AI-экспозиции в страховом/инфраструктурном ядре нет." }
+    ]
+  },
+  "platforms": [
+    {
+      "id": "public-equity",
+      "name": "Публичный equity-портфель (13F-HR)",
+      "role": "Listed-акции, которые менеджмент называет 'integral extension of our insurance operations and capital base'. Концентрированная ставка на качественные американские франшизы; финансируется страховым float.",
+      "stats": [
+        { "label": "13F market value (31.03.2026)", "value": "$263.1 млрд" },
+        { "label": "Fair value акций на балансе", "value": "$288.0 млрд (cost $84.6 млрд)" },
+        { "label": "Позиций / эмитентов", "value": "29 строк / ~26 эмитентов" },
+        { "label": "Топ-5 концентрация", "value": "61% всех акций на балансе" }
+      ],
+      "sectors": [
+        {
+          "name": "Технологии",
+          "shownOf": { "shown": 3, "total": 3, "note": "все технологические позиции 13F раскрыты" },
+          "assets": [
+            { "name": "Apple (AAPL)", "what": "Производитель iPhone/Mac и сервисов; позиция №1", "stake": "227.92 млн акций (21.99% портфеля)", "value": "$57.84 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": true, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Alphabet Cl A (GOOGL)", "what": "Материнская Google/YouTube/Cloud; наращена ~3x за квартал", "stake": "54.25 млн акций (5.93%)", "value": "$15.60 млрд", "valueDisclosed": true, "geography": "США", "status": "added", "ai": true, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Alphabet Cl C (GOOG)", "what": "Доп. класс акций Alphabet без голоса", "stake": "3.59 млн акций (0.39%)", "value": "$1.03 млрд", "valueDisclosed": true, "geography": "США", "status": "added", "ai": true, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Финансы и платежи",
+          "shownOf": { "shown": 6, "total": 6, "note": "все финансовые позиции 13F раскрыты" },
+          "assets": [
+            { "name": "American Express (AXP)", "what": "Платёжная сеть и эмитент карт; Berkshire владеет ~22% компании", "stake": "151.61 млн акций (17.43%)", "value": "$45.86 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Bank of America (BAC)", "what": "Второй по активам банк США; трим -1% за квартал", "stake": "513.62 млн акций (9.52%)", "value": "$25.04 млрд", "valueDisclosed": true, "geography": "США", "status": "trimmed", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Moody's (MCO)", "what": "Рейтинговое агентство и аналитика; держится с 2000 г.", "stake": "24.67 млн акций (4.09%)", "value": "$10.76 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Capital One Financial (COF)", "what": "Банк и эмитент карт", "stake": "7.15 млн акций (0.50%)", "value": "$1.30 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Ally Financial (ALLY)", "what": "Цифровой банк, автокредитование", "stake": "29.00 млн акций (0.43%)", "value": "$1.14 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Jefferies Financial (JEF)", "what": "Инвестбанк; партнёр Berkshire по Berkadia (50/50)", "stake": "0.43 млн акций (0.01%)", "value": "$0.02 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Страхование (публичное)",
+          "shownOf": { "shown": 1, "total": 1, "note": "единственная listed-страховая позиция" },
+          "assets": [
+            { "name": "Chubb (CB)", "what": "Глобальный P&C-страховщик (домициль Швейцария)", "stake": "34.25 млн акций (4.24%)", "value": "$11.16 млрд", "valueDisclosed": true, "geography": "Швейцария / США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Энергетика (публичная)",
+          "shownOf": { "shown": 2, "total": 2, "note": "Chevron + Occidental common; preferred OXY вне 13F" },
+          "assets": [
+            { "name": "Chevron (CVX)", "what": "Интегрированная нефтегазовая компания; трим -35% за квартал", "stake": "84.38 млн акций (6.64%)", "value": "$17.46 млрд", "valueDisclosed": true, "geography": "США", "status": "trimmed", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Occidental Petroleum (OXY)", "what": "Нефтегаз; 26.9% common (equity-method) + $8.5 млрд preferred под 8% + варранты на 83.9 млн акций", "stake": "264.94 млн акций common (6.55%)", "value": "$17.22 млрд (common) + $8.5 млрд (preferred liq. value)", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 + 10-Q Q1'26, SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Потреб-стейплы",
+          "shownOf": { "shown": 3, "total": 3, "note": "все потреб-стейпл позиции 13F раскрыты" },
+          "assets": [
+            { "name": "Coca-Cola (KO)", "what": "Производитель безалкогольных напитков; позиция неизменна десятилетиями", "stake": "400.00 млн акций (11.56%)", "value": "$30.42 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Kraft Heinz (KHC)", "what": "Производитель продуктов питания; 27.5% (equity-method), Abel назвал ставку 'disappointing'", "stake": "325.63 млн акций (2.78%)", "value": "$7.32 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 + 10-Q Q1'26, SEC EDGAR" },
+            { "name": "Constellation Brands Cl A (STZ)", "what": "Производитель пива/вина; позиция почти ликвидирована (-95%)", "stake": "0.63 млн акций (0.04%)", "value": "$0.09 млрд", "valueDisclosed": true, "geography": "США", "status": "trimmed", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Прочие публичные позиции (топ хвоста)",
+          "shownOf": { "shown": 14, "total": 14, "note": "оставшиеся 14 строк 13F полностью раскрыты построчно" },
+          "assets": [
+            { "name": "DaVita (DVA)", "what": "Сеть центров диализа почек; трим -5% в рамках buyback-соглашения", "stake": "30.10 млн акций (1.76%)", "value": "$4.63 млрд", "valueDisclosed": true, "geography": "США", "status": "trimmed", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Kroger (KR)", "what": "Продуктовый ритейлер США", "stake": "50.00 млн акций (1.38%)", "value": "$3.62 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "SiriusXM (SIRI)", "what": "Спутниковое радио и аудио-подписки", "stake": "124.81 млн акций (1.09%)", "value": "$2.88 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Delta Air Lines (DAL)", "what": "Авиаперевозчик; новая позиция Q1 2026", "stake": "39.81 млн акций (1.01%)", "value": "$2.65 млрд", "valueDisclosed": true, "geography": "США", "status": "new", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "VeriSign (VRSN)", "what": "Оператор доменных реестров .com/.net", "stake": "8.99 млн акций (0.85%)", "value": "$2.23 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "New York Times Cl A (NYT)", "what": "Издатель цифровых новостей; наращена ~3x за квартал", "stake": "15.15 млн акций (0.48%)", "value": "$1.27 млрд", "valueDisclosed": true, "geography": "США", "status": "added", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Liberty Live Cl C (LLYVK)", "what": "Tracking-stock на долю Liberty Media в Live Nation", "stake": "10.59 млн акций (0.38%)", "value": "$1.00 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Lennar Cl A (LEN)", "what": "Жилищный застройщик США; наращен +43%", "stake": "10.10 млн акций (0.33%)", "value": "$0.88 млрд", "valueDisclosed": true, "geography": "США", "status": "added", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Nucor (NUE)", "what": "Производитель стали; трим -39% за квартал", "stake": "3.91 млн акций (0.25%)", "value": "$0.66 млрд", "valueDisclosed": true, "geography": "США", "status": "trimmed", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Liberty Live Series C (LLYVK)", "what": "Второй класс Liberty Live", "stake": "4.99 млн акций (0.17%)", "value": "$0.46 млрд", "valueDisclosed": true, "geography": "США", "status": "trimmed", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Louisiana-Pacific (LPX)", "what": "Производитель стройматериалов (OSB)", "stake": "5.66 млн акций (0.16%)", "value": "$0.41 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "NVR (NVR)", "what": "Жилищный застройщик премиум-сегмента", "stake": "11.1 тыс акций (0.03%)", "value": "$0.07 млрд", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Macy's (M)", "what": "Универмаги; крошечная новая позиция Q1 2026", "stake": "3.04 млн акций (0.02%)", "value": "$0.05 млрд", "valueDisclosed": true, "geography": "США", "status": "new", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" },
+            { "name": "Lennar Cl B (LEN.B)", "what": "Класс B застройщика Lennar", "stake": "0.24 млн акций (0.01%)", "value": "$0.02 млрд", "valueDisclosed": true, "geography": "США", "status": "added", "ai": false, "source": "13F-HR Q1'26 (53405.xml), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Японские торговые дома (вне 13F, TSE)",
+          "shownOf": { "shown": 5, "total": 5, "note": "все 5 домов раскрыты в письме к акционерам; market value на 31.12.2025, индивидуальные стоимости не разбиты" },
+          "assets": [
+            { "name": "Mitsubishi Corporation", "what": "Японский торговый дом (sogo shosha); сырьё, энергетика, инфраструктура", "stake": "10.8%", "value": "не раскрыто (индивидуально)", "valueDisclosed": false, "geography": "Япония", "status": "held", "ai": false, "source": "Письмо Abel 2025 (2025ltr.pdf), berkshirehathaway.com" },
+            { "name": "Mitsui & Co.", "what": "Японский торговый дом; энергетика, металлы, машиностроение", "stake": "10.4%", "value": "не раскрыто (индивидуально)", "valueDisclosed": false, "geography": "Япония", "status": "held", "ai": false, "source": "Письмо Abel 2025 (2025ltr.pdf), berkshirehathaway.com" },
+            { "name": "ITOCHU Corporation", "what": "Японский торговый дом; текстиль, ритейл, ICT", "stake": "10.1%", "value": "не раскрыто (индивидуально)", "valueDisclosed": false, "geography": "Япония", "status": "held", "ai": false, "source": "Письмо Abel 2025 (2025ltr.pdf), berkshirehathaway.com" },
+            { "name": "Marubeni Corporation", "what": "Японский торговый дом; агро, энергетика, металлы", "stake": "9.8%", "value": "не раскрыто (индивидуально)", "valueDisclosed": false, "geography": "Япония", "status": "held", "ai": false, "source": "Письмо Abel 2025 (2025ltr.pdf), berkshirehathaway.com" },
+            { "name": "Sumitomo Corporation", "what": "Японский торговый дом; металлы, транспорт, медиа. Итого 5 домов: cost $15.38 млрд, market value $35.37 млрд на 31.12.2025", "stake": "9.7%", "value": "не раскрыто (индивидуально)", "valueDisclosed": false, "geography": "Япония", "status": "held", "ai": false, "source": "Письмо Abel 2025 (2025ltr.pdf), berkshirehathaway.com" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wholly-owned",
+      "name": "Wholly-owned бизнесы (10-K сегменты)",
+      "role": "Полностью контролируемые операционные бизнесы — основной источник стабильной operating-прибыли. Модель децентрализации: 'no layers of management, no allocated goals set by Berkshire'. Рыночной котировки нет — оценка через segment earnings, не market value.",
+      "stats": [
+        { "label": "Operating earnings (Berkshire-defined) FY2025", "value": "$44.49 млрд" },
+        { "label": "MSR after-tax earnings FY2025", "value": "$13.65 млрд" },
+        { "label": "BNSF after-tax earnings FY2025", "value": "$5.48 млрд" },
+        { "label": "BHE after-tax earnings FY2025", "value": "$3.98 млрд" }
+      ],
+      "sectors": [
+        {
+          "name": "Insurance — underwriting (страховое ядро)",
+          "shownOf": { "shown": 3, "total": 3, "note": "три underwriting-группы раскрыты по 10-K; индивидуальные стоимости не раскрываются" },
+          "assets": [
+            { "name": "GEICO", "what": "Авто-страхование напрямую (Government Employees Insurance Co. + связанные); крупнейший вклад в снижение combined ratio до 87.1%", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Berkshire Hathaway Reinsurance Group (BHRG)", "what": "Перестрахование P&C и life/health; National Indemnity и связанные — крупный источник float", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Berkshire Hathaway Primary Group", "what": "Первичное коммерческое страхование (Gen Re, BH Specialty, MedPro, GUARD, NICO Primary и др.)", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "BNSF (железная дорога)",
+          "shownOf": { "shown": 1, "total": 1, "note": "единый сегмент; ~35,000 сотрудников" },
+          "assets": [
+            { "name": "BNSF Railway", "what": "Одна из крупнейших freight-rail систем Северной Америки (Fort Worth, TX); after-tax earnings $5.48 млрд FY2025 (+8.8% г/г)", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / Канада", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Berkshire Hathaway Energy (utilities & energy)",
+          "shownOf": { "shown": 6, "total": null, "note": "крупнейшие активы BHE раскрыты в 10-K; индивидуальные стоимости не разбиты" },
+          "assets": [
+            { "name": "PacifiCorp", "what": "Регулируемая utility (6 западных штатов США); центр wildfire-литигации (~$2.9 млрд кумулятивно), снижение accruals подняло earnings 2025", "stake": "~92% (через BHE)", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США (Запад)", "status": "operating", "ai": true, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "MidAmerican Energy", "what": "Регулируемая utility (Айова и Средний Запад); data-center спрос ~8% пикового потребления в Айове", "stake": "100% (через BHE)", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США (Средний Запад)", "status": "operating", "ai": true, "source": "10-K FY2025 + транскрипт собрания 02.05.2026" },
+            { "name": "NV Energy", "what": "Регулируемая utility (Невада)", "stake": "100% (через BHE)", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США (Невада)", "status": "operating", "ai": true, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Northern Powergrid", "what": "Регулируемая electricity-distribution сеть на северо-востоке Англии", "stake": "100% (через BHE)", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "Великобритания", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Interstate natural gas pipelines", "what": "Две interstate pipeline-компании, ~16,400 миль, design capacity ~7.9 Bcf/day", "stake": "100% (через BHE)", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "HomeServices of America", "what": "Крупнейшая в США residential real estate brokerage сеть", "stake": "100% (через BHE)", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Manufacturing",
+          "shownOf": { "shown": 6, "total": null, "note": "крупнейшие manufacturing-бизнесы раскрыты в 10-K; объекты не разбиты по стоимости" },
+          "assets": [
+            { "name": "Precision Castparts (PCC)", "what": "Сложные металлокомпоненты, литьё, поковки, fasteners, aerostructures для aerospace/энергетики (Lake Oswego, OR)", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Marmon Holdings", "what": "Промышленный конгломерат: food service, water, retail solutions, metal services, plumbing, refrigeration", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Lubrizol", "what": "Один из крупнейших производителей specialty chemicals (присадки для двигателей, coatings, skincare)", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "IMC / ISCAR", "what": "Крупный производитель metal-cutting tools (Израиль)", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "Израиль / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Shaw Industries", "what": "Производитель ковров и напольных покрытий", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "OxyChem", "what": "Химия (PVC, chlor-alkali, топ-3 в США); куплен у Occidental, закрыт 02.01.2026 за ~$9.5 млрд — первая крупная сделка Abel", "stake": "100%", "value": "~$9.5 млрд (цена покупки)", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "10-Q Q1'26 + пресс-релиз 02.01.2026, berkshirehathaway.com" }
+          ]
+        },
+        {
+          "name": "Building products & housing (в составе MSR)",
+          "shownOf": { "shown": 3, "total": null, "note": "крупнейшие раскрыты; полный список MSR не разбит по стоимости" },
+          "assets": [
+            { "name": "Clayton Homes", "what": "Manufactured housing + ипотечное финансирование; крупнейший homebuilder США по объёму", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Johns Manville", "what": "Изоляция, кровля, инженерные материалы", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Forest River", "what": "Производитель recreational vehicles, лодок, автобусов", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" }
+          ]
+        },
+        {
+          "name": "Service & Retailing",
+          "shownOf": { "shown": 8, "total": null, "note": "крупнейшие service/retail бизнесы раскрыты; в MSR десятки бизнесов, по стоимости не разбиты" },
+          "assets": [
+            { "name": "Pilot Travel Centers", "what": "Крупнейший оператор travel centers Северной Америки", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / Канада", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "McLane Company", "what": "Дистрибуция продуктов питания и товаров для ритейла/foodservice (низкомаржинальный, высокообъёмный)", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "NetJets", "what": "Крупнейший бизнес service-группы; fractional-ownership частной авиации", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "See's Candies", "what": "Кондитерская франшиза западного побережья; классический Berkshire-бизнес", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "International Dairy Queen", "what": "Франшиза fast-food / мороженого", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Nebraska Furniture Mart", "what": "Крупная мебельно-электронная розница", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Borsheims / Helzberg (ювелирка)", "what": "Розничные ювелирные сети", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Bell Laboratories", "what": "Производитель средств борьбы с грызунами; новая сделка, Abel: 'we only wish it had been ten times bigger'", "stake": "100%", "value": "не раскрыто (market value)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "Письмо Abel 2025 (2025ltr.pdf), berkshirehathaway.com" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cash-treasuries",
+      "name": "Cash & US Treasuries",
+      "role": "Dry powder холдинга — рекордные $373.5 млрд. Преимущественно short-term US Treasury Bills (insurance & other). Менеджмент держит ликвидность как опцион на дислокации; buyback запрещён при падении ниже $30 млрд.",
+      "stats": [
+        { "label": "Cash + T-Bills (net) 31.03.2026", "value": "$373.5 млрд" },
+        { "label": "Брутто (cash + T-Bills + сегменты)", "value": "$397.4 млрд" },
+        { "label": "Buyback Q1'26", "value": "$235 млн (символический)" }
+      ],
+      "sectors": [
+        {
+          "name": "Денежные средства и казначейские векселя",
+          "shownOf": { "shown": 2, "total": 2, "note": "оба компонента раскрыты в MD&A 10-Q" },
+          "assets": [
+            { "name": "US Treasury Bills (insurance & other)", "what": "Краткосрочные гособлигации США — основной компонент dry powder; investment income под падающую ставку → кэш-дрэг", "stake": "—", "value": "$339.3 млрд (брутто, до вычета unsettled покупок)", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "10-Q Q1'26 MD&A (brka-20260331.htm), SEC EDGAR" },
+            { "name": "Cash & cash equivalents", "what": "Денежные средства группы (insurance/other $51.5 млрд + railroad/utilities/energy $6.6 млрд)", "stake": "—", "value": "$58.1 млрд (брутто)", "valueDisclosed": true, "geography": "США", "status": "held", "ai": false, "source": "10-Q Q1'26 MD&A (brka-20260331.htm), SEC EDGAR" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "insurance-float",
+      "name": "Insurance float",
+      "role": "Не отдельный портфель активов, а структурное преимущество: $176.9 млрд страховых резервов, удерживаемых до выплаты убытков, инвестируются бесплатно (cost of float отрицательный — андеррайтинг прибыльный). Фондирует equity-портфель, бизнесы и cash.",
+      "stats": [
+        { "label": "Float 31.03.2026", "value": "$176.9 млрд" },
+        { "label": "Combined ratio FY2025 (P&C)", "value": "87.1%" },
+        { "label": "Insurance investment income FY2025 (after-tax)", "value": "$12.51 млрд" }
+      ],
+      "sectors": [
+        {
+          "name": "Источники float по underwriting-группам",
+          "shownOf": { "shown": 3, "total": 3, "note": "три группы; разбивка float по группам в 10-K не раскрывается отдельно" },
+          "assets": [
+            { "name": "BHRG / National Indemnity", "what": "Перестрахование — крупнейший источник long-tail float; underwriting прибыльный", "stake": "100%", "value": "не раскрыто (доля float)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "GEICO", "what": "Авто-страхование; быстро-оборачиваемый float, combined ratio лучший в группе", "stake": "100%", "value": "не раскрыто (доля float)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" },
+            { "name": "Berkshire Hathaway Primary Group", "what": "Первичное коммерческое страхование (Gen Re и др.); вклад во float", "stake": "100%", "value": "не раскрыто (доля float)", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "10-K FY2025 (brka-20251231.htm), SEC EDGAR" }
+          ]
+        }
+      ]
+    }
+  ],
+  "notDisclosed": "Berkshire НЕ раскрывает поимённую market-value оценку wholly-owned бизнесов — только segment earnings (BNSF, BHE, MSR) и underwriting-результаты; индивидуальная стоимость GEICO, BNSF, PCC, Marmon, NetJets и т.д. отсутствует в публичном раскрытии. Сегмент MSR объединяет десятки бизнесов (показаны крупнейшие ~20, полный long-tail мелких операций — NFM-сети, дистрибьюторы, бренды — не раскрывается построчно). Разбивка float по underwriting-группам (сколько float у GEICO vs BHRG vs Primary) не публикуется. Индивидуальные стоимости 5 японских торговых домов даны только агрегатом ($35.37 млрд market value на 31.12.2025). Доли владения операционными бизнесами — 100%, если не указано иное (BHE ~92% PacifiCorp; остальные через BHE)."
+}

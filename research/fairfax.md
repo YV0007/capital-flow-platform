@@ -1,0 +1,347 @@
+# Fairfax Financial — Holdings dossier
+
+FFH.TO · тип true holdco · дата 28.06.2026 · источников: 18
+
+> Fairfax Financial — канадский страховой холдинг (P&C insurance + reinsurance) с долгосрочным портфелем value-инвестиций; модель Prem Watsa — зарабатывать на андеррайтинге, инвестировать почти бесплатный float ($39.3B на конец 2025) и держать концентрированные доли в ассоциированных и консолидированных нестраховых бизнесах (Eurobank, Poseidon, Recipe, Fairfax India, AGT). 2025 — рекордный год: net earnings $4.77B ($213.78/акц), combined ratio 93.0%, BVPS $1,260.19. Для решения hold/add/cut ключевые узлы: акция переоценилась с дисконта к book (0.74x в 2021) до премии (~1.4–1.5x USD сейчас), менеджмент ускорил buyback и держит TRS на собственные акции, а две монетизации (Poseidon, Eurolife) вытаскивают ~$1.19B pre-tax gain в Q2'26 при key-person риске (Watsa, 75 лет).
+
+## Tier 1 — Substance
+
+### 01 Текущий портфель
+
+Fairfax — true holdco в страховании. Публично раскрытый look-through equity-портфель в письме Watsa оценивается ~$23.6B рыночной стоимости (carrying ~$20.5B). 13F-HR ($1.94B на 31.03.2026) — это ТОЛЬКО US-listed часть; основная equity-экспозиция сидит в associates (equity-метод) и консолидированных бизнесах и в 13F не видна.
+
+**13F-HR US-listed портфель (источник: SEC EDGAR infotable, проверено построчно — total $1,942,669,475 тыс. = $1.94B, 29 позиций):**
+
+Топ-позиции 13F (Ring 1 — рыночная стоимость на 31.03.2026, проверено мной по XML):
+
+| # | Позиция | Акций | Стоимость | Доля 13F |
+|---|---|---|---|---|
+| 1 | Orla Mining | 31,817,229 | $501.6M | 25.8% |
+| 2 | Under Armour (CL A) | 43,000,872 | $253.7M | 13.1% |
+| 3 | **CVS Health** | 2,712,000 | $194.8M | 10.0% |
+| 4 | Kennedy-Wilson | 13,322,009 | $144.3M | 7.4% |
+| 5 | Under Armour (CL C) | 21,999,128 | $126.9M | 6.5% |
+| 6 | Cleveland-Cliffs | 14,899,273 | $125.7M | 6.5% |
+| 7 | Kraft Heinz | 5,268,200 | $118.4M | 6.1% |
+| 8 | BlackBerry | 34,980,220 | $113.3M | 5.8% |
+| 9 | ATS Corp | 2,486,400 | $69.4M | 3.6% |
+| 10 | Molson Coors | 1,438,500 | $61.9M | 3.2% |
+
+Under Armour суммарно (CL A + CL C) = 65.0M акций / **$380.6M = 19.6% портфеля 13F** — крупнейшая экономическая позиция в US-листинге; наращивалась в 2026. Orla Mining — крупнейшая единая строка 13F. (Замечание верификатора: CVS Health — третья по размеру позиция 13F ($194.8M), но оба черновых агента её не назвали в основном портфеле; см. «Пробелы».)
+
+**Ring 1 — крупные ассоциированные/консолидированные позиции с раскрытой оценкой (источник: 2025 Annual Report, look-through equity portfolio; рыночная стоимость на 31.12.2025 — из черновика FACTS, построчно по annual report мной НЕ переоткрыто, см. «Пробелы»):**
+
+| Позиция | Vehicle | Доля | Рын. стоимость | oneLineDescription |
+|---|---|---|---|---|
+| Eurobank Ergasias | Associate (equity) | 32% | $4.7B | Греческий системный банк; share of profit $474.1M в 2025 (проверено по FY2025 release) — крупнейший контрибьютор associates |
+| Poseidon (быв. Atlas/Seaspan) | Associate (equity) | 22.2% после продажи | $2.6B (до сделки) | Лизинг контейнеровозов; продано 23.1% за $1.91B 29.05.2026 (проверено) |
+| Recipe (быв. Cara) | Консолидирован | 100% | $0.7B | Канадский ресторанный оператор; выкуплена доля семьи Phelan в 2025 |
+| Sleep Country | Консолидирован | 100% | $0.6B | Канадская розница матрасов; частная |
+| Exco Resources | Associate (equity) | 49% | $0.6B | US газодобыча; share of profit $52.5M в 2025 (проверено) |
+| Grivalia Hospitality | Консолидирован | 84% | $0.5B | Греческая гостиничная недвижимость |
+| Peak Achievement | Консолидирован | 100% | $0.5B | Спортивное снаряжение (Bauer/Easton); частная |
+| Thomas Cook India | Консолидирован | 64% | $0.5B | Индийский travel/forex |
+| Fairfax India | Консолидирован | 43% | $1.0B | Индийский холдинг (BIAL — аэропорт Бангалора и др.) |
+| Metlen Energy | Mark-to-market | 8% | $0.6B | Греческая металлургия/энергетика (быв. Mytilineos) |
+| Commercial Intl Bank | Mark-to-market | 7% | $0.5B | Египетский частный банк |
+| Foran Mining | Mark-to-market | 23% | $0.4B | Канадская медь/цинк, проект Саскачеван |
+| Orla Mining | Mark-to-market (13F) | 9% | $0.5B | Золотодобыча Мексика/Канада; крупнейшая строка 13F |
+| Under Armour | Mark-to-market (13F) | 12% | $0.38B | US спортивная одежда; наращивалась в 2026 |
+
+**Ring 2 — названы, без отдельной раскрытой оценки:** Dexterra Group (50%, консолид.), Meadow Foods (95%), John Keells (26% associate), Quess (35%), Helios Fairfax Partners (36%), Waterous Energy Fund III (associate; +$116.6M вклада в Q1'26 — из черновика), Digit (индийское страхование, associate; share of profit $55.1M в 2025 — проверено), AGT Foods (55.8% консолид., IPO март 2026).
+
+**Концентрация:** топ-2 (Eurobank + Poseidon) ≈ $7.3B; для контекста — TRS на 1,760,355 собственных акций Fairfax (проверено, см. s03) добавляет ставку на FFH сверх equity-портфеля. **Гео:** Греция (Eurobank, Grivalia, Metlen, Eurolife), Индия (Fairfax India/BIAL, Thomas Cook, Quess, Digit), Канада (Recipe, Sleep Country, Dexterra, Foran, BlackBerry, ATS), США (Exco, KW, Under Armour, Cliffs, CVS), Египет (CIB). **AI-линза неприменима к core** (страхование + value-equity); косвенно — энергетика под спрос data-центров (Waterous, Exco), но менеджментом как AI-тезис не заявлено.
+
+### 02 Недавние изменения
+
+**13F-HR (US-listed; источник: SEC EDGAR infotable, проверено). Q4'25 → Q1'26, портфель $2.08B → $1.94B, 29 позиций.**
+
+| Действие | Позиция | Деталь |
+|---|---|---|
+| ADD | Under Armour | до 65.0M акций (CL A+C), 19.6% портфеля 13F, ~$380.6M (проверено) |
+| SOLD OUT | Occidental Petroleum | в Q1'26 отсутствует в 13F (проверено — вышли) |
+| SOLD OUT | Vanguard Index Fund | в Q1'26 отсутствует (проверено) |
+| NEW BUY | Wendy's | 3,268,902 акций, ~$22.8M (проверено) |
+| NEW BUY | Warner Bros Discovery | присутствует в 13F (проверено наличие; малая) |
+| TRIM | Garrett Motion | присутствует в 13F (проверено) |
+
+**Корпоративные сделки (источник: Q1'26 press release, SEC EDGAR, проверено):**
+- **AGT Foods IPO завершён 09.03.2026** — размещение Cdn$450M по Cdn$23/акц; Fairfax + private placement ~$200M, сохраняет контроль 55.8%.
+- **Recipe** — выкуплена доля семьи Phelan в 2025 (теперь 100%); спин-офф The Keg.
+- **Poseidon — продано 23.1% за $1.91B (закрыто 29.05.2026), gain ~$837M** — теперь это реализованная сделка, НЕ pending (проверено по completion-релизу 29.05.2026).
+
+**Dry powder:** holding company держал **$2.5B кэша и marketable securities** + $2.1B investments in associates на уровне холдинга (31.03.2026, проверено по Q1'26 release).
+
+### Track record капитал-аллокации
+
+Источник: 2025 Annual Report (письмо Watsa) и финансовая отчётность. Долгосрочный ориентир — book value/share +15%/год. По письму BVPS+дивиденды компаундируют 18.7%/год с 1985 (не переоткрыто построчно мной — см. «Пробелы»).
+
+**Качество отдельных сделок:**
+
+| Сделка | Год входа | Результат | Оценка аллокации |
+|---|---|---|---|
+| Eurobank | 2014–2019 | Share of profit $474.1M в 2025 (проверено); рын. стоимость доли ~$4.7B | Терпеливый turnaround |
+| Poseidon (Atlas/Seaspan) | долгосрочно | Продано 23.1% за $1.91B по $28.30/акц, gain ~$837M (проверено); сохранено 22.2% | Частичная реализация выше carrying |
+| Sigma Companies (81%) | 2017 | Продан 2025: $284M кэш + 16% доля; IRR 31% (из черновика, не переоткрыто) | Реализовано |
+| Odyssey Group | 1996 | $9.8B кумулятивной прибыли (из письма, не переоткрыто) | Лучшая сделка |
+
+**Underwriting (источник: FY2025 release, проверено):** combined ratio 93.0% в 2025, underwriting profit **$1,816.6M** (рекорд). Net premiums рос органически. ROE 2025 ~17.8%.
+
+### 04 Будущие сделки (объявленные, незакрытые на 28.06.2026)
+
+Источник: Q1'26 press release (проверено).
+
+| Сделка | Counterparty | Размер | Expected close | Эффект |
+|---|---|---|---|---|
+| **Продажа Eurolife Life Operations** | Eurobank (associate Fairfax) | ~$935M | Q2 2026 | Pre-tax gain ~$350M; активы classified held-for-sale на 31.03.2026 (проверено) |
+
+**Эффект на прибыль:** Eurolife gain ~$350M + уже-закрытый Poseidon gain ~$837M = ~$1.19B pre-tax в Q2'26 (для контекста: net earnings Q1'26 = $695M). Excess of fair value over carrying value по non-insurance associates вырос до **$3.9B** (с $3.1B на 31.12.2025; проверено) — НЕ в book value.
+
+**Закрытые после 31.03.2026 (уже НЕ pending):**
+- **Poseidon** — закрыто 29.05.2026, $1.91B, gain ~$837M (проверено).
+- **Kennedy-Wilson take-private** — завершено по **US$10.90/акц** (проверено по completion-релизу Fairfax; дата 15–16.06.2026, расхождение в один день между агентами); KW делистингован, Fairfax — большинство экономического интереса.
+
+Других объявленных незакрытых крупных equity-сделок в первичных источниках на 28.06.2026 не подтверждено.
+
+### 08 Финансовая составляющая (true holdco метрики)
+
+Источник: FY2025 и Q1'26 press releases (SEC EDGAR, проверено построчно); валидация — stockanalysis.com.
+
+**Book value per share и доходность:**
+
+| Метрика | 2024 | 2025 | Q1'26 |
+|---|---|---|---|
+| BVPS ($) | 1,059.60 | 1,260.19 | 1,250.14 |
+| Net earnings (shareholders, $M) | — | 4,772.4 | 695 |
+| EPS diluted ($) | 160.56 (черновик) | 213.78 | 31.11 |
+| ROE (%) | 15.2 | 17.8 | ~16.5 TTM |
+
+(BVPS Dec'25 $1,260.19 vs $1,059.60 Dec'24 = +20.5% adjusted — проверено; EPS diluted FY25 $213.78 и Q1'26 $31.11 — проверено.)
+
+**Underwriting / операционные метрики:**
+
+| ($M если не указано) | 2025 | Q1'26 | Q1'25 |
+|---|---|---|---|
+| Gross premiums written | — | 8,809.3 | 8,474.0 |
+| Net premiums written | — | 7,119.2 | 6,843.1 |
+| Underwriting profit (undisc.) | 1,816.6 | 381.6 | — |
+| Combined ratio undiscounted (%) | 93.0 | 94.1 | 98.5 |
+| Interest & dividends (консолид.) | 2,574.0 | 662.1 | 606.5 |
+| Share of profit of associates (консолид.) | 816.1 | 371.5 | 128.6 |
+| Net gains (losses) on investments | 3,151 (~$3.2B) | (385.9) | 1,056.1 |
+
+(Все строки Q1'26/FY25 — проверены построчно по income statement. Замечание: черновик FACTS s08 дал interest&dividends Q1 как 0.56 и share-of-profit 0.37 — это сегментные P&C-строки ($561.2M / 270.6M); консолидированные итоги — $662.1M / $371.5M.)
+
+**Float (P&C):** $39.3B на 31.12.2025 (+11.2% с $35.4B; проверено по FY2025 release). Замечание: черновик FACTS привёл $40.8B 2025 «из письма» — это, вероятно, расширенное определение (вкл. life/run-off); P&C float = $39.3B (см. «Пробелы»).
+
+**Баланс/капитал:** holdco кэш+marketable $2.5B; **total debt to total capital (excl. non-insurance) = 27.8% на 31.03.2026** (с 26.2% на 31.12.2025; рост от выпуска senior notes $476.6M / Cdn$650M — проверено).
+
+**TRS на собственные акции:** Fairfax держит equity total return swaps на **1,760,355 subordinate voting shares**, оригинальный notional $664.0M ($377.19/акц), принесли **$840.6M прибыли в 2025** (проверено по FY2025 release).
+
+### Бенчмарк
+ROE 2025 17.8% против P&C-индустрии типично 8–12%. BVPS+дивиденды компаундируют 18.7%/год с 1985 (из письма, не переоткрыто).
+
+## Tier 2 — Context
+
+### Карта рисков
+
+| Риск | Уровень | Конкретный триггер |
+|---|---|---|
+| Концентрация в Eurobank ($4.7B, ~20% equity; $474.1M profit в 2025) | Средний | Падение акции Eurobank >25% или ограничение дивидендов ЕЦБ — прямой удар по share-of-profit и book value |
+| Греческая концентрация (Eurobank + Grivalia + Metlen + Eurolife) | Средний | Греческий суверенный/банковский кризис; совокупно >$6B экспозиции в одной стране |
+| Leverage | Низкий-средний | Total debt/capital вырос до 27.8% (Q1'26) с 26.2% (Dec'25); триггер — рейтинговое действие при пробое 30% |
+| Mark-to-market волатильность бондов | Средний | Q1'26 показал net losses on investments −$385.9M (из них bonds −$363.9M от роста ставок, из черновика); рост долгосрочных ставок бьёт по quarterly earnings (не по carry-to-maturity) |
+| Key-person dependency (Prem Watsa, 75 лет) | Средний-высокий | Уход/недееспособность Watsa; multiple-voting shares контролируются им — капитал-аллокация = Watsa |
+| Catastrophe / underwriting cycle | Средний | Cat-событие; смягчение hard market (письмо отмечает softening в North America) → давление на combined ratio |
+| Recession sensitivity (консолидированные бизнесы) | Средний | Спад в Канаде/Индии бьёт по Recipe, Sleep Country, Thomas Cook India, Dexterra |
+| Индийская концентрация (Fairfax India/BIAL, Thomas Cook, Quess, Digit) | Низкий-средний | Регуляторные/валютные риски Индии; BIAL — основной актив Fairfax India |
+
+### Оценка vs история (исторический anchor, НЕ DCF)
+
+Источник: stockanalysis.com (валидация, проверено) + проверенный BVPS.
+
+**P/Book.** BVPS на 31.03.2026 = **$1,250.14** (USD, проверено). FRFHF (USD) market cap $38.11B (проверено), P/E 8.12, 52-нед $1,500–$1,949. При ~20.5–20.9M акциях это price ~$1,827–1,861 → **P/B ≈ 1.46–1.49x (USD)**. FFH.TO (CAD) market cap CAD $54.08B, P/E 8.30, 52-нед $2,066–$2,700, рейтинг Hold.
+
+Замечание верификатора: черновики дали P/B ~1.3x при цене FRFHF ~$1,650. Текущий live market cap ($38.11B) даёт более высокий P/B ~1.46–1.49x — черновик использовал более низкую цену. Использую диапазон **1.4–1.5x** как актуальный.
+
+| Год (из агрегатора, валидация) | P/B | ROE |
+|---|---|---|
+| 2021 | 0.74 | 18.9% |
+| 2023 | 0.96 | 20.1% |
+| 2024 | 1.30 | 15.2% |
+| 2025 | 1.56 | 17.8% |
+| текущ. (Jun'26) | ~1.4–1.5 (USD) | ~16.5% TTM |
+
+**Вывод:** Fairfax годами торговался ниже 1.0x book (2018–2023); сейчас впервые за десятилетие платится премия к book — основной re-rating позади. При этом excess of fair value over carry $3.9B (~$185–190/акц) НЕ в book — «экономический» P/B ниже учётного. Дивиденд $15.00/акц, yield ~0.91% (проверено).
+
+### Действия инсайдеров и компании
+
+Источники: FY2025 press release [1], Q1'26 press release [2] (оба проверены построчно через curl к SEC.gov, 200), Management Proxy Circular 2026 [17] (PDF открыт и распарсен мной построчно). Fairfax — канадский эмитент: пофайловой Form 4 нет, инсайдерские сделки идут через SEDI/SEDAR+; индивидуальные транзакции даны через агрегатор MarketBeat (валидация, тянет из SEDI) [18] с пометкой.
+
+**Buyback — основной канал возврата капитала (cancellation, не treasury):**
+
+| Период | Акций погашено | Сумма | Цена/акц | Источник |
+|---|---|---|---|---|
+| FY2025 | 1,006,535 (погашено) | $1,625.2M | $1,614.69 | FY2025 release [1] |
+| Q1'26 | 374,883 (погашено) | $631.3M | $1,683.97 | Q1'26 release [2] |
+
+Effectively outstanding: 21,668,466 (31.12.2024) → 20,856,086 (31.12.2025, −3.7%) → 20,624,032 (31.03.2026, −1.1% к/к) [1][2]. Промежуточный замер на дату FY2025-релиза (19.02.2026): к тому моменту уже выкуплено 130,573 акц за $220.0M по $1,684.70 [1] — это подмножество полного Q1'26 (374,883 / $631.3M).
+
+Q1'26-выкуп по $1,683.97/акц (USD) при BVPS $1,250.14 → премия ~1.35x к book. Логика: менеджмент видит intrinsic value выше учётной — excess of fair value over carrying по non-insurance associates = $3.9B (~$185–190/акц, НЕ в book) [2]. Темп растёт: $1.63B за весь 2025 → $0.63B в одном Q1'26.
+
+**TRS на собственные акции — вторая ставка на ту же недооценку:** equity total return swaps на **1,760,355 subordinate voting shares**, original notional $664.0M (Cdn$846.1M), $377.19/акц (Cdn$480.62) [1]. Эффект противонаправлен котировке FFH: +$840.6M gain в 2025 (акция росла) [1], но −$341.8M loss в Q1'26 (акция падала) [2]. Вместе buyback + TRS = ставка ~2.13M акций-эквивалента на собственную недооценку (1.76M TRS + 0.37M выкуп Q1'26).
+
+**Дивиденд:** $15.00/акц, выплата в Q1; held flat — не initiated, не raised, не cut (FY2024, FY2025, Q1'26 — все $15.00) [1][2]. Cash dividends paid FY2025 = $15.00/акц; Q1'26 выплачено $329.1M [2]. Фиксированный символический дивиденд: возврат капитала идёт через buyback, не через рост дивиденда. Yield ~0.91%.
+
+**Share issuance / монетизации (company actions, влияют на NAV):**
+- **AGT Foods** — на уровне portfolio-компании размещено Cdn$450M по Cdn$23/акц (09.03.2026); Fairfax исполнил warrants по Cdn$22.50 (Cdn$340M, зачёт loan receivable) + private placement Cdn$200M по Cdn$23; контроль сохранён 55.8% [2][14]. Для FFH это НЕ выпуск собственных акций — собственный share count только сокращается.
+- **Senior notes** — выпуск unsecured senior notes $476.6M (Cdn$650.0M) в Q1'26; total debt/capital 26.2% → 27.8% [2]. Долговое, не долевое финансирование.
+- Собственных equity-выпусков FFH в 2024–Q1'26 не зафиксировано; спин-оффов на уровне холдинга нет (спин-офф The Keg был внутри Recipe, не FFH-уровень).
+
+**Индивидуальные инсайдеры (имя/дата/акции/цена) — через SEDI-агрегатор MarketBeat [18], диапазон 23.08.2023–25.06.2025, в CAD:**
+
+| Дата | Инсайдер | Роль | Тип | Акций | Цена (C$) |
+|---|---|---|---|---|---|
+| 25.06.2025 | F. Brian Bradstreet | Director | Sell | 700 | 2,503.00 |
+| 23.06.2025 | Sava Kleven | Director | Sell | 181 | 2,465.95 |
+| 19.06.2025 | William Conrad Weldon | Director | Buy | 7 | 2,412.62 |
+| 19.06.2025 | David Lloyd Johnston | Director | Buy | 6 | 2,415.79 |
+| 18.06.2025 | Jean Cloutier | Senior Officer | Sell | 216 | 2,431.86 |
+
+Агрегат за 3 года (MarketBeat [18], не переоткрыто по SEDI построчно): 7 инсайдеров покупали на C$936.94K, 15 продавали на C$50.28M; insider ownership 3.76%. Покупки директоров мелкие (единицы–десятки акций — bonus-эквиваленты дивиденда по опционам), продажи крупнее (сотни акций по >C$2,400). Это рутина, не сигнал: proxy circular [17] прямо фиксирует — *«with the exception of charitable donations and the repurchase for cancellation of subordinate voting shares owned by V. Prem Watsa in 2024, there has been almost no trading of our shares by our executive officers»*. Свежее 2026 (после 25.06.2025) по индивидам первичкой/SEDI не подтверждено — canadianinsider.com под Cloudflare, insiderscreener 403 (см. «Пробелы»).
+
+**Контроль и alignment (Management Proxy Circular 2026 [17], record date 06.03.2026):**
+- Outstanding: 19,900,801 subordinate voting + 1,548,000 multiple voting shares.
+- **V. Prem Watsa контролирует 43.3% всех голосов**: через The Sixty Two Investment Company (50,620 sub voting + 1,548,000 multiple voting = 100% multiple) + лично 467,259 sub voting + 2,100 под контролем/управлением [17].
+- Multiple voting shares = 50 голосов каждая, capped 41.8% voting power; sub voting = 58.2% голосов [17]. Sixty Two по соглашению не может продать multiple voting shares и не вправе получить премию за их спецправа [17].
+- **Watsa берёт фиксированный salary $600,000** с 2000 г., без бонуса/опционов/пенсии (кроме payroll share purchase plan); total comp 2025 = $630,004 [17]. Alignment максимальный: contrarian-зарплата + 43.3% голосов + buyback по цене выше book + TRS на собственную акцию.
+
+**Чтение для решения (hold/add/cut):** company-action сигнал — bullish на собственную недооценку (ускоряющийся buyback по 1.35x book + TRS + контролирующий founder на фиксированной зарплате). Индивидуальные инсайдеры нейтральны (рутинные мелкие сделки). Главный риск — key-person: 43.3% голосов в руках одного 75-летнего человека, преемственность по голосующему контролю в первичке не раскрыта.
+
+### Peer positioning
+
+Источники: Markel 2025 results (PRNewswire, проверено), stockanalysis.com (валидация).
+
+| Метрика (2025/тек.) | Fairfax (FFH) | Markel (MKL) | Berkshire (BRK) |
+|---|---|---|---|
+| BVPS | $1,250 (Q1'26, проверено) | ~$1,477 (computed: equity $18,598M / 12,590K акц, проверено) | прямо не раскрывается |
+| P/B текущий | ~1.4–1.5x (USD) | ~1.3x (из черновика) | ~1.44x (из черновика) |
+| Combined ratio 2025 | 93.0% (проверено) | 94.6% (Markel Insurance segment, проверено) | низкий 90-х (из черновика) |
+| ROE 2025 | 17.8% | net income $2.11B (проверено), ROE ~умеренный | ~10–12% (из черновика) |
+| Float | $39.3B (P&C, проверено) | существенно меньше | ~$170B+ (из черновика) |
+
+**Относительный вывод:**
+- vs **Markel:** Fairfax с лучшим combined ratio (93.0% vs 94.6%) и выше ROE; Markel буксует в underwriting. Fairfax операционно сильнее.
+- vs **Berkshire:** Fairfax с более высоким ROE и быстрым ростом float на акцию, но с большей концентрацией, key-person риском и менее ликвидным портфелем.
+- **Аргумент за hold/add:** скрытые $3.9B сверх book + ускорившийся buyback + TRS. **Аргумент за осторожность:** P/B уже выше собственной 10-летней медианы, смягчение hard market в North America.
+
+## Tier 3 — Voice
+
+### 03 Заявленная стратегия
+
+**Тип:** true holdco на базе страхования. Три источника прибыли: (1) андеррайтинг P&C; (2) инвестиционный доход с float ($39.3B на конец 2025, проверено); (3) доля прибыли ассоциированных и консолидированных нестраховых бизнесов.
+
+**Edge-тезис (Prem Watsa).** Дисциплинированный андеррайтинг (прибыль, не рост премий) + консервативный ликвидный fixed income + долгосрочные value-инвестиции. По итогам 2025 (цитата из FY2025 release, проверено): *«2025 was the best year in our history with net earnings of $4.8 billion or $213.78 per diluted share, reflecting record underwriting profit and interest and dividends…»*.
+
+**Приоритет андеррайтинга над ростом.** COO Peter Clarke (Q1'26 call): *«underwriting profit is the focus, and underwriting discipline»* (источник — транскрипт, вторичный). FY2025 combined ratio 93.0% undiscounted (проверено), Q1'26 — 94.1% undiscounted.
+
+**Правила капитал-аллокации (по filings):**
+- **Buyback при цене ниже внутренней стоимости:** 2025 — 1,006,535 акц за $1,625.2M; Q1'26 — 374,883 акц за $631.3M (проверено).
+- **TRS на собственные акции:** 1,760,355 акций, notional $664.0M, $840.6M прибыли в 2025 (проверено) [Ring 1].
+- **Монетизация дороже балансовой:** Poseidon продано за $1.91B (gain ~$837M, проверено); Eurolife в Eurobank за ~$935M (gain ~$350M); take-private Kennedy-Wilson за $10.90/акц; IPO AGT.
+- **Дивиденд:** $15/акц, удерживается ~25 лет подряд (CFO Amy Sherk, транскрипт).
+
+**Слои стратегии.** (1) Страховой core — 8 платформ: Northbridge, Crum & Forster, Zenith (North America); Allied World, Odyssey Group, Brit, Ki (Global); International. (2) Fixed income — дюрация 2.2 года, ~5% yield, *«zero traditional private credit exposure»* (Wade Burton, транскрипт; точные цифры $49.8B по 10-Q не сверены — см. «Пробелы»). (3) Equity/private: 13F $1.94B (проверено) + крупные associates/консолидированные.
+
+### 05 Взгляд на рынок
+
+**P&C цикл — расхождение по регионам.** COO Clarke (Q1'26 call): North America — *«softening of rates… much more competitive»*, рост премий ~1.5%; International растёт ~16–26% и даёт *«more attractive business»*. Менеджмент сознательно не гонится за объёмом в мягком рынке. (Источник — транскрипт, вторичный.)
+
+**Чего избегают в инвестициях.** CIO Wade Burton: fixed income коротким и безопасным, дюрация 2.2 года, ~5% yield, *«zero traditional private credit exposure»*. По акциям осторожность: *«with the Shiller PE at all-time highs, you would not expect we'd find a lot of fifty cent dollars in the stock market, and we aren't»*.
+
+**За чем следят.** (1) Геополитика: Gulf Insurance в зоне регионального конфликта. (2) Workers' comp: Zenith combined ratio 103.7% в Q1'26 (из черновика). (3) Процентные ставки: mark-to-market убыток по бондам −$363.9M в Q1'26 (из черновика; консолидированный net losses on investments −$385.9M — проверено).
+
+**Датированные тезисы (проверенные по primary):**
+- **19.02.2026** — рекордный 2025: net earnings $4,772.4M ($213.78/акц), underwriting profit $1,816.6M, net gains on investments ~$3.2B (common stocks ~$3.1B), BVPS $1,260.19 (+20.5%). [FY2025 release, проверено]
+- **19.02.2026** — interest & dividends $2,574.0M; share of profit of associates $816.1M (Eurobank $474.1M, Poseidon $286.9M, Digit $55.1M, EXCO $52.5M). [FY2025 release, проверено]
+- **29.05.2026** — закрыта продажа Poseidon: 67,618,981 акций по $28.30, ~$1.91B, gain ~$837M, удержано 22.2%. [completion-релиз, проверено]
+- **15–16.06.2026** — завершён take-private Kennedy-Wilson по $10.90/акц. [completion-релиз Fairfax, проверено]
+
+## Tier 4 — Signals
+
+### 06 Что мониторить
+
+**Отчётность / IR:**
+- **Q2 2026 earnings** — ожидается конец июля / начало августа 2026 (исторический паттерн Q2'24 — 01.08.2024). Официально НЕ подтверждено → fairfax.ca/news, SEC EDGAR 6-K. [не подтверждено]
+- **AGM 2026 прошёл** 16.04.2026; следующий — апрель 2027.
+- **Annual Report + Prem Watsa letter за 2025** — на fairfax.ca/investors.
+
+**13F (SEC EDGAR, CIK 0000915191):**
+- 13F-HR Q1'26 (31.03.2026) подан, портфель $1.94B, 29 позиций (проверено).
+- **13F-HR Q2'26** — дедлайн ~14.08.2026. Отслеживать Orla Mining, Under Armour, CVS Health.
+- 13F покрывает только US-listed; крупнейшие equity-экспозиции (Eurobank, Digit, TRS) в 13F НЕ видны — для полноты смотреть 10-K/годовой 6-K и SEDAR+.
+
+**SEDAR+ (Канада):** interim/annual filings, MD&A, AIF, management circular — раньше/полнее, чем EDGAR 6-K.
+
+**Транзакции для верификации эффекта в Q2'26:**
+- Poseidon gain ~$837M (закрыто 29.05.2026) → попадёт в Q2'26.
+- Eurolife → Eurobank (~$935M, gain ~$350M) — подтвердить факт закрытия в Q2 release.
+- Kennedy-Wilson take-private — консолидация/переоценка в Q2–Q3'26.
+
+### 07 Аналитический слой (ИНТЕРПРЕТАЦИЯ — не факты компании)
+
+**Чтение Q1'26.** Падение net earnings ($695M vs $945M г/г) — почти целиком из-за mark-to-market по облигациям (−$363.9M от роста ставок), НЕ из-за бизнеса. Операционная картина укрепилась: underwriting profit $381.6M, combined ratio 94.1% vs 98.5%. Короткая дюрация (2.2 года) означает быстрый отыгрыш облигационного убытка через высокий reinvestment yield.
+
+**Эффект транзакций на NAV (Q2–Q3'26).** Poseidon ~$837M gain (закрыт), Eurolife ~$350M (если закрыт в Q2), плюс высвобождение капитала из Kennedy-Wilson. Сигнал: при Shiller PE на максимумах менеджмент продаёт дороже балансовой и держит сухой порох под buyback.
+
+**Связь с соседними позициями.**
+- **Eurobank** — крупнейший контрибьютор associates ($474.1M в 2025, проверено); покупка Eurolife усиливает Eurobank и косвенно стоимость доли Fairfax. Положительная петля.
+- **Poseidon** — после реализации $28.30/акц прежняя оценка доли менее спекулятивна (валидация по сделке).
+- **AGT / Fairfax India** — excess fair value over carrying $3.9B (проверено) — скрытая стоимость над балансом.
+- **TRS на FFH + buyback** — двойная ставка на собственную недооценку; при росте FFH усиливают BVPS, при падении — концентрация на себе.
+
+**AI-линза.** Прямой AI-экспозиции у страхового/инфраструктурного core нет. Косвенно — энергетика под спрос data-центров (Waterous, EXCO); спекулятивно, менеджментом как AI-тезис не заявлено.
+
+**Сигналы (триггеры, не рекомендации):**
+- **Hold/add bias** при котировке заметно ниже BVPS $1,250 и combined ratio <95%; менеджмент покупал по $1,614–1,685.
+- **Watch / возможный trim** если: (1) North American softening углубляется и consolidated combined ratio >97–98%; (2) Zenith CR остаётся >103% несколько кварталов; (3) расширение в private credit вопреки текущему «zero».
+- **Подтверждение тезиса в Q2'26:** попадание Poseidon/Eurolife gains в отчёт + продолжение buyback.
+
+## Источники
+
+1. Fairfax FY2025 press release (year ended Dec 31 2025) — https://www.sec.gov/Archives/edgar/data/915191/000162828026009893/ffh-2025q4pressrelease.htm — primary (SEC EDGAR 6-K) — 2026-02-19 — *открыт и проверен построчно (curl 200)*
+2. Fairfax Q1 2026 press release — https://www.sec.gov/Archives/edgar/data/915191/000162828026029028/ffh-2026q1pressrelease.htm — primary (SEC EDGAR 6-K) — 2026-04-30 — *открыт и проверен построчно (curl 200)*
+3. Fairfax 13F-HR Q1 2026 infotable — https://www.sec.gov/Archives/edgar/data/915191/000110465926061601/infotable.xml — primary (SEC EDGAR) — 2026-05-15 — *распарсен построчно (curl 200): 29 позиций, total $1.94B*
+4. Fairfax Completes Sale of Portion of Poseidon Corp. — https://www.globenewswire.com/news-release/2026/05/29/3303831/0/en/Fairfax-Completes-Sale-of-Portion-of-its-Interest-in-Poseidon-Corp.html — IR press release — 2026-05-29 — *открыт и проверен (67,618,981 акц по $28.30)*
+5. Fairfax — Completion of Kennedy Wilson Take-Private — https://www.fairfax.ca/press-releases/fairfax-announces-completion-of-kennedy-wilson-take-private-transaction/ — primary IR — 2026-06-16 — *открыт и проверен ($10.90/акц)*
+6. Markel Group reports 2025 financial results — https://www.prnewswire.com/news-releases/markel-group-reports-2025-financial-results-302679494.html — primary IR — 2026-02-04 — *открыт и проверен (equity $18,598M, CR 94.6%)*
+7. stockanalysis.com FRFHF (USD price, market cap, 52-нед) — https://stockanalysis.com/quote/otc/FRFHF/ — structured-aggregator (валидация) — 2026-06-28 — *открыт (mc $38.11B, P/E 8.12)*
+8. stockanalysis.com FFH.TO (CAD price, market cap) — https://stockanalysis.com/quote/tsx/FFH/ — structured-aggregator (валидация) — 2026-06-28 — *открыт (mc CAD $54.08B, P/E 8.30)*
+9. Fairfax 2025 Annual Report (письмо Watsa, look-through equity portfolio, float, track record) — https://www.fairfax.ca/wp-content/uploads/2026/03/FFH_Fairfax-Financial-2025-Annual-Report-144860.pdf — primary — 2026-03 — *не переоткрыт построчно мной*
+10. Fairfax FY2025 results (IR page) — https://www.fairfax.ca/press-releases/fairfax-financial-holdings-limited-financial-results-for-the-year-ended-december-31-2025-02-19-2026/ — primary IR — 2026-02-19
+11. Fairfax Q1 2026 results (IR page) — https://www.fairfax.ca/press-releases/fairfax-financial-holdings-limited-financial-results-for-the-first-quarter-04-30-2026/ — primary IR — 2026-04-30
+12. Fairfax Q1 2026 earnings call transcript (Clarke, Burton, Sherk) — https://www.investing.com/news/transcripts/earnings-call-transcript-fairfax-financial-q1-2026-results-disappoint-93CH-4653516 — earnings call transcript (вторичный) — 2026-05-01
+13. Kennedy Wilson completes take-private with Fairfax — https://www.businesswire.com/news/home/20260615942648/en/Kennedy-Wilson-Announces-Completion-of-Take-Private-Transaction-With-Fairfax — counterparty press release — 2026-06-15
+14. AGT Food completes IPO + Fairfax private placement — https://www.newswire.ca/news-releases/agt-food-and-ingredients-inc-completes-initial-public-offering-and-concurrent-fairfax-private-placement-for-total-gross-proceeds-to-agt-of-625-million-833828076.html — portfolio company press release — 2026-03-09
+15. FFH 13F-HR Q4 2025 infotable (сравнение) — https://www.sec.gov/Archives/edgar/data/915191/000110465926015544/infotable.xml — primary (SEC EDGAR) — 2026-02-17
+16. Dataroma FFH 13F holdings (валидация) — https://www.dataroma.com/m/holdings.php?m=FFH — 13F aggregator (валидация) — 2026-03-31
+17. Fairfax Management Proxy Circular 2026 (Watsa voting control 43.3%, Sixty Two, multiple voting shares, executive comp, Watsa $600K salary) — https://www.fairfax.ca/wp-content/uploads/2026/03/FFH_Fairfax-Financial-Management_Proxy_Circular-2026-191881.pdf — primary IR (PDF) — 2026-03-06 — *скачан и распарсен мной построчно (pypdf): 19,900,801 sub + 1,548,000 multiple voting, Watsa 43.3% голосов, salary $600K*
+18. MarketBeat FFH insider trades (SEDI-агрегатор, индивидуальные сделки директоров/офицеров) — https://www.marketbeat.com/stocks/TSE/FFH/insider-trades/ — insider aggregator (валидация, тянет из SEDI) — диапазон 2023-08-23 … 2025-06-25 — *открыт; имена/даты/цены сделок, агрегат 3 года*
+
+## Пробелы и неподтверждённое
+
+- **CVS Health** — третья по размеру 13F-позиция ($194.8M, 2,712,000 акц, проверено мной по XML), но ОБА черновых агента её НЕ назвали в основном портфеле (только VOICE мельком упомянул в «что мониторить»). Включена мной по первичному 13F.
+- **Float $39.3B vs $40.8B** — FY2025 release даёт P&C float $39.3B (+11.2%, проверено); черновик FACTS использовал $40.8B «из письма» (вероятно расширенное определение с life/run-off). Многолетний float-ряд из письма не переоткрыт построчно.
+- **P/B текущий** — черновики дали ~1.3x при цене FRFHF ~$1,650; live market cap $38.11B даёт price ~$1,827–1,861 → P/B ~1.46–1.49x (USD). Точное значение чувствительно к курсу USD/CAD, дате котировки и точному share count (20.5–20.9M).
+- **Look-through equity portfolio (Ring 1 associates/consolidated)** — рыночные стоимости отдельных позиций (Eurobank $4.7B, Poseidon $2.6B и т.д.) взяты из черновика FACTS по Annual Report; PDF годового отчёта мной построчно НЕ переоткрыт (полагаюсь на share-of-profit цифры, которые проверены отдельно по FY2025 release).
+- **Прямая дата Kennedy-Wilson close** — completion-релиз Fairfax подтверждает факт и цену $10.90, точная дата 15 vs 16.06.2026 расходится между агентами на один день.
+- **Form 4 / SEDI** — пофайловой Form 4 нет (Fairfax канадский эмитент → SEDI/SEDAR+). Индивидуальные сделки получены через агрегатор MarketBeat [18] (тянет из SEDI), диапазон до 25.06.2025. Свежие 2026-сделки по индивидам первичкой НЕ подтверждены: canadianinsider.com отдаёт Cloudflare-challenge (JS-проверка, curl/WebFetch не проходят), insiderscreener.com — 403, SEDI-портал требует интерактивного поиска. Построчно по SEDI индивидуальные транзакции мной не переоткрыты. Watsa-уровневые сделки (43.3% голосов, $600K salary, self-repurchase 2024) подтверждены первичкой через Proxy Circular 2026 [17].
+- **Fixed income детали** (дюрация 2.2 года, ~5% yield, $49.8B, «zero private credit») — из транскрипта call (вторичный); сверка с 10-Q/MD&A не выполнена.
+- **Bond loss −$363.9M в Q1'26** — из черновиков; консолидированный net losses on investments −$385.9M проверен по income statement, но отдельная bond-составляющая в press release построчно мной не локализована.
+- **Track record/IRR отдельных сделок** (Odyssey $9.8B, Sigma IRR 31%, BVPS CAGR 18.7% с 1985) — из письма Watsa, не переоткрыты построчно.
+- **Q2 2026 earnings date** — официально не анонсирован; оценка по историческому паттерну.
+- **Markel BVPS** — computed ~$1,477 (equity $18,598M / 12,590K акц, проверено); черновик FACTS дал $1,504 — мелкое расхождение (Markel BVPS прямо в release не раскрыт).
+
+## Статус верификации
+
+Проверены построчно через первичные источники (curl к SEC.gov с корректным User-Agent — WebFetch к SEC даёт 403, обход через curl сработал): все основные финансовые метрики FY2025 и Q1'26 (net earnings $4,772.4M / $695M, EPS $213.78 / $31.11, BVPS $1,260.19 / $1,250.14, combined ratio 93.0% / 94.1%, premiums, interest&dividends $2,574.0M, share of profit of associates $816.1M с разбивкой Eurobank/Poseidon/Digit/EXCO, net gains on investments, float $39.3B, debt/capital 27.8%, holdco cash $2.5B, excess fair value $3.9B, buybacks 1,006,535 / 374,883 акц, TRS $664.0M notional / $840.6M gain); 13F построчно (29 позиций, total $1.94B, топ-10 с точными share counts); закрытие Poseidon (67,618,981 акц по $28.30, gain $837M, 22.2% retained); закрытие Kennedy-Wilson ($10.90); Markel 2025 (equity $18,598M, CR 94.6%, net income $2.11B); текущие котировки/market cap через stockanalysis. Пойманы и исправлены: (1) пропуск CVS Health (3-я позиция 13F) обоими агентами; (2) расхождение float $39.3B vs $40.8B; (3) P/B ~1.3x черновиков занижен — live market cap даёт ~1.4–1.5x; (4) Poseidon перенесён из pending в реализованные сделки (закрыт 29.05.2026); (5) consolidated vs segment строки interest&dividends и share-of-profit. Не переоткрыты построчно: PDF Annual Report (look-through equity stoimosti отдельных associates, многолетний float/track-record ряд), транскрипт call (fixed income детали), Form 4/SEDI. Общий уровень доверия: ВЫСОКИЙ по financials, 13F и закрытым сделкам; СРЕДНИЙ по look-through equity-оценкам отдельных позиций и качественным цитатам менеджмента.

@@ -1,0 +1,163 @@
+{
+  "id": "pershing",
+  "asOf": "28.06.2026",
+  "summary": "Pershing Square Holdings (PSH, Guernsey, листинг LSE) — closed-end holdco с постоянным капиталом под управлением PSCM (Bill Ackman): концентрированный портфель из ~11 публичных North-American large-cap имён, где пять позиций (Brookfield, Amazon, Uber, Microsoft, Restaurant Brands) держат 78.2% раскрытого US-портфеля ($13.71 млрд на 31.03.2026, 13F-HR). Деньги реально текут в две точки: (1) ротация в AI-megacaps (новая позиция Microsoft, докупка Amazon, почти полный выход из Alphabet) и (2) превращение Howard Hughes во вторую управляющую платформу (покупка страховщика Vantage за $2.1 млрд, $1 млрд preferred к PSH, закрыто 04.06.2026). Отдельный спекулятивный слой — probabilistic-ставки на Fannie/Freddie преимущественно через деривативы. Решение hold/add определяется устойчивостью NAV против постоянного дисконта цены к NAV (расширился до ~34% к лету 2026) и key-person-риском Ackman.",
+  "allocation": {
+    "byPlatform": [
+      {
+        "name": "Публичный концентрированный портфель (US-listed)",
+        "value": "$13.71 млрд",
+        "pct": 96,
+        "assetCount": 11,
+        "note": "13F-HR Q1'26: 11 US-listed позиций; ~96% раскрытой стоимости портфеля"
+      },
+      {
+        "name": "Спецструктуры: деривативы / частные / preferred",
+        "value": "не раскрыто",
+        "pct": 4,
+        "assetCount": 4,
+        "note": "Fannie/Freddie через деривативы, UMG (не-US листинг), HHH Preferred $1 млрд, SPARC; веса % NAV первичкой не раскрыты — pct оценочно"
+      }
+    ],
+    "bySector": [
+      {
+        "name": "AI-megacaps (cloud / ads / autonomy)",
+        "pct": 59,
+        "note": "AMZN 17.4 + UBER 15.7 + MSFT 15.3 + META 11.1 = ~59% US-портфеля; AI-линза реальна (AWS/Azure, Waymo, реклама)"
+      },
+      {
+        "name": "Владелец альтернативных активов (Brookfield)",
+        "pct": 18,
+        "note": "BN 17.6% — крупнейшая позиция; через BN — доля в Brookfield Asset Management"
+      },
+      {
+        "name": "QSR / франчайзинг потребления",
+        "pct": 12,
+        "note": "Restaurant Brands (Burger King / Tim Hortons / Popeyes)"
+      },
+      {
+        "name": "Real estate / управляющая платформа (HHH)",
+        "pct": 10,
+        "note": "Howard Hughes 8.7% + Seaport 0.79%; HHH трансформируется в диверсифицированный холдинг + insurance-float Vantage"
+      },
+      {
+        "name": "Situational / turnaround",
+        "pct": 1,
+        "note": "Hertz 0.51%, хвост Alphabet 0.72% (почти продан)"
+      }
+    ],
+    "byGeography": [
+      {
+        "region": "США",
+        "pct": 70
+      },
+      {
+        "region": "Канада (BN, QSR)",
+        "pct": 30
+      }
+    ],
+    "byTheme": [
+      {
+        "theme": "AI / cloud / autonomy",
+        "value": "~$8.1 млрд",
+        "note": "AMZN ($2.385B/AWS), MSFT ($2.093B/Azure), UBER ($2.155B/Waymo), META ($1.522B/реклама на AI-инфраструктуре); хвост GOOG ($0.098B). Точную совокупную AI-долю первичка по типу позиции не агрегирует — сумма US-имён с реальной AI-экспозицией"
+      },
+      {
+        "theme": "Probabilistic / GSE re-IPO",
+        "value": "не раскрыто",
+        "note": "Fannie/Freddie преимущественно через деривативы; ставка на выход GSE из conservatorship. Вес в NAV первичкой не раскрыт"
+      }
+    ]
+  },
+  "platforms": [
+    {
+      "id": "public-portfolio",
+      "name": "Публичный концентрированный портфель (US-listed)",
+      "role": "Ядро холдинга: 8–12 ликвидных North-American large-cap позиций под прямым управлением PSCM. Это весь раскрытый портфель PSH в 13F-HR.",
+      "stats": [
+        {"label": "Раскрытая стоимость (13F Q1'26)", "value": "$13.714 млрд"},
+        {"label": "Позиций", "value": "11"},
+        {"label": "Концентрация топ-5", "value": "78.2%"},
+        {"label": "GAAP NAV (Equity, 31.12.25)", "value": "$15,536 млн"},
+        {"label": "NAV/акц.", "value": "$77.90 (16.06.26) / $85.32 (31.12.25)"}
+      ],
+      "sectors": [
+        {
+          "name": "AI-megacaps (cloud / ads / autonomy)",
+          "shownOf": {"shown": 5, "total": 5, "note": "все AI-экспонированные US-имена раскрыты в 13F"},
+          "assets": [
+            {"name": "Amazon.com (AMZN)", "what": "Розница + облако AWS; ставка на маржу розницы и спрос на AWS под AI-inference", "stake": "11,451,981 акц.", "value": "$2.385 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"},
+            {"name": "Uber (UBER)", "what": "Маркетплейс мобильности; партнёрство с Waymo, ставка на autonomous-vehicle сеть", "stake": "29,958,771 акц.", "value": "$2.155 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"},
+            {"name": "Microsoft (MSFT)", "what": "ПО, облако Azure, AI-инфраструктура; НОВАЯ позиция Q1'26", "stake": "5,654,078 акц.", "value": "$2.093 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"},
+            {"name": "Meta Platforms (META)", "what": "Цифровая реклама Family of Apps; куплена на просадке после AI-капекса (нач. Q4'25)", "stake": "2,660,861 акц.", "value": "$1.522 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"},
+            {"name": "Alphabet C+A (GOOG/GOOGL)", "what": "Поиск + Google Cloud + AI; резко сокращена в Q1'26 (~95%), остался хвост", "stake": "311,726 + 32,376 акц.", "value": "$0.098 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"}
+          ]
+        },
+        {
+          "name": "Владелец альтернативных активов",
+          "shownOf": {"shown": 1, "total": 1, "note": "одна позиция"},
+          "assets": [
+            {"name": "Brookfield Corp (BN)", "what": "Канадский владелец альтернативных активов; основная часть капитализации — доля в Brookfield Asset Management", "stake": "59,697,208 акц.", "value": "$2.416 млрд", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": false, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"}
+          ]
+        },
+        {
+          "name": "QSR / франчайзинг потребления",
+          "shownOf": {"shown": 1, "total": 1, "note": "одна позиция"},
+          "assets": [
+            {"name": "Restaurant Brands Intl (QSR)", "what": "Франчайзинг Burger King / Tim Hortons / Popeyes; предсказуемый кэш", "stake": "22,645,483 акц.", "value": "$1.674 млрд", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": false, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"}
+          ]
+        },
+        {
+          "name": "Real estate / управляющая платформа",
+          "shownOf": {"shown": 2, "total": 2, "note": "HHH + спин-офф Seaport"},
+          "assets": [
+            {"name": "Howard Hughes Holdings (HHH)", "what": "Девелопер master-planned communities; трансформируется во вторую управляющую платформу под Ackman (Exec Chairman), внутри — insurance-float Vantage", "stake": "18,852,064 акц.", "value": "$1.193 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"},
+            {"name": "Seaport Entertainment (SEG)", "what": "Спин-офф HHH; недвижимость и развлечения в Нью-Йорке", "stake": "5,023,780 акц.", "value": "$0.108 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"}
+          ]
+        },
+        {
+          "name": "Situational / turnaround",
+          "shownOf": {"shown": 1, "total": 1, "note": "одна позиция"},
+          "assets": [
+            {"name": "Hertz Global (HTZ)", "what": "Прокат авто, бизнес в стадии оборота (turnaround)", "stake": "15,241,127 акц.", "value": "$0.070 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26 infotable.xml (SEC EDGAR)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "special-structures",
+      "name": "Спецструктуры: деривативы / частные / preferred",
+      "role": "Позиции вне 13F (не-US листинг, OTC, деривативы, частные структуры). Веса % NAV первичкой на 31.03.2026 не раскрыты — эта секция честно помечает структуру каждого vehicle, а не выдаёт оценку.",
+      "stats": [
+        {"label": "Раскрытие стоимости", "value": "частичное / отсутствует"},
+        {"label": "Позиций", "value": "4"}
+      ],
+      "sectors": [
+        {
+          "name": "Probabilistic — GSE (через деривативы)",
+          "shownOf": {"shown": 2, "total": 2, "note": "обе GSE названы в attribution; веса/стоимость в NAV не раскрыты"},
+          "assets": [
+            {"name": "Federal National Mortgage (Fannie Mae, FNMA)", "what": "Ставка на выход GSE из conservatorship; держится преимущественно через деривативы, в 13F крупно не отражена. Средняя цена входа ~$2.29 (презентация)", "stake": "через деривативы", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "probabilistic", "ai": false, "source": "Investor Presentation 11.02.2026 (attribution; вес не раскрыт)"},
+            {"name": "Federal Home Loan Mortgage (Freddie Mac, FMCC)", "what": "Аналогичная ставка на приватизацию GSE; через деривативы. Средняя цена входа ~$2.14 (презентация)", "stake": "через деривативы", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "probabilistic", "ai": false, "source": "Investor Presentation 11.02.2026 (attribution; вес не раскрыт)"}
+          ]
+        },
+        {
+          "name": "Контент / не-US листинг",
+          "shownOf": {"shown": 1, "total": 1, "note": "названа в attribution, вес не раскрыт"},
+          "assets": [
+            {"name": "Universal Music Group (UMG)", "what": "Музыкальный контент, листинг Euronext Amsterdam; не попадает в 13F (не-US листинг). Вес в NAV первичкой не раскрыт", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Нидерланды (листинг) / глобальный бизнес", "status": "operating", "ai": false, "source": "PSH attribution / fact sheet (имя есть, вес не раскрыт)"}
+          ]
+        },
+        {
+          "name": "Preferred / acquisition-vehicle",
+          "shownOf": {"shown": 2, "total": 2, "note": "HHH Preferred (закрыт) + SPARC"},
+          "assets": [
+            {"name": "HHH Preferred $1.0 млрд", "what": "Non-voting exchangeable perpetual preferred, выпущенный HHH в пользу PSH под покупку Vantage; ранг pari passu с common HHH; минимальная доходность 'исходная + 4%/год' с upside по 1.5x book Vantage. Закрыто 04.06.2026", "stake": "$1.0 млрд номинал", "value": "$1.0 млрд (номинал)", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "HHH press release 04.06.2026 (GlobeNewswire)"},
+            {"name": "Pershing Square SPARC Holdings", "what": "Special Purpose Acquisition Rights Company; vehicle под будущую сделку, балансовая оценка не подтверждена", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "vehicle", "ai": false, "source": "PSH disclosure (структура; оценка не подтверждена)"}
+          ]
+        }
+      ]
+    }
+  ],
+  "notDisclosed": "13F-HR покрывает только US-listed позиции (стоимость и акции по ним сверены построчно по infotable.xml). НЕ раскрыты поимённо с весами: % NAV не-US позиций (UMG на Euronext Amsterdam), доли Fannie/Freddie, держащихся преимущественно через деривативы (в 13F крупно не отражены), fair value SPARC и точная транш-структура HHH Preferred (пресс-релиз описывает единый $1 млрд выпуск, презентация — 14 траншей; по 8-K HHH построчно не сверено). PSH — closed-end fund с отчётностью по fair value: Condensed Schedule of Investments в 2025 Annual Report целиком не извлечён (PDF >лимита). IRR/MOIC по vintage частных фондов PSCM в первичке не раскрыты — используется PSH NAV-ряд как прокси."
+}

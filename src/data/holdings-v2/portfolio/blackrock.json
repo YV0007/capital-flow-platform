@@ -1,0 +1,249 @@
+{
+  "id": "blackrock",
+  "asOf": "28.06.2026",
+  "summary": "BlackRock — крупнейший в мире asset manager ($13.89 трлн AUM на 31.03.2026): он владеет ФРАНШИЗОЙ (платформами для управления чужими деньгами), а не базовыми бумагами — underlying-позиции iShares и активных фондов это client assets, не баланс BLK. Экономику франшизы делают две вещи: iShares/ETF ($5.49 трлн AUM, 44% base fees при низкой ставке ~0.16%) дают масштаб и предсказуемость, а высокомаржинальные private markets ($320 млрд AUM) после покупок GIP (infrastructure), HPS (private credit) и Preqin (данные) — главный источник роста и AI-экспозиции через data-центры и power. Деньги реально текут в (1) ETF-притоки ~$130 млрд/квартал и (2) фандрейзинг частных рынков (цель $400 млрд к 2030); решение hold/add держится на конверсии этих притоков в base/performance fees при as-adj марже ≥45%.",
+  "allocation": {
+    "byPlatform": [
+      {"name": "iShares / ETF", "value": "$5.49 трлн AUM", "pct": 39, "assetCount": 1400, "note": "39% AUM, но 44% base fees — самая доходная отдельная франшиза; client assets"},
+      {"name": "Non-ETF index", "value": "$3.92 трлн AUM", "pct": 28, "assetCount": null, "note": "пассивные индекс-мандаты вне ETF; лишь ~7% base fees (низкая ставка)"},
+      {"name": "Active equity / fixed income / multi-asset", "value": "$3.41 трлн AUM", "pct": 25, "assetCount": null, "note": "25% AUM, но ~43% base fees — высокая ставка комиссии"},
+      {"name": "Cash management", "value": "$1.07 трлн AUM", "pct": 8, "assetCount": null, "note": "money-market; низкомаржинально, не приоритет роста"},
+      {"name": "Private markets (GIP + HPS + RE + PE)", "value": "$320 млрд AUM", "pct": 2, "assetCount": null, "note": "только ~2.3% AUM, но ~12% base fees + performance fees; главный драйвер AI-инфры"},
+      {"name": "Liquid alts / digital / commodities", "value": "$0.35 трлн AUM", "pct": 3, "assetCount": null, "note": "liquid alternatives $109 млрд + digital $61 млрд (IBIT) + currency/commodities $177 млрд"}
+    ],
+    "bySector": [
+      {"name": "Public equity (client assets)", "pct": 55, "note": "$7.66 трлн — бета к S&P 500/MSCI; падает почти 1:1 при просадке рынка"},
+      {"name": "Public fixed income (client assets)", "pct": 24, "note": "$3.27 трлн — облигации клиентов"},
+      {"name": "Multi-asset", "pct": 9, "note": "$1.22 трлн — модельные/балансовые портфели"},
+      {"name": "Cash / money-market", "pct": 8, "note": "$1.07 трлн"},
+      {"name": "Private credit / infrastructure / RE / PE", "pct": 2, "note": "$320 млрд — здесь сидит AI-инфраструктура (data-центры, power) через GIP"},
+      {"name": "Digital / commodities / currency", "pct": 2, "note": "$237 млрд — включая IBIT $58 млрд"}
+    ],
+    "byGeography": [
+      {"region": "Северная Америка (Americas)", "pct": 65, "note": "база клиентов и притоков; Q1'26 long-term flows +$123 млрд из +$136 млрд — Americas"},
+      {"region": "EMEA", "pct": 25, "note": "Q1'26 +$13 млрд; стабильный приток"},
+      {"region": "APAC", "pct": 10, "note": "Q1'26 ~$0; LTM отток −$62 млрд"}
+    ],
+    "byTheme": [
+      {"theme": "AI / data-центры / power-for-AI", "value": "$40+ млрд EV (Aligned) + AIP до $100 млрд", "note": "прямая экспозиция через GIP: Aligned Data Centers ($40 млрд EV, >5 GW), CyrusOne, ACS JV (€2 млрд, 1.7 GW старт + 11 GW pipeline), AI Infrastructure Partnership с Microsoft/NVIDIA/MGX (цель $30 млрд equity → $100 млрд с долгом)"},
+      {"theme": "Energy transition / electrification", "value": "часть GIP FPAUM", "note": "renewables-платформы Clearway, Vena, Atlas, Eolian — растущий спрос на power для AI/cloud"},
+      {"theme": "Digital assets / токенизация", "value": "$60.7 млрд AUM", "note": "IBIT (iShares Bitcoin Trust) ~$58 млрд + прочие digital продукты"}
+    ]
+  },
+  "platforms": [
+    {
+      "id": "ishares-etf",
+      "name": "iShares / ETF",
+      "role": "Крупнейшая в мире платформа ETF (куплена как Barclays Global Investors в 2009). Управляет индексными и активными ETF по всем классам активов — это client assets, не баланс BLK. Даёт масштаб, ликвидность и 44% base fees франшизы при низкой ставке ~0.03-0.07% по флагманам.",
+      "stats": [
+        {"label": "AUM", "value": "$5.49 трлн"},
+        {"label": "Base fees Q1'26", "value": "$2.41 млрд (44%)"},
+        {"label": "Net flows Q1'26", "value": "+$132 млрд (рекорд для 1-го кв.)"},
+        {"label": "Продуктов", "value": "~1,400 ETF"}
+      ],
+      "sectors": [
+        {
+          "name": "Крупнейшие equity ETF по AUM (client assets)",
+          "shownOf": {"shown": 4, "total": null, "note": "топ продуктов из ~1,400; полный лист по AUM построчно BLK не раскрывает в earnings release"},
+          "assets": [
+            {"name": "IVV — iShares Core S&P 500 ETF", "what": "S&P 500 индекс-фонд, флагман iShares", "stake": "client assets", "value": "$686 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "investsnips Largest ETFs by AUM (June 2026), валидация"},
+            {"name": "IEFA — iShares Core MSCI EAFE ETF", "what": "развитые рынки ex-US (Европа, Австралазия, Дальний Восток)", "stake": "client assets", "value": "$122 млрд", "valueDisclosed": true, "geography": "Международные DM", "status": "operating", "ai": false, "source": "investsnips / U.S.News (June 2026), валидация"},
+            {"name": "IEMG — iShares Core MSCI Emerging Markets ETF", "what": "акции развивающихся рынков (core EM)", "stake": "client assets", "value": "не раскрыто", "valueDisclosed": false, "geography": "EM", "status": "operating", "ai": false, "source": "iShares product list (упомянут как крупный EM core, точный AUM не открыт)"},
+            {"name": "IWF — iShares Russell 1000 Growth ETF", "what": "крупные US growth-акции (включая мегакэп tech)", "stake": "client assets", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "iShares product list, AUM не открыт построчно"}
+          ]
+        },
+        {
+          "name": "Крупнейшие fixed income ETF (client assets)",
+          "shownOf": {"shown": 1, "total": null, "note": "AGG — крупнейший bond ETF iShares; точный AUM в открытых источниках цикла не подтверждён"},
+          "assets": [
+            {"name": "AGG — iShares Core U.S. Aggregate Bond ETF", "what": "широкий US investment-grade bond индекс", "stake": "client assets", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "investsnips/U.S.News — назван крупнейшим bond ETF iShares, AUM не открыт"}
+          ]
+        },
+        {
+          "name": "Digital assets ETF (client assets)",
+          "shownOf": {"shown": 1, "total": 1, "note": "флагман digital-линейки"},
+          "assets": [
+            {"name": "IBIT — iShares Bitcoin Trust ETF", "what": "spot-bitcoin ETF; ~половина всех активов US крипто-ETF", "stake": "client assets", "value": "$58 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "IBIT fact sheet 31.03.2026 / ETF.com (пик ~$99 млрд окт'25, $58 млрд май'26)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "active",
+      "name": "Active equity / fixed income / multi-asset",
+      "role": "Активно управляемые мандаты и фонды (фундаментальные и systematic). 25% AUM, но ~43% base fees — высокая ставка комиссии. Это client assets; underlying-позиции построчно не атрибутируются балансу BLK.",
+      "stats": [
+        {"label": "AUM", "value": "$3.41 трлн"},
+        {"label": "Base fees Q1'26", "value": "$2.35 млрд (43%)"},
+        {"label": "Equity > бенчмарка 3 года", "value": "fundamental 51% / systematic 91%"},
+        {"label": "Taxable FI > бенчмарка 3 года", "value": "86%"}
+      ],
+      "sectors": [
+        {
+          "name": "Активные стратегии (агрегат, без построчной атрибуции активов)",
+          "shownOf": {"shown": 0, "total": null, "note": "BLK раскрывает только агрегаты AUM/base fees и долю фондов выше бенчмарка; построчные позиции активных фондов = client assets, не атрибутируются балансу холдинга"},
+          "assets": [
+            {"name": "Active fundamental equity", "what": "активные акционные мандаты/фонды", "stake": "client assets", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": false, "source": "Q1'26 earnings release — performance %, не AUM по продуктам"},
+            {"name": "Active fixed income", "what": "активные облигационные стратегии", "stake": "client assets", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": false, "source": "Q1'26 earnings release"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "index",
+      "name": "Non-ETF index",
+      "role": "Институциональные пассивные индекс-мандаты вне ETF-обёртки. 28% AUM, но лишь ~7% base fees — самая низкомаржинальная крупная платформа. Q1'26 институциональный индекс дал отток −$34.7 млрд.",
+      "stats": [
+        {"label": "AUM", "value": "$3.92 трлн"},
+        {"label": "Base fees Q1'26", "value": "$0.34 млрд (7%)"},
+        {"label": "Net flows Q1'26", "value": "−$34.7 млрд (отток)"}
+      ],
+      "sectors": [
+        {
+          "name": "Институциональные индекс-мандаты (агрегат)",
+          "shownOf": {"shown": 0, "total": null, "note": "client assets; построчно не раскрывается"},
+          "assets": [
+            {"name": "Institutional index equity / fixed income", "what": "пассивные мандаты крупных институтов", "stake": "client assets", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": false, "source": "Q1'26 earnings release — агрегат AUM/flows"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "private-markets-gip",
+      "name": "Private markets — GIP (Infrastructure)",
+      "role": "Global Infrastructure Partners (закрыта 01.10.2024, ~$12.55 млрд). Крупнейшая в мире инфраструктурная платформа — реально ВЛАДЕЕТ операционными активами (аэропорты, порты, энергетика, data-центры) через flagship-фонды. Главный канал AI-экспозиции BlackRock (power + data-центры). Это GP-франшиза: BLK берёт fees + co-invest, LP-капитал — клиентский.",
+      "stats": [
+        {"label": "AUM (на момент сделки)", "value": "~$170 млрд"},
+        {"label": "Портфельных компаний", "value": "40+"},
+        {"label": "GIP V (флагман)", "value": "$25.2 млрд (закрыт июнь'25, крупнейший инфра-фонд в истории)"},
+        {"label": "GIP IV (2019)", "value": "$22 млрд"},
+        {"label": "Годовая выручка портфеля", "value": "$75+ млрд, ~115 тыс. сотрудников"}
+      ],
+      "sectors": [
+        {
+          "name": "Data centers / digital infrastructure (AI)",
+          "shownOf": {"shown": 4, "total": null, "note": "раскрыты крупнейшие сделки/активы; полный построчный список долей и оценок GIP не публикует"},
+          "assets": [
+            {"name": "Aligned Data Centers", "what": "50 кампусов, >5 GW операционной/планируемой мощности под cloud/AI", "stake": "часть консорциума AIP+MGX+GIP (100% equity)", "value": "$40 млрд EV (сделка)", "valueDisclosed": true, "geography": "США + Лат. Америка (Сев. Вирджиния, Чикаго, Даллас, Феникс, Бразилия, Мексика, Чили)", "status": "closing H1 2026", "ai": true, "source": "global-infra.com PR (AIP/MGX/GIP acquire Aligned), 2025-2026"},
+            {"name": "AI Infrastructure Partnership (AIP)", "what": "консорциум для AI-инфры; цель $30 млрд equity → $100 млрд с долгом", "stake": "GIP/BlackRock — founding partner", "value": "до $100 млрд (целевая мобилизация)", "valueDisclosed": true, "geography": "Глобально", "status": "active (с сен'24)", "ai": true, "source": "global-infra.com PR — партнёры Microsoft, NVIDIA, MGX, xAI, Cisco, Temasek, KIA"},
+            {"name": "ACS data-center JV", "what": "50/50 СП по глобальной разработке next-gen data-центров", "stake": "50%", "value": "€2 млрд (старт), 1.7 GW портфель + 11 GW pipeline", "valueDisclosed": true, "geography": "Сев. Америка, Европа, APAC", "status": "operating/development", "ai": true, "source": "global-infra.com / Data Centre Magazine, ноя'25"},
+            {"name": "CyrusOne", "what": "оператор data-центров (digital infrastructure)", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": true, "source": "GIP portfolio (Wikipedia/finsmes overview), доля/оценка не раскрыты"}
+          ]
+        },
+        {
+          "name": "Energy / renewables / power (electrification)",
+          "shownOf": {"shown": 4, "total": null, "note": "крупнейшие платформы; полный список с долями не публикуется"},
+          "assets": [
+            {"name": "Clearway Energy", "what": "renewables-платформа (ветер/солнце), US", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": true, "source": "GIP portfolio overview (Wikipedia/finsmes)"},
+            {"name": "Vena Energy", "what": "renewables-платформа APAC", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "APAC", "status": "operating", "ai": false, "source": "GIP portfolio overview"},
+            {"name": "Atlas Renewable Energy", "what": "renewables Лат. Америка", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Лат. Америка", "status": "operating", "ai": false, "source": "GIP portfolio overview"},
+            {"name": "Eolian", "what": "energy storage / power платформа", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "GIP portfolio overview"}
+          ]
+        },
+        {
+          "name": "Транспорт — аэропорты / порты / ж.д.",
+          "shownOf": {"shown": 6, "total": null, "note": "крупнейшие транспортные активы; доли/оценки построчно GIP не раскрывает"},
+          "assets": [
+            {"name": "Gatwick Airport", "what": "2-й аэропорт Лондона", "stake": "не раскрыто", "value": "не раскрыто (приобр. 2009 за £1.5 млрд)", "valueDisclosed": false, "geography": "Великобритания", "status": "operating", "ai": false, "source": "GIP portfolio overview (Wikipedia)"},
+            {"name": "Edinburgh Airport", "what": "крупнейший аэропорт Шотландии", "stake": "не раскрыто", "value": "не раскрыто (приобр. 2012 за £807 млн)", "valueDisclosed": false, "geography": "Великобритания", "status": "operating", "ai": false, "source": "GIP portfolio overview"},
+            {"name": "Sydney Airport", "what": "главный аэропорт Австралии", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Австралия", "status": "operating", "ai": false, "source": "GIP portfolio overview"},
+            {"name": "Peel Ports / Port of Melbourne", "what": "портовые активы", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Великобритания / Австралия", "status": "operating", "ai": false, "source": "GIP portfolio overview"},
+            {"name": "Pacific National", "what": "грузовая ж.д., Австралия", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Австралия", "status": "operating", "ai": false, "source": "GIP portfolio overview"},
+            {"name": "Italo (NTV)", "what": "итальянская высокоскоростная ж.д.", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Италия", "status": "operating", "ai": false, "source": "GIP portfolio overview (GIP IV vintage)"}
+          ]
+        },
+        {
+          "name": "Water / waste / telecom",
+          "shownOf": {"shown": 2, "total": null, "note": "прочая инфраструктура"},
+          "assets": [
+            {"name": "Suez", "what": "вода и обращение с отходами", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Европа", "status": "operating", "ai": false, "source": "GIP portfolio overview"},
+            {"name": "Ascend Telecom Infrastructure", "what": "телеком-инфраструктура (вышки)", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Индия", "status": "operating", "ai": false, "source": "GIP portfolio overview"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "private-markets-hps",
+      "name": "Private markets — HPS (Private credit)",
+      "role": "HPS Investment Partners (закрыта 01.07.2025, ~$12 млрд в акциях). Создан сегмент Private Financing Solutions (PFS); интегрированные client assets ~$190 млрд. Платформа прямого кредитования — BLK как GP берёт base + performance fees (HPS дал $121 млн performance fees в Q1'26).",
+      "stats": [
+        {"label": "AUM HPS (на сделке)", "value": "~$157 млрд (на 31.03.25); ~$179 млрд позже"},
+        {"label": "PFS client assets", "value": "~$190 млрд"},
+        {"label": "Performance fees Q1'26", "value": "$121 млн (от HPS)"},
+        {"label": "HLEND total return", "value": "10.4% annualized since inception"}
+      ],
+      "sectors": [
+        {
+          "name": "Private credit фонды / vehicles",
+          "shownOf": {"shown": 4, "total": null, "note": "флагманские стратегии раскрыты по имени; AUM по каждой и underlying-займы построчно не публикуются BLK"},
+          "assets": [
+            {"name": "HLEND — HPS Corporate Lending Fund", "what": "non-traded BDC прямого кредитования (73% Conventional/CSL, 25% Specialty)", "stake": "GP/management", "value": "не раскрыто (AUM фонда отдельно)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "HLEND Overview Presentation / SEC BDC 8-K, янв'25"},
+            {"name": "SIP — HPS Strategic Investment Partners", "what": "junior/мезонин и капитальные решения", "stake": "GP/management", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": false, "source": "hpspartners.com PR (флагман-стратегии)"},
+            {"name": "SLF — HPS Specialty Loan Fund", "what": "specialty direct lending", "stake": "GP/management", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": false, "source": "hpspartners.com PR"},
+            {"name": "CSL — HPS Core Senior Lending Fund", "what": "core senior secured кредитование", "stake": "GP/management", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "hpspartners.com PR / HLEND presentation"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "private-markets-other",
+      "name": "Private markets — RE / PE / multi-alts",
+      "role": "Прочие частные рынки: недвижимость (вкл. ElmTree net-lease), private equity и multi-alternatives. BLK раскрывает только агрегат private markets ($320 млрд) — построчная разбивка по подклассам в earnings release ОТСУТСТВУЕТ.",
+      "stats": [
+        {"label": "Private markets всего", "value": "$320 млрд AUM"},
+        {"label": "Net flows Q1'26 (весь PM)", "value": "+$9 млрд (led by private credit + infra)"},
+        {"label": "Цель фандрейзинга", "value": "$400 млрд к 2030"}
+      ],
+      "sectors": [
+        {
+          "name": "Real estate / private equity / multi-alts (агрегат)",
+          "shownOf": {"shown": 1, "total": null, "note": "подклассы private markets BLK не раскрывает построчно в Q1'26 release — только агрегат $320 млрд"},
+          "assets": [
+            {"name": "ElmTree Funds (net-lease RE)", "what": "коммерческая net-lease недвижимость", "stake": "GP/management", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "Investor Day 12.06.2025 (упомянут среди private-markets приобретений)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cash",
+      "name": "Cash management",
+      "role": "Money-market фонды и cash-решения. $1.07 трлн AUM, но низкомаржинально (~6% base fees) и не приоритет роста; Q1'26 отток −$6.2 млрд.",
+      "stats": [
+        {"label": "AUM", "value": "$1.07 трлн"},
+        {"label": "Base fees Q1'26", "value": "$0.34 млрд (6%)"},
+        {"label": "Net flows Q1'26", "value": "−$6.2 млрд"}
+      ],
+      "sectors": [
+        {
+          "name": "Money-market / cash (агрегат)",
+          "shownOf": {"shown": 0, "total": null, "note": "client assets; построчно не раскрывается"},
+          "assets": [
+            {"name": "Money-market funds", "what": "ликвидность/cash-менеджмент для институтов", "stake": "client assets", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": false, "source": "Q1'26 earnings release — агрегат AUM/flows"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "technology-aladdin",
+      "name": "Technology — Aladdin / eFront / Preqin",
+      "role": "Платформа risk/портфельных аналитик. Не AUM-бизнес — это высокомаржинальная подписочная tech-выручка ($2.0 млрд FY2025, +24% г/г). Preqin (куплена 03.03.2025 за £2.55 млрд) расширила покрытие в private markets через eFront.",
+      "stats": [
+        {"label": "Активов на платформе", "value": "~$25 трлн"},
+        {"label": "Tech-выручка FY2025", "value": "$2.0 млрд (+24% г/г)"},
+        {"label": "Preqin покрытие", "value": "400,000+ компаний/фондов; 14,000+ funds в eFront"}
+      ],
+      "sectors": [
+        {
+          "name": "Tech-продукты (подписка, не активы холдинга)",
+          "shownOf": {"shown": 3, "total": 3, "note": "три основных продукта платформы"},
+          "assets": [
+            {"name": "Aladdin", "what": "risk/портфельная платформа, млн расчётов риска/день на $25 трлн активов", "stake": "100% (продукт BLK)", "value": "часть tech-выручки $2.0 млрд", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": true, "source": "businesstats / BLK Aladdin IR, 2026"},
+            {"name": "eFront", "what": "private-markets workflow платформа", "stake": "100% (продукт BLK)", "value": "не раскрыто (внутри tech-выручки)", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": false, "source": "BLK Aladdin / Preqin integration PR, фев'26"},
+            {"name": "Preqin", "what": "данные частных рынков (куплена 2025)", "stake": "100%", "value": "£2.55 млрд (цена покупки)", "valueDisclosed": true, "geography": "Глобально", "status": "integrated", "ai": false, "source": "BLK 8-K Preqin close 03.03.2025 / connectmoney"}
+          ]
+        }
+      ]
+    }
+  ],
+  "notDisclosed": "BlackRock владеет ФРАНШИЗОЙ, а не базовыми бумагами: underlying-позиции iShares, активных, индексных и cash-фондов — это CLIENT ASSETS, не баланс холдинга, поэтому 13F-HR ($5.72 трлн, ~50,651 позиция) сознательно не используется как 'портфель BLK'. Точечно НЕ раскрыто построчно: (1) разбивка private markets $320 млрд по подклассам (infrastructure / private credit / RE / PE) — в Q1'26 earnings release только агрегат, фигурирующие цифры (infra ~$112 млрд, private credit ~$147 млрд) НЕ подтверждены первичкой и помечены как неподтверждённые; (2) доли владения и оценки конкретных GIP-активов (Gatwick, Aligned, CyrusOne и др.) — GIP не публикует построчные stakes/NAV; раскрыты только EV отдельных сделок (Aligned $40 млрд, ACS €2 млрд); (3) AUM большинства iShares ETF кроме IVV/IEFA/IBIT и underlying-займы HPS-фондов (HLEND/SIP/SLF/CSL); (4) IRR/MOIC по vintage GIP/HPS фондов (только HLEND 10.4% annualized); (5) балансовые seed/co-investments построчно (раскрываются в 10-K Investments note, не извлечено) и dry powder. SEC EDGAR/blackrock.com отдают 403 на WebFetch — первичные P&L/AUM валидированы через q4cdn earnings-release PDF, активы — через official GIP/HPS/iShares PR и fact sheets."
+}

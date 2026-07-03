@@ -1,0 +1,150 @@
+{
+  "id": "fairfax",
+  "asOf": "28.06.2026",
+  "summary": "Fairfax — true holdco на базе P&C-страхования: восемь страховых платформ генерируют почти бесплатный float ($39.3B на 31.12.2025), который Prem Watsa инвестирует в концентрированный value-портфель. Деньги реально текут в три узла: (1) андеррайтинг (GPW $33.3B, combined ratio 93.0%), (2) инвестиционный портфель — крупные equity-методные associates (Eurobank, Poseidon, EXCO) плюс mark-to-market US-листинг ($1.94B в 13F), (3) консолидированные не-страховые бизнесы (Recipe, Sleep Country, Thomas Cook India, Dexterra, AGT, Fairfax India). Скрытая стоимость: fair value не-страховых associates $9.91B против carrying $7.46B — excess ~$2.46B НЕ в book value. AI-экспозиция отсутствует в core; косвенно — энергетика под спрос data-центров (EXCO, Waterous), менеджментом как AI-тезис не заявлено.",
+  "allocation": {
+    "byPlatform": [
+      { "name": "Insurance & Reinsurance", "value": "GPW $33.3 млрд", "pct": 55, "assetCount": 8, "note": "8 андеррайтинговых платформ; источник float $39.3B и combined ratio 93.0%" },
+      { "name": "Investment Portfolio (equity + associates)", "value": "look-through equity ~$23.6 млрд", "pct": 30, "assetCount": 45, "note": "крупные associates (Eurobank, Poseidon, EXCO) + 13F US-листинг $1.94B; основная стоимость" },
+      { "name": "Consolidated non-insurance", "value": "fair value associates $9.9 млрд", "pct": 15, "assetCount": 10, "note": "Recipe, Sleep Country, Thomas Cook India, Dexterra, AGT, Fairfax India и др." }
+    ],
+    "bySector": [
+      { "name": "P&C Insurance & Reinsurance", "pct": 55, "note": "андеррайтинг — основной источник float и прибыли" },
+      { "name": "Banks (Eurobank, CIB, Digit)", "pct": 12, "note": "Eurobank — крупнейший контрибьютор associates ($474.1M profit в 2025)" },
+      { "name": "Shipping / leasing (Poseidon)", "pct": 5, "note": "лизинг контейнеровозов; частично реализован в 2026" },
+      { "name": "Consumer / retail / restaurants", "pct": 8, "note": "Recipe, Sleep Country, Peak Achievement, Under Armour" },
+      { "name": "Energy / commodities", "pct": 7, "note": "EXCO (газ), Foran/Orla (металлы), Metlen, Waterous" },
+      { "name": "Infrastructure / India (Fairfax India/BIAL)", "pct": 5, "note": "BIAL — аэропорт Бангалора" },
+      { "name": "Travel / staffing / other", "pct": 8, "note": "Thomas Cook India, Dexterra, Quess, AGT (агропродукты)" }
+    ],
+    "byGeography": [
+      { "region": "Северная Америка (Канада + США)", "pct": 50 },
+      { "region": "Европа / Греция (Eurobank, Grivalia, Metlen)", "pct": 22 },
+      { "region": "Индия (Fairfax India, Thomas Cook, Digit, Quess)", "pct": 14 },
+      { "region": "Ближний Восток / Африка (Gulf, CIB)", "pct": 8 },
+      { "region": "Прочее / глобальное перестрахование", "pct": 6 }
+    ],
+    "byTheme": [
+      { "theme": "AI / data-центры / power", "value": "не выделено", "note": "прямой AI-экспозиции нет; косвенно — энергетика под спрос data-центров (EXCO газ, Waterous Energy Fund), но менеджментом как AI-тезис НЕ заявлено. ai-флаги в строках поставлены только там, где связь реальна" }
+    ]
+  },
+  "platforms": [
+    {
+      "id": "insurance",
+      "name": "Insurance & Reinsurance",
+      "role": "Восемь андеррайтинговых платформ — генератор float ($39.3B на 31.12.2025) и underwriting-прибыли ($1,816.6M в 2025). Это операционный core true holdco: дисциплинированный андеррайтинг даёт почти бесплатный капитал для инвестпортфеля.",
+      "stats": [
+        { "label": "GPW 2025", "value": "$33,284.7M" },
+        { "label": "NPW 2025 (P&C)", "value": "$26.3 млрд" },
+        { "label": "Combined ratio 2025", "value": "93.0% (undiscounted)" },
+        { "label": "Underwriting profit 2025", "value": "$1,816.6M" },
+        { "label": "Float (P&C)", "value": "$39.3 млрд" }
+      ],
+      "sectors": [
+        {
+          "name": "North American Insurers (GPW $9,334.6M)",
+          "shownOf": { "shown": 3, "total": 3, "note": "раскрыты все 3 платформы региона" },
+          "assets": [
+            { "name": "Crum & Forster", "what": "US commercial P&C (specialty, accident & health)", "stake": "100%", "value": "GPW $6,159.8M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FY2025 release, GPW table" },
+            { "name": "Northbridge", "what": "Канадский коммерческий P&C-страховщик", "stake": "100%", "value": "GPW $2,397.6M", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": false, "source": "FY2025 release, GPW table" },
+            { "name": "Zenith National", "what": "US workers' compensation специалист", "stake": "100%", "value": "GPW $777.2M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FY2025 release, GPW table; combined ratio под давлением (>103% в Q1'26)" }
+          ]
+        },
+        {
+          "name": "Global Insurers & Reinsurers (GPW $17,567.1M)",
+          "shownOf": { "shown": 4, "total": 4, "note": "раскрыты все 4 платформы региона" },
+          "assets": [
+            { "name": "Allied World", "what": "Глобальный specialty insurer & reinsurer", "stake": "100%", "value": "GPW $7,383.4M", "valueDisclosed": true, "geography": "Глобально (Бермуды/США/Европа)", "status": "operating", "ai": false, "source": "FY2025 release, GPW table" },
+            { "name": "Odyssey Group", "what": "Глобальное перестрахование + US insurance; «лучшая сделка» Watsa ($9.8B кум. прибыли)", "stake": "100%", "value": "GPW $6,282.5M", "valueDisclosed": true, "geography": "Глобально", "status": "operating", "ai": false, "source": "FY2025 release, GPW table" },
+            { "name": "Brit", "what": "Lloyd's синдикат (London market)", "stake": "100%", "value": "GPW $3,072.9M", "valueDisclosed": true, "geography": "Великобритания / Lloyd's", "status": "operating", "ai": false, "source": "FY2025 release, GPW table" },
+            { "name": "Ki", "what": "Цифровой follow-only Lloyd's синдикат (алгоритмический андеррайтинг)", "stake": "100%", "value": "GPW $828.3M", "valueDisclosed": true, "geography": "Великобритания / Lloyd's", "status": "operating", "ai": true, "source": "FY2025 release, GPW table; алгоритмический андеррайтинг — единственная реальная data/algo-составляющая в страховом core" }
+          ]
+        },
+        {
+          "name": "International Insurers & Reinsurers (GPW $6,383.0M)",
+          "shownOf": { "shown": 2, "total": null, "note": "регион агрегирован; Gulf Insurance и Eurolife General выделены, прочие EM-юниты не раскрыты поимённо в press release" },
+          "assets": [
+            { "name": "Gulf Insurance Group", "what": "Ближневосточный мультилайн (Кувейт, регион Залива)", "stake": "контроль (через GIG)", "value": "NPW ~$1,616M (вкл. life)", "valueDisclosed": true, "geography": "Ближний Восток", "status": "operating", "ai": false, "source": "WebSearch FY2025; geopolitical risk (зона регионального конфликта)" },
+            { "name": "Eurolife General", "what": "Греческое P&C-страхование (general operations; life-часть продаётся Eurobank)", "stake": "контроль", "value": "NPW €72.8M", "valueDisclosed": true, "geography": "Греция", "status": "operating", "ai": false, "source": "WebSearch FY2025; Life-операции held-for-sale $3.4B активов" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "investments",
+      "name": "Investment Portfolio (equity + strategic associates)",
+      "role": "Куда инвестируется float. Два слоя: (1) крупные стратегические доли по equity-методу (associates) — основная экономическая стоимость, в 13F НЕ видны; (2) mark-to-market US-листинг ($1.94B в 13F-HR на 31.03.2026, проверено построчно). Look-through equity-портфель ~$23.6B рыночной стоимости (письмо Watsa).",
+      "stats": [
+        { "label": "Look-through equity (письмо)", "value": "~$23.6 млрд" },
+        { "label": "13F-HR US-листинг", "value": "$1.94 млрд (30 строк / 29 эмитентов)" },
+        { "label": "Share of profit associates 2025", "value": "$816.1M" },
+        { "label": "Excess fair over carrying (non-ins. assoc.)", "value": "~$2.46 млрд (FV $9.91B / carry $7.46B)" }
+      ],
+      "sectors": [
+        {
+          "name": "Стратегические associates (equity-метод) — крупнейшие по рыночной стоимости",
+          "shownOf": { "shown": 9, "total": null, "note": "значимые названы; точные рыночные стоимости отдельных позиций — из письма Watsa / Annual Report (PDF — текст-в-кривых, построчно не переоткрыт). Share-of-profit цифры проверены по FY2025 release" },
+          "assets": [
+            { "name": "Eurobank Ergasias", "what": "Греческий системный банк; крупнейший контрибьютор associates", "stake": "~32%", "value": "~$4.7 млрд", "valueDisclosed": true, "geography": "Греция", "status": "operating", "ai": false, "source": "Annual Report look-through (не переоткрыт построчно); share of profit $474.1M проверен по FY2025 release" },
+            { "name": "Poseidon (быв. Atlas / Seaspan)", "what": "Лизинг контейнеровозов; продано 23.1% за $1.91B (закрыто 29.05.2026), удержано 22.2%", "stake": "22.2% (после продажи)", "value": "~$2.6 млрд (carrying до сделки)", "valueDisclosed": true, "geography": "Глобально (shipping)", "status": "operating", "ai": false, "source": "completion-релиз 29.05.2026; share of profit $286.9M (FY2025 release)" },
+            { "name": "Fairfax India", "what": "Индийский холдинг; ключевой актив BIAL (аэропорт Бангалора)", "stake": "~43%", "value": "~$1.0 млрд", "valueDisclosed": true, "geography": "Индия", "status": "operating", "ai": false, "source": "Annual Report; BVPS Fairfax India $22.94 на 31.12.2025 (WebSearch)" },
+            { "name": "EXCO Resources", "what": "US газодобыча (natural gas)", "stake": "~49%", "value": "~$0.6 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "share of profit $52.5M (FY2025 release); газ косвенно — power для data-центров, спекулятивно" },
+            { "name": "Digit", "what": "Индийское цифровое страхование (insurtech)", "stake": "associate", "value": "не раскрыто", "valueDisclosed": false, "geography": "Индия", "status": "operating", "ai": false, "source": "share of profit $55.1M (FY2025 release)" },
+            { "name": "Waterous Energy Fund III", "what": "Канадский energy PE-фонд (нефть/газ)", "stake": "associate (LP)", "value": "не раскрыто", "valueDisclosed": false, "geography": "Канада", "status": "operating", "ai": true, "source": "share of loss $64.7M в 2025 (FY2025 release); энергетика косвенно под спрос data-центров" },
+            { "name": "John Keells Holdings", "what": "Шри-ланкийский конгломерат", "stake": "~26%", "value": "не раскрыто", "valueDisclosed": false, "geography": "Шри-Ланка", "status": "operating", "ai": false, "source": "досье (associate); поимённой оценки в press release нет" },
+            { "name": "Quess Corp", "what": "Индийский staffing / business services", "stake": "~35%", "value": "не раскрыто", "valueDisclosed": false, "geography": "Индия", "status": "operating", "ai": false, "source": "досье (associate)" },
+            { "name": "Helios Fairfax Partners", "what": "Африканский investment holding (PE)", "stake": "~36%", "value": "не раскрыто", "valueDisclosed": false, "geography": "Африка", "status": "operating", "ai": false, "source": "досье (associate)" }
+          ]
+        },
+        {
+          "name": "Mark-to-market US-листинг (13F-HR 31.03.2026, total $1.94B) — топ-15 по стоимости",
+          "shownOf": { "shown": 15, "total": 29, "note": "показано 15 из 29 эмитентов (30 строк: Under Armour CL A + CL C); все стоимости проверены построчно по infotable.xml. Хвост из ~14 малых позиций ниже" },
+          "assets": [
+            { "name": "Orla Mining", "what": "Золотодобыча (Мексика/Канада)", "stake": "~9%", "value": "$501.6M", "valueDisclosed": true, "geography": "Мексика/Канада", "status": "operating", "ai": false, "source": "13F-HR Q1'26 infotable: 31,817,229 акц" },
+            { "name": "Under Armour (CL A + CL C)", "what": "US спортивная одежда; крупнейшая экон. позиция 13F, наращивалась в 2026", "stake": "~12%", "value": "$380.6M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: CL A 43,000,872 ($253.7M) + CL C 21,999,128 ($126.9M)" },
+            { "name": "CVS Health", "what": "US аптечно-страховой ритейл / managed care", "stake": "small", "value": "$194.8M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 2,712,000 акц" },
+            { "name": "Kennedy-Wilson", "what": "Real estate / инвест-менеджмент; take-private завершён $10.90/акц (июнь 2026)", "stake": "большинство экон. интереса", "value": "$144.3M (13F-снимок)", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 13,322,009 акц; take-private completion 16.06.2026" },
+            { "name": "Cleveland-Cliffs", "what": "US сталь / горнодобыча", "stake": "small", "value": "$125.7M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 14,899,273 акц" },
+            { "name": "Kraft Heinz", "what": "Глобальный food & beverage", "stake": "small", "value": "$118.4M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 5,268,200 акц" },
+            { "name": "BlackBerry", "what": "Кибербезопасность / IoT (QNX); исторически — конвертируемые ноты", "stake": "~5.8% (13F)", "value": "$113.3M", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 34,980,220 акц" },
+            { "name": "ATS Corp", "what": "Канадская industrial automation", "stake": "small", "value": "$69.4M", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": true, "source": "13F-HR Q1'26: 2,486,400 акц; factory automation — частично AI/robotics" },
+            { "name": "Molson Coors", "what": "Пивоварение", "stake": "small", "value": "$61.9M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 1,438,500 акц" },
+            { "name": "Helmerich & Payne", "what": "Нефтесервис (буровые установки)", "stake": "small", "value": "$42.3M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 1,174,105 акц" },
+            { "name": "Taiwan Semiconductor (TSMC)", "what": "Контрактное производство чипов — основа AI-вычислений", "stake": "small", "value": "$31.7M", "valueDisclosed": true, "geography": "Тайвань", "status": "operating", "ai": true, "source": "13F-HR Q1'26: 93,700 акц ADR; единственная прямая AI-supply-chain позиция" },
+            { "name": "General Motors", "what": "Автопроизводитель", "stake": "small", "value": "$28.0M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 375,965 акц" },
+            { "name": "Pfizer", "what": "Фарма", "stake": "small", "value": "$27.8M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 990,900 акц" },
+            { "name": "Bank of Nova Scotia", "what": "Канадский банк", "stake": "small", "value": "$24.8M", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 359,100 акц" },
+            { "name": "Wendy's", "what": "Фастфуд (NEW BUY Q1'26)", "stake": "small", "value": "$22.8M", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "13F-HR Q1'26: 3,268,902 акц — новая позиция" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "noninsurance",
+      "name": "Consolidated non-insurance businesses",
+      "role": "Полностью/контрольно консолидированные операционные бизнесы, не входящие в страхование и не учитываемые по equity-методу. Fair value не-страховых associates $9.91B против carrying $7.46B — excess ~$2.46B скрыт от book value. Сезонные/циклические; источник operating income $397.4M в 2025.",
+      "stats": [
+        { "label": "FV non-ins. associates", "value": "$9,913.7M" },
+        { "label": "Carrying value", "value": "$7,456.9M" },
+        { "label": "Operating income non-ins. 2025", "value": "$397.4M" }
+      ],
+      "sectors": [
+        {
+          "name": "Консолидированные операционные бизнесы",
+          "shownOf": { "shown": 8, "total": null, "note": "значимые названы; отдельные рыночные стоимости в press release не раскрыты построчно — даны из досье/Annual Report" },
+          "assets": [
+            { "name": "Recipe (быв. Cara)", "what": "Канадский ресторанный оператор; в 2025 выкуплена доля семьи Phelan (100%), спин-офф The Keg", "stake": "100%", "value": "~$0.7 млрд", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": false, "source": "досье / Annual Report; consolidated" },
+            { "name": "Thomas Cook India", "what": "Индийский travel & forex (portfolio investment)", "stake": "~64%", "value": "не раскрыто", "valueDisclosed": false, "geography": "Индия", "status": "operating", "ai": false, "source": "FY2025 release — назван как portfolio investment в FV-методике" },
+            { "name": "Dexterra Group", "what": "Канадский facilities management / staffing (portfolio investment)", "stake": "~50%", "value": "не раскрыто", "valueDisclosed": false, "geography": "Канада", "status": "operating", "ai": false, "source": "FY2025 release — portfolio investment" },
+            { "name": "Sleep Country", "what": "Канадская розница матрасов; приобретена 01.10.2024", "stake": "100%", "value": "~$0.6 млрд", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": false, "source": "FY2025 release — consolidated с 01.10.2024" },
+            { "name": "Peak Achievement", "what": "Спортивное снаряжение (Bauer/Easton); консолидирован 20.12.2024", "stake": "100%", "value": "~$0.5 млрд", "valueDisclosed": true, "geography": "Северная Америка", "status": "operating", "ai": false, "source": "FY2025 release — consolidated с 20.12.2024" },
+            { "name": "Grivalia Hospitality", "what": "Греческая гостиничная недвижимость", "stake": "~84%", "value": "~$0.5 млрд", "valueDisclosed": true, "geography": "Греция", "status": "operating", "ai": false, "source": "досье / Annual Report; consolidated" },
+            { "name": "AGT Food and Ingredients", "what": "Агропродукты (бобовые/чечевица); IPO Cdn$450M завершён 09.03.2026", "stake": "55.8%", "value": "~$0.6 млрд (IPO Cdn$23/акц)", "valueDisclosed": true, "geography": "Канада", "status": "operating", "ai": false, "source": "AGT IPO completion 09.03.2026; контроль сохранён" },
+            { "name": "Meadow Foods", "what": "Британский переработчик молочных ингредиентов", "stake": "~95%", "value": "не раскрыто", "valueDisclosed": false, "geography": "Великобритания", "status": "operating", "ai": false, "source": "досье; consolidated" }
+          ]
+        }
+      ]
+    }
+  ],
+  "notDisclosed": "Fairfax НЕ раскрывает поимённо: (1) рыночную стоимость каждой associate-позиции в press releases — отдельные look-through marks (Eurobank ~$4.7B, Poseidon ~$2.6B и т.д.) идут только в письме Watsa / Annual Report, чей PDF набран текстом-в-кривых и построчно не парсится; (2) полную дюрацию/состав fixed income ($49.8B, дюрация 2.2 года, «zero private credit») — только из earnings-call (вторичный); (3) поимённый перечень малых International EM-страховых юнитов внутри сегмента $6.38B; (4) хвост 13F (~14 позиций <$25M: Garrett Motion, J&J, Merck, Colliers, Canadian National, Capri, Lululemon, Magnachip, Brightstar Lottery, Penn, Priority Tech, Warner Bros Discovery, Berkshire 1 акц, и др.). 13F покрывает ТОЛЬКО US-листинг — крупнейшие equity-экспозиции (Eurobank, Digit, TRS на собственные акции) в нём не видны."
+}

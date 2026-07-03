@@ -1,0 +1,223 @@
+{
+  "id": "softbank",
+  "asOf": "28.06.2026",
+  "summary": "SoftBank Group устроен как набор отдельных vehicle вокруг одной оси — ASI: консолидированные операционные активы (Arm, SoftBank Corp), три инвестиционных фонда (Vision Fund 1, Vision Fund 2, LatAm Funds) и прямые holdco-доли. Деньги реально текут в две точки: Arm (equity value ¥19.15T, ~40% NAV) и Vision Fund 2 (¥17.19T, ~36% NAV), внутри которого доминирует OpenAI (fair value ~$80B при cost ~$35B, target $64B+ к концу 2026). Зрелые ликвидные позиции (T-Mobile, Deutsche Telekom, NVIDIA, Alibaba) монетизированы и реинвестированы в AI; концентрация Arm + SVF2 = ~76% equity value — экстремальная.",
+  "allocation": {
+    "byPlatform": [
+      {"name": "Arm (консолидирован)", "value": "¥19.15T", "pct": 40, "assetCount": 1, "note": "Дизайнер CPU-архитектур, листинг Nasdaq (ARM); ~87% владения SBG"},
+      {"name": "Vision Fund 2", "value": "¥17.19T", "pct": 36, "assetCount": null, "note": "Внутри доминирует OpenAI; private FV $135.5B комбинированно по фондам"},
+      {"name": "Vision Fund 1", "value": "¥3.38T", "pct": 7, "assetCount": null, "note": "Зрелый портфель, TVPI 1.25x; ByteDance, Coupang, DiDi и др."},
+      {"name": "SoftBank Corp (SBKK, 9434)", "value": "¥2.85T", "pct": 6, "assetCount": 1, "note": "Японский телеком, дивидендный денежный поток; ~40% владения"},
+      {"name": "LatAm Funds", "value": "¥1.04T", "pct": 2, "assetCount": null, "note": "Латиноамериканские фонды; cumulative loss $(0.8B)"},
+      {"name": "T-Mobile US", "value": "¥0.05T", "pct": 0, "assetCount": 1, "note": "Почти полностью монетизирована в FY2025; остаток под prepaid-forward"},
+      {"name": "Others / SB Northstar / Ampere", "value": "¥4.61T", "pct": 10, "assetCount": null, "note": "Ampere (консолид.), Stargate/SB Energy, прочие листинговые/нелистинговые доли"}
+    ],
+    "bySector": [
+      {"name": "AI-чипы / semiconductor", "pct": 41, "note": "Arm (¥19.15T) + Ampere (внутри Others)"},
+      {"name": "AI-модели / foundation models", "pct": 30, "note": "OpenAI внутри SVF2 — крупнейшая частная позиция (~$80B FV)"},
+      {"name": "Telecom", "pct": 6, "note": "SoftBank Corp; T-Mobile почти выведена"},
+      {"name": "Consumer / e-commerce / mobility", "pct": 8, "note": "Coupang, DiDi, Grab, ByteDance, PayPay и др. внутри SVF"},
+      {"name": "AI-инфраструктура / power / data centers", "pct": 5, "note": "Stargate, SB Energy, DigitalBridge (pending) внутри Others"},
+      {"name": "Прочее / cash / SB Northstar", "pct": 10, "note": "Остаток Others, балансовые позиции"}
+    ],
+    "byGeography": [
+      {"region": "США", "pct": 45},
+      {"region": "Япония", "pct": 12},
+      {"region": "Великобритания (Arm plc)", "pct": 20},
+      {"region": "Китай / Азия (ByteDance, DiDi, Grab, Coupang)", "pct": 18},
+      {"region": "Латинская Америка", "pct": 2},
+      {"region": "Прочее", "pct": 3}
+    ],
+    "byTheme": [
+      {"theme": "AI / data-центры / power", "value": "~$91B (ASI-Ready portfolio FV по фондам) + Arm ¥19.15T", "note": "Менеджмент выделяет ASI-Ready portfolio фондов на $91B (AI Platforms, AI Compute, Physical AI, Scalable Energy); сверх этого Arm и Ampere как консолидированные AI-чип-активы"},
+      {"theme": "Монетизированные не-AI позиции (источник капитала)", "value": "$26.5B продано в FY2025", "note": "T-Mobile $17.88B + Deutsche Telekom $2.74B + NVIDIA $5.83B → реинвест в OpenAI/Ampere/Stargate"}
+    ]
+  },
+  "platforms": [
+    {
+      "id": "arm",
+      "name": "Arm Holdings (консолидирован)",
+      "role": "Консолидированный операционный актив и крупнейший рычаг переоценки NAV: дизайнер CPU/IP-архитектур, на чьих лицензиях работает большинство мобильных и растущая доля AI/server-чипов. Листинг Nasdaq с сен-2023.",
+      "stats": [
+        {"label": "Equity value (adj.)", "value": "¥19.15T (~40% NAV)"},
+        {"label": "Доля SBG", "value": "~87% (вторично)"}
+      ],
+      "sectors": [
+        {
+          "name": "AI-чипы / semiconductor IP",
+          "shownOf": {"shown": 1, "total": 1, "note": "единый консолидированный актив"},
+          "assets": [
+            {"name": "Arm Holdings plc (ARM)", "what": "Дизайнер CPU-архитектур и IP, лицензируемых производителям чипов; рекордная выручка $4.92B (+23%)", "stake": "~87%", "value": "¥19.15T", "valueDisclosed": true, "geography": "Великобритания / США (листинг)", "status": "operating", "ai": true, "source": "SBG SOTP page 31.03.2026; Arm Q4 FYE26 results; stake ~87% — вторично (Wikipedia/TradingKey)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svf2",
+      "name": "Vision Fund 2 (SVF2)",
+      "role": "Основной AI-vehicle холдинга: late-stage и AI-портфель, внутри которого экономически доминирует OpenAI. SBG — LP + GP. Acquisition cost $97.7B, total fair value $118.7B.",
+      "stats": [
+        {"label": "Equity value (SBG)", "value": "¥17.19T (~36% NAV)"},
+        {"label": "Total Fair Value", "value": "$118.7B"},
+        {"label": "Acquisition Cost", "value": "$97.7B"},
+        {"label": "Cumulative gross gain", "value": "$21.0B"}
+      ],
+      "sectors": [
+        {
+          "name": "AI-модели / foundation models",
+          "shownOf": {"shown": 1, "total": null, "note": "OpenAI раскрыт поимённо как ключевой драйвер; полный список фонда не построчно"},
+          "assets": [
+            {"name": "OpenAI", "what": "Разработчик ChatGPT/Codex; pre-money $730B (фев 2026), >900M weekly active users; преф-акции с авто-конверсией при IPO", "stake": "~13% target (после $30B follow-on)", "value": "$80B FV (cost $35B; funded+committed $64B+)", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "SBG SVF Q4FY2025 Investor Briefing pp.9-11 (FV $80B, cost $35B, pre-money $730B)"}
+          ]
+        },
+        {
+          "name": "Physical AI / robotics / AI-приложения (private)",
+          "shownOf": {"shown": 4, "total": null, "note": "раскрыты как fair-value drivers; полный private-портфель фондов = 373 компании комбинированно"},
+          "assets": [
+            {"name": "Wayve", "what": "Self-driving / Physical-AI ПО; Series D co-led SVF2 при оценке $8.6B", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Великобритания", "status": "operating", "ai": true, "source": "SBG SVF Q4FY2025 Briefing p.8 (Wayve Series D $8.6B)"},
+            {"name": "Whoop", "what": "Носимые устройства для здоровья; Series G $575M при оценке $10.1B", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.8 (Whoop Series G $10.1B)"},
+            {"name": "Yanolja", "what": "Южнокорейская travel/SaaS-платформа; 2025 revenue $717M, +45% TTV", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Южная Корея", "status": "operating", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.8"},
+            {"name": "Robo HD (Physical-AI портфель)", "what": "Холдинг ~20 robotics-компаний (SVF2 58.7% / SBG 41.3%), Physical-AI портфель 30+ компаний", "stake": "SVF2 58.7%", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": true, "source": "SBG FY2025 Earnings Briefing"}
+          ]
+        },
+        {
+          "name": "Публичные позиции (SVF2)",
+          "shownOf": {"shown": 1, "total": null, "note": "PayPay раскрыта построчно после IPO; SVF2-доли входят в combined top-10 public ниже"},
+          "assets": [
+            {"name": "PayPay", "what": "Японская cashless-платформа, 64% code-based payment рынка Японии; IPO Nasdaq (PAYP) мар-2026", "stake": "28%", "value": "$4.5B FV (cost $2.1B; MOIC 2.1x)", "valueDisclosed": true, "geography": "Япония", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing pp.14-15 (FV $4.5B, ownership 28%, MOIC 2.1x)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "svf1",
+      "name": "Vision Fund 1 (SVF1)",
+      "role": "Первый и наиболее зрелый фонд, выходит на этап реализации. SBG — LP + carry. Acquisition cost $87.8B, total fair value $114.4B, TVPI 1.25x.",
+      "stats": [
+        {"label": "Equity value (SBG)", "value": "¥3.38T (~7% NAV)"},
+        {"label": "Total Fair Value", "value": "$114.4B"},
+        {"label": "Acquisition Cost", "value": "$87.8B"},
+        {"label": "TVPI", "value": "1.25x"}
+      ],
+      "sectors": [
+        {
+          "name": "Late-stage private (SVF1)",
+          "shownOf": {"shown": 1, "total": null, "note": "ByteDance — крупнейшая частная позиция SVF1 по unrealized FV; точная FV/доля не раскрыта построчно"},
+          "assets": [
+            {"name": "ByteDance", "what": "Материнская компания TikTok; крупнейшая частная позиция SVF1 по unrealized FV, в квартале — markdown", "stake": "не раскрыто", "value": "не раскрыто (markdown в FY2025)", "valueDisclosed": false, "geography": "Китай", "status": "operating", "ai": true, "source": "SBG SVF Q4FY2025 Briefing; markdown — TradingView/Invezz (вторично)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "combined-public",
+      "name": "Публичные позиции Vision Funds (top-10 by FV)",
+      "role": "Листинговые холдинги фондов (SVF1/SVF2/LatAm) и публичные доли через wholly-owned vehicles SBG. Unrealized FV — Public = $23.4B (15% общей unrealized FV комбинированно).",
+      "stats": [
+        {"label": "Unrealized FV — Public", "value": "$23.4B"},
+        {"label": "Число публичных позиций", "value": "45"},
+        {"label": "Доля общей unrealized FV", "value": "15%"}
+      ],
+      "sectors": [
+        {
+          "name": "Top-10 публичных позиций по fair value",
+          "shownOf": {"shown": 10, "total": 45, "note": "SBG раскрывает топ-10 публичных по FV (без имён в тексте — логотипы; имена идентифицированы по FV + комментарию и вторичке) + строка Other Investments $3.8B / 35 позиций"},
+          "assets": [
+            {"name": "Coupang", "what": "Южнокорейский e-commerce; Q1'26 net revenues $8.5B (+8%), data-breach overhang", "stake": "не раскрыто", "value": "$5.5B FV (квартал $(1,364)M, акция -20%)", "valueDisclosed": true, "geography": "Южная Корея", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $5.5B); имя — по комментарию '$8.5B net revenues, data breach'"},
+            {"name": "DiDi Global", "what": "Китайский ride-hailing (OTC Pink); рекордные transaction volumes China mobility + international", "stake": "не раскрыто", "value": "$4.0B FV (квартал $(1,133)M, акция -22%)", "valueDisclosed": true, "geography": "Китай", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $4.0B); имя — по комментарию 'China mobility & international'"},
+            {"name": "Grab Holdings", "what": "ЮВА super-app (mobility/delivery); On-Demand GMV +21%, MTUs 52mm в Q1'26", "stake": "не раскрыто", "value": "$1.5B FV (квартал $(534)M, акция -27%)", "valueDisclosed": true, "geography": "Юго-Восточная Азия", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $1.5B); имя — по комментарию 'On-Demand GMV 21%, MTUs 52mm'"},
+            {"name": "Symbotic / робот-логистика (предположительно)", "what": "Публичная позиция FV $1.2B; revenue +37% YoY, EBITDA +90%", "stake": "не раскрыто", "value": "$1.2B FV (квартал +$57M, +5%)", "valueDisclosed": true, "geography": "США (предположительно)", "status": "public", "ai": true, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $1.2B); имя НЕ подтверждено первичкой — атрибуция по профилю роста"},
+            {"name": "AutoStore (предположительно)", "what": "Публичная позиция FV $1.1B; revenue +23% YoY до $676mm, adj. EBITDA +120%", "stake": "не раскрыто", "value": "$1.1B FV (квартал $(126)M, -11%)", "valueDisclosed": true, "geography": "Норвегия (предположительно)", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $1.1B); имя НЕ подтверждено первичкой"},
+            {"name": "Публичная позиция #6 (FV $0.6B, -23%)", "what": "Fulfilled 64mm orders, adj. net income RMB 1.1B в Q4'25 (китайский e-commerce профиль)", "stake": "не раскрыто", "value": "$0.6B FV (квартал $(183)M)", "valueDisclosed": true, "geography": "Китай (предположительно)", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $0.6B); имя НЕ раскрыто (логотип)"},
+            {"name": "Публичная позиция #7 (FV $0.6B, -26%)", "what": "Revenue +47% YoY, квартальный net loss сократился на 88%", "stake": "не раскрыто", "value": "$0.6B FV (квартал $(208)M)", "valueDisclosed": true, "geography": "не раскрыто", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $0.6B); имя НЕ раскрыто"},
+            {"name": "Публичная позиция #8 (FV $0.5B, -46%)", "what": "Рекордные quarterly sales Q4'25, revenue EUR 2.1B (+26% YoY) — европейский профиль", "stake": "не раскрыто", "value": "$0.5B FV (квартал $(438)M)", "valueDisclosed": true, "geography": "Европа (предположительно)", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $0.5B); имя НЕ раскрыто"},
+            {"name": "Публичная позиция #9 (FV $0.5B, -18%)", "what": "$166mm revenue, рекордный backlog $571mm", "stake": "не раскрыто", "value": "$0.5B FV (квартал $(112)M)", "valueDisclosed": true, "geography": "не раскрыто", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $0.5B); имя НЕ раскрыто"},
+            {"name": "Публичная позиция #10 (FV $4.1B, +33%)", "what": "Крупнейший растущий публичный актив: FY25 revenue ¥381B (+27%), profit +201%, adj. EBITDA +89% — японский профиль", "stake": "не раскрыто", "value": "$4.1B FV (квартал +$602M)", "valueDisclosed": true, "geography": "Япония (предположительно)", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (FV $4.1B); имя НЕ раскрыто (вероятно SVF-japan-актив)"},
+            {"name": "Other Investments (35 публичных)", "what": "Остальные публичные позиции фондов агрегированно", "stake": "—", "value": "$3.8B FV (квартал $(912)M)", "valueDisclosed": true, "geography": "Глобально", "status": "public", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.13 (Other Investments $3.8B)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sbkk",
+      "name": "SoftBank Corp (SBKK, 9434, консолидирован)",
+      "role": "Японский телеком-оператор, источник стабильного дивидендного денежного потока; строит внутренние AI-дата-центры. Консолидирован, SBG ~40%.",
+      "stats": [
+        {"label": "Equity value (adj.)", "value": "¥2.85T (~6% NAV)"},
+        {"label": "Доля SBG", "value": "~40% (вторично)"}
+      ],
+      "sectors": [
+        {
+          "name": "Telecom / domestic infrastructure",
+          "shownOf": {"shown": 1, "total": 1, "note": "единый консолидированный актив"},
+          "assets": [
+            {"name": "SoftBank Corp (9434)", "what": "Японский мобильный/fixed телеком, дивидендный денежный поток; внутренние AI-дата-центры", "stake": "~40%", "value": "¥2.85T", "valueDisclosed": true, "geography": "Япония", "status": "public", "ai": false, "source": "SBG SOTP page 31.03.2026; доля ~40% — вторично (Morningstar/Wikipedia)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "latam",
+      "name": "LatAm Funds",
+      "role": "Латиноамериканские фонды (SoftBank Latin America Fund GP / SBLA Holdings). Acquisition cost $7.6B, cumulative loss $(0.8B), total fair value $6.8B.",
+      "stats": [
+        {"label": "Equity value (SBG)", "value": "¥1.04T (~2% NAV)"},
+        {"label": "Total Fair Value", "value": "$6.8B"},
+        {"label": "Cumulative gross gain", "value": "$(0.8B)"}
+      ],
+      "sectors": [
+        {
+          "name": "LatAm tech (private + public)",
+          "shownOf": {"shown": 3, "total": null, "note": "Kavak, QuintoAndar, Wellhub упомянуты как LatAm Fund investments; построчные FV/доли не раскрыты"},
+          "assets": [
+            {"name": "Kavak", "what": "Мексиканская used-car marketplace", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Мексика", "status": "operating", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.16 (LatAm Fund investments)"},
+            {"name": "QuintoAndar", "what": "Бразильская proptech / аренда жилья", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Бразилия", "status": "operating", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.16"},
+            {"name": "Wellhub (ex-Gympass)", "what": "Корпоративная wellness-платформа", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Бразилия / США", "status": "operating", "ai": false, "source": "SBG SVF Q4FY2025 Briefing p.16"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "holdco-others",
+      "name": "Holdco strategic stakes / Others / SB Northstar",
+      "role": "Прямые holdco-доли вне фондов, консолидированный Ampere, AI-инфраструктурные проекты (Stargate/SB Energy) и балансовые позиции SB Northstar. Equity value Others ¥4.61T (~10% NAV).",
+      "stats": [
+        {"label": "Equity value (Others)", "value": "¥4.61T (~10% NAV)"},
+        {"label": "T-Mobile (adj.)", "value": "¥0.05T"}
+      ],
+      "sectors": [
+        {
+          "name": "AI-чипы (консолидированный)",
+          "shownOf": {"shown": 1, "total": 1, "note": "Ampere консолидирован, внутри Others"},
+          "assets": [
+            {"name": "Ampere Computing", "what": "Arm-серверные CPU для дата-центров; 100% приобретение закрыто 25.11.2025 за $6.5B all-cash", "stake": "100%", "value": "$6.5B (цена сделки)", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "SBG press 26.11.2025 (Ampere $6.5B closed)"}
+          ]
+        },
+        {
+          "name": "AI-инфраструктура / power / data centers",
+          "shownOf": {"shown": 2, "total": null, "note": "проекты раскрыты, единая capex-цифра и доля/эффект на NAV — нет"},
+          "assets": [
+            {"name": "Stargate / PORTS Technology Campus (Ohio)", "what": "AI-инфраструктура (10GW power + 10GW data center), госпартнёрство DOE/DOC/SB Energy/AEP Ohio", "stake": "не раскрыто", "value": "не раскрыто (capex единой цифрой не раскрыт)", "valueDisclosed": false, "geography": "США", "status": "development", "ai": true, "source": "SBG FY2025 Earnings Briefing; OpenAI Stargate announcement (partner primary)"},
+            {"name": "SB Energy", "what": "Энергетическая платформа для AI-кампусов (Milam County 1.2GW; цель 10GW gross)", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "development", "ai": true, "source": "SBG FY2025 Earnings Briefing"},
+            {"name": "DigitalBridge (pending)", "what": "AI-инфраструктурный управляющий; объявлено приобретение ~$4.0B EV ($16.00/акция), закрытие 2H2026", "stake": "не раскрыто", "value": "~$4.0B EV (pending; дек SBG ~$3.1B equity)", "valueDisclosed": true, "geography": "США", "status": "pending", "ai": true, "source": "DigitalBridge press 29.12.2025; SBG Dec-25 дек"}
+          ]
+        },
+        {
+          "name": "Robotics (pending)",
+          "shownOf": {"shown": 1, "total": 1, "note": "ABB Robotics — pending"},
+          "assets": [
+            {"name": "ABB Robotics", "what": "Промышленный робо-бизнес ABB (Zürich, ~7,000 чел.); объявлено приобретение $5.375B, новый 100% holdco", "stake": "100% (pending)", "value": "$5.375B (≈¥818.7B, pending)", "valueDisclosed": true, "geography": "Швейцария", "status": "pending", "ai": true, "source": "SBG press 08.10.2025 (ABB Robotics $5.375B)"}
+          ]
+        },
+        {
+          "name": "Монетизируемые strategic stakes",
+          "shownOf": {"shown": 1, "total": null, "note": "T-Mobile — остаток; Deutsche Telekom и Alibaba выведены из NAV-таблицы на 31.03.2026"},
+          "assets": [
+            {"name": "T-Mobile US", "what": "Американский телеком-оператор; почти полностью монетизирован в FY2025 ($17.88B продано), остаток под prepaid-forward", "stake": "минимальная (под collar)", "value": "¥0.05T", "valueDisclosed": true, "geography": "США", "status": "monetizing", "ai": false, "source": "SBG SOTP page 31.03.2026; FY2025 Briefing (T-Mobile $17.88B sold)"}
+          ]
+        }
+      ]
+    }
+  ],
+  "notDisclosed": "SBG поимённо раскрывает только верхушку: Arm, SBKK, OpenAI, PayPay и топ-10 публичных позиций фондов по FV (причём в SVF-деке имена даны логотипами-картинками, а в извлекаемом тексте — только FV + операционный комментарий; имена идентифицированы по комментарию + вторичке, часть помечена как предположительная). Полный private-портфель фондов = 373 текущих private-инвестиции комбинированно (SVF1+SVF2+LatAm), из которых построчно с FV/долей раскрыт фактически только OpenAI; остальные private даны выборочно как fair-value drivers без отдельной оценки. По публичным позициям раскрыты топ-10 + агрегат 'Other Investments' (35 позиций, $3.8B). Точные доли SBG в Arm (~87%) и SoftBank Corp (~40%) — из вторичных источников, не извлечены построчно из 20-F / 有価証券報告書. Stargate/SB Energy capex и эффект на NAV единой цифрой не раскрыты. Long-tail частных компаний и LatAm построчно не оценены."
+}

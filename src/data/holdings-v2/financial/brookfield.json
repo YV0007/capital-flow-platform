@@ -1,0 +1,633 @@
+{
+ "id": "brookfield",
+ "asOf": "28.06.2026",
+ "quote": {
+  "ticker": "BN",
+  "exchange": "New York Stock Exchange",
+  "price": 42.29,
+  "currency": "USD",
+  "change": -0.58,
+  "marketCap": "94.45B"
+ },
+ "returns": [
+  {
+   "period": "1Y",
+   "stock": 2.56,
+   "sp500": 19.91
+  },
+  {
+   "period": "3Y",
+   "stock": 94.59,
+   "sp500": 69.11
+  },
+  {
+   "period": "5Y",
+   "stock": 49.58,
+   "sp500": 73.23
+  }
+ ],
+ "years": [
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024",
+  "2025",
+  "TTM"
+ ],
+ "rows": [
+  {
+   "label": "Revenue per Share",
+   "fmt": "dec",
+   "v": [
+    8.82,
+    8.77,
+    16.97,
+    28.36,
+    39.52,
+    46.68,
+    41.52,
+    49.29,
+    59.18,
+    61.55,
+    37.93,
+    33.42,
+    36.83
+   ]
+  },
+  {
+   "label": "Basic EPS, GAAP",
+   "fmt": "dec",
+   "v": [
+    1.42,
+    0.97,
+    1.06,
+    0.92,
+    2.39,
+    1.83,
+    -0.12,
+    2.47,
+    1.22,
+    0.62,
+    0.21,
+    0.51,
+    0.57
+   ]
+  },
+  {
+   "label": "Free Cash Flow / Share",
+   "fmt": "dec",
+   "v": [
+    0.71,
+    0.74,
+    1.12,
+    1.61,
+    2.23,
+    2.25,
+    2.86,
+    0.65,
+    0.97,
+    -1.03,
+    -1.59,
+    -1.69,
+    -4.06
+   ]
+  },
+  {
+   "label": "Dividend per Share",
+   "fmt": "dec",
+   "v": [
+    0.26,
+    0.26,
+    0.44,
+    0.48,
+    0.51,
+    0.53,
+    0.57,
+    0.97,
+    0.66,
+    0.39,
+    0.29,
+    0.32,
+    0.36
+   ]
+  },
+  {
+   "label": "Book Value per Share",
+   "fmt": "dec",
+   "v": [
+    6.12,
+    6.79,
+    11.04,
+    11.33,
+    13.02,
+    16.06,
+    14.92,
+    18.38,
+    18.44,
+    18.53,
+    12.29,
+    12.24,
+    13.09
+   ]
+  },
+  {
+   "label": "Tangible Book Value / Share",
+   "fmt": "dec",
+   "v": [
+    21.12,
+    20.16,
+    38.84,
+    39.02,
+    45.53,
+    48.48,
+    52.35,
+    51.91,
+    45.09,
+    57.9,
+    39.47,
+    35.71,
+    39.1
+   ]
+  },
+  {
+   "label": "Basic Weighted Avg Shares",
+   "fmt": "int",
+   "v": [
+    2081,
+    2270,
+    1438,
+    1438,
+    1436,
+    1453,
+    1511,
+    1536,
+    1568,
+    1558,
+    2267,
+    2247,
+    2057
+   ]
+  },
+  {
+   "label": "Sales / Revenue",
+   "fmt": "int",
+   "v": [
+    18364,
+    19913,
+    24411,
+    40786,
+    56771,
+    67826,
+    62752,
+    75731,
+    92769,
+    95924,
+    86006,
+    75100,
+    75736
+   ]
+  },
+  {
+   "label": "Operating Margin",
+   "fmt": "pct",
+   "v": [
+    19.89,
+    18.48,
+    18.77,
+    14.61,
+    14.17,
+    14.93,
+    15.1,
+    15.34,
+    15.24,
+    15.06,
+    20.92,
+    24.03,
+    23.76
+   ]
+  },
+  {
+   "label": "Depreciation Expense",
+   "fmt": "int",
+   "v": [
+    1470,
+    1695,
+    2020,
+    2345,
+    3102,
+    4876,
+    5791,
+    6437,
+    7683,
+    9075,
+    9737,
+    10379,
+    10555
+   ]
+  },
+  {
+   "label": "Net Income, GAAP",
+   "fmt": "int",
+   "v": [
+    3110,
+    2341,
+    1651,
+    1462,
+    3584,
+    2807,
+    -134,
+    3966,
+    2056,
+    1130,
+    641,
+    1307,
+    1336
+   ]
+  },
+  {
+   "label": "Effective Tax Rate",
+   "fmt": "pct",
+   "v": [
+    20.25,
+    4.03,
+    null,
+    11.87,
+    null,
+    8.46,
+    54.21,
+    15.8,
+    22.04,
+    16.53,
+    34.64,
+    25.97,
+    22.06
+   ]
+  },
+  {
+   "label": "Profit Margin",
+   "fmt": "pct",
+   "v": [
+    16.94,
+    11.76,
+    6.76,
+    3.58,
+    6.31,
+    4.14,
+    -0.21,
+    5.24,
+    2.22,
+    1.18,
+    0.75,
+    1.74,
+    1.76
+   ]
+  },
+  {
+   "label": "Working Capital",
+   "fmt": "int",
+   "v": [
+    3499,
+    -6194,
+    1068,
+    -2042,
+    4138,
+    -5814,
+    -7646,
+    -8805,
+    -24359,
+    -44430,
+    -16134,
+    -11914,
+    -12752
+   ]
+  },
+  {
+   "label": "LT Debt",
+   "fmt": "int",
+   "v": [
+    47412,
+    46862,
+    56370,
+    67530,
+    107059,
+    127662,
+    127114,
+    143141,
+    170777,
+    176108,
+    197329,
+    220798,
+    229494
+   ]
+  },
+  {
+   "label": "Total Equity",
+   "fmt": "int",
+   "v": [
+    53247,
+    57227,
+    69688,
+    79872,
+    97150,
+    116846,
+    122642,
+    134741,
+    141891,
+    168242,
+    165383,
+    166194,
+    165642
+   ]
+  },
+  {
+   "label": "Return on Invested Capital",
+   "fmt": "pct",
+   "v": [
+    2.91,
+    3.19,
+    null,
+    3.59,
+    null,
+    3.9,
+    1.63,
+    3.36,
+    3.31,
+    3.18,
+    2.93,
+    3.24,
+    3.36
+   ]
+  },
+  {
+   "label": "Return on Capital",
+   "fmt": "pct",
+   "v": [
+    3.31,
+    2.62,
+    null,
+    1.12,
+    null,
+    2.98,
+    0.9,
+    0.7,
+    2.26,
+    2.75,
+    2.65,
+    3.03,
+    3
+   ]
+  },
+  {
+   "label": "Return on Common Equity",
+   "fmt": "pct",
+   "v": [
+    25.96,
+    15.68,
+    9.7,
+    8.19,
+    19.62,
+    12.63,
+    -0.79,
+    14.93,
+    6.67,
+    3.34,
+    1.67,
+    4.12,
+    4.3
+   ]
+  }
+ ],
+ "chartRow": "Total Equity",
+ "description": {
+  "ceo": "James Bruce Flatt",
+  "employees": "250,000",
+  "sector": "Financial Services",
+  "industry": "Asset Management",
+  "address": "Brookfield Place, Toronto ON, Canada M5J 2T3",
+  "ipo": "30 дек 1983",
+  "cik": "0001001085",
+  "website": "brookfield.com",
+  "peers": [
+   "Blackstone (BX)",
+   "KKR & Co (KKR)",
+   "Apollo Global (APO)",
+   "Ares Management (ARES)",
+   "Brookfield Asset Mgmt (BAM)"
+  ]
+ },
+ "capitalStructure": {
+  "periods": [
+   "Sep'25",
+   "Dec'25",
+   "Mar'26"
+  ],
+  "rows": [
+   {
+    "label": "ST Debt",
+    "v": [
+     43703,
+     38814,
+     34238
+    ]
+   },
+   {
+    "label": "LT Borrowings",
+    "v": [
+     215506,
+     220798,
+     229494
+    ]
+   },
+   {
+    "label": "LT Finance Leases",
+    "v": [
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "label": "Preferred Equity & Hybrid",
+    "v": [
+     4103,
+     4090,
+     4090
+    ]
+   },
+   {
+    "label": "Shares Outstanding",
+    "v": [
+     2245,
+     2245,
+     2234
+    ]
+   },
+   {
+    "label": "Market Capitalization",
+    "v": [
+     77181,
+     85914,
+     83229
+    ]
+   }
+  ]
+ },
+ "workingCapital": {
+  "periods": [
+   "Sep'25",
+   "Dec'25",
+   "Mar'26"
+  ],
+  "groups": [
+   {
+    "label": "Total Current Assets",
+    "total": [
+     67507,
+     65079,
+     59465
+    ],
+    "items": [
+     {
+      "label": "Cash & Equivalents",
+      "v": [
+       25391,
+       23604,
+       19690
+      ]
+     },
+     {
+      "label": "Accounts Receivable",
+      "v": [
+       22171,
+       22772,
+       23174
+      ]
+     },
+     {
+      "label": "Inventories",
+      "v": [
+       6049,
+       5923,
+       6520
+      ]
+     }
+    ]
+   },
+   {
+    "label": "Total Current Liabilities",
+    "total": [
+     79820,
+     76993,
+     72217
+    ],
+    "items": [
+     {
+      "label": "Payables & Accruals",
+      "v": [
+       30633,
+       32288,
+       33569
+      ]
+     },
+     {
+      "label": "ST Debt",
+      "v": [
+       43703,
+       38814,
+       34238
+      ]
+     },
+     {
+      "label": "Deferred Revenue",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "growthRates": {
+  "cols": [
+   "10 лет",
+   "5 лет",
+   "1 год"
+  ],
+  "rows": [
+   {
+    "label": "Total Equity",
+    "v": [
+     11.58,
+     6.51,
+     0.49
+    ]
+   },
+   {
+    "label": "Free Cash Flow",
+    "v": [
+     1.26,
+     -20,
+     5.3
+    ]
+   },
+   {
+    "label": "Net Income, GAAP",
+    "v": [
+     -311.45,
+     -618.45,
+     103.9
+    ]
+   },
+   {
+    "label": "Sales / Revenue",
+    "v": [
+     16.44,
+     4.71,
+     -12.68
+    ]
+   },
+   {
+    "label": "Total Cash Common Dividends",
+    "v": [
+     6.74,
+     0.37,
+     11.52
+    ]
+   }
+  ]
+ },
+ "quarterlyRevenue": {
+  "years": [
+   {
+    "year": 2024,
+    "q": [
+     22907,
+     23050,
+     20623,
+     19426
+    ],
+    "fy": 86006
+   },
+   {
+    "year": 2025,
+    "q": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "fy": 75100
+   }
+  ]
+ },
+ "note": "Источник: FRC / Roic.ai (BN, NYSE), в $млн если не указано иное. Похожие компании — реальные peers (вместо авто-подбора фондов)."
+}

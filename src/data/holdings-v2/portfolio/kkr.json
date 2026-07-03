@@ -1,0 +1,150 @@
+{
+  "id": "kkr",
+  "asOf": "28.06.2026",
+  "summary": "KKR — это три разные экономики под одной крышей, и деньги в них устроены принципиально по-разному. (1) Asset Management — комиссии с $757.9B клиентского AUM плюс собственный balance-sheet capital $7,999M, размещённый по стратегиям (41% Traditional PE, 16% Real Estate, 13% Growth Equity); сами активы фондов KKR поимённо НЕ раскрывает, кроме управляемого публичного BDC FS KKR (FSK), где fair value каждой из 236 позиций виден в 10-Q. (2) Insurance — Global Atlantic, 100% KKR, book value $11.66B и AUM $231B; это крупнейшая балансовая позиция холдинга, но её содержимое — облигационный инвестпортфель страховщика, не корпоративные доли. (3) Strategic Holdings — прямые мажоритарные доли в core-PE компаниях на балансе KKR, дающие дивиденды; KKR раскрывает их только в АГРЕГАТЕ (look-through Adjusted EBITDA ~$1.1B, OE $178.9M LTM) и поимённо подтверждает лишь крупнейшие (USI, 1-800 Contacts, Heartland Dental, Internet Brands, Mills Fleet Farm, BMC). Реальный поток денег: durable-комиссии (FRE +14% LTM) растут, а carry/realization-компонент просел (Total Investing Earnings $932M LTM против $1,232M годом ранее) — это тайминг окна выходов, а не комиссионной базы. AI-тема материальна и сосредоточена в инфраструктуре: $40B+ развёрнуто в digital infrastructure (gross IRR 20%+), 6 дата-центр платформ, плюс новый пул Helix Digital Infrastructure ($10B+, якоря KKR/KIA/NVIDIA/Vistra).",
+  "allocation": {
+    "byPlatform": [
+      { "name": "Insurance — Global Atlantic (balance sheet)", "value": "$11.66 млрд book value", "pct": 56, "assetCount": null, "note": "100% KKR; крупнейшая балансовая позиция холдинга; AUM $231B" },
+      { "name": "Asset Management — balance-sheet investments", "value": "$7.999 млрд fair value", "pct": 38, "assetCount": null, "note": "co-invest KKR в собственные фонды; embedded unrealized gains $2.8B" },
+      { "name": "Strategic Holdings — прямые core-PE доли", "value": "не раскрыто (OE $178.9M LTM)", "pct": 6, "assetCount": 18, "note": "fair value поимённо не раскрыта; учитывается по дивидендам; look-through Adj. EBITDA ~$1.1B" }
+    ],
+    "bySector": [
+      { "name": "Traditional Private Equity (balance-sheet investments)", "pct": 41, "note": "доля собственного AM-капитала KKR в его PE-фондах (release Q1'26)" },
+      { "name": "Real Estate", "pct": 16, "note": "balance-sheet investments by asset class" },
+      { "name": "Growth Equity", "pct": 13, "note": "balance-sheet investments by asset class" },
+      { "name": "Infrastructure", "pct": 7, "note": "включает digital infrastructure / data centers — основная AI-экспозиция" },
+      { "name": "Alternative Credit", "pct": 7, "note": "balance-sheet investments by asset class" },
+      { "name": "Other", "pct": 7, "note": "прочее" },
+      { "name": "Leveraged Credit", "pct": 5, "note": "balance-sheet investments by asset class" },
+      { "name": "Energy", "pct": 4, "note": "balance-sheet investments by asset class" }
+    ],
+    "byGeography": [
+      { "region": "Северная Америка (Americas)", "pct": 64, "note": "доля по Strategic Holdings look-through (из агента, не сверено построчно); согласуется с гео FSK-портфеля" },
+      { "region": "Европа", "pct": 31, "note": "Strategic Holdings look-through (не сверено построчно)" },
+      { "region": "Азиатско-Тихоокеанский регион", "pct": 5, "note": "Strategic Holdings look-through (не сверено построчно)" }
+    ],
+    "byTheme": [
+      { "theme": "AI / data-центры / power-for-AI", "value": "$40 млрд+ развёрнуто + Helix $10 млрд+", "note": "digital infrastructure: 6 глобальных дата-центр платформ, gross IRR 20%+ (Q1'26 call); Helix Digital Infrastructure запущен 11.06.2026 с якорями KKR/KIA/NVIDIA/Vistra; ST Telemedia Global Data Centres (KKR+Singtel) S$13.8B EV" }
+    ]
+  },
+  "platforms": [
+    {
+      "id": "insurance-ga",
+      "name": "Insurance — Global Atlantic",
+      "role": "100% дочерний страховщик аннуитетов/life/перестрахования на балансе KKR. Крупнейшая балансовая позиция холдинга; даёт стабильные insurance operating earnings и перпетуальный капитал. Содержимое — облигационный инвестпортфель страховщика, а не корпоративные доли, поэтому поимённого списка активов KKR здесь не раскрывает.",
+      "stats": [
+        { "label": "Доля KKR", "value": "100%" },
+        { "label": "Book value", "value": "$11.66 млрд (31.03.2026)" },
+        { "label": "GA AUM", "value": "$231 млрд" },
+        { "label": "Insurance OE LTM", "value": "$1,110,953K" },
+        { "label": "Net investment income Q1'26", "value": "~$1.9 млрд" }
+      ],
+      "sectors": [
+        {
+          "name": "Инвестпортфель страховщика (fixed income / annuities backing)",
+          "shownOf": { "shown": 0, "total": null, "note": "KKR/GA не раскрывают поимённый список ценных бумаг инвестпортфеля Global Atlantic в составе отчётности KKR; раскрывается только агрегат (book value, net investment income, AUM, длительность origination)" },
+          "assets": [
+            { "name": "Global Atlantic general account (агрегат)", "what": "облигационный/structured-credit портфель, обеспечивающий аннуитетные и life-обязательства; 80% origination Q1'26 имели duration 7+ лет", "stake": "100%", "value": "не раскрыто поимённо", "valueDisclosed": false, "geography": "преимущественно США", "status": "operating", "ai": false, "source": "KKR Q1'26 Earnings Release (SEC 8-K, q126earningsrelease_vf.htm); KKR Q1'26 call" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "am-balance-sheet",
+      "name": "Asset Management — balance-sheet investments",
+      "role": "Собственный капитал KKR, со-инвестированный в свои же фонды по разным стратегиям. KKR раскрывает только разбивку по asset class (fair value), а не поимённые позиции — за единственным исключением управляемого публичного BDC FS KKR (FSK), чьи 236 позиций видны построчно в 10-Q. AI-экспозиция холдинга концентрируется в Infrastructure-части этого пула.",
+      "stats": [
+        { "label": "Fair value", "value": "$7,999M (31.03.2026)" },
+        { "label": "Embedded unrealized gains", "value": "$2.8 млрд" },
+        { "label": "AUM (клиентский, не на балансе)", "value": "$757.9 млрд" },
+        { "label": "FPAUM", "value": "$614.8 млрд" },
+        { "label": "Perpetual capital", "value": "$326 млрд (43% AUM)" }
+      ],
+      "sectors": [
+        {
+          "name": "Balance-sheet investments by asset class (composition)",
+          "shownOf": { "shown": 8, "total": 8, "note": "release раскрывает полную разбивку $7,999M по 8 классам активов в %, но НЕ поимённые позиции внутри классов" },
+          "assets": [
+            { "name": "Traditional Private Equity", "what": "co-invest KKR в флагманские PE-фонды (North America Fund XIII/XIV, Asian Fund IV, European Fund VI и др.)", "stake": "41% от $7,999M", "value": "~$3.28 млрд", "valueDisclosed": true, "geography": "глобально", "status": "operating", "ai": false, "source": "KKR Q1'26 Release — Asset Class (Fair Value) 41%" },
+            { "name": "Real Estate", "what": "co-invest в opportunistic real estate и core RE фонды", "stake": "16%", "value": "~$1.28 млрд", "valueDisclosed": true, "geography": "глобально", "status": "operating", "ai": false, "source": "KKR Q1'26 Release — Asset Class 16%" },
+            { "name": "Growth Equity", "what": "co-invest в tech/health growth фонды", "stake": "13%", "value": "~$1.04 млрд", "valueDisclosed": true, "geography": "глобально", "status": "operating", "ai": false, "source": "KKR Q1'26 Release — Asset Class 13%" },
+            { "name": "Infrastructure", "what": "co-invest в Global Infrastructure / Diversified Core Infrastructure / digital infra — основная AI/data-center экспозиция холдинга", "stake": "7%", "value": "~$0.56 млрд", "valueDisclosed": true, "geography": "глобально", "status": "operating", "ai": true, "source": "KKR Q1'26 Release — Asset Class 7%" },
+            { "name": "Alternative Credit", "what": "co-invest в asset-based finance / private credit фонды", "stake": "7%", "value": "~$0.56 млрд", "valueDisclosed": true, "geography": "глобально", "status": "operating", "ai": false, "source": "KKR Q1'26 Release — Asset Class 7%" },
+            { "name": "Other", "what": "прочие балансовые позиции", "stake": "7%", "value": "~$0.56 млрд", "valueDisclosed": true, "geography": "глобально", "status": "operating", "ai": false, "source": "KKR Q1'26 Release — Asset Class 7%" },
+            { "name": "Leveraged Credit", "what": "co-invest в leveraged/liquid credit", "stake": "5%", "value": "~$0.40 млрд", "valueDisclosed": true, "geography": "глобально", "status": "operating", "ai": false, "source": "KKR Q1'26 Release — Asset Class 5%" },
+            { "name": "Energy", "what": "энергетические балансовые позиции (включая power для AI-нагрузки косвенно)", "stake": "4%", "value": "~$0.32 млрд", "valueDisclosed": true, "geography": "глобально", "status": "operating", "ai": false, "source": "KKR Q1'26 Release — Asset Class 4%" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fsk-bdc",
+      "name": "Asset Management — Credit / BDC: FS KKR Capital (FSK)",
+      "role": "Публичный BDC (NYSE: FSK) под управлением KKR. Единственный vehicle в экосистеме KKR с поимённым раскрытием fair value каждой портфельной компании (10-Q Schedule of Investments). KKR владеет долей акций FSK и получает management/incentive fees. Главный негативный сигнал экосистемы: NAV/share упал до $18.83 (-9.9% кв/кв), non-accrual 4.2% по fair value.",
+      "stats": [
+        { "label": "Портфель fair value", "value": "$12.3 млрд (31.03.2026)" },
+        { "label": "Компаний", "value": "236" },
+        { "label": "NAV/share", "value": "$18.83" },
+        { "label": "Non-accrual (fair value)", "value": "4.2%" },
+        { "label": "Top-10 концентрация", "value": "20% портфеля" }
+      ],
+      "sectors": [
+        {
+          "name": "Топ-позиции по fair value (Schedule of Investments)",
+          "shownOf": { "shown": 22, "total": 236, "note": "показано 22 крупнейших из 236; fair value извлечены из XBRL-разметки FSK 10-Q (Schedule of Investments на 31.03.2026) — значения приблизительные из-за многоконтекстной XBRL-разметки, но ранжирование и порядок величин надёжны" },
+          "assets": [
+            { "name": "Credit Opportunities Partners JV, LLC", "what": "совместное предприятие FSK (фонд-в-фонде кредитных позиций); крупнейшая единичная позиция портфеля", "stake": "JV-доля", "value": "~$1.7 млрд", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 Schedule of Investments (XBRL)" },
+            { "name": "Kellermeyer Bergensons Services LLC", "what": "facility/janitorial outsourcing services", "stake": "—", "value": "~$476 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "athenahealth Inc", "what": "healthcare IT / EHR-платформа (preferred + equity)", "stake": "—", "value": "~$389 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Production Resource Group LLC", "what": "live-event production & entertainment technology", "stake": "—", "value": "~$327 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Galaxy Universal LLC", "what": "потребительские/брендовые активы", "stake": "—", "value": "~$250 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Solera LLC", "what": "automotive/insurance software & data", "stake": "—", "value": "~$218 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Peraton Corp", "what": "оборонные/госуслуги IT (capital goods)", "stake": "—", "value": "~$215 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "JW Aluminum Co", "what": "производство специального алюминия (preferred)", "stake": "—", "value": "~$205 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Global Jet Capital LLC", "what": "финансирование бизнес-джетов (preferred)", "stake": "—", "value": "~$204 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "ATX Networks Corp", "what": "broadband access network equipment", "stake": "—", "value": "~$203 млн", "valueDisclosed": true, "geography": "Канада/США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "My Community Homes PropCo", "what": "single-family residential property (term loan)", "stake": "—", "value": "~$198 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Roemanu LLC (fka Toorak Capital Partners)", "what": "asset-based finance — кредитование под недвижимость (ABF equity)", "stake": "—", "value": "~$197 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Wittur Holding GmbH", "what": "компоненты для лифтов", "stake": "—", "value": "~$174 млн", "valueDisclosed": true, "geography": "Европа", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "MB2 Dental Solutions LLC", "what": "стоматологическая сервисная организация (DSO)", "stake": "—", "value": "~$169 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Lionbridge Technologies Inc", "what": "локализация / AI-data-services для языковых моделей", "stake": "—", "value": "~$157 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Med-Metrix", "what": "revenue-cycle management для healthcare", "stake": "—", "value": "~$153 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Bonterra LLC", "what": "social-good / nonprofit SaaS", "stake": "—", "value": "~$149 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Hibu Inc", "what": "digital marketing services для SMB", "stake": "—", "value": "~$140 млн", "valueDisclosed": true, "geography": "США/UK", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Tangoe LLC", "what": "telecom/cloud expense management SaaS", "stake": "—", "value": "~$136 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Frontline Road Safety LLC", "what": "дорожная разметка/безопасность услуги", "stake": "—", "value": "~$136 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Radwell International LLC", "what": "industrial automation parts distribution", "stake": "—", "value": "~$131 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "FSK 10-Q Q1'26 SOI (XBRL)" },
+            { "name": "Medallia Inc", "what": "customer-experience analytics SaaS (AI-driven feedback)", "stake": "—", "value": "~$127 млн", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": true, "source": "FSK 10-Q Q1'26 SOI (XBRL)" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strategic-holdings",
+      "name": "Strategic Holdings — прямые core-PE доли",
+      "role": "Прямые мажоритарные/значимые доли KKR в core private equity компаниях, держащиеся на балансе KKR долгосрочно и приносящие дивиденды (а не fee-доход). KKR раскрывает этот сегмент ТОЛЬКО в агрегате (look-through Adjusted EBITDA, operating earnings) и не публикует per-company fair value. Поимённо подтверждены лишь крупнейшие. KKR увеличивает доли в трёх из них (USI, 1-800 Contacts, Heartland Dental) на ~$1.1B.",
+      "stats": [
+        { "label": "Компаний (заявлено)", "value": "~18" },
+        { "label": "Operating Earnings LTM", "value": "$178,906K" },
+        { "label": "Operating Earnings Q1'26", "value": "$48,296K" },
+        { "label": "Look-through Adj. EBITDA (KKR share)", "value": "~$1.1 млрд LTM" },
+        { "label": "Цель OE", "value": "$350M+ 2026 → $1.1B+ 2030" }
+      ],
+      "sectors": [
+        {
+          "name": "Named core-PE компании (без per-company fair value)",
+          "shownOf": { "shown": 6, "total": 18, "note": "KKR заявляет ~18 компаний в Strategic Holdings, но единым первичным документом полный список с долями НЕ публикует; поимённо подтверждены 6 крупнейших из релизов/сделок. fair value по каждой компании НЕ раскрыта — учёт по дивидендам" },
+          "assets": [
+            { "name": "USI Insurance Services", "what": "крупный страховой брокер (financial services)", "stake": "мажоритарная; доля увеличивается (часть сделки ~$1.1B, Chubb со-инвестирует)", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "KKR Q4'25 Release / Nasdaq quick-facts 2025-02-04; KKR Q1'26 10-Q (mark-to-market gain на USI)" },
+            { "name": "1-800 Contacts, Inc.", "what": "онлайн-ритейл контактных линз (health care)", "stake": "мажоритарная (куплена у AEA 2020, EV $3B+); доля увеличивается", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "KKR Q4'25 Release; KKR Q1'26 10-Q (mark-to-market gain на 1-800 Contacts)" },
+            { "name": "Heartland Dental", "what": "крупнейшая в США стоматологическая сервисная организация (DSO)", "stake": "мажоритарная (с 2018, со-инвестор Ontario Teachers'); доля увеличивается", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "KKR Q4'25 Release / Nasdaq quick-facts 2025-02-04" },
+            { "name": "Internet Brands", "what": "вертикальные онлайн-медиа и SaaS (включая WebMD/Henry Schein One активы)", "stake": "контролирующая (с 2014; рекап с Temasek/Warburg 2022)", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "KKR / PR Newswire рекап 2022; Investor Day" },
+            { "name": "Mills Fleet Farm", "what": "розничная сеть товаров для фермеров/активного отдыха (Средний Запад США)", "stake": "контролирующая (с 2016)", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "KKR media release 2016; Investor Day" },
+            { "name": "BMC Software", "what": "enterprise IT operations / mainframe software (разделяется на две компании)", "stake": "контролирующая (с 2018)", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "публичные сообщения о контроле KKR над BMC; разделение BMC анонсировано" }
+          ]
+        }
+      ]
+    }
+  ],
+  "notDisclosed": "KKR раскрывает Strategic Holdings ТОЛЬКО в агрегате (operating earnings $178.9M LTM, look-through Adjusted EBITDA ~$1.1B) — полного именного списка ~18 core-PE компаний с долями и per-company fair value НЕТ ни в одном первичном документе (ни в 10-K, ни в 10-Q, ни в earnings release; в 10-Q названы лишь те, по которым была переоценка — USI, 1-800 Contacts). Поимённо подтверждены 6 крупнейших. Также не раскрываются: (1) содержимое инвестпортфеля Global Atlantic поименно (только агрегат book value/NII/AUM) — это облигационный портфель страховщика, а не корпоративные доли; (2) поимённые позиции внутри balance-sheet investments ($7,999M) — только разбивка по asset class в %; (3) активы клиентских фондов KKR (PE/Infra/RE/Credit) поимённо — кроме единственного публичного BDC FS KKR (FSK), чьи 236 позиций видны в 10-Q. 13F-позиции KKR — это активы клиентских фондов, НЕ баланс KKR, и в этот разбор не включены. Значения fair value по FSK-холдингам приблизительны: извлечены из XBRL-разметки 10-Q, где каждая позиция тегируется в нескольких контекстах, поэтому абсолютные числа ±, но ранжирование и порядок величин надёжны."
+}
