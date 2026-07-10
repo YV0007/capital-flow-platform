@@ -328,37 +328,60 @@ export default function HoldingsV2() {
       .navlink{transition:color .15s,border-color .15s;cursor:pointer;}`}</style>
   );
 
+  // Bento layout — each tile decides its span, its accent color, and what tiny
+  // preview it shows (mini-bar, sparkline, number). Priority sections take more
+  // real estate; supporting ones are compact.
+  const bentoLayout = {
+    portfolio:    { span: 'col-span-2 row-span-2', accent: C.teal,   preview: 'sectors' },
+    financial:    { span: 'col-span-2',            accent: C.teal,   preview: 'spark' },
+    strategy:     { span: 'col-span-1 row-span-2', accent: C.gold,   preview: 'quote' },
+    changes:      { span: 'col-span-1',            accent: C.teal,   preview: 'delta' },
+    track_record: { span: 'col-span-1',            accent: C.teal,   preview: 'number' },
+    pipeline:     { span: 'col-span-1',            accent: C.teal,   preview: 'number' },
+    risk:         { span: 'col-span-1',            accent: C.blue,   preview: 'number' },
+    valuation:    { span: 'col-span-1',            accent: C.blue,   preview: 'number' },
+    insider:      { span: 'col-span-1',            accent: C.blue,   preview: 'number' },
+    peers:        { span: 'col-span-1',            accent: C.blue,   preview: 'number' },
+    worldview:    { span: 'col-span-1',            accent: C.gold,   preview: 'quote' },
+    monitor:      { span: 'col-span-1',            accent: C.violet, preview: 'dot' },
+    analysis:     { span: 'col-span-1',            accent: C.violet, preview: 'dot' },
+  };
+
   return (
     <div style={{ background: C.paper, minHeight: '100vh', fontFamily: 'var(--sans)', color: C.ink }}>
       {FONTS}
-      <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: '224px 1fr' }}>
+      <style>{`
+        .bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(140px,auto);gap:14px;}
+        .bento .tile{transition:border-color .15s,transform .15s,background .15s;cursor:pointer;}
+        .bento .tile:hover{border-color:${C.teal};transform:translateY(-2px);background:${C.cardAlt};}
+        .col-span-2{grid-column:span 2;} .row-span-2{grid-row:span 2;}
+        @media (max-width:900px){.bento{grid-template-columns:repeat(2,minmax(0,1fr));} .col-span-2{grid-column:span 2;} .row-span-2{grid-row:auto;}}
+      `}</style>
 
-        {/* ── Sidebar ── */}
-        <aside style={{ position: 'sticky', top: 0, height: '100vh', overflowY: 'auto', padding: '34px 22px 36px 30px', borderRight: `1px solid ${C.line}` }}>
-          <div style={{ fontSize: 10.5, letterSpacing: '.16em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 8 }}>Холдинг</div>
-          <div style={{ position: 'relative', marginBottom: 22, zIndex: 50 }}>
-            <button onClick={() => setSwitcherOpen(!switcherOpen)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, background: C.card, border: `1px solid ${switcherOpen ? C.teal : C.line}`, borderRadius: 10, padding: '10px 12px', cursor: 'pointer', textAlign: 'left' }}>
-              <span style={{ width: 32, height: 32, flexShrink: 0, borderRadius: 7, background: META[cid]?.color || C.teal, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: (META[cid]?.mono || '').length > 2 ? 10 : 12, fontWeight: 600, color: '#fff' }}>{META[cid]?.mono || '·'}</span>
-              <span style={{ flex: 1, minWidth: 0 }}>
-                <span style={{ display: 'block', fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, lineHeight: 1.15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{data.name}</span>
-                <span style={{ display: 'block', fontFamily: 'var(--mono)', fontSize: 10, color: C.inkSoft }}>{data.ticker}</span>
-              </span>
-              <span style={{ flexShrink: 0, color: C.inkSoft, fontSize: 10, transform: switcherOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▼</span>
+      {/* ── Top bar (sticky): company switcher + section dots ── */}
+      <div style={{ position: 'sticky', top: 0, zIndex: 50, background: C.paper + 'F2', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.line}` }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '12px 32px', display: 'flex', alignItems: 'center', gap: 18 }}>
+          <div style={{ position: 'relative' }}>
+            <button onClick={() => setSwitcherOpen(!switcherOpen)} style={{ display: 'flex', alignItems: 'center', gap: 9, background: C.card, border: `1px solid ${switcherOpen ? C.teal : C.line}`, borderRadius: 9, padding: '7px 12px', cursor: 'pointer' }}>
+              <span style={{ width: 26, height: 26, borderRadius: 6, background: META[cid]?.color || C.teal, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: (META[cid]?.mono || '').length > 2 ? 9 : 11, fontWeight: 600, color: '#fff' }}>{META[cid]?.mono || '·'}</span>
+              <span style={{ fontFamily: 'var(--serif)', fontSize: 15, fontWeight: 500, color: C.ink }}>{data.name}</span>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: C.inkSoft }}>{data.ticker}</span>
+              <span style={{ color: C.inkSoft, fontSize: 9, marginLeft: 2, transform: switcherOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▼</span>
             </button>
             {switcherOpen && (
               <>
                 <div onClick={() => setSwitcherOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 40 }} />
-                <div style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 50, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, boxShadow: '0 12px 40px rgba(0,0,0,.35)', padding: 6, maxHeight: '70vh', overflowY: 'auto' }}>
+                <div style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, zIndex: 50, minWidth: 260, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, boxShadow: '0 12px 40px rgba(0,0,0,.45)', padding: 6, maxHeight: '70vh', overflowY: 'auto' }}>
                   {HOLDING_COMPANIES_ORDER.map((id) => {
                     const on = id === cid, migrated = !!V2[id];
                     return (
                       <button key={id} onClick={() => switchCompany(id)} disabled={!migrated} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, background: on ? C.cardAlt : 'transparent', border: 'none', borderRadius: 7, padding: '8px 10px', cursor: migrated ? 'pointer' : 'default', textAlign: 'left', opacity: migrated ? 1 : 0.4 }}>
-                        <span style={{ width: 28, height: 28, flexShrink: 0, borderRadius: 6, background: META[id]?.color || C.line, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: (META[id]?.mono || '').length > 2 ? 9 : 11, fontWeight: 600, color: '#fff' }}>{META[id]?.mono}</span>
+                        <span style={{ width: 26, height: 26, flexShrink: 0, borderRadius: 6, background: META[id]?.color || C.line, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: (META[id]?.mono || '').length > 2 ? 9 : 11, fontWeight: 600, color: '#fff' }}>{META[id]?.mono}</span>
                         <span style={{ flex: 1, minWidth: 0 }}>
-                          <span style={{ display: 'block', fontSize: 13.5, fontWeight: on ? 600 : 500, color: C.ink, lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{nameOf(id)}</span>
+                          <span style={{ display: 'block', fontSize: 13, fontWeight: on ? 600 : 500, color: C.ink, whiteSpace: 'nowrap' }}>{nameOf(id)}</span>
                           {!migrated && <span style={{ display: 'block', fontSize: 10, color: C.inkFaint }}>готовится</span>}
                         </span>
-                        {on && <span style={{ flexShrink: 0, color: C.teal, fontSize: 12 }}>✓</span>}
+                        {on && <span style={{ color: C.teal, fontSize: 12 }}>✓</span>}
                       </button>
                     );
                   })}
@@ -366,114 +389,93 @@ export default function HoldingsV2() {
               </>
             )}
           </div>
-          <div style={{ fontSize: 11, color: C.inkFaint, marginBottom: 24, lineHeight: 1.4 }}>{data.type}</div>
-
-          {/* tiered nav */}
-          <nav>
-            {TIERS.map((tier) => {
-              const items = data.sections.filter((s) => s.tier === tier.id);
-              if (!items.length) return null;
-              return (
-                <div key={tier.id} style={{ marginBottom: 16 }}>
-                  <div style={{ fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: tier.color, marginBottom: 6 }}>{tier.label}</div>
-                  {items.map((sec) => {
-                    const gi = data.sections.indexOf(sec);
-                    const on = deepIdx === gi;
-                    return (
-                      <div key={sec.id} className="navlink" onClick={() => setDeepIdx(gi)} style={{ padding: '7px 0 7px 12px', borderLeft: `2px solid ${on ? tier.color : C.line}`, marginBottom: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
-                          <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: on ? tier.color : C.inkFaint, minWidth: 18 }}>{sec.n}</span>
-                          <span style={{ fontSize: 13, fontWeight: on ? 600 : 400, color: on ? C.ink : C.inkSoft, lineHeight: 1.25 }}>{sec.title}</span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </nav>
-        </aside>
-
-        {/* ── Main ── */}
-        {deepIdx != null ? (
-          <DeepView data={data} idx={deepIdx} setIdx={setDeepIdx} onBack={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} portfolio={PORT[cid]} financial={FIN[cid]} />
-        ) : (
-          <main className="rise" key={cid} style={{ padding: '40px 44px 80px' }}>
-            <header style={{ marginBottom: 36 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11.5, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 14 }}><span>{data.type}</span><span style={{ color: C.inkFaint }}>·</span><span>{data.asOf}</span></div>
-              <h1 style={{ fontFamily: 'var(--serif)', fontSize: 44, fontWeight: 500, lineHeight: 1.05, letterSpacing: '-.02em', margin: '0 0 14px' }}>{data.name}</h1>
-              {(data.about || data.tagline) && <p style={{ fontFamily: 'var(--serif)', fontSize: 17, lineHeight: 1.55, color: C.ink, maxWidth: 760, margin: '0 0 18px' }}>{data.about || data.tagline}</p>}
-              {data.aboutMeta && data.aboutMeta.length > 0 && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 24px', marginBottom: 20, paddingBottom: 18, borderBottom: `1px solid ${C.line}` }}>
-                  {data.aboutMeta.map((m, i) => (
-                    <div key={i}>
-                      <div style={{ fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 3 }}>{m.label}</div>
-                      <div style={{ fontSize: 13, color: C.ink }}>{m.value}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {data.aboutBusiness && data.aboutBusiness.length > 0 && (
-                <div style={{ marginBottom: 16 }}>
-                  <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>Чем занимается</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(220px, 1fr))`, gap: 10 }}>
-                    {data.aboutBusiness.map((b, i) => (
-                      <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 9, padding: '13px 15px' }}>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: C.ink, marginBottom: 5 }}>{b.title}</div>
-                        <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>{b.desc}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {data.aboutRecent && data.aboutRecent.length > 0 && (
-                <div style={{ marginBottom: 24 }}>
-                  <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>Недавние шаги</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(280px, 1fr))`, gap: 10 }}>
-                    {data.aboutRecent.map((b, i) => (
-                      <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.teal}`, borderRadius: 9, padding: '13px 15px' }}>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: C.ink, marginBottom: 5 }}>{b.title}</div>
-                        <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{b.desc}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {data.overview && <OverviewBlock overview={data.overview} />}
-            </header>
-
-            {TIERS.map((tier) => {
-              const items = data.sections.filter((s) => s.tier === tier.id);
-              if (!items.length) return null;
-              return (
-                <div key={tier.id} style={{ marginBottom: 30 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-                    <span style={{ fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: tier.color, fontWeight: 600 }}>{tier.label}</span>
-                    <span style={{ flex: 1, height: 1, background: C.line }} />
-                  </div>
-                  {items.map((sec) => <PreviewCard key={sec.id} sec={sec} onOpen={() => setDeepIdx(data.sections.indexOf(sec))} />)}
-                </div>
-              );
-            })}
-
-            {(data.gaps?.length || data.verification) && (
-              <footer style={{ marginTop: 30, paddingTop: 22, borderTop: `1px solid ${C.line}` }}>
-                {data.verification && (
-                  <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.6, marginBottom: data.gaps?.length ? 14 : 0 }}>
-                    <span style={{ fontWeight: 600, color: C.ink }}>Статус верификации. </span>{data.verification}
-                  </div>
-                )}
-                {data.gaps?.length > 0 && (
-                  <details style={{ fontSize: 12, color: C.inkSoft }}>
-                    <summary style={{ cursor: 'pointer', color: C.gold, fontWeight: 600 }}>Пробелы и неподтверждённое ({data.gaps.length})</summary>
-                    <ul style={{ marginTop: 10, paddingLeft: 18 }}>{data.gaps.map((g, i) => <li key={i} style={{ marginBottom: 5, lineHeight: 1.55 }}>{g}</li>)}</ul>
-                  </details>
-                )}
-              </footer>
-            )}
-          </main>
-        )}
+          {/* section dots — jump-to nav that also indicates position */}
+          {deepIdx != null && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 'auto' }}>
+              {data.sections.map((sec, i) => {
+                const on = deepIdx === i;
+                const tierCol = (TIERS.find((t) => t.id === sec.tier) || {}).color || C.teal;
+                return <button key={sec.id} title={sec.title} onClick={() => setDeepIdx(i)} style={{ width: on ? 22 : 8, height: 8, borderRadius: 4, border: 'none', background: on ? tierCol : C.line, cursor: 'pointer', transition: 'width .2s, background .2s', padding: 0 }} />;
+              })}
+              <button onClick={() => setDeepIdx(null)} style={{ marginLeft: 10, fontSize: 12, color: C.teal, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>← к обзору</button>
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* ── Body ── */}
+      {deepIdx != null ? (
+        <DeepView data={data} idx={deepIdx} setIdx={setDeepIdx} onBack={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} portfolio={PORT[cid]} financial={FIN[cid]} />
+      ) : (
+        <main className="rise" key={cid} style={{ maxWidth: 1240, margin: '0 auto', padding: '32px 32px 80px' }}>
+          {/* Header — clean, no KPI strip (overview handles it) */}
+          <header style={{ marginBottom: 30 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 12 }}><span>{data.type}</span><span style={{ color: C.inkFaint }}>·</span><span>{data.asOf}</span></div>
+            <h1 style={{ fontFamily: 'var(--serif)', fontSize: 52, fontWeight: 500, lineHeight: 1.02, letterSpacing: '-.02em', margin: '0 0 16px' }}>{data.name}</h1>
+            {(data.about || data.tagline) && <p style={{ fontFamily: 'var(--serif)', fontSize: 17, lineHeight: 1.55, color: C.inkSoft, maxWidth: 820, margin: '0 0 18px' }}>{data.about || data.tagline}</p>}
+            {data.aboutMeta && data.aboutMeta.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 28px' }}>
+                {data.aboutMeta.map((m, i) => (
+                  <div key={i}>
+                    <div style={{ fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 3 }}>{m.label}</div>
+                    <div style={{ fontSize: 13, color: C.ink }}>{m.value}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </header>
+
+          {/* Overview — hero KPIs + preview charts */}
+          {data.overview && <div style={{ marginBottom: 24 }}><OverviewBlock overview={data.overview} /></div>}
+
+          {/* Bento grid — 13 section tiles of varying size */}
+          <div className="bento">
+            {data.sections.map((sec) => {
+              const cfg = bentoLayout[sec.id] || { span: 'col-span-1', accent: C.teal, preview: 'number' };
+              const tier = TIERS.find((t) => t.id === sec.tier);
+              const idx = data.sections.indexOf(sec);
+              return (
+                <div key={sec.id} className={`tile ${cfg.span}`} onClick={() => setDeepIdx(idx)} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `2px solid ${cfg.accent}`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', minHeight: 140 }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: cfg.accent, letterSpacing: '.06em' }}>{sec.n}</span>
+                    <span style={{ fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint }}>{tier?.label?.split('—')[0]?.trim() || ''}</span>
+                  </div>
+                  <div style={{ fontFamily: 'var(--serif)', fontSize: 20, fontWeight: 500, color: C.ink, lineHeight: 1.15, marginBottom: 6 }}>{sec.title}</div>
+                  {sec.sub && <div style={{ fontSize: 12, color: C.inkFaint, marginBottom: 12, fontStyle: 'italic' }}>{sec.sub}</div>}
+                  {sec.preview?.line && <div style={{ fontSize: 13, lineHeight: 1.5, color: C.inkSoft, marginBottom: 12, flex: 1 }}>{sec.preview.line}</div>}
+                  {/* Mini stat strip — 1 to 2 numbers depending on tile size */}
+                  {sec.preview?.stats && sec.preview.stats.length > 0 && (
+                    <div style={{ marginTop: 'auto', display: 'flex', gap: 18, paddingTop: 12, borderTop: `1px solid ${C.line}` }}>
+                      {sec.preview.stats.slice(0, cfg.span.includes('col-span-2') ? 3 : 2).map((st, i) => (
+                        <div key={i}>
+                          <div style={{ fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 3 }}>{st.label}</div>
+                          <div style={{ fontFamily: 'var(--mono)', fontSize: 15, fontWeight: 500, color: C.ink, lineHeight: 1 }}>{st.value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {(data.gaps?.length || data.verification) && (
+            <footer style={{ marginTop: 36, paddingTop: 22, borderTop: `1px solid ${C.line}` }}>
+              {data.verification && (
+                <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.6, marginBottom: data.gaps?.length ? 14 : 0 }}>
+                  <span style={{ fontWeight: 600, color: C.ink }}>Статус верификации. </span>{data.verification}
+                </div>
+              )}
+              {data.gaps?.length > 0 && (
+                <details style={{ fontSize: 12, color: C.inkSoft }}>
+                  <summary style={{ cursor: 'pointer', color: C.gold, fontWeight: 600 }}>Пробелы и неподтверждённое ({data.gaps.length})</summary>
+                  <ul style={{ marginTop: 10, paddingLeft: 18 }}>{data.gaps.map((g, i) => <li key={i} style={{ marginBottom: 5, lineHeight: 1.55 }}>{g}</li>)}</ul>
+                </details>
+              )}
+            </footer>
+          )}
+        </main>
+      )}
     </div>
   );
 }
