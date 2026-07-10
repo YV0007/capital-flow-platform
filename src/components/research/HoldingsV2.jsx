@@ -173,6 +173,93 @@ function PreviewCard({ sec, onOpen }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+//  Overview block — hero stats + preview charts on the profile landing
+// ═══════════════════════════════════════════════════════════════════════════
+
+function StackedBar({ items }) {
+  const total = items.reduce((s, x) => s + (x.pct || 0), 0) || 100;
+  return (
+    <div>
+      <div style={{ display: 'flex', height: 12, borderRadius: 6, overflow: 'hidden', background: C.track, marginBottom: 12 }}>
+        {items.map((it, i) => (
+          <div key={i} style={{ width: `${(it.pct / total) * 100}%`, background: C[it.color] || C.teal, borderRight: i < items.length - 1 ? `1px solid ${C.paper}` : 'none' }} />
+        ))}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {items.map((it, i) => (
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12 }}>
+            <span style={{ width: 8, height: 8, borderRadius: 2, background: C[it.color] || C.teal, flexShrink: 0 }} />
+            <span style={{ flex: 1, color: C.inkSoft }}>{it.name}</span>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.ink, fontWeight: 500 }}>{it.pct}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Sparkline({ points, periods, color }) {
+  const W = 320, H = 60;
+  const min = Math.min(...points), max = Math.max(...points);
+  const range = max - min || 1;
+  const x = (i) => (i * W) / (points.length - 1);
+  const y = (v) => H - 4 - ((v - min) / range) * (H - 8);
+  const line = points.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(p).toFixed(1)}`).join(' ');
+  const area = `${line} L${x(points.length - 1).toFixed(1)} ${H} L0 ${H} Z`;
+  return (
+    <div>
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ width: '100%', height: 60, display: 'block' }}>
+        <path d={area} fill={color + '22'} />
+        <path d={line} fill="none" stroke={color} strokeWidth="1.8" />
+        <circle cx={x(points.length - 1)} cy={y(points[points.length - 1])} r="3" fill={color} />
+      </svg>
+      {periods && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 10, color: C.inkFaint, marginTop: 4 }}>
+          <span>{periods[0]}</span><span>{periods[periods.length - 1]}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function OverviewBlock({ overview }) {
+  const { hero, previews } = overview;
+  return (
+    <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, padding: '22px 24px', marginTop: 4 }}>
+      {/* Hero — 2 крупные цифры */}
+      {hero && hero.length > 0 && (
+        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${hero.length},1fr)`, gap: 24, paddingBottom: 22, marginBottom: 22, borderBottom: `1px solid ${C.line}` }}>
+          {hero.map((h, i) => (
+            <div key={i}>
+              <div style={{ fontSize: 10.5, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 8 }}>{h.label}</div>
+              <div style={{ fontFamily: 'var(--mono)', fontSize: 38, fontWeight: 500, lineHeight: 1, color: C.ink, marginBottom: 8 }}>{h.value}</div>
+              {h.sub && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>{h.sub}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Preview mini-charts */}
+      {previews && previews.length > 0 && (
+        <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(240px, 1fr))`, gap: 22 }}>
+          {previews.map((p, i) => (
+            <div key={i}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 12 }}>
+                <div style={{ fontSize: 11.5, fontWeight: 600, color: C.ink }}>{p.label}</div>
+                {p.headline && <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.teal }}>{p.headline}</div>}
+              </div>
+              {p.kind === 'bar' && <StackedBar items={p.items} />}
+              {p.kind === 'spark' && <Sparkline points={p.points} periods={p.periods} color={C.teal} />}
+              {p.hint && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 10, fontStyle: 'italic' }}>{p.hint}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 //  L2 deep view (in-place takeover)
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -352,17 +439,7 @@ export default function HoldingsV2() {
                   </div>
                 </div>
               )}
-              {data.kpis && data.kpis.length > 0 && (
-                <div style={{ display: 'grid', gridTemplateColumns: `repeat(${data.kpis.length},1fr)`, gap: 1, background: C.line, border: `1px solid ${C.line}`, borderRadius: 10 }}>
-                  {data.kpis.map((k, i) => (
-                    <div key={i} style={{ background: C.card, padding: '14px 16px' }}>
-                      <div style={{ fontSize: 11, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 6 }}>{k.label}</div>
-                      <div style={{ fontFamily: 'var(--mono)', fontSize: 22, fontWeight: 500, lineHeight: 1.05, color: C.ink }}>{k.value}</div>
-                      {k.sub && <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint, marginTop: 4, lineHeight: 1.4 }}>{k.sub}</div>}
-                    </div>
-                  ))}
-                </div>
-              )}
+              {data.overview && <OverviewBlock overview={data.overview} />}
             </header>
 
             {TIERS.map((tier) => {
