@@ -315,7 +315,43 @@ export default function HoldingsV2() {
             <header style={{ marginBottom: 36 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11.5, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 14 }}><span>{data.type}</span><span style={{ color: C.inkFaint }}>·</span><span>{data.asOf}</span></div>
               <h1 style={{ fontFamily: 'var(--serif)', fontSize: 44, fontWeight: 500, lineHeight: 1.05, letterSpacing: '-.02em', margin: '0 0 14px' }}>{data.name}</h1>
-              {(data.about || data.tagline) && <p style={{ fontSize: 14.5, lineHeight: 1.7, color: C.inkSoft, maxWidth: 760, margin: '0 0 26px' }}>{data.about || data.tagline}</p>}
+              {(data.about || data.tagline) && <p style={{ fontFamily: 'var(--serif)', fontSize: 17, lineHeight: 1.55, color: C.ink, maxWidth: 760, margin: '0 0 18px' }}>{data.about || data.tagline}</p>}
+              {data.aboutMeta && data.aboutMeta.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 24px', marginBottom: 20, paddingBottom: 18, borderBottom: `1px solid ${C.line}` }}>
+                  {data.aboutMeta.map((m, i) => (
+                    <div key={i}>
+                      <div style={{ fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 3 }}>{m.label}</div>
+                      <div style={{ fontSize: 13, color: C.ink }}>{m.value}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {data.aboutBusiness && data.aboutBusiness.length > 0 && (
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>Чем занимается</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(220px, 1fr))`, gap: 10 }}>
+                    {data.aboutBusiness.map((b, i) => (
+                      <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 9, padding: '13px 15px' }}>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: C.ink, marginBottom: 5 }}>{b.title}</div>
+                        <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>{b.desc}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {data.aboutRecent && data.aboutRecent.length > 0 && (
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>Недавние шаги</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(280px, 1fr))`, gap: 10 }}>
+                    {data.aboutRecent.map((b, i) => (
+                      <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.teal}`, borderRadius: 9, padding: '13px 15px' }}>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: C.ink, marginBottom: 5 }}>{b.title}</div>
+                        <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{b.desc}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               {data.kpis && data.kpis.length > 0 && (
                 <div style={{ display: 'grid', gridTemplateColumns: `repeat(${data.kpis.length},1fr)`, gap: 1, background: C.line, border: `1px solid ${C.line}`, borderRadius: 10 }}>
                   {data.kpis.map((k, i) => (
