@@ -329,30 +329,6 @@ export default function HoldingsV2() {
               )}
             </header>
 
-            {data.verdict && (
-              <div style={{ marginBottom: 36, background: C.card, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.teal}`, borderRadius: 10, padding: '18px 20px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint }}>Вывод</span>
-                  <span style={{ fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 600, color: C.teal, background: C.teal + '18', border: `1px solid ${C.teal}55`, borderRadius: 16, padding: '3px 13px' }}>{data.verdict.call}</span>
-                </div>
-                {data.verdict.rationale && <p style={{ fontFamily: 'var(--serif)', fontSize: 16, lineHeight: 1.55, color: C.ink, margin: '0 0 14px', maxWidth: 720 }}>{data.verdict.rationale}</p>}
-                {data.verdict.proofs && data.verdict.proofs.length > 0 && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: data.verdict.trigger ? 14 : 0 }}>
-                    {data.verdict.proofs.map((p, i) => (
-                      <div key={i} style={{ display: 'flex', gap: 9, fontSize: 13, lineHeight: 1.5, color: C.inkSoft }}>
-                        <span style={{ color: C.teal, flexShrink: 0 }}>✓</span><span>{p}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {data.verdict.trigger && (
-                  <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, paddingTop: 12, borderTop: `1px solid ${C.line}` }}>
-                    <span style={{ fontWeight: 600, color: C.gold }}>Триггер. </span>{data.verdict.trigger}
-                  </div>
-                )}
-              </div>
-            )}
-
             {TIERS.map((tier) => {
               const items = data.sections.filter((s) => s.tier === tier.id);
               if (!items.length) return null;
