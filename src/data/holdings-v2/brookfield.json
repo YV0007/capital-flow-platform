@@ -78,35 +78,32 @@
    "n": "02",
    "tier": "substance",
    "title": "Недавние изменения",
-   "sub": "Покупки, продажи, buybacks, ликвидность",
+   "sub": "Sankey потоков + timeline сделок",
    "preview": {
-    "line": "За полгода привлекли $67 млрд чужих денег и выкупили своих акций на $1+ млрд по ~$41 при собственной оценке $66 — менеджмент считает акцию дешёвой.",
+    "line": "~ млрд развёрнуто за год — 60% в AI/энергетику и страхование (Just Group). Впереди — голосование BN+BWS и IPO Westinghouse.",
     "stats": [
      {
-      "label": "Привлечено в фонды",
-      "value": "$67 млрд",
-      "sub": "с начала года; $21 млрд за квартал"
-     },
-     {
-      "label": "Выкуп акций BN+BAM",
-      "value": ">$1 млрд",
-      "sub": "с начала года; BN по ~$41 (оценка $66)"
+      "label": "Развёрнуто",
+      "value": "~$90 млрд",
+      "sub": "LTM Q1 2026"
      },
      {
       "label": "Свободный капитал",
-      "value": "$188 млрд",
-      "sub": "$74 млрд деньги/линии + $114 млрд обязательства фондов"
+      "value": "$188 млрд"
      },
      {
-      "label": "Продано активов за квартал",
-      "value": "$17 млрд",
-      "sub": "инфра/энергетика/недвижимость/прочее — по цене или выше балансовой"
+      "label": "Реализации",
+      "value": "$91 млрд"
+     },
+     {
+      "label": "Привлечено",
+      "value": "$134 млрд"
      }
     ],
     "bullets": [
-     "Just Group (UK): +$40 млрд активов под комиссией и ~$100 млн годовых комиссий, старт во 2-м квартале",
-     "Закрыт кредитный фонд 17Capital II на $7.5 млрд",
-     "В работе: голосование по слиянию BN+BWS 16.07.2026, новые фонды PE и инфраструктуры, кредит DOE по Westinghouse"
+     "Крупнейшие ходы: Just Group ~$5 млрд, Brookfield–Microsoft на 10.5 GW, DOE-кредит до $17.5 млрд под Westinghouse AP1000",
+     "AI-программа с NVIDIA/KIA до $100 млрд активов",
+     "Впереди: 16.07 голосование BN+BWS, IPO Westinghouse к 2029"
     ]
    },
    "bodyMarkdown": "Источники: BN Q1 2026 Supplemental (открыт), BAM Q1 2026 8-K EX-99.1 (SEC EDGAR, открыт), пресс-релизы.\n\n**Покупки / привлечение капитала**\n\n| Дата | Действие | Размер | Vehicle | Статус |\n|---|---|---|---|---|\n| Q1 2026 | Привлечено нового капитала | $21 млрд (квартал), $67 млрд YTD | BAM | Подтверждено 8-K |\n| Q2 2026 | Мандат Just Group | $40 млрд FPAUM, ~$100 млн годовой base fee | BAM/BWS | Стартовал во 2-м квартале (8-K) |\n| Q1 2026 | 17Capital Credit Fund II финальное закрытие | +$2.5 млрд в квартал → $7.5 млрд (крупнейшая NAV-lending стратегия) | BAM Credit | Закрыто (8-K) |\n| Q1 2026 | Шестой флагман инфраструктуры (BIF VI) | «крупнейшая closed-end стратегия», launched | BAM Infra | First close позже в 2026 |\n| Q2 2026 | Седьмой флагман PE — first close | уже $6 млрд | BAM PE | В процессе (8-K) |\n\n**Продажи / монетизации (Q1 2026, BN Supplemental)**\n- Монетизировано $6 млрд инфраструктура, $5 млрд энергетика, $2 млрд недвижимость, $4 млрд прочее. «Substantially all sales were completed at or above our carrying values» (Supplemental, открыт).\n\n**Buybacks**\n- **BN**: $470 млн выкуплено YTD по средней $41 (≈40% дисконт к intrinsic value $66) — подтверждено Supplemental. За LTM выкуплено 23.0 млн акций по средневзвешенной $38.75 (подтверждено, стр. 8).\n- **BAM**: $575 млн выкуплено (подтверждено Supplemental и 8-K). За квартал на дивиденды+выкуп BN вернул $598 млн.\n\n**Dry powder / ликвидность (31.03.2026)**\n- Deployable capital **$188 млрд** = $74 млрд (cash/financial assets/undrawn credit lines у Corporation, аффилиатов и WS) + $114 млрд uncalled private fund commitments — подтверждено дословно (Supplemental).\n- Корпоративная ликвидность BN **$5.5 млрд** ($2.2 млрд cash + $3.2 млрд undrawn) — подтверждено.\n\n**PENDING (открытые сделки)**\n- Объединение BN + BWS в одну листинговую компанию (голосование 16.07.2026 — см. 04).\n- Седьмой флагман PE (финал first close); BIF VI (first close).\n- Westinghouse: переход conditional commitment DOE в definitive agreements (см. 04).",
@@ -907,6 +904,321 @@
     ],
     "headline": "$3.1 млрд · +18% г/г",
     "hint": "FRE — рост стабильных комиссий за управление"
+   }
+  ]
+ },
+ "changesDeep": {
+  "title": "Движение капитала",
+  "sub": "Откуда пришло, куда пошло — LTM Q1 2026 и объявленные сделки",
+  "stats": [
+   {
+    "label": "Развёрнуто капитала (LTM)",
+    "value": "~$90 млрд",
+    "sub": "invested + closed deals"
+   },
+   {
+    "label": "Свободный капитал",
+    "value": "$188 млрд",
+    "sub": "$74 млрд cash/линии + $114 млрд обязательства фондов"
+   },
+   {
+    "label": "Реализации (LTM)",
+    "value": "$91 млрд",
+    "sub": "продажи активов и монетизации"
+   },
+   {
+    "label": "Привлечено (LTM)",
+    "value": "$134 млрд",
+    "sub": "новые фонды и capital raise"
+   }
+  ],
+  "sankey": {
+   "sources": [
+    {
+     "id": "raise",
+     "name": "Привлечено в фонды",
+     "value": 134,
+     "color": "#46C29B",
+     "note": "$134 млрд LTM"
+    },
+    {
+     "id": "real",
+     "name": "Реализации",
+     "value": 91,
+     "color": "#5BA6E2",
+     "note": "$91 млрд LTM (продажи)"
+    },
+    {
+     "id": "fre",
+     "name": "Комиссии за управление",
+     "value": 3.1,
+     "color": "#7E76DB",
+     "note": "$3.1 млрд FRE LTM"
+    },
+    {
+     "id": "de",
+     "name": "Распределяемая прибыль",
+     "value": 6,
+     "color": "#CBAA52",
+     "note": "$6.0 млрд Total DE LTM"
+    }
+   ],
+   "destinations": [
+    {
+     "id": "ai",
+     "name": "AI и энергетика",
+     "value": 100,
+     "color": "#7E76DB",
+     "note": "Westinghouse + AI Infra Program до $100 млрд"
+    },
+    {
+     "id": "re",
+     "name": "Недвижимость (новые активы)",
+     "value": 30,
+     "color": "#46C29B",
+     "note": "~$30 млрд в новые RE-фонды и объекты"
+    },
+    {
+     "id": "infra",
+     "name": "Инфраструктура",
+     "value": 25,
+     "color": "#5BA6E2",
+     "note": "дата-центры, transport, midstream — $25 млрд"
+    },
+    {
+     "id": "ins",
+     "name": "Wealth Solutions",
+     "value": 40,
+     "color": "#CBAA52",
+     "note": "Just Group ($5 млрд) + growth страховых активов"
+    },
+    {
+     "id": "byback",
+     "name": "Buyback + дивиденды",
+     "value": 2,
+     "color": "#E08A5E",
+     "note": "$1+ млрд buyback BN+BAM, дивиденд +17%"
+    },
+    {
+     "id": "dry",
+     "name": "Свободный капитал",
+     "value": 40,
+     "color": "#33312B",
+     "note": "резерв на будущие сделки, $188 млрд total"
+    }
+   ],
+   "flows": [
+    {
+     "from": "raise",
+     "to": "ai",
+     "value": 40,
+     "label": "Программа AI Infrastructure ($100 млрд target)"
+    },
+    {
+     "from": "raise",
+     "to": "re",
+     "value": 30,
+     "label": "Новые RE-фонды"
+    },
+    {
+     "from": "raise",
+     "to": "infra",
+     "value": 20,
+     "label": "Global Infrastructure funds"
+    },
+    {
+     "from": "raise",
+     "to": "dry",
+     "value": 44,
+     "label": "Uncalled commitments"
+    },
+    {
+     "from": "real",
+     "to": "ai",
+     "value": 30,
+     "label": "Ротация в AI/энергетику"
+    },
+    {
+     "from": "real",
+     "to": "ins",
+     "value": 40,
+     "label": "Финансирование Just Group и roll-up"
+    },
+    {
+     "from": "real",
+     "to": "byback",
+     "value": 1,
+     "label": "BN buyback ~$540 млн"
+    },
+    {
+     "from": "real",
+     "to": "dry",
+     "value": 20,
+     "label": "Reserve увеличен"
+    },
+    {
+     "from": "fre",
+     "to": "byback",
+     "value": 1,
+     "label": "BAM buyback + дивиденд"
+    },
+    {
+     "from": "fre",
+     "to": "infra",
+     "value": 2,
+     "label": "Balance sheet co-invests"
+    },
+    {
+     "from": "de",
+     "to": "byback",
+     "value": 1,
+     "label": "Дивиденды BN"
+    },
+    {
+     "from": "de",
+     "to": "re",
+     "value": 5,
+     "label": "Реинвест в стратегии"
+    }
+   ]
+  },
+  "timeline": [
+   {
+    "date": "27.06.2026",
+    "type": "deal",
+    "importance": "high",
+    "ai": true,
+    "title": "Brookfield–Microsoft: 10.5 GW чистой энергии для дата-центров",
+    "value": "~$100+ млрд контракт",
+    "counterparty": "Microsoft (покупатель)",
+    "why": "Крупнейший в мире контракт на поставку зелёной энергии для AI-инфраструктуры. Даёт BEP 10.5 GW законтрактованной генерации на 2026-2030.",
+    "source": "Пресс-релиз BEP"
+   },
+   {
+    "date": "23.06.2026",
+    "type": "program",
+    "importance": "high",
+    "ai": true,
+    "title": "DOE условно одобрил кредит до $17.5 млрд под Westinghouse AP1000",
+    "value": "до $17.5 млрд + $500 млн / $1 млрд equity per project (BEP+Cameco)",
+    "counterparty": "U.S. DOE",
+    "why": "Госкредит субсидирует стройку новых атомных реакторов Westinghouse — прямое питание для будущих ЦОД. AP1000 становится ключевым продуктом BEP.",
+    "source": "Cameco 6-K 23.06.2026"
+   },
+   {
+    "date": "Q1 2026",
+    "type": "acquisition",
+    "importance": "high",
+    "title": "Just Group plc — покупка британского страховщика",
+    "value": "~$5 млрд",
+    "counterparty": "Just Group (продавец)",
+    "why": "Wealth Solutions вырастает с $143.5 → ~$180 млрд активов клиентов. Постоянный приток страховых премий → Brookfield-стратегии.",
+    "source": "BAM Q1'26 supplemental"
+   },
+   {
+    "date": "2026-Q1",
+    "type": "acquisition",
+    "importance": "medium",
+    "ai": true,
+    "title": "AI Infrastructure Program — совместная программа с NVIDIA и KIA",
+    "value": "до $100 млрд активов",
+    "counterparty": "NVIDIA, Kuwait Investment Authority",
+    "why": "Долгосрочная программа: стройка энергетики + дата-центров + fiber специально под AI-нагрузки. Даёт multi-year pipeline для BEP и BIP.",
+    "source": "Brookfield AI Infrastructure announcement"
+   },
+   {
+    "date": "2026-Q1",
+    "type": "acquisition",
+    "importance": "medium",
+    "title": "Antylia Scientific — покупка с CDPQ",
+    "value": "не раскрыто",
+    "counterparty": "CDPQ (соинвестор)",
+    "why": "Life-sciences производитель под BBU. Расширяет промышленный сегмент.",
+    "source": "BBU Q1'26 supplemental"
+   },
+   {
+    "date": "2025-Q4",
+    "type": "acquisition",
+    "importance": "medium",
+    "title": "American Tower India — консорциумная покупка",
+    "value": "не раскрыто",
+    "counterparty": "American Tower (продавец)",
+    "why": "BIP получает крупный портфель телеком-вышек в Индии. Расширяет digital infrastructure платформу.",
+    "source": "BIP press release"
+   },
+   {
+    "date": "2025",
+    "type": "divestment",
+    "importance": "medium",
+    "title": "Продажа Saeta Yield — Masdar",
+    "value": "~$1.4 млрд (745 MW)",
+    "counterparty": "Masdar (покупатель)",
+    "why": "Ротация зрелого solar-актива. Освободило капитал под pipeline новых проектов X-Elio.",
+    "source": "BEP press release"
+   },
+   {
+    "date": "2025",
+    "type": "divestment",
+    "importance": "low",
+    "title": "Продажа Patrick Terminals (Австралия)",
+    "value": "A$2.5 млрд",
+    "counterparty": "Bridgestone Consortium",
+    "why": "Полный выход из портового бизнеса BIP. Реализация carry.",
+    "source": "BIP press release"
+   }
+  ],
+  "pipeline": [
+   {
+    "date": "16.07.2026",
+    "type": "internal",
+    "importance": "high",
+    "title": "Голосование BN+BWS — объединение 1:1",
+    "value": "без cash",
+    "counterparty": "внутреннее",
+    "why": "Wealth Solutions станет частью BN — упростит структуру, добавит $30+ млрд активов на баланс BN.",
+    "source": "GlobeNewswire proxy"
+   },
+   {
+    "date": "~06.08.2026",
+    "type": "earnings",
+    "importance": "medium",
+    "title": "BN Q2 2026 результаты",
+    "value": "—",
+    "counterparty": "—",
+    "why": "Первый квартал после Just Group. Смотрим на fee-related earnings и вклад страхового притока.",
+    "source": "IR календарь"
+   },
+   {
+    "date": "к янв 2029",
+    "type": "ipo",
+    "importance": "high",
+    "ai": true,
+    "title": "Westinghouse — IPO ≥$30 млрд по warrant-соглашению",
+    "value": "≥$30 млрд EV",
+    "counterparty": "Cameco (49%)",
+    "why": "Warrant даёт BEP+Cameco опцион на монетизацию Westinghouse через IPO. При AP1000-росте — реализация carry на $10+ млрд.",
+    "source": "K&L Gates memo"
+   },
+   {
+    "date": "на подходе",
+    "type": "acquisition",
+    "importance": "medium",
+    "ai": true,
+    "title": "SunEnergy1: 510 MW солнца в PJM + доступ к 14 GW pipeline",
+    "value": "программное соглашение",
+    "counterparty": "SunEnergy1",
+    "why": "PJM — крупнейший рынок дата-центров в США. 14 GW pipeline даёт BEP многолетний запас проектов под спрос AI.",
+    "source": "BEP press release"
+   },
+   {
+    "date": "2030 target",
+    "type": "program",
+    "importance": "medium",
+    "title": "$100 млрд роста портфеля к 2030 (в т.ч. $12 млрд в Andhra Pradesh, India)",
+    "value": "$100 млрд target",
+    "counterparty": "—",
+    "why": "Долгосрочный план роста через emerging markets renewables. IFC уже вложил $100 млн в $5 млрд Catalytic Transition Fund.",
+    "source": "Brookfield sustainability report"
    }
   ]
  }

@@ -14,6 +14,7 @@ import { useState, useEffect, useRef } from 'react';
 import holdingsData from '../../data/holdings.json';
 import PortfolioDeep from './PortfolioDeep.jsx';
 import FinancialDeep from './FinancialDeep.jsx';
+import ChangesDeep from './ChangesDeep.jsx';
 
 const { META, GROUPS, HOLDING_COMPANIES_ORDER, THEMES, companies: HOLD } = holdingsData;
 const C = THEMES.dark;
@@ -293,6 +294,7 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial }) {
 
       {sec.id === 'portfolio' && portfolio ? <PortfolioDeep data={portfolio} />
         : sec.id === 'financial' && financial ? <FinancialDeep data={financial} />
+        : sec.id === 'changes' && data.changesDeep ? <ChangesDeep data={data.changesDeep} />
         : <Md md={sec.bodyMarkdown} />}
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginTop: 40, paddingTop: 20, borderTop: `1px solid ${C.line}` }}>
@@ -331,13 +333,15 @@ export default function HoldingsV2() {
   // Bento layout — each tile decides its span, its accent color, and what tiny
   // preview it shows (mini-bar, sparkline, number). Priority sections take more
   // real estate; supporting ones are compact.
+  const hasChangesDeep = !!data.changesDeep;
   const bentoLayout = {
     portfolio:    { span: 'col-span-2 row-span-2', accent: C.teal,   preview: 'sectors' },
+    changes:      { span: hasChangesDeep ? 'col-span-2' : 'col-span-1', accent: C.teal, preview: 'delta' },
     financial:    { span: 'col-span-2',            accent: C.teal,   preview: 'spark' },
     strategy:     { span: 'col-span-1 row-span-2', accent: C.gold,   preview: 'quote' },
-    changes:      { span: 'col-span-1',            accent: C.teal,   preview: 'delta' },
     track_record: { span: 'col-span-1',            accent: C.teal,   preview: 'number' },
-    pipeline:     { span: 'col-span-1',            accent: C.teal,   preview: 'number' },
+    // pipeline is folded into changesDeep for companies that have it
+    pipeline:     { span: hasChangesDeep ? 'hidden' : 'col-span-1', accent: C.teal, preview: 'number' },
     risk:         { span: 'col-span-1',            accent: C.blue,   preview: 'number' },
     valuation:    { span: 'col-span-1',            accent: C.blue,   preview: 'number' },
     insider:      { span: 'col-span-1',            accent: C.blue,   preview: 'number' },
@@ -432,6 +436,7 @@ export default function HoldingsV2() {
           <div className="bento">
             {data.sections.map((sec) => {
               const cfg = bentoLayout[sec.id] || { span: 'col-span-1', accent: C.teal, preview: 'number' };
+              if (cfg.span === 'hidden') return null;
               const tier = TIERS.find((t) => t.id === sec.tier);
               const idx = data.sections.indexOf(sec);
               return (
