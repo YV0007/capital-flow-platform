@@ -429,6 +429,51 @@ export default function HoldingsV2() {
             )}
           </header>
 
+          {/* Snapshot — Bloomberg-density dense fact grid (business model + ownership) */}
+          {data.snapshot && (
+            <div style={{ marginBottom: 22, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 14 }}>
+              {['businessModel', 'ownership'].filter((k) => data.snapshot[k] && data.snapshot[k].length > 0).map((key) => (
+                <div key={key} style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px' }}>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>{key === 'businessModel' ? 'Бизнес-модель' : 'Собственность и оценка'}</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {data.snapshot[key].map((r, i) => (
+                      <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 12, alignItems: 'baseline', paddingBottom: 8, borderBottom: i < data.snapshot[key].length - 1 ? `1px solid ${C.lineSoft}` : 'none' }}>
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ fontSize: 12, color: C.inkSoft, marginBottom: 2 }}>{r.label}</div>
+                          {r.note && <div style={{ fontSize: 10.5, color: C.inkFaint, lineHeight: 1.4 }}>{r.note}</div>}
+                        </div>
+                        <div style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
+                          <div style={{ fontFamily: 'var(--mono)', fontSize: 14, fontWeight: 500, color: C.ink }}>{r.value}</div>
+                          {r.delta && <div style={{ fontFamily: 'var(--mono)', fontSize: 10, color: /−|−|-\d/.test(r.delta) ? C.clay : C.teal, marginTop: 2 }}>{r.delta}</div>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Recent moves — compact table row style, no prose */}
+          {data.recentMoves && data.recentMoves.length > 0 && (
+            <div style={{ marginBottom: 22, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px' }}>
+              <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>Ключевые ходы (LTM)</div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {data.recentMoves.map((m, i) => (
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '68px 78px 1fr 130px', gap: 12, alignItems: 'baseline', padding: '8px 0', borderTop: i ? `1px solid ${C.lineSoft}` : 'none', fontSize: 12.5 }}>
+                    <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{m.date}</div>
+                    <div style={{ fontSize: 9.5, padding: '2px 7px', borderRadius: 10, background: C.line, color: C.inkSoft, letterSpacing: '.06em', fontWeight: 600, textAlign: 'center', justifySelf: 'start' }}>{m.type.toUpperCase()}</div>
+                    <div style={{ color: C.ink, display: 'flex', gap: 7, alignItems: 'center', flexWrap: 'wrap' }}>
+                      <span>{m.title}</span>
+                      {m.ai && <span style={{ fontSize: 8.5, padding: '1px 6px', borderRadius: 8, background: C.violet + '22', color: C.violet, border: `1px solid ${C.violet}55`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
+                    </div>
+                    <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.inkSoft, textAlign: 'right' }}>{m.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Overview — hero KPIs + preview charts */}
           {data.overview && <div style={{ marginBottom: 24 }}><OverviewBlock overview={data.overview} /></div>}
 
