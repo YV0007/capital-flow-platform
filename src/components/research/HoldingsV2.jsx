@@ -464,21 +464,6 @@ export default function HoldingsV2() {
             })}
           </div>
 
-          {(data.gaps?.length || data.verification) && (
-            <footer style={{ marginTop: 36, paddingTop: 22, borderTop: `1px solid ${C.line}` }}>
-              {data.verification && (
-                <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.6, marginBottom: data.gaps?.length ? 14 : 0 }}>
-                  <span style={{ fontWeight: 600, color: C.ink }}>Статус верификации. </span>{data.verification}
-                </div>
-              )}
-              {data.gaps?.length > 0 && (
-                <details style={{ fontSize: 12, color: C.inkSoft }}>
-                  <summary style={{ cursor: 'pointer', color: C.gold, fontWeight: 600 }}>Пробелы и неподтверждённое ({data.gaps.length})</summary>
-                  <ul style={{ marginTop: 10, paddingLeft: 18 }}>{data.gaps.map((g, i) => <li key={i} style={{ marginBottom: 5, lineHeight: 1.55 }}>{g}</li>)}</ul>
-                </details>
-              )}
-            </footer>
-          )}
         </main>
       )}
     </div>
