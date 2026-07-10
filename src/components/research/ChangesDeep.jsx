@@ -19,7 +19,7 @@ function Sankey({ sankey }) {
   const [hover, setHover] = useState(null); // flow index
 
   const layout = useMemo(() => {
-    const W = 900, H = 500, gap = 8, barW = 14, labelPad = 190;
+    const W = 1200, H = 720, gap = 22, barW = 10, labelPad = 240;
     const leftX = labelPad, rightX = W - labelPad - barW;
 
     const norm = (nodes) => {
@@ -27,7 +27,7 @@ function Sankey({ sankey }) {
       const usable = H - gap * (nodes.length - 1);
       let y = 0;
       return nodes.map((n) => {
-        const h = Math.max(28, (n.value / total) * usable);
+        const h = Math.max(48, (n.value / total) * usable);
         const rec = { ...n, y, h };
         y += h + gap;
         return rec;
@@ -68,24 +68,28 @@ function Sankey({ sankey }) {
       </div>
       <div style={{ position: 'relative' }}>
         <svg viewBox={`0 0 ${layout.W} ${layout.H}`} style={{ width: '100%', height: 'auto', display: 'block' }} onMouseLeave={() => setHover(null)}>
-          {/* flows first (behind bars) */}
+          {/* flows first (behind bars) — deBridge-style: keep everything visible,
+              only slightly brighten the hovered one */}
           <g>{layout.flows.map((f, i) => (
-            <path key={i} d={f.path} fill="none" stroke={f.color} strokeWidth={f.thickness} strokeOpacity={hover == null ? 0.28 : (hover === i ? 0.82 : 0.08)} style={{ transition: 'stroke-opacity .15s' }} onMouseEnter={() => setHover(i)} />
+            <path key={i} d={f.path} fill="none" stroke={f.color} strokeWidth={f.thickness}
+              strokeOpacity={hover === i ? 0.6 : 0.32}
+              style={{ transition: 'stroke-opacity .18s', cursor: 'pointer' }}
+              onMouseEnter={() => setHover(i)} />
           ))}</g>
           {/* left bars */}
           <g>{layout.sources.map((s) => (
             <g key={s.id}>
-              <rect x={layout.leftX} y={s.y} width={layout.barW} height={s.h} fill={s.color} rx="2" />
-              <text x={layout.leftX - 10} y={s.y + s.h / 2} dy="0.32em" textAnchor="end" fill={C.ink} fontSize="12" fontFamily="var(--sans)" fontWeight="500">{s.name}</text>
-              <text x={layout.leftX - 10} y={s.y + s.h / 2 + 14} textAnchor="end" fill={C.inkFaint} fontSize="10" fontFamily="var(--mono)">{s.note}</text>
+              <rect x={layout.leftX} y={s.y} width={layout.barW} height={s.h} fill={s.color} rx="3" />
+              <text x={layout.leftX - 14} y={s.y + s.h / 2 - 4} textAnchor="end" fill={C.ink} fontSize="15" fontFamily="var(--sans)" fontWeight="500">{s.name}</text>
+              <text x={layout.leftX - 14} y={s.y + s.h / 2 + 14} textAnchor="end" fill={C.inkFaint} fontSize="11" fontFamily="var(--mono)">{s.note}</text>
             </g>
           ))}</g>
           {/* right bars */}
           <g>{layout.dests.map((d) => (
             <g key={d.id}>
-              <rect x={layout.rightX} y={d.y} width={layout.barW} height={d.h} fill={d.color} rx="2" />
-              <text x={layout.rightX + layout.barW + 10} y={d.y + d.h / 2} dy="0.32em" fill={C.ink} fontSize="12" fontFamily="var(--sans)" fontWeight="500">{d.name}</text>
-              <text x={layout.rightX + layout.barW + 10} y={d.y + d.h / 2 + 14} fill={C.inkFaint} fontSize="10" fontFamily="var(--mono)">{d.note}</text>
+              <rect x={layout.rightX} y={d.y} width={layout.barW} height={d.h} fill={d.color} rx="3" />
+              <text x={layout.rightX + layout.barW + 14} y={d.y + d.h / 2 - 4} fill={C.ink} fontSize="15" fontFamily="var(--sans)" fontWeight="500">{d.name}</text>
+              <text x={layout.rightX + layout.barW + 14} y={d.y + d.h / 2 + 14} fill={C.inkFaint} fontSize="11" fontFamily="var(--mono)">{d.note}</text>
             </g>
           ))}</g>
         </svg>
