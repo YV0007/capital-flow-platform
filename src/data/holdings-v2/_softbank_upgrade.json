@@ -1,0 +1,344 @@
+{
+  "about": "SoftBank Group — японский инвестиционный холдинг: держит доли в технологических компаниях и управляет фондами Vision Fund. Основные активы — Arm (дизайн процессорных архитектур) и Vision Fund 2 с крупной ставкой на OpenAI; вместе они дают ~76% всей стоимости портфеля.",
+  "aboutMeta": [
+    { "label": "Основана", "value": "1981" },
+    { "label": "Штаб-квартира", "value": "Токио, Япония" },
+    { "label": "Основатель", "value": "Masayoshi Son (32.73%)" },
+    { "label": "Листинг", "value": "9984.T · SFTBY (ADR)" }
+  ],
+  "aboutBusiness": [
+    {
+      "title": "Arm Holdings (~87%, консолидирован)",
+      "desc": "Дизайнер CPU-архитектур для смартфонов и серверов, зарабатывает на роялти. Листинг на Nasdaq с сентября 2023; рекордная выручка $4.92B (+23%), market cap ~$221B на 12.05.2026."
+    },
+    {
+      "title": "Vision Fund 2 — фонд AI-инвестиций",
+      "desc": "Крупнейшая позиция — преф-акции OpenAI, планируемая доля SBG ~13%. Cumulative return $118.7B при cost $111.4B; net blended IRR 6% — сегмент впервые вышел в плюс."
+    },
+    {
+      "title": "SoftBank Corp. (~40%, тикер 9434)",
+      "desc": "Японский телеком-оператор, стабильный дивидендный поток. Строит внутренние AI-дата-центры. Оценка доли в NAV — ¥2.85T."
+    }
+  ],
+  "aboutRecent": [
+    {
+      "title": "OpenAI follow-on $30B (объявлено 27.02.2026)",
+      "desc": "Три транша по $10B (апрель, июль, октябрь 2026). Кумулятивная инвестиция SBG в OpenAI выйдет на $64.6B / ~13% при pre-money $730B. Финансируется $40B bridge-кредитом от JPMorgan, Goldman, Mizuho, SMBC, MUFG с погашением 25.03.2027."
+    },
+    {
+      "title": "Ampere Computing $6.5B (закрыто 25.11.2025)",
+      "desc": "Полная покупка (100%) разработчика Arm-серверных CPU за all-cash. Актив уходит в консолидацию и укрепляет вертикальную интеграцию SBG по чипам вместе с Arm."
+    }
+  ],
+  "overview": {
+    "hero": [
+      {
+        "label": "NAV per share",
+        "value": "¥7,029",
+        "sub": "NAV ¥40.06T; цена ¥3,555 → дисконт 49.4% (первичная SOTP-страница, 31.03.2026)"
+      },
+      {
+        "label": "Arm + SVF2 в NAV",
+        "value": "~76%",
+        "sub": "Arm ¥19.15T (~40%) + SVF2 ¥17.19T (~36%); экстремальная концентрация"
+      }
+    ],
+    "previews": [
+      {
+        "label": "Куда вложены деньги",
+        "kind": "bar",
+        "items": [
+          { "name": "Arm Holdings", "pct": 40, "color": "teal" },
+          { "name": "Vision Fund 2 (OpenAI)", "pct": 36, "color": "violet" },
+          { "name": "Прочие (Ampere, Northstar)", "pct": 10, "color": "gold" },
+          { "name": "Vision Fund 1", "pct": 7, "color": "blue" },
+          { "name": "SoftBank Corp.", "pct": 6, "color": "clay" },
+          { "name": "LatAm Funds", "pct": 1, "color": "inkFaint" }
+        ],
+        "hint": "Доли в equity value портфеля ¥48.26T на 31.03.2026 по SOTP-странице SBG"
+      },
+      {
+        "label": "Где активы",
+        "kind": "bar",
+        "items": [
+          { "name": "США", "pct": 46, "color": "teal" },
+          { "name": "Великобритания (Arm plc)", "pct": 40, "color": "blue" },
+          { "name": "Япония", "pct": 7, "color": "violet" },
+          { "name": "Прочее (глобально)", "pct": 5, "color": "gold" },
+          { "name": "Лат. Америка", "pct": 2, "color": "clay" }
+        ],
+        "hint": "Разбивка по стране операционного бизнеса или домицилю актива; приблизительная — SBG построчную гео-структуру NAV не публикует"
+      },
+      {
+        "label": "Динамика NAV, ¥T",
+        "kind": "spark",
+        "points": [25.7, 28.5, 32.0, 36.0, 40.06, 47.7],
+        "periods": ["мар-25", "июн-25", "сен-25", "дек-25", "мар-26", "май-26"],
+        "headline": "¥40.06T",
+        "hint": "Крайние точки отчётные (мар-25, мар-26, pro forma 12.05.2026); промежуточные — линейная оценка между реперами"
+      }
+    ]
+  },
+  "changesDeep": {
+    "title": "Движение капитала",
+    "sub": "Откуда пришло, куда пошло — LTM + объявленные сделки",
+    "stats": [
+      {
+        "label": "Развёрнуто в AI",
+        "value": "$44.0B",
+        "sub": "SBG + SVF за FY2025: OpenAI $32.4B, Ampere $6.5B, прочее"
+      },
+      {
+        "label": "Свободный капитал",
+        "value": "¥3.5T",
+        "sub": "≈$22B на 31.03.2026; политика — минимум 2 года погашений облигаций в кэше"
+      },
+      {
+        "label": "Реализации листинговых",
+        "value": "$26.45B",
+        "sub": "T-Mobile $17.88B + NVIDIA $5.83B + Deutsche Telekom $2.74B"
+      },
+      {
+        "label": "Привлечено долга",
+        "value": "$40B",
+        "sub": "OpenAI bridge loan — крупнейший в истории SBG; погашение 25.03.2027"
+      }
+    ],
+    "sankey": {
+      "sources": [
+        {
+          "id": "src_realizations",
+          "name": "Продажи листинговых",
+          "value": 26.45,
+          "color": "teal",
+          "note": "T-Mobile $17.88B + NVIDIA $5.83B + Deutsche Telekom $2.74B"
+        },
+        {
+          "id": "src_distributions",
+          "name": "Распределения из фондов",
+          "value": 4.71,
+          "color": "blue",
+          "note": "SVF1 $3.8B + SVF2 $617M + LatAm $293M"
+        },
+        {
+          "id": "src_bridge",
+          "name": "Bridge-кредиты",
+          "value": 52.0,
+          "color": "clay",
+          "note": "$40B OpenAI follow-on + $5.5B OpenAI 1-е закрытие + $6.5B Ampere"
+        },
+        {
+          "id": "src_cash",
+          "name": "Cash на балансе",
+          "value": 22.0,
+          "color": "inkFaint",
+          "note": "¥3.5T на 31.03.2026, ≈$22B по USD/JPY 159.88"
+        }
+      ],
+      "destinations": [
+        {
+          "id": "dst_openai_fy25",
+          "name": "OpenAI, FY2025 инвестиции",
+          "value": 32.4,
+          "color": "violet",
+          "note": "SBG + SVF совокупно; вкл. indirect, net of disposals"
+        },
+        {
+          "id": "dst_openai_new",
+          "name": "OpenAI follow-on $30B",
+          "value": 30.0,
+          "color": "violet",
+          "note": "Апр / июл / окт 2026, 3 транша по $10B; pre-money $730B"
+        },
+        {
+          "id": "dst_ampere",
+          "name": "Ampere Computing",
+          "value": 6.5,
+          "color": "teal",
+          "note": "Закрыто 25.11.2025, 100% all-cash"
+        },
+        {
+          "id": "dst_abb",
+          "name": "ABB Robotics",
+          "value": 5.375,
+          "color": "gold",
+          "note": "PENDING сер.–конец 2026; новый holdco 100%"
+        },
+        {
+          "id": "dst_digitalbridge",
+          "name": "DigitalBridge",
+          "value": 4.0,
+          "color": "blue",
+          "note": "PENDING 2-е полугодие 2026; $16.00/акция"
+        },
+        {
+          "id": "dst_reserve",
+          "name": "Резерв и buyback",
+          "value": 26.885,
+          "color": "inkFaint",
+          "note": "Cash reserve + FY2025 buyback ¥93.2B"
+        }
+      ],
+      "flows": [
+        { "from": "src_realizations", "to": "dst_openai_fy25", "value": 15.0, "label": "Продажи листинговых → OpenAI FY2025" },
+        { "from": "src_realizations", "to": "dst_reserve", "value": 11.45, "label": "Продажи → cash-резерв" },
+        { "from": "src_distributions", "to": "dst_openai_fy25", "value": 4.71, "label": "Распределения фондов → OpenAI" },
+        { "from": "src_bridge", "to": "dst_openai_fy25", "value": 5.5, "label": "$5.5B bridge → OpenAI 1-е закрытие" },
+        { "from": "src_bridge", "to": "dst_ampere", "value": 6.5, "label": "$6.5B bridge → Ampere" },
+        { "from": "src_bridge", "to": "dst_openai_new", "value": 30.0, "label": "$40B bridge → OpenAI follow-on" },
+        { "from": "src_bridge", "to": "dst_abb", "value": 5.375, "label": "Bridge → ABB Robotics" },
+        { "from": "src_bridge", "to": "dst_digitalbridge", "value": 4.0, "label": "Bridge → DigitalBridge" },
+        { "from": "src_bridge", "to": "dst_reserve", "value": 0.625, "label": "Bridge → резерв" },
+        { "from": "src_cash", "to": "dst_openai_fy25", "value": 7.19, "label": "Cash → OpenAI FY2025" },
+        { "from": "src_cash", "to": "dst_reserve", "value": 14.81, "label": "Cash → резерв" }
+      ]
+    },
+    "timeline": [
+      {
+        "date": "01.04.2025",
+        "type": "deal",
+        "importance": "high",
+        "ai": true,
+        "title": "OpenAI, 1-й транш $10B закрыт",
+        "value": "$10.0B funded",
+        "counterparty": "OpenAI",
+        "why": "Первый транш из commitment 2024 года. Финансирован частично $5.5B bridge; открывает серию инвестиций SBG в модельный слой AI.",
+        "source": "SBG FY-дек 2025 [1]"
+      },
+      {
+        "date": "FY2025",
+        "type": "divestment",
+        "importance": "high",
+        "ai": false,
+        "title": "T-Mobile US — частичная продажа $17.88B",
+        "value": "$17.88B",
+        "counterparty": "рынок + prepaid-forward",
+        "why": "Крупнейшая реализация года. Освобождает капитал под переброс в AI; снижает зависимость NAV от телеком-cash.",
+        "source": "SBG FY-дек 2025 [1]"
+      },
+      {
+        "date": "FY2025",
+        "type": "divestment",
+        "importance": "medium",
+        "ai": false,
+        "title": "NVIDIA — полная продажа $5.83B",
+        "value": "$5.83B",
+        "counterparty": "рыночная продажа",
+        "why": "Полный выход из NVIDIA (вкл. долю asset-management subsidiary) несмотря на AI-риторику. Повторная позиция после первого выхода в 2019.",
+        "source": "SBG FY-дек 2025 [1]"
+      },
+      {
+        "date": "25.11.2025",
+        "type": "acquisition",
+        "importance": "high",
+        "ai": true,
+        "title": "Ampere Computing $6.5B — закрытие 100%",
+        "value": "$6.5B all-cash",
+        "counterparty": "Ampere Computing",
+        "why": "Полная покупка разработчика Arm-серверных CPU. Вертикальная интеграция по чипам вместе с Arm; актив уходит в консолидацию.",
+        "source": "SBG press 26.11.2025 [15]"
+      },
+      {
+        "date": "01.01.2026",
+        "type": "internal",
+        "importance": "medium",
+        "ai": false,
+        "title": "4-for-1 сплит акций",
+        "value": "коэффициент 4:1",
+        "counterparty": "—",
+        "why": "После 10:1 сплита в октябре 2024. Повышает розничную ликвидность; все NAV/цены с этой даты приведены post-split.",
+        "source": "SBG press 11.11.2025 [19]"
+      },
+      {
+        "date": "27.02.2026",
+        "type": "deal",
+        "importance": "high",
+        "ai": true,
+        "title": "OpenAI follow-on $30B — объявлен",
+        "value": "$30B commitment",
+        "counterparty": "OpenAI",
+        "why": "Три транша по $10B (апр / июл / окт 2026). Кумулятивная инвестиция SBG → $64.6B / ~13% при pre-money $730B. Крупнейшая одиночная ставка холдинга.",
+        "source": "SBG press 27.02.2026 [4]"
+      },
+      {
+        "date": "Март 2026",
+        "type": "program",
+        "importance": "high",
+        "ai": true,
+        "title": "$40B bridge loan подписан",
+        "value": "$40B",
+        "counterparty": "JPMorgan, Goldman, Mizuho, SMBC, MUFG",
+        "why": "Крупнейший долларовый кредит в истории SBG под OpenAI follow-on. Погашение 25.03.2027; выход через IPO OpenAI или финансирование под существующие активы.",
+        "source": "Bloomberg 27.03.2026 [17]"
+      },
+      {
+        "date": "26.06.2026",
+        "type": "earnings",
+        "importance": "high",
+        "ai": true,
+        "title": "Акция −12.5% на новости о переносе OpenAI IPO на 2027",
+        "value": "−¥5.6T market cap",
+        "counterparty": "рынок",
+        "why": "Live-катализатор: отложенная реализация OpenAI + осложнение погашения $40B bridge к марту 2027. Главный риск на дату прохода.",
+        "source": "Bloomberg 26.06.2026 [18]"
+      }
+    ],
+    "pipeline": [
+      {
+        "date": "01.07.2026",
+        "type": "deal",
+        "importance": "high",
+        "ai": true,
+        "title": "OpenAI, транш 2 $10B",
+        "value": "$10.0B",
+        "counterparty": "OpenAI",
+        "why": "2-й из трёх траншей follow-on. Преф-акции, авто-конверсия при IPO. Финансируется bridge → временный рост net debt и LTV.",
+        "source": "SBG press [4]"
+      },
+      {
+        "date": "01.10.2026",
+        "type": "deal",
+        "importance": "high",
+        "ai": true,
+        "title": "OpenAI, транш 3 $10B → кумулятив $64.6B / ~13%",
+        "value": "$10.0B",
+        "counterparty": "OpenAI",
+        "why": "Финальный транш. Суммарная доля SBG в OpenAI выйдет на ~13%; крупнейшая нелистинговая позиция группы.",
+        "source": "SBG press [4]"
+      },
+      {
+        "date": "2-е полугодие 2026",
+        "type": "acquisition",
+        "importance": "high",
+        "ai": true,
+        "title": "ABB Robotics $5.375B — закрытие",
+        "value": "$5.375B (≈¥818.7B)",
+        "counterparty": "ABB Ltd",
+        "why": "Покупка промышленного робо-бизнеса (Zürich, ~7,000 чел.) в новый 100% holdco. Слой Physical AI в стратегии ASI.",
+        "source": "SBG press 08.10.2025 [7]"
+      },
+      {
+        "date": "2-е полугодие 2026",
+        "type": "acquisition",
+        "importance": "medium",
+        "ai": true,
+        "title": "DigitalBridge ~$4.0B EV — закрытие",
+        "value": "~$4.0B EV ($16.00/акция)",
+        "counterparty": "DigitalBridge",
+        "why": "AI-инфраструктурный управляющий. Дек SBG указывал equity ~$3.1B — небольшое расхождение с пресс-релизом.",
+        "source": "DigitalBridge press 29.12.2025 [10]"
+      },
+      {
+        "date": "25.03.2027",
+        "type": "program",
+        "importance": "high",
+        "ai": false,
+        "title": "$40B bridge loan — окно погашения",
+        "value": "$40B",
+        "counterparty": "синдикат банков",
+        "why": "Ключевая проверка ликвидности: погашение через IPO OpenAI (перенесён на 2027) или финансирование под существующие активы. Задержка IPO усиливает риск.",
+        "source": "Bloomberg [17]; SBG press [4]"
+      }
+    ]
+  }
+}
