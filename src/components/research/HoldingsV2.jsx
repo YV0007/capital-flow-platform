@@ -15,6 +15,7 @@ import holdingsData from '../../data/holdings.json';
 import PortfolioDeep from './PortfolioDeep.jsx';
 import FinancialDeep from './FinancialDeep.jsx';
 import ChangesDeep from './ChangesDeep.jsx';
+import SectionDeep from './SectionDeep.jsx';
 
 const { META, GROUPS, HOLDING_COMPANIES_ORDER, THEMES, companies: HOLD } = holdingsData;
 const C = THEMES.dark;
@@ -295,6 +296,7 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial }) {
       {sec.id === 'portfolio' && portfolio ? <PortfolioDeep data={portfolio} />
         : sec.id === 'financial' && financial ? <FinancialDeep data={financial} />
         : sec.id === 'changes' && data.changesDeep ? <ChangesDeep data={data.changesDeep} />
+        : sec.deep && sec.deep.length ? <SectionDeep blocks={sec.deep} />
         : <Md md={sec.bodyMarkdown} />}
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginTop: 40, paddingTop: 20, borderTop: `1px solid ${C.line}` }}>

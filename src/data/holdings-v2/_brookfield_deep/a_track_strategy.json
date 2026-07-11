@@ -1,0 +1,277 @@
+{
+  "track_record": [
+    {
+      "type": "stats",
+      "items": [
+        {
+          "label": "FPAUM (активы под комиссией)",
+          "value": "$614 млрд",
+          "delta": "+12% YoY",
+          "note": "$341 млрд в 2021 — рост ×1.8"
+        },
+        {
+          "label": "FRE — комиссии за управление, LTM",
+          "value": "$3.1 млрд",
+          "delta": "+18% YoY",
+          "note": "$1.8 млрд в 2021; $1.89/share"
+        },
+        {
+          "label": "Накопленный carry",
+          "value": "$11.8 млрд",
+          "note": "нереализованный; net-доля BN $6.4 млрд"
+        },
+        {
+          "label": "Реализованный carry, LTM",
+          "value": "$528 млн",
+          "note": "$157 млн за Q1'26 — пока малая доля накопленного"
+        },
+        {
+          "label": "Fundraising, LTM",
+          "value": "$108 млрд",
+          "note": "$21 млрд за Q1'26"
+        }
+      ]
+    },
+    {
+      "type": "bars",
+      "title": "Рост платформы BAM: FPAUM по годам",
+      "note": "FPAUM ×1.8 и FRE ×1.7 за ~5 лет. История 2021/2024 — из серии прошлых filings (повторно не переоткрыта).",
+      "items": [
+        {
+          "label": "2021",
+          "note": "FRE $1.8 млрд",
+          "pct": 56,
+          "value": "$341 млрд"
+        },
+        {
+          "label": "2024",
+          "note": "FRE $2.4 млрд",
+          "pct": 88,
+          "value": "$539 млрд"
+        },
+        {
+          "label": "Q1'26",
+          "note": "FRE $3.1 млрд (+18% YoY)",
+          "pct": 100,
+          "value": "$614 млрд",
+          "color": "teal"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Монетизации и выходы",
+      "note": "Q1'26 — сегментная разбивка продаж из BN Supplemental; названные выходы 2025 — из пресс-релизов BIP/BEP.",
+      "headers": ["Актив / сегмент", "Год", "Сумма", "Результат vs балансовой"],
+      "align": ["left", "right", "right", "left"],
+      "rows": [
+        ["Patrick Terminals (порты, Австралия)", "2025", "A$2.5 млрд", "полный выход BIP, реализация carry"],
+        ["Saeta Yield → Masdar (солнце, 745 MW)", "2025", "~$1.4 млрд", "ротация зрелого актива, капитал под pipeline X-Elio"],
+        ["Инфраструктура (сегмент BN)", "Q1'26", "$6 млрд", "по/выше балансовой"],
+        ["Возобновляемая энергетика", "Q1'26", "$5 млрд", "по/выше балансовой"],
+        ["Недвижимость", "Q1'26", "$2 млрд", "по/выше балансовой"],
+        ["Прочее", "Q1'26", "$4 млрд", "по/выше балансовой"]
+      ],
+      "foot": "«Substantially all sales were completed at or above our carrying values» — Q1'26 Supplemental. Агрегат «$91 млрд монетизаций за 2025» первичкой не подтверждён."
+    },
+    {
+      "type": "cards",
+      "title": "Крупные приобретения — как строились платформы",
+      "items": [
+        {
+          "title": "Oaktree",
+          "badge": "с 2019",
+          "color": "blue",
+          "value": "$282 млрд",
+          "desc": "Поэтапный выкуп контроля дал крупнейшее направление BAM — credit: сегмент $282 млрд FPAUM, включая 17Capital и NAV-lending.",
+          "foot": "Целевой carry по Oaktree первичкой не подтверждён"
+        },
+        {
+          "title": "Westinghouse",
+          "badge": "07.11.2023",
+          "color": "gold",
+          "value": "EV $7.9 млрд",
+          "desc": "Куплен с Cameco (BEP+партнёры 51% / Cameco 49%). К 2025 — база партнёрства с правительством США на ≥$80 млрд реакторов AP1000; DOE-кредит до $17.5 млрд (conditional, 23.06.2026).",
+          "foot": "Триггер IPO: оценка ≥$30 млрд к янв-2029; реализованного IRR пока нет"
+        },
+        {
+          "title": "17Capital",
+          "badge": "Q1'26",
+          "color": "teal",
+          "value": "$7.5 млрд",
+          "desc": "Credit Fund II закрыт на $7.5 млрд (+$2.5 млрд за квартал) — крупнейшая NAV-lending стратегия рынка."
+        },
+        {
+          "title": "Just Group",
+          "badge": "Q2'26",
+          "color": "violet",
+          "value": "+$40 млрд FPAUM",
+          "desc": "UK retirement-мандат через Wealth Solutions: ~$100 млн годовой base fee для BAM; страховые активы $143.5 → ~$180 млрд."
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "title": "Дисциплина возврата капитала",
+      "items": [
+        {
+          "k": "Buyback BN (YTD)",
+          "v": "$470 млн по средней ~$41 — ≈37% дисконт к intrinsic value $66.37"
+        },
+        {
+          "k": "Buyback BN (LTM)",
+          "v": "23.0 млн акций по средневзвешенной $38.75"
+        },
+        {
+          "k": "Buyback BAM (YTD)",
+          "v": "$575 млн; вместе BN+BAM — >$1 млрд"
+        },
+        {
+          "k": "NCIB-мандат",
+          "v": "до 191.0 млн Class A (10% float), 27.05.2026–26.05.2027 — выкуп возобновляемый, не разовый"
+        },
+        {
+          "k": "Дивиденд BN",
+          "v": "$0.06 → $0.07/квартал (+17% в 2026), $0.28/год; политика «modest dividend», приоритет — buyback"
+        },
+        {
+          "k": "Дисциплина продаж",
+          "v": "Q1'26: «substantially all at or above carrying values» — отметки активов реализуемы"
+        }
+      ]
+    },
+    {
+      "type": "quote",
+      "text": "Well positioned to realize significant carried interest into income over the next three years",
+      "who": "Менеджмент BN — Q1 2026 Supplemental"
+    },
+    {
+      "type": "text",
+      "title": "Что это значит для решения",
+      "body": "Track record поддерживает hold/add: FRE и FPAUM растут последовательно, продажи проходят по/выше балансовой, buyback идёт с ~37% дисконтом к intrinsic value. Слабое место — темп конвертации carry в деньги ($528 млн за LTM против $11.8 млрд накопленного) и Westinghouse, который держится 2.5 года без зафиксированного результата. Ориентир менеджмента — реализовать «significant carry» в ближайшие 3 года; это главная метрика для проверки тезиса."
+    }
+  ],
+  "strategy": [
+    {
+      "type": "stats",
+      "items": [
+        {
+          "label": "Доходность акционеров, 30+ лет",
+          "value": "19% годовых",
+          "note": "compound; из письма Bruce Flatt 14.05.2026"
+        },
+        {
+          "label": "Deployable capital",
+          "value": "$188 млрд",
+          "note": "$74 млрд cash/кредитные линии + $114 млрд uncalled commitments"
+        },
+        {
+          "label": "Buyback BN+BAM, YTD",
+          "value": ">$1 млрд",
+          "note": "«when their prices sold off» — при цене ниже intrinsic"
+        },
+        {
+          "label": "Корпоративный долг",
+          "value": "15 лет / 4.8%",
+          "note": "средний срок и ставка; 13% от market cap"
+        },
+        {
+          "label": "Permanent capital после BN+BWS",
+          "value": "~$145 млрд",
+          "note": "цель объединения; голосование 16.07.2026"
+        }
+      ]
+    },
+    {
+      "type": "cards",
+      "title": "Слои стратегии",
+      "items": [
+        {
+          "title": "Операционный масштаб",
+          "badge": "тема 1",
+          "color": "teal",
+          "value": ">$1 трлн AUM",
+          "desc": "Три темы: digitalization, energy addition, deglobalization. Decarbonization переформулирована: «no longer one of energy transition, but rather energy addition… renewables, nuclear, storage».",
+          "foot": "«Among the largest builders of data centers globally»"
+        },
+        {
+          "title": "Терпеливый вход",
+          "badge": "тема 2",
+          "color": "blue",
+          "value": "Watch → Scale",
+          "desc": "Процесс входа в новые классы активов: «Watch, Learn, Invest, Perfect, Scale». Пример: Westinghouse — вход EV $7.9 млрд (2023) → партнёрство ≥$80 млрд → окно IPO до янв-2029."
+        },
+        {
+          "title": "Permanent capital",
+          "badge": "тема 3",
+          "color": "violet",
+          "value": "~$145 млрд",
+          "desc": "Объединение BN+BWS (1-к-1, tax-deferred, голосование 16.07.2026) даёт страховому капиталу доступ к балансу BN; страховые активы $143.5 → ~$180 млрд после Just Group."
+        },
+        {
+          "title": "Credit без модных рисков",
+          "badge": "тема 4",
+          "color": "gold",
+          "value": "$282 млрд",
+          "desc": "Крупнейший сегмент FPAUM — credit (Oaktree, 17Capital). «Private credit is simply credit… We have no material exposure to software» — сознательный отказ от SaaS-кредитования."
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "title": "Правила капитал-аллокации (подтверждено Supplemental)",
+      "items": [
+        {
+          "k": "Главная цель",
+          "v": "рост DE (распределяемая прибыль) на акцию и intrinsic value per share"
+        },
+        {
+          "k": "Buyback",
+          "v": "только ниже intrinsic: >$1 млрд YTD по ~$41 при intrinsic $66.37"
+        },
+        {
+          "k": "Монетизации",
+          "v": "продажи по/выше балансовой — «substantially all at or above carrying values»"
+        },
+        {
+          "k": "Резерв капитала",
+          "v": "$188 млрд deployable; корпоративная ликвидность BN $5.5 млрд"
+        },
+        {
+          "k": "Структура долга",
+          "v": "длинный и дешёвый: средний срок 15 лет, ставка 4.8%, 13% от market cap"
+        },
+        {
+          "k": "Дивиденд",
+          "v": "«modest dividend» $0.28/год (yield ~0.6%) — капитал уходит в buyback и реинвестирование"
+        }
+      ]
+    },
+    {
+      "type": "quote",
+      "text": "Price is influenced by capital flows, sentiment… Value is determined by the cash flows a business generates… they will always converge in the longer term",
+      "who": "Bruce Flatt, CEO — письмо акционерам, 14.05.2026"
+    },
+    {
+      "type": "table",
+      "title": "Стратегия в цифрах: цель → факт",
+      "note": "Факты — Q1 2026 (Supplemental BN, 8-K BAM).",
+      "headers": ["Заявленная цель", "Факт Q1'26", "Статус"],
+      "align": ["left", "left", "left"],
+      "rows": [
+        ["Рост FRE (комиссии за управление)", "$3.1 млрд LTM, +18% YoY; квартал $772 млн, +11%", "выполняется"],
+        ["Рост FPAUM / fundraising", "$614 млрд (+12% YoY); привлечено $108 млрд за LTM", "выполняется"],
+        ["Монетизации по/выше балансовой", "$6+$5+$2+$4 млрд за квартал — «at or above carrying values»", "выполняется"],
+        ["Buyback ниже intrinsic", ">$1 млрд YTD по ~$41 vs intrinsic $66.37", "выполняется"],
+        ["Рост DE на акцию", "DE before realizations $1,393 млн за квартал, +7% YoY", "выполняется"],
+        ["Реализация «significant carry» за 3 года", "$528 млн LTM из $11.8 млрд накопленного", "ранняя стадия"],
+        ["2030: FRE ~$5.8 млрд, fee-bearing ~$1.2 трлн", "таргеты Investor Day — первичкой не подтверждены", "не подтверждено"]
+      ]
+    },
+    {
+      "type": "text",
+      "title": "Что это значит для решения",
+      "body": "Стратегия внутренне последовательна: заявленные правила (buyback ниже intrinsic, продажи по/выше балансовой, рост DE на акцию) подтверждаются фактами Q1'26. Ключевая развилка — голосование 16.07.2026 по объединению BN+BWS: одобрение открывает ~$145 млрд permanent capital, провал означает затяжную неопределённость структуры."
+    }
+  ]
+}

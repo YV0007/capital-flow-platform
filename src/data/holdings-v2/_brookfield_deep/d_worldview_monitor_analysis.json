@@ -1,0 +1,251 @@
+{
+  "worldview": [
+    {
+      "type": "stats",
+      "items": [
+        { "label": "Свободный капитал к деплою", "value": "$188 млрд", "note": "$74 млрд cash/линии + $114 млрд uncalled commitments" },
+        { "label": "Страховые активы", "value": "→ $180 млрд", "note": "+$40 млрд после Just Group (Q2 2026)" },
+        { "label": "Permanent capital после слияния", "value": "~$145 млрд", "note": "цель объединения BN+BWS" },
+        { "label": "AI Infrastructure программа", "value": "$100 млрд", "note": "партнёры NVIDIA и Kuwait Investment Authority" },
+        { "label": "Доходность акционерам 30+ лет", "value": "19% годовых", "note": "по письму Flatt от 14.05.2026" }
+      ]
+    },
+    {
+      "type": "cards",
+      "title": "Во что верят",
+      "items": [
+        {
+          "title": "AI = структурный спрос на энергию",
+          "badge": "энергия",
+          "color": "violet",
+          "value": "$100 млрд",
+          "desc": "«The demand for energy is at an unprecedented high» (Connor Teskey, Q1 2026 call). Ставка на связку low-cost renewables + flexible gas + nuclear. Под это — AI Infrastructure программа $100 млрд (NVIDIA, Kuwait Investment Authority) и рамка $5 млрд с Bloom Energy.",
+          "foot": "Westinghouse AP1000 + DOE-кредит до $17.5 млрд — та же ставка"
+        },
+        {
+          "title": "Капитал перетекает в качество",
+          "badge": "активы",
+          "color": "teal",
+          "value": "$17 млрд",
+          "desc": "«Capital increasingly shifting toward quality assets… underpinned by essential services and real assets». Подтверждение делом: монетизации Q1 2026 ($6 млрд инфраструктура + $5 млрд энергетика + $2 млрд недвижимость + $4 млрд прочее) прошли «substantially all at or above carrying values».",
+          "foot": "Отметки активов реализуемы при продаже"
+        },
+        {
+          "title": "Макро и ставки вторичны",
+          "badge": "макро",
+          "color": "blue",
+          "value": "19%/год",
+          "desc": "«Macro events… tend to attract disproportionate attention relative to their long-term impact». За 30+ лет акционеры получили 19% годовых сложной доходности — тезис Flatt: доходность делают cash flows бизнеса, а не угадывание ставок и циклов.",
+          "foot": "Дислокацию в кредите видят как точку входа, а не угрозу"
+        },
+        {
+          "title": "Сильный доллар — в плюс",
+          "badge": "валюта",
+          "color": "gold",
+          "desc": "«Operations predominantly in the U.S. or hedged to the U.S. dollar, we have benefitted commensurately». Операции преимущественно в США или захеджированы в доллар — валютный риск для держателя BN структурно ограничен.",
+          "foot": "Из письма акционерам Q1 2026"
+        }
+      ]
+    },
+    {
+      "type": "quote",
+      "text": "Macro Events Are Mostly Irrelevant to Long Term Investing… over the last 30+ years our shareholders have realized annual compound returns of 19%. Price is influenced by capital flows, sentiment… Value is determined by the cash flows a business generates… they will always converge in the longer term.",
+      "who": "Bruce Flatt, CEO Brookfield — письмо акционерам, 14.05.2026"
+    },
+    {
+      "type": "table",
+      "title": "Чего избегают и за чем следят",
+      "note": "Из Q1 2026 letter и earnings call",
+      "headers": ["Тема", "Позиция менеджмента", "Факт / цитата"],
+      "align": ["left", "left", "left"],
+      "rows": [
+        ["Software/SaaS в private credit", "Избегают", "«No material exposure to software» — ответ на страхи вокруг SaaS-кредитования"],
+        ["Retail-сегмент торгуемого кредита", "Минимальная доля", "«Our products represent a disproportionately small component»"],
+        ["Дислокация в кредите", "Ждут как точку входа", "Oaktree / opportunistic credit позиционированы покупателем, не жертвой"],
+        ["Торговые ограничения", "Мониторят длительность", "Макро-фактор, не драйвер тезиса"],
+        ["Ставки и ожидания снижений", "Следят, но не ставят на них", "Доходность строится на cash flows активов, не на цикле ставок"]
+      ]
+    },
+    {
+      "type": "facts",
+      "title": "Выжимка из последнего письма акционерам (Q1 2026)",
+      "items": [
+        { "k": "14.05.2026 — fundraising", "v": "Привлечено $67 млрд нового капитала YTD; капитал к деплою ~$188–200 млрд (Supplemental подтверждает $188 млрд)" },
+        { "k": "14.05.2026 — Just Group", "v": "Сделка закрыта: страховые активы группы вырастают до $180 млрд (+$40 млрд); +$40 млрд FPAUM и ~$100 млн годовой base fee для BAM" },
+        { "k": "14.05.2026 — объединение BN+BWS", "v": "Цель — доступ страхового бизнеса к ~$145 млрд permanent capital; обмен 1-к-1, tax-deferred, голосование 16.07.2026" },
+        { "k": "14.05.2026 — Wealth Solutions", "v": "Book equity $13.2 млрд, cash flow $2.0 млрд, ROE 15%, P&C combined ratio 99% (из пресс-релиза BN)" },
+        { "k": "08.05.2026 — флагманы", "v": "Teskey: флагманские фонды инфраструктуры (BIF VI) и private equity (BCP VII) «expected to be their largest vintages ever»; first close BCP VII уже $6 млрд" },
+        { "k": "19.11.2025 — AI-программа", "v": "Запущена Brookfield AI Infrastructure программа: $100 млрд активов, партнёры NVIDIA и Kuwait Investment Authority, рамка $5 млрд с Bloom Energy" }
+      ]
+    }
+  ],
+  "monitor": [
+    {
+      "type": "stats",
+      "items": [
+        { "label": "Голосование BN+BWS", "value": "16.07.2026", "note": "AGM, 13:00 ET, онлайн" },
+        { "label": "BN Q2 2026 отчёт", "value": "~06.08.2026", "note": "до открытия; дата по агрегаторам" },
+        { "label": "Накопленный carry", "value": "$11.8 млрд", "note": "net BN $6.4 млрд; следить за реализацией" },
+        { "label": "DOE-кредит Westinghouse", "value": "до $17.5 млрд", "note": "conditional с 23.06.2026 — ждём definitive" }
+      ]
+    },
+    {
+      "type": "timeline",
+      "title": "Календарь",
+      "items": [
+        {
+          "date": "16.07.2026",
+          "badge": "голосование",
+          "color": "gold",
+          "title": "AGM BN и BNT: объединение BN+BWS",
+          "desc": "Обмен 1-к-1 в Brookfield Corporation Ltd. (NYSE/TSX), tax-deferred. Смотреть: результат голосования и финальные условия в proxy/circular. Одобрение = подтверждение hold/add; провал = пересмотр."
+        },
+        {
+          "date": "~06.08.2026",
+          "badge": "отчётность",
+          "color": "blue",
+          "title": "BN Q2 2026 results (до открытия)",
+          "desc": "Смотреть: DE (распределяемая прибыль) before realizations — было $1,393 млн +7% YoY; realized carry (LTM $528 млн — ждём разгон); темп buyback; обновлённый intrinsic value per share (было $66.37)."
+        },
+        {
+          "date": "нач. авг. 2026",
+          "badge": "отчётность",
+          "color": "blue",
+          "title": "BAM Q2 2026 results + 10-Q (исторически ~за неделю до BN)",
+          "desc": "Смотреть: FRE (комиссии за управление) — порог ≥ +11% YoY; FPAUM $614 млрд → выше; подтверждение «largest vintages ever» по BIF VI и BCP VII."
+        },
+        {
+          "date": "нач. авг. 2026",
+          "badge": "filings",
+          "title": "Окно SEC/SEDAR+: BN 6-K, BWS/BNT 6-K, BBUC 6-K",
+          "desc": "CIK BN 0001001085, BAM 0001937926, Cameco 0001009001. Смотреть детали Q2 и любые subsequent events по слиянию."
+        },
+        {
+          "date": "~14.08.2026",
+          "badge": "13F",
+          "title": "Дедлайн 13F-HR за Q2 2026",
+          "desc": "Brookfield-managed позиции = клиентские деньги — для анализа холдинга ИСКЛЮЧАТЬ. Использовать только для трекинга публичных позиций типа Bloom Energy."
+        },
+        {
+          "date": "H2 2026",
+          "badge": "Westinghouse",
+          "color": "violet",
+          "title": "Конвертация DOE conditional commitment в definitive",
+          "desc": "Кредитный пакет до $17.5 млрд на long-lead items до 10 реакторов AP1000. Дальше: SPV + партнёр вносят ~$500 млн каждый ($1 млрд/проект), затем FID. Definitive financing = re-rate триггер."
+        },
+        {
+          "date": "сент. 2026",
+          "badge": "ожидается",
+          "title": "Investor Day (паттерн 2025, дата не объявлена)",
+          "desc": "Смотреть: обновление целей BAM/BN до 2030 — текущие 2030-таргеты первичкой не подтверждены."
+        },
+        {
+          "date": "до конца 2026",
+          "badge": "закрытие",
+          "color": "teal",
+          "title": "Ожидаемое закрытие объединения BN+BWS",
+          "desc": "При регуляторных одобрениях. Квартальная выплата новой компании = сумма текущих BN+BWS."
+        },
+        {
+          "date": "до янв. 2029",
+          "badge": "IPO",
+          "color": "violet",
+          "title": "Окно IPO Westinghouse",
+          "desc": "Правительство США вправе требовать IPO при FID и оценке ≥$30 млрд (+ warrant на 20% equity). Ориентир переоценки против входа $7.9 млрд (07.11.2023). Косвенный сигнал — Cameco MD&A: EBITDA и backlog AP1000."
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "title": "Живые индикаторы",
+      "items": [
+        { "k": "Дисконт к intrinsic value", "v": "Intrinsic $66.37/акцию (BN Supplemental, стр. 7, обновляется квартально) против рыночной цены: на 26.06.2026 ~$42.87 → дисконт ~35%. Сам менеджмент выкупал по ~$41 (~40% дисконт)" },
+        { "k": "Реализация carry", "v": "Накоплено $11.8 млрд нереализованного; реализовано $157 млн за Q1'26 и $528 млн LTM (Supplemental, стр. 13). Менеджмент обещает «significant carried interest» за 3 года — смотреть разгон строки каждый квартал" },
+        { "k": "FRE-рост BAM", "v": "$772 млн за квартал (+11% YoY), $3.1 млрд LTM (+18%) — BAM 8-K. Порог здоровья: квартальный FRE ≥ +11% YoY; fee-bearing capital <8% YoY = trim-сигнал" },
+        { "k": "Монетизации", "v": "Q1'26: $6 млрд инфраструктура + $5 млрд энергетика + $2 млрд недвижимость + $4 млрд прочее, «substantially all at or above carrying values» — проверка реализуемости отметок в каждом Supplemental" },
+        { "k": "Темп buyback", "v": "NCIB обновлён: до 191.0 млн Class A (10% float), период 27.05.2026–26.05.2027, автоматический план с июня. YTD: BN $470 млн @ ~$41 + BAM $575 млн" },
+        { "k": "Инсайдеры", "v": "Form 4 в SEC по BN/BAM не существует (foreign private issuer) — личные сделки только в канадской SEDI; корпоративные прокси: buyback и дивиденд +17%" }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Где смотреть",
+      "headers": ["Источник", "Где", "Что смотреть"],
+      "align": ["left", "left", "left"],
+      "rows": [
+        ["BN Supplemental / 6-K", "bn.brookfield.com/reports-filings", "Intrinsic value, DE, carry (стр. 13), buyback, deployable capital"],
+        ["BAM 8-K / 10-Q", "SEC EDGAR, CIK 0001937926", "FRE, FPAUM, fundraising, флагманские фонды"],
+        ["BN filings / proxy", "SEC EDGAR, CIK 0001001085", "6-K за Q2, circular по объединению BN+BWS"],
+        ["Cameco 6-K / MD&A", "SEC EDGAR CIK 0001009001; cameco.com/media/news", "Westinghouse: energy systems EBITDA, backlog AP1000, статус DOE-кредита"],
+        ["BEP пресс-релизы", "bep.brookfield.com/press-releases", "Westinghouse, контракты на питание дата-центров"],
+        ["SEDI (Канада)", "sedi.ca", "Личные сделки инсайдеров BN/BAM — в SEC их нет"]
+      ]
+    }
+  ],
+  "analysis": [
+    {
+      "type": "stats",
+      "items": [
+        { "label": "Дисконт к intrinsic", "value": "~35%", "note": "$66.37 intrinsic vs ~$42.87 (26.06.2026)" },
+        { "label": "Нереализованный carry", "value": "$11.8 млрд", "note": "реализовано пока $528 млн LTM" },
+        { "label": "Buyback BN+BAM YTD", "value": ">$1 млрд", "note": "BN по средней ~$41 — сигнал недооценки" },
+        { "label": "FRE LTM", "value": "$3.1 млрд", "delta": "+18% YoY", "note": "комиссии за управление, BAM" },
+        { "label": "AI-optionality", "value": "$100 млрд", "note": "AI-программа + Westinghouse (DOE до $17.5 млрд)" }
+      ]
+    },
+    {
+      "type": "text",
+      "title": "Что это значит [интерпретация аналитика — не первичные данные, не valuation]",
+      "body": "Тезис по BN держится на трёх опорах: ~35% дисконт к intrinsic value $66.37 при buyback >$1 млрд YTD, обещанная реализация carry $11.8 млрд за три года и AI/ядерная optionality (программа $100 млрд, Westinghouse с DOE-кредитом до $17.5 млрд). Базовая позиция — hold с уклоном add; ближайшая проверка — голосование BN+BWS 16.07.2026 и Q2-отчёт ~06.08.2026."
+    },
+    {
+      "type": "cards",
+      "title": "Бычий кейс / Медвежий кейс",
+      "min": 320,
+      "items": [
+        {
+          "title": "Бычий кейс",
+          "badge": "add",
+          "color": "teal",
+          "desc": "1) Дисконт ~35% к intrinsic $66.37 — исторически широкий; менеджмент голосует деньгами: buyback >$1 млрд YTD (BN по ~$41) + дивиденд +17%. 2) Carry $11.8 млрд накоплено, план «significant realization» за 3 года; продажи Q1'26 прошли по/выше балансовых отметок. 3) Управляющий бизнес растёт: FRE +18% LTM ($3.1 млрд), FPAUM $614 млрд (+12%), fundraising $108 млрд LTM. 4) Optionality без цены в рынке: Westinghouse (вход $7.9 млрд, IPO-ориентир ≥$30 млрд к янв-2029) + AI-программа $100 млрд.",
+          "foot": "Интересы менеджмента выровнены: Flatt лично 18.0 млн акций, PVI ~121 млн BN Class A"
+        },
+        {
+          "title": "Медвежий кейс",
+          "badge": "риски",
+          "color": "clay",
+          "desc": "1) Концентрация: BAM $52.0 млрд + carry $33.8 млрд ≈ 55–59% blended-стоимости активов — один удар по FRE/мультипликатору бьёт по двум позициям сразу. 2) Carry пока на бумаге: реализовано лишь $157 млн за квартал против $11.8 млрд накопленного. 3) По росту FRE BAM (+11% квартал) — медленнее всех peers: APO +30%, KKR +24%, BX +23%. 4) Недвижимость BPG $26.9 млрд (office/retail) чувствительна к ставкам, а слияние с BWS добавляет страховой риск прямо на баланс BN; DOE-commitment пока conditional.",
+          "foot": "Total DE LTM снизилась $6,607 → $6,009 млн из-за провала disposition gains ($1,027 → $3 млн)"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Триггеры действий",
+      "note": "Интерпретация аналитика: сигнал → условие → действие",
+      "headers": ["Сигнал", "Условие", "Действие"],
+      "align": ["left", "left", "left"],
+      "rows": [
+        ["Дисконт к intrinsic", "Расширение >40% (цена <$40 при intrinsic $66.37)", "Докупать — зона, где сам BN выкупал акции"],
+        ["Голосование BN+BWS 16.07.2026", "Одобрено", "Подтверждение hold/add; ждать закрытия до конца 2026"],
+        ["Голосование BN+BWS 16.07.2026", "Провалено", "Пересмотр — затяжная неопределённость структуры"],
+        ["Реализация carry", "Рост realized carry в квартальных (>$528 млн LTM, разгон к $11.8 млрд)", "Подтверждение тезиса — carry конвертируется в DE"],
+        ["FRE / fee-bearing capital BAM", "Рост fee-bearing capital <8% YoY", "Сокращать BAM"],
+        ["Recourse-долг / leverage", "Рост corporate debt to market cap с текущих 13%; поддержка vehicle деньгами BN", "Сокращать"],
+        ["Монетизации", "Продажи ниже carrying values / срыв монетизаций", "Пересмотр — отметки intrinsic value под вопросом"],
+        ["Westinghouse", "Definitive DOE financing + первый FID ($1 млрд equity/проект)", "Переоценка optionality вверх (вход $7.9 млрд)"],
+        ["Westinghouse", "Conditional commitment DOE не конвертируется (риск из Cameco 6-K)", "Списать optionality из тезиса"],
+        ["Wealth Solutions", "P&C combined ratio >100% (сейчас 99%)", "Trim BN — страховой риск на балансе после слияния"]
+      ]
+    },
+    {
+      "type": "facts",
+      "title": "Сводные сигналы по инструментам",
+      "items": [
+        { "k": "BN — hold с уклоном add", "v": "Add: одобрение объединения 16.07.2026 + Q2 (~06.08.2026) подтверждает траекторию FRE >$3.1 млрд LTM. Trim: провал голосования или WS combined ratio >100%" },
+        { "k": "BAM — hold/add", "v": "Add: подтверждение «largest vintages ever» по инфраструктуре/PE на Q2 call, FRE ≥ +11% YoY. Trim: рост fee-bearing capital <8% YoY" },
+        { "k": "Westinghouse (через BEP/BN) — optionality, не buy", "v": "Re-rate: definitive DOE financing + первый FID. Риск: conditional commitment не конвертируется. Чистая экономическая доля BEP внутри 51% не раскрыта — эффект на NAV не квантифицирован" }
+      ]
+    }
+  ]
+}
