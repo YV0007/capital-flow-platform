@@ -367,7 +367,7 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide }) {
   ) : <span />;
 
   return (
-    <main className="rise" style={{ padding: '36px 40px 80px', maxWidth: wide ? (sec.id === 'changes' ? 'none' : 1080) : 880, margin: '0 auto' }}>
+    <main className="rise" style={{ padding: '36px 40px 80px', maxWidth: wide ? (['changes', 'financial'].includes(sec.id) ? 'none' : 1080) : 880, margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 22 }}>
         <button onClick={onBack} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: C.teal, fontSize: 13, fontFamily: 'var(--sans)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>← {data.name} · профиль</button>
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{idx + 1} / {secs.length}</span>

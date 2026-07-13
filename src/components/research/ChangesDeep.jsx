@@ -25,11 +25,15 @@ function Sankey({ sankey }) {
     const norm = (nodes) => {
       const total = nodes.reduce((s, n) => s + n.value, 0);
       const usable = H - gap * (nodes.length - 1);
+      // min-height clamp can push the sum past the canvas — rescale so the
+      // column always fits inside H (waves used to bleed out of the card)
+      let hs = nodes.map((n) => Math.max(48, (n.value / total) * usable));
+      const sum = hs.reduce((a, b) => a + b, 0);
+      if (sum > usable) hs = hs.map((h) => (h / sum) * usable);
       let y = 0;
-      return nodes.map((n) => {
-        const h = Math.max(48, (n.value / total) * usable);
-        const rec = { ...n, y, h };
-        y += h + gap;
+      return nodes.map((n, i) => {
+        const rec = { ...n, y, h: hs[i] };
+        y += hs[i] + gap;
         return rec;
       });
     };
@@ -69,7 +73,7 @@ function Sankey({ sankey }) {
         <span>Куда</span>
       </div>
       <div style={{ position: 'relative' }}>
-        <svg viewBox={`0 0 ${layout.W} ${layout.H}`} style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }} onMouseLeave={() => setHover(null)}>
+        <svg viewBox={`0 0 ${layout.W} ${layout.H}`} style={{ width: '100%', height: 'auto', display: 'block' }} onMouseLeave={() => setHover(null)}>
           {/* flows first (behind bars) — deBridge-style: keep everything visible,
               only slightly brighten the hovered one */}
           <g>{layout.flows.map((f, i) => (

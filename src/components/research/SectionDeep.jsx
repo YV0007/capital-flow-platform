@@ -200,7 +200,132 @@ function Text({ b }) {
   );
 }
 
-const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text };
+// ── radar geometry helper ───────────────────────────────────────────────────
+function radarPoints(scores, max, cx, cy, R) {
+  const n = scores.length;
+  return scores.map((s, i) => {
+    const a = -Math.PI / 2 + (i * 2 * Math.PI) / n;
+    const r = (Math.max(0, Math.min(s, max)) / max) * R;
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  });
+}
+
+function RadarSvg({ scores, labels, max, size, fill, showLabels }) {
+  const cx = size / 2, cy = size / 2;
+  const R = size / 2 - (showLabels ? 34 : 10);
+  const rings = [0.25, 0.5, 0.75, 1];
+  const pts = radarPoints(scores, max, cx, cy, R);
+  const path = pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ') + ' Z';
+  const axisPt = (i, r) => {
+    const a = -Math.PI / 2 + (i * 2 * Math.PI) / scores.length;
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  };
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} style={{ width: '100%', maxWidth: size, height: 'auto', display: 'block', overflow: 'visible', margin: '0 auto' }}>
+      {rings.map((f, i) => (
+        <polygon key={i} points={scores.map((_, j) => axisPt(j, R * f).join(',')).join(' ')} fill={i === rings.length - 1 ? C.cardAlt : 'none'} stroke={C.line} strokeWidth="1" style={{ fillOpacity: 0.4 }} />
+      )).reverse()}
+      {scores.map((_, i) => { const [x, y] = axisPt(i, R); return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke={C.line} strokeWidth="1" />; })}
+      <path d={path} fill={fill} fillOpacity="0.3" stroke={fill} strokeWidth="1.8" strokeLinejoin="round" />
+      {pts.map((p, i) => <circle key={i} cx={p[0]} cy={p[1]} r="2.5" fill={fill} />)}
+      {showLabels && labels.map((l, i) => {
+        const [x, y] = axisPt(i, R + 18);
+        return <text key={i} x={x} y={y + 3} textAnchor="middle" fill={C.inkSoft} fontSize="9.5" fontFamily="var(--sans)" letterSpacing=".08em">{l.toUpperCase()}</text>;
+      })}
+    </svg>
+  );
+}
+
+// ── radar: single risk/score profile with per-axis legend ───────────────────
+function Radar({ b }) {
+  const max = b.max || 5;
+  const scoreCol = (s) => (s >= max * 0.7 ? C.clay : s >= max * 0.5 ? C.gold : C.teal);
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 340px) 1fr', gap: 24, alignItems: 'center', background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '18px 20px' }}>
+        <RadarSvg scores={b.items.map((x) => x.score)} labels={b.items.map((x) => x.short || x.axis)} max={max} size={320} fill={col(b.color || 'clay')} showLabels />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {b.items.map((x, i) => (
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '44px 1fr', gap: 12, alignItems: 'baseline', paddingBottom: 8, borderBottom: i < b.items.length - 1 ? `1px solid ${C.lineSoft}` : 'none' }}>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: 15, fontWeight: 500, color: scoreCol(x.score) }}>{x.score}/{max}</span>
+              <span style={{ minWidth: 0 }}>
+                <span style={{ display: 'block', fontSize: 13, fontWeight: 600, color: C.ink }}>{x.axis}</span>
+                {x.hint && <span style={{ display: 'block', fontSize: 11.5, color: C.inkSoft, lineHeight: 1.5, marginTop: 2 }}>{x.hint}</span>}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── snowflakes: small-multiple 5-axis radars for peer comparison ────────────
+function Snowflakes({ b }) {
+  const axes = b.axes || [];
+  const max = b.max || 6;
+  const totCol = (t) => { const f = t / (axes.length * max); return f >= 0.6 ? C.teal : f >= 0.4 ? C.gold : C.clay; };
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 14 }}>
+        {b.items.map((it, i) => {
+          const scores = axes.map((a) => it.scores[a.key] ?? 0);
+          const tot = scores.reduce((s, x) => s + x, 0);
+          const c = totCol(tot);
+          return (
+            <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 14px', textAlign: 'center' }}>
+              <RadarSvg scores={scores} labels={axes.map((a) => a.label)} max={max} size={190} fill={c} showLabels />
+              <div style={{ fontFamily: 'var(--serif)', fontSize: 15.5, fontWeight: 500, color: C.ink, marginTop: 8, lineHeight: 1.25 }}>{it.name}</div>
+              <div style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: C.inkSoft, marginTop: 3 }}>{it.ticker}</div>
+              <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.ink, marginTop: 2 }}>{it.mcap}</div>
+              {it.note && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 5, lineHeight: 1.4 }}>{it.note}</div>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── matrix: likelihood × impact grid (ISO 31000-style) ──────────────────────
+function Matrix({ b }) {
+  const X = b.x || ['Низкая', 'Средняя', 'Высокая'];   // вероятность →
+  const Y = b.y || ['Высокое', 'Среднее', 'Низкое'];   // влияние ↓ (top = high)
+  const sevCol = (px, iy) => { const s = px + (Y.length - 1 - iy); return s >= 3 ? C.clay : s === 2 ? C.gold : C.teal; };
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px', overflowX: 'auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: `86px repeat(${X.length}, 1fr)`, gap: 6, minWidth: 560 }}>
+          <div />
+          {X.map((x, i) => <div key={i} style={{ textAlign: 'center', fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, padding: '4px 0' }}>{x}</div>)}
+          {Y.map((y, iy) => (
+            [<div key={`y${iy}`} style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, display: 'flex', alignItems: 'center' }}>{y}</div>,
+              ...X.map((_, ix) => {
+                const cell = (b.items || []).filter((it) => it.px === ix && it.py === (Y.length - 1 - iy));
+                const cc = sevCol(ix, iy);
+                return (
+                  <div key={`c${iy}-${ix}`} style={{ minHeight: 74, borderRadius: 8, background: cc + '14', border: `1px solid ${cc}33`, padding: 7, display: 'flex', flexDirection: 'column', gap: 5 }}>
+                    {cell.map((it, k) => (
+                      <div key={k} title={it.hint || ''} style={{ fontSize: 11, lineHeight: 1.35, color: C.ink, background: C.paper + 'AA', border: `1px solid ${cc}55`, borderLeft: `3px solid ${cc}`, borderRadius: 6, padding: '5px 8px' }}>{it.label}</div>
+                    ))}
+                  </div>
+                );
+              })]
+          ))}
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10, fontSize: 10.5, color: C.inkFaint }}>
+          <span>← влияние по вертикали (выше = больнее для тезиса)</span>
+          <span>вероятность по горизонтали →</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix };
 
 export default function SectionDeep({ blocks }) {
   if (!blocks || !blocks.length) return null;
