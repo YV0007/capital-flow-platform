@@ -363,11 +363,18 @@ export default function HoldingsV2() {
   const [cid, setCid] = useState(order[0] || 'brookfield');
   const [deepIdx, setDeepIdx] = useState(null); // null = profile (L0), number = L2 section index
   const [switcherOpen, setSwitcherOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const refs = useRef({});
   const data = V2[cid];
 
-  const switchCompany = (id) => { if (!V2[id]) return; setCid(id); setDeepIdx(null); setSwitcherOpen(false); window.scrollTo({ top: 0 }); };
+  const switchCompany = (id) => { if (!V2[id]) return; setCid(id); setDeepIdx(null); setSwitcherOpen(false); setMenuOpen(false); window.scrollTo({ top: 0 }); };
   const nameOf = (id) => V2[id]?.name || HOLD[id.toUpperCase()]?.name || id;
+
+  // Bloomberg IA (Brookfield only for now): home = header + snapshot + moves +
+  // overview; sections live in a top-bar dropdown, each opening its own page.
+  // Other companies keep the bento-grid landing until roll-out.
+  const isBloomberg = cid === 'brookfield';
+  const openSection = (i) => { setDeepIdx(i); setMenuOpen(false); window.scrollTo({ top: 0 }); };
 
   if (!data) return <div style={{ padding: 64, color: C.inkSoft }}>Нет мигрированных холдингов.</div>;
 
@@ -442,6 +449,53 @@ export default function HoldingsV2() {
               </>
             )}
           </div>
+          {/* Sections menu (Bloomberg IA) — dropdown listing all section pages */}
+          {isBloomberg && (
+            <div style={{ position: 'relative' }}>
+              <button onClick={() => setMenuOpen(!menuOpen)} style={{ display: 'flex', alignItems: 'center', gap: 8, background: menuOpen ? C.cardAlt : C.card, border: `1px solid ${menuOpen ? C.teal : C.line}`, borderRadius: 9, padding: '9px 13px', cursor: 'pointer', color: C.ink, fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 500 }}>
+                <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 3 }}>
+                  {[0, 1, 2].map((i) => <span key={i} style={{ width: 13, height: 1.5, background: C.inkSoft, borderRadius: 1 }} />)}
+                </span>
+                <span style={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {deepIdx != null ? data.sections[deepIdx].title : 'Разделы'}
+                </span>
+                <span style={{ color: C.inkSoft, fontSize: 9, transform: menuOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▼</span>
+              </button>
+              {menuOpen && (
+                <>
+                  <div onClick={() => setMenuOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 40 }} />
+                  <div style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, zIndex: 50, minWidth: 300, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, boxShadow: '0 12px 40px rgba(0,0,0,.45)', padding: 6, maxHeight: '76vh', overflowY: 'auto' }}>
+                    {/* Home */}
+                    <button onClick={() => { setDeepIdx(null); setMenuOpen(false); window.scrollTo({ top: 0 }); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, background: deepIdx == null ? C.cardAlt : 'transparent', border: 'none', borderRadius: 7, padding: '9px 10px', cursor: 'pointer', textAlign: 'left' }}>
+                      <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: C.inkSoft, width: 22 }}>⌂</span>
+                      <span style={{ fontSize: 13, fontWeight: deepIdx == null ? 600 : 500, color: C.ink }}>Обзор</span>
+                      {deepIdx == null && <span style={{ marginLeft: 'auto', color: C.teal, fontSize: 12 }}>✓</span>}
+                    </button>
+                    {/* Sections, grouped by tier */}
+                    {TIERS.map((tier) => {
+                      const secs = data.sections.map((s, i) => ({ s, i })).filter(({ s }) => s.tier === tier.id);
+                      if (!secs.length) return null;
+                      return (
+                        <div key={tier.id} style={{ borderTop: `1px solid ${C.lineSoft}`, marginTop: 5, paddingTop: 5 }}>
+                          <div style={{ fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: tier.color, padding: '5px 10px 4px' }}>{tier.label}</div>
+                          {secs.map(({ s, i }) => {
+                            const on = deepIdx === i;
+                            return (
+                              <button key={s.id} onClick={() => openSection(i)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, background: on ? C.cardAlt : 'transparent', border: 'none', borderRadius: 7, padding: '8px 10px', cursor: 'pointer', textAlign: 'left' }}>
+                                <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: on ? tier.color : C.inkFaint, width: 22 }}>{s.n}</span>
+                                <span style={{ fontSize: 13, fontWeight: on ? 600 : 500, color: C.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.title}</span>
+                                {on && <span style={{ marginLeft: 'auto', color: tier.color, fontSize: 12 }}>✓</span>}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
           {/* section dots — jump-to nav that also indicates position */}
           {deepIdx != null && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 'auto' }}>
@@ -509,8 +563,9 @@ export default function HoldingsV2() {
           {/* Overview — hero KPIs + preview charts */}
           {data.overview && <div style={{ marginBottom: 24 }}><OverviewBlock overview={data.overview} /></div>}
 
-          {/* Bento grid — 13 section tiles of varying size */}
-          <div className="bento">
+          {/* Bento grid — 13 section tiles of varying size.
+              Bloomberg IA companies don't render it: sections live in the top-bar menu. */}
+          {!isBloomberg && <div className="bento">
             {data.sections.map((sec) => {
               const cfg = bentoLayout[sec.id] || { span: 'col-span-1', accent: C.teal, preview: 'number' };
               if (cfg.span === 'hidden') return null;
@@ -539,7 +594,7 @@ export default function HoldingsV2() {
                 </div>
               );
             })}
-          </div>
+          </div>}
 
         </main>
       )}
