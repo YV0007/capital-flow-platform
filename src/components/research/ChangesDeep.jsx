@@ -19,7 +19,7 @@ function Sankey({ sankey }) {
   const [hover, setHover] = useState(null); // flow index
 
   const layout = useMemo(() => {
-    const W = 1200, H = 720, gap = 22, barW = 10, labelPad = 240;
+    const W = 1500, H = 720, gap = 22, barW = 10, labelPad = 330;
     const leftX = labelPad, rightX = W - labelPad - barW;
 
     const norm = (nodes) => {
@@ -51,8 +51,23 @@ function Sankey({ sankey }) {
       s.used += sH; d.used += dH;
       const thickness = Math.max(sH, dH);
       const midX = (leftX + barW + rightX) / 2;
-      const path = `M${leftX + barW} ${y0} C${midX} ${y0}, ${midX} ${y1}, ${rightX} ${y1}`;
-      return { ...f, i, path, thickness, color: s.color, y0, y1 };
+      const x0 = leftX + barW, x1 = rightX;
+      const path = `M${x0} ${y0} C${midX} ${y0}, ${midX} ${y1}, ${x1} ${y1}`;
+      // direction chevrons along the bezier — count scales with flow thickness
+      // so thin flows stay clean (cubic: P0=(x0,y0) P1=(midX,y0) P2=(midX,y1) P3=(x1,y1))
+      const bez = (t) => {
+        const u = 1 - t;
+        const x = u * u * u * x0 + 3 * u * u * t * midX + 3 * u * t * t * midX + t * t * t * x1;
+        const y = u * u * u * y0 + 3 * u * u * t * y0 + 3 * u * t * t * y1 + t * t * t * y1;
+        const dx = 3 * u * u * (midX - x0) + 3 * t * t * (x1 - midX);
+        const dy = 6 * u * t * (y1 - y0);
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        return { x, y, angle };
+      };
+      const ts = thickness >= 60 ? [0.32, 0.5, 0.68] : thickness >= 26 ? [0.4, 0.6] : thickness >= 12 ? [0.5] : [];
+      const arrowSize = Math.min(11, Math.max(5, thickness * 0.22));
+      const arrows = ts.map(bez);
+      return { ...f, i, path, thickness, color: s.color, y0, y1, arrows, arrowSize };
     });
 
     return { W, H, leftX, rightX, barW, labelPad, sources, dests, flows };
@@ -67,7 +82,7 @@ function Sankey({ sankey }) {
         <span>Куда</span>
       </div>
       <div style={{ position: 'relative' }}>
-        <svg viewBox={`0 0 ${layout.W} ${layout.H}`} style={{ width: '100%', height: 'auto', display: 'block' }} onMouseLeave={() => setHover(null)}>
+        <svg viewBox={`0 0 ${layout.W} ${layout.H}`} style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }} onMouseLeave={() => setHover(null)}>
           {/* flows first (behind bars) — deBridge-style: keep everything visible,
               only slightly brighten the hovered one */}
           <g>{layout.flows.map((f, i) => (
@@ -76,6 +91,14 @@ function Sankey({ sankey }) {
               style={{ transition: 'stroke-opacity .18s', cursor: 'pointer' }}
               onMouseEnter={() => setHover(i)} />
           ))}</g>
+          {/* direction chevrons — subtle, brighten with the hovered flow */}
+          <g pointerEvents="none">{layout.flows.map((f, i) => f.arrows.map((a, j) => (
+            <g key={`${i}-${j}`} transform={`translate(${a.x} ${a.y}) rotate(${a.angle})`}>
+              <path d={`M${-f.arrowSize} ${-f.arrowSize} L${f.arrowSize * 0.85} 0 L${-f.arrowSize} ${f.arrowSize}`}
+                fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                opacity={hover === i ? 0.7 : 0.28} style={{ transition: 'opacity .18s' }} />
+            </g>
+          )))}</g>
           {/* left bars */}
           <g>{layout.sources.map((s) => (
             <g key={s.id}>
@@ -101,7 +124,7 @@ function Sankey({ sankey }) {
           </div>
         )}
       </div>
-      <div style={{ marginTop: 12, fontSize: 11, color: C.inkFaint, fontStyle: 'italic' }}>Наведи курсор на поток — покажет объём и назначение. Ширина = размер потока.</div>
+      <div style={{ marginTop: 34, fontSize: 11, color: C.inkFaint, fontStyle: 'italic', textAlign: 'right' }}>Наведи курсор на поток — покажет объём и назначение. Ширина = размер потока.</div>
     </div>
   );
 }

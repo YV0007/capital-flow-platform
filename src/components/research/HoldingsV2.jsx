@@ -312,7 +312,7 @@ function RecentMoves({ items }) {
 //  L2 deep view (in-place takeover)
 // ═══════════════════════════════════════════════════════════════════════════
 
-function DeepView({ data, idx, setIdx, onBack, portfolio, financial }) {
+function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide }) {
   const secs = data.sections;
   const sec = secs[idx];
   const col = tierColor(sec.tier);
@@ -329,7 +329,7 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial }) {
   ) : <span />;
 
   return (
-    <main className="rise" style={{ padding: '36px 44px 80px', maxWidth: 880, margin: '0 auto' }}>
+    <main className="rise" style={{ padding: '36px 40px 80px', maxWidth: wide ? 'none' : 880, margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 22 }}>
         <button onClick={onBack} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: C.teal, fontSize: 13, fontFamily: 'var(--sans)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>← {data.name} · профиль</button>
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{idx + 1} / {secs.length}</span>
@@ -420,7 +420,7 @@ export default function HoldingsV2() {
 
       {/* ── Top bar (sticky): company switcher + section dots ── */}
       <div style={{ position: 'sticky', top: 0, zIndex: 50, background: C.paper + 'F2', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.line}` }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '12px 32px', display: 'flex', alignItems: 'center', gap: 18, position: 'relative' }}>
+        <div style={{ maxWidth: isBloomberg ? 'none' : 1240, margin: '0 auto', padding: '12px 40px', display: 'flex', alignItems: 'center', gap: 18, position: 'relative' }}>
           <div style={{ position: 'relative' }}>
             <button onClick={() => setSwitcherOpen(!switcherOpen)} style={{ display: 'flex', alignItems: 'center', gap: 9, background: C.card, border: `1px solid ${switcherOpen ? C.teal : C.line}`, borderRadius: 9, padding: '7px 12px', cursor: 'pointer' }}>
               <span style={{ width: 26, height: 26, borderRadius: 6, background: META[cid]?.color || C.teal, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: (META[cid]?.mono || '').length > 2 ? 9 : 11, fontWeight: 600, color: '#fff' }}>{META[cid]?.mono || '·'}</span>
@@ -464,7 +464,7 @@ export default function HoldingsV2() {
               {menuOpen && (
                 <>
                   <div onClick={() => setMenuOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 40 }} />
-                  <div style={{ position: 'absolute', top: 'calc(100% + 2px)', left: 32, right: 32, zIndex: 50, background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, boxShadow: '0 16px 56px rgba(0,0,0,.55)', padding: 18, maxHeight: '80vh', overflowY: 'auto' }}>
+                  <div style={{ position: 'absolute', top: 'calc(100% + 2px)', left: 40, right: 40, zIndex: 50, background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, boxShadow: '0 16px 56px rgba(0,0,0,.55)', padding: 18, maxHeight: '80vh', overflowY: 'auto' }}>
                     {/* Home */}
                     <button onClick={() => { setDeepIdx(null); setMenuOpen(false); window.scrollTo({ top: 0 }); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: deepIdx == null ? C.cardAlt : 'transparent', border: `1px solid ${deepIdx == null ? C.teal + '55' : 'transparent'}`, borderRadius: 8, padding: '11px 14px', cursor: 'pointer', textAlign: 'left', marginBottom: 14 }}>
                       <span style={{ fontFamily: 'var(--mono)', fontSize: 13, color: C.inkSoft }}>⌂</span>
@@ -524,9 +524,9 @@ export default function HoldingsV2() {
 
       {/* ── Body ── */}
       {deepIdx != null ? (
-        <DeepView data={data} idx={deepIdx} setIdx={setDeepIdx} onBack={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} portfolio={PORT[cid]} financial={FIN[cid]} />
+        <DeepView data={data} idx={deepIdx} setIdx={setDeepIdx} onBack={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} portfolio={PORT[cid]} financial={FIN[cid]} wide={isBloomberg} />
       ) : (
-        <main className="rise" key={cid} style={{ maxWidth: 1240, margin: '0 auto', padding: '32px 32px 80px' }}>
+        <main className="rise" key={cid} style={{ maxWidth: isBloomberg ? 'none' : 1240, margin: '0 auto', padding: '32px 40px 80px' }}>
           {/* Header — clean, no KPI strip (overview handles it) */}
           <header style={{ marginBottom: 30 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 12 }}><span>{data.type}</span><span style={{ color: C.inkFaint }}>·</span><span>{data.asOf}</span></div>
