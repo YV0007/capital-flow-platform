@@ -420,7 +420,7 @@ export default function HoldingsV2() {
 
       {/* ── Top bar (sticky): company switcher + section dots ── */}
       <div style={{ position: 'sticky', top: 0, zIndex: 50, background: C.paper + 'F2', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.line}` }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '12px 32px', display: 'flex', alignItems: 'center', gap: 18 }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '12px 32px', display: 'flex', alignItems: 'center', gap: 18, position: 'relative' }}>
           <div style={{ position: 'relative' }}>
             <button onClick={() => setSwitcherOpen(!switcherOpen)} style={{ display: 'flex', alignItems: 'center', gap: 9, background: C.card, border: `1px solid ${switcherOpen ? C.teal : C.line}`, borderRadius: 9, padding: '7px 12px', cursor: 'pointer' }}>
               <span style={{ width: 26, height: 26, borderRadius: 6, background: META[cid]?.color || C.teal, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: (META[cid]?.mono || '').length > 2 ? 9 : 11, fontWeight: 600, color: '#fff' }}>{META[cid]?.mono || '·'}</span>
@@ -449,9 +449,9 @@ export default function HoldingsV2() {
               </>
             )}
           </div>
-          {/* Sections menu (Bloomberg IA) — dropdown listing all section pages */}
+          {/* Sections menu (Bloomberg IA) — wide mega-menu anchored to the top bar */}
           {isBloomberg && (
-            <div style={{ position: 'relative' }}>
+            <div>
               <button onClick={() => setMenuOpen(!menuOpen)} style={{ display: 'flex', alignItems: 'center', gap: 8, background: menuOpen ? C.cardAlt : C.card, border: `1px solid ${menuOpen ? C.teal : C.line}`, borderRadius: 9, padding: '9px 13px', cursor: 'pointer', color: C.ink, fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 500 }}>
                 <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 3 }}>
                   {[0, 1, 2].map((i) => <span key={i} style={{ width: 13, height: 1.5, background: C.inkSoft, borderRadius: 1 }} />)}
@@ -464,33 +464,45 @@ export default function HoldingsV2() {
               {menuOpen && (
                 <>
                   <div onClick={() => setMenuOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 40 }} />
-                  <div style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, zIndex: 50, minWidth: 300, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, boxShadow: '0 12px 40px rgba(0,0,0,.45)', padding: 6, maxHeight: '76vh', overflowY: 'auto' }}>
+                  <div style={{ position: 'absolute', top: 'calc(100% + 2px)', left: 32, right: 32, zIndex: 50, background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, boxShadow: '0 16px 56px rgba(0,0,0,.55)', padding: 18, maxHeight: '80vh', overflowY: 'auto' }}>
                     {/* Home */}
-                    <button onClick={() => { setDeepIdx(null); setMenuOpen(false); window.scrollTo({ top: 0 }); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, background: deepIdx == null ? C.cardAlt : 'transparent', border: 'none', borderRadius: 7, padding: '9px 10px', cursor: 'pointer', textAlign: 'left' }}>
-                      <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: C.inkSoft, width: 22 }}>⌂</span>
-                      <span style={{ fontSize: 13, fontWeight: deepIdx == null ? 600 : 500, color: C.ink }}>Обзор</span>
-                      {deepIdx == null && <span style={{ marginLeft: 'auto', color: C.teal, fontSize: 12 }}>✓</span>}
+                    <button onClick={() => { setDeepIdx(null); setMenuOpen(false); window.scrollTo({ top: 0 }); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: deepIdx == null ? C.cardAlt : 'transparent', border: `1px solid ${deepIdx == null ? C.teal + '55' : 'transparent'}`, borderRadius: 8, padding: '11px 14px', cursor: 'pointer', textAlign: 'left', marginBottom: 14 }}>
+                      <span style={{ fontFamily: 'var(--mono)', fontSize: 13, color: C.inkSoft }}>⌂</span>
+                      <span style={{ fontSize: 14.5, fontWeight: deepIdx == null ? 600 : 500, color: C.ink }}>Обзор</span>
+                      <span style={{ fontSize: 11.5, color: C.inkFaint }}>— главная страница компании: снимок бизнеса и ключевые ходы</span>
+                      {deepIdx == null && <span style={{ marginLeft: 'auto', color: C.teal, fontSize: 13 }}>✓</span>}
                     </button>
-                    {/* Sections, grouped by tier */}
-                    {TIERS.map((tier) => {
-                      const secs = data.sections.map((s, i) => ({ s, i })).filter(({ s }) => s.tier === tier.id);
-                      if (!secs.length) return null;
-                      return (
-                        <div key={tier.id} style={{ borderTop: `1px solid ${C.lineSoft}`, marginTop: 5, paddingTop: 5 }}>
-                          <div style={{ fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: tier.color, padding: '5px 10px 4px' }}>{tier.label}</div>
-                          {secs.map(({ s, i }) => {
-                            const on = deepIdx === i;
-                            return (
-                              <button key={s.id} onClick={() => openSection(i)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, background: on ? C.cardAlt : 'transparent', border: 'none', borderRadius: 7, padding: '8px 10px', cursor: 'pointer', textAlign: 'left' }}>
-                                <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: on ? tier.color : C.inkFaint, width: 22 }}>{s.n}</span>
-                                <span style={{ fontSize: 13, fontWeight: on ? 600 : 500, color: C.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.title}</span>
-                                {on && <span style={{ marginLeft: 'auto', color: tier.color, fontSize: 12 }}>✓</span>}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      );
-                    })}
+                    {/* Sections — 4 tier columns, wide mega-menu */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 18 }}>
+                      {TIERS.map((tier) => {
+                        const secs = data.sections.map((s, i) => ({ s, i })).filter(({ s }) => s.tier === tier.id);
+                        if (!secs.length) return null;
+                        return (
+                          <div key={tier.id} style={{ borderTop: `2px solid ${tier.color}`, paddingTop: 10 }}>
+                            <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: tier.color, padding: '0 4px 8px', lineHeight: 1.4 }}>{tier.label}</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                              {secs.map(({ s, i }) => {
+                                const on = deepIdx === i;
+                                return (
+                                  <button key={s.id} onClick={() => openSection(i)} className="navlink" style={{ width: '100%', display: 'flex', alignItems: 'flex-start', gap: 10, background: on ? C.cardAlt : 'transparent', border: 'none', borderRadius: 8, padding: '10px 8px', cursor: 'pointer', textAlign: 'left' }}
+                                    onMouseEnter={(e) => { if (!on) e.currentTarget.style.background = C.cardAlt; }}
+                                    onMouseLeave={(e) => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
+                                    <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: on ? tier.color : C.inkFaint, width: 24, flexShrink: 0, paddingTop: 2 }}>{s.n}</span>
+                                    <span style={{ flex: 1, minWidth: 0 }}>
+                                      <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                                        <span style={{ fontSize: 14.5, fontWeight: on ? 600 : 500, color: C.ink, lineHeight: 1.3 }}>{s.title}</span>
+                                        {on && <span style={{ color: tier.color, fontSize: 12 }}>✓</span>}
+                                      </span>
+                                      {s.sub && <span style={{ display: 'block', fontSize: 11.5, color: C.inkFaint, lineHeight: 1.45, marginTop: 3 }}>{s.sub}</span>}
+                                    </span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </>
               )}
