@@ -309,6 +309,44 @@ function RecentMoves({ items }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+//  News block — recent news / insider moves / corporate events, 2-col grid
+// ═══════════════════════════════════════════════════════════════════════════
+
+const NEWS_META = {
+  news:         { label: 'Новость',   glyph: '✦', color: C.teal },
+  insider:      { label: 'Инсайдеры', glyph: '↓', color: C.clay },
+  announcement: { label: 'Анонс',     glyph: '◎', color: C.blue },
+  dividend:     { label: 'Дивиденд',  glyph: '$', color: C.gold },
+};
+
+function NewsBlock({ items }) {
+  return (
+    <div style={{ marginBottom: 24 }}>
+      <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 12 }}>Новости и события</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: 14 }}>
+        {items.map((n, i) => {
+          const m = NEWS_META[n.type] || NEWS_META.news;
+          return (
+            <div key={i} style={{ display: 'flex', gap: 14, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px' }}>
+              <div style={{ width: 40, height: 40, flexShrink: 0, borderRadius: 20, background: m.color + '1A', border: `1px solid ${m.color}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--mono)', fontSize: 15, color: m.color }}>{m.glyph}</div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: 11, color: C.inkFaint, marginBottom: 4 }}>
+                  <span style={{ color: m.color }}>{m.label}</span>
+                  <span style={{ margin: '0 6px' }}>·</span>
+                  <span style={{ fontFamily: 'var(--mono)' }}>{n.date}</span>
+                </div>
+                <div style={{ fontFamily: 'var(--serif)', fontSize: 16.5, fontWeight: 500, color: C.ink, lineHeight: 1.3, marginBottom: 6 }}>{n.title}</div>
+                <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{n.text}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 //  L2 deep view (in-place takeover)
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -574,6 +612,9 @@ export default function HoldingsV2() {
 
           {/* Overview — hero KPIs + preview charts */}
           {data.overview && <div style={{ marginBottom: 24 }}><OverviewBlock overview={data.overview} /></div>}
+
+          {/* News & events — recent headlines, insider moves, dividends */}
+          {data.news && data.news.length > 0 && <NewsBlock items={data.news} />}
 
           {/* Bento grid — 13 section tiles of varying size.
               Bloomberg IA companies don't render it: sections live in the top-bar menu. */}
