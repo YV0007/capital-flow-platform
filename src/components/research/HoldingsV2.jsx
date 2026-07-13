@@ -367,7 +367,7 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide }) {
   ) : <span />;
 
   return (
-    <main className="rise" style={{ padding: '36px 40px 80px', maxWidth: wide ? 'none' : 880, margin: '0 auto' }}>
+    <main className="rise" style={{ padding: '36px 40px 80px', maxWidth: wide ? (sec.id === 'changes' ? 'none' : 1080) : 880, margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 22 }}>
         <button onClick={onBack} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: C.teal, fontSize: 13, fontFamily: 'var(--sans)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>← {data.name} · профиль</button>
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{idx + 1} / {secs.length}</span>
@@ -564,7 +564,7 @@ export default function HoldingsV2() {
       {deepIdx != null ? (
         <DeepView data={data} idx={deepIdx} setIdx={setDeepIdx} onBack={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} portfolio={PORT[cid]} financial={FIN[cid]} wide={isBloomberg} />
       ) : (
-        <main className="rise" key={cid} style={{ maxWidth: isBloomberg ? 'none' : 1240, margin: '0 auto', padding: '32px 40px 80px' }}>
+        <main className="rise" key={cid} style={{ maxWidth: 1240, margin: '0 auto', padding: '32px 40px 80px' }}>
           {/* Header — clean, no KPI strip (overview handles it) */}
           <header style={{ marginBottom: 30 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 12 }}><span>{data.type}</span><span style={{ color: C.inkFaint }}>·</span><span>{data.asOf}</span></div>

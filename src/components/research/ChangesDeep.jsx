@@ -53,21 +53,7 @@ function Sankey({ sankey }) {
       const midX = (leftX + barW + rightX) / 2;
       const x0 = leftX + barW, x1 = rightX;
       const path = `M${x0} ${y0} C${midX} ${y0}, ${midX} ${y1}, ${x1} ${y1}`;
-      // direction chevrons along the bezier — count scales with flow thickness
-      // so thin flows stay clean (cubic: P0=(x0,y0) P1=(midX,y0) P2=(midX,y1) P3=(x1,y1))
-      const bez = (t) => {
-        const u = 1 - t;
-        const x = u * u * u * x0 + 3 * u * u * t * midX + 3 * u * t * t * midX + t * t * t * x1;
-        const y = u * u * u * y0 + 3 * u * u * t * y0 + 3 * u * t * t * y1 + t * t * t * y1;
-        const dx = 3 * u * u * (midX - x0) + 3 * t * t * (x1 - midX);
-        const dy = 6 * u * t * (y1 - y0);
-        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-        return { x, y, angle };
-      };
-      const ts = thickness >= 60 ? [0.32, 0.5, 0.68] : thickness >= 26 ? [0.4, 0.6] : thickness >= 12 ? [0.5] : [];
-      const arrowSize = Math.min(11, Math.max(5, thickness * 0.22));
-      const arrows = ts.map(bez);
-      return { ...f, i, path, thickness, color: s.color, y0, y1, arrows, arrowSize };
+      return { ...f, i, path, thickness, color: s.color, y0, y1 };
     });
 
     return { W, H, leftX, rightX, barW, labelPad, sources, dests, flows };
@@ -77,6 +63,7 @@ function Sankey({ sankey }) {
 
   return (
     <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, padding: '16px 18px' }}>
+      <style>{`@keyframes flowwave{to{stroke-dashoffset:-24;}} .flowwave{animation:flowwave 2.2s linear infinite;}`}</style>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 6, fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint }}>
         <span>Откуда</span>
         <span>Куда</span>
@@ -91,14 +78,14 @@ function Sankey({ sankey }) {
               style={{ transition: 'stroke-opacity .18s', cursor: 'pointer' }}
               onMouseEnter={() => setHover(i)} />
           ))}</g>
-          {/* direction chevrons — subtle, brighten with the hovered flow */}
-          <g pointerEvents="none">{layout.flows.map((f, i) => f.arrows.map((a, j) => (
-            <g key={`${i}-${j}`} transform={`translate(${a.x} ${a.y}) rotate(${a.angle})`}>
-              <path d={`M${-f.arrowSize} ${-f.arrowSize} L${f.arrowSize * 0.85} 0 L${-f.arrowSize} ${f.arrowSize}`}
-                fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                opacity={hover === i ? 0.7 : 0.28} style={{ transition: 'opacity .18s' }} />
-            </g>
-          )))}</g>
+          {/* direction — soft wave dashes drifting along each stream centreline */}
+          <g pointerEvents="none">{layout.flows.map((f, i) => (
+            <path key={i} d={f.path} fill="none" stroke="#fff" className="flowwave"
+              strokeWidth={Math.min(2.2, Math.max(1.2, f.thickness * 0.05))}
+              strokeOpacity={hover === i ? 0.4 : 0.14}
+              strokeDasharray="4 20" strokeLinecap="round"
+              style={{ transition: 'stroke-opacity .18s' }} />
+          ))}</g>
           {/* left bars */}
           <g>{layout.sources.map((s) => (
             <g key={s.id}>
@@ -204,9 +191,9 @@ export default function ChangesDeep({ data }) {
 
   return (
     <div>
-      {/* Stats strip */}
+      {/* Stats strip — reading column; only the Sankey goes full-width */}
       {cd.stats && cd.stats.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(180px, 1fr))`, gap: 1, background: C.line, border: `1px solid ${C.line}`, borderRadius: 10, marginBottom: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(180px, 1fr))`, gap: 1, background: C.line, border: `1px solid ${C.line}`, borderRadius: 10, margin: '0 auto 20px', maxWidth: 1080 }}>
           {cd.stats.map((s, i) => (
             <div key={i} style={{ background: C.card, padding: '14px 16px' }}>
               <div style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 6 }}>{s.label}</div>
@@ -230,8 +217,8 @@ export default function ChangesDeep({ data }) {
         </div>
       )}
 
-      {/* Timeline: past + pipeline merged */}
-      <div>
+      {/* Timeline: past + pipeline merged — reading column for readability */}
+      <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
           <div style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: C.ink, letterSpacing: '-.01em' }}>Ключевые ходы</div>
           <div style={{ fontSize: 12, color: C.inkFaint }}>красный кружок = крупная сделка</div>
