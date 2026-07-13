@@ -262,6 +262,53 @@ function OverviewBlock({ overview }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+//  Recent moves — compact table, each row expands to a brief strategic read
+// ═══════════════════════════════════════════════════════════════════════════
+
+function RecentMoves({ items }) {
+  const [open, setOpen] = useState(null);
+  return (
+    <div style={{ marginBottom: 22, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px' }}>
+      <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>Ключевые ходы (12 мес) · клик — зачем это</div>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        {items.map((m, i) => {
+          const has = !!(m.detail || m.signal);
+          const isOpen = open === i;
+          return (
+            <div key={i} style={{ borderTop: i ? `1px solid ${C.lineSoft}` : 'none' }}>
+              <div onClick={() => has && setOpen(isOpen ? null : i)} style={{ display: 'grid', gridTemplateColumns: '68px 78px 1fr 132px 14px', gap: 12, alignItems: 'baseline', padding: '9px 0', fontSize: 12.5, cursor: has ? 'pointer' : 'default' }}>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{m.date}</div>
+                <div style={{ fontSize: 9.5, padding: '2px 7px', borderRadius: 10, background: C.line, color: C.inkSoft, letterSpacing: '.06em', fontWeight: 600, textAlign: 'center', justifySelf: 'start' }}>{m.type.toUpperCase()}</div>
+                <div style={{ color: C.ink, display: 'flex', gap: 7, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <span>{m.title}</span>
+                  {m.ai && <span style={{ fontSize: 8.5, padding: '1px 6px', borderRadius: 8, background: C.violet + '22', color: C.violet, border: `1px solid ${C.violet}55`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
+                </div>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.inkSoft, textAlign: 'right' }}>{m.value}</div>
+                <div style={{ textAlign: 'right', color: C.inkFaint, fontSize: 11 }}>{has ? (isOpen ? '▾' : '▸') : ''}</div>
+              </div>
+              {isOpen && has && (
+                <div style={{ padding: '2px 0 14px', display: 'grid', gridTemplateColumns: '146px 1fr', gap: 12 }}>
+                  <div />
+                  <div style={{ background: C.cardAlt, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '12px 14px' }}>
+                    {m.detail && <div style={{ fontSize: 13, color: C.ink, lineHeight: 1.6, marginBottom: m.signal ? 10 : 0 }}>{m.detail}</div>}
+                    {m.signal && (
+                      <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>
+                        <span style={{ fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: C.teal, fontWeight: 600, marginRight: 8 }}>Стратегический смысл</span>
+                        {m.signal}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 //  L2 deep view (in-place takeover)
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -456,25 +503,8 @@ export default function HoldingsV2() {
             </div>
           )}
 
-          {/* Recent moves — compact table row style, no prose */}
-          {data.recentMoves && data.recentMoves.length > 0 && (
-            <div style={{ marginBottom: 22, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px' }}>
-              <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>Ключевые ходы (LTM)</div>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {data.recentMoves.map((m, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '68px 78px 1fr 130px', gap: 12, alignItems: 'baseline', padding: '8px 0', borderTop: i ? `1px solid ${C.lineSoft}` : 'none', fontSize: 12.5 }}>
-                    <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{m.date}</div>
-                    <div style={{ fontSize: 9.5, padding: '2px 7px', borderRadius: 10, background: C.line, color: C.inkSoft, letterSpacing: '.06em', fontWeight: 600, textAlign: 'center', justifySelf: 'start' }}>{m.type.toUpperCase()}</div>
-                    <div style={{ color: C.ink, display: 'flex', gap: 7, alignItems: 'center', flexWrap: 'wrap' }}>
-                      <span>{m.title}</span>
-                      {m.ai && <span style={{ fontSize: 8.5, padding: '1px 6px', borderRadius: 8, background: C.violet + '22', color: C.violet, border: `1px solid ${C.violet}55`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
-                    </div>
-                    <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.inkSoft, textAlign: 'right' }}>{m.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Recent moves — compact table; each row expands to a brief strategic read */}
+          {data.recentMoves && data.recentMoves.length > 0 && <RecentMoves items={data.recentMoves} />}
 
           {/* Overview — hero KPIs + preview charts */}
           {data.overview && <div style={{ marginBottom: 24 }}><OverviewBlock overview={data.overview} /></div>}
