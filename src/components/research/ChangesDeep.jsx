@@ -144,8 +144,10 @@ const TYPE_META = {
 };
 
 function TimelineItem({ ev, forward }) {
+  const [open, setOpen] = useState(false);
   const t = TYPE_META[ev.type] || { label: ev.type, color: C.inkSoft };
   const isHigh = ev.importance === 'high';
+  const det = ev.detail && typeof ev.detail === 'object' ? ev.detail : null;
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: 20, position: 'relative', paddingLeft: 12 }}>
       {/* rail dot */}
@@ -154,17 +156,41 @@ function TimelineItem({ ev, forward }) {
         <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{ev.date}</div>
         <div style={{ marginTop: 6, fontSize: 9.5, padding: '2px 8px', borderRadius: 10, background: t.color + '22', color: t.color, border: `1px solid ${t.color}55`, fontWeight: 600, letterSpacing: '.06em', display: 'inline-block' }}>{t.label.toUpperCase()}</div>
       </div>
-      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderLeft: `3px solid ${isHigh ? t.color : C.line}`, borderRadius: 10, padding: '14px 16px', marginBottom: 12 }}>
+      <div onClick={() => det && setOpen(!open)}
+        style={{ background: C.card, border: `1px solid ${open ? t.color + '66' : C.line}`, borderLeft: `3px solid ${isHigh ? t.color : C.line}`, borderRadius: 10, padding: '14px 16px', marginBottom: 12, cursor: det ? 'pointer' : 'default', transition: 'border-color .18s' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginBottom: 6 }}>
           <span style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, flex: 1, lineHeight: 1.3 }}>{ev.title}</span>
           {ev.ai && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: C.violet + '22', color: C.violet, border: `1px solid ${C.violet}55`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
           {forward && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: C.clay + '22', color: C.clay, border: `1px solid ${C.clay}55`, fontWeight: 600, letterSpacing: '.06em' }}>ОБЪЯВЛЕНО</span>}
+          {det && <span style={{ fontSize: 11, color: open ? t.color : C.inkFaint, whiteSpace: 'nowrap' }}>{open ? '▾ свернуть' : '▸ подробнее'}</span>}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 20px', marginBottom: 10, fontSize: 12 }}>
           {ev.value && <span><span style={{ color: C.inkFaint }}>Сумма: </span><span style={{ fontFamily: 'var(--mono)', color: C.ink, fontWeight: 500 }}>{ev.value}</span></span>}
           {ev.counterparty && ev.counterparty !== '—' && <span><span style={{ color: C.inkFaint }}>Контрагент: </span><span style={{ color: C.ink }}>{ev.counterparty}</span></span>}
         </div>
         {ev.why && <div style={{ fontSize: 13, color: C.inkSoft, lineHeight: 1.6, marginBottom: 6 }}>{ev.why}</div>}
+        {/* Expanded detail — what it actually is + numbers + strategic read */}
+        {open && det && (
+          <div style={{ margin: '12px 0 10px', paddingTop: 12, borderTop: `1px solid ${C.lineSoft}` }}>
+            {det.what && <div style={{ fontSize: 13.5, color: C.ink, lineHeight: 1.65, marginBottom: det.facts?.length || det.read ? 12 : 0 }}>{det.what}</div>}
+            {det.facts && det.facts.length > 0 && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 1, background: C.line, border: `1px solid ${C.line}`, borderRadius: 8, overflow: 'hidden', marginBottom: det.read ? 12 : 0 }}>
+                {det.facts.map((f, i) => (
+                  <div key={i} style={{ background: C.cardAlt, padding: '9px 12px' }}>
+                    <div style={{ fontSize: 9.5, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 4 }}>{f.k}</div>
+                    <div style={{ fontFamily: 'var(--mono)', fontSize: 13, color: C.ink, lineHeight: 1.35 }}>{f.v}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {det.read && (
+              <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.6, borderLeft: `3px solid ${t.color}`, paddingLeft: 12 }}>
+                <span style={{ fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: t.color, fontWeight: 600, marginRight: 8 }}>Стратегический смысл</span>
+                {det.read}
+              </div>
+            )}
+          </div>
+        )}
         {ev.source && <div style={{ fontSize: 10.5, color: C.inkFaint, fontStyle: 'italic' }}>Источник: {ev.source}</div>}
       </div>
     </div>
