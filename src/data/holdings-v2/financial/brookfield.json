@@ -11,19 +11,29 @@
  },
  "returns": [
   {
-   "period": "1Y",
+   "period": "YTD 2026",
+   "stock": -18.4,
+   "sp500": 4.2
+  },
+  {
+   "period": "1 год",
    "stock": 2.56,
    "sp500": 19.91
   },
   {
-   "period": "3Y",
+   "period": "3 года",
    "stock": 94.59,
    "sp500": 69.11
   },
   {
-   "period": "5Y",
+   "period": "5 лет",
    "stock": 49.58,
    "sp500": 73.23
+  },
+  {
+   "period": "10 лет",
+   "stock": 118.4,
+   "sp500": 216.0
   }
  ],
  "years": [

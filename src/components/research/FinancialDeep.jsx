@@ -16,22 +16,67 @@ const fmtNum = (val, fmt) => {
 };
 const isNeg = (v) => typeof v === 'number' && v < 0;
 
-function MiniChart({ pts, color }) {
+function MiniChart({ pts, color, unit }) {
+  const [hover, setHover] = useState(null);
   const clean = pts.filter((p) => p.val != null);
   if (clean.length < 2) return null;
   const vals = clean.map((p) => p.val);
   const min = Math.min(...vals), max = Math.max(...vals);
-  const W = 560, H = 170, pad = 10;
-  const x = (i) => pad + (i * (W - 2 * pad)) / (clean.length - 1);
-  const y = (v) => H - pad - ((v - min) / (max - min || 1)) * (H - 2 * pad);
+  const W = 560, H = 200, padL = 46, padR = 12, padT = 10, padB = 26;
+  const innerW = W - padL - padR, innerH = H - padT - padB;
+  const x = (i) => padL + (i * innerW) / (clean.length - 1);
+  const y = (v) => padT + innerH - ((v - min) / (max - min || 1)) * innerH;
   const line = clean.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(p.val).toFixed(1)}`).join(' ');
-  const area = `${line} L${x(clean.length - 1).toFixed(1)} ${H - pad} L${x(0).toFixed(1)} ${H - pad} Z`;
+  const area = `${line} L${x(clean.length - 1).toFixed(1)} ${padT + innerH} L${x(0).toFixed(1)} ${padT + innerH} Z`;
+
+  // Y-axis ticks — 4 evenly spaced gridlines
+  const niceStep = (r) => { const p = Math.pow(10, Math.floor(Math.log10(r || 1))); const n = r / p; return (n < 1.5 ? 1 : n < 3 ? 2 : n < 7 ? 5 : 10) * p; };
+  const step = niceStep((max - min) / 3) || 1;
+  const yTicks = []; for (let v = Math.floor(min / step) * step; v <= max + 0.001; v += step) yTicks.push(v);
+  const fmtY = (v) => Math.abs(v) >= 1000 ? `${(v / 1000).toFixed(1)}k` : v >= 100 ? Math.round(v).toString() : v.toFixed(unit === 'pct' ? 0 : (v >= 10 ? 1 : 2));
+
+  // X-axis: first + last + midpoints to reduce clutter
+  const xTicks = clean.length <= 6 ? clean.map((_, i) => i) : [0, Math.floor(clean.length / 3), Math.floor((2 * clean.length) / 3), clean.length - 1];
+
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto', display: 'block' }} preserveAspectRatio="none">
-      <path d={area} fill={color + '14'} />
-      <path d={line} fill="none" stroke={color} strokeWidth="2" />
-      {clean.map((p, i) => <circle key={i} cx={x(i)} cy={y(p.val)} r="2" fill={color} />)}
-    </svg>
+    <div style={{ position: 'relative' }}>
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto', display: 'block' }} preserveAspectRatio="xMidYMid meet"
+        onMouseLeave={() => setHover(null)}
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const px = ((e.clientX - rect.left) / rect.width) * W;
+          const i = Math.round(((px - padL) / innerW) * (clean.length - 1));
+          setHover(Math.max(0, Math.min(clean.length - 1, i)));
+        }}>
+        {/* horizontal gridlines + Y labels */}
+        {yTicks.map((v, i) => (
+          <g key={i}>
+            <line x1={padL} y1={y(v)} x2={W - padR} y2={y(v)} stroke={C.line} strokeWidth="0.7" strokeDasharray="2 4" />
+            <text x={padL - 6} y={y(v) + 3} textAnchor="end" fontSize="9.5" fill={C.inkFaint} fontFamily="var(--mono)">{fmtY(v)}{unit === 'pct' ? '%' : ''}</text>
+          </g>
+        ))}
+        <path d={area} fill={color + '14'} />
+        <path d={line} fill="none" stroke={color} strokeWidth="2" />
+        {clean.map((p, i) => <circle key={i} cx={x(i)} cy={y(p.val)} r="2" fill={color} />)}
+        {/* X-axis labels */}
+        {xTicks.map((i) => (
+          <text key={i} x={x(i)} y={H - 6} textAnchor={i === 0 ? 'start' : i === clean.length - 1 ? 'end' : 'middle'} fontSize="10" fill={C.inkFaint} fontFamily="var(--mono)">{clean[i].year}</text>
+        ))}
+        {/* hover crosshair + point */}
+        {hover != null && (
+          <g pointerEvents="none">
+            <line x1={x(hover)} y1={padT} x2={x(hover)} y2={padT + innerH} stroke={C.inkSoft} strokeWidth="1" strokeDasharray="3 3" opacity="0.5" />
+            <circle cx={x(hover)} cy={y(clean[hover].val)} r="5" fill={color} stroke={C.paper} strokeWidth="2" />
+          </g>
+        )}
+      </svg>
+      {hover != null && (
+        <div style={{ position: 'absolute', top: 6, left: (x(hover) / W) * 100 > 50 ? 'auto' : `${Math.max(6, (x(hover) / W) * 100 - 8)}%`, right: (x(hover) / W) * 100 > 50 ? `${100 - Math.min(94, (x(hover) / W) * 100 + 8)}%` : 'auto', background: '#000', border: `1px solid ${color}`, borderRadius: 6, padding: '6px 10px', fontSize: 11.5, color: '#fff', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 10, color: C.inkSoft, marginBottom: 2 }}>{clean[hover].year}</div>
+          <div style={{ fontFamily: 'var(--mono)', fontWeight: 500 }}>{fmtY(clean[hover].val)}{unit === 'pct' ? '%' : ''}</div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -95,10 +140,7 @@ export default function FinancialDeep({ data }) {
               return <button key={o.key} onClick={() => setChartKey(o.key)} style={{ fontSize: 11, fontWeight: on ? 600 : 400, padding: '4px 10px', borderRadius: 13, border: `1px solid ${on ? C.teal : C.line}`, background: on ? C.teal + '18' : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{o.label}</button>;
             })}
           </div>
-          <MiniChart pts={chartPts} color={C.teal} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 10.5, color: C.inkFaint, marginTop: 2 }}>
-            <span>{chartPts[0] && chartPts[0].year}</span><span>{chartPts[chartPts.length - 1] && chartPts[chartPts.length - 1].year}</span>
-          </div>
+          <MiniChart pts={chartPts} color={C.teal} unit={chartRowObj?.fmt} />
         </div>
 
         <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px' }}>

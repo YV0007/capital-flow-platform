@@ -546,16 +546,9 @@ export default function HoldingsV2() {
               )}
             </div>
           )}
-          {/* section dots — jump-to nav that also indicates position */}
+          {/* «Назад к обзору» — компактная кнопка справа при заходе внутрь секции */}
           {deepIdx != null && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 'auto' }}>
-              {data.sections.map((sec, i) => {
-                const on = deepIdx === i;
-                const tierCol = (TIERS.find((t) => t.id === sec.tier) || {}).color || C.teal;
-                return <button key={sec.id} title={sec.title} onClick={() => setDeepIdx(i)} style={{ width: on ? 22 : 8, height: 8, borderRadius: 4, border: 'none', background: on ? tierCol : C.line, cursor: 'pointer', transition: 'width .2s, background .2s', padding: 0 }} />;
-              })}
-              <button onClick={() => setDeepIdx(null)} style={{ marginLeft: 10, fontSize: 12, color: C.teal, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>← к обзору</button>
-            </div>
+            <button onClick={() => setDeepIdx(null)} style={{ marginLeft: 'auto', fontSize: 12.5, color: C.teal, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>← к обзору</button>
           )}
         </div>
       </div>

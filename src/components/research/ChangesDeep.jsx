@@ -22,29 +22,39 @@ function Sankey({ sankey }) {
     const W = 1500, H = 720, gap = 22, barW = 10, labelPad = 330;
     const leftX = labelPad, rightX = W - labelPad - barW;
 
-    const norm = (nodes) => {
-      const total = nodes.reduce((s, n) => s + n.value, 0);
-      const usable = H - gap * (nodes.length - 1);
-      // min-height clamp can push the sum past the canvas — rescale so the
-      // column always fits inside H (waves used to bleed out of the card)
-      let hs = nodes.map((n) => Math.max(48, (n.value / total) * usable));
-      const sum = hs.reduce((a, b) => a + b, 0);
-      if (sum > usable) hs = hs.map((h) => (h / sum) * usable);
-      let y = 0;
-      return nodes.map((n, i) => {
-        const rec = { ...n, y, h: hs[i] };
-        y += hs[i] + gap;
+    // Node height = sum of connected flows (not the declared value), so bars
+    // always match the ribbons that meet them. Both columns share one scale so
+    // left and right totals align vertically. min-height clamp is removed —
+    // we rescale to the tallest column so all bars fit inside H.
+    const flowSum = { src: {}, dst: {} };
+    sankey.sources.forEach((s) => { flowSum.src[s.id] = 0; });
+    sankey.destinations.forEach((n) => { flowSum.dst[n.id] = 0; });
+    sankey.flows.forEach((f) => { flowSum.src[f.from] += f.value; flowSum.dst[f.to] += f.value; });
+
+    const totalSrc = Object.values(flowSum.src).reduce((a, b) => a + b, 0);
+    const totalDst = Object.values(flowSum.dst).reduce((a, b) => a + b, 0);
+    const nRowsMax = Math.max(sankey.sources.length, sankey.destinations.length);
+    const usable = H - gap * (nRowsMax - 1);
+    const scale = usable / Math.max(totalSrc, totalDst);
+
+    const layoutCol = (nodes, sumMap) => {
+      // vertically center the column when one side has fewer flows
+      const totalH = nodes.reduce((a, n) => a + sumMap[n.id] * scale, 0) + gap * (nodes.length - 1);
+      let y = (H - totalH) / 2;
+      return nodes.map((n) => {
+        const h = sumMap[n.id] * scale;
+        const rec = { ...n, y, h };
+        y += h + gap;
         return rec;
       });
     };
 
-    const sources = norm(sankey.sources);
-    const dests = norm(sankey.destinations);
+    const sources = layoutCol(sankey.sources, flowSum.src);
+    const dests = layoutCol(sankey.destinations, flowSum.dst);
 
     const bySrc = {}, byDest = {};
-    sources.forEach((s) => { bySrc[s.id] = { ...s, used: 0, sum: 0 }; });
-    dests.forEach((d) => { byDest[d.id] = { ...d, used: 0, sum: 0 }; });
-    sankey.flows.forEach((f) => { bySrc[f.from].sum += f.value; byDest[f.to].sum += f.value; });
+    sources.forEach((s) => { bySrc[s.id] = { ...s, used: 0, sum: flowSum.src[s.id] }; });
+    dests.forEach((d) => { byDest[d.id] = { ...d, used: 0, sum: flowSum.dst[d.id] }; });
 
     const flows = sankey.flows.map((f, i) => {
       const s = bySrc[f.from], d = byDest[f.to];
