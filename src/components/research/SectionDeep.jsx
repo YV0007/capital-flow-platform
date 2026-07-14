@@ -342,7 +342,37 @@ function Matrix({ b }) {
   );
 }
 
-const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix };
+function RadarHeat({ b }) {
+  const max = b.max || 5;
+  const radar = b.radarItems || [];
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '18px 20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 18 }}>
+          <RadarSvg scores={radar.map(x => x.score)} labels={radar.map(x => x.short || x.axis)} max={max} size={300} fill={col(b.color || 'clay')} showLabels />
+        </div>
+        <div style={{ borderTop: `1px solid ${C.line}` }}>
+          {(b.items || []).map((r, i) => {
+            const lv = LEVELS[r.level] || LEVELS.med;
+            return (
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '92px 1fr', gap: 14, padding: '13px 16px', borderTop: i ? `1px solid ${C.lineSoft}` : 'none', background: i % 2 ? 'transparent' : C.card }}>
+                <div><span style={{ fontSize: 9.5, padding: '3px 8px', borderRadius: 10, background: lv.color + '22', color: lv.color, border: `1px solid ${lv.color}55`, fontWeight: 600, letterSpacing: '.06em' }}>{lv.label}</span></div>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, marginBottom: 3 }}>{r.label}</div>
+                  {r.desc && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: r.trigger ? 5 : 0 }}>{r.desc}</div>}
+                  {r.trigger && <div style={{ fontSize: 12, lineHeight: 1.5 }}><span style={{ color: C.gold, fontWeight: 600 }}>Триггер: </span><span style={{ color: C.inkSoft }}>{r.trigger}</span></div>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat };
 
 export default function SectionDeep({ blocks }) {
   if (!blocks || !blocks.length) return null;
