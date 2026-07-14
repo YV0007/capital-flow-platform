@@ -4,6 +4,7 @@
 // quotes and dense fact lists. A section's data is an array of typed
 // blocks (sections[].deep in the company JSON). Dark mode only.
 
+import { useState } from 'react';
 import holdingsData from '../../data/holdings.json';
 
 const C = holdingsData.THEMES.dark;
@@ -290,9 +291,27 @@ function Snowflakes({ b }) {
 }
 
 // ── matrix: likelihood × impact grid (ISO 31000-style) ──────────────────────
+function MatrixCell({ it, cc }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      style={{ position: 'relative', fontSize: 11, lineHeight: 1.35, color: C.ink, background: hover ? cc + '28' : C.paper + 'AA', border: `1px solid ${cc}55`, borderLeft: `3px solid ${cc}`, borderRadius: 6, padding: '5px 8px', cursor: it.desc ? 'pointer' : 'default', transition: 'background .15s' }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {it.label}
+      {hover && it.desc && (
+        <div style={{ position: 'absolute', left: 0, top: '100%', marginTop: 4, zIndex: 50, width: 300, background: C.paper, border: `1px solid ${C.line}`, borderRadius: 8, padding: '10px 12px', boxShadow: '0 8px 24px rgba(0,0,0,.5)' }}>
+          <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.55 }}>{it.desc}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Matrix({ b }) {
-  const X = b.x || ['Низкая', 'Средняя', 'Высокая'];   // вероятность →
-  const Y = b.y || ['Высокое', 'Среднее', 'Низкое'];   // влияние ↓ (top = high)
+  const X = b.x || ['Низкая', 'Средняя', 'Высокая'];
+  const Y = b.y || ['Высокое', 'Среднее', 'Низкое'];
   const sevCol = (px, iy) => { const s = px + (Y.length - 1 - iy); return s >= 3 ? C.clay : s === 2 ? C.gold : C.teal; };
   return (
     <div>
@@ -308,9 +327,7 @@ function Matrix({ b }) {
                 const cc = sevCol(ix, iy);
                 return (
                   <div key={`c${iy}-${ix}`} style={{ minHeight: 74, borderRadius: 8, background: cc + '14', border: `1px solid ${cc}33`, padding: 7, display: 'flex', flexDirection: 'column', gap: 5 }}>
-                    {cell.map((it, k) => (
-                      <div key={k} title={it.hint || ''} style={{ fontSize: 11, lineHeight: 1.35, color: C.ink, background: C.paper + 'AA', border: `1px solid ${cc}55`, borderLeft: `3px solid ${cc}`, borderRadius: 6, padding: '5px 8px' }}>{it.label}</div>
-                    ))}
+                    {cell.map((it, k) => <MatrixCell key={k} it={it} cc={cc} />)}
                   </div>
                 );
               })]
