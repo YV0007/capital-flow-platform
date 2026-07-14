@@ -317,11 +317,17 @@ function Matrix({ b }) {
     <div>
       <Title note={b.note}>{b.title}</Title>
       <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px', overflowX: 'auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: `86px repeat(${X.length}, 1fr)`, gap: 6, minWidth: 560 }}>
+        <div style={{ textAlign: 'center', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 8, fontWeight: 600 }}>
+          Вероятность →
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: `30px 56px repeat(${X.length}, 1fr)`, gap: 6, minWidth: 560 }}>
+          <div style={{ gridRow: `1 / ${Y.length + 2}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>Влияние ↑</span>
+          </div>
           <div />
           {X.map((x, i) => <div key={i} style={{ textAlign: 'center', fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, padding: '4px 0' }}>{x}</div>)}
           {Y.map((y, iy) => (
-            [<div key={`y${iy}`} style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, display: 'flex', alignItems: 'center' }}>{y}</div>,
+            [<div key={`y${iy}`} style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', textAlign: 'right', lineHeight: 1.2 }}>{y}</div>,
               ...X.map((_, ix) => {
                 const cell = (b.items || []).filter((it) => it.px === ix && it.py === (Y.length - 1 - iy));
                 const cc = sevCol(ix, iy);
@@ -333,9 +339,11 @@ function Matrix({ b }) {
               })]
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10, fontSize: 10.5, color: C.inkFaint }}>
-          <span>← влияние по вертикали (выше = больнее для тезиса)</span>
-          <span>вероятность по горизонтали →</span>
+        <div style={{ display: 'grid', gridTemplateColumns: `86px repeat(${X.length}, 1fr)`, gap: 6, marginTop: 8 }}>
+          <div />
+          <div style={{ fontSize: 9.5, color: C.teal + 'BB', textAlign: 'center' }}>↙ меньше риск</div>
+          <div />
+          <div style={{ fontSize: 9.5, color: C.clay + 'BB', textAlign: 'center' }}>↗ больше риск</div>
         </div>
       </div>
     </div>
