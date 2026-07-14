@@ -36,10 +36,10 @@ const FIN = {};
 for (const p in finModules) { const d = finModules[p].default || finModules[p]; if (d && d.id) FIN[d.id] = d; }
 
 const TIERS = [
-  { id: 'substance', label: 'Существо — факты для решения', color: C.teal },
-  { id: 'context', label: 'Контекст — рамка для фактов', color: C.blue },
-  { id: 'voice', label: 'Голос менеджмента', color: C.gold },
-  { id: 'signals', label: 'Сигналы и интерпретация', color: C.violet },
+  { id: 'substance', label: 'Факты', color: C.teal },
+  { id: 'context', label: 'Проверки и риски', color: C.blue },
+  { id: 'voice', label: 'Что говорит менеджмент', color: C.gold },
+  { id: 'signals', label: 'Выводы и наблюдение', color: C.violet },
 ];
 const tierColor = (t) => (TIERS.find((x) => x.id === t) || {}).color || C.teal;
 
