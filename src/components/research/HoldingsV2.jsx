@@ -200,8 +200,8 @@ function StackedBar({ items }) {
   );
 }
 
-function Sparkline({ points, periods, color }) {
-  const W = 320, H = 60;
+function Sparkline({ points, periods, color, h = 60 }) {
+  const W = 320, H = h;
   const min = Math.min(...points), max = Math.max(...points);
   const range = max - min || 1;
   const x = (i) => (i * W) / (points.length - 1);
@@ -210,7 +210,7 @@ function Sparkline({ points, periods, color }) {
   const area = `${line} L${x(points.length - 1).toFixed(1)} ${H} L0 ${H} Z`;
   return (
     <div>
-      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ width: '100%', height: 60, display: 'block' }}>
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ width: '100%', height: h, display: 'block' }}>
         <path d={area} fill={color + '22'} />
         <path d={line} fill="none" stroke={color} strokeWidth="1.8" />
         <circle cx={x(points.length - 1)} cy={y(points[points.length - 1])} r="3" fill={color} />
@@ -574,6 +574,25 @@ export default function HoldingsV2() {
               </div>
             )}
           </header>
+
+          {/* Price chart + summary */}
+          {data.priceChart && (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 22 }}>
+              {data.summary && (
+                <div style={{ fontSize: 13.5, color: C.inkSoft, lineHeight: 1.65, alignSelf: 'center' }}>{data.summary}</div>
+              )}
+              <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
+                  <div>
+                    <span style={{ fontFamily: 'var(--mono)', fontSize: 28, fontWeight: 500, color: C.ink }}>{data.priceChart.current}</span>
+                    <span style={{ fontFamily: 'var(--mono)', fontSize: 14, color: data.priceChart.change.includes('+') ? C.teal : C.clay, marginLeft: 12 }}>{data.priceChart.change}</span>
+                  </div>
+                  <span style={{ fontSize: 10.5, color: C.inkFaint }}>{data.priceChart.period}</span>
+                </div>
+                <Sparkline points={data.priceChart.points} periods={[data.priceChart.start, data.priceChart.end]} color={data.priceChart.change.includes('+') ? C.teal : C.clay} h={100} />
+              </div>
+            </div>
+          )}
 
           {/* Snapshot — Bloomberg-density dense fact grid (business model + ownership) */}
           {data.snapshot && (
