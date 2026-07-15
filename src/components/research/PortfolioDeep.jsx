@@ -221,7 +221,7 @@ export default function PortfolioDeep({ data }) {
           {sorted.map((it, i) => (
             <div key={i} title={`${it[labelKey]} · ${it.pct}%${it[valKey] ? ' · ' + it[valKey] : ''}`}
               style={{ width: `${it.pct}%`, background: PALETTE[i % PALETTE.length], display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: i < sorted.length - 1 ? `1px solid ${C.paper}` : 'none', minWidth: 2 }}>
-              {it.pct >= 8 && <span style={{ fontFamily: 'var(--mono)', fontSize: 11, fontWeight: 600, color: dark }}>{it.pct}%</span>}
+              {it.pct >= 15 && <span style={{ fontFamily: 'var(--mono)', fontSize: 11, fontWeight: 600, color: dark }}>{it.pct}%</span>}
             </div>
           ))}
         </div>
@@ -252,6 +252,11 @@ export default function PortfolioDeep({ data }) {
               const on = tab === id;
               return <button key={id} onClick={() => setTab(id)} style={{ fontSize: 12, fontWeight: on ? 600 : 400, padding: '5px 13px', borderRadius: 14, border: `1px solid ${on ? C.teal : C.line}`, background: on ? C.teal + '18' : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{lab}</button>;
             })}
+          </div>
+          <div style={{ fontSize: 12, color: C.inkFaint, marginBottom: 14, lineHeight: 1.4 }}>
+            {tab === 'sector' && 'Как распределены активы по типам бизнеса — управление, страхование, недвижимость и т.д.'}
+            {tab === 'geo' && 'В каких регионах сосредоточены активы компании'}
+            {tab === 'theme' && 'Три главные инвестиционные темы — на чём Brookfield зарабатывает и куда ставит'}
           </div>
           {tab === 'sector' && <Composition items={n.composition} labelKey="name" valKey="value" />}
           {tab === 'geo' && <Composition items={n.geo} labelKey="region" />}

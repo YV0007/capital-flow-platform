@@ -24,9 +24,16 @@ export default function ResearchDetail({ researchId, onBack }) {
       </div>
     );
   }
-  // Holdings (Bloomberg IA) renders full-bleed — the report body escapes the
-  // 1280px column; other reports keep the centered layout (1344 - 64 padding = 1280).
-  const fullBleed = researchId === 'holdings';
+  // Holdings (Bloomberg IA) renders full-bleed with no research header —
+  // navigation lives inside HoldingsV2's own sticky top bar.
+  if (researchId === 'holdings') {
+    return (
+      <div style={{ minHeight: 'calc(100vh - 80px)', background: '#0A0A0B' }}>
+        <HoldingsV2 onBack={onBack} />
+      </div>
+    );
+  }
+
   const column = { maxWidth: 1344, margin: '0 auto', padding: '0 32px' };
   return (
     <div style={{ minHeight: 'calc(100vh - 80px)', padding: '32px 0 96px', background: '#0A0A0B' }}>
@@ -50,7 +57,6 @@ export default function ResearchDetail({ researchId, onBack }) {
           display: 'flex', alignItems: 'flex-start', gap: 28, marginBottom: 48,
           paddingBottom: 32, borderBottom: '1px solid #27272a',
         }}>
-          {/* Clickable cover icon — second back-navigation affordance */}
           <div
             onClick={onBack}
             style={{
@@ -85,12 +91,10 @@ export default function ResearchDetail({ researchId, onBack }) {
 
       </div>
 
-      {/* Report body — holdings goes full-bleed, the rest stay in the column */}
-      <div style={fullBleed ? undefined : column}>
+      {/* Report body */}
+      <div style={column}>
         {researchId === 'data-centers-ai' ? (
           <DataCentersAI />
-        ) : researchId === 'holdings' ? (
-          <HoldingsV2 />
         ) : researchId === 'proxy' ? (
           <Proxy />
         ) : (

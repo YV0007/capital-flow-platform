@@ -246,71 +246,10 @@ function ResearchCoverNodes({ color = '#22D3EE' }) {
   );
 }
 
-// Cover art for the Holdings Map report — an abstract relationship graph:
-// three zones (AI core left, the "tricky" middle, ballast right) shown as
-// clustered nodes joined by connection lines, echoing the map inside.
-function HoldingsCoverArt({ color = '#2FD9C4' }) {
-  // Compounding-growth motif — concentric "held position" rings with an upward
-  // value curve rising through them. Says long-term holding + compounding,
-  // without a person or a bare letter. Themeable via the accent color.
-  const cx = 64, cy = 60;                       // ring center, left-of-middle
-  const rings = [14, 24, 34, 44];               // concentric position rings
-  const A = color;
-
-  // upward value curve sweeping left→right, lifting as it goes (compounding).
-  const curve = 'M 18 96 C 56 92, 78 84, 104 64 S 158 26, 188 16';
-  // a few "position" dots sitting on the rings
-  const dots = [
-    { x: cx, y: cy - 24 }, { x: cx + 34, y: cy }, { x: cx - 34, y: cy },
-    { x: cx + 24, y: cy + 24 }, { x: cx - 17, y: cy + 31 },
-  ];
-
+function HoldingsCoverArt() {
   return (
-    <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
-      <defs>
-        <radialGradient id="hca-spot" cx="34%" cy="50%" r="62%">
-          <stop offset="0%"  stopColor={A} stopOpacity="0.12" />
-          <stop offset="60%" stopColor={A} stopOpacity="0.02" />
-          <stop offset="100%" stopColor={A} stopOpacity="0" />
-        </radialGradient>
-        {/* curve brightens as it rises */}
-        <linearGradient id="hca-curve" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%"   stopColor={A} stopOpacity="0.35" />
-          <stop offset="100%" stopColor={A} stopOpacity="1" />
-        </linearGradient>
-        {/* soft area fill under the curve */}
-        <linearGradient id="hca-area" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"   stopColor={A} stopOpacity="0.16" />
-          <stop offset="100%" stopColor={A} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
-      <rect width="200" height="120" fill="#080B12" />
-      <rect width="200" height="120" fill="url(#hca-spot)" />
-
-      {/* concentric position rings — outer faint, inner brighter */}
-      {rings.map((r, i) => (
-        <circle key={i} cx={cx} cy={cy} r={r} fill="none"
-          stroke={A} strokeWidth="1" strokeOpacity={0.10 + i * 0.10} />
-      ))}
-      {/* solid core */}
-      <circle cx={cx} cy={cy} r="5" fill={A} fillOpacity="0.9" />
-      <circle cx={cx} cy={cy} r="9" fill="none" stroke={A} strokeWidth="1.2" strokeOpacity="0.6" />
-
-      {/* position dots on the rings */}
-      {dots.map((d, i) => (
-        <circle key={`d${i}`} cx={d.x} cy={d.y} r="2.1" fill={A} fillOpacity="0.85" />
-      ))}
-
-      {/* area under the value curve */}
-      <path d={`${curve} L 188 120 L 18 120 Z`} fill="url(#hca-area)" opacity="0.6" />
-      {/* the rising value curve */}
-      <path d={curve} fill="none" stroke="url(#hca-curve)" strokeWidth="2.2" strokeLinecap="round" />
-      {/* end marker */}
-      <circle cx="188" cy="16" r="3" fill={A} />
-      <circle cx="188" cy="16" r="6" fill="none" stroke={A} strokeWidth="1" strokeOpacity="0.45" />
-    </svg>
+    <img src={new URL('../../assets/buffett.jpg', import.meta.url).href}
+      alt="Holdings" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
   );
 }
 
@@ -402,7 +341,7 @@ function ProxyCoverArt({ color = '#F59E0B' }) {
 
 // Picks the right cover art for a given research id.
 function ResearchCover({ id, color }) {
-  if (id === 'holdings') return <HoldingsCoverArt color={color} />;
+  if (id === 'holdings') return <HoldingsCoverArt />;
   if (id === 'proxy')    return <ProxyCoverArt color={color} />;
   return <ResearchCoverNodes color={color} />;
 }

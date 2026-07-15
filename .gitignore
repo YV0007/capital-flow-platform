@@ -2,3 +2,7 @@ index_slim.html
 *.zip
 ab-investment-handoff.md
 .DS_Store
+node_modules/
+dist/
+src/data/holdings-v2/_*.json
+src/data/holdings-v2/portfolio/_*/

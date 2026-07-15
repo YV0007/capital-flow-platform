@@ -88,6 +88,151 @@ function Cards({ b }) {
   );
 }
 
+// ── pie: interactive SVG donut with hover + labels ─────────────────────────
+function Pie({ b }) {
+  const [hov, setHov] = useState(null);
+  const total = b.items.reduce((s, it) => s + (it.pct || 0), 0) || 1;
+  const sz = 280, cx = sz / 2, cy = sz / 2, r = 110, ir = 68;
+  let ang = -Math.PI / 2;
+  const slices = b.items.filter(it => it.pct > 0.05).map((it, idx) => {
+    const a = (it.pct / total) * Math.PI * 2;
+    const la = a > Math.PI ? 1 : 0;
+    const mid = ang + a / 2;
+    const cos1 = Math.cos(ang), sin1 = Math.sin(ang);
+    const cos2 = Math.cos(ang + a), sin2 = Math.sin(ang + a);
+    const lr = (hov === idx) ? r + 6 : r;
+    const lir = (hov === idx) ? ir - 2 : ir;
+    const d = `M${cx + lr * cos1} ${cy + lr * sin1} A${lr} ${lr} 0 ${la} 1 ${cx + lr * cos2} ${cy + lr * sin2} L${cx + lir * cos2} ${cy + lir * sin2} A${lir} ${lir} 0 ${la} 0 ${cx + lir * cos1} ${cy + lir * sin1}Z`;
+    const labelR = r + 22;
+    const lx = cx + labelR * Math.cos(mid);
+    const ly = cy + labelR * Math.sin(mid);
+    ang += a;
+    return { ...it, d, idx, lx, ly, mid };
+  });
+  const active = hov !== null ? slices.find(s => s.idx === hov) : null;
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '24px 20px', display: 'flex', alignItems: 'center', gap: 32, flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div style={{ position: 'relative', width: sz, height: sz, flexShrink: 0 }}>
+          <svg width={sz} height={sz} viewBox={`0 0 ${sz} ${sz}`} style={{ overflow: 'visible' }}>
+            {slices.map((s) => (
+              <path key={s.idx} d={s.d} fill={col(s.color)} opacity={hov === null || hov === s.idx ? .88 : .35}
+                stroke={C.card} strokeWidth={1.5} style={{ cursor: 'pointer', transition: 'opacity .15s' }}
+                onMouseEnter={() => setHov(s.idx)} onMouseLeave={() => setHov(null)} />
+            ))}
+          </svg>
+          {active && (
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', textAlign: 'center', pointerEvents: 'none' }}>
+              <div style={{ fontFamily: 'var(--mono)', fontSize: 22, fontWeight: 600, color: C.ink }}>{active.value}</div>
+              <div style={{ fontSize: 11, color: C.inkSoft, marginTop: 2, maxWidth: 100 }}>{active.label}</div>
+              {active.note && <div style={{ fontSize: 10, color: C.inkFaint, marginTop: 2 }}>{active.note}</div>}
+            </div>
+          )}
+          {!active && (
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', textAlign: 'center', pointerEvents: 'none' }}>
+              <div style={{ fontSize: 10, color: C.inkFaint, textTransform: 'uppercase', letterSpacing: '.05em' }}>Наведите</div>
+            </div>
+          )}
+        </div>
+        <div style={{ flex: '1 1 200px', minWidth: 180 }}>
+          {b.items.map((it, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 6, marginBottom: 2,
+              background: hov === i ? C.line + '44' : 'transparent', cursor: 'pointer', transition: 'background .12s' }}
+              onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}>
+              <div style={{ width: 10, height: 10, borderRadius: 2, background: col(it.color), flexShrink: 0 }} />
+              <div style={{ fontSize: 13, color: hov === i ? C.ink : C.inkSoft, flex: 1, lineHeight: 1.3, transition: 'color .12s' }}>{it.label}</div>
+              <div style={{ fontFamily: 'var(--mono)', fontSize: 13, color: C.ink, flexShrink: 0 }}>{it.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── flows: insider-action summary — takeaway + scale bars + monthly history ─
+// Answers "what's happening and which way is it trending" at a glance: a
+// scale comparison (buyback vs sells vs buys) plus a diverging monthly bar
+// chart of individual insider trades (sells down, buys up around a zero line).
+function Flows({ b }) {
+  const [hov, setHov] = useState(null);
+  const sells = b.sells || [], buys = b.buys || [], axis = b.axis || [];
+  const maxAbs = Math.max(...sells, ...buys, 1);
+  const SELL_H = 128, BUY_H = 34; // px budget below / above the zero line
+  const hSell = (v) => (v > 0 ? Math.max(3, (v / maxAbs) * SELL_H) : 0);
+  const hBuy = (v) => (v > 0 ? Math.max(3, (v / maxAbs) * SELL_H) : 0);
+  const tmax = b.totals ? Math.max(...b.totals.map((x) => x.mag)) : 1;
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      {b.takeaway && (
+        <div style={{ background: C.cardAlt, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '13px 16px', marginBottom: 16, fontSize: 13.5, color: C.ink, lineHeight: 1.6 }}>{b.takeaway}</div>
+      )}
+      {/* scale comparison: buyback vs sells vs buys */}
+      {b.totals && (
+        <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px', marginBottom: 14 }}>
+          <div style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 13, fontWeight: 600 }}>Масштаб действий · 12 мес</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+            {b.totals.map((t, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{ width: 210, flexShrink: 0 }}>
+                  <div style={{ fontSize: 12, color: C.ink }}>{t.label}</div>
+                  {t.sub && <div style={{ fontSize: 10.5, color: C.inkFaint, lineHeight: 1.35 }}>{t.sub}</div>}
+                </div>
+                <div style={{ flex: 1, height: 20, background: C.track, borderRadius: 4, overflow: 'hidden' }}>
+                  <div style={{ width: `${(t.mag / tmax) * 100}%`, height: '100%', background: col(t.color), borderRadius: 4, minWidth: 4 }} />
+                </div>
+                <div style={{ width: 108, textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 14, fontWeight: 600, color: col(t.color), flexShrink: 0 }}>{t.value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {/* monthly diverging history */}
+      {axis.length > 0 && (
+        <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px 12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
+            <div style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>Сделки инсайдеров помесячно · {b.unit || 'CA$ млн'}</div>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <span style={{ fontSize: 10.5, color: C.inkSoft, display: 'flex', alignItems: 'center', gap: 5 }}><span style={{ width: 9, height: 9, borderRadius: 2, background: col('teal'), display: 'inline-block' }} />покупки</span>
+              <span style={{ fontSize: 10.5, color: C.inkSoft, display: 'flex', alignItems: 'center', gap: 5 }}><span style={{ width: 9, height: 9, borderRadius: 2, background: col('clay'), display: 'inline-block' }} />продажи</span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'stretch', gap: 4 }}>
+            {axis.map((m, i) => {
+              const on = hov === i;
+              return (
+                <div key={i} style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: (sells[i] || buys[i]) ? 'pointer' : 'default' }}
+                  onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}>
+                  {/* buys region (above zero) */}
+                  <div style={{ height: BUY_H, width: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+                    {buys[i] > 0 && <div style={{ width: '62%', height: hBuy(buys[i]), background: col('teal'), borderRadius: '2px 2px 0 0', opacity: on ? 1 : 0.85 }} />}
+                  </div>
+                  <div style={{ height: 1, width: '100%', background: C.line }} />
+                  {/* sells region (below zero) */}
+                  <div style={{ height: SELL_H, width: '100%', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', position: 'relative' }}>
+                    {sells[i] > 0 && <div style={{ width: '62%', height: hSell(sells[i]), background: col('clay'), borderRadius: '0 0 2px 2px', opacity: on ? 1 : 0.85 }} />}
+                    {on && (sells[i] || buys[i]) ? (
+                      <div style={{ position: 'absolute', top: hSell(sells[i]) + 6, left: '50%', transform: 'translateX(-50%)', background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 6, padding: '5px 9px', whiteSpace: 'nowrap', zIndex: 5, pointerEvents: 'none' }}>
+                        {b.labels && b.labels[i] && <div style={{ fontSize: 11, color: C.ink, fontWeight: 600 }}>{b.labels[i]}</div>}
+                        {sells[i] > 0 && <div style={{ fontSize: 10.5, fontFamily: 'var(--mono)', color: col('clay') }}>−{sells[i]} продажа</div>}
+                        {buys[i] > 0 && <div style={{ fontSize: 10.5, fontFamily: 'var(--mono)', color: col('teal') }}>+{buys[i]} покупка</div>}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div style={{ fontSize: 9.5, color: on ? C.ink : C.inkFaint, marginTop: 6, whiteSpace: 'nowrap' }}>{m}</div>
+                </div>
+              );
+            })}
+          </div>
+          {b.foot && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 12, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── bars: labeled horizontal bars ───────────────────────────────────────────
 function Bars({ b }) {
   const max = Math.max(...b.items.map((x) => x.pct || 0), 1);
@@ -107,6 +252,221 @@ function Bars({ b }) {
             <div style={{ width: 96, textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12.5, color: C.ink }}>{it.value}</div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// ── compare: multi-metric small-multiples bar comparison ────────────────────
+// One card, several metric panels; each panel compares the same set of
+// companies on that metric (bars normalized to the metric's own max, or a
+// log scale so wildly different magnitudes still fit). Company colors are
+// consistent across panels so one entity is trackable at a glance.
+function Compare({ b }) {
+  const [hov, setHov] = useState(null);
+  const companies = b.companies;
+  const colors = b.colors || companies.map(() => 'teal');
+  const scale = b.scale === 'log' ? 'log' : 'linear';
+  const widthFor = (vals, v) => {
+    if (scale === 'log') {
+      const min = Math.min(...vals.filter((x) => x > 0));
+      const max = Math.max(...vals);
+      if (max <= min) return 100;
+      const lo = Math.log(min) - (Math.log(max) - Math.log(min)) * 0.08; // small floor so smallest bar is visible
+      return Math.max(4, ((Math.log(Math.max(v, min)) - lo) / (Math.log(max) - lo)) * 100);
+    }
+    const max = Math.max(...vals, 1);
+    return (v / max) * 100;
+  };
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '18px 20px' }}>
+        {/* legend */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 20px', marginBottom: 18, paddingBottom: 14, borderBottom: `1px solid ${C.lineSoft}` }}>
+          {companies.map((co, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', opacity: hov === null || hov === i ? 1 : 0.4, transition: 'opacity .12s' }}
+              onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}>
+              <div style={{ width: 11, height: 11, borderRadius: 3, background: col(colors[i]) }} />
+              <span style={{ fontSize: 12.5, color: C.ink, fontWeight: b.primary === i ? 700 : 500 }}>{co}</span>
+            </div>
+          ))}
+        </div>
+        {/* metric panels */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '22px 36px' }}>
+          {b.metrics.map((m, mi) => (
+            <div key={mi}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 11 }}>
+                <div style={{ fontSize: 11, letterSpacing: '.05em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>{m.label}</div>
+                {m.note && <div style={{ fontSize: 10, color: C.inkFaint }}>{m.note}</div>}
+              </div>
+              {companies.map((co, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: i < companies.length - 1 ? 8 : 0, opacity: hov === null || hov === i ? 1 : 0.35, transition: 'opacity .12s' }}
+                  onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}>
+                  <div style={{ width: 118, flexShrink: 0, fontSize: 11.5, color: b.primary === i ? C.ink : C.inkSoft, fontWeight: b.primary === i ? 600 : 400, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{co}</div>
+                  <div style={{ flex: 1, height: 13, background: C.track, borderRadius: 3, overflow: 'hidden' }}>
+                    <div style={{ width: `${widthFor(m.values, m.values[i])}%`, height: '100%', background: col(colors[i]), borderRadius: 3 }} />
+                  </div>
+                  <div style={{ width: 92, textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 11.5, color: C.ink, flexShrink: 0 }}>{m.display[i]}</div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        {/* per-company feature captions */}
+        {b.features && (
+          <div style={{ marginTop: 18, paddingTop: 14, borderTop: `1px solid ${C.lineSoft}`, display: 'flex', flexDirection: 'column', gap: 7 }}>
+            {companies.map((co, i) => b.features[i] && (
+              <div key={i} style={{ fontSize: 11.5, color: C.inkSoft, lineHeight: 1.45, opacity: hov === null || hov === i ? 1 : 0.4, transition: 'opacity .12s' }}>
+                <span style={{ color: col(colors[i]), fontWeight: 600 }}>{co} — </span>{b.features[i]}
+              </div>
+            ))}
+          </div>
+        )}
+        {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 14, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+      </div>
+    </div>
+  );
+}
+
+// ── moat: two-column strategic wins-vs-gaps analysis ────────────────────────
+// Left column = durable structural advantages (where BN clearly wins), right
+// column = where it competes but lags. Each item carries a strength meter and
+// a "vs whom" chip so the comparison is decision-legible, not just descriptive.
+// ── posgrid: strategic positioning heatmap (segments × players) ─────────────
+// Shows at a glance where each manager leads vs lags across asset classes —
+// the real "moat map". Optional catalysts strip highlights the unique edge.
+const POS_LEVELS = {
+  lead:    { label: 'Лидер',   bg: C.teal,         fg: '#0b0b0c', bd: C.teal },
+  strong:  { label: 'Сильный', bg: C.teal + '2e',  fg: C.teal,    bd: C.teal + '55' },
+  present: { label: 'Есть',    bg: C.track,        fg: C.inkSoft, bd: C.line },
+  lag:     { label: 'Слабо',   bg: 'transparent',  fg: C.clay,    bd: C.clay + '55' },
+};
+function PosGrid({ b }) {
+  const [hov, setHov] = useState(null);
+  const players = b.players || [];
+  const hl = b.highlight ?? 0;
+  const gridCols = `minmax(148px, 1.5fr) repeat(${players.length}, minmax(84px, 1fr))`;
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      {b.takeaway && (
+        <div style={{ background: C.cardAlt, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '13px 16px', marginBottom: 16, fontSize: 13.5, color: C.ink, lineHeight: 1.6 }}>{b.takeaway}</div>
+      )}
+      <div style={{ overflowX: 'auto', border: `1px solid ${C.line}`, borderRadius: 10 }}>
+        <div style={{ minWidth: 560 }}>
+          {/* header */}
+          <div style={{ display: 'grid', gridTemplateColumns: gridCols, background: C.cardAlt, borderBottom: `1px solid ${C.line}` }}>
+            <div style={{ padding: '11px 14px', fontSize: 10, letterSpacing: '.05em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>Сегмент</div>
+            {players.map((p, i) => (
+              <div key={i} style={{ padding: '11px 8px', textAlign: 'center', fontSize: 11.5, fontWeight: i === hl ? 700 : 500, color: i === hl ? C.teal : C.inkSoft, background: i === hl ? C.teal + '12' : 'transparent', borderLeft: `1px solid ${C.lineSoft}` }}>{p}</div>
+            ))}
+          </div>
+          {/* rows */}
+          {b.segments.map((seg, ri) => (
+            <div key={ri} style={{ display: 'grid', gridTemplateColumns: gridCols, borderTop: ri ? `1px solid ${C.lineSoft}` : 'none', background: ri % 2 ? C.card : 'transparent' }}>
+              <div style={{ padding: '12px 14px' }}>
+                <div style={{ fontSize: 12.5, color: C.ink, fontWeight: 500, lineHeight: 1.3 }}>{seg.label}</div>
+                {seg.sub && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 2 }}>{seg.sub}</div>}
+              </div>
+              {seg.cells.map((c, ci) => {
+                const lv = POS_LEVELS[c.level] || POS_LEVELS.present;
+                const key = ri + '-' + ci;
+                const on = hov === key;
+                return (
+                  <div key={ci} style={{ padding: '10px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4, borderLeft: `1px solid ${C.lineSoft}`, background: ci === hl ? C.teal + '08' : 'transparent', cursor: c.note ? 'pointer' : 'default', position: 'relative' }}
+                    onMouseEnter={() => setHov(key)} onMouseLeave={() => setHov(null)}>
+                    <span style={{ fontSize: 10.5, fontWeight: 600, padding: '3px 9px', borderRadius: 11, background: lv.bg, color: lv.fg, border: `1px solid ${lv.bd}`, whiteSpace: 'nowrap' }}>{c.label || lv.label}</span>
+                    {c.metric && <span style={{ fontSize: 9.5, color: C.inkFaint, textAlign: 'center', lineHeight: 1.2 }}>{c.metric}</span>}
+                    {on && c.note && (
+                      <div style={{ position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%)', marginBottom: 4, background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 6, padding: '6px 10px', width: 180, zIndex: 6, pointerEvents: 'none', boxShadow: '0 4px 16px rgba(0,0,0,.4)' }}>
+                        <div style={{ fontSize: 11, color: C.inkSoft, lineHeight: 1.45 }}>{c.note}</div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* legend */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginTop: 12 }}>
+        {['lead', 'strong', 'present', 'lag'].map((k) => (
+          <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ width: 11, height: 11, borderRadius: 3, background: POS_LEVELS[k].bg === 'transparent' ? 'transparent' : POS_LEVELS[k].bg, border: `1px solid ${POS_LEVELS[k].bd}` }} />
+            <span style={{ fontSize: 10.5, color: C.inkSoft }}>{POS_LEVELS[k].label}</span>
+          </div>
+        ))}
+        <span style={{ fontSize: 10.5, color: C.inkFaint, fontStyle: 'italic' }}>наведите на ячейку — детали</span>
+      </div>
+      {/* catalysts strip */}
+      {b.catalysts && (
+        <div style={{ marginTop: 18 }}>
+          <div style={{ fontSize: 11, letterSpacing: '.05em', textTransform: 'uppercase', color: C.teal, fontWeight: 700, marginBottom: 11 }}>{b.catalysts.label}</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 10 }}>
+            {b.catalysts.items.map((it, i) => (
+              <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '11px 14px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, marginBottom: 3 }}>
+                  <span style={{ fontSize: 12.5, color: C.ink, fontWeight: 600 }}>{it.who}</span>
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.teal, fontWeight: 600, whiteSpace: 'nowrap' }}>{it.mag}</span>
+                </div>
+                <div style={{ fontSize: 11.5, color: C.inkSoft, lineHeight: 1.4 }}>{it.what}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Moat({ b }) {
+  const [hov, setHov] = useState(null);
+  const renderCol = (items, side, accent, heading) => (
+    <div style={{ flex: 1, minWidth: 280 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 14 }}>
+        <div style={{ width: 3, height: 15, background: accent, borderRadius: 2 }} />
+        <div style={{ fontSize: 11.5, letterSpacing: '.06em', textTransform: 'uppercase', color: accent, fontWeight: 700 }}>{heading}</div>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {items.map((it, i) => {
+          const key = side + i;
+          const on = hov === key;
+          return (
+            <div key={i}
+              onMouseEnter={() => setHov(key)} onMouseLeave={() => setHov(null)}
+              style={{ background: C.card, border: `1px solid ${on ? accent + '77' : C.line}`, borderRadius: 9, padding: '13px 15px', transition: 'border-color .15s' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 6 }}>
+                <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, lineHeight: 1.35 }}>{it.title}</div>
+                {it.strength != null && (
+                  <div style={{ display: 'flex', gap: 3, flexShrink: 0, marginTop: 5 }} title={`Сила преимущества ${it.strength}/5`}>
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <div key={n} style={{ width: 6, height: 6, borderRadius: '50%', background: n <= it.strength ? accent : C.track }} />
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: it.vs ? 9 : 0 }}>{it.body}</div>
+              {it.vs && <span style={{ fontSize: 10.5, fontFamily: 'var(--mono)', color: accent, background: accent + '18', border: `1px solid ${accent}33`, borderRadius: 5, padding: '2px 8px' }}>{it.vs}</span>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      {b.verdict && (
+        <div style={{ background: C.cardAlt, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '14px 18px', marginBottom: 18 }}>
+          <div style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: C.teal, fontWeight: 700, marginBottom: 6 }}>Тезис для решения</div>
+          <div style={{ fontSize: 14, color: C.ink, lineHeight: 1.6 }}>{b.verdict}</div>
+        </div>
+      )}
+      <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        {renderCol(b.wins, 'w', C.teal, b.winsLabel || 'Устойчивый moat — где выигрывает')}
+        {renderCol(b.gaps, 'g', C.gold, b.gapsLabel || 'Где догоняет или отстаёт')}
       </div>
     </div>
   );
@@ -380,15 +740,33 @@ function RadarHeat({ b }) {
   );
 }
 
-const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat };
+const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, pie: Pie, compare: Compare, moat: Moat, posgrid: PosGrid, flows: Flows, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat };
 
 export default function SectionDeep({ blocks }) {
   if (!blocks || !blocks.length) return null;
+  const groups = [];
+  blocks.forEach(b => {
+    if (b.row && groups.length && groups[groups.length - 1][0]?.row === b.row) {
+      groups[groups.length - 1].push(b);
+    } else {
+      groups.push([b]);
+    }
+  });
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
-      {blocks.map((b, i) => {
-        const Cmp = RENDER[b.type];
-        return Cmp ? <Cmp key={i} b={b} /> : null;
+      {groups.map((g, gi) => {
+        if (g.length === 1) {
+          const Cmp = RENDER[g[0].type];
+          return Cmp ? <Cmp key={gi} b={g[0]} /> : null;
+        }
+        return (
+          <div key={gi} style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
+            {g.map((b, bi) => {
+              const Cmp = RENDER[b.type];
+              return Cmp ? <div key={bi} style={{ flex: b.flex || 1, minWidth: 0 }}><Cmp b={b} /></div> : null;
+            })}
+          </div>
+        );
       })}
     </div>
   );
