@@ -253,6 +253,13 @@ function HoldingsCoverArt() {
   );
 }
 
+function DataCentersCoverArt() {
+  return (
+    <img src={new URL('../../assets/datacenter.jpg', import.meta.url).href}
+      alt="Data Centers for AI" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+  );
+}
+
 // Cover art for the Proxy research report — concentric "private-value" arcs
 // emanating from three private hubs (SpaceX / OpenAI / Anthropic at the
 // upper-left cluster) caught by an outer public-market ring at the right.
@@ -341,11 +348,12 @@ function ProxyCoverArt({ color = '#F59E0B' }) {
 
 // Picks the right cover art for a given research id.
 function ResearchCover({ id, color }) {
-  if (id === 'holdings') return <HoldingsCoverArt />;
-  if (id === 'proxy')    return <ProxyCoverArt color={color} />;
+  if (id === 'holdings')       return <HoldingsCoverArt />;
+  if (id === 'data-centers-ai') return <DataCentersCoverArt />;
+  if (id === 'proxy')          return <ProxyCoverArt color={color} />;
   return <ResearchCoverNodes color={color} />;
 }
 
 
 export default ResearchCover;
-export { ResearchCoverNodes, HoldingsCoverArt, ProxyCoverArt };
+export { ResearchCoverNodes, HoldingsCoverArt, DataCentersCoverArt, ProxyCoverArt };
