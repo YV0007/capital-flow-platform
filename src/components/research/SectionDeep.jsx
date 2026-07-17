@@ -478,6 +478,120 @@ const LEVELS = {
   med: { label: 'СРЕДНИЙ', color: C.gold },
   low: { label: 'НИЗКИЙ', color: C.teal },
 };
+
+// ── risksplit: the risk map — two origins, side by side ─────────────────────
+// Answers "what are the risks and where do they come from" in one screen.
+// Left = risks from what the capital is invested in (by sector); right = risks
+// from how the holdco earns and values itself. Each row is severity + sector +
+// size of exposure + one plain sentence on what actually breaks.
+function RiskSplit({ b }) {
+  const [hov, setHov] = useState(null);
+  const renderGroup = (g, gi) => {
+    const accent = col(g.accent || 'clay');
+    return (
+      <div key={gi} style={{ flex: '1 1 380px', minWidth: 300 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 4 }}>
+          <div style={{ width: 3, height: 15, background: accent, borderRadius: 2 }} />
+          <div style={{ fontSize: 11.5, letterSpacing: '.06em', textTransform: 'uppercase', color: accent, fontWeight: 700 }}>{g.label}</div>
+        </div>
+        {g.sub && <div style={{ fontSize: 11.5, color: C.inkFaint, lineHeight: 1.45, marginBottom: 12, paddingLeft: 12 }}>{g.sub}</div>}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {g.items.map((it, i) => {
+            const lv = LEVELS[it.level] || LEVELS.med;
+            const key = gi + '-' + i;
+            const on = hov === key;
+            return (
+              <div key={i}
+                onMouseEnter={() => setHov(key)} onMouseLeave={() => setHov(null)}
+                style={{ background: C.card, border: `1px solid ${on ? lv.color + '77' : C.line}`, borderLeft: `3px solid ${lv.color}`, borderRadius: 9, padding: '12px 14px', transition: 'border-color .15s' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, marginBottom: 5 }}>
+                  <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, lineHeight: 1.35 }}>{it.label}</div>
+                  {it.exposure && <div style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: C.ink, whiteSpace: 'nowrap', flexShrink: 0 }}>{it.exposure}</div>}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 6 }}>
+                  <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: lv.color + '22', color: lv.color, border: `1px solid ${lv.color}55`, fontWeight: 700, letterSpacing: '.06em' }}>{lv.label}</span>
+                  {it.sector && <span style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 10, background: C.track, color: C.inkSoft, border: `1px solid ${C.line}` }}>{it.sector}</span>}
+                  {it.share && <span style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: C.inkFaint }}>{it.share}</span>}
+                </div>
+                {it.line && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{it.line}</div>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      {b.takeaway && (
+        <div style={{ background: C.cardAlt, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '14px 18px', marginBottom: 18 }}>
+          {b.takeawayLabel && <div style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: C.teal, fontWeight: 700, marginBottom: 6 }}>{b.takeawayLabel}</div>}
+          <div style={{ fontSize: 14, color: C.ink, lineHeight: 1.6 }}>{b.takeaway}</div>
+        </div>
+      )}
+      <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        {b.groups.map(renderGroup)}
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 14, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+    </div>
+  );
+}
+
+// ── scenarios: trigger → chain → price outcome → what to track ──────────────
+// Each card is one way the future actually resolves, with a probability, the
+// event that starts it, the causal chain in ordered steps, the effect on value
+// per share, and the single observable that tells you it's happening.
+function Scenarios({ b }) {
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${b.min || 290}px, 1fr))`, gap: 12 }}>
+        {b.items.map((s, i) => {
+          const c = col(s.color);
+          return (
+            <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `3px solid ${c}`, borderRadius: 10, padding: '15px 16px', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 8, marginBottom: 10 }}>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, color: C.ink }}>{s.name}</span>
+                {s.prob && <span style={{ fontFamily: 'var(--mono)', fontSize: 11, padding: '2px 8px', borderRadius: 10, background: c + '22', color: c, border: `1px solid ${c}55`, fontWeight: 600, whiteSpace: 'nowrap' }}>{s.prob}</span>}
+              </div>
+              {s.value && (
+                <div style={{ marginBottom: 12, paddingBottom: 12, borderBottom: `1px solid ${C.lineSoft}` }}>
+                  <div style={{ fontFamily: 'var(--mono)', fontSize: 19, fontWeight: 500, color: c, lineHeight: 1.15 }}>{s.value}</div>
+                  {s.valueLabel && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 3, lineHeight: 1.4 }}>{s.valueLabel}</div>}
+                </div>
+              )}
+              {s.trigger && (
+                <div style={{ marginBottom: 11 }}>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.gold, fontWeight: 700, marginBottom: 4 }}>Что запускает</div>
+                  <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>{s.trigger}</div>
+                </div>
+              )}
+              {s.chain && (
+                <div style={{ marginBottom: 11 }}>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 700, marginBottom: 6 }}>Как разворачивается</div>
+                  {s.chain.map((step, si) => (
+                    <div key={si} style={{ display: 'flex', gap: 8, marginBottom: si < s.chain.length - 1 ? 6 : 0 }}>
+                      <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: c, flexShrink: 0, marginTop: 2, width: 12 }}>{si + 1}</span>
+                      <span style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>{step}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {s.track && (
+                <div style={{ marginTop: 'auto', paddingTop: 11, borderTop: `1px solid ${C.lineSoft}` }}>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.teal, fontWeight: 700, marginBottom: 4 }}>Что отслеживать</div>
+                  <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.5 }}>{s.track}</div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 14, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+    </div>
+  );
+}
 function Heat({ b }) {
   return (
     <div>
@@ -740,7 +854,7 @@ function RadarHeat({ b }) {
   );
 }
 
-const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, pie: Pie, compare: Compare, moat: Moat, posgrid: PosGrid, flows: Flows, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat };
+const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, pie: Pie, compare: Compare, moat: Moat, posgrid: PosGrid, flows: Flows, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat, risksplit: RiskSplit, scenarios: Scenarios };
 
 export default function SectionDeep({ blocks }) {
   if (!blocks || !blocks.length) return null;
