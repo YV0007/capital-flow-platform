@@ -584,6 +584,12 @@ function Scenarios({ b }) {
                   <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.5 }}>{s.track}</div>
                 </div>
               )}
+              {s.action && (
+                <div style={{ marginTop: 10, background: c + '14', border: `1px solid ${c}44`, borderRadius: 7, padding: '9px 11px' }}>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: c, fontWeight: 700, marginBottom: 3 }}>Решение</div>
+                  <div style={{ fontSize: 12, color: C.ink, lineHeight: 1.5 }}>{s.action}</div>
+                </div>
+              )}
             </div>
           );
         })}
