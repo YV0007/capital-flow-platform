@@ -115,9 +115,226 @@
   {
    "id": "assetmgmt",
    "name": "Управление активами",
-   "plain": "Это сам управляющий бизнес Brookfield (BAM): он управляет деньгами внешних инвесторов и за это получает стабильные комиссии, а также долю в прибыли удачных фондов. Отдельных компаний-активов здесь нет — это поток комиссий.",
-   "stat": "$614 млрд капитала, приносящего комиссии; ~$3.1 млрд комиссий за управление в год",
-   "companies": []
+   "plain": "Это сам управляющий бизнес Brookfield (BAM): управляет деньгами внешних инвесторов через серию флагманских фондов, каждый из которых фокусируется на конкретном классе активов. Комиссии ~$3.1 млрд/год + доля в прибыли удачных фондов.",
+   "stat": "$614 млрд капитала, приносящего комиссии; 40+ активных фондов",
+   "companies": [],
+   "total": 6,
+   "subsectors": [
+    {
+     "name": "Публичные фонды",
+     "companies": [
+      {
+       "name": "Brookfield Infrastructure Partners (BIP)",
+       "what": "Флагманский фонд инфраструктуры — порты, трубопроводы, вышки, дата-центры",
+       "stake": "27%",
+       "value": "$20.4 млрд",
+       "valueDisclosed": true,
+       "size": "Market cap ~$20.4 млрд",
+       "geography": "Глобально",
+       "status": "operating",
+       "ai": true,
+       "key": true,
+       "detail": {
+        "summary": "Крупнейший в мире фонд инфраструктуры. Владеет ~$100 млрд активов: трубопроводы (Inter Pipeline), телеком-вышки (Heartland, ~200k), логистика (IPL), data-центры (>150 объектов, 1.3 GW). Brookfield держит ~27% экономической доли.",
+        "whyMatters": "Главный бенефициар AI-спроса через дата-центры и энергосети. Самый крупный и ликвидный фонд Brookfield.",
+        "metrics": [
+         {
+          "label": "AUM фонда",
+          "value": "~$100 млрд"
+         },
+         {
+          "label": "Рост прибыли на пай (FFO/unit)",
+          "value": "+8% г/г"
+         },
+         {
+          "label": "Дивидендная доходность",
+          "value": "~4.2%"
+         },
+         {
+          "label": "Фокус",
+          "value": "Транспорт, утилиты, data, midstream"
+         }
+        ]
+       }
+      },
+      {
+       "name": "Brookfield Renewable Partners (BEP)",
+       "what": "Флагманский фонд возобновляемой энергетики — ГЭС, ветер, солнце, ядерная (Westinghouse)",
+       "stake": "48%",
+       "value": "$13.7 млрд",
+       "valueDisclosed": true,
+       "size": "Market cap ~$13.7 млрд",
+       "geography": "Глобально",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Один из крупнейших в мире владельцев возобновляемой генерации: ~34 GW мощности (hydro, wind, solar, distributed, storage). Также контрольная доля в Westinghouse Electric (ядерное топливо и сервис). Brookfield держит ~48%.",
+        "whyMatters": "Ставка на декарбонизацию + ядерную энергию. Westinghouse даёт уникальный exposure к nuclear renaissance.",
+        "metrics": [
+         {
+          "label": "Мощность",
+          "value": "~34 GW"
+         },
+         {
+          "label": "Доля BN",
+          "value": "~48%"
+         },
+         {
+          "label": "Дивидендная доходность",
+          "value": "~4.8%"
+         },
+         {
+          "label": "Фокус",
+          "value": "Hydro, wind, solar, nuclear"
+         }
+        ]
+       }
+      },
+      {
+       "name": "Brookfield Asset Management (BAM)",
+       "what": "Публичная управляющая компания — получает комиссии от всех фондов Brookfield",
+       "stake": "75%",
+       "value": "$22.0 млрд",
+       "valueDisclosed": true,
+       "size": "Market cap ~$22 млрд (при 75% доле BN)",
+       "geography": "Глобально (штаб Торонто)",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Asset-light управляющая платформа, выделена из BN в 2022. Получает management fees (~$3.1 млрд/год) и долю carry ($33.8 млрд в ожидании). Управляет >$1 трлн через ~40 фондов. Brookfield держит 75% акций.",
+        "whyMatters": "Единственная чистая fee-revenue компания в структуре BN. Рынок оценивает BAM дороже, чем весь BN — это аномалия, на которой строится тезис.",
+        "metrics": [
+         {
+          "label": "Fee-related earnings",
+          "value": "~$2.5 млрд/год"
+         },
+         {
+          "label": "Carry в ожидании",
+          "value": "$33.8 млрд"
+         },
+         {
+          "label": "Доля BN",
+          "value": "75%"
+         },
+         {
+          "label": "Фокус",
+          "value": "Fee management + carry"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Непубличные платформы",
+     "companies": [
+      {
+       "name": "Brookfield Real Estate (BPG)",
+       "what": "Фонды недвижимости — офисы, торговые центры, жильё, склады",
+       "stake": "контроль",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "~$27 млрд собственных активов",
+       "geography": "Глобально",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Непубличное подразделение: 139+ объектов недвижимости, включая prime offices (Canary Wharf, Brookfield Place NYC), торговые центры, multifamily. Точная поимённая оценка не раскрывается — только агрегат.",
+        "whyMatters": "Самый рискованный сектор — офисы под давлением после пандемии. Одновременно самый недооценённый при развороте.",
+        "metrics": [
+         {
+          "label": "Объекты",
+          "value": "139+"
+         },
+         {
+          "label": "Основные рынки",
+          "value": "NYC, London, Tokyo, Dubai"
+         },
+         {
+          "label": "Доля BN",
+          "value": "Контроль через фонды"
+         },
+         {
+          "label": "Фокус",
+          "value": "Office, retail, multifamily, logistics"
+         }
+        ]
+       }
+      },
+      {
+       "name": "Oaktree Capital Management",
+       "what": "Крупнейшая кредитная платформа — distressed debt, special situations",
+       "stake": "68%",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "$205 млрд под управлением",
+       "geography": "Глобально (штаб LA)",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Один из крупнейших в мире кредитных управляющих. Специализация: distressed и opportunistic credit, special situations. Brookfield купил 68% в 2019. Это client assets — не входят в портфель BN напрямую, но генерируют комиссии.",
+        "whyMatters": "Самый быстрорастущий сегмент по привлечению капитала. Даёт Brookfield exposure к credit cycle без balance-sheet risk.",
+        "metrics": [
+         {
+          "label": "AUM",
+          "value": "$205 млрд"
+         },
+         {
+          "label": "Доля BN",
+          "value": "68%"
+         },
+         {
+          "label": "Клиенты",
+          "value": "~1,000 институциональных"
+         },
+         {
+          "label": "Фокус",
+          "value": "Distressed, credit, special sits"
+         }
+        ]
+       }
+      },
+      {
+       "name": "Brookfield Wealth Solutions (BWS)",
+       "what": "Страховая и пенсионная платформа — аннуитеты и permanent capital",
+       "stake": "контроль",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "$130+ млрд обязательств",
+       "geography": "Северная Америка, UK",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Страховая и пенсионная платформа Brookfield: American Equity (аннуитеты, $70+ млрд), AEL (UK annuities). Привлекает permanent capital через страховые продукты и реинвестирует в стратегии Brookfield. Быстрее всех растёт по AUM.",
+        "whyMatters": "Permanent capital engine — деньги не нужно возвращать клиентам, что даёт стабильные долгосрочные комиссии. Главный драйвер роста AUM.",
+        "metrics": [
+         {
+          "label": "Обязательства",
+          "value": "$130+ млрд"
+         },
+         {
+          "label": "Ключевой актив",
+          "value": "American Equity"
+         },
+         {
+          "label": "Рост AUM",
+          "value": "Самый быстрый в группе"
+         },
+         {
+          "label": "Фокус",
+          "value": "Аннуитеты, пенсии, permanent capital"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "insurance",
@@ -430,6 +647,68 @@
         ]
        },
        "source": "en.wikipedia.org / brookfield.com"
+      },
+      {
+       "name": "Potsdamer Platz",
+       "what": "Трофейный квартал в центре Берлина: офисы, ритейл, жильё, отель",
+       "stake": "контроль (СП с KIC)",
+       "value": "~$1.4 млрд при покупке",
+       "valueDisclosed": true,
+       "size": "17 зданий, ~2.9 млн кв. футов",
+       "geography": "Германия (Берлин)",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Potsdamer Platz — знаковый смешанный квартал в сердце Берлина: 17 зданий, 10 улиц и две площади общей площадью ~2.9 млн кв. футов (офисы, ритейл, жильё, досуг и отель). Куплен в январе 2016 вместе с Korea Investment Corporation примерно за $1.4 млрд.",
+        "whyMatters": "Пример стратегии Brookfield в недвижимости: трофейный актив в supply-constrained локации, купленный у прежнего владельца с дисконтом под операционное улучшение.",
+        "metrics": [
+         {
+          "label": "Зданий",
+          "value": "17"
+         },
+         {
+          "label": "Размер",
+          "value": "~2.9 млн кв. футов"
+         },
+         {
+          "label": "Гео",
+          "value": "Берлин"
+         }
+        ]
+       },
+       "source": "bpy.brookfield.com / brookfieldproperties.com"
+      },
+      {
+       "name": "IFC Seoul",
+       "what": "Международный финансовый центр Сеула: 3 башни, ТЦ, отель Conrad",
+       "stake": "контроль через фонды",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "3 офисные башни + ТЦ + 5★ отель",
+       "geography": "Южная Корея (Сеул)",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "International Finance Center Seoul (IFC Seoul) — комплекс из трёх офисных небоскрёбов, трёхуровневого торгового центра и пятизвёздочного отеля Conrad. Приобретён в конце 2016 года при выходе Brookfield на рынок Южной Кореи.",
+        "whyMatters": "Флагманский азиатский офисный актив; часть глобального портфеля trophy-офисов вместе с Canary Wharf, Manhattan West и Potsdamer Platz.",
+        "metrics": [
+         {
+          "label": "Башни",
+          "value": "3"
+         },
+         {
+          "label": "Состав",
+          "value": "офисы + ТЦ + отель"
+         },
+         {
+          "label": "Гео",
+          "value": "Сеул"
+         }
+        ]
+       },
+       "source": "brookfieldproperties.com"
       },
       {
        "name": "ARC (Advanced Research Clusters)",
@@ -1862,14 +2141,14 @@
        "value": "Clarios (~$13.2 млрд при покупке)"
       },
       {
-       "label": "Свежие carve-out 2025",
+       "label": "Свежие выделения 2025",
        "value": "Chemelex + Antylia ($3.0 млрд)"
       }
      ],
      "companies": [
       {
        "name": "Clarios",
-       "what": "Батареи для автомобилей — каждая третья машина в мире",
+       "what": "Батареи для автомобилей — находятся в каждой третьей машине в мире",
        "stake": "~30%",
        "value": "",
        "valueDisclosed": false,
@@ -1942,7 +2221,7 @@
        "key": false,
        "detail": {
         "summary": "Лидер в системах электрообогрева — кабельный обогрев труб и оборудования (electric heat tracing). Выделена из nVent Electric и переименована в Chemelex. Закрытие сделки 30.01.2025 при стоимости бизнеса $1.65 млрд. Brookfield контролирует вместе с институциональными партнёрами и CPP Investments.",
-        "whyMatters": "Свежее приобретение (carve-out) — стоимость создаётся через отделение и операционные улучшения.",
+        "whyMatters": "Свежее приобретение (выделение из nVent) — стоимость создаётся через отделение и операционные улучшения.",
         "metrics": [
          {
           "label": "Стоимость сделки",
