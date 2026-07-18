@@ -329,6 +329,200 @@ function Compare({ b }) {
   );
 }
 
+// ── dumbbell: two linked values per row (e.g. total vs monetized) ───────────
+// Answers "how much of the big number actually converts" — a single line per
+// company with two dots joined by a stem; the gap itself is the story.
+function Dumbbell({ b }) {
+  const [hov, setHov] = useState(null);
+  const all = b.items.flatMap((it) => [it.a, it.b]);
+  const max = Math.max(...all) * 1.08;
+  const pct = (v) => (v / max) * 100;
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      {b.takeaway && (
+        <div style={{ background: C.cardAlt, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '13px 16px', marginBottom: 16, fontSize: 13.5, color: C.ink, lineHeight: 1.6 }}>{b.takeaway}</div>
+      )}
+      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '18px 20px' }}>
+        <div style={{ display: 'flex', gap: 16, marginBottom: 14, fontSize: 10.5, color: C.inkFaint }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 9, height: 9, borderRadius: '50%', background: C.inkFaint, display: 'inline-block' }} />{b.aLabel}</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 9, height: 9, borderRadius: '50%', background: col(b.color || 'teal'), display: 'inline-block' }} />{b.bLabel}</span>
+        </div>
+        {b.items.map((it, i) => {
+          const on = hov === i;
+          const c = col(it.color || b.color || 'teal');
+          return (
+            <div key={i} onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}
+              style={{ marginBottom: i < b.items.length - 1 ? 20 : 0, opacity: hov === null || on ? 1 : 0.5, transition: 'opacity .12s' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 }}>
+                <span style={{ fontSize: 13, fontWeight: it.primary ? 700 : 500, color: C.ink }}>{it.name}</span>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: c, fontWeight: 600 }}>{it.pctLabel}</span>
+              </div>
+              <div style={{ position: 'relative', height: 22 }}>
+                <div style={{ position: 'absolute', top: 10, left: 0, right: 0, height: 2, background: C.track }} />
+                <div style={{ position: 'absolute', top: 10, height: 2, background: c + '99', left: `${pct(Math.min(it.a, it.b))}%`, width: `${pct(Math.max(it.a, it.b)) - pct(Math.min(it.a, it.b))}%` }} />
+                <div style={{ position: 'absolute', top: 4, left: `${pct(it.a)}%`, transform: 'translateX(-50%)', width: 14, height: 14, borderRadius: '50%', background: C.paper, border: `2px solid ${C.inkFaint}` }} />
+                <div style={{ position: 'absolute', top: 4, left: `${pct(it.b)}%`, transform: 'translateX(-50%)', width: 14, height: 14, borderRadius: '50%', background: c, border: `2px solid ${c}` }} />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10.5, color: C.inkFaint, fontFamily: 'var(--mono)', marginTop: 4 }}>
+                <span>{it.aDisplay}</span>
+                <span>{it.bDisplay}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 12, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+    </div>
+  );
+}
+
+// ── columns: simple vertical column chart ───────────────────────────────────
+// For metrics that read naturally as "how tall" rather than "how long" — a
+// single quarter's absolute figures side by side.
+function Columns({ b }) {
+  const [hov, setHov] = useState(null);
+  const max = Math.max(...b.items.map((it) => it.value)) * 1.15;
+  const H = 180;
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '20px 20px 14px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 18, height: H, justifyContent: 'center' }}>
+          {b.items.map((it, i) => {
+            const on = hov === i;
+            const c = col(it.color);
+            const h = Math.max(6, (it.value / max) * H);
+            return (
+              <div key={i} onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '0 1 84px', cursor: 'default' }}>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 600, color: on ? c : C.ink, marginBottom: 6 }}>{it.display}</div>
+                <div style={{ width: '100%', maxWidth: 56, height: h, background: c, opacity: on ? 1 : 0.82, borderRadius: '5px 5px 2px 2px', transition: 'opacity .12s, height .2s' }} />
+              </div>
+            );
+          })}
+        </div>
+        <div style={{ display: 'flex', gap: 18, justifyContent: 'center', marginTop: 10, borderTop: `1px solid ${C.lineSoft}`, paddingTop: 10 }}>
+          {b.items.map((it, i) => (
+            <div key={i} style={{ flex: '0 1 84px', textAlign: 'center', fontSize: 11.5, fontWeight: it.primary ? 700 : 500, color: it.primary ? col(it.color) : C.inkSoft }}>{it.name}</div>
+          ))}
+        </div>
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 12, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+    </div>
+  );
+}
+
+// ── lollipop: stem + dot, for rates/percentages compared side by side ───────
+function Lollipop({ b }) {
+  const [hov, setHov] = useState(null);
+  const max = Math.max(...b.items.map((it) => it.value)) * 1.12;
+  const sorted = [...b.items].sort((p, q) => p.value - q.value);
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px' }}>
+        {sorted.map((it) => {
+          const i = b.items.indexOf(it);
+          const on = hov === i;
+          const c = col(it.color);
+          return (
+            <div key={i} onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}
+              style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: it === sorted[sorted.length - 1] ? 0 : 14, opacity: hov === null || on ? 1 : 0.55, transition: 'opacity .12s' }}>
+              <div style={{ width: 108, flexShrink: 0, fontSize: 12.5, fontWeight: it.primary ? 700 : 500, color: C.ink }}>{it.name}</div>
+              <div style={{ flex: 1, position: 'relative', height: 8 }}>
+                <div style={{ position: 'absolute', top: 3, left: 0, right: 0, height: 2, background: C.track }} />
+                <div style={{ position: 'absolute', top: 3, left: 0, height: 2, background: c, width: `${(it.value / max) * 100}%`, borderRadius: 2 }} />
+                <div style={{ position: 'absolute', top: -2, left: `${(it.value / max) * 100}%`, transform: 'translateX(-50%)', width: 12, height: 12, borderRadius: '50%', background: c, boxShadow: on ? `0 0 0 4px ${c}33` : 'none' }} />
+              </div>
+              <div style={{ width: 56, textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 13, fontWeight: 600, color: c }}>{it.display}</div>
+            </div>
+          );
+        })}
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 12, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+    </div>
+  );
+}
+
+// ── quadrant: 2×2 strategic positioning map ─────────────────────────────────
+// Discrete placement in a labeled box rather than a precise numeric scatter —
+// reads as "where does each player sit" rather than "what are the coordinates".
+function Quadrant({ b }) {
+  const [hov, setHov] = useState(null);
+  const S = 420;
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '20px 24px 16px', display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ position: 'relative', width: S, height: S, flexShrink: 0 }}>
+          {/* axis labels */}
+          <div style={{ position: 'absolute', top: -22, left: '50%', transform: 'translateX(-50%)', fontSize: 10, letterSpacing: '.06em', color: C.inkSoft, whiteSpace: 'nowrap' }}>{b.y.top}</div>
+          <div style={{ position: 'absolute', bottom: -22, left: '50%', transform: 'translateX(-50%)', fontSize: 10, letterSpacing: '.06em', color: C.inkSoft, whiteSpace: 'nowrap' }}>{b.y.bottom}</div>
+          <div style={{ position: 'absolute', left: -8, top: '50%', transform: 'translateY(-50%) rotate(-90deg) translateY(-50%)', transformOrigin: 'left center', fontSize: 10, letterSpacing: '.06em', color: C.inkSoft, whiteSpace: 'nowrap' }}>{b.x.left}</div>
+          <div style={{ position: 'absolute', right: -8, top: '50%', transform: 'translateY(-50%) rotate(90deg) translateY(-50%)', transformOrigin: 'right center', fontSize: 10, letterSpacing: '.06em', color: C.inkSoft, whiteSpace: 'nowrap' }}>{b.x.right}</div>
+          {/* box */}
+          <div style={{ position: 'absolute', inset: 0, border: `1px solid ${C.line}`, borderRadius: 10 }}>
+            <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 1, background: C.lineSoft }} />
+            <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 1, background: C.lineSoft }} />
+          </div>
+          {/* points — x,y in [0,1], 0=left/top per axis labels above */}
+          {b.items.map((it, i) => {
+            const on = hov === i;
+            const c = col(it.color);
+            const left = it.x * 100, top = it.y * 100;
+            return (
+              <div key={i} onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}
+                style={{ position: 'absolute', left: `${left}%`, top: `${top}%`, transform: 'translate(-50%,-50%)', cursor: 'pointer', textAlign: 'center', zIndex: on ? 5 : 1 }}>
+                <div style={{ width: it.primary ? 18 : 13, height: it.primary ? 18 : 13, borderRadius: '50%', background: c, opacity: on || it.primary ? 1 : 0.8, border: it.primary ? `2px solid ${C.ink}55` : 'none', margin: '0 auto', boxShadow: on ? `0 0 0 6px ${c}2e` : 'none', transition: 'box-shadow .15s' }} />
+                <div style={{ marginTop: 5, fontSize: 11.5, fontWeight: it.primary ? 700 : 500, color: on || it.primary ? C.ink : C.inkSoft, whiteSpace: 'nowrap' }}>{it.name}</div>
+                {on && it.note && (
+                  <div style={{ position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)', marginTop: 4, width: 190, background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 7, padding: '7px 10px', zIndex: 6, pointerEvents: 'none', boxShadow: '0 6px 20px rgba(0,0,0,.4)' }}>
+                    <div style={{ fontSize: 11, color: C.inkSoft, lineHeight: 1.45 }}>{it.note}</div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 12, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+    </div>
+  );
+}
+
+// ── mix: per-company segment-composition mini-bars ──────────────────────────
+function Mix({ b }) {
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${b.min || 240}px, 1fr))`, gap: 14 }}>
+        {b.items.map((co, i) => {
+          const max = Math.max(...co.segments.map((s) => s.pct));
+          return (
+            <div key={i} style={{ background: C.card, border: `1px solid ${co.primary ? col(co.color) + '66' : C.line}`, borderRadius: 10, padding: '14px 16px' }}>
+              <div style={{ fontSize: 13.5, fontWeight: co.primary ? 700 : 600, color: C.ink, marginBottom: 10 }}>{co.name}</div>
+              {co.segments.map((s, si) => (
+                <div key={si} style={{ marginBottom: si < co.segments.length - 1 ? 7 : 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10.5, color: C.inkSoft, marginBottom: 2 }}>
+                    <span>{s.label}</span>
+                    <span style={{ fontFamily: 'var(--mono)', color: C.inkFaint }}>{s.pct}%</span>
+                  </div>
+                  <div style={{ height: 7, background: C.track, borderRadius: 3, overflow: 'hidden' }}>
+                    <div style={{ width: `${(s.pct / max) * 100}%`, height: '100%', background: col(co.color), opacity: 0.4 + 0.6 * (s.pct / max), borderRadius: 3 }} />
+                  </div>
+                </div>
+              ))}
+              {co.note && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 9, lineHeight: 1.4, fontStyle: 'italic' }}>{co.note}</div>}
+            </div>
+          );
+        })}
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 12, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+    </div>
+  );
+}
+
 // ── moat: two-column strategic wins-vs-gaps analysis ────────────────────────
 // Left column = durable structural advantages (where BN clearly wins), right
 // column = where it competes but lags. Each item carries a strength meter and
@@ -673,10 +867,21 @@ function Facts({ b }) {
 
 // ── text: short paragraph (use sparingly) ───────────────────────────────────
 function Text({ b }) {
+  const render = (s) => {
+    if (!s) return null;
+    const parts = s.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((p, i) => p.startsWith('**') && p.endsWith('**')
+      ? <strong key={i} style={{ color: C.ink, fontWeight: 600 }}>{p.slice(2, -2)}</strong>
+      : p);
+  };
+  const paragraphs = (b.body || '').split('\n\n');
   return (
     <div>
-      <Title>{b.title}</Title>
-      <p style={{ fontSize: 13.5, color: C.inkSoft, lineHeight: 1.65, margin: 0, maxWidth: 760 }}>{b.body}</p>
+      <Title note={b.note}>{b.title}</Title>
+      {paragraphs.map((para, i) => (
+        <p key={i} style={{ fontSize: 13.5, color: C.inkSoft, lineHeight: 1.65, margin: i < paragraphs.length - 1 ? '0 0 14px' : 0, maxWidth: 760 }}>{render(para)}</p>
+      ))}
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 14, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
     </div>
   );
 }
@@ -860,7 +1065,58 @@ function RadarHeat({ b }) {
   );
 }
 
-const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, pie: Pie, compare: Compare, moat: Moat, posgrid: PosGrid, flows: Flows, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat, risksplit: RiskSplit, scenarios: Scenarios };
+// ── chains: how a risk transmits from asset level up to the holdco ──────────
+// Each card is one channel by which an asset-level loss actually reaches the
+// shareholder — an anchor number, then the causal chain as ordered steps, then
+// the caveat that keeps the number honest. Channels are additive, not
+// alternatives: one bad outcome can arrive through all three at once.
+function Chains({ b }) {
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      {b.takeaway && (
+        <div style={{ background: C.cardAlt, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '13px 16px', marginBottom: 16, fontSize: 13.5, color: C.ink, lineHeight: 1.6 }}>{b.takeaway}</div>
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${b.min || 300}px, 1fr))`, gap: 12 }}>
+        {b.items.map((ch, i) => {
+          const c = col(ch.color);
+          return (
+            <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `3px solid ${c}`, borderRadius: 10, padding: '15px 16px', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: 10, letterSpacing: '.07em', textTransform: 'uppercase', color: c, fontWeight: 700, marginBottom: 9 }}>{ch.name}</div>
+              {ch.anchor && (
+                <div style={{ marginBottom: 13, paddingBottom: 13, borderBottom: `1px solid ${C.lineSoft}` }}>
+                  <div style={{ fontFamily: 'var(--mono)', fontSize: 21, fontWeight: 500, color: C.ink, lineHeight: 1.1 }}>{ch.anchor}</div>
+                  {ch.anchorLabel && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 4, lineHeight: 1.45 }}>{ch.anchorLabel}</div>}
+                </div>
+              )}
+              {ch.steps && (
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {ch.steps.map((s, si) => (
+                    <div key={si}>
+                      <div style={{ display: 'flex', gap: 9, alignItems: 'flex-start' }}>
+                        <span style={{ width: 6, height: 6, borderRadius: 3, background: c, flexShrink: 0, marginTop: 6 }} />
+                        <span style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>{s}</span>
+                      </div>
+                      {si < ch.steps.length - 1 && (
+                        <div style={{ marginLeft: 2.5, width: 1, height: 12, background: c + '55' }} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {ch.note && (
+                <div style={{ marginTop: 'auto', paddingTop: 12, fontSize: 11, color: C.inkFaint, fontStyle: 'italic', lineHeight: 1.5 }}>{ch.note}</div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 14, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
+    </div>
+  );
+}
+
+const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, pie: Pie, compare: Compare, moat: Moat, posgrid: PosGrid, flows: Flows, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat, risksplit: RiskSplit, scenarios: Scenarios, chains: Chains, dumbbell: Dumbbell, columns: Columns, lollipop: Lollipop, quadrant: Quadrant, mix: Mix };
 
 export default function SectionDeep({ blocks }) {
   if (!blocks || !blocks.length) return null;

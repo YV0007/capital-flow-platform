@@ -167,8 +167,8 @@ function Subgroup({ g, forceOpen }) {
   );
 }
 
-function SectorBlock({ b, open, onToggle, search, keyOnly }) {
-  // filter rows inside groups
+// ── filter a sector's groups by search / keyOnly ────────────────────────────
+function filterBlock(b, search, keyOnly) {
   const groups = b.groups.map((g) => {
     let rows = g.rows;
     if (search) rows = rows.filter((r) => (r.name + ' ' + (r.what || '')).toLowerCase().includes(search.toLowerCase()));
@@ -176,25 +176,49 @@ function SectorBlock({ b, open, onToggle, search, keyOnly }) {
     return { ...g, rows };
   }).filter((g) => g.rows.length);
   const total = groups.reduce((s, g) => s + g.rows.length, 0);
-  const filtering = !!(search || keyOnly);
-  if (filtering && total === 0) return null;
+  return { ...b, groups, total };
+}
 
+// ── left rail: one selectable sector ────────────────────────────────────────
+function RailItem({ b, active, onClick, filtering }) {
   return (
-    <section style={{ marginBottom: 14, border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden' }}>
-      <button onClick={onToggle} style={{ width: '100%', display: 'grid', gridTemplateColumns: '20px 1fr auto', gap: 12, alignItems: 'center', background: C.cardAlt, border: 'none', padding: '14px 18px', cursor: 'pointer', textAlign: 'left' }}>
-        <span style={{ fontSize: 13, color: C.inkFaint }}>{open ? '▾' : '▸'}</span>
-        <span style={{ minWidth: 0 }}>
-          <span style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: 'var(--serif)', fontSize: 19, fontWeight: 500, color: C.ink }}>{b.name}</span>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint }}>{total}</span>
-          </span>
-          {b.plain && <span style={{ display: 'block', fontSize: 12.5, color: C.inkSoft, marginTop: 3, lineHeight: 1.45 }}>{b.plain}</span>}
+    <button onClick={onClick} style={{
+      width: '100%', textAlign: 'left', cursor: 'pointer', display: 'block',
+      background: active ? C.cardAlt : 'transparent',
+      border: 'none', borderLeft: `3px solid ${active ? C.teal : 'transparent'}`,
+      padding: '13px 16px', transition: 'background .12s',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+        <span style={{ fontFamily: 'var(--serif)', fontSize: 15.5, fontWeight: 500, color: active ? C.ink : C.inkSoft, lineHeight: 1.25, flex: 1, minWidth: 0 }}>{b.name}</span>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: active ? C.teal : C.inkFaint, flexShrink: 0 }}>
+          {filtering ? `${b.total} найдено` : b.total}
         </span>
-        {b.stat && <span style={{ justifySelf: 'end', maxWidth: 240, textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.teal, lineHeight: 1.4 }}>{b.stat}</span>}
-      </button>
+      </div>
+      {b.plain && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 3, lineHeight: 1.4, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{b.plain}</div>}
+    </button>
+  );
+}
 
-      {open && <div>{groups.map((g, gi) => <Subgroup key={gi} g={g} forceOpen={filtering} />)}</div>}
-    </section>
+// ── right pane: the selected sector, its stat + companies ───────────────────
+function SectorPane({ b, filtering }) {
+  if (!b) return null;
+  if (filtering && b.total === 0) {
+    return <div style={{ padding: '40px 20px', textAlign: 'center', fontSize: 13, color: C.inkFaint }}>Ничего не найдено в этом секторе</div>;
+  }
+  return (
+    <div>
+      <div style={{ padding: '2px 2px 16px' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: b.plain ? 7 : 0 }}>
+          <h3 style={{ fontFamily: 'var(--serif)', fontSize: 23, fontWeight: 500, color: C.ink, margin: 0, letterSpacing: '-.01em' }}>{b.name}</h3>
+          <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{b.total} {filtering ? 'найдено' : 'позиций'}</span>
+        </div>
+        {b.plain && <p style={{ fontSize: 13, color: C.inkSoft, lineHeight: 1.55, margin: '0 0 10px', maxWidth: 680 }}>{b.plain}</p>}
+        {b.stat && <div style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: C.teal, lineHeight: 1.5 }}>{b.stat}</div>}
+      </div>
+      {b.total === 0
+        ? <div style={{ padding: '18px 16px', border: `1px solid ${C.line}`, borderRadius: 8, background: C.card, fontSize: 12.5, color: C.inkFaint, lineHeight: 1.6 }}>Отдельные позиции по этому сегменту поимённо не раскрываются — показатели сегмента приведены выше.</div>
+        : b.groups.map((g, gi) => <Subgroup key={gi} g={g} forceOpen={filtering || b.groups.length === 1} />)}
+    </div>
   );
 }
 
@@ -203,7 +227,12 @@ export default function PortfolioDeep({ data }) {
   const [tab, setTab] = useState('sector');
   const [search, setSearch] = useState('');
   const [keyOnly, setKeyOnly] = useState(false);
-  const [open, setOpen] = useState(() => { const o = {}; n.blocks.forEach((b, i) => { o[b.id || i] = i < 2; }); return o; });
+  // default to the first sector that actually holds companies (some, e.g. asset
+  // management, carry no named positions and would open to an empty pane)
+  const [active, setActive] = useState(() => {
+    const i = n.blocks.findIndex((b) => b.groups.some((g) => g.rows.length));
+    return i >= 0 ? i : 0;
+  });
 
   const tabs = [
     n.composition.length && ['sector', 'По секторам'],
@@ -217,7 +246,7 @@ export default function PortfolioDeep({ data }) {
     const dark = '#0B130F';
     return (
       <div>
-        <div style={{ display: 'flex', height: 34, borderRadius: 8, overflow: 'hidden', border: `1px solid ${C.line}`, marginBottom: 20 }}>
+        <div style={{ display: 'flex', height: 26, borderRadius: 8, overflow: 'hidden', border: `1px solid ${C.line}`, marginBottom: 13 }}>
           {sorted.map((it, i) => (
             <div key={i} title={`${it[labelKey]} · ${it.pct}%${it[valKey] ? ' · ' + it[valKey] : ''}`}
               style={{ width: `${it.pct}%`, background: PALETTE[i % PALETTE.length], display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: i < sorted.length - 1 ? `1px solid ${C.paper}` : 'none', minWidth: 2 }}>
@@ -245,8 +274,8 @@ export default function PortfolioDeep({ data }) {
 
       {/* ── Куда вложены деньги ── */}
       {tabs.length > 0 && (
-        <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px', marginBottom: 26 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
+        <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '13px 16px', marginBottom: 22 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkSoft, marginRight: 6 }}>Куда вложены деньги</span>
             {tabs.map(([id, lab]) => {
               const on = tab === id;
@@ -291,22 +320,40 @@ export default function PortfolioDeep({ data }) {
       )}
 
       {/* ── Filters ── */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск по компании…" style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, fontFamily: 'var(--sans)', width: 220, outline: 'none' }} />
-        <span style={{ fontSize: 11.5, color: C.inkFaint, marginLeft: 'auto' }}>Сектор → компания → клик для деталей</span>
+        <span style={{ fontSize: 11.5, color: C.inkFaint, marginLeft: 'auto' }}>Сектор слева → компания → клик для деталей</span>
       </div>
 
-      {/* ── Sector blocks ── */}
-      {n.blocks.map((b, i) => {
-        const key = b.id || i;
-        return <SectorBlock key={key} b={b} open={!!open[key]} onToggle={() => setOpen((o) => ({ ...o, [key]: !o[key] }))} search={search} keyOnly={keyOnly} />;
-      })}
+      {/* ── Sectors: master (left rail) + detail (right pane) ── */}
+      {(() => {
+        const filtering = !!(search || keyOnly);
+        const filtered = n.blocks.map((b) => filterBlock(b, search, keyOnly));
+        // when filtering, keep the active sector if it still has hits, else jump to the first that does
+        let shown = active;
+        if (filtering && filtered[shown] && filtered[shown].total === 0) {
+          const first = filtered.findIndex((b) => b.total > 0);
+          if (first >= 0) shown = first;
+        }
+        const current = filtered[shown];
+        return (
+          <div style={{ display: 'flex', gap: 20, alignItems: 'stretch', flexWrap: 'wrap', minHeight: 580 }}>
+            {/* left rail */}
+            <nav style={{ flex: '1 1 260px', maxWidth: 320, minWidth: 240, border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden', background: C.card, alignSelf: 'stretch' }}>
+              {filtered.map((b, i) => (
+                <div key={b.id || i} style={{ borderTop: i ? `1px solid ${C.lineSoft}` : 'none', opacity: filtering && b.total === 0 ? 0.4 : 1 }}>
+                  <RailItem b={b} active={i === shown} filtering={filtering} onClick={() => setActive(i)} />
+                </div>
+              ))}
+            </nav>
+            {/* right pane */}
+            <div style={{ flex: '999 1 520px', minWidth: 300, border: `1px solid ${C.line}`, borderRadius: 10, background: C.card, padding: '20px 24px' }}>
+              <SectorPane b={current} filtering={filtering} />
+            </div>
+          </div>
+        );
+      })()}
 
-      {data.notDisclosed && (
-        <div style={{ marginTop: 18, padding: '12px 14px', background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 8, fontSize: 12, color: C.inkSoft, lineHeight: 1.6 }}>
-          <span style={{ fontWeight: 600, color: C.ink }}>Что не раскрывается поимённо: </span>{data.notDisclosed}
-        </div>
-      )}
     </div>
   );
 }

@@ -300,6 +300,40 @@ function OverviewBlock({ overview }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+//  Top bets — 5 flagship names, one per pillar. The memorability anchor:
+//  after the dashboard, "Brookfield = these five names" should stick.
+// ═══════════════════════════════════════════════════════════════════════════
+
+function TopBets({ data }) {
+  const items = data.items || [];
+  return (
+    <div style={{ marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14 }}>
+        <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint }}>Флагманские ставки · 5 имён</div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 12 }}>
+        {items.map((b, i) => {
+          const c = C[b.color] || C.teal;
+          return (
+            <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `3px solid ${c}`, borderRadius: 10, padding: '15px 16px', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: c, fontWeight: 700, marginBottom: 9 }}>{b.sector}</div>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: 21, fontWeight: 500, color: C.ink, lineHeight: 1.12, marginBottom: 6, letterSpacing: '-.01em' }}>{b.name}</div>
+              {b.role && <div style={{ fontSize: 12, color: C.ink, fontWeight: 500, marginBottom: 8 }}>{b.role}</div>}
+              {b.fact && <div style={{ fontSize: 11.5, color: C.inkSoft, lineHeight: 1.5, marginBottom: 12 }}>{b.fact}</div>}
+              {b.embodies && (
+                <div style={{ marginTop: 'auto', paddingTop: 10 }}>
+                  <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 600, letterSpacing: '.03em', color: c, background: c + '18', border: `1px solid ${c}44`, borderRadius: 6, padding: '3px 9px' }}>{b.embodies}</span>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 //  Recent moves — compact table, each row expands to a brief strategic read
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -360,20 +394,26 @@ function NewsBlock({ items }) {
   return (
     <div style={{ marginBottom: 24 }}>
       <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 12 }}>Новости и события</div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: 14 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
         {items.map((n, i) => {
           const m = NEWS_META[n.type] || NEWS_META.news;
           return (
-            <div key={i} style={{ display: 'flex', gap: 14, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px' }}>
-              <div style={{ width: 40, height: 40, flexShrink: 0, borderRadius: 20, background: m.color + '1A', border: `1px solid ${m.color}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--mono)', fontSize: 15, color: m.color }}>{m.glyph}</div>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: 11, color: C.inkFaint, marginBottom: 4 }}>
-                  <span style={{ color: m.color }}>{m.label}</span>
-                  <span style={{ margin: '0 6px' }}>·</span>
-                  <span style={{ fontFamily: 'var(--mono)' }}>{n.date}</span>
+            <div key={i} style={{ display: 'flex', flexDirection: 'column', background: C.card, border: `1px solid ${C.line}`, borderRadius: 6, overflow: 'hidden', height: '100%' }}>
+              {n.image && (
+                <div style={{ height: 148, background: C.cardAlt, borderBottom: `1px solid ${C.line}`, overflow: 'hidden' }}>
+                  <img src={n.image} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 </div>
-                <div style={{ fontFamily: 'var(--serif)', fontSize: 16.5, fontWeight: 500, color: C.ink, lineHeight: 1.3, marginBottom: 6 }}>{n.title}</div>
-                <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{n.text}</div>
+              )}
+              <div style={{ padding: '13px 15px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 8 }}>
+                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: m.color, background: m.color + '1A', border: `1px solid ${m.color}44`, borderRadius: 3, padding: '2px 7px' }}>{m.label}</span>
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: C.inkFaint }}>{n.date}</span>
+                </div>
+                <div style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, lineHeight: 1.32, marginBottom: 7 }}>{n.title}</div>
+                <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: n.url ? 12 : 0 }}>{n.text}</div>
+                {n.url && (
+                  <a href={n.url} target="_blank" rel="noopener noreferrer" style={{ marginTop: 'auto', alignSelf: 'flex-start', fontSize: 11.5, color: m.color, fontWeight: 600, textDecoration: 'none' }}>Читать подробнее →</a>
+                )}
               </div>
             </div>
           );
@@ -665,6 +705,12 @@ export default function HoldingsV2({ onBack }) {
               ←
             </button>
           )}
+          {isBloomberg && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.inkFaint, flexShrink: 0 }}>
+              <span style={{ letterSpacing: '.04em' }}>Holdings</span>
+              <span style={{ opacity: .45 }}>/</span>
+            </div>
+          )}
           <div style={{ position: 'relative' }}>
             <button onClick={() => setSwitcherOpen(!switcherOpen)} style={{ display: 'flex', alignItems: 'center', gap: 9, background: C.card, border: `1px solid ${switcherOpen ? C.teal : C.line}`, borderRadius: 9, padding: '7px 12px', cursor: 'pointer' }}>
               <span style={{ width: 26, height: 26, borderRadius: 6, background: META[cid]?.color || C.teal, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: (META[cid]?.mono || '').length > 2 ? 9 : 11, fontWeight: 600, color: '#fff' }}>{META[cid]?.mono || '·'}</span>
@@ -693,67 +739,58 @@ export default function HoldingsV2({ onBack }) {
               </>
             )}
           </div>
-          {/* Sections menu (Bloomberg IA) — wide mega-menu anchored to the top bar */}
-          {isBloomberg && (
-            <div>
-              <button onClick={() => setMenuOpen(!menuOpen)} style={{ display: 'flex', alignItems: 'center', gap: 8, background: menuOpen ? C.cardAlt : C.card, border: `1px solid ${menuOpen ? C.teal : C.line}`, borderRadius: 9, padding: '9px 13px', cursor: 'pointer', color: C.ink, fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 500 }}>
-                <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 3 }}>
-                  {[0, 1, 2].map((i) => <span key={i} style={{ width: 13, height: 1.5, background: C.inkSoft, borderRadius: 1 }} />)}
-                </span>
-                <span style={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {deepIdx != null ? data.sections[deepIdx].title : 'Разделы'}
-                </span>
-                <span style={{ color: C.inkSoft, fontSize: 9, transform: menuOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▼</span>
-              </button>
-              {menuOpen && (
-                <>
-                  <div onClick={() => setMenuOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 40 }} />
-                  <div style={{ position: 'absolute', top: 'calc(100% + 2px)', left: 40, right: 40, zIndex: 50, background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, boxShadow: '0 16px 56px rgba(0,0,0,.55)', padding: 18, maxHeight: '80vh', overflowY: 'auto' }}>
-                    {/* Home */}
-                    <button onClick={() => { setDeepIdx(null); setMenuOpen(false); window.scrollTo({ top: 0 }); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: deepIdx == null ? C.cardAlt : 'transparent', border: `1px solid ${deepIdx == null ? C.teal + '55' : 'transparent'}`, borderRadius: 8, padding: '11px 14px', cursor: 'pointer', textAlign: 'left', marginBottom: 14 }}>
-                      <span style={{ fontFamily: 'var(--mono)', fontSize: 13, color: C.inkSoft }}>⌂</span>
-                      <span style={{ fontSize: 14.5, fontWeight: deepIdx == null ? 600 : 500, color: C.ink }}>Обзор</span>
-                      <span style={{ fontSize: 11.5, color: C.inkFaint }}>— главная страница компании: снимок бизнеса и ключевые ходы</span>
-                      {deepIdx == null && <span style={{ marginLeft: 'auto', color: C.teal, fontSize: 13 }}>✓</span>}
-                    </button>
-                    {/* Sections — 4 tier columns, wide mega-menu */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 18 }}>
-                      {TIERS.map((tier) => {
-                        const secs = data.sections.map((s, i) => ({ s, i })).filter(({ s }) => s.tier === tier.id);
-                        if (!secs.length) return null;
-                        return (
-                          <div key={tier.id} style={{ borderTop: `2px solid ${tier.color}`, paddingTop: 10 }}>
-                            <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: tier.color, padding: '0 4px 8px', lineHeight: 1.4 }}>{tier.label}</div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                              {secs.map(({ s, i }) => {
-                                const on = deepIdx === i;
-                                return (
-                                  <button key={s.id} onClick={() => openSection(i)} className="navlink" style={{ width: '100%', display: 'flex', alignItems: 'flex-start', gap: 10, background: on ? C.cardAlt : 'transparent', border: 'none', borderRadius: 8, padding: '10px 8px', cursor: 'pointer', textAlign: 'left' }}
-                                    onMouseEnter={(e) => { if (!on) e.currentTarget.style.background = C.cardAlt; }}
-                                    onMouseLeave={(e) => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
-                                    <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: on ? tier.color : C.inkFaint, width: 24, flexShrink: 0, paddingTop: 2 }}>{s.n}</span>
-                                    <span style={{ flex: 1, minWidth: 0 }}>
-                                      <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                                        <span style={{ fontSize: 14.5, fontWeight: on ? 600 : 500, color: C.ink, lineHeight: 1.3 }}>{s.title}</span>
-                                        {on && <span style={{ color: tier.color, fontSize: 12 }}>✓</span>}
-                                      </span>
-                                      {s.sub && <span style={{ display: 'block', fontSize: 11.5, color: C.inkFaint, lineHeight: 1.45, marginTop: 3 }}>{s.sub}</span>}
-                                    </span>
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          )}
           <HoldingSearch key={cid} data={data} portfolio={PORT[cid]} sections={data.sections} onOpenSection={openSection} onGoHome={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} />
         </div>
+
+        {/* ── Row 2: category tabs (Variant A) — 4 tiers, each opens its sub-sections on hover ── */}
+        {isBloomberg && (
+          <div style={{ borderTop: `1px solid ${C.line}` }} onMouseLeave={() => setMenuOpen(null)}>
+            <div style={{ margin: '0 auto', padding: '0 40px', display: 'flex', alignItems: 'stretch', gap: 2 }}>
+              <button onClick={() => { setDeepIdx(null); setMenuOpen(null); window.scrollTo({ top: 0 }); }}
+                style={{ background: 'transparent', border: 'none', padding: '11px 14px', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: deepIdx == null ? 600 : 500, color: deepIdx == null ? C.ink : C.inkSoft, borderBottom: `2px solid ${deepIdx == null ? C.teal : 'transparent'}`, transition: 'color .15s' }}
+                onMouseEnter={(e) => { setMenuOpen(null); if (deepIdx != null) e.currentTarget.style.color = C.ink; }}
+                onMouseLeaveCapture={(e) => { if (deepIdx != null) e.currentTarget.style.color = C.inkSoft; }}>
+                Обзор
+              </button>
+              {TIERS.map((tier) => {
+                const secs = data.sections.map((s, i) => ({ s, i })).filter(({ s }) => s.tier === tier.id);
+                if (!secs.length) return null;
+                const activeInTier = deepIdx != null && secs.some(({ i }) => i === deepIdx);
+                const open = menuOpen === tier.id;
+                return (
+                  <div key={tier.id} style={{ position: 'relative' }} onMouseEnter={() => setMenuOpen(tier.id)}>
+                    <button onClick={() => openSection(secs[0].i)}
+                      style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'transparent', border: 'none', padding: '11px 14px', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: activeInTier ? 600 : 500, color: activeInTier || open ? C.ink : C.inkSoft, borderBottom: `2px solid ${activeInTier ? tier.color : 'transparent'}`, transition: 'color .15s' }}>
+                      {tier.label}
+                      <span style={{ fontSize: 8, color: C.inkFaint, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▾</span>
+                    </button>
+                    {open && (
+                      <div style={{ position: 'absolute', top: '100%', left: 0, zIndex: 60, minWidth: 320, background: C.card, border: `1px solid ${C.line}`, borderTop: `2px solid ${tier.color}`, borderRadius: '0 0 10px 10px', boxShadow: '0 16px 48px rgba(0,0,0,.5)', padding: 8 }}>
+                        {secs.map(({ s, i }) => {
+                          const on = deepIdx === i;
+                          return (
+                            <button key={s.id} onClick={() => { openSection(i); setMenuOpen(null); }} className="navlink" style={{ width: '100%', display: 'flex', alignItems: 'flex-start', gap: 10, background: on ? C.cardAlt : 'transparent', border: 'none', borderRadius: 8, padding: '9px 10px', cursor: 'pointer', textAlign: 'left' }}
+                              onMouseEnter={(e) => { if (!on) e.currentTarget.style.background = C.cardAlt; }}
+                              onMouseLeave={(e) => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
+                              <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: on ? tier.color : C.inkFaint, width: 22, flexShrink: 0, paddingTop: 2 }}>{s.n}</span>
+                              <span style={{ flex: 1, minWidth: 0 }}>
+                                <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                                  <span style={{ fontSize: 14, fontWeight: on ? 600 : 500, color: C.ink, lineHeight: 1.3 }}>{s.title}</span>
+                                  {on && <span style={{ color: tier.color, fontSize: 11 }}>✓</span>}
+                                </span>
+                                {s.sub && <span style={{ display: 'block', fontSize: 11, color: C.inkFaint, lineHeight: 1.4, marginTop: 2 }}>{s.sub}</span>}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── Body ── */}
@@ -785,11 +822,13 @@ export default function HoldingsV2({ onBack }) {
                 <div style={{ fontSize: 13.5, color: C.inkSoft, lineHeight: 1.65, alignSelf: 'center' }}>{data.summary}</div>
               )}
               <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 20px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                   <div>
-                    <span style={{ fontSize: 12, color: C.inkFaint, fontFamily: 'var(--mono)', letterSpacing: 1, marginRight: 10 }}>{data.ticker}</span>
-                    <span style={{ fontFamily: 'var(--mono)', fontSize: 28, fontWeight: 500, color: C.ink }}>{data.priceChart.current}</span>
-                    <span style={{ fontFamily: 'var(--mono)', fontSize: 14, color: data.priceChart.change.includes('+') ? C.teal : C.clay, marginLeft: 12 }}>{data.priceChart.change}</span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+                      <span style={{ fontFamily: 'var(--mono)', fontSize: 30, fontWeight: 500, color: C.ink, lineHeight: 1 }}>{data.priceChart.current}</span>
+                      <span style={{ fontFamily: 'var(--mono)', fontSize: 14, color: data.priceChart.change.includes('+') ? C.teal : C.clay }}>{data.priceChart.change}</span>
+                    </div>
+                    <div style={{ fontSize: 10.5, color: C.inkFaint, fontFamily: 'var(--mono)', letterSpacing: 1.5, marginTop: 6 }}>{data.ticker}</div>
                   </div>
                   <span style={{ fontSize: 10.5, color: C.inkFaint }}>{data.priceChart.period}</span>
                 </div>
@@ -828,6 +867,9 @@ export default function HoldingsV2({ onBack }) {
 
           {/* Overview — hero KPIs + preview charts */}
           {data.overview && <div style={{ marginBottom: 24 }}><OverviewBlock overview={data.overview} /></div>}
+
+          {/* Top bets — 5 flagship names, the memorability anchor */}
+          {data.topBets && data.topBets.items && data.topBets.items.length > 0 && <TopBets data={data.topBets} />}
 
           {/* News & events — recent headlines, insider moves, dividends */}
           {data.news && data.news.length > 0 && <NewsBlock items={data.news} />}
