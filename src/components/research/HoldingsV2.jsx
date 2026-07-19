@@ -649,8 +649,11 @@ export default function HoldingsV2({ onBack }) {
 
   // Bloomberg IA (Brookfield only for now): home = header + snapshot + moves +
   // overview; sections live in a top-bar dropdown, each opening its own page.
-  // Other companies keep the bento-grid landing until roll-out.
+  // isBloomberg → rich overview landing (Brookfield). showNav → enhanced header
+  // with category-tab dropdowns, rolled out to every holding; non-Bloomberg
+  // holdings keep their bento-grid landing body.
   const isBloomberg = cid === 'brookfield';
+  const showNav = !!(data && data.sections && data.sections.length);
   const openSection = (i) => { setDeepIdx(i); setMenuOpen(false); window.scrollTo({ top: 0 }); };
 
   if (!data) return <div style={{ padding: 64, color: C.inkSoft }}>Нет мигрированных холдингов.</div>;
@@ -697,7 +700,7 @@ export default function HoldingsV2({ onBack }) {
 
       {/* ── Top bar (sticky): company switcher + section dots ── */}
       <div style={{ position: 'sticky', top: 0, zIndex: 50, background: C.paper + 'F2', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.line}` }}>
-        <div style={{ maxWidth: isBloomberg ? 'none' : 1240, margin: '0 auto', padding: '12px 40px', display: 'flex', alignItems: 'center', gap: 18, position: 'relative' }}>
+        <div onMouseLeave={() => setMenuOpen(null)} style={{ maxWidth: 'none', margin: '0 auto', padding: '0 40px', minHeight: 56, display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
           {onBack && (
             <button onClick={onBack} title="Назад к исследованиям" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, background: C.card, border: `1px solid ${C.line}`, borderRadius: 8, cursor: 'pointer', color: C.inkSoft, fontSize: 14, flexShrink: 0, transition: 'border-color .15s, color .15s' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = C.teal; e.currentTarget.style.color = C.teal; }}
@@ -705,7 +708,7 @@ export default function HoldingsV2({ onBack }) {
               ←
             </button>
           )}
-          {isBloomberg && (
+          {showNav && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.inkFaint, flexShrink: 0 }}>
               <span style={{ letterSpacing: '.04em' }}>Holdings</span>
               <span style={{ opacity: .45 }}>/</span>
@@ -739,17 +742,11 @@ export default function HoldingsV2({ onBack }) {
               </>
             )}
           </div>
-          <HoldingSearch key={cid} data={data} portfolio={PORT[cid]} sections={data.sections} onOpenSection={openSection} onGoHome={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} />
-        </div>
-
-        {/* ── Row 2: category tabs (Variant A) — 4 tiers, each opens its sub-sections on hover ── */}
-        {isBloomberg && (
-          <div style={{ borderTop: `1px solid ${C.line}` }} onMouseLeave={() => setMenuOpen(null)}>
-            <div style={{ margin: '0 auto', padding: '0 40px', display: 'flex', alignItems: 'stretch', gap: 2 }}>
+          {showNav && (
+            <nav onMouseLeave={() => setMenuOpen(null)} style={{ display: 'flex', alignItems: 'stretch', alignSelf: 'stretch', gap: 0, marginLeft: 8 }}>
               <button onClick={() => { setDeepIdx(null); setMenuOpen(null); window.scrollTo({ top: 0 }); }}
-                style={{ background: 'transparent', border: 'none', padding: '11px 14px', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: deepIdx == null ? 600 : 500, color: deepIdx == null ? C.ink : C.inkSoft, borderBottom: `2px solid ${deepIdx == null ? C.teal : 'transparent'}`, transition: 'color .15s' }}
-                onMouseEnter={(e) => { setMenuOpen(null); if (deepIdx != null) e.currentTarget.style.color = C.ink; }}
-                onMouseLeaveCapture={(e) => { if (deepIdx != null) e.currentTarget.style.color = C.inkSoft; }}>
+                onMouseEnter={() => setMenuOpen(null)}
+                style={{ display: 'flex', alignItems: 'center', height: '100%', background: 'transparent', border: 'none', padding: '0 12px', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: deepIdx == null ? 600 : 500, color: deepIdx == null ? C.ink : C.inkSoft, borderBottom: `2px solid ${deepIdx == null ? C.teal : 'transparent'}`, transition: 'color .15s', whiteSpace: 'nowrap' }}>
                 Обзор
               </button>
               {TIERS.map((tier) => {
@@ -758,9 +755,9 @@ export default function HoldingsV2({ onBack }) {
                 const activeInTier = deepIdx != null && secs.some(({ i }) => i === deepIdx);
                 const open = menuOpen === tier.id;
                 return (
-                  <div key={tier.id} style={{ position: 'relative' }} onMouseEnter={() => setMenuOpen(tier.id)}>
+                  <div key={tier.id} style={{ position: 'relative', display: 'flex' }} onMouseEnter={() => setMenuOpen(tier.id)}>
                     <button onClick={() => openSection(secs[0].i)}
-                      style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'transparent', border: 'none', padding: '11px 14px', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: activeInTier ? 600 : 500, color: activeInTier || open ? C.ink : C.inkSoft, borderBottom: `2px solid ${activeInTier ? tier.color : 'transparent'}`, transition: 'color .15s' }}>
+                      style={{ display: 'flex', alignItems: 'center', gap: 5, height: '100%', background: 'transparent', border: 'none', padding: '0 12px', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: activeInTier ? 600 : 500, color: activeInTier || open ? C.ink : C.inkSoft, borderBottom: `2px solid ${activeInTier ? tier.color : 'transparent'}`, transition: 'color .15s', whiteSpace: 'nowrap' }}>
                       {tier.label}
                       <span style={{ fontSize: 8, color: C.inkFaint, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▾</span>
                     </button>
@@ -788,9 +785,10 @@ export default function HoldingsV2({ onBack }) {
                   </div>
                 );
               })}
-            </div>
-          </div>
-        )}
+            </nav>
+          )}
+          <HoldingSearch key={cid} data={data} portfolio={PORT[cid]} sections={data.sections} onOpenSection={openSection} onGoHome={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} />
+        </div>
       </div>
 
       {/* ── Body ── */}
