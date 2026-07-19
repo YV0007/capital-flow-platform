@@ -260,89 +260,14 @@ function DataCentersCoverArt() {
   );
 }
 
-// Cover art for the Proxy research report — concentric "private-value" arcs
-// emanating from three private hubs (SpaceX / OpenAI / Anthropic at the
-// upper-left cluster) caught by an outer public-market ring at the right.
-// A connecting handoff path traces the proxy trade from a public catcher
-// dot through the rings back to the central asset cluster. Themeable via
-// the accent color so the same component renders well in amber, cyan, etc.
-function ProxyCoverArt({ color = '#F59E0B' }) {
-  const A = color;
-  // Three private-asset hubs forming a clustered triangle on the left.
-  const hubs = [
-    { x: 56, y: 50, r: 5,   label: 'S' },   // SpaceX
-    { x: 76, y: 68, r: 4.5, label: 'O' },   // OpenAI
-    { x: 50, y: 78, r: 4,   label: 'A' },   // Anthropic
-  ];
-  // Concentric "value-radius" rings centred on the cluster's centroid.
-  const cx = 60, cy = 66;
-  const rings = [16, 26, 38, 52];
-
-  // Outer "public-market" arc on the right side — three catcher dots where
-  // listed proxies receive value.
-  const catchers = [
-    { x: 162, y: 36 },                       // SATS / SoftBank tier
-    { x: 184, y: 64 },                       // SKM tier
-    { x: 158, y: 96 },                       // fund vehicles
-  ];
-
+// Cover art for the Proxy research report — a Falcon 9 launch photo, matching
+// the photographic covers of the Holdings and Data-Centers reports. The report
+// analyses proxy access to frontier private AI (SpaceX / OpenAI / Anthropic)
+// through public holdings, so the launch imagery reads as "reaching the frontier."
+function ProxyCoverArt() {
   return (
-    <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
-      <defs>
-        {/* warm spot on the left half */}
-        <radialGradient id="pca-spot" cx="34%" cy="58%" r="62%">
-          <stop offset="0%"   stopColor={A} stopOpacity="0.13" />
-          <stop offset="55%"  stopColor={A} stopOpacity="0.02" />
-          <stop offset="100%" stopColor={A} stopOpacity="0" />
-        </radialGradient>
-        {/* handoff path gradient: starts faint (private), brightens toward the public catcher */}
-        <linearGradient id="pca-handoff" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stopColor={A} stopOpacity="0.35" />
-          <stop offset="100%" stopColor={A} stopOpacity="1" />
-        </linearGradient>
-      </defs>
-
-      <rect width="200" height="120" fill="#080B12" />
-      <rect width="200" height="120" fill="url(#pca-spot)" />
-
-      {/* concentric private-value rings — outer faint, inner brighter */}
-      {rings.map((r, i) => (
-        <circle key={i} cx={cx} cy={cy} r={r} fill="none"
-          stroke={A} strokeWidth="0.9" strokeOpacity={0.08 + i * 0.08} />
-      ))}
-
-      {/* outer public-market arc on the right — large radius, partial sweep */}
-      <path d="M 158 18 A 70 70 0 0 1 158 114"
-        fill="none" stroke={A} strokeWidth="1.1" strokeOpacity="0.55" />
-
-      {/* three private hubs at the cluster */}
-      {hubs.map((h, i) => (
-        <g key={`h${i}`}>
-          <circle cx={h.x} cy={h.y} r={h.r + 2.5} fill={A} fillOpacity="0.10" />
-          <circle cx={h.x} cy={h.y} r={h.r} fill={A} fillOpacity="0.95" />
-          <text x={h.x} y={h.y + 2.4} textAnchor="middle" fontFamily="ui-monospace, monospace"
-            fontSize="5.4" fontWeight="700" fill="#080B12">{h.label}</text>
-        </g>
-      ))}
-
-      {/* three catcher dots on the public arc */}
-      {catchers.map((c, i) => (
-        <g key={`c${i}`}>
-          <circle cx={c.x} cy={c.y} r="4.2" fill={A} fillOpacity="0.95" />
-          <circle cx={c.x} cy={c.y} r="7"   fill="none" stroke={A} strokeWidth="0.9" strokeOpacity="0.5" />
-        </g>
-      ))}
-
-      {/* handoff trace: a curving line from the upper catcher through the
-          rings, dipping into the cluster — the proxy trade path */}
-      <path d="M 162 36 C 130 30, 108 32, 88 50 S 70 60, 60 66"
-        fill="none" stroke="url(#pca-handoff)" strokeWidth="1.6" strokeLinecap="round"
-        strokeDasharray="3 2" />
-
-      {/* small pulse dot riding the handoff path near the catcher */}
-      <circle cx="142" cy="33" r="1.6" fill={A} />
-    </svg>
+    <img src={new URL('../../assets/proxy.jpg', import.meta.url).href}
+      alt="Proxy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
   );
 }
 
