@@ -4,12 +4,28 @@
 // quotes and dense fact lists. A section's data is an array of typed
 // blocks (sections[].deep in the company JSON). Dark mode only.
 
-import { useState } from 'react';
+import { useState, useContext, createContext } from 'react';
 import holdingsData from '../../data/holdings.json';
 
 const C = holdingsData.THEMES.dark;
 const col = (name) => C[name] || name || C.teal;
 const isNeg = (s) => typeof s === 'string' && /^[−-]/.test(s.trim());
+
+// Cross-section navigation: a block can turn company mentions into links that
+// jump to the Portfolio section and open that company. HoldingsV2 supplies the
+// handler; blocks declare links via an item's `links: [{text, company}]`.
+const OpenCompanyCtx = createContext(null);
+function withLinks(text, links, openCompany) {
+  if (!text || !links || !links.length || !openCompany) return text;
+  const map = {};
+  links.forEach((l) => { map[l.text] = l.company; });
+  const escaped = links.map((l) => l.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).sort((a, b) => b.length - a.length);
+  const re = new RegExp('(' + escaped.join('|') + ')', 'g');
+  return text.split(re).map((p, i) => map[p]
+    ? <span key={i} onClick={() => openCompany(map[p])} title="Открыть в портфеле"
+        style={{ color: C.teal, cursor: 'pointer', borderBottom: `1px dashed ${C.teal}88`, fontWeight: 500 }}>{p}</span>
+    : p);
+}
 
 function Title({ children, note }) {
   if (!children) return null;
@@ -24,20 +40,41 @@ function Title({ children, note }) {
 // ── stats: row of big figures with deltas ───────────────────────────────────
 function Stats({ b }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))', gap: 1, background: C.line, border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden' }}>
-      {b.items.map((s, i) => (
-        <div key={i} style={{ background: C.card, padding: '14px 16px' }}>
-          <div style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 6, lineHeight: 1.3 }}>{s.label}</div>
-          <div style={{ fontFamily: 'var(--mono)', fontSize: 21, fontWeight: 500, color: C.ink, lineHeight: 1.05 }}>{s.value}</div>
-          {s.delta && <div style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: isNeg(s.delta) ? C.clay : C.teal, marginTop: 4 }}>{s.delta}</div>}
-          {s.note && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 4, lineHeight: 1.4 }}>{s.note}</div>}
-        </div>
-      ))}
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${b.min || 210}px, 1fr))`, gap: 1, background: C.line, border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden' }}>
+        {b.items.map((s, i) => {
+          const ac = s.accent ? col(s.accent) : null;
+          return (
+            <div key={i} style={{ background: C.card, padding: '15px 17px', borderTop: ac ? `2px solid ${ac}` : 'none' }}>
+              <div style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 7, lineHeight: 1.3 }}>{s.label}</div>
+              <div style={{ fontFamily: 'var(--mono)', fontSize: 20, fontWeight: 500, color: ac || C.ink, lineHeight: 1.1 }}>{s.value}</div>
+              {s.delta && <div style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: isNeg(s.delta) ? C.clay : C.teal, marginTop: 4 }}>{s.delta}</div>}
+              {s.note && <div style={{ fontSize: 11.5, color: C.inkSoft, marginTop: 9, lineHeight: 1.5 }}>{s.note}</div>}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
 // ── table: column-headed data table ─────────────────────────────────────────
+function linkifyCell(cell) {
+  if (typeof cell !== 'string') return cell;
+  const re = /((?:https?:\/\/)?(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s,;]*)?)/gi;
+  const out = []; let last = 0, m, k = 0;
+  while ((m = re.exec(cell)) !== null) {
+    if (m.index > last) out.push(cell.slice(last, m.index));
+    const url = m[0], href = url.startsWith('http') ? url : 'https://' + url;
+    out.push(<a key={k++} href={href} target="_blank" rel="noopener noreferrer" style={{ color: C.teal, textDecoration: 'none' }}>{url}</a>);
+    last = m.index + url.length;
+  }
+  if (!out.length) return cell;
+  if (last < cell.length) out.push(cell.slice(last));
+  return out;
+}
+
 function DataTable({ b }) {
   const alignFor = (ci) => (b.align && b.align[ci]) || (ci === 0 ? 'left' : 'right');
   return (
@@ -54,7 +91,7 @@ function DataTable({ b }) {
             {b.rows.map((r, ri) => (
               <tr key={ri} style={{ background: ri % 2 ? C.card : 'transparent' }}>
                 {r.map((cell, ci) => (
-                  <td key={ci} style={{ textAlign: alignFor(ci), padding: '9px 14px', fontSize: ci === 0 ? 12.5 : 12, fontFamily: ci === 0 ? 'var(--sans)' : 'var(--mono)', color: isNeg(cell) ? C.clay : (ci === 0 ? C.ink : C.inkSoft), lineHeight: 1.45, verticalAlign: 'top' }}>{cell}</td>
+                  <td key={ci} style={{ textAlign: alignFor(ci), padding: '9px 14px', fontSize: ci === 0 ? 12.5 : 12, fontFamily: ci === 0 ? 'var(--sans)' : 'var(--mono)', color: isNeg(cell) ? C.clay : (ci === 0 ? C.ink : C.inkSoft), lineHeight: 1.45, verticalAlign: 'top' }}>{linkifyCell(cell)}</td>
                 ))}
               </tr>
             ))}
@@ -84,6 +121,65 @@ function Cards({ b }) {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+// ── bets: strategy bet cards — labelled headline number + vehicles (business
+//    models + named companies + scale) + management outlook + quote ──────────
+function Bets({ b }) {
+  return (
+    <div>
+      <Title note={b.note}>{b.title}</Title>
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${b.min || 360}px, 1fr))`, gap: 14 }}>
+        {b.items.map((c, i) => {
+          const cc = col(c.color);
+          return (
+            <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `3px solid ${cc}`, borderRadius: 12, padding: '16px 18px', display: 'flex', flexDirection: 'column' }}>
+              {/* header: sector + tag */}
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 12 }}>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, color: C.ink, flex: 1, lineHeight: 1.2 }}>{c.title}</span>
+                {c.badge && <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: cc + '22', color: cc, border: `1px solid ${cc}55`, fontWeight: 600, letterSpacing: '.06em', flexShrink: 0 }}>{c.badge}</span>}
+              </div>
+              {/* headline number + what it actually is */}
+              <div style={{ marginBottom: 14, paddingBottom: 14, borderBottom: `1px solid ${C.lineSoft}` }}>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 23, fontWeight: 500, color: cc, lineHeight: 1 }}>{c.value}</div>
+                {c.valueLabel && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 6, lineHeight: 1.45 }}>{c.valueLabel}</div>}
+              </div>
+              {/* vehicles: business model + named companies + scale */}
+              {c.vehicles && c.vehicles.length > 0 && (
+                <div style={{ marginBottom: c.outlook || c.quote ? 14 : 0 }}>
+                  <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: C.inkFaint, fontWeight: 600, marginBottom: 9 }}>Через что вкладывают</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+                    {c.vehicles.map((v, vi) => (
+                      <div key={vi} style={{ display: 'flex', gap: 9, alignItems: 'flex-start' }}>
+                        <span style={{ width: 5, height: 5, borderRadius: 3, background: cc, flexShrink: 0, marginTop: 6 }} />
+                        <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>
+                          <span style={{ color: C.ink, fontWeight: 600 }}>{v.label} — </span>{v.text}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {/* management outlook / projection */}
+              {c.outlook && (
+                <div style={{ background: cc + '10', border: `1px solid ${cc}33`, borderRadius: 8, padding: '10px 12px', marginBottom: c.quote ? 12 : 0 }}>
+                  <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: cc, fontWeight: 600, marginBottom: 5 }}>Куда идёт — взгляд менеджмента</div>
+                  <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.5 }}>{c.outlook}</div>
+                </div>
+              )}
+              {/* quote */}
+              {c.quote && (
+                <div style={{ marginTop: 'auto', paddingTop: c.outlook ? 2 : 12, fontSize: 11, color: C.inkFaint, fontStyle: 'italic', lineHeight: 1.5 }}>
+                  «{c.quote}»{c.quoteBy && <span style={{ fontStyle: 'normal' }}> — {c.quoteBy}</span>}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      {b.foot && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 14, fontStyle: 'italic', lineHeight: 1.5 }}>{b.foot}</div>}
     </div>
   );
 }
@@ -850,14 +946,15 @@ function Quote({ b }) {
 
 // ── facts: dense k/v list ───────────────────────────────────────────────────
 function Facts({ b }) {
+  const openCompany = useContext(OpenCompanyCtx);
   return (
     <div>
       <Title note={b.note}>{b.title}</Title>
       <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '6px 16px' }}>
         {b.items.map((f, i) => (
-          <div key={i} style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, 38%) 1fr', gap: 14, padding: '9px 0', borderTop: i ? `1px solid ${C.lineSoft}` : 'none' }}>
-            <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.5 }}>{f.k}</div>
-            <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.5 }}>{f.v}</div>
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, 38%) 1fr', gap: 14, padding: '11px 0', borderTop: i ? `1px solid ${C.lineSoft}` : 'none' }}>
+            <div style={{ fontSize: 12.5, fontWeight: 600, color: C.ink, lineHeight: 1.5 }}>{withLinks(f.k, f.links, openCompany)}</div>
+            <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{withLinks(f.v, f.links, openCompany)}</div>
           </div>
         ))}
       </div>
@@ -1116,9 +1213,9 @@ function Chains({ b }) {
   );
 }
 
-const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, pie: Pie, compare: Compare, moat: Moat, posgrid: PosGrid, flows: Flows, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat, risksplit: RiskSplit, scenarios: Scenarios, chains: Chains, dumbbell: Dumbbell, columns: Columns, lollipop: Lollipop, quadrant: Quadrant, mix: Mix };
+const RENDER = { stats: Stats, table: DataTable, cards: Cards, bars: Bars, pie: Pie, compare: Compare, moat: Moat, posgrid: PosGrid, flows: Flows, heat: Heat, timeline: Timeline, quote: Quote, facts: Facts, text: Text, radar: Radar, snowflakes: Snowflakes, matrix: Matrix, 'radar-heat': RadarHeat, risksplit: RiskSplit, scenarios: Scenarios, chains: Chains, dumbbell: Dumbbell, columns: Columns, lollipop: Lollipop, quadrant: Quadrant, mix: Mix, bets: Bets };
 
-export default function SectionDeep({ blocks }) {
+export default function SectionDeep({ blocks, onOpenCompany }) {
   if (!blocks || !blocks.length) return null;
   const groups = [];
   blocks.forEach(b => {
@@ -1129,21 +1226,23 @@ export default function SectionDeep({ blocks }) {
     }
   });
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
-      {groups.map((g, gi) => {
-        if (g.length === 1) {
-          const Cmp = RENDER[g[0].type];
-          return Cmp ? <Cmp key={gi} b={g[0]} /> : null;
-        }
-        return (
-          <div key={gi} style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
-            {g.map((b, bi) => {
-              const Cmp = RENDER[b.type];
-              return Cmp ? <div key={bi} style={{ flex: b.flex || 1, minWidth: 0 }}><Cmp b={b} /></div> : null;
-            })}
-          </div>
-        );
-      })}
-    </div>
+    <OpenCompanyCtx.Provider value={onOpenCompany}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
+        {groups.map((g, gi) => {
+          if (g.length === 1) {
+            const Cmp = RENDER[g[0].type];
+            return Cmp ? <Cmp key={gi} b={g[0]} /> : null;
+          }
+          return (
+            <div key={gi} style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
+              {g.map((b, bi) => {
+                const Cmp = RENDER[b.type];
+                return Cmp ? <div key={bi} style={{ flex: b.flex || 1, minWidth: 0 }}><Cmp b={b} /></div> : null;
+              })}
+            </div>
+          );
+        })}
+      </div>
+    </OpenCompanyCtx.Provider>
   );
 }
