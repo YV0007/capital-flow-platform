@@ -10,7 +10,7 @@
 //
 // Data: src/data/holdings-v2/portfolio/<id>.json. Dark mode only.
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import holdingsData from '../../data/holdings.json';
 
 const C = holdingsData.THEMES.dark;
@@ -74,12 +74,19 @@ function RowHeader() {
   );
 }
 
-function CompanyRow({ r, open, onToggle }) {
+function CompanyRow({ r, open, onToggle, focused }) {
   const v = valueCell(r);
   const pending = r.status && /pending|объяв|незакры/i.test(r.status);
   const exiting = r.status && /exit|выход|продаж/i.test(r.status);
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!focused || !ref.current) return;
+    // delay so this wins over the section's scroll-to-top on cross-section jump
+    const t = setTimeout(() => { if (ref.current) ref.current.scrollIntoView({ block: 'center' }); }, 450);
+    return () => clearTimeout(t);
+  }, [focused]);
   return (
-    <div style={{ borderTop: `1px solid ${C.lineSoft}`, background: open ? C.cardAlt : 'transparent' }}>
+    <div ref={ref} style={{ borderTop: `1px solid ${C.lineSoft}`, background: open ? C.cardAlt : 'transparent', boxShadow: focused ? `inset 0 0 0 1px ${C.teal}` : 'none', borderRadius: focused ? 6 : 0 }}>
       <div onClick={onToggle} style={{ display: 'grid', gridTemplateColumns: ROW_GRID, gap: 12, alignItems: 'start', padding: '11px 14px', cursor: r.detail ? 'pointer' : 'default' }}>
         <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 13.5, fontWeight: 500, color: C.ink, display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap' }}>
@@ -127,13 +134,17 @@ function CompanyRow({ r, open, onToggle }) {
 }
 
 // Level-2: a sub-sector (e.g. Гидро) — key stats + blurb, then its companies.
-function Subgroup({ g, forceOpen }) {
+function Subgroup({ g, forceOpen, focus }) {
   const [open, setOpen] = useState(false);
   const [openRow, setOpenRow] = useState(null);
-  const isOpen = open || forceOpen;
+  const focusIdx = focus ? g.rows.findIndex((r) => r.name === focus) : -1;
+  useEffect(() => {
+    if (focusIdx >= 0) { setOpen(true); setOpenRow(g.rows[focusIdx].detail ? focusIdx : null); }
+  }, [focus, focusIdx]);
+  const isOpen = open || forceOpen || focusIdx >= 0;
   const rows = g.rows;
   const Rows = () => rows.map((r, ri) => (
-    <CompanyRow key={ri} r={r} open={openRow === ri} onToggle={() => r.detail && setOpenRow(openRow === ri ? null : ri)} />
+    <CompanyRow key={ri} r={r} open={openRow === ri} focused={focus === r.name} onToggle={() => r.detail && setOpenRow(openRow === ri ? null : ri)} />
   ));
   if (!g.name) return <div style={{ border: `1px solid ${C.line}`, borderRadius: 8, overflow: 'hidden' }}><RowHeader /><Rows /></div>;
   const teaser = g.stats && g.stats[0] ? g.stats[0].value : '';
@@ -200,7 +211,7 @@ function RailItem({ b, active, onClick, filtering }) {
 }
 
 // ── right pane: the selected sector, its stat + companies ───────────────────
-function SectorPane({ b, filtering }) {
+function SectorPane({ b, filtering, focus }) {
   if (!b) return null;
   if (filtering && b.total === 0) {
     return <div style={{ padding: '40px 20px', textAlign: 'center', fontSize: 13, color: C.inkFaint }}>Ничего не найдено в этом секторе</div>;
@@ -217,12 +228,12 @@ function SectorPane({ b, filtering }) {
       </div>
       {b.total === 0
         ? <div style={{ padding: '18px 16px', border: `1px solid ${C.line}`, borderRadius: 8, background: C.card, fontSize: 12.5, color: C.inkFaint, lineHeight: 1.6 }}>Отдельные позиции по этому сегменту поимённо не раскрываются — показатели сегмента приведены выше.</div>
-        : b.groups.map((g, gi) => <Subgroup key={gi} g={g} forceOpen={filtering || b.groups.length === 1} />)}
+        : b.groups.map((g, gi) => <Subgroup key={gi} g={g} forceOpen={filtering || b.groups.length === 1} focus={focus} />)}
     </div>
   );
 }
 
-export default function PortfolioDeep({ data }) {
+export default function PortfolioDeep({ data, focus }) {
   const n = normalize(data);
   const [tab, setTab] = useState('sector');
   const [search, setSearch] = useState('');
@@ -233,6 +244,12 @@ export default function PortfolioDeep({ data }) {
     const i = n.blocks.findIndex((b) => b.groups.some((g) => g.rows.length));
     return i >= 0 ? i : 0;
   });
+  // a company link from another section: jump to the sector holding that company
+  useEffect(() => {
+    if (!focus) return;
+    const i = n.blocks.findIndex((b) => b.groups.some((g) => g.rows.some((r) => r.name === focus)));
+    if (i >= 0) setActive(i);
+  }, [focus]);
 
   const tabs = [
     n.composition.length && ['sector', 'По секторам'],
@@ -348,7 +365,7 @@ export default function PortfolioDeep({ data }) {
             </nav>
             {/* right pane */}
             <div style={{ flex: '999 1 520px', minWidth: 300, border: `1px solid ${C.line}`, borderRadius: 10, background: C.card, padding: '20px 24px' }}>
-              <SectorPane b={current} filtering={filtering} />
+              <SectorPane b={current} filtering={filtering} focus={focus} />
             </div>
           </div>
         );

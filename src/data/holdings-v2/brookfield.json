@@ -1735,7 +1735,17 @@
        ],
        "outlook": "Менеджмент ждёт 75 ГВт новых AI-дата-центров за 10 лет и до $7 трлн инвестиций во всю цепочку AI — и считает узким местом не деньги, а электричество.",
        "quote": "Главное ограничение роста AI сегодня — не капитал, а доступ к электричеству",
-       "quoteBy": "Connor Teskey, президент Brookfield"
+       "quoteBy": "Connor Teskey, президент Brookfield",
+       "links": [
+        {
+         "text": "Compass",
+         "company": "Compass Datacenters"
+        },
+        {
+         "text": "Data4",
+         "company": "Data4"
+        }
+       ]
       },
       {
        "title": "Частный кредит",

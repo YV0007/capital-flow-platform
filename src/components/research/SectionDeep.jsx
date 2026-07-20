@@ -128,6 +128,7 @@ function Cards({ b }) {
 // ── bets: strategy bet cards — labelled headline number + vehicles (business
 //    models + named companies + scale) + management outlook + quote ──────────
 function Bets({ b }) {
+  const openCompany = useContext(OpenCompanyCtx);
   return (
     <div>
       <Title note={b.note}>{b.title}</Title>
@@ -155,7 +156,7 @@ function Bets({ b }) {
                       <div key={vi} style={{ display: 'flex', gap: 9, alignItems: 'flex-start' }}>
                         <span style={{ width: 5, height: 5, borderRadius: 3, background: cc, flexShrink: 0, marginTop: 6 }} />
                         <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>
-                          <span style={{ color: C.ink, fontWeight: 600 }}>{v.label} — </span>{v.text}
+                          <span style={{ color: C.ink, fontWeight: 600 }}>{v.label} — </span>{withLinks(v.text, c.links, openCompany)}
                         </div>
                       </div>
                     ))}
