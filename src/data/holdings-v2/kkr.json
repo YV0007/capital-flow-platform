@@ -1,396 +1,722 @@
 {
-  "id": "kkr",
-  "name": "KKR & Co",
-  "ticker": "KKR",
-  "type": "asset manager",
-  "asOf": "28.06.2026",
-  "tagline": "Глобальный alternative asset manager (AUM $757.9B): комиссионная база растёт (FRE +14% LTM, margin 69%), но ANI вырос лишь +5% из-за переноса монетизаций — это проблема тайминга окна выходов, не базы; акция −41% от пика, оба Co-CEO докупали на просадке.",
-  "kpis": [
-    {
-      "label": "AUM / FPAUM",
-      "value": "$757.9B / $614.8B",
-      "sub": "Perpetual capital $326B (43% AUM, 51% FPAUM); AUM +14% г/г",
-      "source": "KKR Q1 2026 Earnings Release (SEC 8-K, 05.05.2026)"
-    },
-    {
-      "label": "FRE (LTM Q1'26)",
-      "value": "$3,908,085K",
-      "sub": "$4.34 / adj. share; +14% LTM (квартал +24% г/г); FRE margin 69%",
-      "source": "KKR Q1 2026 Earnings Release (SEC 8-K)"
-    },
-    {
-      "label": "ANI / DE (LTM Q1'26)",
-      "value": "$4,593,023K",
-      "sub": "$5.10 / adj. share; рост лишь +5% LTM — Total Investing Earnings упали до $932,087K",
-      "source": "KKR Q1 2026 Earnings Release (SEC 8-K)"
-    },
-    {
-      "label": "Цена / оценка",
-      "value": "$90.13",
-      "sub": "−41% от 52w-максимума $153.87; P/ANI ~17.7x (vs пиковые ~30x); market cap $80.93B",
-      "source": "stockanalysis.com (26.06.2026) + KKR primary"
-    }
-  ],
-  "sections": [
-    {
-      "id": "portfolio",
-      "n": "01",
-      "tier": "substance",
-      "title": "Текущий портфель",
-      "sub": "Из чего состоит баланс KKR",
-      "preview": {
-        "line": "Баланс KKR — три части: Asset Management (co-invest $7,999M), Insurance (Global Atlantic, book value $11.66B) и Strategic Holdings (прямые core-PE доли).",
-        "stats": [
-          { "label": "AUM (для клиентов)", "value": "$757.9B", "sub": "FPAUM $614.8B; perpetual $326B" },
-          { "label": "Global Atlantic (book value)", "value": "$11,664,526K", "sub": "топ-1 балансовая позиция; GA AUM $231B" },
-          { "label": "Asset Management investments", "value": "$7,999M", "sub": "fair value; embedded unrealized gains $2.8B" },
-          { "label": "FS KKR Capital (FSK)", "value": "$12.3B", "sub": "публичный BDC, 236 компаний, NAV/share $18.83" },
-          { "label": "Strategic Holdings OE", "value": "$178,906K", "sub": "LTM (Dividends, Net); KKR доля LTM Adj. EBITDA ~$1.1B" }
-        ],
-        "bullets": [
-          "13F-позиции (Masonite, Amedisys, Lamar) — это активы клиентских фондов, НЕ баланс KKR; исключены",
-          "Strategic Holdings: USI Insurance Services, Heartland Dental, 1-800 Contacts, Internet Brands, Mills Fleet Farm, BridgeBio (полный список ~18-19 компаний единым primary не подтверждён)",
-          "AI-линза реальна через инфраструктуру/энергетику и data-center спрос (Helix Digital Infrastructure $10B+), не через страховой core"
-        ]
-      },
-      "bodyMarkdown": "13F-позиции KKR (Masonite, Amedisys, Lamar и т.д.) — это активы клиентских фондов, НЕ баланс KKR; они исключены из анализа холдинга. Собственный баланс KKR состоит из трёх частей: Asset Management (co-invest в свои фонды), Insurance (Global Atlantic) и Strategic Holdings (прямые core-PE доли).\n\n**AUM (управляемый для клиентов, не на балансе KKR): $757.9B; FPAUM $614.8B; perpetual capital $326B (43% AUM, 51% FPAUM).** Все три цифры подтверждены первичным earnings release Q1'26 (SEC 8-K, 05.05.2026, открыт через curl HTTP 200).\n\n**Балансовые позиции с опубликованной оценкой**\n\n| Позиция | Vehicle / тип | Оценка (31.03.2026) | Описание |\n|---|---|---|---|\n| Global Atlantic (страхование) | 100% KKR, Insurance segment | Book value $11.66B (точно $11,664,526K, primary); GA AUM $231B | Страховщик аннуитетов/life/перестрахования; net investment income $1.9B за Q1'26; Insurance operating earnings $260.3M Q1, $1,110,953K LTM |\n| Asset Management investments | На балансе KKR (co-invest в свои фонды) | Fair value $7,999M (primary); embedded unrealized gains $2.8B | Собственный капитал KKR в своих фондах; 41% Traditional PE, 16% Real Estate, 13% Growth Equity, 7% Infra (разбивка не переподтверждена из release — см. gaps) |\n| FS KKR Capital (FSK) | Публичный BDC (NYSE: FSK), KKR — advisor | Портфель fair value $12.3B, 236 компаний, NAV/share $18.83 | KKR владеет долей акций FSK и получает management/incentive fees; non-accrual 4.2% по fair value (подтверждено сайтом FSK) |\n\n**Флагманские фонды** (commitment / remaining fair value из vehicle-таблиц; цифры из FACTS-агента, источник 10-Q; точные строки 10-Q НЕ переподтверждены построчно — SEC HTML недоступен через WebFetch, см. gaps)\n\n| Фонд (vintage) | Commitment | Remaining FV | Realized | Описание |\n|---|---|---|---|---|\n| North America Fund XIII (2021) | $18.4B | $23.45B | $0.57B | Крупнейший активный североамериканский PE-фонд предыдущего vintage |\n| North America Fund XIV (2025) | $21.9B / vintage 4/2025 | $0 (только начал) | $0 | Крупнейший в истории KKR фонд только для Северной Америки (агенты дают $21.9B commitment и \"$23B vintage\" — расхождение, не сверено) |\n| Asian Fund IV (2020) | $14.7B | $16.20B | $4.23B | Азиатский PE-фонд |\n| Global Infrastructure Investors IV (2021) | $16.6B | $19.62B | $1.70B | Инфраструктурный фонд |\n| Diversified Core Infrastructure (открытый) | $14.3B | $13.51B | $1.72B | Бессрочный core-инфраструктурный фонд |\n\n**Strategic Holdings (названы, БЕЗ поштучной fair value на балансе; учитываются по дивидендам)**\nKKR раскрывает только агрегат, не fair value по каждой компании. Strategic Holdings operating earnings = $48,296K Q1'26 / $178,906K LTM (в release это строка \"Dividends, Net\" — подтверждено primary). KKR's доля LTM Adjusted EBITDA по этим компаниям ~$1.1B. Названные мажоритарные core-PE активы (из инвест-релизов / 2024 Investor Day, не из Q1'26 release): **USI Insurance Services**, **Heartland Dental**, **1-800 Contacts**, **Internet Brands**, **Mills Fleet Farm**, **BridgeBio** (частично реализована). Полный список ~18-19 компаний единым первичным документом не подтверждён.\n\n**Концентрация и структура**\n- **Топ-1 балансовая позиция: Global Atlantic** (book value $11.66B) — крупнее всего собственного Asset Management-портфеля ($7,999M).\n- **Гео (Strategic Holdings, KKR's share EBITDA):** Americas 64%, Europe 31%, Asia Pacific 5% (из агента, не переподтверждено).\n- **Отрасли (Strategic Holdings):** Business Services 33%, Consumer 28%, Health Care 16%, TMT 14%, Infrastructure 6%, Industrials 3% (из агента, не переподтверждено).\n- **Listed vs unlisted:** портфель преимущественно unlisted; единственная крупная публичная балансовая экспозиция — доля в FSK (NYSE: FSK).\n- **AI-линза (реальна):** через инфраструктуру/энергетику и data-center спрос (Helix Digital Infrastructure $10B+, Global Infrastructure фонды, core infra), не через страховой core.",
-      "hasDeep": true
-    },
-    {
-      "id": "changes",
-      "n": "02",
-      "tier": "substance",
-      "title": "Недавние изменения",
-      "sub": "Сделки, монетизации, dry powder",
-      "preview": {
-        "line": "Закрыты Arctos ($1.4B+earn-out), Spectris (£4.7B), OSTTRA ($3.1B), Fuji Soft (~$4.4B); dry powder ~$125B; реализованный performance income LTM снижается.",
-        "stats": [
-          { "label": "Uncalled commitments", "value": "~$125B", "sub": "$124,857K тыс. на 31.03.2026, +14% г/г" },
-          { "label": "AUM not yet paying fees", "value": "$64B", "sub": "committed; встроенный рост management fees" },
-          { "label": "New capital raised", "value": "$27.75B / $126.6B", "sub": "квартал / LTM; K-Series AUM $38B (vs $21B)" },
-          { "label": "Net realized perf. income", "value": "$197,191K", "sub": "Q1 +124% г/г; но LTM $600,938K — СНИЖЕНИЕ" },
-          { "label": "Arctos Partners", "value": "$1.4B", "sub": "~$15B AUM спортивных франшиз; +$550M earn-out до 2031; ЗАКРЫТО" }
-        ],
-        "bullets": [
-          "Продажа Circor aerospace → Parker Hannifin за $2.55B (май 2026); KKR сохраняет naval/industrial Circor",
-          "Dry powder breakdown PE $53B / Real Assets $37B / Credit $34B — из агента, не сверено",
-          "PENDING: увеличение долей в core-PE (USI, 1-800 Contacts, Heartland Dental) на ~$1.1B + Chubb ~$1.0B; +~$50M/год к Strategic Holdings OE"
-        ]
-      },
-      "bodyMarkdown": "**Покупки / новые vehicle**\n\n| Дата | Сделка | Размер | Vehicle | Статус |\n|---|---|---|---|---|\n| 05.05.2026 | **Arctos Partners** (инвестор в доли спортивных франшиз, ~$15B AUM) | $1.4B initial ($300M cash + $900M + $200M equity) + до $550M earn-out до 2031 | Корп. поглощение KKR (платформа KKR Solutions) | ЗАКРЫТО (подтверждено BusinessWire 04-05.05.2026; primary указывает ~$15B AUM, а не $16B) |\n| 04.12.2025 | **Spectris plc** (приборостроение, делистинг с LSE) | £4.7B (~$6.5B) | Фонды KKR | ЗАКРЫТО (подтверждено BusinessCloud/MergerLinks/Financier Worldwide) |\n| 10.10.2025 | **OSTTRA** (post-trade сервисы) от S&P Global и CME | $3.1B EV | Фонды KKR (Infrastructure) | ЗАКРЫТО |\n| 19.02.2025 | **Fuji Soft** (японский IT) через тендер | ~$4.4B | Фонды KKR Asia | ЗАКРЫТО (тендер выигран у Bain) |\n\n**Продажи / монетизации**\n\n| Дата | Сделка | Размер | Эффект |\n|---|---|---|---|\n| май 2026 | Продажа аэрокосмического бизнеса **Circor** компании Parker Hannifin | $2.55B | KKR сохраняет naval/industrial Circor (подтверждено WebSearch; прямой KKR-PR не открыт — см. gaps) |\n| Q1'26 | Net realized performance income $197,191K Q1 (+124% г/г vs $87,989K Q1'25); за LTM инвестировано $97B | — | Подтверждено primary; ВАЖНО: LTM realized performance income $600,938K — это СНИЖЕНИЕ vs $618,779K годом ранее, несмотря на сильный квартал |\n\n**Капитал к развёртыванию (dry powder)**\n- **Uncalled commitments: $124,857K тыс. (~$125B)** на 31.03.2026 (+14% г/г vs $115,628K тыс.) — primary-подтверждено. Разбивка PE $53B / Real Assets $37B / Credit $34B — из агента, не сверена построчно.\n- **AUM not yet paying fees: $64B** committed — primary-подтверждено; встроенный рост management fees при инвестировании.\n- New capital raised: $27,750K тыс. ($27.75B) за Q1'26, $126,609K тыс. ($126.6B) LTM — primary. K-Series AUM $38B (vs $21B годом ранее) — primary.\n\n**PENDING / незакрытое**\n- Увеличение долей в core-PE (USI, 1-800 Contacts, Heartland Dental) на ~$1.1B (+ Chubb ~$1.0B) — анонс 1H2025, +~$50M/год к Strategic Holdings OE; полное завершение всех траншей первичным источником на 28.06.2026 НЕ подтверждено (см. gaps).",
-      "hasDeep": true
-    },
-    {
-      "id": "track_record",
-      "n": "TR",
-      "tier": "substance",
-      "title": "Track record капитал-аллокации",
-      "sub": "Реализованная доходность по vintage",
-      "preview": {
-        "line": "Зрелые vintages (2002-2017) дают 2.1x-2.7x MOIC; молодые (2020-2021) пока ~1.4x в раннем holdperiod; аллокация устойчиво выше 2x на полных циклах.",
-        "stats": [
-          { "label": "2006 Fund (реализован)", "value": "2.16x", "sub": "$17.31B invested → $37.42B realized" },
-          { "label": "Americas Fund XII (2017)", "value": "2.73x", "sub": "лучший из активных PE-флагманов" },
-          { "label": "North America Fund XI (2012)", "value": "2.64x", "sub": "$25.15B realized" },
-          { "label": "Asian Fund III (2017)", "value": "2.45x", "sub": "" },
-          { "label": "GeoStabilization exit", "value": "5.0x", "sub": "продан Leonard Green, 2024 (раскрыто KKR)" }
-        ],
-        "bullets": [
-          "Infrastructure: I/II (2010/2014) по 2.12x реализовано; III (2018) 1.55x; IV (2021) 1.40x (молодой)",
-          "Private Credit: Lending Partners III 7.4% / IV 9.2%; Private BDC (2023) 8.0% net (по агенту, не сверено)",
-          "Vehicle-таблицы (MOIC) не переподтверждены построчно из 10-Q — SEC HTML недоступен через WebFetch"
-        ]
-      },
-      "bodyMarkdown": "Для asset manager качество = реализованная доходность по vintage. Цифры из 10-Q vehicle-таблиц по агенту FACTS; SEC 10-Q HTML недоступен через WebFetch, поэтому MOIC ниже НЕ переподтверждены построчно (см. gaps). MOIC = (Realized + Remaining FV) / Invested.\n\n**Private Equity флагманы**\n\n| Фонд (vintage) | Invested | Realized | Remaining FV | MOIC |\n|---|---|---|---|---|\n| 2006 Fund (2006) | $17.31B | $37.42B | $0 | 2.16x (полностью реализован) |\n| Millennium Fund (2002) | $6.0B | $14.13B | $0 | 2.36x (полностью реализован) |\n| Americas Fund XII (2017) | $12.75B | $18.51B | $16.32B | 2.73x |\n| North America Fund XI (2012) | $10.20B | $25.15B | $1.71B | 2.64x |\n| North America Fund XIII (2021) | $17.27B | $0.57B | $23.45B | 1.39x (молодой) |\n| European Fund IV (2015) | $3.65B | $5.73B | $2.19B | 2.17x |\n| Asian Fund III (2017) | $8.27B | $11.60B | $8.68B | 2.45x |\n\n**Infrastructure**\n\n| Фонд (vintage) | Invested | Realized | Remaining FV | MOIC |\n|---|---|---|---|---|\n| Global Infrastructure I (2010) | $1.05B | $2.23B | $0 | 2.12x |\n| Global Infrastructure II (2014) | $3.17B | $5.76B | $0.96B | 2.12x |\n| Global Infrastructure III (2018) | $7.07B | $5.83B | $5.15B | 1.55x |\n| Global Infrastructure IV (2021) | $15.25B | $1.70B | $19.62B | 1.40x (молодой) |\n\n**Private Credit — gross/net returns vs бенчмарк** (по агенту, не сверено построчно): Lending Partners III (2017) 7.4%; IV (2021) 9.2% vs бенчмарк LSTA+200bps; Asset Based Finance Partners I (2020) 10.9% gross; Private BDC (2023) 8.0% net.\n\n**Конкретные exit-кейсы:** GeoStabilization International (продан Leonard Green, 2024) — 5.0x на вложенный капитал (раскрыто KKR). Core Investors I (2018) invested $10.50B → remaining FV $17.53B + realized $2.68B = 1.92x.\n\n**Вывод:** зрелые vintages (2002-2017) дают 2.1x-2.7x MOIC; молодые (2020-2021) пока ~1.4x в раннем holdperiod. Аллокация устойчиво выше 2x на полных циклах — при оговорке, что vehicle-таблицы не сверены построчно из 10-Q.",
-      "hasDeep": true
-    },
-    {
-      "id": "pipeline",
-      "n": "04",
-      "tier": "substance",
-      "title": "Будущие сделки",
-      "sub": "Forward-таргеты и незакрытое",
-      "preview": {
-        "line": "Крупных незакрытых M&A на 28.06.2026 нет; forward monetizations $1.2B+ подписано (\"largest in our history\"); ST Telemedia data centres ждёт закрытия 2H'26.",
-        "stats": [
-          { "label": "Forward monetizations", "value": "$1.2B+", "sub": "подписано; \"largest in our history\" (Q1'26 call)" },
-          { "label": "FRE per adj. share 2026", "value": ">$4.50", "sub": "цель Investor Day 2024" },
-          { "label": "ANI/share 2026", "value": "<$7", "sub": "\"more likely below $7\" (Q1'26 call); бюджет был $7-8" },
-          { "label": "Strategic Holdings OE", "value": "$350M→$1.1B+", "sub": "2026 → 2028 $700+M → 2030 $1.1B+" },
-          { "label": "ST Telemedia Data Centres", "value": "S$13.8B EV", "sub": "консорциум KKR+Singtel; закрытие 2H'26 (AI-линза)" }
-        ],
-        "bullets": [
-          "Долгосрочно: AUM $1T к 2030; ANI/share $15+ за ≤10 лет (Investor Day 2024)",
-          "$64B committed capital not yet paying fees (~80 bps) станет fee-paying при инвестировании",
-          "Circor aerospace → Parker Hannifin $2.55B — реализованный gain поступит в Investing Earnings"
-        ]
-      },
-      "bodyMarkdown": "На 28.06.2026 крупных объявленных но незакрытых M&A первичными источниками не выявлено — Arctos, OSTTRA, Spectris, Fuji Soft уже закрыты.\n\n| Объект | Counterparty | Размер | Статус | Эффект |\n|---|---|---|---|---|\n| Увеличение долей в USI / 1-800 Contacts / Heartland Dental | существующие акционеры | ~$1.1B | анонс 1H2025; полное завершение не подтверждено | +~$50M/год к Strategic Holdings OE |\n| Circor aerospace → Parker Hannifin | Parker Hannifin | $2.55B | объявлено май 2026 | Монетизация; реализованный gain поступит в Investing Earnings |\n| ST Telemedia Global Data Centres (консорциум KKR+Singtel) | — | S$13.8B EV | анонс 02.02.2026, закрытие ожидалось 2H'26 | Data-center экспозиция (AI-линза) |\n\n**Forward-таргеты, раскрытые KKR (forward-looking, primary где указано):**\n- **FRE per adjusted share >$4.50/год** (2026 цель, Investor Day 2024).\n- **ANI/share 2026** — на Q1'26 call менеджмент сказал \"more likely below $7\" из-за переноса монетизаций в 2027+ (бюджет был $7-8).\n- **Strategic Holdings OE:** $350+M в 2026 → $700+M к 2028 → $1.1B+ к 2030 (с текущих $178,906K LTM). Реализация смещена на конец 2026.\n- **Forward monetizations $1.2B+ подписано** — \"largest forward monetization figure in our history\" (Q1'26 call).\n- $64B committed capital \"not yet paying fees\" (~80 bps) станет fee-paying при инвестировании.\n- Долгосрочно: AUM $1T к 2030; ANI/share $15+ за ≤10 лет (Investor Day 2024).",
-      "hasDeep": true
-    },
-    {
-      "id": "financial",
-      "n": "08",
-      "tier": "substance",
-      "title": "Финансовая составляющая",
-      "sub": "P&L, баланс holdco, FRE-ряд",
-      "preview": {
-        "line": "FRE margin стабильно 69%; 85% сегментных earnings durable; holdco — нетто-кэш ~$3.63B; Total Investing Earnings снижаются — корень слабого ANI.",
-        "stats": [
-          { "label": "FRE / margin (LTM)", "value": "$3,908,085K / 69%", "sub": "$4.34/share; +14% LTM" },
-          { "label": "Total Operating Earnings (LTM)", "value": "$5,197,944K", "sub": "$5.77/share" },
-          { "label": "Management Fees (LTM)", "value": "$4,376,011K", "sub": "+30% г/г (Q1 $1,192,504K)" },
-          { "label": "Total Investing Earnings (LTM)", "value": "$932,087K", "sub": "СНИЖЕНИЕ с $1,231,663K — источник слабого ANI" },
-          { "label": "Net cash & investments (holdco)", "value": "~$3.63B", "sub": "$12,967M cash & investments − $9,340M debt; рейтинг 'A'" }
-        ],
-        "bullets": [
-          "Total Segment Earnings $6,130,031K LTM; 85% из durable & recurring (FRE + Insurance + Strategic Holdings)",
-          "Preferred Stock Dividends $159,026K LTM — новый элемент (Series D Mandatory Convertible)",
-          "Многолетний FRE: 2023 ~$3.0B → 2024 ~$3.5B → 2025 ~$4.1B (release-график; цифры FACTS-агента отброшены)"
-        ]
-      },
-      "bodyMarkdown": "Все Q1'26 цифры переподтверждены из primary earnings release (SEC 8-K, curl HTTP 200).\n\n| Метрика | Q1'26 | Q1'26 LTM | Q1'25 | Q1'25 LTM |\n|---|---|---|---|---|\n| **FRE** | $1,016,375K | $3,908,085K | $822,603K | $3,421,658K |\n| FRE / adj. share | $1.13 | $4.34 | $0.92 | $3.82 |\n| **Total Operating Earnings** | $1,325,001K | $5,197,944K | $1,112,861K | $4,509,113K |\n| TOE / adj. share | $1.47 | $5.77 | $1.24 | $5.04 |\n| **Adjusted Net Income (ANI/DE)** | $1,249,539K | $4,593,023K | $1,033,988K | $4,372,509K |\n| ANI / adj. share | $1.39 | $5.10 | $1.15 | $4.88 |\n| Insurance operating earnings | $260,330K | $1,110,953K | $258,772K | $1,000,478K |\n| Strategic Holdings OE | $48,296K | $178,906K | $31,486K | $86,977K |\n| Management Fees | $1,192,504K | $4,376,011K | $917,334K | $3,563,388K |\n| AUM | $757,877K тыс. | — | $664,319K тыс. | — |\n| FPAUM | $614,845K тыс. | — | $526,045K тыс. | — |\n\n- **FRE margin: 69%** (стабильно 69% Q1'25 LTM и Q1'26 LTM) — primary-подтверждено.\n- **Total Segment Earnings: $6,130,031K LTM** (primary). 85% сегментных earnings — из \"durable & recurring\" частей (FRE + Insurance + Strategic Holdings) = ~$1.3B из $1.5B Q1'26 (call).\n- **Total Investing Earnings: $932,087K LTM** — primary; СНИЖЕНИЕ с $1,231,663K годом ранее (это и есть источник слабого роста ANI +5% LTM).\n- Transaction & Monitoring Fees $252,709K Q1 / $1,083,777K LTM (primary).\n- **Preferred Stock Dividends $159,026K LTM** (primary) — новый элемент структуры капитала (Series D Mandatory Convertible).\n\n**Балансовый профиль (holdco, Q1'26, primary):**\n- Cash & short-term investments (excl. GA) $4,968M + AM investments $7,999M = **Cash & investments $12,967M**.\n- Outstanding debt (at par) $9,340M → **Net cash & investments ~$3.63B**.\n- Embedded unrealized gains в AM $2.8B (primary); gross unrealized performance income $10.2B (по агенту).\n- Рейтинг 'A' у S&P и Fitch, средняя дюрация долга ~15 лет (по агенту, не сверено).\n\n**Многолетний FRE ряд:** release-график показывает FRE 2023 ~$3.0B, 2024 ~$3.5B, 2025 ~$4.1B. ВНИМАНИЕ: FACTS-агент привёл FY2024 FRE $3.27B и FY2025 $3.71B — это РАСХОДИТСЯ с release-графиком (~$3.5B и ~$4.1B). Точные годовые значения из release-графика приоритетны; цифры агента не приняты (см. unverified).",
-      "hasDeep": true
-    },
-    {
-      "id": "risk",
-      "n": "R",
-      "tier": "context",
-      "title": "Карта рисков",
-      "sub": "Концентрация, carry, кредит BDC",
-      "preview": {
-        "line": "Два риска средний-высокий: концентрация в Global Atlantic ($11.66B) и multiple de-rating (акция −41%); кредитный стресс виден в управляемом BDC (FSK).",
-        "stats": [
-          { "label": "Концентрация GA", "value": "Средний-высокий", "sub": "топ-1 позиция; book value $11.66B, AUM $231B" },
-          { "label": "Перенос монетизаций", "value": "Средний", "sub": "ANI +5% LTM vs FRE +14%; Investing Earnings $932,087K" },
-          { "label": "Кредитный риск FSK", "value": "Средний", "sub": "NAV −9.9% кв/кв; non-accrual 4.2%; дистрибуция срезана $0.48→$0.42" },
-          { "label": "Multiple de-rating", "value": "Средний-высокий", "sub": "$90.13 vs 52w-максимум $153.87 (−41%)" },
-          { "label": "Leverage / LTV", "value": "Низкий", "sub": "нетто-кэш ~$3.63B; долг $9.34B; рейтинг 'A'" }
-        ],
-        "bullets": [
-          "Key-person: Co-CEO Bae & Nuttall + основатели Kravis/Roberts — низкий-средний, митигируется институционализацией",
-          "Regulatory: рост retail/wealth (K-Series $38B) и страхования → надзор SEC/страховых регуляторов",
-          "GA GAAP net investment-related losses по Insurance существенны (по агенту −$653M, не переподтверждено)"
-        ]
-      },
-      "bodyMarkdown": "| Риск | Уровень | Конкретный триггер |\n|---|---|---|\n| **Концентрация в Global Atlantic** | Средний-высокий | GA — топ-1 балансовая позиция (book value $11.66B, AUM $231B). Триггер: рост кредитных спредов/дефолтов в инвестпортфеле GA, рейтинговый даунгрейд, отток аннуитетов. Q1'26 GAAP net investment-related losses по Insurance существенны (по агенту -$653M, не переподтверждено) |\n| **Перенос монетизаций / carry-зависимость** | Средний | ANI/share вырос лишь +5% LTM (vs FRE +14%) — Total Investing Earnings упали до $932,087K LTM с $1,231,663K (primary). Триггер: повторный перенос монетизаций с Q3 на Q4/2027 → ANI-цель под угрозой |\n| **Кредитный риск BDC (FSK)** | Средний | FSK NAV/share упал до $18.83 (-9.9% кв/кв с $20.89); non-accrual 4.2% по fair value (8.1% по cost); дистрибуция срезана с $0.48 до $0.42; KKR влил $300M поддержки. Триггер: расползание стресса на private BDC/direct lending |\n| **Leverage / LTV** | Низкий | KKR holdco — нетто-кэш (~$3.63B net cash & investments), долг $9.34B при рейтинге 'A'. Триггер только при системном кризисе ликвидности |\n| **Key-person dependency** | Низкий-средний | Co-CEO Bae и Nuttall + основатели Kravis/Roberts (Co-Executive Chairmen). Митигируется институционализацией |\n| **Regulatory exposure** | Средний | Рост retail/wealth (K-Series AUM $38B) и страхования → надзор SEC/страховых регуляторов |\n| **Multiple de-rating** | Средний-высокий | Акция $90.13 vs 52w-максимум $153.87 (-41%). Триггер: дальнейшее сжатие мультипликатора при замедлении fundraising/монетизаций |",
-      "hasDeep": true
-    },
-    {
-      "id": "valuation",
-      "n": "V",
-      "tier": "context",
-      "title": "Оценка vs история",
-      "sub": "Исторический anchor, не DCF",
-      "preview": {
-        "line": "Позиция в нижней части 52w-диапазона при P/ANI ~17.7x (vs пиковые ~30x) — относительно дешёвый вход по историческим меркам компании при растущем FRE +14%.",
-        "stats": [
-          { "label": "Цена", "value": "$90.13", "sub": "в нижних ~9% диапазона (от низа +9%, от верха −41%)" },
-          { "label": "52w диапазон", "value": "$82.67 - $153.87", "sub": "пик предполагал P/ANI ~30x" },
-          { "label": "P/ANI / P/FRE", "value": "~17.7x / ~20.8x", "sub": "$90.13 / ANI $5.10 LTM; / FRE $4.34" },
-          { "label": "P/E (GAAP trailing)", "value": "31.36", "sub": "market cap $80.93B; shares 897.87M" },
-          { "label": "Dividend yield", "value": "0.87%", "sub": "$0.78/год; квартальный $0.195, +5%" }
-        ],
-        "bullets": [
-          "Аналитический консенсус (stockanalysis): средний таргет $125.53 (+39%), 21 buy / 0 sell",
-          "KKR не публикует единый book value per share; прокси: net cash & investments holdco ~$3.63B + GA book value $11.66B",
-          "Ключевой риск — продолжение de-rating сектора"
-        ]
-      },
-      "bodyMarkdown": "Не valuation-инструмент — только исторический anchor. На 26.06.2026 (stockanalysis.com как structured-aggregator, переподтверждено + KKR primary):\n- **Цена: $90.13**, market cap **$80.93B**, shares outstanding 897.87M, P/E (GAAP trailing) **31.36** — все переподтверждены через WebFetch.\n- **52-недельный диапазон: $82.67 - $153.87.** Текущая цена в нижних ~9% диапазона (от низа +9%, от верха -41%).\n- По adjusted-метрикам: $90.13 / ANI $5.10 LTM = **P/ANI ~17.7x**; / FRE $4.34 = **P/FRE ~20.8x**.\n- **Dividend yield: 0.87%** ($0.78/год; квартальный дивиденд $0.195, +5% годовых) — переподтверждено.\n\n**Контекст:** пик 52w $153.87 предполагал P/ANI ~30x; текущие ~17.7x — существенное сжатие относительно собственного недавнего максимума при растущем FRE +14%. KKR не публикует единый \"book value per share\" в стиле holdco — прокси: net cash & investments holdco ~$3.63B + GA book value $11.66B. Аналитический консенсус (stockanalysis): средний таргет $125.53 (+39%), 21 buy / 0 sell.\n\n**Decision-grade:** позиция в нижней части 52w-диапазона при P/ANI ~17.7x (vs пиковые ~30x) — относительно дешёвый вход по историческим меркам компании; ключевой риск — продолжение de-rating сектора.",
-      "hasDeep": true
-    },
-    {
-      "id": "insider",
-      "n": "I",
-      "tier": "context",
-      "title": "Действия инсайдеров",
-      "sub": "Form 4, buybacks, дивиденды",
-      "preview": {
-        "line": "Менеджмент покупает на дне (оба Co-CEO + 3 директора, ~$50.9M в фев-март по $88-105, ноль продаж); основатели продали на пике 2025 ($413.2M по $120-144).",
-        "stats": [
-          { "label": "Покупки инсайдеров", "value": "~$50.9M / 516,322 акц.", "sub": "8 сделок 09.02-04.03.2026; ноль продаж менеджмента" },
-          { "label": "Покупки Co-CEO", "value": "175,000 акц. каждый", "sub": "Bae и Nuttall: по 125k @ $102 + по 50k @ $87-89" },
-          { "label": "Продажи основателей 2025", "value": "~$413.2M / 3.28M акц.", "sub": "Kravis/Roberts по $120-144; флаг 10b5-1 = false" },
-          { "label": "Buyback (2025→01.05.2026)", "value": "$317M / 3.5M акц.", "sub": "средняя $91.08; совет одобрил +$500M" },
-          { "label": "Квартальный дивиденд", "value": "$0.195", "sub": "+5% г/г; серия повышений с 2018, без cut" }
-        ],
-        "bullets": [
-          "Сигнал: менеджмент-покупает-на-дне + основатели-продали-на-пике = уверенность операционной команды в недооценке",
-          "Inception-to-date buybacks: 97.7M акций, $3,083M, средняя $31.56/акция; остаток $122M на 01.05.2026",
-          "Series D Mandatory Convertible Preferred — preferred dividends $159,026K LTM; встроенное будущее разводнение к 2028"
-        ]
-      },
-      "bodyMarkdown": "**Form 4 — открытые покупки на просадке (код P).** Все строки ниже открыты построчно из SEC Form 4 XML (CIK 0001404912, curl HTTP 200); цена и объём сверены с openinsider.com как агрегатор-валидация. Это покупки за личные деньги топ-менеджмента в окне просадки акции (с $153.87 пика до $82-90).\n\n| Дата сделки | Инсайдер | Роль | Объём | Цена (P) | Сумма | Тип | Источник |\n|---|---|---|---|---|---|---|---|\n| 09.02.2026 | Timothy R. Barakett | директор | 50,000 | $104.93 | ~$5.25M | indirect | Form 4 (acc. ...004845) |\n| 17.02.2026 | **Joseph Y. Bae** | Co-CEO | 125,000 | $100.39-$103.17 (wavg ~$102.19) | ~$12.77M | indirect, By Trusts | Form 4 (acc. ...006056) |\n| 17.02.2026 | **Scott C. Nuttall** | Co-CEO | 125,000 | $102.13-$103.41 (wavg ~$102.67) | ~$12.83M | прямая (direct) | Form 4 (acc. ...006054) |\n| 17.02.2026 | Matt Cohler | директор | 43,872 | $102.90 | ~$4.51M | прямая (direct) | Form 4 (acc. ...006058) |\n| 27.02.2026 | **Joseph Y. Bae** | Co-CEO | 50,000 | $88.56 | ~$4.43M | indirect, By Trusts | Form 4 (acc. ...007578) |\n| 27.02.2026 | **Scott C. Nuttall** | Co-CEO | 50,000 | $87.81 | ~$4.39M | прямая (direct) | Form 4 (acc. ...007579) |\n| 02.03.2026 | Mary N. Dillon | директор | 22,225 | $90.96 | ~$2.02M | indirect, By Trust | Form 4 (acc. ...007577) |\n| 04.03.2026 | Timothy R. Barakett | директор | 50,000 | $94.47 | ~$4.72M | indirect, траст | Form 4 (acc. ...008123) |\n\n**Итог покупок (09.02-04.03.2026): 8 сделок, ~516,322 акций, ~$50.9M.** Оба Co-CEO купили по 175,000 акций каждый (по 125,000 на $102 + по 50,000 на $87-89); три независимых директора (Barakett, Cohler, Dillon) добавили ~166,322 акции. Покупки идут двумя волнами: середина февраля у $100-105 и конец февраля / начало марта у $88-95 — то есть инсайдеры докупали и на втором, более глубоком провале. Ни одного открытого insider-sale у действующего менеджмента/директоров в 2026 году в Form 4 не зафиксировано.\n\n**Контекст — крупные продажи основателей в 2025 (код S, НЕ по плану 10b5-1).** Co-Executive Chairmen Henry R. Kravis и George R. Roberts продали значимые блоки в первой половине / середине 2025, на более высоких уровнях, до падения акции. Открыто из SEC Form 4 XML; флаг плана 10b5-1 в обоих filings = false (дискреционные продажи).\n\n| Дата сделки | Инсайдер | Роль | Объём | Цена (S) | Сумма | Источник |\n|---|---|---|---|---|---|---|\n| 02.06.2025 | **Henry R. Kravis** | Co-Exec Chairman | 1,281,394 | wavg ~$119.99 | ~$153.8M | Form 4 (acc. ...021188) |\n| 02.06.2025 | **George R. Roberts** | Co-Exec Chairman | 1,190,094 | $119.80 | ~$142.6M | Form 4 (acc. ...021191) |\n| 07.08.2025 | **George R. Roberts** | Co-Exec Chairman | 809,906 | $144.25 | ~$116.8M | Form 4 (acc. ...029677) |\n\n**Итог продаж основателей (2025): ~3.28M акций, ~$413.2M** при ценах $120-144. Часть проданного Roberts (август) по footnote держалась \"solely for purposes of charitable donations\" — то есть отчасти благотворительная ликвидация, а не чистый кэш-аут. После этих продаж у каждого основателя остаётся крупная доля (Roberts ~83.9M акций после августовской сделки; Kravis ~81.4M после июньской — по строке sharesOwnedFollowingTransaction в Form 4).\n\n**Сигнал (decision-grade):** разнонаправленный по уровню иерархии. Основатели (Kravis/Roberts, отходящие от операционного управления) фиксировали прибыль у $120-144 в 2025 — это диверсификация/благотворительность пожилых мажоритариев, а не операционный сигнал. Действующее руководство, наоборот, покупало за свои у $88-105 в феврале-марте 2026 — оба Co-CEO + три директора, ~$50.9M суммарно, без единой продажи. Сочетание «менеджмент-покупает-на-дне + основатели-продали-на-пике» читается как уверенность операционной команды в недооценке при текущем P/ANI ~17.7x.\n\n**Buybacks (primary Q1'26 release, открыт через curl HTTP 200):**\n- С конца 2025 года по 01.05.2026 KKR использовал **$317M** на выкуп и погашение **3.5M акций** по средней **$91.08** — то есть выкуп шёл примерно по той же цене, по которой докупали инсайдеры (вторая волна $88-95).\n- Совет одобрил **увеличение программы на $500M**. Механика амортизации: когда остаток программы падает до $50M или ниже, лимит автоматически прирастает на $500M.\n- **Inception-to-date (с авторизации 27.10.2015 по 01.05.2026):** 69.6M акций выкуплено на открытом рынке + 28.1M погашено по retired equity awards = **97.7M акций, $3,083M, средняя $31.56/акция**. Остаток доступности на 01.05.2026 — **$122M** (до авто-прироста).\n\n**Дивиденды (primary release):**\n- Квартальный дивиденд по обыкновенной акции **$0.195** объявлен за Q1'26; выплата 29.05.2026, record 15.05.2026. **+5% к аннуализированному уровню 2025.**\n- KKR повышает аннуализированный дивиденд **каждый год с момента конверсии в C-Corp в 2018** — то есть непрерывная серия повышений, без cut и без пропусков. Инициаций новых дивидендов нет (программа давно действует).\n\n**Эмиссия / структура капитала (primary release):**\n- **Series D Mandatory Convertible Preferred Stock** — preferred dividends $159,026K LTM (в Q1'26 — $40,430K). Объявленный дивиденд по preferred **$0.78125/акция**, выплата 01.06.2026, record 15.05.2026.\n- Это обязательная конвертация в обыкновенные акции — встроенное будущее разводнение; дата конвертации не позднее 01.03.2028 (из прежних filings; в самом Q1'26 release дата конверсии построчно не переподтверждена — см. gaps). Эффект: preferred-дивиденды уменьшают Net Income to common stockholders уже сейчас, конверсия добавит акции к 2028.\n- Иных крупных эмиссий обыкновенных акций или spin-off на 28.06.2026 первичными источниками не выявлено.",
-      "hasDeep": true
-    },
-    {
-      "id": "peers",
-      "n": "P",
-      "tier": "context",
-      "title": "Peer positioning",
-      "sub": "KKR vs BX / APO / BAM",
-      "preview": {
-        "line": "KKR меньше по AUM и FRE, чем Blackstone и Apollo, но быстрее растёт по FRE, чем Brookfield; отстаёт по inflows — относительная слабость momentum.",
-        "stats": [
-          { "label": "Total AUM", "value": "$757.9B", "sub": "vs BX $1.30T, APO $1.0T+, BAM ~$1.2T" },
-          { "label": "Q1'26 FRE", "value": "$1,016,375K", "sub": "vs BX $1.55B, BAM $772M" },
-          { "label": "FRE рост г/г", "value": "+24%", "sub": "vs BX +23%, BAM +11%" },
-          { "label": "Inflows Q1'26", "value": "$27.75B", "sub": "vs Apollo $115B (рекорд), BX $68.5B" },
-          { "label": "Уникум KKR", "value": "Strategic Holdings", "sub": "прямые core-PE доли, дивиденды до $1.1B+ к 2030" }
-        ],
-        "bullets": [
-          "Главный негатив vs Apollo/BX — отставание в фандрейзинге",
-          "Профиль ближе к hold/add: vs Brookfield быстрее + insider-buying + сжатый мультипликатор",
-          "Peer-цифры BX/APO/BAM — из structured-aggregators, не переподтверждены построчно"
-        ]
-      },
-      "bodyMarkdown": "| Метрика | **KKR** | Blackstone (BX) | Apollo (APO) | Brookfield AM (BAM) |\n|---|---|---|---|---|\n| Total AUM | $757.9B (primary) | $1.30T | $1.0T+ | ~$1.2T |\n| Fee-paying AUM | $614.8B (primary) | $937.6B | $836B | $614B |\n| Q1'26 FRE | $1,016,375K (primary) | $1.55B | рекорд (абсолют не извлечён) | $772M |\n| FRE рост г/г | +24% (primary) | +23% | сильный | +11% |\n| Inflows Q1'26 | $27.75B (primary) | $68.5B | $115B (рекорд) | н/п |\n| Перпетуал/страхование | GA $231B AUM | мин. | Athene | мин. |\n\n(Peer-цифры BX/APO/BAM — из агентов через structured-aggregators, не переподтверждены построчно.)\n\n**Относительное позиционирование (decision-grade):**\n- **Масштаб:** KKR меньше по AUM и абсолютному FRE, чем Blackstone и Apollo, но быстрее растёт по FRE, чем Brookfield (+24% vs +11%).\n- **Fundraising:** KKR отстаёт по квартальным inflows ($27.75B vs Apollo $115B, BX $68.5B) — относительная слабость momentum.\n- **Уникум KKR:** Strategic Holdings (прямые core-PE доли с растущими дивидендами до $1.1B+ к 2030) — структурно отличает KKR от peers.\n\n**Вывод hold/add/cut:** относительно Brookfield (медленнее) + insider-buying на просадке + сжатый мультипликатор → профиль ближе к hold/add; главный негатив vs Apollo/BX — отставание в фандрейзинге.",
-      "hasDeep": true
-    },
-    {
-      "id": "strategy",
-      "n": "03",
-      "tier": "voice",
-      "title": "Заявленная стратегия",
-      "sub": "Edge-тезис и правила аллокации",
-      "preview": {
-        "line": "Тезис менеджмента — durability прибыли: 85% сегментных earnings из durable & recurring частей; правило аллокации — максимизация recurring durable EPS на марже.",
-        "stats": [
-          { "label": "Durable earnings", "value": "85%", "sub": "FRE + Insurance OE + Strategic Holdings OE = ~$1.3B из $1.5B Q1'26" },
-          { "label": "FRE/share 2026", "value": ">$4.50", "sub": "цель; TOE/share >$7" },
-          { "label": "ANI/share 2026", "value": "$7-8 → <$7", "sub": "скорректировано \"more likely below $7\" на Q1'26 call" },
-          { "label": "Долгосрочно ANI/share", "value": "$15+", "sub": "за ≤10 лет; AUM $1T к 2030" },
-          { "label": "Сотрудники владеют", "value": "~30%", "sub": "акций KKR — основа long-term ориентации" }
-        ],
-        "bullets": [
-          "Приоритеты Q1'26: buyback $317M → M&A (Arctos) → докапитализация Insurance → рост Strategic Holdings",
-          "50-летний трек: KKR отметил 50-летие 01.05.2026",
-          "AI как кросс-портфельный рычаг: 150+ портфельных компаний внедряют AI"
-        ]
-      },
-      "bodyMarkdown": "**Edge-тезис менеджмента (Q1'26 call, 05.05.2026):**\n- Durability и диверсификация прибыли. CFO Rob Lewin: «We benefit from real stability and durability of earnings and increased visibility on how they will grow». В Q1'26 «85% of segment earnings are from the more durable and recurring portions» (FRE + Insurance OE + Strategic Holdings OE) — ~$1.3B из сегментных $1.5B.\n- 50-летний трек. CEO в release: «On May 1st, KKR celebrated its 50th anniversary... a half century of navigating cycles».\n- AI как кросс-портфельный рычаг: 150+ портфельных компаний внедряют AI (применимо к Asset Management/Infra, не к Insurance/roll-up).\n\n**Правила капитал-аллокации (Lewin, Q1'26 call):** «how we take our marginal dollar of cash flows and drive the most amount of recurring durable and growing earnings per share». Жёсткой формулы нет — решение на марже по risk-adjusted return. Приоритеты Q1'26: (1) buyback $317M (3.5M акций по $91.08); (2) M&A (Arctos закрыта 04.05.2026); (3) докапитализация Insurance при расширении спредов; (4) рост Strategic Holdings. Сотрудники владеют ~30% акций KKR (call) — основа long-term ориентации.\n\n**Слои стратегии (2024 Investor Day, 10.04.2024 + Q1'26):**\n- 2026 цели: FRE/share >$4.50; TOE/share >$7; ANI/share $7-8 (на Q1'26 call скорректировано \"more likely below $7\").\n- Долгосрочно: ANI/share $15+ за ≤10 лет; AUM $1T к 2030.\n- Strategic Holdings OE: $350+M в 2026 → $700+M к 2028 → $1.1B+ к 2030.",
-      "hasDeep": true
-    },
-    {
-      "id": "worldview",
-      "n": "05",
-      "tier": "voice",
-      "title": "Взгляд на рынок",
-      "sub": "Во что верят, чего избегают",
-      "preview": {
-        "line": "Главные ставки — long-duration insurance и digital infrastructure / AI buildout ($40B+ развёрнуто, IRR 20%+); избегают розничного кредита при сжатых спредах.",
-        "stats": [
-          { "label": "Long-duration origination", "value": "80%", "sub": "в Q1'26 имели duration 7+ лет (vs 37% за 2024)" },
-          { "label": "Insurance dry powder", "value": "$6B equity", "sub": "= $60B+ buying power при дислокациях" },
-          { "label": "Digital infra развёрнуто", "value": "$40B+", "sub": "KKR + партнёры; gross IRR 20%+; 6 дата-центр платформ" },
-          { "label": "Perpetual capital", "value": "$326B", "sub": "43% AUM, 51% FPAUM — стабилизатор" }
-        ],
-        "bullets": [
-          "11.06.2026: запуск Helix Digital Infrastructure — $10B+; якоря KKR, KIA, NVIDIA, Vistra; CEO экс-глава AWS Adam Selipsky",
-          "25.06.2026: capital markets transaction fees за Q2'26 ~$175M; часть сделок сдвинута с Q2 на Q3'26",
-          "Не форсируют exit'ы в слабом окне монетизаций — переносят, а не отменяют"
-        ]
-      },
-      "bodyMarkdown": "**Во что верят (Q1'26 call, 05.05.2026):**\n- Long-duration insurance: 80% origination в Q1'26 имели duration 7+ лет (против 37% за весь 2024) — ставка на рост ROE при нормализации спредов. Lewin: «$6 billion of dry powder equity... translates into $60-plus billion of buying power» при дислокациях.\n- Digital infrastructure / AI buildout — главная секулярная тема: $40B+ развёрнуто (KKR + партнёры), gross IRR 20%+, 6 глобальных дата-центр платформ.\n- Перпетуальный капитал как стабилизатор: $326B (43% AUM, 51% FPAUM — primary).\n\n**Чего избегают:** розничный кредит при сжатых спредах. Lewin: «Spreads are as tight as they've been in a very long time». Не форсируют exit'ы в слабом окне монетизаций — переносят, а не отменяют.\n\n**За чем следят:** окно монетизаций (нормализация = триггер для ANI); волатильность как сигнал для buyback и развёртывания insurance dry powder; wealth-канал (ожидают замедление Q2 на фоне шума вокруг private-credit redemptions).\n\n**Свежие датированные тезисы:**\n1. **11.06.2026 (BusinessWire):** запуск **Helix Digital Infrastructure** — $10B+ long-duration капитала; якорные инвесторы KKR, Kuwait Investment Authority, NVIDIA, Vistra; CEO — экс-глава AWS Adam Selipsky. Прямая AI-линза.\n2. **25.06.2026 (BusinessWire, intra-quarter update):** capital markets transaction fees за Q2'26 ожидаются ~$175M; часть транзакций сдвинута с Q2 на Q3'26 — подтверждает тезис о задержке монетизаций.",
-      "hasDeep": true
-    },
-    {
-      "id": "monitor",
-      "n": "06",
-      "tier": "signals",
-      "title": "Что мониторить",
-      "sub": "Отчётность, vehicle, регуляторика",
-      "preview": {
-        "line": "Главное на Q2'26: подтвердятся ли capital markets fees ~$175M, сместился ли ANI ниже $7, темп Strategic Holdings OE к $350+M; и стресс в FSK.",
-        "stats": [
-          { "label": "Q2'26 earnings", "value": "04.08 или 30.07", "sub": "TipRanks vs public.com — расхождение; ждать IR-анонс" },
-          { "label": "10-Q за Q2'26", "value": "1H авг 2026", "sub": "SEC EDGAR CIK 0001404912; источник Strategic Holdings и GA" },
-          { "label": "FSK (BDC)", "value": "начало авг 2026", "sub": "NAV/share $18.83, non-accrual 4.2%, дистрибуция $0.42" },
-          { "label": "13F-HR за Q2'26", "value": "~14.08.2026", "sub": "ВАЖНО: активы клиентских фондов, НЕ баланс KKR" }
-        ],
-        "bullets": [
-          "FSK поддержка $300M: $150M convertible preferred (5.00% cash/7.00% PIK) + $150M tender + waiver incentive fee на 4 квартала; мониторить Medallia, Production Resource Group, ATX, Cubic Corp., Affordable Care",
-          "DEF 14A (proxy) апрель/май; Form 4 / Schedule 13D/G через EDGAR + openinsider; NPORT-P по кредитным фондам ежеквартально",
-          "Новости media.kkr.com: Helix Digital Infrastructure, ST Telemedia Global Data Centres (закрытие 2H'26), North America Fund XIV"
-        ]
-      },
-      "bodyMarkdown": "**Earnings / отчётность KKR:**\n- **Q2'26 earnings release — дата НЕ подтверждена однозначно:** TipRanks указывает 04.08.2026, public.com — 30.07.2026. Использовать официальный IR-анонс. Главное к проверке: подтвердятся ли capital markets fees ~$175M; сместился ли ANI ниже $7; темп Strategic Holdings OE к $350+M.\n- **10-Q за Q2'26** — SEC EDGAR (CIK 0001404912), первая половина августа 2026. Источник балансовых данных Strategic Holdings и GA book value.\n- **Начало ноября 2026** — Q3'26 release.\n\n**Управляемые vehicle:**\n- **FS KKR Capital (FSK, BDC)** — следующий 10-Q/earnings Q2'26 начало августа 2026. Q1'26: NAV/share $18.83 (-9.9% кв/кв), портфель $12.3B, non-accrual 4.2% по fair value, дистрибуция $0.42. KKR влил $300M ($150M convertible preferred 5.00% cash/7.00% PIK + $150M tender + waiver incentive fee на 4 квартала). Мониторить: Medallia, Production Resource Group, ATX, Cubic Corp., Affordable Care.\n- **NPORT-P** по кредитным фондам KKR — ежеквартально в EDGAR.\n\n**Регуляторные / корпоративные:**\n- **DEF 14A** (proxy) — апрель/май; следующий ориентир апрель 2027.\n- **Form 4 / Schedule 13D/G** — инсайдерские сделки через EDGAR + openinsider как валидация.\n- **13F-HR за Q2'26** — дедлайн ~14.08.2026. ВАЖНО: это активы клиентских фондов, НЕ баланс KKR.\n\n**Новостные потоки (media.kkr.com):**\n- Helix Digital Infrastructure (запуск 11.06.2026) — развёртывание капитала, hyperscaler-контракты.\n- ST Telemedia Global Data Centres (KKR+Singtel, S$13.8B EV) — закрытие 2H'26.\n- North America Fund XIV (vintage 4/2025) — темп развёртывания.",
-      "hasDeep": true
-    },
-    {
-      "id": "analysis",
-      "n": "07",
-      "tier": "signals",
-      "title": "Аналитический слой",
-      "sub": "Интерпретация фактов, триггеры",
-      "preview": {
-        "line": "Расхождение FRE vs ANI — структурное, не кризисное: проблема тайминга окна монетизаций, не фандрейзинга; FSK — главный негативный сигнал из экосистемы.",
-        "stats": [
-          { "label": "FRE рост / management fees", "value": "+24% / +30%", "sub": "комиссионная база растёт к цели $4.50+" },
-          { "label": "Helix capital pool", "value": "$10B+", "sub": "KKR/KIA/NVIDIA/Vistra — материализация AI-тезиса" },
-          { "label": "FSK NAV / non-accrual", "value": "−9.9% / 4.2%", "sub": "видимое ухудшение кредита; ранний индикатор стресса" },
-          { "label": "Insurance ROE", "value": "ниже таргета", "sub": "long-duration pivot (80%) + $6B dry powder = опцион на рост" }
-        ],
-        "bullets": [
-          "HOLD/ADD-триггеры: capital markets fees ≥$175M + Strategic Holdings OE к $350M; закрытие $1.2B+ forward monetizations; разворот insurance ROE; масштабирование Helix",
-          "TRIM/CUT-триггеры: рост non-accrual в FSK → системный стресс; повторный перенос монетизаций; замедление wealth K-Series; стагнация Insurance OE",
-          "Strategic Holdings back-end-weighted к $350+M; EBITDA-вклад (~$1.1B LTM) даёт растущие дивиденды независимо от exit-окна"
-        ]
-      },
-      "bodyMarkdown": "*Интерпретация аналитика на основе раскрытых фактов. Не valuation, без DCF.*\n\n**Что значат недавние события:**\n- Расхождение FRE vs ANI — структурное, не кризисное. FRE +24% и management fees +30% г/г показывают, что комиссионная база растёт к цели $4.50+. Снижение прогноза ANI ниже $7 и сдвиг capital markets fees к ~$175M с переносом сделок на Q3 — проблема тайминга окна монетизаций, не ухудшение фандрейзинга. «Качество» прибыли защищено, волатилен только carry/realization-компонент.\n- Helix ($10B+, KKR/KIA/NVIDIA/Vistra) — материализация AI-тезиса в отдельный capital pool. Поддерживает рост FPAUM и future management fees.\n- FSK (BDC) — главный негативный сигнал из экосистемы. NAV -9.9% за квартал, non-accrual до 4.2% по fair value, срез дистрибуции, экстренный $300M пакет — видимое ухудшение качества кредита в нижнем сегменте direct lending. Прямой эффект на KKR holdco невелик (FSK — vehicle, не баланс KKR), но это (а) репутационный/фандрейзинговый встречный ветер для credit/wealth K-Series, (б) ранний индикатор стресса в private credit.\n\n**Влияние на структуру:**\n- Strategic Holdings — back-end-weighted к цели $350+M; EBITDA-вклад (KKR share LTM ~$1.1B) даёт растущие дивиденды независимо от exit-окна. Положительно для durability.\n- Insurance (GA, book value $11.66B) — pivot в long-duration (80% origination 7+ лет) + $6B dry powder = опцион на ROE-рост при расширении спредов; текущий ROE ниже low-double-digit таргета — встречный ветер.\n\n**Сигналы (триггеры, не valuation-уровни):**\n- **HOLD / ADD-триггеры:** (1) подтверждение на Q2'26 capital markets fees ≥$175M и роста Strategic Holdings OE к $350M; (2) фактическое закрытие $1.2B+ forward monetizations; (3) расширение спредов → разворот insurance ROE вверх; (4) масштабирование Helix новыми инвесторами.\n- **TRIM / CUT-триггеры:** (1) дальнейший рост non-accrual в FSK → системный, а не идиосинкратический кредитный стресс; (2) повторный перенос монетизаций → ANI-цель под угрозой два квартала подряд; (3) замедление wealth K-Series при продолжении redemptions; (4) Insurance OE стагнирует, dry powder не развёрнут при волатильности.",
-      "hasDeep": true
-    }
-  ],
-  "sources": [
-    { "n": 1, "label": "KKR Q1 2026 Earnings Release (SEC 8-K exhibit, q126earningsrelease_vf.htm)", "url": "https://www.sec.gov/Archives/edgar/data/0001404912/000140491226000011/q126earningsrelease_vf.htm", "sourceType": "SEC EDGAR 8-K primary (открыт через curl HTTP 200)", "date": "2026-05-05" },
-    { "n": 2, "label": "KKR Q1 2026 10-Q index (SEC EDGAR, CIK 0001404912)", "url": "https://www.sec.gov/Archives/edgar/data/0001404912/000140491226000017/kkr-20260331.htm", "sourceType": "SEC EDGAR 10-Q primary (HTML недоступен через WebFetch)", "date": "2026-05-05" },
-    { "n": 3, "label": "KKR Q4 2025 / FY2025 Earnings Release", "url": "https://www.sec.gov/Archives/edgar/data/0001404912/000140491226000002/q425earningsrelease_vf.htm", "sourceType": "SEC EDGAR 8-K primary", "date": "2026-02-05" },
-    { "n": 4, "label": "KKR Q1 2026 Earnings Call Transcript (Motley Fool)", "url": "https://www.fool.com/earnings/call-transcripts/2026/05/05/kkr-kkr-q1-2026-earnings-call-transcript/", "sourceType": "earnings-call transcript", "date": "2026-05-05" },
-    { "n": 5, "label": "KKR Investor Relations homepage", "url": "https://ir.kkr.com/", "sourceType": "primary IR", "date": "2026-06-28" },
-    { "n": 6, "label": "KKR Reports First Quarter 2026 Results (BusinessWire)", "url": "https://www.businesswire.com/news/home/20260505994009/en/KKR-Co.-Inc.-Reports-First-Quarter-2026-Results", "sourceType": "primary PR", "date": "2026-05-05" },
-    { "n": 7, "label": "KKR Q1 2026 8-K material event (StockTitan, validation)", "url": "https://www.stocktitan.net/sec-filings/KKR/8-k-kkr-co-inc-reports-material-event-77e0b43d20f9.html", "sourceType": "structured-aggregator (validation)", "date": "2026-05-05" },
-    { "n": 8, "label": "KKR Announces Intra-Quarter Update (Q2'26 capital markets fees ~$175M)", "url": "https://www.businesswire.com/news/home/20260625517751/en/KKR-Announces-Intra-Quarter-Update", "sourceType": "primary PR", "date": "2026-06-25" },
-    { "n": 9, "label": "KKR Launches Helix Digital Infrastructure ($10B+, KKR/KIA/NVIDIA/Vistra)", "url": "https://www.businesswire.com/news/home/20260610500794/en/KKR-Launches-Helix-Digital-Infrastructure", "sourceType": "primary PR", "date": "2026-06-11" },
-    { "n": 10, "label": "KKR Closes Acquisition of Arctos Partners (~$15B AUM)", "url": "https://www.businesswire.com/news/home/20260504956768/en/KKR-Closes-Acquisition-of-Arctos-Partners", "sourceType": "primary PR (переподтверждено WebSearch)", "date": "2026-05-04" },
-    { "n": 11, "label": "KKR to Acquire Arctos — структура $1.4B + $550M earn-out", "url": "https://www.businesswire.com/news/home/20260204778743/en/KKR-to-Acquire-Arctos", "sourceType": "primary PR (переподтверждено WebSearch)", "date": "2026-02-04" },
-    { "n": 12, "label": "FS KKR Capital (FSK) Q1 2026 Results & Strategic Value Actions (PR Newswire)", "url": "https://www.prnewswire.com/news-releases/fs-kkr-capital-corp-announces-first-quarter-2026-results-302768117.html", "sourceType": "primary PR", "date": "2026-05-06" },
-    { "n": 13, "label": "FS KKR Capital (FSK) портфель (официальный сайт BDC)", "url": "https://www.fskkrcapitalcorp.com/about/portfolio/", "sourceType": "primary (переподтверждено через WebFetch: $12.3B, 236 компаний, non-accrual 4.2%)", "date": "2026-06-28" },
-    { "n": 14, "label": "FS KKR Q1 2026 8-K material event ($150M preferred, StockTitan)", "url": "https://www.stocktitan.net/sec-filings/FSK/8-k-fs-kkr-capital-corp-reports-material-event-7274b1c9adcc.html", "sourceType": "structured-aggregator (validation)", "date": "2026-05-07" },
-    { "n": 15, "label": "S&P Global & CME to sell OSTTRA to KKR for $3.1B", "url": "https://osttra.com/press_releases/sp-global-and-cme-group-to-sell-osttra-to-kkr-for-3-1-billion/", "sourceType": "primary PR", "date": "2025-04-14" },
-    { "n": 16, "label": "KKR Completes Tender Offer for FUJI SOFT (BusinessWire)", "url": "https://www.businesswire.com/news/home/20250219106284/en/KKR-Completes-Tender-Offer-for-FUJI-SOFT", "sourceType": "primary PR", "date": "2025-02-19" },
-    { "n": 17, "label": "KKR completes £4.7bn acquisition of Spectris (MergerLinks/BusinessCloud)", "url": "https://news.mergerlinks.com/daily-review/kkr-completes-the-acquisition-of-spectris-for-4-7bn", "sourceType": "structured-aggregator (переподтверждено WebSearch)", "date": "2025-12-04" },
-    { "n": 18, "label": "KKR increases ownership in core PE (USI, 1-800 Contacts, Heartland Dental, Nasdaq summary)", "url": "https://www.nasdaq.com/articles/kkr-increases-ownership-core-private-equity-businesses-quick-facts", "sourceType": "press summary (validation)", "date": "2025-02-04" },
-    { "n": 19, "label": "KKR targets $1T AUM, $15+ ANI/share (2024 Investor Day, Bloomberg)", "url": "https://www.bloomberg.com/news/articles/2024-04-10/kkr-targets-1-trillion-of-assets-under-management-in-five-years", "sourceType": "investor day coverage (validation)", "date": "2024-04-10" },
-    { "n": 20, "label": "KKR stock quote: цена/P-E/yield/52w (stockanalysis.com)", "url": "https://stockanalysis.com/stocks/kkr/", "sourceType": "structured-aggregator (переподтверждено через WebFetch)", "date": "2026-06-26" },
-    { "n": 21, "label": "Scott Nuttall Form 4 / insider activity (QuiverQuant)", "url": "https://www.quiverquant.com/insiders/1207606/Scott-C-Nuttall", "sourceType": "structured-aggregator (validation)", "date": "2026-02-27" },
-    { "n": 22, "label": "KKR co-CEO open-market purchases — Form 4 (StockTitan)", "url": "https://www.stocktitan.net/sec-filings/KKR/form-4-kkr-co-inc-insider-trading-activity-b6a4ca0334d6.html", "sourceType": "structured-aggregator (validation)", "date": "2026-02-27" },
-    { "n": 23, "label": "KKR Q2 2026 earnings date (TipRanks Aug 4 vs public.com Jul 30 — расхождение)", "url": "https://www.tipranks.com/stocks/kkr/earnings", "sourceType": "earnings-calendar aggregator (validation)", "date": "2026-06-01" },
-    { "n": 24, "label": "KKR Form 4 index (все insider-filings, SEC EDGAR, CIK 0001404912)", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001404912&type=4&owner=include&count=100", "sourceType": "SEC EDGAR Form 4 primary (открыт через curl HTTP 200)", "date": "2026-06-28" },
-    { "n": 25, "label": "Form 4 — Joseph Y. Bae покупка 125,000 акций @ ~$102.19 (17.02.2026)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126006056/form4.xml", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2026-02-18" },
-    { "n": 26, "label": "Form 4 — Scott C. Nuttall покупка 125,000 акций @ ~$102.67 (17.02.2026)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126006054/form4.xml", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2026-02-18" },
-    { "n": 27, "label": "Form 4 — Matt Cohler покупка 43,872 акций @ $102.90 (17.02.2026)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126006058/form4.xml", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2026-02-18" },
-    { "n": 28, "label": "Form 4 — Joseph Y. Bae покупка 50,000 акций @ $88.56 (27.02.2026)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126007578/form4.xml", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2026-03-03" },
-    { "n": 29, "label": "Form 4 — Scott C. Nuttall покупка 50,000 акций @ $87.81 (27.02.2026)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126007579/form4.xml", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2026-03-03" },
-    { "n": 30, "label": "Form 4 — Mary N. Dillon покупка 22,225 акций @ $90.96 (02.03.2026)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126007577/form4.xml", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2026-03-03" },
-    { "n": 31, "label": "Form 4 — Timothy R. Barakett покупка 50,000 акций @ $94.47 (04.03.2026)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126008123/form4.xml", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2026-03-05" },
-    { "n": 32, "label": "Form 4 — Henry R. Kravis продажа 1,281,394 акций @ ~$119.99 (02.06.2025, не 10b5-1)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036125021188/", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2025-06-02" },
-    { "n": 33, "label": "Form 4 — George R. Roberts продажа 1,190,094 акций @ $119.80 (02.06.2025, не 10b5-1)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036125021191/", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2025-06-02" },
-    { "n": 34, "label": "Form 4 — George R. Roberts продажа 809,906 акций @ $144.25 (07.08.2025, не 10b5-1, частично charitable)", "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036125029677/", "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)", "date": "2025-08-07" },
-    { "n": 35, "label": "KKR insider transactions table (openinsider.com)", "url": "http://openinsider.com/search?q=KKR", "sourceType": "structured-aggregator (validation покупок/продаж, сверено с Form 4)", "date": "2026-06-28" }
-  ],
-  "gaps": [
-    "Поштучная fair value Strategic Holdings (USI, Heartland Dental, 1-800 Contacts, Internet Brands, Mills Fleet Farm) — НЕ раскрыта в Q1'26 release; только агрегат (KKR share LTM Adjusted EBITDA ~$1.1B). Нужен полный 10-Q EX-таблицы или Investor Day deck.",
-    "Полный список ~18-19 компаний Strategic Holdings с долями — не подтверждён единым первичным документом; поимённо подтверждены 6 крупнейших.",
-    "Статус полного завершения ~$1.1B сделки по USI/1-800 Contacts/Heartland Dental — анонс 1H2025, закрытие всех траншей на 28.06.2026 первичным источником не подтверждено.",
-    "10-Q vehicle-таблицы (MOIC по фондам, dry powder breakdown, Private Credit IRR) — SEC HTML (kkr-20260331.htm) недоступен через WebFetch (403); цифры взяты от FACTS-агента, НЕ сверены построчно. Earnings release сверен полностью через curl.",
-    "Named FSK holdings с fair value (Medallia, Production Resource Group, ATX, Cubic Corp.) — по BDC-аналитике, не построчно из FSK 10-Q Schedule of Investments.",
-    "Circor → Parker Hannifin $2.55B — подтверждено WebSearch, прямой первичный KKR/Parker PR не открыт через WebFetch.",
-    "Form 4 — все ключевые покупки 2026 и продажи основателей 2025 открыты построчно из SEC Form 4 XML (источники 24-35) и сверены с openinsider. Не верифицирован построчно полный «long tail» мелких award/J-кодовых filings (RSU vesting, gift-коды G, внутригрупповые переводы KKR Group Partnership) — directional-сигнала не несут.",
-    "Series D Mandatory Convertible — дата конверсии (≤01.03.2028) взята из прежних filings; в самом Q1'26 earnings release построчно не переподтверждена (release раскрывает только текущий preferred-дивиденд $0.78125 и payment dates).",
-    "Peer-цифры BX/APO/BAM — из structured-aggregators, не сверены построчно с их primary releases. Apollo абсолютная квартальная FRE не извлечена.",
-    "Дата Q2'26 earnings — расхождение TipRanks (04.08.2026) vs public.com (30.07.2026); официальный IR-анонс не сверен.",
-    "«Embedded gains $18.3B» из агрегаторов транскрипта НЕ сводится к release: primary даёт embedded unrealized gains $2.8B и gross unrealized performance income $10.2B. $18.3B отброшено как неподтверждённое."
-  ],
-  "verification": "Все headline-метрики Q1'26 переподтверждены напрямую из первичного earnings release (SEC 8-K, открыт через curl HTTP 200, обход 403-блокировки WebFetch): FRE $3,908,085K LTM / $4.34 на share, TOE $5,197,944K / $5.77, ANI $4,593,023K / $5.10, AUM $757,877K тыс., FPAUM $614,845K тыс., perpetual $326B (43%/51%), management fees $4,376,011K LTM, Insurance OE $1,110,953K LTM, Strategic Holdings OE $178,906K LTM, GA book value $11,664,526K, uncalled commitments $124,857K тыс., buyback $317M/3.5M акций/$91.08, дивиденд $0.195, preferred dividends $159,026K. Котировки (цена $90.13, market cap $80.93B, P/E 31.36, yield 0.87%, 52w $82.67-$153.87, shares 897.87M) переподтверждены через stockanalysis.com. Arctos ($1.4B + $550M, ~$15B AUM), Spectris (£4.7B), FSK ($12.3B/236 компаний/non-accrual 4.2%) переподтверждены. ВАЖНЫЕ ПОПРАВКИ к черновикам: (1) GA AUM = $231B (primary), FACTS-агент ошибочно дал $220B; (2) Arctos AUM ~$15B (primary), не $16B; (3) FACTS-агент дал FY2024/2025 FRE $3.27B/$3.71B — расходится с release-графиком (~$3.5B/$4.1B), отброшено; (4) Total Investing Earnings СНИЖАЮТСЯ LTM ($932,087K vs $1,231,663K) — это корень слабого ANI. Инсайдерская секция усилена: все ключевые Form 4 (покупки Bae/Nuttall/Cohler/Dillon/Barakett на $50.9M в фев-март 2026; продажи основателей Kravis/Roberts на $413.2M в 2025, флаг 10b5-1=false) открыты построчно из SEC Form 4 XML и сверены с openinsider; buyback ($317M/3.5M/$91.08 + $500M, inception-to-date 97.7M акций/$3,083M/$31.56), дивиденд ($0.195, +5%, серия с 2018) и Series D preferred ($0.78125, $159,026K LTM) переподтверждены из release. НЕ переподтверждены построчно: 10-Q vehicle-таблицы (MOIC, IRR), per-company Strategic Holdings оценки, peer-цифры. Общий уровень доверия: ВЫСОКИЙ по финансам/котировкам/сделкам holdco, СРЕДНИЙ по track-record фондов и peer-сравнению."
+ "id": "kkr",
+ "name": "KKR & Co",
+ "ticker": "KKR",
+ "type": "asset manager",
+ "asOf": "28.06.2026",
+ "tagline": "Глобальный alternative asset manager (AUM $757.9B): комиссионная база растёт (FRE +14% LTM, margin 69%), но ANI вырос лишь +5% из-за переноса монетизаций — это проблема тайминга окна выходов, не базы; акция −41% от пика, оба Co-CEO докупали на просадке.",
+ "kpis": [
+  {
+   "label": "AUM / FPAUM",
+   "value": "$757.9B / $614.8B",
+   "sub": "Perpetual capital $326B (43% AUM, 51% FPAUM); AUM +14% г/г",
+   "source": "KKR Q1 2026 Earnings Release (SEC 8-K, 05.05.2026)"
+  },
+  {
+   "label": "FRE (LTM Q1'26)",
+   "value": "$3,908,085K",
+   "sub": "$4.34 / adj. share; +14% LTM (квартал +24% г/г); FRE margin 69%",
+   "source": "KKR Q1 2026 Earnings Release (SEC 8-K)"
+  },
+  {
+   "label": "ANI / DE (LTM Q1'26)",
+   "value": "$4,593,023K",
+   "sub": "$5.10 / adj. share; рост лишь +5% LTM — Total Investing Earnings упали до $932,087K",
+   "source": "KKR Q1 2026 Earnings Release (SEC 8-K)"
+  },
+  {
+   "label": "Цена / оценка",
+   "value": "$90.13",
+   "sub": "−41% от 52w-максимума $153.87; P/ANI ~17.7x (vs пиковые ~30x); market cap $80.93B",
+   "source": "stockanalysis.com (26.06.2026) + KKR primary"
+  }
+ ],
+ "sections": [
+  {
+   "id": "portfolio",
+   "n": "01",
+   "tier": "substance",
+   "title": "Текущий портфель",
+   "sub": "Из чего состоит баланс KKR",
+   "preview": {
+    "line": "Баланс KKR — три части: Asset Management (co-invest $7,999M), Insurance (Global Atlantic, book value $11.66B) и Strategic Holdings (прямые core-PE доли).",
+    "stats": [
+     {
+      "label": "AUM (для клиентов)",
+      "value": "$757.9B",
+      "sub": "FPAUM $614.8B; perpetual $326B"
+     },
+     {
+      "label": "Global Atlantic (book value)",
+      "value": "$11,664,526K",
+      "sub": "топ-1 балансовая позиция; GA AUM $231B"
+     },
+     {
+      "label": "Asset Management investments",
+      "value": "$7,999M",
+      "sub": "fair value; embedded unrealized gains $2.8B"
+     },
+     {
+      "label": "FS KKR Capital (FSK)",
+      "value": "$12.3B",
+      "sub": "публичный BDC, 236 компаний, NAV/share $18.83"
+     },
+     {
+      "label": "Strategic Holdings OE",
+      "value": "$178,906K",
+      "sub": "LTM (Dividends, Net); KKR доля LTM Adj. EBITDA ~$1.1B"
+     }
+    ],
+    "bullets": [
+     "13F-позиции (Masonite, Amedisys, Lamar) — это активы клиентских фондов, НЕ баланс KKR; исключены",
+     "Strategic Holdings: USI Insurance Services, Heartland Dental, 1-800 Contacts, Internet Brands, Mills Fleet Farm, BridgeBio (полный список ~18-19 компаний единым primary не подтверждён)",
+     "AI-линза реальна через инфраструктуру/энергетику и data-center спрос (Helix Digital Infrastructure $10B+), не через страховой core"
+    ]
+   },
+   "bodyMarkdown": "13F-позиции KKR (Masonite, Amedisys, Lamar и т.д.) — это активы клиентских фондов, НЕ баланс KKR; они исключены из анализа холдинга. Собственный баланс KKR состоит из трёх частей: Asset Management (co-invest в свои фонды), Insurance (Global Atlantic) и Strategic Holdings (прямые core-PE доли).\n\n**AUM (управляемый для клиентов, не на балансе KKR): $757.9B; FPAUM $614.8B; perpetual capital $326B (43% AUM, 51% FPAUM).** Все три цифры подтверждены первичным earnings release Q1'26 (SEC 8-K, 05.05.2026, открыт через curl HTTP 200).\n\n**Балансовые позиции с опубликованной оценкой**\n\n| Позиция | Vehicle / тип | Оценка (31.03.2026) | Описание |\n|---|---|---|---|\n| Global Atlantic (страхование) | 100% KKR, Insurance segment | Book value $11.66B (точно $11,664,526K, primary); GA AUM $231B | Страховщик аннуитетов/life/перестрахования; net investment income $1.9B за Q1'26; Insurance operating earnings $260.3M Q1, $1,110,953K LTM |\n| Asset Management investments | На балансе KKR (co-invest в свои фонды) | Fair value $7,999M (primary); embedded unrealized gains $2.8B | Собственный капитал KKR в своих фондах; 41% Traditional PE, 16% Real Estate, 13% Growth Equity, 7% Infra (разбивка не переподтверждена из release — см. gaps) |\n| FS KKR Capital (FSK) | Публичный BDC (NYSE: FSK), KKR — advisor | Портфель fair value $12.3B, 236 компаний, NAV/share $18.83 | KKR владеет долей акций FSK и получает management/incentive fees; non-accrual 4.2% по fair value (подтверждено сайтом FSK) |\n\n**Флагманские фонды** (commitment / remaining fair value из vehicle-таблиц; цифры из FACTS-агента, источник 10-Q; точные строки 10-Q НЕ переподтверждены построчно — SEC HTML недоступен через WebFetch, см. gaps)\n\n| Фонд (vintage) | Commitment | Remaining FV | Realized | Описание |\n|---|---|---|---|---|\n| North America Fund XIII (2021) | $18.4B | $23.45B | $0.57B | Крупнейший активный североамериканский PE-фонд предыдущего vintage |\n| North America Fund XIV (2025) | $21.9B / vintage 4/2025 | $0 (только начал) | $0 | Крупнейший в истории KKR фонд только для Северной Америки (агенты дают $21.9B commitment и \"$23B vintage\" — расхождение, не сверено) |\n| Asian Fund IV (2020) | $14.7B | $16.20B | $4.23B | Азиатский PE-фонд |\n| Global Infrastructure Investors IV (2021) | $16.6B | $19.62B | $1.70B | Инфраструктурный фонд |\n| Diversified Core Infrastructure (открытый) | $14.3B | $13.51B | $1.72B | Бессрочный core-инфраструктурный фонд |\n\n**Strategic Holdings (названы, БЕЗ поштучной fair value на балансе; учитываются по дивидендам)**\nKKR раскрывает только агрегат, не fair value по каждой компании. Strategic Holdings operating earnings = $48,296K Q1'26 / $178,906K LTM (в release это строка \"Dividends, Net\" — подтверждено primary). KKR's доля LTM Adjusted EBITDA по этим компаниям ~$1.1B. Названные мажоритарные core-PE активы (из инвест-релизов / 2024 Investor Day, не из Q1'26 release): **USI Insurance Services**, **Heartland Dental**, **1-800 Contacts**, **Internet Brands**, **Mills Fleet Farm**, **BridgeBio** (частично реализована). Полный список ~18-19 компаний единым первичным документом не подтверждён.\n\n**Концентрация и структура**\n- **Топ-1 балансовая позиция: Global Atlantic** (book value $11.66B) — крупнее всего собственного Asset Management-портфеля ($7,999M).\n- **Гео (Strategic Holdings, KKR's share EBITDA):** Americas 64%, Europe 31%, Asia Pacific 5% (из агента, не переподтверждено).\n- **Отрасли (Strategic Holdings):** Business Services 33%, Consumer 28%, Health Care 16%, TMT 14%, Infrastructure 6%, Industrials 3% (из агента, не переподтверждено).\n- **Listed vs unlisted:** портфель преимущественно unlisted; единственная крупная публичная балансовая экспозиция — доля в FSK (NYSE: FSK).\n- **AI-линза (реальна):** через инфраструктуру/энергетику и data-center спрос (Helix Digital Infrastructure $10B+, Global Infrastructure фонды, core infra), не через страховой core.",
+   "hasDeep": true
+  },
+  {
+   "id": "changes",
+   "n": "02",
+   "tier": "substance",
+   "title": "Недавние изменения",
+   "sub": "Сделки, монетизации, dry powder",
+   "preview": {
+    "line": "Закрыты Arctos ($1.4B+earn-out), Spectris (£4.7B), OSTTRA ($3.1B), Fuji Soft (~$4.4B); dry powder ~$125B; реализованный performance income LTM снижается.",
+    "stats": [
+     {
+      "label": "Uncalled commitments",
+      "value": "~$125B",
+      "sub": "$124,857K тыс. на 31.03.2026, +14% г/г"
+     },
+     {
+      "label": "AUM not yet paying fees",
+      "value": "$64B",
+      "sub": "committed; встроенный рост management fees"
+     },
+     {
+      "label": "New capital raised",
+      "value": "$27.75B / $126.6B",
+      "sub": "квартал / LTM; K-Series AUM $38B (vs $21B)"
+     },
+     {
+      "label": "Net realized perf. income",
+      "value": "$197,191K",
+      "sub": "Q1 +124% г/г; но LTM $600,938K — СНИЖЕНИЕ"
+     },
+     {
+      "label": "Arctos Partners",
+      "value": "$1.4B",
+      "sub": "~$15B AUM спортивных франшиз; +$550M earn-out до 2031; ЗАКРЫТО"
+     }
+    ],
+    "bullets": [
+     "Продажа Circor aerospace → Parker Hannifin за $2.55B (май 2026); KKR сохраняет naval/industrial Circor",
+     "Dry powder breakdown PE $53B / Real Assets $37B / Credit $34B — из агента, не сверено",
+     "PENDING: увеличение долей в core-PE (USI, 1-800 Contacts, Heartland Dental) на ~$1.1B + Chubb ~$1.0B; +~$50M/год к Strategic Holdings OE"
+    ]
+   },
+   "bodyMarkdown": "**Покупки / новые vehicle**\n\n| Дата | Сделка | Размер | Vehicle | Статус |\n|---|---|---|---|---|\n| 05.05.2026 | **Arctos Partners** (инвестор в доли спортивных франшиз, ~$15B AUM) | $1.4B initial ($300M cash + $900M + $200M equity) + до $550M earn-out до 2031 | Корп. поглощение KKR (платформа KKR Solutions) | ЗАКРЫТО (подтверждено BusinessWire 04-05.05.2026; primary указывает ~$15B AUM, а не $16B) |\n| 04.12.2025 | **Spectris plc** (приборостроение, делистинг с LSE) | £4.7B (~$6.5B) | Фонды KKR | ЗАКРЫТО (подтверждено BusinessCloud/MergerLinks/Financier Worldwide) |\n| 10.10.2025 | **OSTTRA** (post-trade сервисы) от S&P Global и CME | $3.1B EV | Фонды KKR (Infrastructure) | ЗАКРЫТО |\n| 19.02.2025 | **Fuji Soft** (японский IT) через тендер | ~$4.4B | Фонды KKR Asia | ЗАКРЫТО (тендер выигран у Bain) |\n\n**Продажи / монетизации**\n\n| Дата | Сделка | Размер | Эффект |\n|---|---|---|---|\n| май 2026 | Продажа аэрокосмического бизнеса **Circor** компании Parker Hannifin | $2.55B | KKR сохраняет naval/industrial Circor (подтверждено WebSearch; прямой KKR-PR не открыт — см. gaps) |\n| Q1'26 | Net realized performance income $197,191K Q1 (+124% г/г vs $87,989K Q1'25); за LTM инвестировано $97B | — | Подтверждено primary; ВАЖНО: LTM realized performance income $600,938K — это СНИЖЕНИЕ vs $618,779K годом ранее, несмотря на сильный квартал |\n\n**Капитал к развёртыванию (dry powder)**\n- **Uncalled commitments: $124,857K тыс. (~$125B)** на 31.03.2026 (+14% г/г vs $115,628K тыс.) — primary-подтверждено. Разбивка PE $53B / Real Assets $37B / Credit $34B — из агента, не сверена построчно.\n- **AUM not yet paying fees: $64B** committed — primary-подтверждено; встроенный рост management fees при инвестировании.\n- New capital raised: $27,750K тыс. ($27.75B) за Q1'26, $126,609K тыс. ($126.6B) LTM — primary. K-Series AUM $38B (vs $21B годом ранее) — primary.\n\n**PENDING / незакрытое**\n- Увеличение долей в core-PE (USI, 1-800 Contacts, Heartland Dental) на ~$1.1B (+ Chubb ~$1.0B) — анонс 1H2025, +~$50M/год к Strategic Holdings OE; полное завершение всех траншей первичным источником на 28.06.2026 НЕ подтверждено (см. gaps).",
+   "hasDeep": true
+  },
+  {
+   "id": "financial",
+   "n": "03",
+   "tier": "substance",
+   "title": "Финансовая составляющая",
+   "sub": "P&L, баланс holdco, FRE-ряд",
+   "preview": {
+    "line": "FRE margin стабильно 69%; 85% сегментных earnings durable; holdco — нетто-кэш ~$3.63B; Total Investing Earnings снижаются — корень слабого ANI.",
+    "stats": [
+     {
+      "label": "FRE / margin (LTM)",
+      "value": "$3,908,085K / 69%",
+      "sub": "$4.34/share; +14% LTM"
+     },
+     {
+      "label": "Total Operating Earnings (LTM)",
+      "value": "$5,197,944K",
+      "sub": "$5.77/share"
+     },
+     {
+      "label": "Management Fees (LTM)",
+      "value": "$4,376,011K",
+      "sub": "+30% г/г (Q1 $1,192,504K)"
+     },
+     {
+      "label": "Total Investing Earnings (LTM)",
+      "value": "$932,087K",
+      "sub": "СНИЖЕНИЕ с $1,231,663K — источник слабого ANI"
+     },
+     {
+      "label": "Net cash & investments (holdco)",
+      "value": "~$3.63B",
+      "sub": "$12,967M cash & investments − $9,340M debt; рейтинг 'A'"
+     }
+    ],
+    "bullets": [
+     "Total Segment Earnings $6,130,031K LTM; 85% из durable & recurring (FRE + Insurance + Strategic Holdings)",
+     "Preferred Stock Dividends $159,026K LTM — новый элемент (Series D Mandatory Convertible)",
+     "Многолетний FRE: 2023 ~$3.0B → 2024 ~$3.5B → 2025 ~$4.1B (release-график; цифры FACTS-агента отброшены)"
+    ]
+   },
+   "bodyMarkdown": "Все Q1'26 цифры переподтверждены из primary earnings release (SEC 8-K, curl HTTP 200).\n\n| Метрика | Q1'26 | Q1'26 LTM | Q1'25 | Q1'25 LTM |\n|---|---|---|---|---|\n| **FRE** | $1,016,375K | $3,908,085K | $822,603K | $3,421,658K |\n| FRE / adj. share | $1.13 | $4.34 | $0.92 | $3.82 |\n| **Total Operating Earnings** | $1,325,001K | $5,197,944K | $1,112,861K | $4,509,113K |\n| TOE / adj. share | $1.47 | $5.77 | $1.24 | $5.04 |\n| **Adjusted Net Income (ANI/DE)** | $1,249,539K | $4,593,023K | $1,033,988K | $4,372,509K |\n| ANI / adj. share | $1.39 | $5.10 | $1.15 | $4.88 |\n| Insurance operating earnings | $260,330K | $1,110,953K | $258,772K | $1,000,478K |\n| Strategic Holdings OE | $48,296K | $178,906K | $31,486K | $86,977K |\n| Management Fees | $1,192,504K | $4,376,011K | $917,334K | $3,563,388K |\n| AUM | $757,877K тыс. | — | $664,319K тыс. | — |\n| FPAUM | $614,845K тыс. | — | $526,045K тыс. | — |\n\n- **FRE margin: 69%** (стабильно 69% Q1'25 LTM и Q1'26 LTM) — primary-подтверждено.\n- **Total Segment Earnings: $6,130,031K LTM** (primary). 85% сегментных earnings — из \"durable & recurring\" частей (FRE + Insurance + Strategic Holdings) = ~$1.3B из $1.5B Q1'26 (call).\n- **Total Investing Earnings: $932,087K LTM** — primary; СНИЖЕНИЕ с $1,231,663K годом ранее (это и есть источник слабого роста ANI +5% LTM).\n- Transaction & Monitoring Fees $252,709K Q1 / $1,083,777K LTM (primary).\n- **Preferred Stock Dividends $159,026K LTM** (primary) — новый элемент структуры капитала (Series D Mandatory Convertible).\n\n**Балансовый профиль (holdco, Q1'26, primary):**\n- Cash & short-term investments (excl. GA) $4,968M + AM investments $7,999M = **Cash & investments $12,967M**.\n- Outstanding debt (at par) $9,340M → **Net cash & investments ~$3.63B**.\n- Embedded unrealized gains в AM $2.8B (primary); gross unrealized performance income $10.2B (по агенту).\n- Рейтинг 'A' у S&P и Fitch, средняя дюрация долга ~15 лет (по агенту, не сверено).\n\n**Многолетний FRE ряд:** release-график показывает FRE 2023 ~$3.0B, 2024 ~$3.5B, 2025 ~$4.1B. ВНИМАНИЕ: FACTS-агент привёл FY2024 FRE $3.27B и FY2025 $3.71B — это РАСХОДИТСЯ с release-графиком (~$3.5B и ~$4.1B). Точные годовые значения из release-графика приоритетны; цифры агента не приняты (см. unverified).",
+   "hasDeep": true
+  },
+  {
+   "id": "risk",
+   "n": "04",
+   "tier": "context",
+   "title": "Карта рисков",
+   "sub": "Концентрация, carry, кредит BDC",
+   "preview": {
+    "line": "Два риска средний-высокий: концентрация в Global Atlantic ($11.66B) и multiple de-rating (акция −41%); кредитный стресс виден в управляемом BDC (FSK).",
+    "stats": [
+     {
+      "label": "Концентрация GA",
+      "value": "Средний-высокий",
+      "sub": "топ-1 позиция; book value $11.66B, AUM $231B"
+     },
+     {
+      "label": "Перенос монетизаций",
+      "value": "Средний",
+      "sub": "ANI +5% LTM vs FRE +14%; Investing Earnings $932,087K"
+     },
+     {
+      "label": "Кредитный риск FSK",
+      "value": "Средний",
+      "sub": "NAV −9.9% кв/кв; non-accrual 4.2%; дистрибуция срезана $0.48→$0.42"
+     },
+     {
+      "label": "Multiple de-rating",
+      "value": "Средний-высокий",
+      "sub": "$90.13 vs 52w-максимум $153.87 (−41%)"
+     },
+     {
+      "label": "Leverage / LTV",
+      "value": "Низкий",
+      "sub": "нетто-кэш ~$3.63B; долг $9.34B; рейтинг 'A'"
+     }
+    ],
+    "bullets": [
+     "Key-person: Co-CEO Bae & Nuttall + основатели Kravis/Roberts — низкий-средний, митигируется институционализацией",
+     "Regulatory: рост retail/wealth (K-Series $38B) и страхования → надзор SEC/страховых регуляторов",
+     "GA GAAP net investment-related losses по Insurance существенны (по агенту −$653M, не переподтверждено)"
+    ]
+   },
+   "bodyMarkdown": "| Риск | Уровень | Конкретный триггер |\n|---|---|---|\n| **Концентрация в Global Atlantic** | Средний-высокий | GA — топ-1 балансовая позиция (book value $11.66B, AUM $231B). Триггер: рост кредитных спредов/дефолтов в инвестпортфеле GA, рейтинговый даунгрейд, отток аннуитетов. Q1'26 GAAP net investment-related losses по Insurance существенны (по агенту -$653M, не переподтверждено) |\n| **Перенос монетизаций / carry-зависимость** | Средний | ANI/share вырос лишь +5% LTM (vs FRE +14%) — Total Investing Earnings упали до $932,087K LTM с $1,231,663K (primary). Триггер: повторный перенос монетизаций с Q3 на Q4/2027 → ANI-цель под угрозой |\n| **Кредитный риск BDC (FSK)** | Средний | FSK NAV/share упал до $18.83 (-9.9% кв/кв с $20.89); non-accrual 4.2% по fair value (8.1% по cost); дистрибуция срезана с $0.48 до $0.42; KKR влил $300M поддержки. Триггер: расползание стресса на private BDC/direct lending |\n| **Leverage / LTV** | Низкий | KKR holdco — нетто-кэш (~$3.63B net cash & investments), долг $9.34B при рейтинге 'A'. Триггер только при системном кризисе ликвидности |\n| **Key-person dependency** | Низкий-средний | Co-CEO Bae и Nuttall + основатели Kravis/Roberts (Co-Executive Chairmen). Митигируется институционализацией |\n| **Regulatory exposure** | Средний | Рост retail/wealth (K-Series AUM $38B) и страхования → надзор SEC/страховых регуляторов |\n| **Multiple de-rating** | Средний-высокий | Акция $90.13 vs 52w-максимум $153.87 (-41%). Триггер: дальнейшее сжатие мультипликатора при замедлении fundraising/монетизаций |",
+   "hasDeep": true
+  },
+  {
+   "id": "insider",
+   "n": "05",
+   "tier": "context",
+   "title": "Действия инсайдеров",
+   "sub": "Form 4, buybacks, дивиденды",
+   "preview": {
+    "line": "Менеджмент покупает на дне (оба Co-CEO + 3 директора, ~$50.9M в фев-март по $88-105, ноль продаж); основатели продали на пике 2025 ($413.2M по $120-144).",
+    "stats": [
+     {
+      "label": "Покупки инсайдеров",
+      "value": "~$50.9M / 516,322 акц.",
+      "sub": "8 сделок 09.02-04.03.2026; ноль продаж менеджмента"
+     },
+     {
+      "label": "Покупки Co-CEO",
+      "value": "175,000 акц. каждый",
+      "sub": "Bae и Nuttall: по 125k @ $102 + по 50k @ $87-89"
+     },
+     {
+      "label": "Продажи основателей 2025",
+      "value": "~$413.2M / 3.28M акц.",
+      "sub": "Kravis/Roberts по $120-144; флаг 10b5-1 = false"
+     },
+     {
+      "label": "Buyback (2025→01.05.2026)",
+      "value": "$317M / 3.5M акц.",
+      "sub": "средняя $91.08; совет одобрил +$500M"
+     },
+     {
+      "label": "Квартальный дивиденд",
+      "value": "$0.195",
+      "sub": "+5% г/г; серия повышений с 2018, без cut"
+     }
+    ],
+    "bullets": [
+     "Сигнал: менеджмент-покупает-на-дне + основатели-продали-на-пике = уверенность операционной команды в недооценке",
+     "Inception-to-date buybacks: 97.7M акций, $3,083M, средняя $31.56/акция; остаток $122M на 01.05.2026",
+     "Series D Mandatory Convertible Preferred — preferred dividends $159,026K LTM; встроенное будущее разводнение к 2028"
+    ]
+   },
+   "bodyMarkdown": "**Form 4 — открытые покупки на просадке (код P).** Все строки ниже открыты построчно из SEC Form 4 XML (CIK 0001404912, curl HTTP 200); цена и объём сверены с openinsider.com как агрегатор-валидация. Это покупки за личные деньги топ-менеджмента в окне просадки акции (с $153.87 пика до $82-90).\n\n| Дата сделки | Инсайдер | Роль | Объём | Цена (P) | Сумма | Тип | Источник |\n|---|---|---|---|---|---|---|---|\n| 09.02.2026 | Timothy R. Barakett | директор | 50,000 | $104.93 | ~$5.25M | indirect | Form 4 (acc. ...004845) |\n| 17.02.2026 | **Joseph Y. Bae** | Co-CEO | 125,000 | $100.39-$103.17 (wavg ~$102.19) | ~$12.77M | indirect, By Trusts | Form 4 (acc. ...006056) |\n| 17.02.2026 | **Scott C. Nuttall** | Co-CEO | 125,000 | $102.13-$103.41 (wavg ~$102.67) | ~$12.83M | прямая (direct) | Form 4 (acc. ...006054) |\n| 17.02.2026 | Matt Cohler | директор | 43,872 | $102.90 | ~$4.51M | прямая (direct) | Form 4 (acc. ...006058) |\n| 27.02.2026 | **Joseph Y. Bae** | Co-CEO | 50,000 | $88.56 | ~$4.43M | indirect, By Trusts | Form 4 (acc. ...007578) |\n| 27.02.2026 | **Scott C. Nuttall** | Co-CEO | 50,000 | $87.81 | ~$4.39M | прямая (direct) | Form 4 (acc. ...007579) |\n| 02.03.2026 | Mary N. Dillon | директор | 22,225 | $90.96 | ~$2.02M | indirect, By Trust | Form 4 (acc. ...007577) |\n| 04.03.2026 | Timothy R. Barakett | директор | 50,000 | $94.47 | ~$4.72M | indirect, траст | Form 4 (acc. ...008123) |\n\n**Итог покупок (09.02-04.03.2026): 8 сделок, ~516,322 акций, ~$50.9M.** Оба Co-CEO купили по 175,000 акций каждый (по 125,000 на $102 + по 50,000 на $87-89); три независимых директора (Barakett, Cohler, Dillon) добавили ~166,322 акции. Покупки идут двумя волнами: середина февраля у $100-105 и конец февраля / начало марта у $88-95 — то есть инсайдеры докупали и на втором, более глубоком провале. Ни одного открытого insider-sale у действующего менеджмента/директоров в 2026 году в Form 4 не зафиксировано.\n\n**Контекст — крупные продажи основателей в 2025 (код S, НЕ по плану 10b5-1).** Co-Executive Chairmen Henry R. Kravis и George R. Roberts продали значимые блоки в первой половине / середине 2025, на более высоких уровнях, до падения акции. Открыто из SEC Form 4 XML; флаг плана 10b5-1 в обоих filings = false (дискреционные продажи).\n\n| Дата сделки | Инсайдер | Роль | Объём | Цена (S) | Сумма | Источник |\n|---|---|---|---|---|---|---|\n| 02.06.2025 | **Henry R. Kravis** | Co-Exec Chairman | 1,281,394 | wavg ~$119.99 | ~$153.8M | Form 4 (acc. ...021188) |\n| 02.06.2025 | **George R. Roberts** | Co-Exec Chairman | 1,190,094 | $119.80 | ~$142.6M | Form 4 (acc. ...021191) |\n| 07.08.2025 | **George R. Roberts** | Co-Exec Chairman | 809,906 | $144.25 | ~$116.8M | Form 4 (acc. ...029677) |\n\n**Итог продаж основателей (2025): ~3.28M акций, ~$413.2M** при ценах $120-144. Часть проданного Roberts (август) по footnote держалась \"solely for purposes of charitable donations\" — то есть отчасти благотворительная ликвидация, а не чистый кэш-аут. После этих продаж у каждого основателя остаётся крупная доля (Roberts ~83.9M акций после августовской сделки; Kravis ~81.4M после июньской — по строке sharesOwnedFollowingTransaction в Form 4).\n\n**Сигнал (decision-grade):** разнонаправленный по уровню иерархии. Основатели (Kravis/Roberts, отходящие от операционного управления) фиксировали прибыль у $120-144 в 2025 — это диверсификация/благотворительность пожилых мажоритариев, а не операционный сигнал. Действующее руководство, наоборот, покупало за свои у $88-105 в феврале-марте 2026 — оба Co-CEO + три директора, ~$50.9M суммарно, без единой продажи. Сочетание «менеджмент-покупает-на-дне + основатели-продали-на-пике» читается как уверенность операционной команды в недооценке при текущем P/ANI ~17.7x.\n\n**Buybacks (primary Q1'26 release, открыт через curl HTTP 200):**\n- С конца 2025 года по 01.05.2026 KKR использовал **$317M** на выкуп и погашение **3.5M акций** по средней **$91.08** — то есть выкуп шёл примерно по той же цене, по которой докупали инсайдеры (вторая волна $88-95).\n- Совет одобрил **увеличение программы на $500M**. Механика амортизации: когда остаток программы падает до $50M или ниже, лимит автоматически прирастает на $500M.\n- **Inception-to-date (с авторизации 27.10.2015 по 01.05.2026):** 69.6M акций выкуплено на открытом рынке + 28.1M погашено по retired equity awards = **97.7M акций, $3,083M, средняя $31.56/акция**. Остаток доступности на 01.05.2026 — **$122M** (до авто-прироста).\n\n**Дивиденды (primary release):**\n- Квартальный дивиденд по обыкновенной акции **$0.195** объявлен за Q1'26; выплата 29.05.2026, record 15.05.2026. **+5% к аннуализированному уровню 2025.**\n- KKR повышает аннуализированный дивиденд **каждый год с момента конверсии в C-Corp в 2018** — то есть непрерывная серия повышений, без cut и без пропусков. Инициаций новых дивидендов нет (программа давно действует).\n\n**Эмиссия / структура капитала (primary release):**\n- **Series D Mandatory Convertible Preferred Stock** — preferred dividends $159,026K LTM (в Q1'26 — $40,430K). Объявленный дивиденд по preferred **$0.78125/акция**, выплата 01.06.2026, record 15.05.2026.\n- Это обязательная конвертация в обыкновенные акции — встроенное будущее разводнение; дата конвертации не позднее 01.03.2028 (из прежних filings; в самом Q1'26 release дата конверсии построчно не переподтверждена — см. gaps). Эффект: preferred-дивиденды уменьшают Net Income to common stockholders уже сейчас, конверсия добавит акции к 2028.\n- Иных крупных эмиссий обыкновенных акций или spin-off на 28.06.2026 первичными источниками не выявлено.",
+   "hasDeep": true
+  },
+  {
+   "id": "peers",
+   "n": "06",
+   "tier": "context",
+   "title": "Peer positioning",
+   "sub": "KKR vs BX / APO / BAM",
+   "preview": {
+    "line": "KKR меньше по AUM и FRE, чем Blackstone и Apollo, но быстрее растёт по FRE, чем Brookfield; отстаёт по inflows — относительная слабость momentum.",
+    "stats": [
+     {
+      "label": "Total AUM",
+      "value": "$757.9B",
+      "sub": "vs BX $1.30T, APO $1.0T+, BAM ~$1.2T"
+     },
+     {
+      "label": "Q1'26 FRE",
+      "value": "$1,016,375K",
+      "sub": "vs BX $1.55B, BAM $772M"
+     },
+     {
+      "label": "FRE рост г/г",
+      "value": "+24%",
+      "sub": "vs BX +23%, BAM +11%"
+     },
+     {
+      "label": "Inflows Q1'26",
+      "value": "$27.75B",
+      "sub": "vs Apollo $115B (рекорд), BX $68.5B"
+     },
+     {
+      "label": "Уникум KKR",
+      "value": "Strategic Holdings",
+      "sub": "прямые core-PE доли, дивиденды до $1.1B+ к 2030"
+     }
+    ],
+    "bullets": [
+     "Главный негатив vs Apollo/BX — отставание в фандрейзинге",
+     "Профиль ближе к hold/add: vs Brookfield быстрее + insider-buying + сжатый мультипликатор",
+     "Peer-цифры BX/APO/BAM — из structured-aggregators, не переподтверждены построчно"
+    ]
+   },
+   "bodyMarkdown": "| Метрика | **KKR** | Blackstone (BX) | Apollo (APO) | Brookfield AM (BAM) |\n|---|---|---|---|---|\n| Total AUM | $757.9B (primary) | $1.30T | $1.0T+ | ~$1.2T |\n| Fee-paying AUM | $614.8B (primary) | $937.6B | $836B | $614B |\n| Q1'26 FRE | $1,016,375K (primary) | $1.55B | рекорд (абсолют не извлечён) | $772M |\n| FRE рост г/г | +24% (primary) | +23% | сильный | +11% |\n| Inflows Q1'26 | $27.75B (primary) | $68.5B | $115B (рекорд) | н/п |\n| Перпетуал/страхование | GA $231B AUM | мин. | Athene | мин. |\n\n(Peer-цифры BX/APO/BAM — из агентов через structured-aggregators, не переподтверждены построчно.)\n\n**Относительное позиционирование (decision-grade):**\n- **Масштаб:** KKR меньше по AUM и абсолютному FRE, чем Blackstone и Apollo, но быстрее растёт по FRE, чем Brookfield (+24% vs +11%).\n- **Fundraising:** KKR отстаёт по квартальным inflows ($27.75B vs Apollo $115B, BX $68.5B) — относительная слабость momentum.\n- **Уникум KKR:** Strategic Holdings (прямые core-PE доли с растущими дивидендами до $1.1B+ к 2030) — структурно отличает KKR от peers.\n\n**Вывод hold/add/cut:** относительно Brookfield (медленнее) + insider-buying на просадке + сжатый мультипликатор → профиль ближе к hold/add; главный негатив vs Apollo/BX — отставание в фандрейзинге.",
+   "hasDeep": true
+  },
+  {
+   "id": "strategy",
+   "n": "07",
+   "tier": "voice",
+   "title": "Заявленная стратегия",
+   "sub": "Edge-тезис и правила аллокации",
+   "preview": {
+    "line": "Тезис менеджмента — durability прибыли: 85% сегментных earnings из durable & recurring частей; правило аллокации — максимизация recurring durable EPS на марже.",
+    "stats": [
+     {
+      "label": "Durable earnings",
+      "value": "85%",
+      "sub": "FRE + Insurance OE + Strategic Holdings OE = ~$1.3B из $1.5B Q1'26"
+     },
+     {
+      "label": "FRE/share 2026",
+      "value": ">$4.50",
+      "sub": "цель; TOE/share >$7"
+     },
+     {
+      "label": "ANI/share 2026",
+      "value": "$7-8 → <$7",
+      "sub": "скорректировано \"more likely below $7\" на Q1'26 call"
+     },
+     {
+      "label": "Долгосрочно ANI/share",
+      "value": "$15+",
+      "sub": "за ≤10 лет; AUM $1T к 2030"
+     },
+     {
+      "label": "Сотрудники владеют",
+      "value": "~30%",
+      "sub": "акций KKR — основа long-term ориентации"
+     }
+    ],
+    "bullets": [
+     "Приоритеты Q1'26: buyback $317M → M&A (Arctos) → докапитализация Insurance → рост Strategic Holdings",
+     "50-летний трек: KKR отметил 50-летие 01.05.2026",
+     "AI как кросс-портфельный рычаг: 150+ портфельных компаний внедряют AI"
+    ]
+   },
+   "bodyMarkdown": "**Edge-тезис менеджмента (Q1'26 call, 05.05.2026):**\n- Durability и диверсификация прибыли. CFO Rob Lewin: «We benefit from real stability and durability of earnings and increased visibility on how they will grow». В Q1'26 «85% of segment earnings are from the more durable and recurring portions» (FRE + Insurance OE + Strategic Holdings OE) — ~$1.3B из сегментных $1.5B.\n- 50-летний трек. CEO в release: «On May 1st, KKR celebrated its 50th anniversary... a half century of navigating cycles».\n- AI как кросс-портфельный рычаг: 150+ портфельных компаний внедряют AI (применимо к Asset Management/Infra, не к Insurance/roll-up).\n\n**Правила капитал-аллокации (Lewin, Q1'26 call):** «how we take our marginal dollar of cash flows and drive the most amount of recurring durable and growing earnings per share». Жёсткой формулы нет — решение на марже по risk-adjusted return. Приоритеты Q1'26: (1) buyback $317M (3.5M акций по $91.08); (2) M&A (Arctos закрыта 04.05.2026); (3) докапитализация Insurance при расширении спредов; (4) рост Strategic Holdings. Сотрудники владеют ~30% акций KKR (call) — основа long-term ориентации.\n\n**Слои стратегии (2024 Investor Day, 10.04.2024 + Q1'26):**\n- 2026 цели: FRE/share >$4.50; TOE/share >$7; ANI/share $7-8 (на Q1'26 call скорректировано \"more likely below $7\").\n- Долгосрочно: ANI/share $15+ за ≤10 лет; AUM $1T к 2030.\n- Strategic Holdings OE: $350+M в 2026 → $700+M к 2028 → $1.1B+ к 2030.",
+   "hasDeep": true
+  },
+  {
+   "id": "worldview",
+   "n": "08",
+   "tier": "voice",
+   "title": "Взгляд на рынок",
+   "sub": "Во что верят, чего избегают",
+   "preview": {
+    "line": "Главные ставки — long-duration insurance и digital infrastructure / AI buildout ($40B+ развёрнуто, IRR 20%+); избегают розничного кредита при сжатых спредах.",
+    "stats": [
+     {
+      "label": "Long-duration origination",
+      "value": "80%",
+      "sub": "в Q1'26 имели duration 7+ лет (vs 37% за 2024)"
+     },
+     {
+      "label": "Insurance dry powder",
+      "value": "$6B equity",
+      "sub": "= $60B+ buying power при дислокациях"
+     },
+     {
+      "label": "Digital infra развёрнуто",
+      "value": "$40B+",
+      "sub": "KKR + партнёры; gross IRR 20%+; 6 дата-центр платформ"
+     },
+     {
+      "label": "Perpetual capital",
+      "value": "$326B",
+      "sub": "43% AUM, 51% FPAUM — стабилизатор"
+     }
+    ],
+    "bullets": [
+     "11.06.2026: запуск Helix Digital Infrastructure — $10B+; якоря KKR, KIA, NVIDIA, Vistra; CEO экс-глава AWS Adam Selipsky",
+     "25.06.2026: capital markets transaction fees за Q2'26 ~$175M; часть сделок сдвинута с Q2 на Q3'26",
+     "Не форсируют exit'ы в слабом окне монетизаций — переносят, а не отменяют"
+    ]
+   },
+   "bodyMarkdown": "**Во что верят (Q1'26 call, 05.05.2026):**\n- Long-duration insurance: 80% origination в Q1'26 имели duration 7+ лет (против 37% за весь 2024) — ставка на рост ROE при нормализации спредов. Lewin: «$6 billion of dry powder equity... translates into $60-plus billion of buying power» при дислокациях.\n- Digital infrastructure / AI buildout — главная секулярная тема: $40B+ развёрнуто (KKR + партнёры), gross IRR 20%+, 6 глобальных дата-центр платформ.\n- Перпетуальный капитал как стабилизатор: $326B (43% AUM, 51% FPAUM — primary).\n\n**Чего избегают:** розничный кредит при сжатых спредах. Lewin: «Spreads are as tight as they've been in a very long time». Не форсируют exit'ы в слабом окне монетизаций — переносят, а не отменяют.\n\n**За чем следят:** окно монетизаций (нормализация = триггер для ANI); волатильность как сигнал для buyback и развёртывания insurance dry powder; wealth-канал (ожидают замедление Q2 на фоне шума вокруг private-credit redemptions).\n\n**Свежие датированные тезисы:**\n1. **11.06.2026 (BusinessWire):** запуск **Helix Digital Infrastructure** — $10B+ long-duration капитала; якорные инвесторы KKR, Kuwait Investment Authority, NVIDIA, Vistra; CEO — экс-глава AWS Adam Selipsky. Прямая AI-линза.\n2. **25.06.2026 (BusinessWire, intra-quarter update):** capital markets transaction fees за Q2'26 ожидаются ~$175M; часть транзакций сдвинута с Q2 на Q3'26 — подтверждает тезис о задержке монетизаций.",
+   "hasDeep": true
+  },
+  {
+   "id": "monitor",
+   "n": "09",
+   "tier": "signals",
+   "title": "Что мониторить",
+   "sub": "Отчётность, vehicle, регуляторика",
+   "preview": {
+    "line": "Главное на Q2'26: подтвердятся ли capital markets fees ~$175M, сместился ли ANI ниже $7, темп Strategic Holdings OE к $350+M; и стресс в FSK.",
+    "stats": [
+     {
+      "label": "Q2'26 earnings",
+      "value": "04.08 или 30.07",
+      "sub": "TipRanks vs public.com — расхождение; ждать IR-анонс"
+     },
+     {
+      "label": "10-Q за Q2'26",
+      "value": "1H авг 2026",
+      "sub": "SEC EDGAR CIK 0001404912; источник Strategic Holdings и GA"
+     },
+     {
+      "label": "FSK (BDC)",
+      "value": "начало авг 2026",
+      "sub": "NAV/share $18.83, non-accrual 4.2%, дистрибуция $0.42"
+     },
+     {
+      "label": "13F-HR за Q2'26",
+      "value": "~14.08.2026",
+      "sub": "ВАЖНО: активы клиентских фондов, НЕ баланс KKR"
+     }
+    ],
+    "bullets": [
+     "FSK поддержка $300M: $150M convertible preferred (5.00% cash/7.00% PIK) + $150M tender + waiver incentive fee на 4 квартала; мониторить Medallia, Production Resource Group, ATX, Cubic Corp., Affordable Care",
+     "DEF 14A (proxy) апрель/май; Form 4 / Schedule 13D/G через EDGAR + openinsider; NPORT-P по кредитным фондам ежеквартально",
+     "Новости media.kkr.com: Helix Digital Infrastructure, ST Telemedia Global Data Centres (закрытие 2H'26), North America Fund XIV"
+    ]
+   },
+   "bodyMarkdown": "**Earnings / отчётность KKR:**\n- **Q2'26 earnings release — дата НЕ подтверждена однозначно:** TipRanks указывает 04.08.2026, public.com — 30.07.2026. Использовать официальный IR-анонс. Главное к проверке: подтвердятся ли capital markets fees ~$175M; сместился ли ANI ниже $7; темп Strategic Holdings OE к $350+M.\n- **10-Q за Q2'26** — SEC EDGAR (CIK 0001404912), первая половина августа 2026. Источник балансовых данных Strategic Holdings и GA book value.\n- **Начало ноября 2026** — Q3'26 release.\n\n**Управляемые vehicle:**\n- **FS KKR Capital (FSK, BDC)** — следующий 10-Q/earnings Q2'26 начало августа 2026. Q1'26: NAV/share $18.83 (-9.9% кв/кв), портфель $12.3B, non-accrual 4.2% по fair value, дистрибуция $0.42. KKR влил $300M ($150M convertible preferred 5.00% cash/7.00% PIK + $150M tender + waiver incentive fee на 4 квартала). Мониторить: Medallia, Production Resource Group, ATX, Cubic Corp., Affordable Care.\n- **NPORT-P** по кредитным фондам KKR — ежеквартально в EDGAR.\n\n**Регуляторные / корпоративные:**\n- **DEF 14A** (proxy) — апрель/май; следующий ориентир апрель 2027.\n- **Form 4 / Schedule 13D/G** — инсайдерские сделки через EDGAR + openinsider как валидация.\n- **13F-HR за Q2'26** — дедлайн ~14.08.2026. ВАЖНО: это активы клиентских фондов, НЕ баланс KKR.\n\n**Новостные потоки (media.kkr.com):**\n- Helix Digital Infrastructure (запуск 11.06.2026) — развёртывание капитала, hyperscaler-контракты.\n- ST Telemedia Global Data Centres (KKR+Singtel, S$13.8B EV) — закрытие 2H'26.\n- North America Fund XIV (vintage 4/2025) — темп развёртывания.",
+   "hasDeep": true
+  },
+  {
+   "id": "analysis",
+   "n": "10",
+   "tier": "signals",
+   "title": "Аналитический слой",
+   "sub": "Интерпретация фактов, триггеры",
+   "preview": {
+    "line": "Расхождение FRE vs ANI — структурное, не кризисное: проблема тайминга окна монетизаций, не фандрейзинга; FSK — главный негативный сигнал из экосистемы.",
+    "stats": [
+     {
+      "label": "FRE рост / management fees",
+      "value": "+24% / +30%",
+      "sub": "комиссионная база растёт к цели $4.50+"
+     },
+     {
+      "label": "Helix capital pool",
+      "value": "$10B+",
+      "sub": "KKR/KIA/NVIDIA/Vistra — материализация AI-тезиса"
+     },
+     {
+      "label": "FSK NAV / non-accrual",
+      "value": "−9.9% / 4.2%",
+      "sub": "видимое ухудшение кредита; ранний индикатор стресса"
+     },
+     {
+      "label": "Insurance ROE",
+      "value": "ниже таргета",
+      "sub": "long-duration pivot (80%) + $6B dry powder = опцион на рост"
+     }
+    ],
+    "bullets": [
+     "HOLD/ADD-триггеры: capital markets fees ≥$175M + Strategic Holdings OE к $350M; закрытие $1.2B+ forward monetizations; разворот insurance ROE; масштабирование Helix",
+     "TRIM/CUT-триггеры: рост non-accrual в FSK → системный стресс; повторный перенос монетизаций; замедление wealth K-Series; стагнация Insurance OE",
+     "Strategic Holdings back-end-weighted к $350+M; EBITDA-вклад (~$1.1B LTM) даёт растущие дивиденды независимо от exit-окна"
+    ]
+   },
+   "bodyMarkdown": "*Интерпретация аналитика на основе раскрытых фактов. Не valuation, без DCF.*\n\n**Что значат недавние события:**\n- Расхождение FRE vs ANI — структурное, не кризисное. FRE +24% и management fees +30% г/г показывают, что комиссионная база растёт к цели $4.50+. Снижение прогноза ANI ниже $7 и сдвиг capital markets fees к ~$175M с переносом сделок на Q3 — проблема тайминга окна монетизаций, не ухудшение фандрейзинга. «Качество» прибыли защищено, волатилен только carry/realization-компонент.\n- Helix ($10B+, KKR/KIA/NVIDIA/Vistra) — материализация AI-тезиса в отдельный capital pool. Поддерживает рост FPAUM и future management fees.\n- FSK (BDC) — главный негативный сигнал из экосистемы. NAV -9.9% за квартал, non-accrual до 4.2% по fair value, срез дистрибуции, экстренный $300M пакет — видимое ухудшение качества кредита в нижнем сегменте direct lending. Прямой эффект на KKR holdco невелик (FSK — vehicle, не баланс KKR), но это (а) репутационный/фандрейзинговый встречный ветер для credit/wealth K-Series, (б) ранний индикатор стресса в private credit.\n\n**Влияние на структуру:**\n- Strategic Holdings — back-end-weighted к цели $350+M; EBITDA-вклад (KKR share LTM ~$1.1B) даёт растущие дивиденды независимо от exit-окна. Положительно для durability.\n- Insurance (GA, book value $11.66B) — pivot в long-duration (80% origination 7+ лет) + $6B dry powder = опцион на ROE-рост при расширении спредов; текущий ROE ниже low-double-digit таргета — встречный ветер.\n\n**Сигналы (триггеры, не valuation-уровни):**\n- **HOLD / ADD-триггеры:** (1) подтверждение на Q2'26 capital markets fees ≥$175M и роста Strategic Holdings OE к $350M; (2) фактическое закрытие $1.2B+ forward monetizations; (3) расширение спредов → разворот insurance ROE вверх; (4) масштабирование Helix новыми инвесторами.\n- **TRIM / CUT-триггеры:** (1) дальнейший рост non-accrual в FSK → системный, а не идиосинкратический кредитный стресс; (2) повторный перенос монетизаций → ANI-цель под угрозой два квартала подряд; (3) замедление wealth K-Series при продолжении redemptions; (4) Insurance OE стагнирует, dry powder не развёрнут при волатильности.",
+   "hasDeep": true
+  }
+ ],
+ "sources": [
+  {
+   "n": 1,
+   "label": "KKR Q1 2026 Earnings Release (SEC 8-K exhibit, q126earningsrelease_vf.htm)",
+   "url": "https://www.sec.gov/Archives/edgar/data/0001404912/000140491226000011/q126earningsrelease_vf.htm",
+   "sourceType": "SEC EDGAR 8-K primary (открыт через curl HTTP 200)",
+   "date": "2026-05-05"
+  },
+  {
+   "n": 2,
+   "label": "KKR Q1 2026 10-Q index (SEC EDGAR, CIK 0001404912)",
+   "url": "https://www.sec.gov/Archives/edgar/data/0001404912/000140491226000017/kkr-20260331.htm",
+   "sourceType": "SEC EDGAR 10-Q primary (HTML недоступен через WebFetch)",
+   "date": "2026-05-05"
+  },
+  {
+   "n": 3,
+   "label": "KKR Q4 2025 / FY2025 Earnings Release",
+   "url": "https://www.sec.gov/Archives/edgar/data/0001404912/000140491226000002/q425earningsrelease_vf.htm",
+   "sourceType": "SEC EDGAR 8-K primary",
+   "date": "2026-02-05"
+  },
+  {
+   "n": 4,
+   "label": "KKR Q1 2026 Earnings Call Transcript (Motley Fool)",
+   "url": "https://www.fool.com/earnings/call-transcripts/2026/05/05/kkr-kkr-q1-2026-earnings-call-transcript/",
+   "sourceType": "earnings-call transcript",
+   "date": "2026-05-05"
+  },
+  {
+   "n": 5,
+   "label": "KKR Investor Relations homepage",
+   "url": "https://ir.kkr.com/",
+   "sourceType": "primary IR",
+   "date": "2026-06-28"
+  },
+  {
+   "n": 6,
+   "label": "KKR Reports First Quarter 2026 Results (BusinessWire)",
+   "url": "https://www.businesswire.com/news/home/20260505994009/en/KKR-Co.-Inc.-Reports-First-Quarter-2026-Results",
+   "sourceType": "primary PR",
+   "date": "2026-05-05"
+  },
+  {
+   "n": 7,
+   "label": "KKR Q1 2026 8-K material event (StockTitan, validation)",
+   "url": "https://www.stocktitan.net/sec-filings/KKR/8-k-kkr-co-inc-reports-material-event-77e0b43d20f9.html",
+   "sourceType": "structured-aggregator (validation)",
+   "date": "2026-05-05"
+  },
+  {
+   "n": 8,
+   "label": "KKR Announces Intra-Quarter Update (Q2'26 capital markets fees ~$175M)",
+   "url": "https://www.businesswire.com/news/home/20260625517751/en/KKR-Announces-Intra-Quarter-Update",
+   "sourceType": "primary PR",
+   "date": "2026-06-25"
+  },
+  {
+   "n": 9,
+   "label": "KKR Launches Helix Digital Infrastructure ($10B+, KKR/KIA/NVIDIA/Vistra)",
+   "url": "https://www.businesswire.com/news/home/20260610500794/en/KKR-Launches-Helix-Digital-Infrastructure",
+   "sourceType": "primary PR",
+   "date": "2026-06-11"
+  },
+  {
+   "n": 10,
+   "label": "KKR Closes Acquisition of Arctos Partners (~$15B AUM)",
+   "url": "https://www.businesswire.com/news/home/20260504956768/en/KKR-Closes-Acquisition-of-Arctos-Partners",
+   "sourceType": "primary PR (переподтверждено WebSearch)",
+   "date": "2026-05-04"
+  },
+  {
+   "n": 11,
+   "label": "KKR to Acquire Arctos — структура $1.4B + $550M earn-out",
+   "url": "https://www.businesswire.com/news/home/20260204778743/en/KKR-to-Acquire-Arctos",
+   "sourceType": "primary PR (переподтверждено WebSearch)",
+   "date": "2026-02-04"
+  },
+  {
+   "n": 12,
+   "label": "FS KKR Capital (FSK) Q1 2026 Results & Strategic Value Actions (PR Newswire)",
+   "url": "https://www.prnewswire.com/news-releases/fs-kkr-capital-corp-announces-first-quarter-2026-results-302768117.html",
+   "sourceType": "primary PR",
+   "date": "2026-05-06"
+  },
+  {
+   "n": 13,
+   "label": "FS KKR Capital (FSK) портфель (официальный сайт BDC)",
+   "url": "https://www.fskkrcapitalcorp.com/about/portfolio/",
+   "sourceType": "primary (переподтверждено через WebFetch: $12.3B, 236 компаний, non-accrual 4.2%)",
+   "date": "2026-06-28"
+  },
+  {
+   "n": 14,
+   "label": "FS KKR Q1 2026 8-K material event ($150M preferred, StockTitan)",
+   "url": "https://www.stocktitan.net/sec-filings/FSK/8-k-fs-kkr-capital-corp-reports-material-event-7274b1c9adcc.html",
+   "sourceType": "structured-aggregator (validation)",
+   "date": "2026-05-07"
+  },
+  {
+   "n": 15,
+   "label": "S&P Global & CME to sell OSTTRA to KKR for $3.1B",
+   "url": "https://osttra.com/press_releases/sp-global-and-cme-group-to-sell-osttra-to-kkr-for-3-1-billion/",
+   "sourceType": "primary PR",
+   "date": "2025-04-14"
+  },
+  {
+   "n": 16,
+   "label": "KKR Completes Tender Offer for FUJI SOFT (BusinessWire)",
+   "url": "https://www.businesswire.com/news/home/20250219106284/en/KKR-Completes-Tender-Offer-for-FUJI-SOFT",
+   "sourceType": "primary PR",
+   "date": "2025-02-19"
+  },
+  {
+   "n": 17,
+   "label": "KKR completes £4.7bn acquisition of Spectris (MergerLinks/BusinessCloud)",
+   "url": "https://news.mergerlinks.com/daily-review/kkr-completes-the-acquisition-of-spectris-for-4-7bn",
+   "sourceType": "structured-aggregator (переподтверждено WebSearch)",
+   "date": "2025-12-04"
+  },
+  {
+   "n": 18,
+   "label": "KKR increases ownership in core PE (USI, 1-800 Contacts, Heartland Dental, Nasdaq summary)",
+   "url": "https://www.nasdaq.com/articles/kkr-increases-ownership-core-private-equity-businesses-quick-facts",
+   "sourceType": "press summary (validation)",
+   "date": "2025-02-04"
+  },
+  {
+   "n": 19,
+   "label": "KKR targets $1T AUM, $15+ ANI/share (2024 Investor Day, Bloomberg)",
+   "url": "https://www.bloomberg.com/news/articles/2024-04-10/kkr-targets-1-trillion-of-assets-under-management-in-five-years",
+   "sourceType": "investor day coverage (validation)",
+   "date": "2024-04-10"
+  },
+  {
+   "n": 20,
+   "label": "KKR stock quote: цена/P-E/yield/52w (stockanalysis.com)",
+   "url": "https://stockanalysis.com/stocks/kkr/",
+   "sourceType": "structured-aggregator (переподтверждено через WebFetch)",
+   "date": "2026-06-26"
+  },
+  {
+   "n": 21,
+   "label": "Scott Nuttall Form 4 / insider activity (QuiverQuant)",
+   "url": "https://www.quiverquant.com/insiders/1207606/Scott-C-Nuttall",
+   "sourceType": "structured-aggregator (validation)",
+   "date": "2026-02-27"
+  },
+  {
+   "n": 22,
+   "label": "KKR co-CEO open-market purchases — Form 4 (StockTitan)",
+   "url": "https://www.stocktitan.net/sec-filings/KKR/form-4-kkr-co-inc-insider-trading-activity-b6a4ca0334d6.html",
+   "sourceType": "structured-aggregator (validation)",
+   "date": "2026-02-27"
+  },
+  {
+   "n": 23,
+   "label": "KKR Q2 2026 earnings date (TipRanks Aug 4 vs public.com Jul 30 — расхождение)",
+   "url": "https://www.tipranks.com/stocks/kkr/earnings",
+   "sourceType": "earnings-calendar aggregator (validation)",
+   "date": "2026-06-01"
+  },
+  {
+   "n": 24,
+   "label": "KKR Form 4 index (все insider-filings, SEC EDGAR, CIK 0001404912)",
+   "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001404912&type=4&owner=include&count=100",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт через curl HTTP 200)",
+   "date": "2026-06-28"
+  },
+  {
+   "n": 25,
+   "label": "Form 4 — Joseph Y. Bae покупка 125,000 акций @ ~$102.19 (17.02.2026)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126006056/form4.xml",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2026-02-18"
+  },
+  {
+   "n": 26,
+   "label": "Form 4 — Scott C. Nuttall покупка 125,000 акций @ ~$102.67 (17.02.2026)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126006054/form4.xml",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2026-02-18"
+  },
+  {
+   "n": 27,
+   "label": "Form 4 — Matt Cohler покупка 43,872 акций @ $102.90 (17.02.2026)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126006058/form4.xml",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2026-02-18"
+  },
+  {
+   "n": 28,
+   "label": "Form 4 — Joseph Y. Bae покупка 50,000 акций @ $88.56 (27.02.2026)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126007578/form4.xml",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2026-03-03"
+  },
+  {
+   "n": 29,
+   "label": "Form 4 — Scott C. Nuttall покупка 50,000 акций @ $87.81 (27.02.2026)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126007579/form4.xml",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2026-03-03"
+  },
+  {
+   "n": 30,
+   "label": "Form 4 — Mary N. Dillon покупка 22,225 акций @ $90.96 (02.03.2026)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126007577/form4.xml",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2026-03-03"
+  },
+  {
+   "n": 31,
+   "label": "Form 4 — Timothy R. Barakett покупка 50,000 акций @ $94.47 (04.03.2026)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036126008123/form4.xml",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2026-03-05"
+  },
+  {
+   "n": 32,
+   "label": "Form 4 — Henry R. Kravis продажа 1,281,394 акций @ ~$119.99 (02.06.2025, не 10b5-1)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036125021188/",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2025-06-02"
+  },
+  {
+   "n": 33,
+   "label": "Form 4 — George R. Roberts продажа 1,190,094 акций @ $119.80 (02.06.2025, не 10b5-1)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036125021191/",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2025-06-02"
+  },
+  {
+   "n": 34,
+   "label": "Form 4 — George R. Roberts продажа 809,906 акций @ $144.25 (07.08.2025, не 10b5-1, частично charitable)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1404912/000114036125029677/",
+   "sourceType": "SEC EDGAR Form 4 primary (открыт построчно)",
+   "date": "2025-08-07"
+  },
+  {
+   "n": 35,
+   "label": "KKR insider transactions table (openinsider.com)",
+   "url": "http://openinsider.com/search?q=KKR",
+   "sourceType": "structured-aggregator (validation покупок/продаж, сверено с Form 4)",
+   "date": "2026-06-28"
+  }
+ ],
+ "gaps": [
+  "Поштучная fair value Strategic Holdings (USI, Heartland Dental, 1-800 Contacts, Internet Brands, Mills Fleet Farm) — НЕ раскрыта в Q1'26 release; только агрегат (KKR share LTM Adjusted EBITDA ~$1.1B). Нужен полный 10-Q EX-таблицы или Investor Day deck.",
+  "Полный список ~18-19 компаний Strategic Holdings с долями — не подтверждён единым первичным документом; поимённо подтверждены 6 крупнейших.",
+  "Статус полного завершения ~$1.1B сделки по USI/1-800 Contacts/Heartland Dental — анонс 1H2025, закрытие всех траншей на 28.06.2026 первичным источником не подтверждено.",
+  "10-Q vehicle-таблицы (MOIC по фондам, dry powder breakdown, Private Credit IRR) — SEC HTML (kkr-20260331.htm) недоступен через WebFetch (403); цифры взяты от FACTS-агента, НЕ сверены построчно. Earnings release сверен полностью через curl.",
+  "Named FSK holdings с fair value (Medallia, Production Resource Group, ATX, Cubic Corp.) — по BDC-аналитике, не построчно из FSK 10-Q Schedule of Investments.",
+  "Circor → Parker Hannifin $2.55B — подтверждено WebSearch, прямой первичный KKR/Parker PR не открыт через WebFetch.",
+  "Form 4 — все ключевые покупки 2026 и продажи основателей 2025 открыты построчно из SEC Form 4 XML (источники 24-35) и сверены с openinsider. Не верифицирован построчно полный «long tail» мелких award/J-кодовых filings (RSU vesting, gift-коды G, внутригрупповые переводы KKR Group Partnership) — directional-сигнала не несут.",
+  "Series D Mandatory Convertible — дата конверсии (≤01.03.2028) взята из прежних filings; в самом Q1'26 earnings release построчно не переподтверждена (release раскрывает только текущий preferred-дивиденд $0.78125 и payment dates).",
+  "Peer-цифры BX/APO/BAM — из structured-aggregators, не сверены построчно с их primary releases. Apollo абсолютная квартальная FRE не извлечена.",
+  "Дата Q2'26 earnings — расхождение TipRanks (04.08.2026) vs public.com (30.07.2026); официальный IR-анонс не сверен.",
+  "«Embedded gains $18.3B» из агрегаторов транскрипта НЕ сводится к release: primary даёт embedded unrealized gains $2.8B и gross unrealized performance income $10.2B. $18.3B отброшено как неподтверждённое."
+ ],
+ "verification": "Все headline-метрики Q1'26 переподтверждены напрямую из первичного earnings release (SEC 8-K, открыт через curl HTTP 200, обход 403-блокировки WebFetch): FRE $3,908,085K LTM / $4.34 на share, TOE $5,197,944K / $5.77, ANI $4,593,023K / $5.10, AUM $757,877K тыс., FPAUM $614,845K тыс., perpetual $326B (43%/51%), management fees $4,376,011K LTM, Insurance OE $1,110,953K LTM, Strategic Holdings OE $178,906K LTM, GA book value $11,664,526K, uncalled commitments $124,857K тыс., buyback $317M/3.5M акций/$91.08, дивиденд $0.195, preferred dividends $159,026K. Котировки (цена $90.13, market cap $80.93B, P/E 31.36, yield 0.87%, 52w $82.67-$153.87, shares 897.87M) переподтверждены через stockanalysis.com. Arctos ($1.4B + $550M, ~$15B AUM), Spectris (£4.7B), FSK ($12.3B/236 компаний/non-accrual 4.2%) переподтверждены. ВАЖНЫЕ ПОПРАВКИ к черновикам: (1) GA AUM = $231B (primary), FACTS-агент ошибочно дал $220B; (2) Arctos AUM ~$15B (primary), не $16B; (3) FACTS-агент дал FY2024/2025 FRE $3.27B/$3.71B — расходится с release-графиком (~$3.5B/$4.1B), отброшено; (4) Total Investing Earnings СНИЖАЮТСЯ LTM ($932,087K vs $1,231,663K) — это корень слабого ANI. Инсайдерская секция усилена: все ключевые Form 4 (покупки Bae/Nuttall/Cohler/Dillon/Barakett на $50.9M в фев-март 2026; продажи основателей Kravis/Roberts на $413.2M в 2025, флаг 10b5-1=false) открыты построчно из SEC Form 4 XML и сверены с openinsider; buyback ($317M/3.5M/$91.08 + $500M, inception-to-date 97.7M акций/$3,083M/$31.56), дивиденд ($0.195, +5%, серия с 2018) и Series D preferred ($0.78125, $159,026K LTM) переподтверждены из release. НЕ переподтверждены построчно: 10-Q vehicle-таблицы (MOIC, IRR), per-company Strategic Holdings оценки, peer-цифры. Общий уровень доверия: ВЫСОКИЙ по финансам/котировкам/сделкам holdco, СРЕДНИЙ по track-record фондов и peer-сравнению."
 }

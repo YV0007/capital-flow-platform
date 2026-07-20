@@ -122,88 +122,8 @@
    "hasDeep": true
   },
   {
-   "id": "track_record",
-   "n": "TR",
-   "tier": "substance",
-   "title": "Track record капитал-аллокации",
-   "sub": "IRR Vision Funds, исход крупных сделок",
-   "preview": {
-    "line": "Arm ~4.2x с IPO — единственный проверяемый multiple; Vision Funds blended IRR ~5%, история сильно зависит от 2-3 сделок.",
-    "stats": [
-     {
-      "label": "Arm с IPO",
-      "value": "~4.2x",
-      "sub": "вход ~$32B (2016); market cap $52B → $221B"
-     },
-     {
-      "label": "SVF1 net IRR",
-      "value": "4% / 5%",
-      "sub": "equity / blended; cost $87.2B → return $103.6B"
-     },
-     {
-      "label": "SVF2 net blended IRR",
-      "value": "6%",
-      "sub": "впервые в плюсе; ключевой драйвер — OpenAI"
-     },
-     {
-      "label": "LatAm net blended IRR",
-      "value": "−2%",
-      "sub": "отрицательная реализация"
-     }
-    ],
-    "bullets": [
-     "SVF cumulative investment gain $45.7B — почти весь прирост FY2025 пришёлся на OpenAI (SVF2)",
-     "NVIDIA — полная продажа $5.83B; ранее выходили в 2019 (упущенная выгода)",
-     "Alibaba «~425x / full exit» первичкой НЕ подтверждён — только внутригрупповой расчёт ¥546.1B",
-     "WeWork — исторический убыток SVF (банкротство 2023)"
-    ]
-   },
-   "bodyMarkdown": "**Vision Funds — IRR по vehicle (inception → 31.03.2026, net to SBG LP + carry; FY-дек стр. 73-77):** [1]\n\n| Фонд | Net IRR | Cumulative cost | Cumulative return (FV+sale) | Комментарий |\n|---|---|---|---|---|\n| SVF1 | Net Equity 4% / Blended 5% | $87.2B | $103.6B | Exited $48.3B; включает OpenAI indirect |\n| SVF2 | Net Blended 6% | $111.4B | $118.7B | Включает OpenAI $34.6B; впервые в плюсе |\n| SVF1+2 | Net Blended 5% | — | — | Суммарно |\n| LatAm | Net Blended −2% | — | — | Отрицательная реализация |\n\nSVF-сегмент cumulative investment gain **$45.7B** (на 31.03.2026), +$46.2B г/г — почти весь прирост FY2025 (+$45,327M) пришёлся на SVF2 + LatAm + others (в т.ч. OpenAI); SVF1 +$847M. [1; 12 — CNBC «$46B gain driven mainly by OpenAI», search-валидация, тело 403]\n\n**Крупные сделки (реализация / текущая стоимость):**\n- **Arm:** приобретена ~$32B (2016); IPO сен-2023 по $51/ADS → market cap $52B при листинге → ~$221B (12.05.2026), **~4.2x с IPO**. Equity value в NAV ¥19.15T. Лучший серийный исход. [1; 13]\n- **Alibaba:** историческая инвестиция ~$20M (2000) → реализована преимущественно через prepaid-forward 2019-2024. **Claim «~425x / full market exit» НЕ подтверждён первичкой** — релиз 17.07.2024 [11] показывает лишь intra-group расчёт ¥546.1B без рыночной продажи; «~$8.5B cumulative gain / full exit» — вторично (SCMP/Register [16]). См. gaps.\n- **T-Mobile (ex-Sprint):** монетизация продолжается; $17.88B продано в FY2025.\n- **NVIDIA:** полностью продана в FY2025 за $5.83B (повторная позиция; ранее выходили в 2019 — упущенная выгода).\n- **WeWork:** исторический убыток SVF (банкротство 2023).\n\n**Вывод по аллокации:** концентрированный capital recycling — монетизация зрелых ликвидных позиций (T-Mobile, DT, NVIDIA, Alibaba-расчёт) → реинвест в AI (OpenAI $64.6B target, Ampere $6.5B, Stargate). ROIC по vintage единым показателем не раскрыт; Arm — единственная сделка с верифицируемым multiple (~4.2x с IPO). High-variance, зависит от 2-3 имён.",
-   "hasDeep": true
-  },
-  {
-   "id": "pipeline",
-   "n": "04",
-   "tier": "substance",
-   "title": "Будущие сделки",
-   "sub": "Объявленные, незакрытые сделки",
-   "preview": {
-    "line": "$29.4B объявленных сделок к концу 2026 (OpenAI $20B + ABB $5.4B + DigitalBridge $4B); финансируется долгом — LTV пойдёт вверх с 17%.",
-    "stats": [
-     {
-      "label": "OpenAI транш 2",
-      "value": "$10.0B",
-      "sub": "01.07.2026; преф-акции"
-     },
-     {
-      "label": "OpenAI транш 3",
-      "value": "$10.0B",
-      "sub": "01.10.2026 → кумулятив $64.6B / ~13%"
-     },
-     {
-      "label": "ABB Robotics",
-      "value": "$5.375B",
-      "sub": "новый holdco 100%; закрытие сер.–конец 2026"
-     },
-     {
-      "label": "DigitalBridge",
-      "value": "~$4.0B EV",
-      "sub": "$16.00/акция; 2-е полугодие 2026"
-     }
-    ],
-    "bullets": [
-     "OpenAI-транши обусловлены продолжением фандрейзинга OpenAI по pre-money $730B",
-     "Committed $38.5B финансируется через bridge; политика — takeout из финансирования под существующие активы",
-     "Stargate / PORTS Campus (Ohio): 10GW power + 10GW data center, groundbreaking 20.03.2026; capex единой цифрой не раскрыт",
-     "Расхождение по DigitalBridge: дек SBG указывал ~$3.1B equity, пресс-релиз — ~$4.0B EV"
-    ]
-   },
-   "bodyMarkdown": "| Сделка | Counterparty | Размер | Vehicle | Close | Эффект на NAV / источник |\n|---|---|---|---|---|---|\n| **OpenAI follow-on, транш 2** | OpenAI | $10.0B | SBG | 01.07.2026 | Преф-акции, авто-конверсия при IPO; pre-money $730B. Финансируется bridge → временный рост net debt/LTV. [4] |\n| **OpenAI follow-on, транш 3** | OpenAI | $10.0B | SBG | 01.10.2026 | То же; кумулятив → **$64.6B / ~13%**. [4] |\n| **ABB Robotics** | ABB Ltd | **$5.375B** (≈¥818.7B) | SBG (новый holdco, 100%) | сер.–конец 2026 | Покупка промышленного робо-бизнеса (Zürich, ~7,000 чел.). PENDING. [7] |\n| **DigitalBridge** | DigitalBridge | **~$4.0B EV** ($16.00/акция) | SBG | 2-е полугодие 2026 | AI-инфраструктурный управляющий. PENDING. [10] |\n| **Stargate / PORTS Campus (Ohio)** | DOE, DOC, SB Energy, AEP Ohio | 10GW power + 10GW DC; capex не раскрыт единой цифрой | SBG / SB Energy | groundbreaking 20.03.2026, многолетний | Capex-интенсивный; эффект на NAV через SB Energy, отдельная оценка не раскрыта. [1; 8] |\n\nРасхождение по DigitalBridge: дек SBG (Dec-25) указывал ~$3.1B equity, пресс-релиз — ~$4.0B EV; equity vs EV не до конца сверено (gap).\n\n**Финансирование future deals:** bridge loan (арранжирован март 2026) под committed $38.5B; политика — заменять bridge на existing-asset financing. Pipeline «further opportunities» до $40B (FY2026). **Риск исполнения:** OpenAI-транши обусловлены продолжением фандрейзинга OpenAI; финансирование через рост долга при LTV 17% (потолок 25% норма, 35% кризис). [1; 4]",
-   "hasDeep": true
-  },
-  {
    "id": "financial",
-   "n": "08",
+   "n": "03",
    "tier": "substance",
    "title": "Финансовая составляющая",
    "sub": "P&L, NAV/LTV, долг",
@@ -243,7 +163,7 @@
   },
   {
    "id": "risk",
-   "n": "R",
+   "n": "04",
    "tier": "context",
    "title": "Карта рисков",
    "sub": "Сценарии, уровни, триггеры",
@@ -282,48 +202,8 @@
    "hasDeep": true
   },
   {
-   "id": "valuation",
-   "n": "V",
-   "tier": "context",
-   "title": "Оценка vs история",
-   "sub": "Реконсиляция дисконта к NAV",
-   "preview": {
-    "line": "Одна раскрытая база — SOTP: NAV/share ¥7,029, цена ¥3,555, дисконт 49.4%. Именно эта цифра решает hold/add/cut, а не разговоры про 12%.",
-    "stats": [
-     {
-      "label": "NAV / share",
-      "value": "¥7,029",
-      "sub": "31.03.2026; методология SBG (SOTP)"
-     },
-     {
-      "label": "Share price",
-      "value": "¥3,555",
-      "sub": "на 31.03.2026 (post-split)"
-     },
-     {
-      "label": "Дисконт к NAV",
-      "value": "49.4%",
-      "sub": "прямо на SOTP-странице"
-     },
-     {
-      "label": "52-нед. диапазон",
-      "value": "¥2,387 – ¥9,074",
-      "sub": "post-split; сильная волатильность"
-     }
-    ],
-    "bullets": [
-     "AGM-нарратив ¥74T NAV / ¥13,000 на акцию / дисконт ~12% в первичке НЕ найден (числовые слайды — картинки)",
-     "Цифра ~12% возникает только при ошибочном спаривании ¥7,029 с устаревшей ценой ¥6,226",
-     "Dividend yield ~0.18% — символический; сплит 4-for-1 эффективен с 01.01.2026",
-     "P/Book vs 10-летняя медиана компания в первичке не публикует"
-    ]
-   },
-   "bodyMarkdown": "*(Не valuation-инструмент — только исторические якоря.)*\n\n**Дисконт к NAV — реконсиляция баз (центральный вопрос прохода):**\n\n| База | Дата | NAV | NAV/share | Share price | Дисконт |\n|---|---|---|---|---|---|\n| **SOTP-страница / FY-дек (ПЕРВИЧНАЯ)** | 31.03.2026 | ¥40.06T | **¥7,029** | **¥3,555** | **49.4%** [3] |\n| FY-дек pro forma | 12.05.2026 | ¥47.7T | — | — | — [1] |\n| AGM-нарратив (НЕ подтверждён) | июнь 2026 | ¥74T | ¥13,000 | ~¥6,500 | ~50% [вторично, см. gaps] |\n\n**Главный вывод реконсиляции:** первична **ОДНА** база — SOTP-методология SBG (raw NAV = equity value of holdings − net debt). Сама первичная SOTP-страница [3, ПЕРЕПРОВЕРЕНО WebFetch] показывает share price **¥3,555** и дисконт **49.4%** прямо на странице. Версии «SOTP-дисконт ~12%» в первичке **не существует** — цифра ~12% возникает только при ошибочном спаривании NAV/share ¥7,029 с устаревшей рыночной ценой ¥6,226 (другая дата). Цифры ¥74T / ¥13,000 / ~12% дисконт — **НЕ подтверждены** ни на SOTP-странице, ни в извлекаемом тексте AGM-дека (числовые слайды AGM-PDF — изображения, текст не извлекается; см. gaps). Для решения hold/add/cut использовать **¥40.06T NAV, ¥7,029/share, ~49% дисконт** как единственную раскрытую базу.\n\n**Прочее:**\n- 52-недельный диапазон (post-split) ~¥2,386.75 – ¥9,074; сильная волатильность. [14 — вторичка]\n- Dividend yield ~0.18% (¥11 при цене ~¥6,200) — символический; SBG не дивидендный инструмент. [14]\n- 4-for-1 сплит эффективен с 01.01.2026 (после 10:1 от окт-2024) — повышает розничную ликвидность. [press 20251111]\n- P/Book vs 10y медиана компания в первичке не публикует → gaps.",
-   "hasDeep": true
-  },
-  {
    "id": "insider",
-   "n": "I",
+   "n": "05",
    "tier": "context",
    "title": "Действия инсайдеров",
    "sub": "Владение Son, buybacks, эмиссия",
@@ -363,7 +243,7 @@
   },
   {
    "id": "peers",
-   "n": "P",
+   "n": "06",
    "tier": "context",
    "title": "Peer positioning",
    "sub": "vs Berkshire, Prosus/Naspers",
@@ -403,7 +283,7 @@
   },
   {
    "id": "strategy",
-   "n": "03",
+   "n": "07",
    "tier": "voice",
    "title": "Заявленная стратегия",
    "sub": "ASI-платформа, правила аллокации",
@@ -443,7 +323,7 @@
   },
   {
    "id": "worldview",
-   "n": "05",
+   "n": "08",
    "tier": "voice",
    "title": "Взгляд на рынок",
    "sub": "Тезис об AI, из чего выходят",
@@ -483,7 +363,7 @@
   },
   {
    "id": "monitor",
-   "n": "06",
+   "n": "09",
    "tier": "signals",
    "title": "Что мониторить",
    "sub": "Календарь, триггеры, фиды",
@@ -523,7 +403,7 @@
   },
   {
    "id": "analysis",
-   "n": "07",
+   "n": "10",
    "tier": "signals",
    "title": "Аналитический слой",
    "sub": "Интерпретация, сигналы решения",
@@ -867,8 +747,8 @@
     "points": [
      25.7,
      28.5,
-     32.0,
-     36.0,
+     32,
+     36,
      40.06,
      47.7
     ],
@@ -929,14 +809,14 @@
     {
      "id": "src_bridge",
      "name": "Bridge-кредиты",
-     "value": 52.0,
+     "value": 52,
      "color": "clay",
      "note": "$40B OpenAI follow-on + $5.5B OpenAI 1-е закрытие + $6.5B Ampere"
     },
     {
      "id": "src_cash",
      "name": "Cash на балансе",
-     "value": 22.0,
+     "value": 22,
      "color": "inkFaint",
      "note": "¥3.5T на 31.03.2026, ≈$22B по USD/JPY 159.88"
     }
@@ -952,7 +832,7 @@
     {
      "id": "dst_openai_new",
      "name": "OpenAI follow-on $30B",
-     "value": 30.0,
+     "value": 30,
      "color": "violet",
      "note": "Апр / июл / окт 2026, 3 транша по $10B; pre-money $730B"
     },
@@ -973,7 +853,7 @@
     {
      "id": "dst_digitalbridge",
      "name": "DigitalBridge",
-     "value": 4.0,
+     "value": 4,
      "color": "blue",
      "note": "PENDING 2-е полугодие 2026; $16.00/акция"
     },
@@ -989,7 +869,7 @@
     {
      "from": "src_realizations",
      "to": "dst_openai_fy25",
-     "value": 15.0,
+     "value": 15,
      "label": "Продажи листинговых → OpenAI FY2025"
     },
     {
@@ -1019,7 +899,7 @@
     {
      "from": "src_bridge",
      "to": "dst_openai_new",
-     "value": 30.0,
+     "value": 30,
      "label": "$40B bridge → OpenAI follow-on"
     },
     {
@@ -1031,7 +911,7 @@
     {
      "from": "src_bridge",
      "to": "dst_digitalbridge",
-     "value": 4.0,
+     "value": 4,
      "label": "Bridge → DigitalBridge"
     },
     {

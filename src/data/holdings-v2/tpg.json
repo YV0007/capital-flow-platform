@@ -1,487 +1,591 @@
 {
-  "id": "tpg",
-  "name": "TPG Inc",
-  "ticker": "TPG",
-  "type": "asset manager",
-  "asOf": "28.06.2026",
-  "tagline": "> Публичный alternative asset manager с $306.2B AUM (31.03.2026); доход всё больше опирается на предсказуемые management fees — LTM FRE впервые перешёл $1B при FRE margin 44% за квартал. Решение по позиции опирается на устойчивость fee-базы в Credit ($95.2B, +30% г/г), исполнение fundraise-таргета >$50B/2026 и переход на нового CFO в момент жёсткого guidance.",
-  "kpis": [
-    {
-      "label": "Total AUM",
-      "value": "$306.2B",
-      "sub": "+22% г/г; 31.03.2026",
-      "source": "10-Q Q1 2026"
-    },
-    {
-      "label": "LTM FRE",
-      "value": "$1,018M",
-      "sub": "впервые >$1B; FRE margin 44% (кв)",
-      "source": "10-K FY2025 / earnings Q1'26"
-    },
-    {
-      "label": "After-tax DE (FY2025)",
-      "value": "$973.5M",
-      "sub": "payout ≥85%; дивиденд $0.59/акц",
-      "source": "10-K FY2025"
-    },
-    {
-      "label": "Credit AUM",
+ "id": "tpg",
+ "name": "TPG Inc",
+ "ticker": "TPG",
+ "type": "asset manager",
+ "asOf": "28.06.2026",
+ "tagline": "> Публичный alternative asset manager с $306.2B AUM (31.03.2026); доход всё больше опирается на предсказуемые management fees — LTM FRE впервые перешёл $1B при FRE margin 44% за квартал. Решение по позиции опирается на устойчивость fee-базы в Credit ($95.2B, +30% г/г), исполнение fundraise-таргета >$50B/2026 и переход на нового CFO в момент жёсткого guidance.",
+ "kpis": [
+  {
+   "label": "Total AUM",
+   "value": "$306.2B",
+   "sub": "+22% г/г; 31.03.2026",
+   "source": "10-Q Q1 2026"
+  },
+  {
+   "label": "LTM FRE",
+   "value": "$1,018M",
+   "sub": "впервые >$1B; FRE margin 44% (кв)",
+   "source": "10-K FY2025 / earnings Q1'26"
+  },
+  {
+   "label": "After-tax DE (FY2025)",
+   "value": "$973.5M",
+   "sub": "payout ≥85%; дивиденд $0.59/акц",
+   "source": "10-K FY2025"
+  },
+  {
+   "label": "Credit AUM",
+   "value": "$95.2B",
+   "sub": "+30% г/г; крупнейший сегмент (31% AUM)",
+   "source": "10-Q Q1 2026"
+  }
+ ],
+ "sections": [
+  {
+   "id": "portfolio",
+   "n": "01",
+   "tier": "substance",
+   "title": "Текущий портфель",
+   "sub": "AUM по шести направлениям, флагман-фонды",
+   "preview": {
+    "line": "Holdco без корпоративных позиций: «портфель» — это $306.2B AUM по шести направлениям и фонды как позиции.",
+    "stats": [
+     {
+      "label": "Credit",
       "value": "$95.2B",
-      "sub": "+30% г/г; крупнейший сегмент (31% AUM)",
-      "source": "10-Q Q1 2026"
-    }
-  ],
-  "sections": [
-    {
-      "id": "portfolio",
-      "n": "01",
-      "tier": "substance",
-      "title": "Текущий портфель",
-      "sub": "AUM по шести направлениям, флагман-фонды",
-      "preview": {
-        "line": "Holdco без корпоративных позиций: «портфель» — это $306.2B AUM по шести направлениям и фонды как позиции.",
-        "stats": [
-          { "label": "Credit", "value": "$95.2B", "sub": "+30% г/г" },
-          { "label": "Capital (PE)", "value": "$89.7B" },
-          { "label": "Real Estate", "value": "$39.2B" },
-          { "label": "Growth", "value": "$32.4B" },
-          { "label": "Impact", "value": "$31.6B" },
-          { "label": "Market Solutions", "value": "$18.1B", "sub": "эффект Peppertree" }
-        ],
-        "bullets": [
-          "Итого AUM $306.2B; FAUM $175.4B (31.03.2026)",
-          "Структура Up-C, статус controlled company по Nasdaq",
-          "Long-dated 10+ лет = $204.5B (67%); perpetual = $49.7B (16%)"
-        ]
-      },
-      "bodyMarkdown": "TPG — holdco: его единственный материальный актив — доля в TPG Operating Group; структура Up-C, статус «controlled company» по правилам Nasdaq (10-K FY2025). Холдинг зарабатывает на управлении капиталом, а не на корпоративных позициях, поэтому «портфель» здесь — это AUM по шести направлениям и фонды как «позиции». 13F-портфель = клиентские активы управляемых счетов и для оценки holdco ИСКЛЮЧЁН по методологии.\n\n**AUM по направлениям на 31.03.2026** (источник: 10-Q Q1 2026, AUM table — проверено построчно через SEC EDGAR):\n- Credit — $95,196M ($95.2B; +30% г/г от $73,430M)\n- Capital (private equity) — $89,732M ($89.7B; от $76,016M)\n- Real Estate — $39,246M ($39.2B)\n- Growth — $32,366M ($32.4B)\n- Impact (Rise/climate) — $31,551M ($31.6B)\n- Market Solutions — $18,091M ($18.1B; от $7,668M — эффект консолидации Peppertree)\n- **Итого AUM — $306,182M ($306.2B)**; FAUM — $175,372M ($175.4B; от $142,794M)\n\n**AUM по направлениям на 31.12.2025** (10-K FY2025; здесь сегменты в порядке размера): Credit $93.1B, Capital $90.9B, Real Estate $38.2B, Growth $32.2B, Impact $31.2B, Market Solutions $17.4B — итого $303.0B; FAUM $170.1B. (Сегментные суммы между 10-K Dec-31 и 10-Q Mar-31 различаются датой — обе цифры из первички, не противоречие.)\n\n**Крупнейшие фонды как «позиции»** (10-K FY2025 fund performance table, Total Value):\n- TPG IX (vintage 2022) — committed $12,014M, Total Value $15,383M.\n- TPG X (vintage 2025, активирован 3кв25) — committed $10,858M (ранний; NM).\n- Rise Climate Funds — committed $16,014M total (Rise Climate I 2021 + II/Global South/TI 2025).\n- TPG Direct Lending (MMDL, агрегат) — Total Value $14,792M.\n- TPG VII (2015) — Total Value $24,825M; TPG VIII (2019) — $20,252M.\n\n**Названные портфельные компании** (названы без раскрытой отдельной оценки в holdco-filings): Hologic (закрыта 07.04.2026, сделка Blackstone + TPG до $18.3B / $79/акц — counterparty IR), Surescripts, Viking Cruises, DirecTV, OneOncology (выход → Syncora), Intersect Power (Rise Climate, выход digital power → Google), Sabre Industries (Rise Climate), Curium (continuation vehicle), прямые AI-позиции Anthropic / OpenAI / SpaceX в Tech Adjacencies / T-POP.\n\n**Структура капитала по дюрации** (earnings release Q1'26): long-dated фонды 10+ лет = $204.5B (67% AUM); perpetual capital = $49.7B (16% AUM).\n\n**Капитальная структура holdco** (earnings release Q1'26 / 8-K годового собрания, record 08.04.2026): Class A common ~160.46M шт. (153.78M на record годового собрания); Common Units, конвертируемые в Class A, ~223.85M шт. → на TPG Inc приходится ~41% units в Operating Group (160.46M / 384.31M = 41.7%).",
-      "hasDeep": true
-    },
-    {
-      "id": "changes",
-      "n": "02",
-      "tier": "substance",
-      "title": "Недавние изменения",
-      "sub": "Fundraise, Peppertree, Jackson, смена CFO",
-      "preview": {
-        "line": "FY2025 fundraise $51.5B (+71%); консолидация Peppertree; партнёрство Jackson; CFO transition с 27.07.2026.",
-        "stats": [
-          { "label": "Capital Raised FY2025", "value": "$51.5B", "sub": "+71% г/г" },
-          { "label": "Capital Invested FY2025", "value": "$51.9B", "sub": "+58% г/г" },
-          { "label": "Реализации FY2025", "value": "$23.4B", "sub": "плоско г/г" },
-          { "label": "Peppertree AUM", "value": "+$7.9B", "sub": "в Market Solutions" },
-          { "label": "Curium CV", "value": "$3.8B", "sub": "continuation vehicle" }
-        ],
-        "bullets": [
-          "Axel André — CFO с 27.07.2026; Weingart → CEO Global Wealth Solutions",
-          "Jackson Financial: $2B commitments ABF + $500M в акции (Senior Notes)"
-        ]
-      },
-      "bodyMarkdown": "(последние 2–4 квартала; источники: 10-K FY2025, 10-Q Q1'26, earnings release/call Q1'26)\n\n- **Capital Raised:** FY2025 = $51.5B (vs $30.1B в 2024, +71%); Q1'26 = $10,347M ($10.3B, +75% г/г); LTM ≈$55.9B.\n- **Capital Invested:** FY2025 = $51.9B (vs $32.9B, +58%; Credit крупнейший — ≈$25.0B); Q1'26 = $14.4B (≈×2 г/г); LTM ≈$58.9B.\n- **Реализации:** FY2025 = $23.4B (vs $22.9B, плоско г/г); Q1'26 = $8,745M ($8.7B, ≈×2 г/г). Названы выходы: OneOncology → Syncora, Intersect digital power → Google, Viking Cruises, DirecTV.\n- **Acquisition Peppertree Capital** консолидирован с 01.07.2025 — добавил $7,927M AUM в Market Solutions (digital infrastructure / вышки); cash до $242M + equity до $418M + earnouts (counterparty IR).\n- **Партнёрство с Jackson Financial:** $2B первоначальных commitments в asset-based finance; TPG вложил $500M в обыкновенные акции Jackson (профинансировано выпуском Senior Notes $500M в Q1'26 — рост debt obligations до $2.3B).\n- **Curium Pharma:** $3.8B continuation vehicle (Q1'26); TPG как secondary через TPG GP Solutions + миноритарий через Life Sciences; CV структурировал CapVest (Curium ~$7B — secondary-валидация Bloomberg/PitchBook).\n- **Смена CFO:** Axel André назначен CFO с 27.07.2026; Jack Weingart → CEO Global Wealth Solutions (8-K от 22.06.2026). Бэкграунд André: EVP & CFO в Reinsurance Group of America (RGA); ранее CFO в American Equity Life и Jackson National.\n- **Годовое собрание 03.06.2026** (8-K Item 5.07; record 08.04.2026) — переизбрание директоров.",
-      "hasDeep": true
-    },
-    {
-      "id": "track_record",
-      "n": "TR",
-      "tier": "substance",
-      "title": "Track record капитал-аллокации",
-      "sub": "IRR/MoM флагман-фондов по 10-K",
-      "preview": {
-        "line": "Capital-серия Net IRR ≈15% агрегат (10-K, построчно); TPG IX Net 24%, провал vintage 2006 (TPG V Net 5%).",
-        "stats": [
-          { "label": "Capital Funds (агрегат)", "value": "Net 15%", "sub": "1.6x MoM" },
-          { "label": "TPG IX (2022)", "value": "Net 24%", "sub": "1.3x; unrealized $14.2B" },
-          { "label": "TPG VII (2015)", "value": "Net 19%", "sub": "2.0x MoM" },
-          { "label": "Net Accrued Performance", "value": "$1,280M", "sub": "vs $974M в 2024" },
-          { "label": "Angelo Gordon (2023)", "value": "~$2.7B", "sub": "создал Credit-платформу" }
-        ],
-        "bullets": [
-          "THP II (2022) Net 29%; Rise Climate I (2021) Net 15%, unrealized $7.9B",
-          "Слабые: TPG V Net 5% (GFC), Asia I −10%, LSI −25%"
-        ]
-      },
-      "bodyMarkdown": "(источник: 10-K FY2025 fund performance table на 31.12.2025 — **проверено построчно через SEC EDGAR**; Net IRR / Net MoM = после fees и carry)\n\n**Флагманские Capital-фонды:**\n| Фонд | Vintage | Committed $M | Total Value $M | Gross IRR | Net IRR | Net MoM |\n|---|---|---|---|---|---|---|\n| TPG III | 1999 | 4,497 | 12,360 | 34% | 26% | 2.6x |\n| TPG IV | 2003 | 5,800 | 13,734 | 20% | 15% | 1.9x |\n| TPG V | 2006 | 15,372 | 22,074 | 6% | 5% | 1.4x |\n| TPG VI | 2008 | 18,873 | 33,539 | 14% | 10% | 1.5x |\n| TPG VII | 2015 | 10,495 | 24,825 | 26% | 19% | 2.0x |\n| TPG VIII | 2019 | 11,505 | 20,252 | 22% | 15% | 1.5x |\n| TPG IX | 2022 | 12,014 | 15,383 | 37% | 24% | 1.3x |\n| **Capital Funds (агрегат)** | | 92,699 | 152,006 | 23% | **15%** | **1.6x** |\n\nВывод: исторический Net IRR Capital-серии ≈15% (агрегат), с провалом vintage 2006 (TPG V — Net 5%, GFC) и сильным восстановлением VII/IX. TPG IX ещё ранний: unrealized $14,178M из total value $15,383M.\n\n**Asia (агрегат):** Net IRR 14%, Net MoM 1.6x. Asia III (2000) Net 31% / 3.8x; Asia I (1994) убыточен (Net −10% / 0.7x).\n**Healthcare (THP):** THP II (2022) Net 29% / 1.4x (один из лучших vintages); THP I (2019) Net 11% / 1.4x.\n**Growth (агрегат):** Net IRR 13% / 1.6x. Growth III (2015) Net 15% / 1.6x; Growth IV (2017) 14% / 1.7x; Growth V (2020) 12% / 1.4x; Growth VI (2023) 18% / 1.1x (ранний); LSI (2023) Net −25% / 0.8x (early-stage, убыточен).\n**Impact:** The Rise Funds (агрегат) Net 11% / 1.4x; Rise Climate I (2021) Net 15% / 1.3x (Total Value $9,416M, unrealized $7,918M — основной будущий carry Impact); Rise III (2022) Net 23% / 1.3x; Evercare (2019) Net 0% / 1.0x.\n**Credit:** TPG Credit Solutions (агрегат) Net 13% / 1.3x; ABC Fund I (2021, ABF) Net 13% / 1.3x; TPG Direct Lending (MMDL, агрегат) Net 10% / 1.4x (Total Value $14,792M); Credit Solutions II (2021) Net 12% / 1.3x; MMDL V (2022) Net 13% / 1.2x. Стабильный, низковолатильный профиль.\n\n**Net Accrued Performance (нереализованный carry, 31.12.2025; 10-K — проверено):** $1,280M (vs $974M в 2024). По сегментам: Capital $581M, Growth $211M, Impact $173M, Market Solutions $132M, Real Estate $100M, Credit $83M. По винтажам: 2020 & Prior $809M, 2022 $280M, 2021 $136M.\n\n**Крупнейшая корпоративная капитал-аллокация TPG:** покупка Angelo Gordon (закрыта 02.11.2023, ~$2.7B cash+equity + до $400M earnout — counterparty/trade-валидация) — создала Credit-платформу ($95.2B AUM к Q1'26) и расширила Real Estate; главный драйвер роста AUM с 2023.",
-      "hasDeep": true
-    },
-    {
-      "id": "pipeline",
-      "n": "04",
-      "tier": "substance",
-      "title": "Будущие сделки",
-      "sub": "Fundraise >$50B, Hologic, новые vehicle",
-      "preview": {
-        "line": "Fundraise-таргет 2026 >$50B (back-half weighted); Hologic закрыта 07.04.2026; target FRE margin 47%.",
-        "stats": [
-          { "label": "Fundraise-таргет 2026", "value": ">$50B", "sub": "Q1 накоплено $10.3B" },
-          { "label": "Hologic", "value": "$18.3B", "sub": "$79/акц; закрыта 07.04.2026" },
-          { "label": "TPG X + THP III", "value": "≈$13B", "sub": "подписано/привлечено" },
-          { "label": "Target FRE margin", "value": "47%", "sub": "факт Q1'26 = 44%" }
-        ],
-        "bullets": [
-          "Net Lease V (~$1B), Asia RE VI (запуск июнь), RISE Impact ($925M first close)",
-          "Wealth-продукты: nontraded REIT + multi-strategy credit interval fund (2026/2027)"
-        ]
-      },
-      "bodyMarkdown": "(объявленные / в процессе; источники: 10-K, earnings call Q1'26, counterparty IR)\n\n- **Hologic** — крупнейшая сделка цикла: Blackstone + TPG до $18.3B ($76 cash + CVR до $3 = до $79/акц). Объявлена 21.10.2025, **закрыта 07.04.2026** (т.е. на 28.06.2026 уже закрыта). Пройдёт через Capital (TPG IX/X + co-invest); доля TPG-фондов отдельно не раскрыта.\n- **Sabre Industries** — Rise Climate (инфраструктура энергосетей); деплоймент Rise Climate II.\n- **Fundraise-таргет 2026: >$50B** (back-half weighted); накопленно за Q1 — $10.3B. TPG Capital X + Healthcare Partners III — ≈$13B подписано/привлечено (включая signed commitments), закрытие к концу 2026. Net Lease V (~$1B, завершение 2кв), Asia RE VI (запуск июнь 2026), RISE Impact ($925M first close).\n- **Target FRE margin 2026 = 47%** (факт Q1'26 = 44%, LTM = 46%).\n- Wealth-продукты: nontraded REIT + multi-strategy credit interval fund — запуск 2026/2027.\n\nЭффект на NAV/прибыль: рост FAUM → рост FRE (предсказуемая часть прибыли); крупные realizations → realized performance allocations и рост DE. Незакрытых на 28.06.2026 трансформационных сделок уровня Hologic в публичном поле не подтверждено.",
-      "hasDeep": true
-    },
-    {
-      "id": "financial",
-      "n": "08",
-      "tier": "substance",
-      "title": "Финансовая составляющая",
-      "sub": "FRE/DE динамика, баланс, дивиденд",
-      "preview": {
-        "line": "FRE 2023→2025 CAGR ≈25%; LTM FRE впервые >$1B ($1,018M); After-tax DE FY2025 $973.5M; дивиденд $0.59/акц.",
-        "stats": [
-          { "label": "FRE FY2025", "value": "$952.6M", "sub": "margin 45%" },
-          { "label": "DE FY2025", "value": "$1,042.1M", "sub": "after-tax $973.5M" },
-          { "label": "Management fees FY2025", "value": "$1,800.1M", "sub": "CAGR ≈24%" },
-          { "label": "Dry powder (31.12.2025)", "value": "$72.4B", "sub": "available capital" },
-          { "label": "Net debt", "value": "$2.3B", "sub": "available liquidity $1.7B" },
-          { "label": "Дивиденд Q1'26", "value": "$0.59/акц", "sub": "payout ≥85% DE" }
-        ],
-        "bullets": [
-          "GAAP FY2025: revenues $4,670.2M (+33%), net income $599.6M",
-          "Credit ratings: Moody's A3 / S&P BBB+ / Fitch A-"
-        ]
-      },
-      "bodyMarkdown": "**Многолетняя динамика (FRE/DE — non-GAAP; 10-K FY2023–25, 10-Q Q1'26 — проверено построчно):**\n| Метрика | FY2023 | FY2024 | FY2025 | Q1'26 (кв) |\n|---|---|---|---|---|\n| Total AUM, $млрд | 221.6 | 245.9 | 303.0 | 306.2 |\n| FAUM, $млрд | — | 141.3 | 170.1 | 175.4 |\n| Management fees, $млн | 1,178.7 | 1,625.7 | 1,800.1 | 475.1 |\n| Fee-Related Revenues, $млн | 1,337.3 | 1,831.5 | 2,109.3 | 557.2 |\n| Fee-Related Earnings (FRE), $млн | 606.3 | 764.2 | 952.6 | 246.9 |\n| FRE margin | 45% | 42% | 45% | 44% |\n| Distributable Earnings (DE), $млн | 627.9 | 894.6 | 1,042.1 | 296.0 |\n| After-tax DE, $млн | 585.3 | 837.3 | 973.5 | 281.6 |\n\nТемпы: FRE 2023→2025 CAGR ≈25%; management fees CAGR ≈24%. LTM FRE впервые >$1B по итогам Q1'26 ($1,018M).\n\n**GAAP (FY2025, 10-K):** Total revenues $4,670.2M (vs $3,500.1M, +33%); net income $599.6M (vs убыток $(76.9)M в FY2024). **GAAP Q1'26: net loss $(123.3)M**, но attributable to TPG Inc. лишь $(1.5)M — основная часть на non-controlling interests; причина минуса — unrealized capital allocation-based loss. GAAP EPS малоинформативен для up-C структуры — смотреть DE/share.\n\n**Management fees by platform LTM** (earnings release Q1'26): Capital $525M, Credit $356M, Real Estate $339M, Impact $286M, Growth $236M, Market Solutions $120M. Real Estate — единственное направление со снижением management fees кв/кв ($95M→$83M).\n\n**Структура fee-дохода:** weighted average management fee rate ≈1.1–1.2% от FAUM (10-K FY2025). FRE — наиболее стабильная часть; performance allocations волатильны.\n\n**Баланс / ликвидность (earnings release Q1'26):** Cash $89M; net debt $2.3B; debt obligations $2,343M; available liquidity $1.7B; undrawn revolver $1.6B. Borrowings: Senior + Subordinated Notes принципал $2.0B (вкл. Senior Notes 2034 $600M @5.875%, sub-нота 2064 $400M @6.95%); Secured Notes принципал $250M (залог $496M) — при невыкупе до 20.06.2028 купон +4.0%. Credit ratings: Moody's A3 / S&P BBB+ / Fitch A-. **Available Capital (dry powder, 31.12.2025): $72,436M** — Capital $21,776M, Credit $18,268M, Real Estate $12,293M, Impact $9,564M, Growth $7,050M, Market Solutions $3,485M.\n\n**Дивиденд:** $0.59/Class A за Q1'26 (record 11.05.2026, выплата 26.05.2026; press release). Payout ≥85% от доли TPG Inc в After-tax DE.",
-      "hasDeep": true
-    },
-    {
-      "id": "risk",
-      "n": "R",
-      "tier": "context",
-      "title": "Карта рисков",
-      "sub": "Зависимость от exits, private credit, vintages",
-      "preview": {
-        "line": "Высокий риск — зависимость DE от realizations; средне-высокий — концентрация на private credit (31% AUM).",
-        "stats": [
-          { "label": "Зависимость от exits", "value": "ВЫСОКИЙ", "sub": "DE/carry от realizations" },
-          { "label": "Private credit", "value": "СРЕДНЕ-ВЫСОКИЙ", "sub": "Credit = 31% AUM" },
-          { "label": "Слабые vintages", "value": "СРЕДНИЙ", "sub": "LSI −25%, Asia I −10%" },
-          { "label": "Смена CFO", "value": "СРЕДНИЙ", "sub": "при агрессивном guidance" }
-        ],
-        "bullets": [
-          "Интеграция M&A (Angelo Gordon/Peppertree) — давит на GAAP-прибыль",
-          "Долговой watch 2028: Secured Notes +4.0% при невыкупе до 20.06.2028"
-        ]
-      },
-      "bodyMarkdown": "- **Реализационный цикл / зависимость от exits — ВЫСОКИЙ.** DE и performance allocations зависят от realizations; FY2025 realizations $23.4B плоско г/г; net accrued $1.28B не монетизируется при заморозке выходов. Дивиденд (≥85% DE) переменный.\n- **Концентрация на private credit — СРЕДНЕ-ВЫСОКИЙ.** Credit = 31% AUM ($95.2B), крупнейший сегмент; рост дефолтов в direct lending (MMDL $14.8B) / стресс ABF на фоне «private credit winter» бьёт по NAV и fee-базе. (TCAP nonaccruals «just above 1%», redemptions 1.3% — слова менеджмента, не из BDC 10-Q.)\n- **Слабые недавние vintages — СРЕДНИЙ.** LSI (Net −25%), Evercare (Net 0%), Asia I (Net −10%), TPG AION (Net −11%). Незрелые/слабые фонды давят на track record и способность поднимать следующие vintages.\n- **Смена CFO при агрессивном guidance — СРЕДНИЙ.** Weingart → Global Wealth Solutions; новый CFO André (страховой бэкграунд, не PE) вступает 27.07.2026 ровно в момент таргета FRE margin 47% и fundraise >$50B.\n- **Интеграция/масштабирование M&A — СРЕДНИЙ.** Angelo Gordon (Credit) / Peppertree; earnouts и amortization интангиблов давят на GAAP-прибыль.\n- **CRE-стресс (Real Estate) — СРЕДНИЙ.** Real Estate management fees снижаются; отслеживать резервы/просрочки в TRTX 10-Q.\n- **Долговой watch 2028 — НИЗКО-СРЕДНИЙ.** Secured Notes с +4.0% при невыкупе до 20.06.2028; net debt $2.3B.\n- **GAAP-волатильность vs cash — риск восприятия, не денежного потока.** GAAP net loss $(123)M при After-tax DE $282M (+51%) — бухгалтерский эффект unrealized.",
-      "hasDeep": true
-    },
-    {
-      "id": "valuation",
-      "n": "V",
-      "tier": "context",
-      "title": "Оценка vs история",
-      "sub": "Сжатие P/Book, цена у 52-нед. минимума",
-      "preview": {
-        "line": "Не valuation-инструмент: P/Book ≈5.6x против FY2024 8.75x; цена ~$40 у нижней границы при растущем фундаментале.",
-        "stats": [
-          { "label": "P/Book", "value": "≈5.6x", "sub": "vs FY2024 8.75x" },
-          { "label": "Цена", "value": "~$40.04", "sub": "52-нед. $36.95–$70.38" },
-          { "label": "P/DE (норм.)", "value": "≈15x", "sub": "середина диапазона альт-менеджеров" },
-          { "label": "Dividend yield", "value": "≈5.2–5.6%", "sub": "зависит от цены" },
-          { "label": "LTM FRE", "value": "+33%", "sub": "$763M → $1,018M" }
-        ],
-        "bullets": [
-          "Market cap (Class A float) ≈$15.3B; ≈−43% от максимума",
-          "Расхождение цены и фундаментала: mcap у минимума при растущих AUM/FRE/DE"
-        ]
-      },
-      "bodyMarkdown": "Это НЕ valuation-инструмент: DCF и справедливая стоимость не считаются. Исторические сравнения (первичные + агрегатор как валидация):\n- FRE margin: 38% (Q1'25) → 44% (Q1'26); LTM 46%; таргет 47% (2026).\n- LTM FRE: $763M → $1,018M (+33%). LTM After-tax DE: $843M → $1,068M.\n- Total revenues: $3,500.1M (FY2024) → $4,670.2M (FY2025) (+33%). Net income: убыток $(76.9)M → прибыль $599.6M.\n- Credit AUM: $73.4B → $95.2B (+30%). Total AUM: $250.6B (Q1'25) → $306.2B (+22%).\n- **P/Book** (stockanalysis.com, валидация): ≈5.6x текущий против FY2024 8.75x и FY2025 8.25x — заметное сжатие к собственной истории.\n- **Цена ~$40.04** (26.06.2026; агрегатор), 52-нед. диапазон $36.95–$70.38 — у нижней границы (≈−43% от максимума). Market cap (Class A float) ≈$15.3B. По after-tax DE на полностью разводнённую базу (~375–384M units) P/DE ≈15x — в середине диапазона альт-менеджеров. GAAP P/E нерелевантен (up-C, NCI). Dividend yield ≈5.2–5.6% (агрегатор; зависит от внутридневной цены).\n- mcap у 52-нед. минимума при растущих AUM/FRE/DE — расхождение цены и фундаментала.",
-      "hasDeep": true
-    },
-    {
-      "id": "insider",
-      "n": "I",
-      "tier": "context",
-      "title": "Действия инсайдеров",
-      "sub": "Form 4: нет open-market sales в 2026",
-      "preview": {
-        "line": "Открытых рыночных покупок/продаж операционного менеджмента в 2026 НЕ зафиксировано — всё рутинный вестинг. Нейтрально.",
-        "stats": [
-          { "label": "Open-market sales (Code S)", "value": "нет", "sub": "2026 YTD" },
-          { "label": "Buybacks", "value": "нет", "sub": "значимой программы НЕТ" },
-          { "label": "Дивиденд Q1'26", "value": "$0.59/акц", "sub": "привязан к DE" }
-        ],
-        "bullets": [
-          "11.02.2026 — annual equity grants (Code A; Winkelried, Weingart и др.)",
-          "Issuance под Angelo Gordon (до 62.5M units) и Peppertree (до $418M)"
-        ]
-      },
-      "bodyMarkdown": "(Form 4 — проверено напрямую через EDGAR XML, CIK 0001880661)\n- **Открытых рыночных покупок/продаж операционного менеджмента в 2026 НЕ зафиксировано.** Все транзакции — grants (Code A), tax-withholding на вестинге (Code F), либо unit-движения (Code J). Кода S (open-market sale) нет.\n  - 11.02.2026 — пакетные annual equity grants топ-менеджменту (Code A; Winkelried, Weingart и др.).\n  - Chu Jennifer L. (Chief Legal Officer & GC): 01.04.2026 Code F −22,079 @ $40.51, owned after 196,974; ранее ещё −19,679 (оба tax-withholding).\n  - Trujillo David (director): 14.04.2026 Code F −8,379 @ $39.42, owned after 237,297 (tax-withholding).\n  - McRaven William H. (director): 12.05.2026 Code A +7,434 Class A (director award).\n  - Davis Kelvin L. (director): 16.06.2026 Code J +41,661 TPG Partner Holdings units @ $42.48, owned after 11,602,827 (НЕ open-market sale).\n  Вывод: внутренних bearish-сигналов через продажи нет; всё рутинный вестинг/grants. Нейтрально.\n- **Buybacks:** значимой программы выкупа акций НЕТ — Item 5 10-K FY2025 без выкупов. Модель возврата капитала — дивиденды (≥85% DE), не байбек.\n- **Dividend:** переменный, привязан к DE. Q1'26 = $0.59/акц.\n- **Issuance:** equity под Angelo Gordon (2023, до 62.5M units) и Peppertree (до $418M, 2025) — разводняет Class A экономику, финансирует рост AUM.\n- **Управленческое изменение:** CFO transition (Weingart → André, eff. 27.07.2026).",
-      "hasDeep": true
-    },
-    {
-      "id": "peers",
-      "n": "P",
-      "tier": "context",
-      "title": "Peer positioning",
-      "sub": "vs Carlyle, Ares: самый быстрорастущий",
-      "preview": {
-        "line": "Самый быстрорастущий (AUM +22%, FRE-CAGR ~25%) и самый дешёвый по P/DE в тройке, с наивысшей дивдоходностью.",
-        "stats": [
-          { "label": "TPG AUM", "value": "$306B", "sub": "Carlyle ~$477B, Ares ~$572B" },
-          { "label": "TPG P/DE", "value": "~15x", "sub": "CG ~22x, ARES ~16x" },
-          { "label": "TPG div yield", "value": "~5.2–5.6%", "sub": "CG ~3.0%, ARES ~4.3%" },
-          { "label": "Credit-фокус", "value": "31% AUM", "sub": "бывш. Angelo Gordon" }
-        ],
-        "bullets": [
-          "Плата за рост: меньший масштаб, молодая credit-франшиза, переменный дивиденд",
-          "Relative-value кандидат: скидка к 52-нед. максимуму при растущем фундаментале"
-        ]
-      },
-      "bodyMarkdown": "| Метрика | TPG | Carlyle (CG) | Ares (ARES) |\n|---|---|---|---|\n| Total AUM | $306B (Q1'26) | ~$477B | ~$572B |\n| FRE (LTM) | ~$1.0B (впервые >$1B) | ~$1.2B | лидер по credit |\n| Дивидендная доходность | ~5.2–5.6% | ~3.0% | ~4.3% |\n| P/DE (нормализ.) | ~15x | ~22x | ~16x |\n| Кредит-фокус | Credit = 31% AUM (бывш. Angelo Gordon) | сбалансир. | credit-доминанта |\n\nTPG — самый быстрорастущий (AUM +22% г/г, FRE-CAGR ~25%) и самый дешёвый по P/DE в тройке, с наивысшей дивидендной доходностью; плата — меньший масштаб, более молодая credit-франшиза (Angelo Gordon с 2023) и переменный дивиденд. Скидка цены к 52-нед. максимуму при растущем фундаментале выделяет TPG как relative-value кандидата. (Peer-числа — counterparty 8-K / агрегатор как валидация; точное числовое сопоставление не из первички TPG.)",
-      "hasDeep": true
-    },
-    {
-      "id": "strategy",
-      "n": "03",
-      "tier": "voice",
-      "title": "Заявленная стратегия",
-      "sub": "Масштаб + диверсификация + кросс-сорсинг",
-      "preview": {
-        "line": "Edge-тезис: масштаб + диверсификация + кросс-направленное происхождение сделок (Curium — 4 платформы, 3 географии).",
-        "stats": [
-          { "label": "Management fees Q1'26", "value": "$475M", "sub": "+15% г/г; 5 из 6 направлений" },
-          { "label": "Уже привлечено, без комиссий", "value": "$33B", "sub": "встроенный рост FAUM" },
-          { "label": "Dividend payout target", "value": "≥85%", "sub": "от доли в After-tax DE" },
-          { "label": "T-POP AUM", "value": "$2.1B", "sub": "за ~10 мес.; +130% г/г канал" }
-        ],
-        "bullets": [
-          "Twin Brook: 310+ компаний, LTV 42%, nonaccruals «just above 1%»",
-          "Available Capital $72.8B; Net Accrued Performance $1,188M (Q1'26)"
-        ]
-      },
-      "bodyMarkdown": "**Edge-тезис — масштаб + диверсификация + кросс-направленное происхождение сделок.** Jon Winkelried (CEO), press release 01.05.2026 (verbatim): «TPG's strong first quarter performance reflects the significant momentum across our global platform, as the scale of our franchise and consistent execution continue to translate into powerful results… Our resilient business model is intentionally built to navigate complexity and capitalize on opportunity».\n\nИзмеримое подтверждение: LTM FRE впервые >$1B ($1,017,903K) при FRE margin 44% за квартал (+620 б.п. г/г); management fees Q1'26 = $475,119M (+15% г/г).\n\nКросс-направленное происхождение сделок (transcript): Curium «sourced and completed through the close collaboration of TPG's investment professionals across four platforms and three geographies» — одна сделка задействует TPG GP Solutions + Life Sciences.\n\n**Правила капитал-аллокации (10-K + earnings release):**\n- Target dividend payout ≥85% от доли TPG Inc в After-tax DE; Q1'26 = $0.59/Class A.\n- GP commitments финансируются деньгами, не deferral комиссий (10-K).\n- Clawback / contingent repayment obligation = $7.9M на 31.12.2025 (10-K).\n- Балансовые инвестиции — целевые под сделку (например, $500M в Jackson через выпуск Senior Notes $500M), а не общий рост leverage.\n- Распределение pre-tax DE: 83% из FRE в Q1'26 (против 97% в Q4'25).\n\n**Слои бизнес-механики:**\n1. Management fees — предсказуемая база ($475M Q1'26; рост по 5 из 6 направлений; Real Estate — единственное снижение). $33B уже привлечённого, но ещё не приносящего комиссии капитала — встроенный рост FAUM.\n2. Fee-related performance ($8.2M Q1'26) + transaction/monitoring/other fees, net ($73.9M, +30% г/г) → FRR $557M.\n3. Realized performance allocations (carry): $67.7M net Q1'26; LTM $232.8M. Драйверы Q1'26: TPG IX, THP II (Capital), Rise Climate I (Impact), Growth V.\n4. Private wealth: T-POP (perpetual PE evergreen) $2.1B AUM за ~10 мес. ($545M inflows за Q1; private-wealth channel +130% г/г). Под направление Weingart → CEO Global Wealth Solutions.\n5. Credit (после Angelo Gordon): крупнейшее по AUM. Twin Brook (direct lending): 310+ компаний, средний LTV 42% at origination, interest coverage >2x, nonaccruals «just above 1%», ~50% сделок — add-on.\n\nСтруктура по дюрации: Performance Eligible AUM ≈$253B; Performance Generating AUM ≈$208B; Net Accrued Performance $1,188M (Q1'26); Available Capital $72.8B (dry powder).",
-      "hasDeep": true
-    },
-    {
-      "id": "worldview",
-      "n": "05",
-      "tier": "voice",
-      "title": "Взгляд на рынок",
-      "sub": "Сложная среда = окно; PE-цикл + AI",
-      "preview": {
-        "line": "Сложная среда = окно возможностей; PE на пороге сильного цикла; AI как драйвер и риск одновременно.",
-        "stats": [
-          { "label": "AI-инструменты", "value": "~80%", "sub": "сотрудников используют ежедневно" },
-          { "label": "TCAP redemptions", "value": "1.3%", "sub": "vs розничные «elevated»" },
-          { "label": "PE valuation Q1'26", "value": "−1%", "sub": "multiple compression, не операц." },
-          { "label": "IPO-окно AI", "value": "1–3 компании", "sub": "за 18 месяцев" }
-        ],
-        "bullets": [
-          "Прямые позиции Anthropic / OpenAI / SpaceX (Tech Adjacency / T-POP)",
-          "Software bookings портфеля +20% г/г; Jackson ABF «tracking ahead of plan»"
-        ]
-      },
-      "bodyMarkdown": "**Во что верят (earnings call transcript 01.05.2026, verbatim атрибуция):**\n- **Сложная среда = окно возможностей.** Winkelried: «Our business is intentionally built to be resilient through cycles… The current environment is an opportunity… We've never felt more confident in the positioning of our franchise».\n- **PE на пороге сильного цикла + AI как инструмент.** James Coulter (Founding Partner & Executive Chairman): «I personally believe this will be the most positive weapon that we've seen in a long time in private equity».\n- **Текущий PE-портфель устойчив.** Todd Sisitsky (President): «This is a portfolio across private equity, I think we'd be excited about in any environment».\n- **Private credit — структурный рост; институциональный фокус как защита.** TPG отделяет себя от розничных credit-фондов с «elevated redemptions»; у TCAP redemptions 1.3%.\n- **AI — драйвер и риск.** Прямые позиции Anthropic / OpenAI / SpaceX в Tech Adjacency fund и T-POP (без раскрытой оценки); ~80% сотрудников ежедневно используют AI-инструменты.\n\n**Где осторожны:** часть TPG VIII отнесена к категории AI-disruption-риска в софте (mitigate); новые фонды (IX, X) делают AI частью underwriting. PE valuation Q1'26 −1% от multiple compression (Capital: прибыль +$1.2B, мультипликаторы −$2.4B) — переоценка от рынка мультипликаторов, не от операционной деградации.\n\n**За чем следят:** IPO-окно для крупных частных AI-компаний («1 to 3 of the large companies to go public over 18 months»); software bookings портфеля +20% г/г; Jackson Financial ABF $2B initial commitments «tracking ahead of plan».",
-      "hasDeep": true
-    },
-    {
-      "id": "monitor",
-      "n": "06",
-      "tier": "signals",
-      "title": "Что мониторить",
-      "sub": "Календарь, SEC-filings, vehicle-метрики",
-      "preview": {
-        "line": "Q2 2026 earnings ~05.08.2026 (проектно); CFO André с 27.07.2026; сверять FRE margin к 47% и fundraise к >$50B.",
-        "stats": [
-          { "label": "Q2 2026 earnings", "value": "~05.08.2026", "sub": "projected, не подтв." },
-          { "label": "CFO André старт", "value": "27.07.2026", "sub": "первый отчётный цикл" },
-          { "label": "FRE margin таргет", "value": "47%", "sub": "сверять прогресс" },
-          { "label": "TCAP AUM", "value": "~$4.7B", "sub": "nonaccruals ~1%, redemptions 1.3%" }
-        ],
-        "bullets": [
-          "Form 4: мониторить появление Code S у операционного менеджмента",
-          "Vehicle-filings: TRTX (CRE), MITT (book value), TCAP BDC (nonaccruals)"
-        ]
-      },
-      "bodyMarkdown": "**Корпоративный календарь:**\n- **Q2 2026 earnings + 10-Q** — ожидать ~05.08.2026 (по паттерну Q2'25 = 06.08.2025; дата projected агрегаторами, компанией НЕ подтверждена — проверять shareholders.tpg.com/events).\n- **27.07.2026** — вступает в должность CFO Axel André (бэкграунд RGA / American Equity / Jackson National); Q2 — его первый отчётный цикл при жёстком guidance.\n- Следующий дивиденд объявят вместе с Q2 (~начало августа 2026).\n\n**SEC-filings (CIK 0001880661):**\n- Q2 2026 10-Q: сверить management fees by platform, FRE margin к таргету 47%, прогресс fundraise к >$50B, обновлённый fund track record.\n- **Form 4 (инсайдеры)** — поток постоянный; мониторить появление Code S (open-market sale) у операционного менеджмента.\n- **Schedule 13G/13D** — отслеживать новых >5% держателей. (Подтверждённых через subject-company индекс 13-filings в 2026 НЕТ — последние в индексе TPG датированы 2024; заявленный VOICE Millennium 13G 17.06.2026 в subject-индексе не виден — см. пробелы.)\n- 13F-HR — клиентские активы; для оценки holdco ИСКЛЮЧАЮТСЯ.\n\n**Filings управляемых vehicles (источник fee-дохода):**\n- TRTX 10-Q (TPG RE Finance Trust, NYSE) — резервы/просрочки по CRE.\n- MITT 10-Q (AG Mortgage Investment Trust, под Angelo Gordon) — book value/портфель.\n- TCAP BDC 10-Q (TPG Twin Brook Capital Income Fund, non-traded) — nonaccruals (~1%), redemption rate (1.3%); AUM ~$4.7B.\n\n**Триггеры guidance на Q2 call:** прогресс к fundraise >$50B; FRE margin к 47%; рост T-POP AUM выше $2.1B; insurance-капитал Jackson ABF выше $2B; investment appreciation by platform (Q1'26: Capital −2.3%, Growth −1.5%, Credit +2.2%, RE +1.9% — watch на разворот квартальной депрециации Capital/Growth).",
-      "hasDeep": true
-    },
-    {
-      "id": "analysis",
-      "n": "07",
-      "tier": "signals",
-      "title": "Аналитический слой",
-      "sub": "FRE-сдвиг, GAAP-шум, hold/add/trim",
-      "preview": {
-        "line": "FRE-машина перешла $1B LTM при марже 44% — качественный сдвиг к предсказуемому доходу. Базовый сигнал: HOLD / ADD на подтверждениях.",
-        "stats": [
-          { "label": "LTM FRE", "value": ">$1B", "sub": "margin 44% кв / 46% LTM / таргет 47%" },
-          { "label": "After-tax DE Q1'26", "value": "+51%", "sub": "до $282M; GAAP loss — шум" },
-          { "label": "LTM realized carry", "value": "$233M", "sub": "watch-порог <$200M" },
-          { "label": "Available Capital", "value": "$72.4B", "sub": "watch-порог <$60B" }
-        ],
-        "bullets": [
-          "ADD-триггеры: Q2 FRE margin ≥46% + fundraise ≥$25B; T-POP >$3B",
-          "TRIM: TCAP nonaccruals >2%, CRE-стресс TRTX, downgrade, появление Code S"
-        ]
-      },
-      "bodyMarkdown": "> Интерпретация аналитика из проверенных первичных фактов. НЕ раскрытия компании и не valuation.\n\n1. **FRE-машина перешла $1B LTM при марже 44% (кв) / 46% (LTM) и таргете 47%** — качественный сдвиг к предсказуемому доходу. Подпорки: $33B уже привлечённого, но ещё не приносящего комиссии капитала (встроенный рост FAUM); management fees +15% г/г при росте по 5 из 6 направлений. Watch-точка: Real Estate management fees снижаются ($95M→$83M кв).\n2. **GAAP net loss vs cash-прибыль — бухгалтерский шум.** GAAP net loss Q1'26 $(123)M, attributable to TPG Inc. лишь $(1.5)M; After-tax DE +51% до $282M. Сигнал: смотреть DE/FRE, игнорировать GAAP-волатильность.\n3. **Track record флагманов (10-K, проверено) задаёт «земное притяжение» carry:** будущая монетизация опирается на TPG IX (Net 24%, unrealized $14.2B), THP II (Net 29%), Rise Climate I (Net 15%, unrealized $7.9B) — конкретные фонды с большими unrealized хвостами. Net accrued $1,280M концентрирован в винтажах 2020 & Prior ($809M) и 2022 ($280M).\n4. **AI-линза реальна и двусторонняя.** Плюс: прямые позиции Anthropic/OpenAI/SpaceX, Tata data-center $6B, Intersect → Google как exit-премия, IPO-окно для AI-компаний. Минус: AI-риск в зрелом TPG VIII; PE valuation Q1'26 −1% от multiple compression. НЕ натягивать AI на Real Estate / mortgage REITs (TRTX/MITT) — это процентно-ставочные и CRE-циклические истории.\n5. **Менеджмент-переходы при агрессивном guidance.** Weingart → Global Wealth Solutions (T-POP $2.1B, private wealth +130%); CFO André (RGA/Jackson) — двойной приоритет на insurance-капитал. Риск-нота: смена CFO ровно в момент таргета FRE margin 47% и fundraise >$50B.\n\n**Инсайдеры/держатели (Form 4 — проверено):** 2026 YTD нет open-market sales операционного менеджмента; всё рутинный вестинг (Code F) и director grants (Code A); Davis Kelvin — unit-acquisition (Code J), не продажа. Нейтрально.\n\n**Сигналы hold / add / trim для holdco-позиции TPG Inc (НЕ цена акции):**\n- **Базовый: HOLD / ADD на подтверждениях.**\n- **ADD-триггеры:** (1) Q2 FRE margin ≥46% и накопленный fundraise ≥$25B к >$50B; (2) финальные closes TPG X / Healthcare Partners III выше предыдущих vintages (TPG IX был $12.0B committed); (3) T-POP AUM >$3B; (4) разворот квартальной депрециации Capital/Growth в плюс.\n- **TRIM / осторожность:** (1) nonaccruals TCAP выше ~2% или скачок redemptions выше ~2–3%; (2) рост резервов/просрочек TRTX (CRE-стресс); (3) downgrade ниже A3/BBB+/A- при net debt $2.3B; (4) сбой guidance в первом квартале нового CFO; (5) реклассификация большей части TPG VIII в «material AI risk»; (6) появление Code S у операционного менеджмента.\n- **Operational маяки:** FRE margin <43% два квартала подряд = разворот тезиса об operating leverage; LTM realized carry <$200M (сейчас $233M) = ослабление монетизации; Available Capital <$60B (сейчас $72.4B) без компенсирующего fundraise; продолжение снижения Real Estate management fees.",
-      "hasDeep": true
-    }
-  ],
-  "sources": [
-    {
-      "n": 1,
-      "label": "TPG Inc Form 10-K FY2025 (tpg-20251231.htm) — AUM/FAUM по сегментам, fund track record, management fees $1,800.1M, FRE $952.6M, DE $1,042.1M, after-tax DE $973.5M, net accrued $1,280M, available capital $72,436M, clawback $7.9M",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000011/tpg-20251231.htm",
-      "sourceType": "SEC 10-K",
-      "date": "2026-02-17"
-    },
-    {
-      "n": 2,
-      "label": "TPG Inc Form 10-Q Q1 2026 (tpg-20260331.htm) — AUM $306,182M, FAUM $175,372M, сегменты (Credit $95,196M, Capital $89,732M и др.)",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000033/tpg-20260331.htm",
-      "sourceType": "SEC 10-Q",
-      "date": "2026-05-01"
-    },
-    {
-      "n": 3,
-      "label": "TPG Inc Form 10-K FY2024 — исторические FRE/DE/AUM 2023–2024",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066125000014/tpg-20241231.htm",
-      "sourceType": "SEC 10-K",
-      "date": "2025-02-18"
-    },
-    {
-      "n": 4,
-      "label": "TPG Q1 2026 earnings release (8-K) — FRE/FRR/DE, management fees by platform, available capital, net accrued, баланс, дивиденд $0.59",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000029/",
-      "sourceType": "SEC 8-K exhibit",
-      "date": "2026-05-01"
-    },
-    {
-      "n": 5,
-      "label": "TPG Q1 2026 press release (8-K) — CEO quote verbatim, дивиденд $0.59 (record 11.05, выплата 26.05), AUM $306B, founding 1992",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000029/",
-      "sourceType": "SEC 8-K exhibit",
-      "date": "2026-05-01"
-    },
-    {
-      "n": 6,
-      "label": "TPG Inc Form 8-K filed 2026-06-22 (tpg-20260615.htm) — Axel André назначен CFO eff. 27.07.2026; Weingart → CEO Global Wealth Solutions",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000040/tpg-20260615.htm",
-      "sourceType": "SEC 8-K",
-      "date": "2026-06-22"
-    },
-    {
-      "n": 7,
-      "label": "TPG Inc Form 8-K filed 2026-06-05 (tpg-20260603.htm) — годовое собрание 03.06.2026, record date 08.04.2026",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000036/tpg-20260603.htm",
-      "sourceType": "SEC 8-K",
-      "date": "2026-06-05"
-    },
-    {
-      "n": 8,
-      "label": "TPG Inc EDGAR submissions index (CIK 0001880661) — список filings, формы, даты; SIC «Investment Advice», тикеры TPG/TPGXL",
-      "url": "https://data.sec.gov/submissions/CIK0001880661.json",
-      "sourceType": "SEC EDGAR",
-      "date": "2026-06-28"
-    },
-    {
-      "n": 9,
-      "label": "TPG Inc EDGAR Schedule 13 filing index (subject company) — последние 13G/13D в индексе TPG датированы 2024; 2026 13-filings под subject-CIK не найдены",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001880661&type=SC+13",
-      "sourceType": "SEC EDGAR",
-      "date": "2026-06-28"
-    },
-    {
-      "n": 10,
-      "label": "TPG Form 4 — Trujillo David (director), Code F −8,379 @ $39.42, owned after 237,297",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000094787126000442/ownership.xml",
-      "sourceType": "SEC Form 4",
-      "date": "2026-04-16"
-    },
-    {
-      "n": 11,
-      "label": "TPG Form 4 — Chu Jennifer L. (Chief Legal Officer & GC), Code F −22,079 @ $40.51, owned after 196,974",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000094787126000396/ownership.xml",
-      "sourceType": "SEC Form 4",
-      "date": "2026-04-03"
-    },
-    {
-      "n": 12,
-      "label": "TPG Form 4 — McRaven William H. (director), Code A +7,434 Class A",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000094787126000537/ownership.xml",
-      "sourceType": "SEC Form 4",
-      "date": "2026-05-14"
-    },
-    {
-      "n": 13,
-      "label": "TPG Form 4 — Davis Kelvin L. (director), Code J +41,661 TPG Partner Holdings units @ $42.48, owned after 11,602,827",
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000094787126000638/ownership.xml",
-      "sourceType": "SEC Form 4",
-      "date": "2026-06-18"
-    },
-    {
-      "n": 14,
-      "label": "TPG Q1 2026 earnings call transcript (Motley Fool) — verbatim quotes (Winkelried, Coulter, Sisitsky), pending fundraises, deployment >$14B, realizations ~$9B, guidance >$50B/2026, FRE margin 47%, Twin Brook/TCAP метрики, Curium $3.8B CV",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/05/01/tpg-tpg-q1-2026-earnings-call-transcript/",
-      "sourceType": "Earnings call transcript (валидация)",
-      "date": "2026-05-01"
-    },
-    {
-      "n": 15,
-      "label": "Blackstone press release — Hologic acquisition до $79/акц (Blackstone + TPG), до $18.3B",
-      "url": "https://www.blackstone.com/news/press/hologic-to-be-acquired-by-blackstone-and-tpg-for-up-to-79-per-share/",
-      "sourceType": "Counterparty IR (валидация)",
-      "date": "2025-10-21"
-    },
-    {
-      "n": 16,
-      "label": "MedTech Dive — закрытие Hologic 07.04.2026",
-      "url": "https://www.medtechdive.com/news/hologic-acquired-18b-blackstone-tpg/803361/",
-      "sourceType": "Отраслевое подтверждение даты",
-      "date": "2026-04-07"
-    },
-    {
-      "n": 17,
-      "label": "AMG IR — приобретение Peppertree Capital ($7.7–7.9B AUM, digital infrastructure), cash до $242M + equity до $418M, закрыто 02.07.2025",
-      "url": "https://ir.amg.com/news-releases/news-release-details/peppertree-capital-management-be-acquired-tpg",
-      "sourceType": "Counterparty IR (валидация)",
-      "date": "2025-07-02"
-    },
-    {
-      "n": 18,
-      "label": "Mingtiandi / CoStar — TPG приобретает Angelo Gordon за ~$2.7B (cash + до 62.5M units + earnout до $400M), закрыто 02.11.2023",
-      "url": "https://www.mingtiandi.com/real-estate/finance/tpg-buying-angelo-gordon-for-2-7b/",
-      "sourceType": "Отраслевое подтверждение (валидация)",
-      "date": "2023-05-15"
-    },
-    {
-      "n": 19,
-      "label": "stockanalysis.com — TPG valuation ratios (P/Book 5.6x vs 8.25x FY2025; market cap $15.3B; div yield ~5.2%; цена ~$40, 52-нед. $36.95–$70.38)",
-      "url": "https://stockanalysis.com/stocks/tpg/financials/ratios/",
-      "sourceType": "Агрегатор (валидация)",
-      "date": "2026-06-26"
-    },
-    {
-      "n": 20,
-      "label": "Carlyle / Ares Q1 2026 8-K — валидация peer-метрик (CG FRE LTM ~$1.2B, div ~3.0%; ARES AUM ~$572B, div ~4.3%)",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=carlyle",
-      "sourceType": "SEC 8-K (peer, валидация)",
-      "date": "2026-05-01"
-    }
-  ],
-  "gaps": [
-    "Schedule 13G/13D 2026 — заявленный VOICE Millennium Management 13G (17.06.2026, 5.1%) и 13D/A (18.05.2026, TPG GP A) в subject-company индексе 13-filings TPG НЕ найдены (последние записи — 2024); через subject-CIK не подтверждаются.",
-    "Q2 2026 earnings/10-Q дата (~05.08.2026) — projected агрегаторами, компанией построчно НЕ подтверждена.",
-    "Сегментные management fees FY2025 точными $-строками (Capital $500.7M и др.) НЕ найдены в 10-K; подтверждены только агрегат $1,800.1M и LTM by-platform из earnings release.",
-    "Hologic — точная доля TPG-фондов и конкретный vehicle (TPG IX vs X vs co-invest) и чек TPG отдельно от Blackstone в filings TPG не раскрыты; Hologic не упомянута в тексте 10-K (post-period). Подтверждена через counterparty IR + trade press.",
-    "Net accrued по винтажам — FACTS s07 дал 2020 & Prior $728M / 2022 $257M; фактические по 10-K — $809M / $280M (использованы проверенные 10-K цифры).",
-    "OneOncology → Syncora — сумма выхода НЕ раскрыта; Intersect → Google — сумма НЕ раскрыта.",
-    "Прямые позиции Anthropic / OpenAI / SpaceX (доллары, % фонда) НЕ раскрыты; только факт нахождения в Tech Adjacency / T-POP.",
-    "Managed vehicles TRTX / MITT / TCAP BDC 10-Q напрямую не открывались — nonaccruals (~1%), TCAP redemptions (1.3%), Twin Brook LTV 42% взяты из earnings call (слова менеджмента), не из самих filings.",
-    "Curium ~$7B / $3.8B CV — структурировал CapVest; валидация только secondary-источниками (Bloomberg/PitchBook), не filing TPG.",
-    "Цена/доходность/market cap — зависят от внутридневной цены (~$40 на 26.06.2026, агрегатор, не биржевой первичный фид); div yield 5.2–5.6%.",
-    "Peer-метрики (Carlyle/Ares/Blackstone/KKR) — числовое сопоставление не из первички TPG; counterparty 8-K / агрегатор как валидация.",
-    "TPG Inc economic ownership ~41% — выведено из share counts (Common Units 223.85M vs Class A 160.46M), не приведено компанией явной строкой.",
-    "OpenInsider недоступен из sandbox — insider-вывод построен напрямую на Form 4 XML из EDGAR."
-  ],
-  "verification": "Проведён усиленный повторный проход с adversarial-перепроверкой через SEC EDGAR (curl с User-Agent). Проверено построчно из первички: AUM $306,182M и сегменты Q1'26 (Credit $95,196M, Capital $89,732M, Growth $32,366M, Impact $31,551M, RE $39,246M, Market Solutions $18,091M), FAUM $175,372M (10-Q); полный fund track record IRR/MoM по всем vintages (Capital-серия агрегат Net 15% / 1.6x; TPG IX Net 24% / 1.3x; TPG VII Net 19% / 2.0x; TPG V Net 5%; Rise Climate I Net 15%, Total Value $9,416M; MMDL агрегат Net 10%, Total Value $14,792M; THP II Net 29%; LSI Net −25%) (10-K); management fees $1,800,061K, FRR $2,109,255K, FRE $952,572K, DE $1,042,109K, after-tax DE $973,489K (10-K); net accrued $1,280M с разбивкой по сегментам и винтажам (10-K); available capital $72,436M с разбивкой (10-K); тикеры/CIK/SIC (EDGAR submissions); четыре Form 4 напрямую из XML (Trujillo, Chu, McRaven, Davis Kelvin — нет open-market sales). Подтверждено из вторичных/counterparty с пометкой: Hologic (Blackstone IR + MedTech Dive), Peppertree (AMG IR), Angelo Gordon (trade press), valuation/цена (stockanalysis), peer-числа (counterparty 8-K). Уровень доверия — высокий по Tier 1. Слабые места: 2026 13G/13D под subject-CIK не подтверждены (Millennium); Q2 дата projected; managed-vehicle метрики и отдельные суммы выходов из транскрипта не из самих filings; сегментные management fees точными строками не сверены. Число источников: 20."
+      "sub": "+30% г/г"
+     },
+     {
+      "label": "Capital (PE)",
+      "value": "$89.7B"
+     },
+     {
+      "label": "Real Estate",
+      "value": "$39.2B"
+     },
+     {
+      "label": "Growth",
+      "value": "$32.4B"
+     },
+     {
+      "label": "Impact",
+      "value": "$31.6B"
+     },
+     {
+      "label": "Market Solutions",
+      "value": "$18.1B",
+      "sub": "эффект Peppertree"
+     }
+    ],
+    "bullets": [
+     "Итого AUM $306.2B; FAUM $175.4B (31.03.2026)",
+     "Структура Up-C, статус controlled company по Nasdaq",
+     "Long-dated 10+ лет = $204.5B (67%); perpetual = $49.7B (16%)"
+    ]
+   },
+   "bodyMarkdown": "TPG — holdco: его единственный материальный актив — доля в TPG Operating Group; структура Up-C, статус «controlled company» по правилам Nasdaq (10-K FY2025). Холдинг зарабатывает на управлении капиталом, а не на корпоративных позициях, поэтому «портфель» здесь — это AUM по шести направлениям и фонды как «позиции». 13F-портфель = клиентские активы управляемых счетов и для оценки holdco ИСКЛЮЧЁН по методологии.\n\n**AUM по направлениям на 31.03.2026** (источник: 10-Q Q1 2026, AUM table — проверено построчно через SEC EDGAR):\n- Credit — $95,196M ($95.2B; +30% г/г от $73,430M)\n- Capital (private equity) — $89,732M ($89.7B; от $76,016M)\n- Real Estate — $39,246M ($39.2B)\n- Growth — $32,366M ($32.4B)\n- Impact (Rise/climate) — $31,551M ($31.6B)\n- Market Solutions — $18,091M ($18.1B; от $7,668M — эффект консолидации Peppertree)\n- **Итого AUM — $306,182M ($306.2B)**; FAUM — $175,372M ($175.4B; от $142,794M)\n\n**AUM по направлениям на 31.12.2025** (10-K FY2025; здесь сегменты в порядке размера): Credit $93.1B, Capital $90.9B, Real Estate $38.2B, Growth $32.2B, Impact $31.2B, Market Solutions $17.4B — итого $303.0B; FAUM $170.1B. (Сегментные суммы между 10-K Dec-31 и 10-Q Mar-31 различаются датой — обе цифры из первички, не противоречие.)\n\n**Крупнейшие фонды как «позиции»** (10-K FY2025 fund performance table, Total Value):\n- TPG IX (vintage 2022) — committed $12,014M, Total Value $15,383M.\n- TPG X (vintage 2025, активирован 3кв25) — committed $10,858M (ранний; NM).\n- Rise Climate Funds — committed $16,014M total (Rise Climate I 2021 + II/Global South/TI 2025).\n- TPG Direct Lending (MMDL, агрегат) — Total Value $14,792M.\n- TPG VII (2015) — Total Value $24,825M; TPG VIII (2019) — $20,252M.\n\n**Названные портфельные компании** (названы без раскрытой отдельной оценки в holdco-filings): Hologic (закрыта 07.04.2026, сделка Blackstone + TPG до $18.3B / $79/акц — counterparty IR), Surescripts, Viking Cruises, DirecTV, OneOncology (выход → Syncora), Intersect Power (Rise Climate, выход digital power → Google), Sabre Industries (Rise Climate), Curium (continuation vehicle), прямые AI-позиции Anthropic / OpenAI / SpaceX в Tech Adjacencies / T-POP.\n\n**Структура капитала по дюрации** (earnings release Q1'26): long-dated фонды 10+ лет = $204.5B (67% AUM); perpetual capital = $49.7B (16% AUM).\n\n**Капитальная структура holdco** (earnings release Q1'26 / 8-K годового собрания, record 08.04.2026): Class A common ~160.46M шт. (153.78M на record годового собрания); Common Units, конвертируемые в Class A, ~223.85M шт. → на TPG Inc приходится ~41% units в Operating Group (160.46M / 384.31M = 41.7%).",
+   "hasDeep": true
+  },
+  {
+   "id": "changes",
+   "n": "02",
+   "tier": "substance",
+   "title": "Недавние изменения",
+   "sub": "Fundraise, Peppertree, Jackson, смена CFO",
+   "preview": {
+    "line": "FY2025 fundraise $51.5B (+71%); консолидация Peppertree; партнёрство Jackson; CFO transition с 27.07.2026.",
+    "stats": [
+     {
+      "label": "Capital Raised FY2025",
+      "value": "$51.5B",
+      "sub": "+71% г/г"
+     },
+     {
+      "label": "Capital Invested FY2025",
+      "value": "$51.9B",
+      "sub": "+58% г/г"
+     },
+     {
+      "label": "Реализации FY2025",
+      "value": "$23.4B",
+      "sub": "плоско г/г"
+     },
+     {
+      "label": "Peppertree AUM",
+      "value": "+$7.9B",
+      "sub": "в Market Solutions"
+     },
+     {
+      "label": "Curium CV",
+      "value": "$3.8B",
+      "sub": "continuation vehicle"
+     }
+    ],
+    "bullets": [
+     "Axel André — CFO с 27.07.2026; Weingart → CEO Global Wealth Solutions",
+     "Jackson Financial: $2B commitments ABF + $500M в акции (Senior Notes)"
+    ]
+   },
+   "bodyMarkdown": "(последние 2–4 квартала; источники: 10-K FY2025, 10-Q Q1'26, earnings release/call Q1'26)\n\n- **Capital Raised:** FY2025 = $51.5B (vs $30.1B в 2024, +71%); Q1'26 = $10,347M ($10.3B, +75% г/г); LTM ≈$55.9B.\n- **Capital Invested:** FY2025 = $51.9B (vs $32.9B, +58%; Credit крупнейший — ≈$25.0B); Q1'26 = $14.4B (≈×2 г/г); LTM ≈$58.9B.\n- **Реализации:** FY2025 = $23.4B (vs $22.9B, плоско г/г); Q1'26 = $8,745M ($8.7B, ≈×2 г/г). Названы выходы: OneOncology → Syncora, Intersect digital power → Google, Viking Cruises, DirecTV.\n- **Acquisition Peppertree Capital** консолидирован с 01.07.2025 — добавил $7,927M AUM в Market Solutions (digital infrastructure / вышки); cash до $242M + equity до $418M + earnouts (counterparty IR).\n- **Партнёрство с Jackson Financial:** $2B первоначальных commitments в asset-based finance; TPG вложил $500M в обыкновенные акции Jackson (профинансировано выпуском Senior Notes $500M в Q1'26 — рост debt obligations до $2.3B).\n- **Curium Pharma:** $3.8B continuation vehicle (Q1'26); TPG как secondary через TPG GP Solutions + миноритарий через Life Sciences; CV структурировал CapVest (Curium ~$7B — secondary-валидация Bloomberg/PitchBook).\n- **Смена CFO:** Axel André назначен CFO с 27.07.2026; Jack Weingart → CEO Global Wealth Solutions (8-K от 22.06.2026). Бэкграунд André: EVP & CFO в Reinsurance Group of America (RGA); ранее CFO в American Equity Life и Jackson National.\n- **Годовое собрание 03.06.2026** (8-K Item 5.07; record 08.04.2026) — переизбрание директоров.",
+   "hasDeep": true
+  },
+  {
+   "id": "financial",
+   "n": "03",
+   "tier": "substance",
+   "title": "Финансовая составляющая",
+   "sub": "FRE/DE динамика, баланс, дивиденд",
+   "preview": {
+    "line": "FRE 2023→2025 CAGR ≈25%; LTM FRE впервые >$1B ($1,018M); After-tax DE FY2025 $973.5M; дивиденд $0.59/акц.",
+    "stats": [
+     {
+      "label": "FRE FY2025",
+      "value": "$952.6M",
+      "sub": "margin 45%"
+     },
+     {
+      "label": "DE FY2025",
+      "value": "$1,042.1M",
+      "sub": "after-tax $973.5M"
+     },
+     {
+      "label": "Management fees FY2025",
+      "value": "$1,800.1M",
+      "sub": "CAGR ≈24%"
+     },
+     {
+      "label": "Dry powder (31.12.2025)",
+      "value": "$72.4B",
+      "sub": "available capital"
+     },
+     {
+      "label": "Net debt",
+      "value": "$2.3B",
+      "sub": "available liquidity $1.7B"
+     },
+     {
+      "label": "Дивиденд Q1'26",
+      "value": "$0.59/акц",
+      "sub": "payout ≥85% DE"
+     }
+    ],
+    "bullets": [
+     "GAAP FY2025: revenues $4,670.2M (+33%), net income $599.6M",
+     "Credit ratings: Moody's A3 / S&P BBB+ / Fitch A-"
+    ]
+   },
+   "bodyMarkdown": "**Многолетняя динамика (FRE/DE — non-GAAP; 10-K FY2023–25, 10-Q Q1'26 — проверено построчно):**\n| Метрика | FY2023 | FY2024 | FY2025 | Q1'26 (кв) |\n|---|---|---|---|---|\n| Total AUM, $млрд | 221.6 | 245.9 | 303.0 | 306.2 |\n| FAUM, $млрд | — | 141.3 | 170.1 | 175.4 |\n| Management fees, $млн | 1,178.7 | 1,625.7 | 1,800.1 | 475.1 |\n| Fee-Related Revenues, $млн | 1,337.3 | 1,831.5 | 2,109.3 | 557.2 |\n| Fee-Related Earnings (FRE), $млн | 606.3 | 764.2 | 952.6 | 246.9 |\n| FRE margin | 45% | 42% | 45% | 44% |\n| Distributable Earnings (DE), $млн | 627.9 | 894.6 | 1,042.1 | 296.0 |\n| After-tax DE, $млн | 585.3 | 837.3 | 973.5 | 281.6 |\n\nТемпы: FRE 2023→2025 CAGR ≈25%; management fees CAGR ≈24%. LTM FRE впервые >$1B по итогам Q1'26 ($1,018M).\n\n**GAAP (FY2025, 10-K):** Total revenues $4,670.2M (vs $3,500.1M, +33%); net income $599.6M (vs убыток $(76.9)M в FY2024). **GAAP Q1'26: net loss $(123.3)M**, но attributable to TPG Inc. лишь $(1.5)M — основная часть на non-controlling interests; причина минуса — unrealized capital allocation-based loss. GAAP EPS малоинформативен для up-C структуры — смотреть DE/share.\n\n**Management fees by platform LTM** (earnings release Q1'26): Capital $525M, Credit $356M, Real Estate $339M, Impact $286M, Growth $236M, Market Solutions $120M. Real Estate — единственное направление со снижением management fees кв/кв ($95M→$83M).\n\n**Структура fee-дохода:** weighted average management fee rate ≈1.1–1.2% от FAUM (10-K FY2025). FRE — наиболее стабильная часть; performance allocations волатильны.\n\n**Баланс / ликвидность (earnings release Q1'26):** Cash $89M; net debt $2.3B; debt obligations $2,343M; available liquidity $1.7B; undrawn revolver $1.6B. Borrowings: Senior + Subordinated Notes принципал $2.0B (вкл. Senior Notes 2034 $600M @5.875%, sub-нота 2064 $400M @6.95%); Secured Notes принципал $250M (залог $496M) — при невыкупе до 20.06.2028 купон +4.0%. Credit ratings: Moody's A3 / S&P BBB+ / Fitch A-. **Available Capital (dry powder, 31.12.2025): $72,436M** — Capital $21,776M, Credit $18,268M, Real Estate $12,293M, Impact $9,564M, Growth $7,050M, Market Solutions $3,485M.\n\n**Дивиденд:** $0.59/Class A за Q1'26 (record 11.05.2026, выплата 26.05.2026; press release). Payout ≥85% от доли TPG Inc в After-tax DE.",
+   "hasDeep": true
+  },
+  {
+   "id": "risk",
+   "n": "04",
+   "tier": "context",
+   "title": "Карта рисков",
+   "sub": "Зависимость от exits, private credit, vintages",
+   "preview": {
+    "line": "Высокий риск — зависимость DE от realizations; средне-высокий — концентрация на private credit (31% AUM).",
+    "stats": [
+     {
+      "label": "Зависимость от exits",
+      "value": "ВЫСОКИЙ",
+      "sub": "DE/carry от realizations"
+     },
+     {
+      "label": "Private credit",
+      "value": "СРЕДНЕ-ВЫСОКИЙ",
+      "sub": "Credit = 31% AUM"
+     },
+     {
+      "label": "Слабые vintages",
+      "value": "СРЕДНИЙ",
+      "sub": "LSI −25%, Asia I −10%"
+     },
+     {
+      "label": "Смена CFO",
+      "value": "СРЕДНИЙ",
+      "sub": "при агрессивном guidance"
+     }
+    ],
+    "bullets": [
+     "Интеграция M&A (Angelo Gordon/Peppertree) — давит на GAAP-прибыль",
+     "Долговой watch 2028: Secured Notes +4.0% при невыкупе до 20.06.2028"
+    ]
+   },
+   "bodyMarkdown": "- **Реализационный цикл / зависимость от exits — ВЫСОКИЙ.** DE и performance allocations зависят от realizations; FY2025 realizations $23.4B плоско г/г; net accrued $1.28B не монетизируется при заморозке выходов. Дивиденд (≥85% DE) переменный.\n- **Концентрация на private credit — СРЕДНЕ-ВЫСОКИЙ.** Credit = 31% AUM ($95.2B), крупнейший сегмент; рост дефолтов в direct lending (MMDL $14.8B) / стресс ABF на фоне «private credit winter» бьёт по NAV и fee-базе. (TCAP nonaccruals «just above 1%», redemptions 1.3% — слова менеджмента, не из BDC 10-Q.)\n- **Слабые недавние vintages — СРЕДНИЙ.** LSI (Net −25%), Evercare (Net 0%), Asia I (Net −10%), TPG AION (Net −11%). Незрелые/слабые фонды давят на track record и способность поднимать следующие vintages.\n- **Смена CFO при агрессивном guidance — СРЕДНИЙ.** Weingart → Global Wealth Solutions; новый CFO André (страховой бэкграунд, не PE) вступает 27.07.2026 ровно в момент таргета FRE margin 47% и fundraise >$50B.\n- **Интеграция/масштабирование M&A — СРЕДНИЙ.** Angelo Gordon (Credit) / Peppertree; earnouts и amortization интангиблов давят на GAAP-прибыль.\n- **CRE-стресс (Real Estate) — СРЕДНИЙ.** Real Estate management fees снижаются; отслеживать резервы/просрочки в TRTX 10-Q.\n- **Долговой watch 2028 — НИЗКО-СРЕДНИЙ.** Secured Notes с +4.0% при невыкупе до 20.06.2028; net debt $2.3B.\n- **GAAP-волатильность vs cash — риск восприятия, не денежного потока.** GAAP net loss $(123)M при After-tax DE $282M (+51%) — бухгалтерский эффект unrealized.",
+   "hasDeep": true
+  },
+  {
+   "id": "insider",
+   "n": "05",
+   "tier": "context",
+   "title": "Действия инсайдеров",
+   "sub": "Form 4: нет open-market sales в 2026",
+   "preview": {
+    "line": "Открытых рыночных покупок/продаж операционного менеджмента в 2026 НЕ зафиксировано — всё рутинный вестинг. Нейтрально.",
+    "stats": [
+     {
+      "label": "Open-market sales (Code S)",
+      "value": "нет",
+      "sub": "2026 YTD"
+     },
+     {
+      "label": "Buybacks",
+      "value": "нет",
+      "sub": "значимой программы НЕТ"
+     },
+     {
+      "label": "Дивиденд Q1'26",
+      "value": "$0.59/акц",
+      "sub": "привязан к DE"
+     }
+    ],
+    "bullets": [
+     "11.02.2026 — annual equity grants (Code A; Winkelried, Weingart и др.)",
+     "Issuance под Angelo Gordon (до 62.5M units) и Peppertree (до $418M)"
+    ]
+   },
+   "bodyMarkdown": "(Form 4 — проверено напрямую через EDGAR XML, CIK 0001880661)\n- **Открытых рыночных покупок/продаж операционного менеджмента в 2026 НЕ зафиксировано.** Все транзакции — grants (Code A), tax-withholding на вестинге (Code F), либо unit-движения (Code J). Кода S (open-market sale) нет.\n  - 11.02.2026 — пакетные annual equity grants топ-менеджменту (Code A; Winkelried, Weingart и др.).\n  - Chu Jennifer L. (Chief Legal Officer & GC): 01.04.2026 Code F −22,079 @ $40.51, owned after 196,974; ранее ещё −19,679 (оба tax-withholding).\n  - Trujillo David (director): 14.04.2026 Code F −8,379 @ $39.42, owned after 237,297 (tax-withholding).\n  - McRaven William H. (director): 12.05.2026 Code A +7,434 Class A (director award).\n  - Davis Kelvin L. (director): 16.06.2026 Code J +41,661 TPG Partner Holdings units @ $42.48, owned after 11,602,827 (НЕ open-market sale).\n  Вывод: внутренних bearish-сигналов через продажи нет; всё рутинный вестинг/grants. Нейтрально.\n- **Buybacks:** значимой программы выкупа акций НЕТ — Item 5 10-K FY2025 без выкупов. Модель возврата капитала — дивиденды (≥85% DE), не байбек.\n- **Dividend:** переменный, привязан к DE. Q1'26 = $0.59/акц.\n- **Issuance:** equity под Angelo Gordon (2023, до 62.5M units) и Peppertree (до $418M, 2025) — разводняет Class A экономику, финансирует рост AUM.\n- **Управленческое изменение:** CFO transition (Weingart → André, eff. 27.07.2026).",
+   "hasDeep": true
+  },
+  {
+   "id": "peers",
+   "n": "06",
+   "tier": "context",
+   "title": "Peer positioning",
+   "sub": "vs Carlyle, Ares: самый быстрорастущий",
+   "preview": {
+    "line": "Самый быстрорастущий (AUM +22%, FRE-CAGR ~25%) и самый дешёвый по P/DE в тройке, с наивысшей дивдоходностью.",
+    "stats": [
+     {
+      "label": "TPG AUM",
+      "value": "$306B",
+      "sub": "Carlyle ~$477B, Ares ~$572B"
+     },
+     {
+      "label": "TPG P/DE",
+      "value": "~15x",
+      "sub": "CG ~22x, ARES ~16x"
+     },
+     {
+      "label": "TPG div yield",
+      "value": "~5.2–5.6%",
+      "sub": "CG ~3.0%, ARES ~4.3%"
+     },
+     {
+      "label": "Credit-фокус",
+      "value": "31% AUM",
+      "sub": "бывш. Angelo Gordon"
+     }
+    ],
+    "bullets": [
+     "Плата за рост: меньший масштаб, молодая credit-франшиза, переменный дивиденд",
+     "Relative-value кандидат: скидка к 52-нед. максимуму при растущем фундаментале"
+    ]
+   },
+   "bodyMarkdown": "| Метрика | TPG | Carlyle (CG) | Ares (ARES) |\n|---|---|---|---|\n| Total AUM | $306B (Q1'26) | ~$477B | ~$572B |\n| FRE (LTM) | ~$1.0B (впервые >$1B) | ~$1.2B | лидер по credit |\n| Дивидендная доходность | ~5.2–5.6% | ~3.0% | ~4.3% |\n| P/DE (нормализ.) | ~15x | ~22x | ~16x |\n| Кредит-фокус | Credit = 31% AUM (бывш. Angelo Gordon) | сбалансир. | credit-доминанта |\n\nTPG — самый быстрорастущий (AUM +22% г/г, FRE-CAGR ~25%) и самый дешёвый по P/DE в тройке, с наивысшей дивидендной доходностью; плата — меньший масштаб, более молодая credit-франшиза (Angelo Gordon с 2023) и переменный дивиденд. Скидка цены к 52-нед. максимуму при растущем фундаментале выделяет TPG как relative-value кандидата. (Peer-числа — counterparty 8-K / агрегатор как валидация; точное числовое сопоставление не из первички TPG.)",
+   "hasDeep": true
+  },
+  {
+   "id": "strategy",
+   "n": "07",
+   "tier": "voice",
+   "title": "Заявленная стратегия",
+   "sub": "Масштаб + диверсификация + кросс-сорсинг",
+   "preview": {
+    "line": "Edge-тезис: масштаб + диверсификация + кросс-направленное происхождение сделок (Curium — 4 платформы, 3 географии).",
+    "stats": [
+     {
+      "label": "Management fees Q1'26",
+      "value": "$475M",
+      "sub": "+15% г/г; 5 из 6 направлений"
+     },
+     {
+      "label": "Уже привлечено, без комиссий",
+      "value": "$33B",
+      "sub": "встроенный рост FAUM"
+     },
+     {
+      "label": "Dividend payout target",
+      "value": "≥85%",
+      "sub": "от доли в After-tax DE"
+     },
+     {
+      "label": "T-POP AUM",
+      "value": "$2.1B",
+      "sub": "за ~10 мес.; +130% г/г канал"
+     }
+    ],
+    "bullets": [
+     "Twin Brook: 310+ компаний, LTV 42%, nonaccruals «just above 1%»",
+     "Available Capital $72.8B; Net Accrued Performance $1,188M (Q1'26)"
+    ]
+   },
+   "bodyMarkdown": "**Edge-тезис — масштаб + диверсификация + кросс-направленное происхождение сделок.** Jon Winkelried (CEO), press release 01.05.2026 (verbatim): «TPG's strong first quarter performance reflects the significant momentum across our global platform, as the scale of our franchise and consistent execution continue to translate into powerful results… Our resilient business model is intentionally built to navigate complexity and capitalize on opportunity».\n\nИзмеримое подтверждение: LTM FRE впервые >$1B ($1,017,903K) при FRE margin 44% за квартал (+620 б.п. г/г); management fees Q1'26 = $475,119M (+15% г/г).\n\nКросс-направленное происхождение сделок (transcript): Curium «sourced and completed through the close collaboration of TPG's investment professionals across four platforms and three geographies» — одна сделка задействует TPG GP Solutions + Life Sciences.\n\n**Правила капитал-аллокации (10-K + earnings release):**\n- Target dividend payout ≥85% от доли TPG Inc в After-tax DE; Q1'26 = $0.59/Class A.\n- GP commitments финансируются деньгами, не deferral комиссий (10-K).\n- Clawback / contingent repayment obligation = $7.9M на 31.12.2025 (10-K).\n- Балансовые инвестиции — целевые под сделку (например, $500M в Jackson через выпуск Senior Notes $500M), а не общий рост leverage.\n- Распределение pre-tax DE: 83% из FRE в Q1'26 (против 97% в Q4'25).\n\n**Слои бизнес-механики:**\n1. Management fees — предсказуемая база ($475M Q1'26; рост по 5 из 6 направлений; Real Estate — единственное снижение). $33B уже привлечённого, но ещё не приносящего комиссии капитала — встроенный рост FAUM.\n2. Fee-related performance ($8.2M Q1'26) + transaction/monitoring/other fees, net ($73.9M, +30% г/г) → FRR $557M.\n3. Realized performance allocations (carry): $67.7M net Q1'26; LTM $232.8M. Драйверы Q1'26: TPG IX, THP II (Capital), Rise Climate I (Impact), Growth V.\n4. Private wealth: T-POP (perpetual PE evergreen) $2.1B AUM за ~10 мес. ($545M inflows за Q1; private-wealth channel +130% г/г). Под направление Weingart → CEO Global Wealth Solutions.\n5. Credit (после Angelo Gordon): крупнейшее по AUM. Twin Brook (direct lending): 310+ компаний, средний LTV 42% at origination, interest coverage >2x, nonaccruals «just above 1%», ~50% сделок — add-on.\n\nСтруктура по дюрации: Performance Eligible AUM ≈$253B; Performance Generating AUM ≈$208B; Net Accrued Performance $1,188M (Q1'26); Available Capital $72.8B (dry powder).",
+   "hasDeep": true
+  },
+  {
+   "id": "worldview",
+   "n": "08",
+   "tier": "voice",
+   "title": "Взгляд на рынок",
+   "sub": "Сложная среда = окно; PE-цикл + AI",
+   "preview": {
+    "line": "Сложная среда = окно возможностей; PE на пороге сильного цикла; AI как драйвер и риск одновременно.",
+    "stats": [
+     {
+      "label": "AI-инструменты",
+      "value": "~80%",
+      "sub": "сотрудников используют ежедневно"
+     },
+     {
+      "label": "TCAP redemptions",
+      "value": "1.3%",
+      "sub": "vs розничные «elevated»"
+     },
+     {
+      "label": "PE valuation Q1'26",
+      "value": "−1%",
+      "sub": "multiple compression, не операц."
+     },
+     {
+      "label": "IPO-окно AI",
+      "value": "1–3 компании",
+      "sub": "за 18 месяцев"
+     }
+    ],
+    "bullets": [
+     "Прямые позиции Anthropic / OpenAI / SpaceX (Tech Adjacency / T-POP)",
+     "Software bookings портфеля +20% г/г; Jackson ABF «tracking ahead of plan»"
+    ]
+   },
+   "bodyMarkdown": "**Во что верят (earnings call transcript 01.05.2026, verbatim атрибуция):**\n- **Сложная среда = окно возможностей.** Winkelried: «Our business is intentionally built to be resilient through cycles… The current environment is an opportunity… We've never felt more confident in the positioning of our franchise».\n- **PE на пороге сильного цикла + AI как инструмент.** James Coulter (Founding Partner & Executive Chairman): «I personally believe this will be the most positive weapon that we've seen in a long time in private equity».\n- **Текущий PE-портфель устойчив.** Todd Sisitsky (President): «This is a portfolio across private equity, I think we'd be excited about in any environment».\n- **Private credit — структурный рост; институциональный фокус как защита.** TPG отделяет себя от розничных credit-фондов с «elevated redemptions»; у TCAP redemptions 1.3%.\n- **AI — драйвер и риск.** Прямые позиции Anthropic / OpenAI / SpaceX в Tech Adjacency fund и T-POP (без раскрытой оценки); ~80% сотрудников ежедневно используют AI-инструменты.\n\n**Где осторожны:** часть TPG VIII отнесена к категории AI-disruption-риска в софте (mitigate); новые фонды (IX, X) делают AI частью underwriting. PE valuation Q1'26 −1% от multiple compression (Capital: прибыль +$1.2B, мультипликаторы −$2.4B) — переоценка от рынка мультипликаторов, не от операционной деградации.\n\n**За чем следят:** IPO-окно для крупных частных AI-компаний («1 to 3 of the large companies to go public over 18 months»); software bookings портфеля +20% г/г; Jackson Financial ABF $2B initial commitments «tracking ahead of plan».",
+   "hasDeep": true
+  },
+  {
+   "id": "monitor",
+   "n": "09",
+   "tier": "signals",
+   "title": "Что мониторить",
+   "sub": "Календарь, SEC-filings, vehicle-метрики",
+   "preview": {
+    "line": "Q2 2026 earnings ~05.08.2026 (проектно); CFO André с 27.07.2026; сверять FRE margin к 47% и fundraise к >$50B.",
+    "stats": [
+     {
+      "label": "Q2 2026 earnings",
+      "value": "~05.08.2026",
+      "sub": "projected, не подтв."
+     },
+     {
+      "label": "CFO André старт",
+      "value": "27.07.2026",
+      "sub": "первый отчётный цикл"
+     },
+     {
+      "label": "FRE margin таргет",
+      "value": "47%",
+      "sub": "сверять прогресс"
+     },
+     {
+      "label": "TCAP AUM",
+      "value": "~$4.7B",
+      "sub": "nonaccruals ~1%, redemptions 1.3%"
+     }
+    ],
+    "bullets": [
+     "Form 4: мониторить появление Code S у операционного менеджмента",
+     "Vehicle-filings: TRTX (CRE), MITT (book value), TCAP BDC (nonaccruals)"
+    ]
+   },
+   "bodyMarkdown": "**Корпоративный календарь:**\n- **Q2 2026 earnings + 10-Q** — ожидать ~05.08.2026 (по паттерну Q2'25 = 06.08.2025; дата projected агрегаторами, компанией НЕ подтверждена — проверять shareholders.tpg.com/events).\n- **27.07.2026** — вступает в должность CFO Axel André (бэкграунд RGA / American Equity / Jackson National); Q2 — его первый отчётный цикл при жёстком guidance.\n- Следующий дивиденд объявят вместе с Q2 (~начало августа 2026).\n\n**SEC-filings (CIK 0001880661):**\n- Q2 2026 10-Q: сверить management fees by platform, FRE margin к таргету 47%, прогресс fundraise к >$50B, обновлённый fund track record.\n- **Form 4 (инсайдеры)** — поток постоянный; мониторить появление Code S (open-market sale) у операционного менеджмента.\n- **Schedule 13G/13D** — отслеживать новых >5% держателей. (Подтверждённых через subject-company индекс 13-filings в 2026 НЕТ — последние в индексе TPG датированы 2024; заявленный VOICE Millennium 13G 17.06.2026 в subject-индексе не виден — см. пробелы.)\n- 13F-HR — клиентские активы; для оценки holdco ИСКЛЮЧАЮТСЯ.\n\n**Filings управляемых vehicles (источник fee-дохода):**\n- TRTX 10-Q (TPG RE Finance Trust, NYSE) — резервы/просрочки по CRE.\n- MITT 10-Q (AG Mortgage Investment Trust, под Angelo Gordon) — book value/портфель.\n- TCAP BDC 10-Q (TPG Twin Brook Capital Income Fund, non-traded) — nonaccruals (~1%), redemption rate (1.3%); AUM ~$4.7B.\n\n**Триггеры guidance на Q2 call:** прогресс к fundraise >$50B; FRE margin к 47%; рост T-POP AUM выше $2.1B; insurance-капитал Jackson ABF выше $2B; investment appreciation by platform (Q1'26: Capital −2.3%, Growth −1.5%, Credit +2.2%, RE +1.9% — watch на разворот квартальной депрециации Capital/Growth).",
+   "hasDeep": true
+  },
+  {
+   "id": "analysis",
+   "n": "10",
+   "tier": "signals",
+   "title": "Аналитический слой",
+   "sub": "FRE-сдвиг, GAAP-шум, hold/add/trim",
+   "preview": {
+    "line": "FRE-машина перешла $1B LTM при марже 44% — качественный сдвиг к предсказуемому доходу. Базовый сигнал: HOLD / ADD на подтверждениях.",
+    "stats": [
+     {
+      "label": "LTM FRE",
+      "value": ">$1B",
+      "sub": "margin 44% кв / 46% LTM / таргет 47%"
+     },
+     {
+      "label": "After-tax DE Q1'26",
+      "value": "+51%",
+      "sub": "до $282M; GAAP loss — шум"
+     },
+     {
+      "label": "LTM realized carry",
+      "value": "$233M",
+      "sub": "watch-порог <$200M"
+     },
+     {
+      "label": "Available Capital",
+      "value": "$72.4B",
+      "sub": "watch-порог <$60B"
+     }
+    ],
+    "bullets": [
+     "ADD-триггеры: Q2 FRE margin ≥46% + fundraise ≥$25B; T-POP >$3B",
+     "TRIM: TCAP nonaccruals >2%, CRE-стресс TRTX, downgrade, появление Code S"
+    ]
+   },
+   "bodyMarkdown": "> Интерпретация аналитика из проверенных первичных фактов. НЕ раскрытия компании и не valuation.\n\n1. **FRE-машина перешла $1B LTM при марже 44% (кв) / 46% (LTM) и таргете 47%** — качественный сдвиг к предсказуемому доходу. Подпорки: $33B уже привлечённого, но ещё не приносящего комиссии капитала (встроенный рост FAUM); management fees +15% г/г при росте по 5 из 6 направлений. Watch-точка: Real Estate management fees снижаются ($95M→$83M кв).\n2. **GAAP net loss vs cash-прибыль — бухгалтерский шум.** GAAP net loss Q1'26 $(123)M, attributable to TPG Inc. лишь $(1.5)M; After-tax DE +51% до $282M. Сигнал: смотреть DE/FRE, игнорировать GAAP-волатильность.\n3. **Track record флагманов (10-K, проверено) задаёт «земное притяжение» carry:** будущая монетизация опирается на TPG IX (Net 24%, unrealized $14.2B), THP II (Net 29%), Rise Climate I (Net 15%, unrealized $7.9B) — конкретные фонды с большими unrealized хвостами. Net accrued $1,280M концентрирован в винтажах 2020 & Prior ($809M) и 2022 ($280M).\n4. **AI-линза реальна и двусторонняя.** Плюс: прямые позиции Anthropic/OpenAI/SpaceX, Tata data-center $6B, Intersect → Google как exit-премия, IPO-окно для AI-компаний. Минус: AI-риск в зрелом TPG VIII; PE valuation Q1'26 −1% от multiple compression. НЕ натягивать AI на Real Estate / mortgage REITs (TRTX/MITT) — это процентно-ставочные и CRE-циклические истории.\n5. **Менеджмент-переходы при агрессивном guidance.** Weingart → Global Wealth Solutions (T-POP $2.1B, private wealth +130%); CFO André (RGA/Jackson) — двойной приоритет на insurance-капитал. Риск-нота: смена CFO ровно в момент таргета FRE margin 47% и fundraise >$50B.\n\n**Инсайдеры/держатели (Form 4 — проверено):** 2026 YTD нет open-market sales операционного менеджмента; всё рутинный вестинг (Code F) и director grants (Code A); Davis Kelvin — unit-acquisition (Code J), не продажа. Нейтрально.\n\n**Сигналы hold / add / trim для holdco-позиции TPG Inc (НЕ цена акции):**\n- **Базовый: HOLD / ADD на подтверждениях.**\n- **ADD-триггеры:** (1) Q2 FRE margin ≥46% и накопленный fundraise ≥$25B к >$50B; (2) финальные closes TPG X / Healthcare Partners III выше предыдущих vintages (TPG IX был $12.0B committed); (3) T-POP AUM >$3B; (4) разворот квартальной депрециации Capital/Growth в плюс.\n- **TRIM / осторожность:** (1) nonaccruals TCAP выше ~2% или скачок redemptions выше ~2–3%; (2) рост резервов/просрочек TRTX (CRE-стресс); (3) downgrade ниже A3/BBB+/A- при net debt $2.3B; (4) сбой guidance в первом квартале нового CFO; (5) реклассификация большей части TPG VIII в «material AI risk»; (6) появление Code S у операционного менеджмента.\n- **Operational маяки:** FRE margin <43% два квартала подряд = разворот тезиса об operating leverage; LTM realized carry <$200M (сейчас $233M) = ослабление монетизации; Available Capital <$60B (сейчас $72.4B) без компенсирующего fundraise; продолжение снижения Real Estate management fees.",
+   "hasDeep": true
+  }
+ ],
+ "sources": [
+  {
+   "n": 1,
+   "label": "TPG Inc Form 10-K FY2025 (tpg-20251231.htm) — AUM/FAUM по сегментам, fund track record, management fees $1,800.1M, FRE $952.6M, DE $1,042.1M, after-tax DE $973.5M, net accrued $1,280M, available capital $72,436M, clawback $7.9M",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000011/tpg-20251231.htm",
+   "sourceType": "SEC 10-K",
+   "date": "2026-02-17"
+  },
+  {
+   "n": 2,
+   "label": "TPG Inc Form 10-Q Q1 2026 (tpg-20260331.htm) — AUM $306,182M, FAUM $175,372M, сегменты (Credit $95,196M, Capital $89,732M и др.)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000033/tpg-20260331.htm",
+   "sourceType": "SEC 10-Q",
+   "date": "2026-05-01"
+  },
+  {
+   "n": 3,
+   "label": "TPG Inc Form 10-K FY2024 — исторические FRE/DE/AUM 2023–2024",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066125000014/tpg-20241231.htm",
+   "sourceType": "SEC 10-K",
+   "date": "2025-02-18"
+  },
+  {
+   "n": 4,
+   "label": "TPG Q1 2026 earnings release (8-K) — FRE/FRR/DE, management fees by platform, available capital, net accrued, баланс, дивиденд $0.59",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000029/",
+   "sourceType": "SEC 8-K exhibit",
+   "date": "2026-05-01"
+  },
+  {
+   "n": 5,
+   "label": "TPG Q1 2026 press release (8-K) — CEO quote verbatim, дивиденд $0.59 (record 11.05, выплата 26.05), AUM $306B, founding 1992",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000029/",
+   "sourceType": "SEC 8-K exhibit",
+   "date": "2026-05-01"
+  },
+  {
+   "n": 6,
+   "label": "TPG Inc Form 8-K filed 2026-06-22 (tpg-20260615.htm) — Axel André назначен CFO eff. 27.07.2026; Weingart → CEO Global Wealth Solutions",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000040/tpg-20260615.htm",
+   "sourceType": "SEC 8-K",
+   "date": "2026-06-22"
+  },
+  {
+   "n": 7,
+   "label": "TPG Inc Form 8-K filed 2026-06-05 (tpg-20260603.htm) — годовое собрание 03.06.2026, record date 08.04.2026",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000036/tpg-20260603.htm",
+   "sourceType": "SEC 8-K",
+   "date": "2026-06-05"
+  },
+  {
+   "n": 8,
+   "label": "TPG Inc EDGAR submissions index (CIK 0001880661) — список filings, формы, даты; SIC «Investment Advice», тикеры TPG/TPGXL",
+   "url": "https://data.sec.gov/submissions/CIK0001880661.json",
+   "sourceType": "SEC EDGAR",
+   "date": "2026-06-28"
+  },
+  {
+   "n": 9,
+   "label": "TPG Inc EDGAR Schedule 13 filing index (subject company) — последние 13G/13D в индексе TPG датированы 2024; 2026 13-filings под subject-CIK не найдены",
+   "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001880661&type=SC+13",
+   "sourceType": "SEC EDGAR",
+   "date": "2026-06-28"
+  },
+  {
+   "n": 10,
+   "label": "TPG Form 4 — Trujillo David (director), Code F −8,379 @ $39.42, owned after 237,297",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000094787126000442/ownership.xml",
+   "sourceType": "SEC Form 4",
+   "date": "2026-04-16"
+  },
+  {
+   "n": 11,
+   "label": "TPG Form 4 — Chu Jennifer L. (Chief Legal Officer & GC), Code F −22,079 @ $40.51, owned after 196,974",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000094787126000396/ownership.xml",
+   "sourceType": "SEC Form 4",
+   "date": "2026-04-03"
+  },
+  {
+   "n": 12,
+   "label": "TPG Form 4 — McRaven William H. (director), Code A +7,434 Class A",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000094787126000537/ownership.xml",
+   "sourceType": "SEC Form 4",
+   "date": "2026-05-14"
+  },
+  {
+   "n": 13,
+   "label": "TPG Form 4 — Davis Kelvin L. (director), Code J +41,661 TPG Partner Holdings units @ $42.48, owned after 11,602,827",
+   "url": "https://www.sec.gov/Archives/edgar/data/1880661/000094787126000638/ownership.xml",
+   "sourceType": "SEC Form 4",
+   "date": "2026-06-18"
+  },
+  {
+   "n": 14,
+   "label": "TPG Q1 2026 earnings call transcript (Motley Fool) — verbatim quotes (Winkelried, Coulter, Sisitsky), pending fundraises, deployment >$14B, realizations ~$9B, guidance >$50B/2026, FRE margin 47%, Twin Brook/TCAP метрики, Curium $3.8B CV",
+   "url": "https://www.fool.com/earnings/call-transcripts/2026/05/01/tpg-tpg-q1-2026-earnings-call-transcript/",
+   "sourceType": "Earnings call transcript (валидация)",
+   "date": "2026-05-01"
+  },
+  {
+   "n": 15,
+   "label": "Blackstone press release — Hologic acquisition до $79/акц (Blackstone + TPG), до $18.3B",
+   "url": "https://www.blackstone.com/news/press/hologic-to-be-acquired-by-blackstone-and-tpg-for-up-to-79-per-share/",
+   "sourceType": "Counterparty IR (валидация)",
+   "date": "2025-10-21"
+  },
+  {
+   "n": 16,
+   "label": "MedTech Dive — закрытие Hologic 07.04.2026",
+   "url": "https://www.medtechdive.com/news/hologic-acquired-18b-blackstone-tpg/803361/",
+   "sourceType": "Отраслевое подтверждение даты",
+   "date": "2026-04-07"
+  },
+  {
+   "n": 17,
+   "label": "AMG IR — приобретение Peppertree Capital ($7.7–7.9B AUM, digital infrastructure), cash до $242M + equity до $418M, закрыто 02.07.2025",
+   "url": "https://ir.amg.com/news-releases/news-release-details/peppertree-capital-management-be-acquired-tpg",
+   "sourceType": "Counterparty IR (валидация)",
+   "date": "2025-07-02"
+  },
+  {
+   "n": 18,
+   "label": "Mingtiandi / CoStar — TPG приобретает Angelo Gordon за ~$2.7B (cash + до 62.5M units + earnout до $400M), закрыто 02.11.2023",
+   "url": "https://www.mingtiandi.com/real-estate/finance/tpg-buying-angelo-gordon-for-2-7b/",
+   "sourceType": "Отраслевое подтверждение (валидация)",
+   "date": "2023-05-15"
+  },
+  {
+   "n": 19,
+   "label": "stockanalysis.com — TPG valuation ratios (P/Book 5.6x vs 8.25x FY2025; market cap $15.3B; div yield ~5.2%; цена ~$40, 52-нед. $36.95–$70.38)",
+   "url": "https://stockanalysis.com/stocks/tpg/financials/ratios/",
+   "sourceType": "Агрегатор (валидация)",
+   "date": "2026-06-26"
+  },
+  {
+   "n": 20,
+   "label": "Carlyle / Ares Q1 2026 8-K — валидация peer-метрик (CG FRE LTM ~$1.2B, div ~3.0%; ARES AUM ~$572B, div ~4.3%)",
+   "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=carlyle",
+   "sourceType": "SEC 8-K (peer, валидация)",
+   "date": "2026-05-01"
+  }
+ ],
+ "gaps": [
+  "Schedule 13G/13D 2026 — заявленный VOICE Millennium Management 13G (17.06.2026, 5.1%) и 13D/A (18.05.2026, TPG GP A) в subject-company индексе 13-filings TPG НЕ найдены (последние записи — 2024); через subject-CIK не подтверждаются.",
+  "Q2 2026 earnings/10-Q дата (~05.08.2026) — projected агрегаторами, компанией построчно НЕ подтверждена.",
+  "Сегментные management fees FY2025 точными $-строками (Capital $500.7M и др.) НЕ найдены в 10-K; подтверждены только агрегат $1,800.1M и LTM by-platform из earnings release.",
+  "Hologic — точная доля TPG-фондов и конкретный vehicle (TPG IX vs X vs co-invest) и чек TPG отдельно от Blackstone в filings TPG не раскрыты; Hologic не упомянута в тексте 10-K (post-period). Подтверждена через counterparty IR + trade press.",
+  "Net accrued по винтажам — FACTS s07 дал 2020 & Prior $728M / 2022 $257M; фактические по 10-K — $809M / $280M (использованы проверенные 10-K цифры).",
+  "OneOncology → Syncora — сумма выхода НЕ раскрыта; Intersect → Google — сумма НЕ раскрыта.",
+  "Прямые позиции Anthropic / OpenAI / SpaceX (доллары, % фонда) НЕ раскрыты; только факт нахождения в Tech Adjacency / T-POP.",
+  "Managed vehicles TRTX / MITT / TCAP BDC 10-Q напрямую не открывались — nonaccruals (~1%), TCAP redemptions (1.3%), Twin Brook LTV 42% взяты из earnings call (слова менеджмента), не из самих filings.",
+  "Curium ~$7B / $3.8B CV — структурировал CapVest; валидация только secondary-источниками (Bloomberg/PitchBook), не filing TPG.",
+  "Цена/доходность/market cap — зависят от внутридневной цены (~$40 на 26.06.2026, агрегатор, не биржевой первичный фид); div yield 5.2–5.6%.",
+  "Peer-метрики (Carlyle/Ares/Blackstone/KKR) — числовое сопоставление не из первички TPG; counterparty 8-K / агрегатор как валидация.",
+  "TPG Inc economic ownership ~41% — выведено из share counts (Common Units 223.85M vs Class A 160.46M), не приведено компанией явной строкой.",
+  "OpenInsider недоступен из sandbox — insider-вывод построен напрямую на Form 4 XML из EDGAR."
+ ],
+ "verification": "Проведён усиленный повторный проход с adversarial-перепроверкой через SEC EDGAR (curl с User-Agent). Проверено построчно из первички: AUM $306,182M и сегменты Q1'26 (Credit $95,196M, Capital $89,732M, Growth $32,366M, Impact $31,551M, RE $39,246M, Market Solutions $18,091M), FAUM $175,372M (10-Q); полный fund track record IRR/MoM по всем vintages (Capital-серия агрегат Net 15% / 1.6x; TPG IX Net 24% / 1.3x; TPG VII Net 19% / 2.0x; TPG V Net 5%; Rise Climate I Net 15%, Total Value $9,416M; MMDL агрегат Net 10%, Total Value $14,792M; THP II Net 29%; LSI Net −25%) (10-K); management fees $1,800,061K, FRR $2,109,255K, FRE $952,572K, DE $1,042,109K, after-tax DE $973,489K (10-K); net accrued $1,280M с разбивкой по сегментам и винтажам (10-K); available capital $72,436M с разбивкой (10-K); тикеры/CIK/SIC (EDGAR submissions); четыре Form 4 напрямую из XML (Trujillo, Chu, McRaven, Davis Kelvin — нет open-market sales). Подтверждено из вторичных/counterparty с пометкой: Hologic (Blackstone IR + MedTech Dive), Peppertree (AMG IR), Angelo Gordon (trade press), valuation/цена (stockanalysis), peer-числа (counterparty 8-K). Уровень доверия — высокий по Tier 1. Слабые места: 2026 13G/13D под subject-CIK не подтверждены (Millennium); Q2 дата projected; managed-vehicle метрики и отдельные суммы выходов из транскрипта не из самих filings; сегментные management fees точными строками не сверены. Число источников: 20."
 }
