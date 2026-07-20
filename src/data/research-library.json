@@ -2,13 +2,13 @@
   {
     "id": "data-centers-ai",
     "title": "Data Centers for AI",
-    "subtitle": "The picks-and-shovels alpha behind the AI buildout — supply-side chokepoints with 24–48 month near-vertical supply curves",
+    "subtitle": "Как устроена цепочка поставок ИИ-инфраструктуры — от сырья до готового ИИ: 31 подсектор, зависимости между ними и ключевые компании каждого.",
     "sector": "Infrastructure",
     "dateCompleted": "2026-05-18",
-    "companyCount": 41,
-    "sectionCount": 11,
+    "companyCount": 116,
+    "sectionCount": 31,
     "accent": "#22D3EE",
-    "summary": "AI-capex alpha 2026–2030 won't come from Nvidia or hyperscalers — it will come from the physical supply-side bottlenecks behind them: HV transformers, GOES electrical steel, hybrid-bonding tools, on-site power, MEP labor, and fiber."
+    "summary": "Интерактивная карта цепочки поставок ИИ: 10 уровней от сырьевых материалов до внедрения ИИ в бизнес. По каждому подсектору — простое объяснение, роль в общей цепочке и заметные компании как примеры."
   },
   {
     "id": "holdings",

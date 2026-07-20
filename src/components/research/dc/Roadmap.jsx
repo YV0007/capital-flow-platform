@@ -416,7 +416,7 @@ export default function Roadmap() {
           fontSize: 13.5, color: '#a1a1aa', lineHeight: 1.65,
           maxWidth: 640, margin: '0 auto',
         }}>
-          {Object.keys(NODES).length} {plural(Object.keys(NODES).length, 'звено', 'звена', 'звеньев')} ·{' '}
+          {Object.keys(NODES).length} {plural(Object.keys(NODES).length, 'подсектор', 'подсектора', 'подсекторов')} ·{' '}
           {EDGES_RAW.length} {plural(EDGES_RAW.length, 'связь', 'связи', 'связей')} ·{' '}
           {totalCompanies} {plural(totalCompanies, 'компания', 'компании', 'компаний')} · нажмите на узел, чтобы открыть карточку.
         </div>
