@@ -859,6 +859,12 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
       {/* Chain neighbours */}
       {(upstream.length > 0 || downstream.length > 0) && (
         <div style={{ padding: '4px 24px 18px' }}>
+          <div style={{
+            fontSize: 10.5, color: '#71717a', fontStyle: 'italic',
+            lineHeight: 1.5, marginBottom: 12,
+          }}>
+            Нажмите на блок ниже, чтобы перейти к его карточке.
+          </div>
           {upstream.length > 0 && (
             <div style={{ marginBottom: 14 }}>
               <div style={{
