@@ -1,0 +1,54 @@
+{
+ "id": "softbank",
+ "asOf": "12.05.2026",
+ "unit": "¥ млрд",
+ "quote": {
+  "ticker": "SFTBY · 9984.T",
+  "exchange": "OTC / Tokyo",
+  "price": "3,555",
+  "currency": "¥ (Tokyo, post-split)",
+  "change": null,
+  "marketCap": "≈¥20.3T"
+ },
+ "returns": [],
+ "years": ["FY2024", "FY2025"],
+ "rows": [
+  { "label": "Sales / Revenue", "fmt": "", "v": [7243.8, 7798.7] },
+  { "label": "Gain / loss on investments", "fmt": "", "v": [3701.1, 7286.5] },
+  { "label": "Income before income tax", "fmt": "", "v": [1704.7, 6134.9] },
+  { "label": "Net Income, GAAP", "fmt": "", "v": [1153.3, 5002.3] },
+  { "label": "NAV (holdco)", "fmt": "", "v": [25700, 40060] },
+  { "label": "Net debt", "fmt": "", "v": [null, 8210] },
+  { "label": "Cash position", "fmt": "", "v": [3400, 3500] },
+  { "label": "LTV", "fmt": "pct", "v": [18.0, 17.0] }
+ ],
+ "description": {
+  "ceo": "Масаёси Сон",
+  "employees": "—",
+  "sector": "Investment Holding",
+  "industry": "Tech / Vision Fund (Arm, OpenAI)",
+  "ipo": "—",
+  "website": "group.softbank",
+  "address": "1-7-1 Kaigan, Tokyo, Japan",
+  "cik": "US83404D1090 (ADR)",
+  "peers": ["Berkshire Hathaway", "Prosus / Naspers", "Brookfield"]
+ },
+ "capitalStructure": {
+  "periods": ["31.03.2025", "31.03.2026"],
+  "rows": [
+   { "label": "NAV", "v": [25700, 40060], "bold": true },
+   { "label": "Cash position", "v": [3400, 3500] },
+   { "label": "Net debt", "v": [null, 8210] },
+   { "label": "Equity value of holdings", "v": [null, 48260] }
+  ]
+ },
+ "growthRates": {
+  "cols": ["1 год"],
+  "rows": [
+   { "label": "Выручка", "v": [7.7] },
+   { "label": "Net income", "v": [333.7] },
+   { "label": "NAV", "v": [55.9] }
+  ]
+ },
+ "note": "Источник: SoftBank Group FY2025 (год к 31.03.2026), консолидированная P&L (драйвер — Arm/SBKK); holdco-метрики (NAV/LTV/долг) — SOTP-страница [3], Bloomberg [17]. Все суммы в ¥ млрд, если не указано. SoftBank Group — холдинг: ключевая метрика NAV и дисконт к NAV (~49%), а не операционный P&L. Полная многолетняя roic-таблица (per-share, оборотный капитал, кварталы, доходность vs S&P) не заполнена — нужен экспорт roic по SFTBY (US ADR). Данные по 9434.T (SoftBank Corp) — это отдельная телеком-дочка, здесь НЕ использованы."
+}
