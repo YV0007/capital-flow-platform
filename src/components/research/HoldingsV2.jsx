@@ -427,7 +427,7 @@ function NewsBlock({ items }) {
 //  L2 deep view (in-place takeover)
 // ═══════════════════════════════════════════════════════════════════════════
 
-function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide }) {
+function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide, onOpenCompany, focus }) {
   const secs = data.sections;
   const sec = secs[idx];
   const col = tierColor(sec.tier);
@@ -455,10 +455,10 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide }) {
       {sec.sub && <p style={{ fontSize: 14, color: C.inkSoft, fontStyle: 'italic', margin: '0 0 22px' }}>{sec.sub}</p>}
       <div style={{ height: 1, background: C.line, margin: '0 0 22px' }} />
 
-      {sec.id === 'portfolio' && portfolio ? <PortfolioDeep data={portfolio} />
+      {sec.id === 'portfolio' && portfolio ? <PortfolioDeep data={portfolio} focus={focus} />
         : sec.id === 'financial' && financial ? <FinancialDeep data={financial} />
         : sec.id === 'changes' && data.changesDeep ? <ChangesDeep data={data.changesDeep} />
-        : sec.deep && sec.deep.length ? <SectionDeep blocks={sec.deep} />
+        : sec.deep && sec.deep.length ? <SectionDeep blocks={sec.deep} onOpenCompany={onOpenCompany} />
         : <Md md={sec.bodyMarkdown} />}
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginTop: 40, paddingTop: 20, borderTop: `1px solid ${C.line}` }}>
@@ -641,20 +641,30 @@ export default function HoldingsV2({ onBack }) {
   const [deepIdx, setDeepIdx] = useState(null); // null = profile (L0), number = L2 section index
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [focusCompany, setFocusCompany] = useState(null); // set when a company link jumps to Portfolio
   const refs = useRef({});
   const data = V2[cid];
 
-  const switchCompany = (id) => { if (!V2[id]) return; setCid(id); setDeepIdx(null); setSwitcherOpen(false); setMenuOpen(false); window.scrollTo({ top: 0 }); };
+  const switchCompany = (id) => { if (!V2[id]) return; setCid(id); setDeepIdx(null); setFocusCompany(null); setSwitcherOpen(false); setMenuOpen(false); window.scrollTo({ top: 0 }); };
+  // jump from any section to the Portfolio section and open a specific company
+  const openCompany = (name) => {
+    const pi = (data.sections || []).findIndex((s) => s.id === 'portfolio');
+    if (pi < 0) return;
+    setFocusCompany(name);
+    setDeepIdx(pi);
+    setMenuOpen(false);
+    window.scrollTo({ top: 0 });
+  };
   const nameOf = (id) => V2[id]?.name || HOLD[id.toUpperCase()]?.name || id;
 
-  // Bloomberg IA (Brookfield only for now): home = header + snapshot + moves +
-  // overview; sections live in a top-bar dropdown, each opening its own page.
-  // isBloomberg → rich overview landing (Brookfield). showNav → enhanced header
-  // with category-tab dropdowns, rolled out to every holding; non-Bloomberg
-  // holdings keep their bento-grid landing body.
-  const isBloomberg = cid === 'brookfield';
+  // Bloomberg IA: home = header + snapshot + moves + overview; sections live in a
+  // top-bar dropdown, each opening its own page. Data-driven — any holding that has
+  // authored the rich `overview` block gets the Bloomberg landing; the rest keep the
+  // bento-grid body. (Brookfield was first; roll-out flips automatically per holding.)
+  // showNav → enhanced header with category-tab dropdowns, on every holding.
+  const isBloomberg = !!(data && data.overview);
   const showNav = !!(data && data.sections && data.sections.length);
-  const openSection = (i) => { setDeepIdx(i); setMenuOpen(false); window.scrollTo({ top: 0 }); };
+  const openSection = (i) => { setDeepIdx(i); setFocusCompany(null); setMenuOpen(false); window.scrollTo({ top: 0 }); };
 
   if (!data) return <div style={{ padding: 64, color: C.inkSoft }}>Нет мигрированных холдингов.</div>;
 
@@ -793,7 +803,7 @@ export default function HoldingsV2({ onBack }) {
 
       {/* ── Body ── */}
       {deepIdx != null ? (
-        <DeepView data={data} idx={deepIdx} setIdx={setDeepIdx} onBack={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} portfolio={PORT[cid]} financial={FIN[cid]} wide={isBloomberg} />
+        <DeepView data={data} idx={deepIdx} setIdx={setDeepIdx} onBack={() => { setDeepIdx(null); window.scrollTo({ top: 0 }); }} portfolio={PORT[cid]} financial={FIN[cid]} wide={isBloomberg} onOpenCompany={openCompany} focus={focusCompany} />
       ) : (
         <main className="rise" key={cid} style={{ maxWidth: 1240, margin: '0 auto', padding: '32px 40px 80px' }}>
           {/* Header — clean, no KPI strip (overview handles it) */}

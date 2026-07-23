@@ -164,7 +164,7 @@ export default function FinancialDeep({ data }) {
 
       {/* ── Multi-year financials table ── */}
       <div style={{ marginBottom: 28 }}>
-        <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 10 }}>Финансовые показатели по годам <span style={{ color: C.inkFaint, textTransform: 'none', letterSpacing: 0 }}>· $млн, если не на акцию / %</span></div>
+        <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 10 }}>Финансовые показатели по годам <span style={{ color: C.inkFaint, textTransform: 'none', letterSpacing: 0 }}>· {data.unit || '$млн'}, если не на акцию / %</span></div>
         <div style={{ overflowX: 'auto', border: `1px solid ${C.line}`, borderRadius: 10 }}>
           <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 1000 }}>
             <thead><tr>
@@ -204,7 +204,7 @@ export default function FinancialDeep({ data }) {
           </MiniCard>
         )}
         {data.capitalStructure && (
-          <MiniCard title="Структура капитала" note="$млн">
+          <MiniCard title="Структура капитала" note={data.unit || '$млн'}>
             <PeriodTable periods={data.capitalStructure.periods} rows={data.capitalStructure.rows} />
           </MiniCard>
         )}
@@ -213,7 +213,7 @@ export default function FinancialDeep({ data }) {
       {/* ── Working capital + Growth rates ── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 18, marginBottom: 18 }}>
         {data.workingCapital && (
-          <MiniCard title="Оборотный капитал" note="$млн">
+          <MiniCard title="Оборотный капитал" note={data.unit || '$млн'}>
             <PeriodTable periods={data.workingCapital.periods} rows={data.workingCapital.groups.flatMap((g) => [
               { label: g.label, v: g.total, bold: true },
               ...g.items.map((it) => ({ label: it.label, v: it.v, indent: true })),
@@ -240,7 +240,7 @@ export default function FinancialDeep({ data }) {
 
       {/* ── Quarterly revenue ── */}
       {data.quarterlyRevenue && (
-        <MiniCard title="Выручка по кварталам" note="$млн">
+        <MiniCard title="Выручка по кварталам" note={data.unit || '$млн'}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5 }}>
             <thead><tr>
               {['Год', 'Q1', 'Q2', 'Q3', 'Q4', 'FY'].map((h, i) => <th key={i} style={{ textAlign: i ? 'right' : 'left', padding: '0 0 8px', fontSize: 10.5, color: C.inkFaint, fontWeight: 500 }}>{h}</th>)}
