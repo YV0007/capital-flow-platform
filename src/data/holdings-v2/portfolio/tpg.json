@@ -1,244 +1,725 @@
 {
-  "id": "tpg",
-  "asOf": "28.06.2026",
-  "summary": "TPG Inc — публичный alternative asset manager ($306.2B AUM на 31.03.2026), чей материальный актив — доля в TPG Operating Group; «портфель» здесь — это шесть инвестплатформ (Capital, Credit, Real Estate, Growth, Impact/Rise, Market Solutions), а деньги реально текут в management fees ($475M Q1'26) и будущий carry. Решающее наблюдение по структуре: деньги концентрируются в Credit (бывш. Angelo Gordon, $95.2B / 31% AUM — крупнейший сегмент после M&A 2023) и Capital ($89.7B), а самый быстрорастущий по теме AI — Rise Climate (power/grid-инфраструктура под data-центры: Sabre Industries, IPX Power). Ключевая честная оговорка: в SEC-раскрытии TPG НЕ публикует поимённо долю/стоимость отдельных портфельных компаний — твёрдый количественный спайн здесь это AUM по платформам и fund-level track record; имена компаний идут из IR-портфолио и пресс-релизов сделок, а суммы сделок — это total EV (часто Blackstone+TPG совместно), не отдельный чек TPG.",
-  "allocation": {
-    "byPlatform": [
-      { "name": "Credit (вкл. Angelo Gordon)", "value": "$95.2 млрд", "pct": 31, "assetCount": null, "note": "Крупнейший сегмент после покупки Angelo Gordon (2023); direct lending Twin Brook 310+ компаний, ABF, structured credit. 10-Q Q1'26: $95,196M, +30% г/г" },
-      { "name": "Capital (private equity)", "value": "$89.7 млрд", "pct": 29, "assetCount": null, "note": "Флагманская PE-серия TPG (фонды III–X), healthcare (THP), Asia. 10-Q Q1'26: $89,732M" },
-      { "name": "Real Estate", "value": "$39.2 млрд", "pct": 13, "assetCount": null, "note": "Equity RE + кредитный REIT TRTX + ипотечный MITT (Angelo Gordon). 10-Q Q1'26: $39,246M" },
-      { "name": "Growth", "value": "$32.4 млрд", "pct": 11, "assetCount": null, "note": "Growth equity, Tech Adjacencies (прямые позиции в late-stage tech), Life Sciences Innovations. 10-Q Q1'26: $32,366M" },
-      { "name": "Impact (Rise / Rise Climate)", "value": "$31.6 млрд", "pct": 10, "assetCount": null, "note": "Rise Funds (broad impact) + Rise Climate (energy transition / power for AI). 10-Q Q1'26: $31,551M" },
-      { "name": "Market Solutions", "value": "$18.1 млрд", "pct": 6, "assetCount": null, "note": "Secondaries (GP Solutions, NewQuest) + digital infrastructure (Peppertree, towers/fiber). 10-Q Q1'26: $18,091M, ×2.4 г/г от консолидации Peppertree" }
-    ],
-    "bySector": [
-      { "name": "Private credit / direct lending / ABF", "pct": 31, "note": "Credit-платформа — крупнейший пул; Twin Brook direct lending, asset-based finance, structured credit" },
-      { "name": "Private equity (broad)", "pct": 29, "note": "Capital-серия: enterprise, consumer, media/entertainment, industrials" },
-      { "name": "Healthcare / life sciences", "pct": 10, "note": "THP (Healthcare Partners), Surescripts, Hologic, Curium, Allogene, Adare — сквозь Capital/Growth/Impact" },
-      { "name": "Real estate (equity + debt)", "pct": 13, "note": "Equity RE, CRE-кредит (TRTX $4.3B loan book), ипотека (MITT)" },
-      { "name": "Energy transition / power / grid", "pct": 7, "note": "Rise Climate: Sabre Industries (grid + data-center инфраструктура), IPX Power, Altus Power, A-Gas" },
-      { "name": "Digital infrastructure (towers/fiber/data)", "pct": 6, "note": "Market Solutions / Peppertree: вышки, спектр, fiber — под рост трафика данных" },
-      { "name": "Technology / late-stage (вкл. AI)", "pct": 4, "note": "Growth Tech Adjacencies + T-POP: прямые позиции в Anthropic, OpenAI, SpaceX, Airbnb (исторически)" }
-    ],
-    "byGeography": [
-      { "region": "Северная Америка", "pct": 70 },
-      { "region": "Европа", "pct": 13 },
-      { "region": "Азия (вкл. NewQuest, TPG Asia)", "pct": 12 },
-      { "region": "Прочее / Global South (Rise)", "pct": 5 }
-    ],
-    "byTheme": [
-      { "theme": "AI / data-центры / power-for-AI", "value": "не раскрыто отдельной строкой", "note": "Концентрируется в Rise Climate (Sabre Industries — grid/data-center инфраструктура, сделка ~$3.5B EV; IPX Power — IPP под co-located power для data-центров) + прямые позиции Anthropic/OpenAI/SpaceX в Growth Tech Adjacencies и T-POP (доллары/доли НЕ раскрыты) + Learfield (AI-data платформа, сделка анонс 14.04.2026). Exit-премия AI-темы: Intersect Power → Google ($4.75B cash + долг, март 2026). Точный $-объём AI-темы компанией не выделен." }
-    ]
-  },
-  "platforms": [
-    {
-      "id": "credit",
-      "name": "Credit (вкл. Angelo Gordon)",
-      "role": "Крупнейший по AUM сегмент, созданный покупкой Angelo Gordon (закрыта 02.11.2023, ~$2.7B). Direct lending (Twin Brook), asset-based finance, structured/performing credit. Главный драйвер роста AUM с 2023 и самая стабильная fee-база.",
-      "stats": [
-        { "label": "AUM", "value": "$95,196M (Q1'26)" },
-        { "label": "Рост г/г", "value": "+30%" },
-        { "label": "Management fees LTM", "value": "$356M" },
-        { "label": "Заёмщиков Twin Brook", "value": "310+ компаний" }
-      ],
-      "sectors": [
-        {
-          "name": "Direct lending (Twin Brook / middle-market)",
-          "shownOf": { "shown": 1, "total": null, "note": "TPG раскрывает агрегатные метрики, не поимённый список 310+ заёмщиков" },
-          "assets": [
-            { "name": "Twin Brook direct lending book (TPG Direct Lending / MMDL)", "what": "Портфель middle-market сениор-кредитов: 310+ компаний, средний LTV ~42% at origination, interest coverage >2x, ~50% сделок — add-on", "stake": "lender (debt)", "value": "Total Value $14,792M (агрегат MMDL, 10-K)", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "TPG 10-K FY2025 fund performance + earnings call Q1'26" },
-            { "name": "TPG Twin Brook Capital Income Fund (TCAP, non-traded BDC)", "what": "Управляемый non-traded BDC — источник fee-дохода; nonaccruals «just above 1%», redemptions ~1.3% (слова менеджмента)", "stake": "manager", "value": "~$4.7B AUM (менеджмент)", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "TPG earnings call Q1'26 (метрики vehicle, не из BDC 10-Q)" }
-          ]
-        },
-        {
-          "name": "Asset-based finance (ABF) / insurance-linked",
-          "shownOf": { "shown": 2, "total": null, "note": "Раскрыты якорные мандаты, не полный список активов" },
-          "assets": [
-            { "name": "Jackson Financial ABF-партнёрство", "what": "$2B первоначальных commitments в asset-based finance; TPG также вложил $500M в обыкновенные акции Jackson (профинансировано выпуском Senior Notes $500M)", "stake": "manager + $500M equity", "value": "$2B initial commitments + $500M equity", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "TPG earnings release/call Q1'26" },
-            { "name": "AG Asset Based Credit (ABC) Funds", "what": "ABF-стратегия из платформы Angelo Gordon; ABC Fund I (2021) Net IRR 13% / 1.3x", "stake": "manager", "value": "Total Value не выделен отдельно", "valueDisclosed": false, "geography": "США / Европа", "status": "operating", "ai": false, "source": "TPG 10-K FY2025 fund performance table" }
-          ]
-        },
-        {
-          "name": "Performing / structured credit (Angelo Gordon legacy)",
-          "shownOf": { "shown": 2, "total": null, "note": "Только агрегатные фонды; underlying-позиции не раскрыты" },
-          "assets": [
-            { "name": "TPG Credit Solutions (агрегат)", "what": "Opportunistic / dislocation credit; агрегат Net IRR 13% / 1.3x; Credit Solutions II (2021) Net 12% / 1.3x", "stake": "manager", "value": "не раскрыто поимённо", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "TPG 10-K FY2025 fund performance table" },
-            { "name": "AG structured credit / CLO-платформа", "what": "Унаследованная от Angelo Gordon structured credit / securitized-стратегия", "stake": "manager", "value": "не раскрыто", "valueDisclosed": false, "geography": "США / Европа", "status": "operating", "ai": false, "source": "TPG 10-K FY2025 (Credit segment description)" }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "capital",
-      "name": "Capital (private equity)",
-      "role": "Флагманская PE-франшиза TPG (фонды III–X), плюс healthcare (THP) и Asia. Источник крупнейшего нереализованного carry (net accrued $581M из $1,280M). Здесь сидят самые узнаваемые портфельные компании.",
-      "stats": [
-        { "label": "AUM", "value": "$89,732M (Q1'26)" },
-        { "label": "Management fees LTM", "value": "$525M" },
-        { "label": "Net accrued performance", "value": "$581M (крупнейший сегмент)" },
-        { "label": "Capital-серия Net IRR (агрегат)", "value": "15% / 1.6x" }
-      ],
-      "sectors": [
-        {
-          "name": "Healthcare / life sciences",
-          "shownOf": { "shown": 6, "total": null, "note": "Наиболее раскрытый сектор по именам; полный список портфеля не публикуется в SEC-filings" },
-          "assets": [
-            { "name": "Hologic", "what": "Лидер women's health (диагностика, breast health); take-private Blackstone + TPG (+ ADIA, GIC миноритарии), $76 cash + CVR до $3 = до $79/акц, total до $18.3B EV", "stake": "co-control с Blackstone (доля TPG не раскрыта)", "value": "до $18.3B EV (совместно, не чек TPG)", "valueDisclosed": false, "geography": "США", "status": "closed 07.04.2026", "ai": false, "source": "Hologic/Blackstone press release; закрытие подтверждено 07.04.2026" },
-            { "name": "Surescripts", "what": "Health-tech сеть электронных рецептов / обмена клиническими данными; TPG — мажоритарная доля", "stake": "majority", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "Healthcare Dive; TPG IR" },
-            { "name": "Curium Pharma", "what": "Радиофармацевтика; $3.8B continuation vehicle (Q1'26) — TPG как secondary через GP Solutions + миноритарий через Life Sciences; CV структурировал CapVest", "stake": "minority / secondary", "value": "Curium ~$7B (secondary-валидация Bloomberg/PitchBook)", "valueDisclosed": false, "geography": "Европа / США", "status": "operating (CV)", "ai": false, "source": "TPG earnings call Q1'26; Bloomberg/PitchBook (валидация)" },
-            { "name": "Allogene Therapeutics", "what": "Allogeneic CAR-T биотех", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "Adare Pharmaceuticals", "what": "CDMO / спец-фарма (oral drug delivery)", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США / Европа", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "OneOncology (вышел)", "what": "Онкологическая платформа; реализация → Syncora (FY2025), сумма не раскрыта", "stake": "exited", "value": "сумма выхода не раскрыта", "valueDisclosed": false, "geography": "США", "status": "exited", "ai": false, "source": "TPG earnings release FY2025 (realizations)" }
-          ]
-        },
-        {
-          "name": "Media / entertainment / sports",
-          "shownOf": { "shown": 6, "total": null, "note": "Имена из IR-портфолио и пресс-релизов сделок" },
-          "assets": [
-            { "name": "DIRECTV", "what": "Спутниковое/стриминговое ТВ — крупная медиа-позиция", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "Learfield", "what": "Лидер college sports media & technology — монетизация IP 1,200+ институтов, AI-enabled data платформа; сделка анонс 14.04.2026, закрытие ~Q3'26", "stake": "acquiring (majority)", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "announced 14.04.2026", "ai": true, "source": "Learfield/TPG press release 14.04.2026" },
-            { "name": "Creative Artists Agency (CAA)", "what": "Талант-агентство (спорт/развлечения)", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "Entertainment Partners", "what": "Payroll/production-management для индустрии развлечений", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "Fandom", "what": "Платформа фан-контента / entertainment data", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "Viking Cruises (вышел)", "what": "Круизный оператор; реализация в FY2025", "stake": "exited", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "exited", "ai": false, "source": "TPG earnings release FY2025 (realizations)" }
-          ]
-        },
-        {
-          "name": "Enterprise / consumer / прочее",
-          "shownOf": { "shown": 4, "total": null, "note": "Иллюстративная выборка из IR-портфолио; полный список не раскрыт в filings" },
-          "assets": [
-            { "name": "Troon", "what": "Управление гольф-клубами / leisure", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "AmSpec", "what": "Тестирование/инспекция/сертификация товаров", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США / глобально", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "Aareon", "what": "Property-management ПО (Европа)", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Европа", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "A&O Hostels", "what": "Сеть хостелов (Европа)", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Европа", "status": "operating", "ai": false, "source": "TPG IR portfolio page" }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "real-estate",
-      "name": "Real Estate",
-      "role": "Equity-недвижимость + два управляемых публичных vehicle: TRTX (CRE-кредит) и MITT (ипотека, из Angelo Gordon). Единственный сегмент со снижением management fees кв/кв ($95M→$83M) — watch на CRE-стресс.",
-      "stats": [
-        { "label": "AUM", "value": "$39,246M (Q1'26)" },
-        { "label": "Management fees LTM", "value": "$339M" },
-        { "label": "Net accrued performance", "value": "$100M" }
-      ],
-      "sectors": [
-        {
-          "name": "Управляемые публичные vehicles (CRE-кредит / ипотека)",
-          "shownOf": { "shown": 2, "total": 2, "note": "Оба публичных REIT раскрыты; underlying-займы у TRTX в их собственных 10-Q" },
-          "assets": [
-            { "name": "TPG RE Finance Trust (TRTX, NYSE)", "what": "Публичный CRE-кредитный REIT, управляемый TPG: loan book $4.3B, средний заём $86.3M, 100% performing, office <5%, ~70% портфеля — vintage после янв-2023 (multifamily/industrial)", "stake": "external manager", "value": "$4.3B loan portfolio", "valueDisclosed": true, "geography": "США", "status": "operating", "ai": false, "source": "TRTX 8-K Q1'26 (trtx-20260428 exhibit 99.1)" },
-            { "name": "AG Mortgage Investment Trust (MITT, NYSE)", "what": "Публичный ипотечный REIT под управлением Angelo Gordon (теперь TPG); residential mortgage credit", "stake": "external manager", "value": "не раскрыто (см. MITT 10-Q)", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG 10-K FY2025 (Real Estate / AG managed vehicles)" }
-          ]
-        },
-        {
-          "name": "Equity real estate / прочее",
-          "shownOf": { "shown": 2, "total": null, "note": "Раскрыты стратегии-фонды, не поимённый список объектов" },
-          "assets": [
-            { "name": "TPG Real Estate Partners (equity RE funds)", "what": "Equity-стратегия в недвижимости (logistics, residential, нишевые сектора)", "stake": "manager", "value": "не раскрыто поимённо", "valueDisclosed": false, "geography": "США / Европа / Азия", "status": "operating", "ai": false, "source": "TPG 10-K FY2025 (Real Estate segment)" },
-            { "name": "Net Lease V (fundraise) + Asia RE VI (launch июнь 2026)", "what": "Net-lease стратегия (~$1B завершение) + новый азиатский RE-фонд (запуск июнь 2026)", "stake": "manager", "value": "Net Lease V ~$1B (целевой)", "valueDisclosed": true, "geography": "США / Азия", "status": "fundraising", "ai": false, "source": "TPG earnings call Q1'26" }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "growth",
-      "name": "Growth",
-      "role": "Growth equity + Tech Adjacencies (прямые миноритарные позиции в late-stage tech, включая AI) + Life Sciences Innovations. Здесь сидят прямые AI-позиции через T-POP и Tech Adjacency fund.",
-      "stats": [
-        { "label": "AUM", "value": "$32,366M (Q1'26)" },
-        { "label": "Management fees LTM", "value": "$236M" },
-        { "label": "Net accrued performance", "value": "$211M" },
-        { "label": "Growth-серия Net IRR (агрегат)", "value": "13% / 1.6x" }
-      ],
-      "sectors": [
-        {
-          "name": "Tech Adjacencies / late-stage tech (вкл. AI)",
-          "shownOf": { "shown": 4, "total": null, "note": "Факт наличия позиций раскрыт менеджментом; доллары/доли НЕ раскрыты" },
-          "assets": [
-            { "name": "Anthropic", "what": "AI-лаборатория (foundation models) — прямая late-stage позиция через Tech Adjacencies / T-POP", "stake": "minority (не раскрыто)", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": true, "source": "TPG earnings call Q1'26 (факт позиции)" },
-            { "name": "OpenAI", "what": "AI-лаборатория (foundation models) — прямая late-stage позиция", "stake": "minority (не раскрыто)", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": true, "source": "TPG earnings call Q1'26 (факт позиции)" },
-            { "name": "SpaceX", "what": "Космос/спутниковый интернет — late-stage позиция", "stake": "minority (не раскрыто)", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG earnings call Q1'26 (факт позиции)" },
-            { "name": "Acorns / Age of Learning / Musixmatch (прочее growth)", "what": "Иллюстративные позиции growth-портфеля (fintech / edtech / music-data)", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США / Европа", "status": "operating", "ai": false, "source": "TPG IR portfolio page" }
-          ]
-        },
-        {
-          "name": "Life Sciences Innovations",
-          "shownOf": { "shown": 1, "total": null, "note": "Раскрыт фонд, не underlying-компании" },
-          "assets": [
-            { "name": "TPG Life Sciences Innovations (LSI) fund", "what": "Early-stage life-sciences стратегия; LSI (2023) ранний и пока убыточный Net IRR −25% / 0.8x", "stake": "manager", "value": "не раскрыто поимённо", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG 10-K FY2025 fund performance table" }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "impact",
-      "name": "Impact (Rise / Rise Climate)",
-      "role": "Двойная платформа: The Rise Funds (broad impact) + Rise Climate (energy transition). Rise Climate — главный канал AI-темы через power/grid-инфраструктуру под data-центры; крупнейший будущий carry в Rise Climate I (unrealized $7.9B).",
-      "stats": [
-        { "label": "AUM", "value": "$31,551M (Q1'26)" },
-        { "label": "Management fees LTM", "value": "$286M" },
-        { "label": "Rise Climate committed (агрегат)", "value": "$16,014M" },
-        { "label": "Rise Climate I Net IRR", "value": "15% / 1.3x (Total Value $9,416M)" }
-      ],
-      "sectors": [
-        {
-          "name": "Rise Climate — power / grid / data-center инфраструктура",
-          "shownOf": { "shown": 3, "total": null, "note": "Раскрыты по сделкам; полный список underlying не публикуется" },
-          "assets": [
-            { "name": "Sabre Industries", "what": "Производитель grid-инфраструктуры (опоры/подстанции) для utilities, телеком и data-центров — прямая ставка на AI-driven рост спроса на электроэнергию; куплен у Blackstone Energy Transition Partners", "stake": "majority", "value": "~$3.5B EV (сделка)", "valueDisclosed": true, "geography": "США", "status": "closing Q2'26", "ai": true, "source": "Blackstone/TPG press release; Bloomberg (~$3.5B)" },
-            { "name": "IPX Power", "what": "Новый IPP (independent power producer) на базе grid-tied clean-energy активов Intersect; TPG Rise Climate — мажоритарный инвестор; co-located power под data-центры", "stake": "majority", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating (spin-off март 2026)", "ai": true, "source": "Alternatives Watch (март 2026); spin-off при закрытии Intersect→Google" },
-            { "name": "Intersect Power (вышел)", "what": "Renewable power + storage девелопер; digital-power-бизнес продан Google за $4.75B cash + assumption долга (закрыто март 2026) — exit-премия AI-темы; grid-tied активы выделены в IPX Power", "stake": "exited (digital power → Google)", "value": "$4.75B cash + долг (digital power часть)", "valueDisclosed": true, "geography": "США", "status": "partially exited март 2026", "ai": true, "source": "Alternatives Watch; Google press" }
-          ]
-        },
-        {
-          "name": "Rise Climate — energy transition / decarbonization (прочее)",
-          "shownOf": { "shown": 2, "total": null, "note": "Иллюстративные позиции из IR-портфолио" },
-          "assets": [
-            { "name": "Altus Power", "what": "Коммерческая солнечная генерация / distributed power", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "США", "status": "operating", "ai": false, "source": "TPG IR portfolio page" },
-            { "name": "A-Gas", "what": "Управление жизненным циклом хладагентов / decarbonization", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Глобально", "status": "operating", "ai": false, "source": "TPG IR portfolio page" }
-          ]
-        },
-        {
-          "name": "The Rise Funds (broad impact)",
-          "shownOf": { "shown": 2, "total": null, "note": "Раскрыты фонды/иллюстративные позиции, не полный портфель" },
-          "assets": [
-            { "name": "Evercare (healthcare, EM)", "what": "Сеть здравоохранения в развивающихся рынках; Evercare (2019) Net IRR 0% / 1.0x", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Африка / Южная Азия", "status": "operating", "ai": false, "source": "TPG 10-K FY2025 fund performance table" },
-            { "name": "Airtel Money (financial inclusion)", "what": "Мобильные платежи в Африке — позиция broad-impact", "stake": "не раскрыто", "value": "не раскрыто", "valueDisclosed": false, "geography": "Африка", "status": "operating", "ai": false, "source": "TPG IR portfolio page" }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "market-solutions",
-      "name": "Market Solutions",
-      "role": "Secondaries (GP Solutions — GP-led, NewQuest — Asia) + digital infrastructure (Peppertree: вышки/спектр/fiber). Самый быстрорастущий по AUM сегмент (×2.4 г/г) — эффект консолидации Peppertree с 01.07.2025.",
-      "stats": [
-        { "label": "AUM", "value": "$18,091M (Q1'26)" },
-        { "label": "Рост г/г", "value": "×2.4 (от $7,668M)" },
-        { "label": "Management fees LTM", "value": "$120M" },
-        { "label": "Peppertree AUM добавлено", "value": "$7,927M" }
-      ],
-      "sectors": [
-        {
-          "name": "Digital infrastructure (Peppertree)",
-          "shownOf": { "shown": 1, "total": null, "note": "Раскрыт мандат/тезис; поимённый список tower-компаний не публикуется" },
-          "assets": [
-            { "name": "TPG Peppertree (towers / spectrum / fiber)", "what": "Digital-infrastructure стратегия (осн. 2004, куплена TPG 01.07.2025): инвестиции в компании, владеющие вышками, спектром и fiber — ставка на рост трафика данных; >$8.0B AUM", "stake": "manager", "value": ">$8.0B AUM (стратегия)", "valueDisclosed": true, "geography": "США / глобально", "status": "operating", "ai": false, "source": "TPG IR (TPG Peppertree page); AMG IR (сделка)" }
-          ]
-        },
-        {
-          "name": "Secondaries (GP-led + Asia)",
-          "shownOf": { "shown": 2, "total": 2, "note": "Обе secondary-франшизы раскрыты по названию" },
-          "assets": [
-            { "name": "TPG GP Solutions (TGS)", "what": "GP-led secondaries (осн. 2021): покупка качественных PE-активов в партнёрстве со сторонними GP (North America / Europe); участвовал в Curium CV", "stake": "manager", "value": "не раскрыто поимённо", "valueDisclosed": false, "geography": "Северная Америка / Европа", "status": "operating", "ai": false, "source": "TPG IR (TPG GP Solutions page)" },
-            { "name": "TPG NewQuest", "what": "Ведущий азиатский secondary-менеджер (осн. 2011): liquidity solutions для владельцев PE-активов в Азии", "stake": "manager", "value": "не раскрыто поимённо", "valueDisclosed": false, "geography": "Азия", "status": "operating", "ai": false, "source": "TPG IR (TPG NewQuest page)" }
-          ]
-        }
-      ]
-    }
+ "id": "tpg",
+ "asOf": "22.07.2026",
+ "summary": "TPG Inc — публичный alternative asset manager с AUM $306.2 млрд (31.03.2026). Материальный актив холдинга — доля в TPG Operating Group; «портфель» здесь — это шесть инвестплатформ, где TPG зарабатывает комиссии за управление (FRE) и carry, а не держит компании на балансе. Крупнейшая платформа — Credit ($95.2 млрд, 31% AUM) после покупки Angelo Gordon в 2023; за ней Capital / private equity ($89.7 млрд, 29%). Все названные ниже компании — активы клиентских фондов, а не баланс TPG: на решение по TPG они влияют через будущие fees/carry, не через переоценку активов холдинга.",
+ "allocation": {
+  "bySector": [
+   {
+    "name": "Credit (вкл. Angelo Gordon)",
+    "plain": "Крупнейшая платформа TPG и главный драйвер роста AUM: прямое кредитование среднего рынка (Twin Brook, 310+ заёмщиков), asset-based finance и структурный кредит из Angelo Gordon. Самая стабильная, «fee-heavy» база — комиссии $356 млн за 12 мес, низкий нереализованный carry ($83 млн), рост +30% г/г.",
+    "pct": 31,
+    "value": "$95.2 млрд AUM"
+   },
+   {
+    "name": "Capital (private equity)",
+    "plain": "Классический контрольный private equity: крупные take-private и carve-out сделки (Hologic $18.3 млрд, Proficy $600 млн). Здесь сосредоточен крупнейший нереализованный carry TPG ($581 млн) — самый «perf-heavy» сегмент, ценность которого зависит от будущих реализаций.",
+    "pct": 29,
+    "value": "$89.7 млрд AUM"
+   },
+   {
+    "name": "Real Estate",
+    "plain": "Недвижимость и ипотечный кредит: CRE-кредитный REIT TRTX (loan book $4.3 млрд), resi-кредитный REIT MITT (из Angelo Gordon), equity-фонды. Единственный сегмент со снижением комиссий кв/кв ($95→$83 млн) — точка внимания.",
+    "pct": 13,
+    "value": "$39.2 млрд AUM"
+   },
+   {
+    "name": "Growth",
+    "plain": "Растущие компании и late-stage tech: прямые позиции в Anthropic, OpenAI, SpaceX через Tech Adjacencies / T-POP (доли не раскрыты). Net IRR серии 13% / 1.6x; carry $211 млн.",
+    "pct": 11,
+    "value": "$32.4 млрд AUM"
+   },
+   {
+    "name": "Impact (Rise / Rise Climate)",
+    "plain": "Инвестиции с двойной отдачей (социальной + финансовой): Rise Climate — ставка на электросеть и питание под AI-спрос (Pike, Sabre, Intersect→Google $4.75 млрд exit); Transition Infrastructure (Waste Eliminator, Kinetic). Нереализованный Total Value Rise Climate I ~$7.9 млрд — крупнейший будущий carry сегмента.",
+    "pct": 10,
+    "value": "$31.6 млрд AUM"
+   },
+   {
+    "name": "Market Solutions",
+    "plain": "GP-led secondaries, capital markets и цифровая инфраструктура. Вырос ×2.4 г/г за счёт консолидации Peppertree (вышки/спектр/fiber, $7.7 млрд AUM). Комиссии $120 млн за 12 мес.",
+    "pct": 6,
+    "value": "$18.1 млрд AUM"
+   }
   ],
-  "notDisclosed": "Главное, чего TPG НЕ раскрывает поимённо: (1) долю и стоимость отдельных портфельных компаний — в SEC-filings есть только AUM по платформам и fund-level track record (IRR/MoM/Total Value), а имена компаний идут из IR-портфолио и пресс-релизов сделок; (2) собственный чек TPG в совместных сделках — суммы вроде Hologic до $18.3B EV или Sabre ~$3.5B это total enterprise value (часто совместно с Blackstone и др.), не отдельная инвестиция TPG; (3) доллары/доли в прямых AI-позициях (Anthropic, OpenAI, SpaceX) — раскрыт только факт наличия; (4) суммы ряда выходов (OneOncology→Syncora; точная доля digital-power части Intersect); (5) underlying-займы Twin Brook (310+ компаний — только агрегатные метрики); (6) полный «long-tail» из 600+ портфельных компаний на IR-странице, из которых SEC-раскрытие именует лишь часть. 13F-портфель TPG = клиентские активы управляемых счетов и для оценки самого holdco исключается."
+  "byGeography": [
+   {
+    "region": "Северная Америка",
+    "pct": 70
+   },
+   {
+    "region": "Азия (вкл. Индия, NewQuest)",
+    "pct": 15
+   },
+   {
+    "region": "Европа",
+    "pct": 10
+   },
+   {
+    "region": "Прочее / глобальное",
+    "pct": 5
+   }
+  ],
+  "byTheme": [
+   {
+    "theme": "AI, электросеть и питание для дата-центров",
+    "headline": "grid-capex под AI: Sabre ~$3.5 млрд EV, Pike (EPC для сети), Intersect→Google $4.75 млрд, HyperVault/TCS ~$1 млрд",
+    "plain": "Сквозная тема TPG — не сами вычисления, а инфраструктура под них: строительство и оборудование электросети (Sabre, Pike), генерация под co-located дата-центры (Intersect/IPX) и AI-ЦОД в Индии (HyperVault). Плюс прямые доли в Anthropic/OpenAI/SpaceX через Growth.",
+    "items": "Sabre Industries — Pike Corporation — Intersect Power — IPX Power — HyperVault/TCS — Anthropic/OpenAI/SpaceX"
+   },
+   {
+    "theme": "Частный кредит (Angelo Gordon)",
+    "headline": "$95.2 млрд AUM, +30% г/г — крупнейший двигатель роста fee-базы",
+    "plain": "Покупка Angelo Gordon (2023) превратила TPG в полноценного кредитного менеджера: прямое кредитование среднего рынка (Twin Brook, 310+ заёмщиков), asset-based finance (Jackson Financial $2 млрд) и структурный кредит. Стабильные комиссии против цикличного carry в PE.",
+    "items": "Twin Brook Direct Lending — TCAP BDC — Jackson Financial ABF — AG Credit Solutions"
+   },
+   {
+    "theme": "Цифровая инфраструктура",
+    "headline": "Peppertree $7.7 млрд AUM, 10 000+ беспроводных активов; HyperVault GW-масштаб",
+    "plain": "Вышки, спектр, fiber и AI-ЦОД — новое направление после консолидации Peppertree (июль 2025) и JV с TCS в Индии. Даёт TPG перпетуальную инфра-экспозицию с длинными контрактами.",
+    "items": "TPG Peppertree — HyperVault/TCS"
+   }
+  ]
+ },
+ "sectors": [
+  {
+   "id": "credit",
+   "name": "Credit (вкл. Angelo Gordon)",
+   "plain": "Крупнейшая платформа TPG — $95.2 млрд AUM, 31% всего, +30% г/г. Fee-heavy база (комиссии $356 млн за 12 мес), низкий нереализованный carry $83 млн.",
+   "stat": "$95.2 млрд AUM · 31% · комиссии $356 млн LTM",
+   "total": "$95.2 млрд AUM",
+   "subsectors": [
+    {
+     "id": "direct-lending",
+     "name": "Прямое кредитование среднего рынка",
+     "blurb": "Twin Brook — платформа middle-market direct lending Angelo Gordon: 310+ заёмщиков, LTV ~42% at origination, покрытие долга >2x. Плюс non-traded BDC TCAP ~$4.7 млрд.",
+     "stats": [
+      {
+       "label": "Заёмщики Twin Brook",
+       "value": "310+"
+      },
+      {
+       "label": "Total Value",
+       "value": "$14.8 млрд"
+      },
+      {
+       "label": "LTV at origination",
+       "value": "~42%"
+      }
+     ],
+     "companies": [
+      {
+       "name": "Twin Brook Direct Lending",
+       "what": "Прямое кредитование среднего рынка (MMDL) — 310+ заёмщиков, старший обеспеченный долг",
+       "stake": "стратегия управляемых фондов TPG AG",
+       "value": "$14.8 млрд Total Value",
+       "valueDisclosed": true,
+       "size": "LTV ~42% at origination, покрытие >2x",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Twin Brook Capital Partners — платформа прямого кредитования среднего рынка внутри Angelo Gordon: старшие обеспеченные займы 310+ компаниям среднего рынка США. Консервативная выдача — LTV около 42% на входе, покрытие обслуживания долга выше 2x. Это управляемый капитал клиентских фондов; TPG зарабатывает комиссии за управление, а не держит займы на балансе.",
+        "whyMatters": "Ядро fee-стабильности TPG: диверсифицированный, обеспеченный кредитный поток даёт предсказуемые комиссии против цикличного carry в PE. Ухудшение кредитного качества (nonaccruals) — первый сигнал для пересмотра.",
+        "metrics": [
+         {
+          "label": "Заёмщики",
+          "value": "310+"
+         },
+         {
+          "label": "Total Value",
+          "value": "$14.8 млрд"
+         },
+         {
+          "label": "LTV at origination",
+          "value": "~42%"
+         }
+        ]
+       },
+       "source": "TPG 10-K + earnings call Q1'26"
+      },
+      {
+       "name": "TCAP (Twin Brook Capital Income Fund)",
+       "what": "Non-traded BDC среднего рынка (~$4.7 млрд AUM)",
+       "stake": "управляемый non-traded BDC",
+       "value": "~$4.7 млрд AUM",
+       "valueDisclosed": true,
+       "size": "nonaccruals «чуть выше 1%», выкупы ~1.3% (слова менеджмента)",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "менеджмент Q1'26 (не BDC 10-Q)"
+      }
+     ]
+    },
+    {
+     "id": "abf-structured",
+     "name": "Asset-based finance и структурный кредит",
+     "blurb": "Финансирование под активы и структурный кредит из Angelo Gordon: Jackson Financial ABF ($2 млрд), AG Asset-Based Credit, TPG Credit Solutions, CLO.",
+     "stats": [
+      {
+       "label": "Jackson ABF",
+       "value": "$2 млрд + $500 млн equity"
+      },
+      {
+       "label": "AG ABC Fund I (2021)",
+       "value": "Net 13%"
+      },
+      {
+       "label": "Credit Solutions",
+       "value": "Net 13%"
+      }
+     ],
+     "companies": [
+      {
+       "name": "Jackson Financial ABF",
+       "what": "Asset-based finance партнёрство с Jackson Financial — $2 млрд начальных обязательств",
+       "stake": "$500 млн equity от TPG (профинанс. Senior Notes $500 млн)",
+       "value": "$2 млрд обязательств",
+       "valueDisclosed": true,
+       "size": "закрыто Q1'26",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "TPG earnings release Q1'26"
+      },
+      {
+       "name": "AG Asset-Based Credit / CLO / Credit Solutions",
+       "what": "Структурный кредит, ABS и CLO-платформы Angelo Gordon (underlying не раскрыт)",
+       "stake": "стратегии управляемых фондов",
+       "value": "не раскрыто (fund-level)",
+       "valueDisclosed": false,
+       "size": "AG ABC Fund I Net 13% (2021)",
+       "geography": "США / глобально",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "TPG 10-K"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "capital",
+   "name": "Capital (private equity)",
+   "plain": "Контрольный private equity — $89.7 млрд AUM, 29%. Крупнейший нереализованный carry TPG ($581 млн). Net IRR серии 15% / 1.6x. Комиссии $525 млн за 12 мес.",
+   "stat": "$89.7 млрд AUM · 29% · carry $581 млн (крупнейший)",
+   "total": "$89.7 млрд AUM",
+   "companies": [
+    {
+     "name": "Hologic",
+     "what": "Диагностика женского здоровья — take-private Blackstone + TPG",
+     "stake": "актив фонда TPG Capital (чек TPG отдельно не раскрыт)",
+     "value": "до $18.3 млрд EV",
+     "valueDisclosed": true,
+     "size": "$76 cash + CVR до $3; закрыт 07.04.2026",
+     "geography": "США",
+     "status": "operating",
+     "ai": false,
+     "key": true,
+     "detail": {
+      "summary": "Hologic — производитель диагностики женского здоровья. Blackstone и TPG вывели компанию с биржи (take-private) при EV до $18.3 млрд: $76 наличными за акцию плюс CVR до $3. Сделка закрыта 07.04.2026. Это крупнейшая сделка цикла для TPG, но чек TPG отдельно от Blackstone не раскрыт.",
+      "whyMatters": "Демонстрирует масштаб и партнёрскую модель TPG Capital, но влияет на TPG через будущие fees/carry, а не через баланс. Флагман perf-heavy сегмента с крупнейшим нереализованным carry.",
+      "metrics": [
+       {
+        "label": "EV",
+        "value": "до $18.3 млрд"
+       },
+       {
+        "label": "Структура",
+        "value": "$76 cash + CVR до $3"
+       },
+       {
+        "label": "Закрытие",
+        "value": "07.04.2026 (с Blackstone)"
+       }
+      ]
+     },
+     "source": "Blackstone IR / MedTech Dive"
+    },
+    {
+     "name": "Proficy (ex-GE Vernova)",
+     "what": "Промышленный софт (HMI/SCADA, MES, Historians), 20 000+ клиентов",
+     "stake": "актив фонда TPG Capital",
+     "value": "$600 млн",
+     "valueDisclosed": true,
+     "size": "~20% выручки Electrification Software GEV; закрыт 02.03.2026",
+     "geography": "США",
+     "status": "operating",
+     "ai": false,
+     "key": true,
+     "detail": {
+      "summary": "Proficy — бизнес промышленного ПО, выделенный из GE Vernova: системы HMI/SCADA, MES и Historians для 20 000+ промышленных клиентов, ~20% выручки Electrification Software GEV. TPG Capital купил его за $600 млн, сделка закрыта 02.03.2026.",
+      "whyMatters": "Свежий carve-out — показывает, как TPG разворачивает капитал в промышленный софт с повторяющейся выручкой. Влияет через fees/carry.",
+      "metrics": [
+       {
+        "label": "Цена",
+        "value": "$600 млн"
+       },
+       {
+        "label": "Клиенты",
+        "value": "20 000+"
+       },
+       {
+        "label": "Закрытие",
+        "value": "02.03.2026"
+       }
+      ]
+     },
+     "source": "tpg.com; GE Vernova press"
+    },
+    {
+     "name": "Curium Pharma",
+     "what": "Радиофармацевтика — $3.8 млрд continuation vehicle",
+     "stake": "актив фонда / continuation vehicle",
+     "value": "$3.8 млрд (CV)",
+     "valueDisclosed": true,
+     "size": "Q1'26",
+     "geography": "Европа / США",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "earnings call Q1'26"
+    },
+    {
+     "name": "Surescripts",
+     "what": "Сеть электронных рецептов — мажоритарная доля TPG",
+     "stake": "мажоритарная доля (актив фонда)",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "e-prescribing сеть США",
+     "geography": "США",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "Healthcare Dive"
+    },
+    {
+     "name": "DIRECTV · CAA · Entertainment Partners · Fandom",
+     "what": "Медиа и развлечения — портфель TPG Capital",
+     "stake": "активы фондов (суммы не раскрыты)",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "из IR-портфолио",
+     "geography": "США",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "TPG IR-портфолио"
+    },
+    {
+     "name": "Troon · AmSpec · Aareon · A&O Hostels",
+     "what": "Enterprise / consumer — портфель TPG Capital",
+     "stake": "активы фондов (суммы не раскрыты)",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "из IR-портфолио",
+     "geography": "США / Европа",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "TPG IR-портфолио"
+    }
+   ]
+  },
+  {
+   "id": "real-estate",
+   "name": "Real Estate",
+   "plain": "Недвижимость и ипотечный кредит — $39.2 млрд AUM, 13%. Единственный сегмент со снижением комиссий кв/кв ($95→$83 млн). Carry $100 млн.",
+   "stat": "$39.2 млрд AUM · 13% · комиссии снижаются кв/кв",
+   "total": "$39.2 млрд AUM",
+   "companies": [
+    {
+     "name": "TRTX (TPG RE Finance Trust)",
+     "what": "CRE-кредитный REIT (NYSE) — loan book $4.3 млрд, 100% performing",
+     "stake": "управляемый публичный REIT",
+     "value": "$4.3 млрд loan book",
+     "valueDisclosed": true,
+     "size": "средний заём $86.3 млн; офис <5%",
+     "geography": "США",
+     "status": "operating",
+     "ai": false,
+     "key": true,
+     "detail": {
+      "summary": "TPG RE Finance Trust (TRTX, NYSE) — коммерческий ипотечный REIT под управлением TPG: книга займов $4.3 млрд, средний заём $86.3 млн, 100% performing, доля офисной недвижимости менее 5%. Публичное аффилированное средство, а не баланс TPG.",
+      "whyMatters": "Барометр здоровья CRE-кредита TPG. Низкая доля офисов и 100% performing — сигнал качества; ухудшение — ранний риск для Real Estate fees.",
+      "metrics": [
+       {
+        "label": "Loan book",
+        "value": "$4.3 млрд"
+       },
+       {
+        "label": "Средний заём",
+        "value": "$86.3 млн"
+       },
+       {
+        "label": "Офис",
+        "value": "<5%"
+       }
+      ]
+     },
+     "source": "TRTX 8-K Q1'26"
+    },
+    {
+     "name": "MITT (AG Mortgage Investment Trust)",
+     "what": "Resi-ипотечный кредитный REIT (NYSE) — из Angelo Gordon",
+     "stake": "управляемый публичный REIT",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "residential mortgage credit",
+     "geography": "США",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "MITT filings"
+    },
+    {
+     "name": "TPG Real Estate Partners · Net Lease V · Asia RE VI",
+     "what": "Equity-фонды недвижимости — Net Lease V (~$1 млрд), Asia RE VI (запуск июнь'26)",
+     "stake": "стратегии управляемых фондов",
+     "value": "~$1 млрд (Net Lease V fundraise)",
+     "valueDisclosed": true,
+     "size": "equity real estate",
+     "geography": "США / Азия",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "TPG earnings call Q1'26"
+    }
+   ]
+  },
+  {
+   "id": "growth",
+   "name": "Growth",
+   "plain": "Растущие компании и late-stage tech — $32.4 млрд AUM, 11%. Net IRR серии 13% / 1.6x; carry $211 млн. Прямые доли в Anthropic/OpenAI/SpaceX.",
+   "stat": "$32.4 млрд AUM · 11% · Net IRR 13% / 1.6x",
+   "total": "$32.4 млрд AUM",
+   "companies": [
+    {
+     "name": "Anthropic · OpenAI · SpaceX",
+     "what": "Прямые late-stage позиции через Tech Adjacencies / T-POP",
+     "stake": "актив фондов (доли и суммы НЕ раскрыты)",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "прямая AI/космос-экспозиция",
+     "geography": "США",
+     "status": "operating",
+     "ai": true,
+     "key": true,
+     "detail": {
+      "summary": "TPG держит прямые late-stage позиции в Anthropic, OpenAI и SpaceX через стратегии Tech Adjacencies и T-POP (TPG Private Opportunities). Сам факт раскрыт, но доли и вложенные суммы TPG НЕ публикует.",
+      "whyMatters": "Прямая экспозиция на самые дорогие частные AI/космос-компании — сильная тема для восприятия TPG, но без раскрытых цифр это качественный, а не количественный драйвер оценки.",
+      "metrics": [
+       {
+        "label": "Компании",
+        "value": "Anthropic, OpenAI, SpaceX"
+       },
+       {
+        "label": "Средство",
+        "value": "Tech Adjacencies / T-POP"
+       },
+       {
+        "label": "Доли/суммы",
+        "value": "не раскрыты"
+       }
+      ]
+     },
+     "source": "TPG раскрытие (доли не раскрыты)"
+    },
+    {
+     "name": "Smith + Howard",
+     "what": "Assurance / tax / advisory-фирма — FY24 выручка $74.2 млн, ~800 профессионалов",
+     "stake": "актив фонда TPG Growth",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "анонс 09.06.2026, закрытие Q3'26",
+     "geography": "США",
+     "status": "pending",
+     "ai": false,
+     "key": false,
+     "source": "tpg.com; Accounting Today"
+    },
+    {
+     "name": "LSI (Life Sciences Innovations)",
+     "what": "Ранний фонд life sciences (2023) — Net IRR −25% / 0.8x",
+     "stake": "стратегия управляемого фонда",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "ранняя стадия, отрицательный IRR",
+     "geography": "США",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "TPG track record"
+    }
+   ]
+  },
+  {
+   "id": "impact",
+   "name": "Impact (Rise / Rise Climate)",
+   "plain": "Инвестиции с двойной отдачей — $31.6 млрд AUM, 10%. Rise Climate I Net 15% / 1.3x, нереализованный Total Value ~$7.9 млрд (крупнейший будущий carry сегмента).",
+   "stat": "$31.6 млрд AUM · 10% · Rise Climate I Net 15%",
+   "total": "$31.6 млрд AUM",
+   "subsectors": [
+    {
+     "id": "rise-climate",
+     "name": "Rise Climate — электросеть и питание под AI",
+     "blurb": "Ставка на grid-capex и генерацию под спрос дата-центров: Pike (EPC для сети), Sabre (опоры/подстанции), Intersect/IPX (генерация), HyperVault (AI-ЦОД в Индии).",
+     "stats": [
+      {
+       "label": "Rise Climate I Net IRR",
+       "value": "15% / 1.3x"
+      },
+      {
+       "label": "Нереализованный Total Value",
+       "value": "~$7.9 млрд"
+      },
+      {
+       "label": "Sabre EV",
+       "value": "~$3.5 млрд"
+      }
+     ],
+     "companies": [
+      {
+       "name": "Sabre Industries",
+       "what": "Grid-инфраструктура — опоры, подстанции для utilities и дата-центров",
+       "stake": "актив фонда TPG Rise Climate",
+       "value": "~$3.5 млрд EV",
+       "valueDisclosed": true,
+       "size": "closing Q2'26 (с Blackstone)",
+       "geography": "США",
+       "status": "pending",
+       "ai": true,
+       "key": true,
+       "detail": {
+        "summary": "Sabre Industries — производитель оборудования электросети (стальные опоры, подстанции) для коммунальных компаний и дата-центров. TPG Rise Climate приобретает актив при EV ~$3.5 млрд, закрытие Q2'26. Прямая ставка на capex электросети под спрос AI.",
+        "whyMatters": "Ядро AI-power темы TPG: не вычисления, а «железо» сети, спрос на которое растёт с data-center буилдаутом. Влияет через fees/carry Rise Climate.",
+        "metrics": [
+         {
+          "label": "EV",
+          "value": "~$3.5 млрд"
+         },
+         {
+          "label": "Закрытие",
+          "value": "Q2'26"
+         },
+         {
+          "label": "Тема",
+          "value": "grid-capex под AI"
+         }
+        ]
+       },
+       "source": "Blackstone/TPG press"
+      },
+      {
+       "name": "Pike Corporation",
+       "what": "Turnkey инжиниринг/строительство электросети (EPC)",
+       "stake": "мажоритарий TPG + La Caisse (актив фонда)",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "анонс 17.11.2025; Rise Climate",
+       "geography": "США",
+       "status": "operating",
+       "ai": true,
+       "key": true,
+       "detail": {
+        "summary": "Pike Corporation — turnkey инжиниринг и строительство электросети. TPG Rise Climate вместе с La Caisse получили мажоритарную долю (анонс 17.11.2025). Прямая ставка на grid-capex под спрос AI-дата-центров.",
+        "whyMatters": "Второй столб AI-power кластера TPG (вместе с Sabre) — строительство сети, дефицитный ресурс в data-center буме.",
+        "metrics": [
+         {
+          "label": "Роль",
+          "value": "EPC для электросети"
+         },
+         {
+          "label": "Партнёр",
+          "value": "La Caisse"
+         },
+         {
+          "label": "Анонс",
+          "value": "17.11.2025"
+         }
+        ]
+       },
+       "source": "La Caisse press; PE Hub"
+      },
+      {
+       "name": "Intersect Power → Google",
+       "what": "Генерация под co-located дата-центры — выход в Google",
+       "stake": "реализованный выход фонда",
+       "value": "$4.75 млрд (cash + долг)",
+       "valueDisclosed": true,
+       "size": "exit март'26 — премия AI-темы",
+       "geography": "США",
+       "status": "sold",
+       "ai": true,
+       "key": false,
+       "source": "TPG / Google press"
+      },
+      {
+       "name": "IPX Power",
+       "what": "IPP на grid-tied активах Intersect — питание под дата-центры",
+       "stake": "spin-off (актив фонда)",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "spin-off март'26",
+       "geography": "США",
+       "status": "operating",
+       "ai": true,
+       "key": false,
+       "source": "TPG press"
+      },
+      {
+       "name": "HyperVault / TCS",
+       "what": "JV AI дата-центров в Индии — GW-масштаб, liquid-cooled",
+       "stake": "до ₹8 820 crore (~$1 млрд) за 27.5–49%",
+       "value": "~$1 млрд (доля TPG)",
+       "valueDisclosed": true,
+       "size": "TCS+TPG совместно до ₹18 000 crore; анонс 20.11.2025",
+       "geography": "Индия",
+       "status": "operating",
+       "ai": true,
+       "key": true,
+       "detail": {
+        "summary": "HyperVault — совместное предприятие AI дата-центров в Индии GW-масштаба с жидкостным охлаждением. TPG инвестирует до ₹8 820 crore (~$1 млрд) за 27.5–49%; TCS и TPG вместе — до ₹18 000 crore (анонс 20.11.2025). Vehicle внутри TPG точно не раскрыт — вероятно инфраструктурная/Rise Climate линия.",
+        "whyMatters": "Прямая AI-ЦОД ставка TPG с раскрытой суммой (~$1 млрд) — редкий количественный якорь в AI-теме. Влияет через fees/carry.",
+        "metrics": [
+         {
+          "label": "Доля TPG",
+          "value": "до ~$1 млрд"
+         },
+         {
+          "label": "Пакет",
+          "value": "27.5–49%"
+         },
+         {
+          "label": "Анонс",
+          "value": "20.11.2025"
+         }
+        ]
+       },
+       "source": "tpg.com; TCS newsroom; TechCrunch"
+      }
+     ]
+    },
+    {
+     "id": "transition-infra",
+     "name": "Transition Infrastructure",
+     "blurb": "Отдельная стратегия внутри Impact-периметра: waste/recycling, транспорт, solar. Третья сделка фонда — Waste Eliminator/Liberty Waste.",
+     "stats": [
+      {
+       "label": "Объекты (Waste)",
+       "value": "14 + 500 машин"
+      },
+      {
+       "label": "Сделка фонда",
+       "value": "третья (после Kinetic, Altus)"
+      }
+     ],
+     "companies": [
+      {
+       "name": "Waste Eliminator + Liberty Waste",
+       "what": "Waste/recycling инфра на Юго-Востоке США — 14 объектов, 500+ машин",
+       "stake": "актив фонда TPG Transition Infrastructure",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "анонс 17.06.2026; третья сделка фонда",
+       "geography": "США",
+       "status": "pending",
+       "ai": false,
+       "key": false,
+       "source": "tpg.com; Waste Dive"
+      },
+      {
+       "name": "Kinetic · Altus Power · A-Gas",
+       "what": "Транспорт (автобусы Мельбурн), solar, прочее Transition Infra / Rise",
+       "stake": "активы фондов",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "из портфолио Rise / Transition Infra",
+       "geography": "США / Австралия",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "TPG IR-портфолио"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "market-solutions",
+   "name": "Market Solutions",
+   "plain": "GP-led secondaries, capital markets и цифровая инфраструктура — $18.1 млрд AUM, 6%. Вырос ×2.4 г/г за счёт консолидации Peppertree.",
+   "stat": "$18.1 млрд AUM · 6% · ×2.4 г/г (Peppertree)",
+   "total": "$18.1 млрд AUM",
+   "companies": [
+    {
+     "name": "TPG Peppertree",
+     "what": "Вышки, спектр, fiber — $7.7 млрд AUM, 10 000+ беспроводных активов",
+     "stake": "консолидированная платформа (сделка до $660 млн)",
+     "value": "$7.7 млрд AUM",
+     "valueDisclosed": true,
+     "size": "$242 млн cash + $418 млн equity + до $300 млн earnout; консолид. 01.07.2025",
+     "geography": "США",
+     "status": "operating",
+     "ai": false,
+     "key": true,
+     "detail": {
+      "summary": "Peppertree — менеджер цифровой инфраструктуры (вышки, спектр, fiber): $7.7 млрд AUM, 175+ инвестиций, 10 флагман-фондов, 10 000+ беспроводных активов. TPG купил его за сумму до $660 млн ($242 млн наличными + $418 млн акциями + до $300 млн earnout) и консолидировал с 01.07.2025 (+$7.9 млрд AUM).",
+      "whyMatters": "Главный драйвер роста Market Solutions (×2.4 г/г) и вход TPG в перпетуальную цифровую инфраструктуру с длинными контрактами.",
+      "metrics": [
+       {
+        "label": "AUM",
+        "value": "$7.7 млрд"
+       },
+       {
+        "label": "Пакет",
+        "value": "$242 cash + $418 equity + до $300 earnout"
+       },
+       {
+        "label": "Консолидация",
+        "value": "01.07.2025"
+       }
+      ]
+     },
+     "source": "Capacity; Dallas Innovates"
+    },
+    {
+     "name": "TPG GP Solutions",
+     "what": "GP-led secondaries (Северная Америка / Европа) — участвовал в Curium CV",
+     "stake": "стратегия управляемых фондов",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "GP-led вторичный рынок",
+     "geography": "США / Европа",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "TPG 10-K"
+    },
+    {
+     "name": "TPG NewQuest",
+     "what": "Азиатский secondary-менеджер",
+     "stake": "стратегия управляемых фондов",
+     "value": "не раскрыто",
+     "valueDisclosed": false,
+     "size": "Asia secondaries",
+     "geography": "Азия",
+     "status": "operating",
+     "ai": false,
+     "key": false,
+     "source": "TPG 10-K"
+    }
+   ]
+  }
+ ],
+ "notDisclosed": [
+  "Долю и стоимость отдельных портфельных компаний TPG в SEC-filings не публикует — только AUM по платформам и fund-level IRR / MoM / Total Value.",
+  "Суммы сделок (Hologic $18.3 млрд, Sabre ~$3.5 млрд) — это total EV, часто совместно с Blackstone / La Caisse, а не отдельный чек TPG.",
+  "AI-позиции (Anthropic / OpenAI / SpaceX), Waste Eliminator / Liberty Waste, Smith + Howard — суммы не раскрыты.",
+  "Vehicle сделки HyperVault внутри TPG точно не уточнён. HALA — связь с TPG не подтверждена ни одним источником, не включена."
+ ]
 }
