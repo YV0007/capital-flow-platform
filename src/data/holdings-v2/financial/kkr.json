@@ -1,0 +1,643 @@
+{
+ "id": "kkr",
+ "asOf": "22.07.2026",
+ "quote": {
+  "ticker": "KKR",
+  "exchange": "New York Stock Exchange",
+  "price": 100.94,
+  "currency": "USD",
+  "change": -1.81,
+  "marketCap": "90.63B"
+ },
+ "returns": [
+  {
+   "period": "1 год",
+   "stock": -30.04,
+   "sp500": 18.21
+  },
+  {
+   "period": "3 года",
+   "stock": 65.5,
+   "sp500": 64.38
+  },
+  {
+   "period": "5 лет",
+   "stock": 72.37,
+   "sp500": 72.43
+  }
+ ],
+ "years": [
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024",
+  "2025",
+  "TTM"
+ ],
+ "rows": [
+  {
+   "label": "Revenue per Share",
+   "fmt": "dec",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    27.89,
+    7.6,
+    16.72,
+    24.67,
+    21.84,
+    23.2
+   ]
+  },
+  {
+   "label": "Basic EPS, GAAP",
+   "fmt": "dec",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    7.95,
+    -0.79,
+    4.24,
+    3.47,
+    2.53,
+    3.15
+   ]
+  },
+  {
+   "label": "Free Cash Flow / Share",
+   "fmt": "dec",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -11.5,
+    -7.16,
+    -1.76,
+    6.93,
+    0.36,
+    0.36
+   ]
+  },
+  {
+   "label": "Dividend per Share",
+   "fmt": "dec",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    0.58,
+    0.6,
+    0.66,
+    0.68,
+    0.7,
+    0.74
+   ]
+  },
+  {
+   "label": "Book Value per Share",
+   "fmt": "dec",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    27.77,
+    25.09,
+    25.07,
+    26.63,
+    34.67,
+    34.67
+   ]
+  },
+  {
+   "label": "Tangible Book Value / Share",
+   "fmt": "dec",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    27.77,
+    25.09,
+    25.07,
+    26.63,
+    34.67,
+    34.67
+   ]
+  },
+  {
+   "label": "Basic Weighted Avg Shares",
+   "fmt": "int",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    582,
+    750,
+    867,
+    887,
+    891,
+    891
+   ]
+  },
+  {
+   "label": "Sales / Revenue",
+   "fmt": "int",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    16230,
+    5700,
+    14500,
+    21880,
+    19460,
+    20670
+   ]
+  },
+  {
+   "label": "Operating Margin",
+   "fmt": "pct",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    31.27,
+    -3.62,
+    15.96,
+    5.32,
+    3.84,
+    9.29
+   ]
+  },
+  {
+   "label": "Depreciation Expense",
+   "fmt": "int",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    162,
+    162
+   ]
+  },
+  {
+   "label": "Net Income, GAAP",
+   "fmt": "int",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    12450,
+    -420,
+    5360,
+    4910,
+    6150,
+    5740
+   ]
+  },
+  {
+   "label": "Effective Tax Rate",
+   "fmt": "pct",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    10.1,
+    -42.9,
+    18.3,
+    16.3,
+    13.4,
+    15.5
+   ]
+  },
+  {
+   "label": "Profit Margin",
+   "fmt": "pct",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    76.7,
+    -7.3,
+    37,
+    22.4,
+    31.6,
+    27.8
+   ]
+  },
+  {
+   "label": "Working Capital",
+   "fmt": "int",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    130,
+    3510,
+    10740,
+    3060,
+    1330,
+    1330
+   ]
+  },
+  {
+   "label": "LT Debt",
+   "fmt": "int",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    38600,
+    42700,
+    47500,
+    49600,
+    52900,
+    53704
+   ]
+  },
+  {
+   "label": "Total Equity",
+   "fmt": "int",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    58100,
+    55400,
+    58400,
+    62000,
+    78920,
+    78920
+   ]
+  },
+  {
+   "label": "Return on Invested Capital",
+   "fmt": "pct",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    5.91,
+    -0.34,
+    2.21,
+    1.07,
+    0.6,
+    0.6
+   ]
+  },
+  {
+   "label": "Return on Capital",
+   "fmt": "pct",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    3.1,
+    -0.08,
+    0.81,
+    0.36,
+    0.2,
+    0.2
+   ]
+  },
+  {
+   "label": "Return on Common Equity",
+   "fmt": "pct",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    25.17,
+    -0.74,
+    9.42,
+    8.15,
+    8.56,
+    8.56
+   ]
+  }
+ ],
+ "chartRow": "Total Equity",
+ "description": {
+  "ceo": "Joseph Y. Bae",
+  "employees": "5,043",
+  "sector": "Financial Services",
+  "industry": "Asset Management",
+  "address": "30 Hudson Yards, New York City, NY 10001",
+  "ipo": "15 июл 2010",
+  "cik": "0001404912",
+  "website": "kkr.com",
+  "peers": [
+   "Blackstone (BX)",
+   "Apollo Global (APO)",
+   "Ares Management (ARES)",
+   "Brookfield (BN)",
+   "Carlyle (CG)"
+  ]
+ },
+ "capitalStructure": {
+  "periods": [
+   "Sep'25",
+   "Dec'25",
+   "Mar'26"
+  ],
+  "rows": [
+   {
+    "label": "ST Debt",
+    "v": [
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "label": "LT Borrowings",
+    "v": [
+     53504,
+     53602,
+     53704
+    ]
+   },
+   {
+    "label": "LT Finance Leases",
+    "v": [
+     945,
+     935,
+     931
+    ]
+   },
+   {
+    "label": "Preferred Equity & Hybrid",
+    "v": [
+     2543,
+     2543,
+     2543
+    ]
+   },
+   {
+    "label": "Shares Outstanding",
+    "v": [
+     891,
+     891,
+     889
+    ]
+   },
+   {
+    "label": "Market Capitalization",
+    "v": [
+     115595,
+     113499,
+     82423
+    ]
+   }
+  ]
+ },
+ "workingCapital": {
+  "periods": [
+   "Sep'25",
+   "Dec'25",
+   "Mar'26"
+  ],
+  "groups": [
+   {
+    "label": "Total Current Assets",
+    "total": [
+     241261,
+     243380,
+     244383
+    ],
+    "items": [
+     {
+      "label": "Cash & Equivalents",
+      "v": [
+       134087,
+       132713,
+       131656
+      ]
+     },
+     {
+      "label": "Accounts Receivable",
+      "v": [
+       592,
+       488,
+       470
+      ]
+     },
+     {
+      "label": "Inventories",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     }
+    ]
+   },
+   {
+    "label": "Total Current Liabilities",
+    "total": [
+     57388,
+     58249,
+     62382
+    ],
+    "items": [
+     {
+      "label": "Payables & Accruals",
+      "v": [
+       57388,
+       58249,
+       62382
+      ]
+     },
+     {
+      "label": "ST Debt",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     },
+     {
+      "label": "Deferred Revenue",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "growthRates": {
+  "cols": [
+   "10 лет",
+   "5 лет",
+   "1 год"
+  ],
+  "rows": [
+   {
+    "label": "Total Equity",
+    "v": [
+     11.31,
+     16.21,
+     31.7
+    ]
+   },
+   {
+    "label": "Free Cash Flow",
+    "v": [
+     -179.98,
+     -135.72,
+     -95.13
+    ]
+   },
+   {
+    "label": "Net Income, GAAP",
+    "v": [
+     -54.99,
+     -166.13,
+     -22.94
+    ]
+   },
+   {
+    "label": "Sales / Revenue",
+    "v": [
+     62.6,
+     82.49,
+     -11.24
+    ]
+   },
+   {
+    "label": "Total Cash Common Dividends",
+    "v": [
+     3.33,
+     17.53,
+     3.99
+    ]
+   }
+  ]
+ },
+ "quarterlyRevenue": {
+  "years": [
+   {
+    "year": 2024,
+    "q": [
+     9600,
+     4108,
+     4732,
+     3200
+    ],
+    "fy": 21640
+   },
+   {
+    "year": 2025,
+    "q": [
+     3055,
+     5003,
+     5465,
+     5685
+    ],
+    "fy": 19208
+   },
+   {
+    "year": 2026,
+    "q": [
+     4253,
+     null,
+     null,
+     null
+    ],
+    "fy": null
+   }
+  ]
+ },
+ "note": "Источник: KKR 10-K FY2025 / 8-K Q1'26 (SEC EDGAR CIK 0001404912) и Stockanalysis (KKR, NYSE), в $млн если не указано иное; данные до 2021 г. не раскрываются в доступных лентах (LP→C-corp конверсия 2018 г.). GAAP-показатели искажены консолидацией фондов и Global Atlantic — для решения используйте экономические метрики (FRE, ANI, DE). Похожие компании — реальные peers."
+}
