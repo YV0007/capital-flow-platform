@@ -64,19 +64,34 @@
     "theme": "AI, электросеть и питание для дата-центров",
     "headline": "grid-capex под AI: Sabre ~$3.5 млрд EV, Pike (EPC для сети), Intersect→Google $4.75 млрд, HyperVault/TCS ~$1 млрд",
     "plain": "Сквозная тема TPG — не сами вычисления, а инфраструктура под них: строительство и оборудование электросети (Sabre, Pike), генерация под co-located дата-центры (Intersect/IPX) и AI-ЦОД в Индии (HyperVault). Плюс прямые доли в Anthropic/OpenAI/SpaceX через Growth.",
-    "items": "Sabre Industries — Pike Corporation — Intersect Power — IPX Power — HyperVault/TCS — Anthropic/OpenAI/SpaceX"
+    "items": [
+     "Sabre Industries",
+     "Pike Corporation",
+     "Intersect Power",
+     "IPX Power",
+     "HyperVault/TCS",
+     "Anthropic/OpenAI/SpaceX"
+    ]
    },
    {
     "theme": "Частный кредит (Angelo Gordon)",
     "headline": "$95.2 млрд AUM, +30% г/г — крупнейший двигатель роста fee-базы",
     "plain": "Покупка Angelo Gordon (2023) превратила TPG в полноценного кредитного менеджера: прямое кредитование среднего рынка (Twin Brook, 310+ заёмщиков), asset-based finance (Jackson Financial $2 млрд) и структурный кредит. Стабильные комиссии против цикличного carry в PE.",
-    "items": "Twin Brook Direct Lending — TCAP BDC — Jackson Financial ABF — AG Credit Solutions"
+    "items": [
+     "Twin Brook Direct Lending",
+     "TCAP BDC",
+     "Jackson Financial ABF",
+     "AG Credit Solutions"
+    ]
    },
    {
     "theme": "Цифровая инфраструктура",
     "headline": "Peppertree $7.7 млрд AUM, 10 000+ беспроводных активов; HyperVault GW-масштаб",
     "plain": "Вышки, спектр, fiber и AI-ЦОД — новое направление после консолидации Peppertree (июль 2025) и JV с TCS в Индии. Даёт TPG перпетуальную инфра-экспозицию с длинными контрактами.",
-    "items": "TPG Peppertree — HyperVault/TCS"
+    "items": [
+     "TPG Peppertree",
+     "HyperVault/TCS"
+    ]
    }
   ]
  },
