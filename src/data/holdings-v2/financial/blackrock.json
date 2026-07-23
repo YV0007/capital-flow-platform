@@ -1,0 +1,643 @@
+{
+ "id": "blackrock",
+ "asOf": "23.07.2026",
+ "quote": {
+  "ticker": "BLK",
+  "exchange": "New York Stock Exchange",
+  "price": 1072.2,
+  "currency": "USD",
+  "change": -14.85,
+  "marketCap": "166.19B"
+ },
+ "returns": [
+  {
+   "period": "1 год",
+   "stock": -1.9,
+   "sp500": 18.21
+  },
+  {
+   "period": "3 года",
+   "stock": 42.79,
+   "sp500": 64.38
+  },
+  {
+   "period": "5 лет",
+   "stock": 22,
+   "sp500": 72.43
+  }
+ ],
+ "years": [
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024",
+  "2025",
+  "TTM"
+ ],
+ "rows": [
+  {
+   "label": "Revenue per Share",
+   "fmt": "dec",
+   "v": [
+    65.61,
+    68.25,
+    74.27,
+    83.54,
+    88.22,
+    92.82,
+    105.16,
+    126.75,
+    118.43,
+    119.62,
+    136.05,
+    156.23,
+    165
+   ]
+  },
+  {
+   "label": "Basic EPS, GAAP",
+   "fmt": "dec",
+   "v": [
+    19.5,
+    20.02,
+    19.19,
+    30.42,
+    26.75,
+    28.57,
+    32,
+    38.61,
+    34.31,
+    36.85,
+    42.46,
+    35.83,
+    41.84
+   ]
+  },
+  {
+   "label": "Free Cash Flow / Share",
+   "fmt": "dec",
+   "v": [
+    17.89,
+    16.66,
+    13.05,
+    23.31,
+    17.84,
+    16.79,
+    23.03,
+    30.11,
+    29.31,
+    25.59,
+    31.34,
+    22.92,
+    15.45
+   ]
+  },
+  {
+   "label": "Dividend per Share",
+   "fmt": "dec",
+   "v": [
+    7.92,
+    8.84,
+    9.36,
+    10.21,
+    12.23,
+    13.38,
+    14.52,
+    16.66,
+    19.81,
+    20.33,
+    20.67,
+    21.59,
+    22.29
+   ]
+  },
+  {
+   "label": "Book Value per Share",
+   "fmt": "dec",
+   "v": [
+    60.08,
+    72.04,
+    82.76,
+    104.06,
+    119.82,
+    138.3,
+    157.92,
+    181.16,
+    197.97,
+    216.64,
+    237.42,
+    244.52,
+    null
+   ]
+  },
+  {
+   "label": "Tangible Book Value / Share",
+   "fmt": "dec",
+   "v": [
+    -16.49,
+    -8.69,
+    -6.89,
+    10.17,
+    13.51,
+    12.76,
+    31.42,
+    33.29,
+    34.07,
+    49.95,
+    17.75,
+    -11.03,
+    null
+   ]
+  },
+  {
+   "label": "Basic Weighted Avg Shares",
+   "fmt": "int",
+   "v": [
+    169,
+    167,
+    165,
+    163,
+    161,
+    157,
+    154,
+    153,
+    151,
+    149,
+    150,
+    155,
+    155
+   ]
+  },
+  {
+   "label": "Sales / Revenue",
+   "fmt": "int",
+   "v": [
+    11081,
+    11401,
+    12261,
+    13600,
+    14198,
+    14539,
+    16205,
+    19374,
+    17873,
+    17859,
+    20407,
+    24216,
+    27299
+   ]
+  },
+  {
+   "label": "Operating Margin",
+   "fmt": "pct",
+   "v": [
+    40.83,
+    40.91,
+    37.79,
+    38.63,
+    38.86,
+    38.18,
+    35.14,
+    38.45,
+    36.23,
+    35.49,
+    36.94,
+    32.66,
+    32.57
+   ]
+  },
+  {
+   "label": "Depreciation Expense",
+   "fmt": "int",
+   "v": [
+    278,
+    295,
+    263,
+    240,
+    220,
+    296,
+    358,
+    415,
+    418,
+    427,
+    529,
+    1126,
+    1095
+   ]
+  },
+  {
+   "label": "Net Income, GAAP",
+   "fmt": "int",
+   "v": [
+    3294,
+    3345,
+    3168,
+    4952,
+    4305,
+    4476,
+    4932,
+    5901,
+    5178,
+    5502,
+    6369,
+    5553,
+    6576
+   ]
+  },
+  {
+   "label": "Effective Tax Rate",
+   "fmt": "pct",
+   "v": [
+    25.73,
+    27.16,
+    28.93,
+    5.13,
+    20.01,
+    21.79,
+    18.98,
+    24.08,
+    20.6,
+    20.67,
+    21.49,
+    22.01,
+    22.2
+   ]
+  },
+  {
+   "label": "Profit Margin",
+   "fmt": "pct",
+   "v": [
+    29.73,
+    29.34,
+    25.84,
+    36.41,
+    30.32,
+    30.79,
+    30.44,
+    30.46,
+    28.97,
+    30.81,
+    31.21,
+    22.93,
+    26.12
+   ]
+  },
+  {
+   "label": "Working Capital",
+   "fmt": "int",
+   "v": [
+    44060,
+    39766,
+    36210,
+    34259,
+    28508,
+    22307,
+    27678,
+    18796,
+    16927,
+    18138,
+    23578,
+    25684,
+    null
+   ]
+  },
+  {
+   "label": "LT Debt",
+   "fmt": "int",
+   "v": [
+    8311,
+    4930,
+    4915,
+    5014,
+    4979,
+    4955,
+    8019,
+    9318,
+    8489,
+    9702,
+    14222,
+    14996,
+    null
+   ]
+  },
+  {
+   "label": "Total Equity",
+   "fmt": "int",
+   "v": [
+    27520,
+    29044,
+    29344,
+    32264,
+    33540,
+    34929,
+    37656,
+    38893,
+    38785,
+    41240,
+    49355,
+    61542,
+    null
+   ]
+  },
+  {
+   "label": "Return on Invested Capital",
+   "fmt": "pct",
+   "v": [
+    9.63,
+    9.73,
+    9.65,
+    13.93,
+    11.64,
+    11.07,
+    10.79,
+    12.05,
+    10.77,
+    10.24,
+    10.33,
+    8.8,
+    15.56
+   ]
+  },
+  {
+   "label": "Return on Capital",
+   "fmt": "pct",
+   "v": [
+    20.35,
+    19.31,
+    18.25,
+    24.78,
+    18.62,
+    17.16,
+    15.13,
+    15.77,
+    14.25,
+    13.34,
+    13.9,
+    10.24,
+    16.81
+   ]
+  },
+  {
+   "label": "Return on Common Equity",
+   "fmt": "pct",
+   "v": [
+    35.85,
+    30.16,
+    24.66,
+    32.36,
+    23.77,
+    21.86,
+    21.44,
+    22.68,
+    17.99,
+    17.68,
+    18.74,
+    15.11,
+    25.15
+   ]
+  }
+ ],
+ "chartRow": "Total Equity",
+ "description": {
+  "ceo": "Laurence Douglas Fink",
+  "employees": "24,900",
+  "sector": "Financial Services",
+  "industry": "Asset Management",
+  "address": "50 Hudson Yards, New York, NY 10001",
+  "ipo": "1 окт 1999",
+  "cik": "0002012383",
+  "website": "blackrock.com",
+  "peers": [
+   "State Street (STT)",
+   "Invesco (IVZ)",
+   "Franklin Resources (BEN)",
+   "T. Rowe Price (TROW)",
+   "Amundi (AMUN.PA)"
+  ]
+ },
+ "capitalStructure": {
+  "periods": [
+   "Dec'25",
+   "Mar'26",
+   "Jun'26"
+  ],
+  "rows": [
+   {
+    "label": "ST Debt",
+    "v": [
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "label": "LT Borrowings",
+    "v": [
+     12768,
+     12749,
+     null
+    ]
+   },
+   {
+    "label": "LT Finance Leases",
+    "v": [
+     2228,
+     2216,
+     null
+    ]
+   },
+   {
+    "label": "Preferred Equity & Hybrid",
+    "v": [
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "label": "Shares Outstanding",
+    "v": [
+     155,
+     155,
+     null
+    ]
+   },
+   {
+    "label": "Market Capitalization",
+    "v": [
+     165876,
+     149113,
+     149162
+    ]
+   }
+  ]
+ },
+ "workingCapital": {
+  "periods": [
+   "Dec'25",
+   "Mar'26",
+   "Jun'26"
+  ],
+  "groups": [
+   {
+    "label": "Total Current Assets",
+    "total": [
+     27424,
+     25021,
+     null
+    ],
+    "items": [
+     {
+      "label": "Cash & Equivalents",
+      "v": [
+       14257,
+       13145,
+       null
+      ]
+     },
+     {
+      "label": "Accounts Receivable",
+      "v": [
+       5158,
+       5219,
+       null
+      ]
+     },
+     {
+      "label": "Inventories",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     }
+    ]
+   },
+   {
+    "label": "Total Current Liabilities",
+    "total": [
+     1740,
+     2097,
+     null
+    ],
+    "items": [
+     {
+      "label": "Payables & Accruals",
+      "v": [
+       1740,
+       2097,
+       null
+      ]
+     },
+     {
+      "label": "ST Debt",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     },
+     {
+      "label": "Deferred Revenue",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "growthRates": {
+  "cols": [
+   "10 лет",
+   "5 лет",
+   "1 год"
+  ],
+  "rows": [
+   {
+    "label": "Total Equity",
+    "v": [
+     8.06,
+     10.74,
+     24.69
+    ]
+   },
+   {
+    "label": "Free Cash Flow",
+    "v": [
+     6.66,
+     2.15,
+     -24.44
+    ]
+   },
+   {
+    "label": "Net Income, GAAP",
+    "v": [
+     6.87,
+     3.32,
+     -12.81
+    ]
+   },
+   {
+    "label": "Sales / Revenue",
+    "v": [
+     7.82,
+     8.37,
+     18.66
+    ]
+   },
+   {
+    "label": "Total Cash Common Dividends",
+    "v": [
+     9.34,
+     8.26,
+     4.45
+    ]
+   }
+  ]
+ },
+ "quarterlyRevenue": {
+  "years": [
+   {
+    "year": 2024,
+    "q": [
+     4728,
+     4805,
+     5199,
+     5675
+    ],
+    "fy": 20407
+   },
+   {
+    "year": 2025,
+    "q": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "fy": 24216
+   },
+   {
+    "year": 2026,
+    "q": [
+     null,
+     7084,
+     null,
+     null
+    ],
+    "fy": null
+   }
+  ]
+ },
+ "note": "Источник: BlackRock 10-K FY2025 / 8-K Q2 2026 + Stockanalysis (BLK, NYSE), в $млн если не указано иное. Колонка TTM в исходном скриншоте была повреждена и исправлена по Q2 2026 8-K / Stockanalysis: выручка ~$27.3B (не $20.2B), чистая прибыль (attributable) ~$6.58B, выручка на акцию ~$165 (не 130.31). AUM $15.34T (Q2 2026, +22% г/г) — это клиентские активы под управлением (AUM), база для базовых комиссий за управление (base fees), а не собственные позиции BlackRock. Падение GAAP-маржи и ROE в FY2025 отражает затраты на интеграцию GIP / HPS / Preqin и рост капитала на ~$25B+, а не ухудшение бизнеса — операционная маржа (adjusted) держится ~45.9% (Q2 2026). BVPS / TBVPS за TTM не раскрыты в источниках — уточнить по 10-K FY2025 (баланс). Похожие компании — реальные peers (вместо авто-подбора фондов)."
+}
