@@ -1,0 +1,643 @@
+{
+ "id": "fairfax",
+ "asOf": "23.07.2026",
+ "quote": {
+  "ticker": "FFH.TO",
+  "exchange": "Toronto Stock Exchange",
+  "price": 2317.75,
+  "currency": "CAD",
+  "change": -12.51,
+  "marketCap": "47.80B CAD"
+ },
+ "returns": [
+  {
+   "period": "1 год",
+   "stock": -5.24,
+   "sp500": 18.21
+  },
+  {
+   "period": "3 года",
+   "stock": 131.11,
+   "sp500": 64.38
+  },
+  {
+   "period": "5 лет",
+   "stock": 338.97,
+   "sp500": 72.43
+  }
+ ],
+ "years": [
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024",
+  "2025",
+  "TTM"
+ ],
+ "rows": [
+  {
+   "label": "Revenue per Share",
+   "fmt": "dec",
+   "v": [
+    463.37,
+    415.59,
+    402.98,
+    551.16,
+    600.15,
+    787.36,
+    750.95,
+    994.18,
+    828.44,
+    1113.02,
+    1205.21,
+    1417.51,
+    1397.97
+   ]
+  },
+  {
+   "label": "Basic EPS, GAAP",
+   "fmt": "dec",
+   "v": [
+    74.4,
+    23.49,
+    -24.18,
+    66.74,
+    12.03,
+    72.8,
+    6.59,
+    129.33,
+    140.83,
+    186.87,
+    171.02,
+    221.35,
+    212.98
+   ]
+  },
+  {
+   "label": "Free Cash Flow / Share",
+   "fmt": "dec",
+   "v": [
+    -6.48,
+    -2.56,
+    45.61,
+    94.33,
+    -78.56,
+    38.5,
+    -5.05,
+    242.25,
+    -204.7,
+    -23.88,
+    160.24,
+    85.46,
+    39.94
+   ]
+  },
+  {
+   "label": "Dividend per Share",
+   "fmt": "dec",
+   "v": [
+    12.87,
+    12.03,
+    11.81,
+    11.1,
+    11.94,
+    12.04,
+    12.09,
+    12.2,
+    12.48,
+    12.72,
+    18.4,
+    17.16,
+    16.34
+   ]
+  },
+  {
+   "label": "Book Value per Share",
+   "fmt": "dec",
+   "v": [
+    403.88,
+    428.83,
+    400.17,
+    509.76,
+    462.56,
+    526.98,
+    521.97,
+    628.24,
+    805.43,
+    986.55,
+    1101.75,
+    1282.7,
+    1283.27
+   ]
+  },
+  {
+   "label": "Tangible Book Value / Share",
+   "fmt": "dec",
+   "v": [
+    331.39,
+    338.43,
+    288.36,
+    433.04,
+    376.38,
+    385.77,
+    376.7,
+    547.62,
+    676.63,
+    862.23,
+    847.57,
+    1039.78,
+    1045.67
+   ]
+  },
+  {
+   "label": "Basic Weighted Avg Shares",
+   "fmt": "int",
+   "v": [
+    21,
+    22,
+    23,
+    25,
+    28,
+    27,
+    26,
+    26,
+    24,
+    23,
+    22,
+    21,
+    21
+   ]
+  },
+  {
+   "label": "Sales / Revenue",
+   "fmt": "int",
+   "v": [
+    9817,
+    9172,
+    9275,
+    14006,
+    16508,
+    21181,
+    19860,
+    25802,
+    19583,
+    25803,
+    26964,
+    30405,
+    29684
+   ]
+  },
+  {
+   "label": "Operating Margin",
+   "fmt": "pct",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "label": "Depreciation Expense",
+   "fmt": "int",
+   "v": [
+    94,
+    133,
+    192,
+    280,
+    351,
+    651,
+    752,
+    930,
+    677,
+    896,
+    754,
+    784,
+    669
+   ]
+  },
+  {
+   "label": "Net Income, GAAP",
+   "fmt": "int",
+   "v": [
+    1633,
+    568,
+    -512,
+    1741,
+    376,
+    2004,
+    218,
+    3401,
+    3374,
+    4382,
+    3875,
+    4772,
+    4522
+   ]
+  },
+  {
+   "label": "Effective Tax Rate",
+   "fmt": "pct",
+   "v": [
+    28.8,
+    null,
+    null,
+    20.18,
+    5.13,
+    11.71,
+    84.68,
+    16.53,
+    22.28,
+    13.77,
+    24.4,
+    17.96,
+    19.76
+   ]
+  },
+  {
+   "label": "Profit Margin",
+   "fmt": "pct",
+   "v": [
+    16.64,
+    6.19,
+    -5.53,
+    12.43,
+    2.28,
+    9.46,
+    1.1,
+    13.18,
+    17.23,
+    16.98,
+    14.37,
+    15.7,
+    15.24
+   ]
+  },
+  {
+   "label": "Working Capital",
+   "fmt": "int",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "label": "LT Debt",
+   "fmt": "int",
+   "v": [
+    3105,
+    3139,
+    4166,
+    6029,
+    6116,
+    7686,
+    8334,
+    7753,
+    8819,
+    9737,
+    10914,
+    12354,
+    14049
+   ]
+  },
+  {
+   "label": "Total Equity",
+   "fmt": "int",
+   "v": [
+    9744,
+    12019,
+    11820,
+    18412,
+    17365,
+    17907,
+    17527,
+    21476,
+    23019,
+    27701,
+    28349,
+    30874,
+    30658
+   ]
+  },
+  {
+   "label": "Return on Invested Capital",
+   "fmt": "pct",
+   "v": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "label": "Return on Capital",
+   "fmt": "pct",
+   "v": [
+    14.23,
+    null,
+    null,
+    10,
+    1.05,
+    9.34,
+    1.66,
+    11.87,
+    10.12,
+    11.14,
+    9.6,
+    10.96,
+    10.55
+   ]
+  },
+  {
+   "label": "Return on Common Equity",
+   "fmt": "pct",
+   "v": [
+    20.01,
+    5.75,
+    -5.96,
+    15.3,
+    2.58,
+    14.56,
+    1.25,
+    22.3,
+    18.84,
+    20.67,
+    16.1,
+    18.2,
+    17.33
+   ]
+  }
+ ],
+ "chartRow": "Book Value per Share",
+ "description": {
+  "ceo": "V. Prem Watsa",
+  "employees": "47,040",
+  "sector": "Financial Services",
+  "industry": "Insurance — Property & Casualty",
+  "address": "95 Wellington Street West, Toronto, ON, Canada M5J 2N7",
+  "ipo": "12 янв 1995",
+  "cik": "0000915191",
+  "website": "fairfax.ca",
+  "peers": [
+   "Berkshire Hathaway (BRK.B)",
+   "Markel (MKL)",
+   "W. R. Berkley (WRB)",
+   "Chubb (CB)",
+   "Brookfield (BN)"
+  ]
+ },
+ "capitalStructure": {
+  "periods": [
+   "Sep'25",
+   "Dec'25",
+   "Mar'26"
+  ],
+  "rows": [
+   {
+    "label": "ST Debt",
+    "v": [
+     null,
+     2480,
+     null
+    ]
+   },
+   {
+    "label": "LT Borrowings",
+    "v": [
+     13842,
+     11163,
+     14049
+    ]
+   },
+   {
+    "label": "LT Finance Leases",
+    "v": [
+     null,
+     1191,
+     null
+    ]
+   },
+   {
+    "label": "Preferred Equity & Hybrid",
+    "v": [
+     520,
+     232,
+     232
+    ]
+   },
+   {
+    "label": "Shares Outstanding",
+    "v": [
+     22,
+     22,
+     21
+    ]
+   },
+   {
+    "label": "Market Capitalization",
+    "v": [
+     37872,
+     40864,
+     36184
+    ]
+   }
+  ]
+ },
+ "workingCapital": {
+  "periods": [
+   "Sep'25",
+   "Dec'25",
+   "Mar'26"
+  ],
+  "groups": [
+   {
+    "label": "Total Current Assets",
+    "total": [
+     null,
+     null,
+     null
+    ],
+    "items": [
+     {
+      "label": "Cash & Equivalents",
+      "v": [
+       11435,
+       8573,
+       6688
+      ]
+     },
+     {
+      "label": "Accounts Receivable",
+      "v": [
+       919,
+       1006,
+       962
+      ]
+     },
+     {
+      "label": "Inventories",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     }
+    ]
+   },
+   {
+    "label": "Total Current Liabilities",
+    "total": [
+     null,
+     null,
+     null
+    ],
+    "items": [
+     {
+      "label": "Payables & Accruals",
+      "v": [
+       6933,
+       4534,
+       6365
+      ]
+     },
+     {
+      "label": "ST Debt",
+      "v": [
+       null,
+       2480,
+       null
+      ]
+     },
+     {
+      "label": "Deferred Revenue",
+      "v": [
+       null,
+       null,
+       null
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "growthRates": {
+  "cols": [
+   "10 лет",
+   "5 лет",
+   "1 год"
+  ],
+  "rows": [
+   {
+    "label": "Total Equity",
+    "v": [
+     11.07,
+     12.26,
+     8.91
+    ]
+   },
+   {
+    "label": "Free Cash Flow",
+    "v": [
+     -814.92,
+     -1174.31,
+     -48.87
+    ]
+   },
+   {
+    "label": "Net Income, GAAP",
+    "v": [
+     113.35,
+     299.59,
+     23.16
+    ]
+   },
+   {
+    "label": "Sales / Revenue",
+    "v": [
+     14.69,
+     10.97,
+     12.76
+    ]
+   },
+   {
+    "label": "Total Cash Common Dividends",
+    "v": [
+     5.76,
+     6.27,
+     -5.37
+    ]
+   }
+  ]
+ },
+ "quarterlyRevenue": {
+  "years": [
+   {
+    "year": 2024,
+    "q": [
+     6260,
+     6802,
+     8053,
+     7696
+    ],
+    "fy": 26964
+   },
+   {
+    "year": 2025,
+    "q": [
+     7479,
+     8020,
+     7548,
+     7702
+    ],
+    "fy": 30405
+   },
+   {
+    "year": 2026,
+    "q": [
+     6414,
+     null,
+     null,
+     null
+    ],
+    "fy": null
+   }
+  ]
+ },
+ "note": "Источник: FRC / Roic.ai (FFH, Toronto Stock Exchange), в $млн если не указано иное. Важно про валюту: акция котируется в CAD (цена 2 317.75 CAD, капитализация ~47.80B CAD), но Fairfax публикует финансовую отчётность в USD — строки Revenue/Share, Book Value per Share (BVPS), Net Income, Total Equity даны в USD. Строка BVPS в таблице рассчитана Roic ($1 282.7 за 2025); официальный отчётный BVPS Fairfax — $1 260.19 (USD) на 31.12.2025, +20.5% с учётом дивиденда. Похожие компании — реальные страховые peers (Berkshire, Markel, W. R. Berkley, Chubb), а не альт-менеджеры."
+}
