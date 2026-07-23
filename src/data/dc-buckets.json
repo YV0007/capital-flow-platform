@@ -17,31 +17,38 @@
   "DC_BUCKETS": {
     "Power & Grid": {
       "color": "#22d3ee",
-      "sectors": ["Transformers", "Power", "Power Mgmt", "Fuel Cells", "Switchgear", "Nuclear/SMR", "SMR", "Gas Pipelines", "Gas Turbines"],
+      "sectors": ["Transformers", "Power", "Power Mgmt", "Fuel Cells", "Switchgear", "Nuclear", "SMR", "Gas Pipelines", "Gas Turbines"],
       "topCompany": "GE Vernova",
       "topTicker": "NYSE: GEV",
-      "why": "Transformers, switchgear, gas turbines, fuel cells, SMRs — where the buildout actually hits the physical world. Transformer lead times of 30–40 months and PJM interconnection queues over 8 years make this the single most binding constraint in the stack."
+      "why": "Transformers, switchgear, gas turbines, fuel cells, SMRs — where the buildout actually hits the physical world. Power is now scarcer than chips: a ~2,600 GW interconnection backlog (median ~5-year wait) and 30–40-month transformer lead times make this the single most binding constraint in the stack. GE Vernova's gas-turbine backlog hit ~100 GW / $176B with pricing up ~300% in three years."
     },
     "Compute & Silicon": {
       "color": "#a78bfa",
-      "sectors": ["Adv Packaging", "AI Silicon", "AI Compute Infra", "AI Compute Infra (pivot)", "EDA", "Frontier Lab", "IP/Bonding", "Wide-Bandgap", "PCB"],
-      "topCompany": "BESI",
-      "topTicker": "AMS: BESI",
-      "why": "Where capital is most concentrated and most exposed. The HBM hybrid-bonding monopoly (BESI/ASMPT) and the EDA duopoly (Synopsys/Cadence) are durable. Merchant AI accelerators and frontier labs are not — post-Groq, the exit math is brutal."
+      "sectors": ["Adv Packaging", "AI Silicon", "Custom ASIC", "Server Systems", "AI Compute Infra", "AI Compute Infra (pivot)", "EDA", "Frontier Lab", "IP/Bonding", "Wide-Bandgap", "PCB"],
+      "topCompany": "Broadcom",
+      "topTicker": "NASDAQ: AVGO",
+      "why": "Where capital is most concentrated and most exposed. The EDA duopoly (Synopsys/Cadence) and custom-ASIC design (Broadcom/Marvell, growing ~45%/yr vs ~16% for GPUs) are durable moats. Merchant AI accelerators and frontier labs are not — and the neocloud model now runs on circular financing (Nvidia takes equity → neoclouds buy Nvidia GPUs → GPU-collateralised debt), which holds only while AI demand keeps compounding."
+    },
+    "Memory & Storage": {
+      "color": "#fb7185",
+      "sectors": ["HBM", "DRAM", "NAND/SSD"],
+      "topCompany": "SK Hynix",
+      "topTicker": "KRX: 000660",
+      "why": "Now ~63% of an AI chip's bill of materials — bigger than the logic die (~13%) and tighter than the GPU itself. An HBM/DRAM/NAND triopoly (SK Hynix, Samsung, Micron) running 70%+ margins, sold out of 2026 HBM with 2027 largely booked. DRAM contract prices rose 90%+ in a single quarter. The scarcest, highest-margin layer in the whole stack — and the one the map was missing."
     },
     "Materials & Chemicals": {
       "color": "#f59e0b",
-      "sectors": ["GOES Steel", "Specialty Chem", "Photoresist", "InP/GaAs", "Titanium"],
+      "sectors": ["GOES Steel", "Specialty Chem", "Photoresist", "InP/GaAs", "Titanium", "HBM Materials"],
       "topCompany": "Cleveland-Cliffs",
       "topTicker": "NYSE: CLF",
-      "why": "Quiet near-monopolies. GOES electrical steel (Cleveland-Cliffs is the sole North American producer), EUV photoresists, high-purity silicon wafers, InP / GaAs substrates for photonics, and titanium alloys for gas-turbine generators that now power AI campuses."
+      "why": "Quiet near-monopolies. GOES electrical steel (Cleveland-Cliffs is the sole North American producer), EUV photoresists, high-purity silicon wafers, InP / GaAs substrates for photonics, titanium alloys for gas-turbine generators, and the HBM consumables (Ajinomoto ~98% of ABF film, Namics sole-source MR-MUF) that a handful of Japanese suppliers control outright."
     },
     "Connectivity & Photonics": {
       "color": "#10b981",
-      "sectors": ["Dark Fiber", "Fiber/Cable", "Photonics"],
-      "topCompany": "Coherent",
-      "topTicker": "NYSE: COHR",
-      "why": "Inter-region and intra-rack bandwidth. Subsea triopoly, multi-decade dark-fiber IRUs from hyperscalers, and the CPO / silicon-photonics transition that copper interconnect cannot scale past."
+      "sectors": ["Dark Fiber", "Fiber/Cable", "Photonics", "Network Silicon", "Interconnect Fabric", "Optical Modules"],
+      "topCompany": "Broadcom",
+      "topTicker": "NASDAQ: AVGO",
+      "why": "The whole 'moving-bits' half of the data center: switch silicon (Broadcom, Marvell), the scale-up (NVLink/UALink) and scale-out (InfiniBand vs Ethernet) fabrics, 800G/1.6T optical modules, plus subsea fibre and hyperscaler dark-fibre IRUs. A GB200 NVL72 rack is ~2 miles of copper and thousands of optical links; networking is the fastest-growing capex line at both Nvidia and Broadcom."
     },
     "Construction & Labor": {
       "color": "#ef4444",
