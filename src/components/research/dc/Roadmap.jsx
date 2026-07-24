@@ -1091,150 +1091,250 @@ function ChainPill({ node, onClick }) {
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────
-// NodeDetail — full-page deep-dive for a single sub-sector.
-// Data-driven: rich content comes from DC_DETAILS[node.id] when present;
-// otherwise the page shows the base ЧТО ЭТО / РОЛЬ / companies plus a
-// styled placeholder marking where the deeper breakdown will go.
-// ──────────────────────────────────────────────────────────────────────────
+
+// ══════════════════════════════════════════════════════════════════════════
+// NodeDetail — full-page INVESTMENT deep-dive for a sub-sector.
+// Rendered as a decision-grade research memo, data-driven from DC_DETAILS[id].
+// 12 optional blocks (verdict, TL;DR, market, value-capture, competition,
+// demand, supply, unit-econ, roadmap, dependencies, risk, universe, monitor,
+// scenarios). A node with no data shows a placeholder.
+// ══════════════════════════════════════════════════════════════════════════
+
+// ─ Shared styles ──────────────────────────────────────────────────────────
+const thCell     = { padding: '4px 14px 8px 0', fontWeight: 700, whiteSpace: 'nowrap' };
+const tdCell     = { padding: '11px 14px 11px 0', verticalAlign: 'top' };
+const cardBg     = { background: '#0d0d0e', border: '1px solid #1f1f23', borderRadius: 12 };
+const miniCard   = { background: 'rgba(255,255,255,0.02)', border: '1px solid #27272a', borderRadius: 9, padding: '12px 14px' };
+const miniKicker = { fontSize: 9, color: '#71717a', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 };
+const miniBody   = { fontSize: 12, color: '#c4c4cc', lineHeight: 1.6 };
+const thRow      = { color: '#71717a', textAlign: 'left', fontFamily: 'ui-monospace,monospace', fontSize: 9.5, letterSpacing: '0.1em' };
+
+function trendGlyph(t) { return t === 'up' ? { s: '▲', c: '#10b981' } : t === 'down' ? { s: '▼', c: '#ef4444' } : { s: '▬', c: '#a1a1aa' }; }
+
 function Paragraphs({ text, style }) {
-  return String(text).split(/\n{2,}/).map((p, i) => (
-    <p key={i} style={{ margin: i === 0 ? 0 : '12px 0 0', ...style }}>{p}</p>
-  ));
+  return String(text).split(/\n{2,}/).map((p, i) => <p key={i} style={{ margin: i === 0 ? 0 : '12px 0 0', ...style }}>{p}</p>);
 }
 
-function DetailSection({ accent, kicker, children }) {
+function Src({ children }) {
+  if (!children) return null;
+  return <span style={{ fontSize: 9.5, color: '#52525b', fontFamily: 'ui-monospace,monospace', marginLeft: 6, whiteSpace: 'nowrap' }}>· {children}</span>;
+}
+
+// Titled section with an anchor id for the jump-nav.
+function Block({ id, accent, kicker, lead, children }) {
   return (
-    <div style={{
-      background: '#0d0d0e',
-      border: '1px solid #1f1f23',
-      borderRadius: 12,
-      padding: '22px 26px',
-      marginBottom: 16,
-    }}>
-      <div style={{
-        fontSize: 9.5, color: accent,
-        fontFamily: 'ui-monospace,monospace',
-        letterSpacing: '0.16em', fontWeight: 700,
-        marginBottom: 12,
-      }}>{kicker}</div>
+    <section id={id} style={{ scrollMarginTop: 12, marginBottom: 20 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14, borderBottom: '1px solid #1f1f23', paddingBottom: 10 }}>
+        <div style={{ fontSize: 10.5, color: accent, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>{kicker}</div>
+        {lead && <div style={{ marginLeft: 'auto', fontSize: 11, color: '#a1a1aa', textAlign: 'right' }}>{lead}</div>}
+      </div>
       {children}
-    </div>
+    </section>
   );
 }
 
-// ─ Shared styles for detail tables / mini-cards ───────────────────────────
-const thCell    = { padding: '4px 12px 8px 0', fontWeight: 700, whiteSpace: 'nowrap' };
-const tdCell    = { padding: '10px 12px 10px 0', verticalAlign: 'top' };
-const miniCard  = { background: 'rgba(255,255,255,0.02)', border: '1px solid #27272a', borderRadius: 9, padding: '12px 14px' };
-const miniKicker= { fontSize: 9, color: '#71717a', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 };
-const miniBody  = { fontSize: 11.5, color: '#c4c4cc', lineHeight: 1.6 };
-
-function trendGlyph(t) {
-  return t === 'up' ? { s: '▲', c: '#10b981' } : t === 'down' ? { s: '▼', c: '#ef4444' } : { s: '▬', c: '#a1a1aa' };
-}
-
-function ScoreBar({ label, value, accent }) {
-  const pct = Math.max(0, Math.min(10, Number(value) || 0)) * 10;
+function StatCard({ label, value, note, accent, src }) {
   return (
-    <div style={{ marginBottom: 10 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#a1a1aa', marginBottom: 5 }}>
-        <span>{label}</span>
-        <span style={{ color: '#e4e4e7', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{value}/10</span>
-      </div>
-      <div style={{ height: 6, borderRadius: 3, background: '#1f1f23', overflow: 'hidden' }}>
-        <div style={{ width: pct + '%', height: '100%', background: accent, borderRadius: 3 }} />
-      </div>
+    <div style={miniCard}>
+      <div style={miniKicker}>{label}</div>
+      <div style={{ fontSize: 22, fontWeight: 800, color: accent || '#fafafa', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{value}</div>
+      {note && <div style={{ fontSize: 11, color: '#a1a1aa', marginTop: 5, lineHeight: 1.5 }}>{note}<Src>{src}</Src></div>}
     </div>
   );
 }
 
 function MetaCell({ label, value }) {
+  return <div style={miniCard}><div style={miniKicker}>{label}</div><div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.55 }}>{value}</div></div>;
+}
+
+function Badge({ text, col }) {
+  return <span style={{ fontSize: 10.5, fontWeight: 700, color: col, background: `${col}18`, border: `1px solid ${col}44`, borderRadius: 5, padding: '2px 8px', whiteSpace: 'nowrap' }}>{text}</span>;
+}
+
+function ScoreBar({ label, value, accent }) {
+  const n = Number(value) || 0, pct = Math.max(0, Math.min(10, n)) * 10;
+  const col = n >= 7 ? '#10b981' : n >= 5 ? '#f59e0b' : '#ef4444';
   return (
-    <div style={miniCard}>
-      <div style={miniKicker}>{label}</div>
-      <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.55 }}>{value}</div>
+    <div style={{ marginBottom: 9 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#a1a1aa', marginBottom: 4 }}>
+        <span>{label}</span><span style={{ color: '#e4e4e7', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{value}</span>
+      </div>
+      <div style={{ height: 6, borderRadius: 3, background: '#1f1f23', overflow: 'hidden' }}>
+        <div style={{ width: pct + '%', height: '100%', background: col, borderRadius: 3 }} />
+      </div>
     </div>
   );
 }
 
-function CaseList({ title, items, color }) {
+function PurePlay({ v, c }) {
+  const n = Number(v) || 0;
   return (
-    <div style={{ background: `${color}0d`, border: `1px solid ${color}30`, borderRadius: 9, padding: '12px 14px' }}>
-      <div style={{ fontSize: 9, color, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 8 }}>{title}</div>
-      <ul style={{ margin: 0, paddingLeft: 16, color: '#d4d4d8', fontSize: 12, lineHeight: 1.65 }}>
-        {items.map((it, i) => <li key={i} style={{ marginBottom: 4 }}>{it}</li>)}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+      <div style={{ width: 44, height: 6, background: '#1f1f23', borderRadius: 3, overflow: 'hidden' }}>
+        <div style={{ width: (Math.max(0, Math.min(10, n)) * 10) + '%', height: '100%', background: c }} />
+      </div>
+      <span style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{v}</span>
+    </div>
+  );
+}
+
+// ─ Verdict hero (decision summary) ─────────────────────────────────────────
+function VerdictHero({ v, c, asOf }) {
+  const subs = v.subScores ? Object.entries(v.subScores) : [];
+  const score = v.score != null ? Number(v.score) : (subs.length ? Math.round(subs.reduce((a, [, x]) => a + Number(x), 0) / subs.length) : null);
+  const scoreCol = score == null ? '#a1a1aa' : score >= 7 ? '#10b981' : score >= 5 ? '#f59e0b' : '#ef4444';
+  return (
+    <div style={{ background: `linear-gradient(180deg, ${c}1c 0%, #0d0d0e 65%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 28px', marginBottom: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 18, flexWrap: 'wrap', gap: 8 }}>
+        <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>ВЕРДИКТ · ИНВЕСТ-ОЦЕНКА</div>
+        {asOf && <div style={{ fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>данные на {asOf}</div>}
+      </div>
+      <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap', alignItems: 'center' }}>
+        {score != null && (
+          <div style={{ textAlign: 'center', minWidth: 104 }}>
+            <div style={{ fontSize: 60, fontWeight: 800, color: scoreCol, lineHeight: 1, letterSpacing: '-0.04em' }}>{score}</div>
+            <div style={{ fontSize: 10, color: '#71717a', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>ИЗ 10</div>
+          </div>
+        )}
+        <div style={{ flex: 1, minWidth: 240 }}>{subs.map(([k, val]) => <ScoreBar key={k} label={k} value={val} accent={c} />)}</div>
+      </div>
+      {(v.horizon || v.sizing) && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 12, marginTop: 20 }}>
+          {v.horizon && <MetaCell label="ГОРИЗОНТ" value={v.horizon} />}
+          {v.sizing && <MetaCell label="РАЗМЕР ПОЗИЦИИ" value={v.sizing} />}
+        </div>
+      )}
+      {v.keyQuestion && (
+        <div style={{ marginTop: 14, padding: '16px 18px', background: `${c}14`, border: `1px solid ${c}3a`, borderRadius: 10 }}>
+          <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 7 }}>ГЛАВНЫЙ ВОПРОС</div>
+          <div style={{ fontSize: 14.5, color: '#fafafa', lineHeight: 1.6, fontStyle: 'italic' }}>{v.keyQuestion}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Tldr({ items, c }) {
+  return (
+    <div style={{ ...cardBg, padding: '18px 22px', marginBottom: 16, borderLeft: `3px solid ${c}` }}>
+      <div style={{ ...miniKicker, marginBottom: 10 }}>КОРОТКО · ГЛАВНОЕ</div>
+      <ul style={{ margin: 0, paddingLeft: 18, color: '#d4d4d8', fontSize: 13.5, lineHeight: 1.7 }}>
+        {items.map((t, i) => <li key={i} style={{ marginBottom: 6 }}>{t}</li>)}
       </ul>
     </div>
   );
 }
 
-// Section 12 — Verdict scorecard (decision summary, top of page)
-function VerdictBlock({ v, c }) {
-  const score = Number(v.score) || 0;
-  const scoreColor = score >= 7 ? '#10b981' : score >= 5 ? '#f59e0b' : '#ef4444';
+function SectionNav({ items, c }) {
   return (
-    <div style={{ background: `linear-gradient(180deg, ${c}16 0%, #0d0d0e 60%)`, border: `1px solid ${c}44`, borderRadius: 14, padding: '24px 26px', marginBottom: 18 }}>
-      <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 16 }}>ВЕРДИКТ · СТОИТ ЛИ СМОТРЕТЬ</div>
-      <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-        <div style={{ textAlign: 'center', minWidth: 92 }}>
-          <div style={{ fontSize: 52, fontWeight: 800, color: scoreColor, lineHeight: 1, letterSpacing: '-0.03em' }}>{v.score}</div>
-          <div style={{ fontSize: 10, color: '#71717a', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>из 10</div>
-        </div>
-        <div style={{ flex: 1, minWidth: 220 }}>
-          {v.subScores && Object.entries(v.subScores).map(([k, val]) => <ScoreBar key={k} label={k} value={val} accent={c} />)}
-        </div>
-      </div>
-      {(v.horizon || v.sizing) && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12, marginTop: 18 }}>
-          {v.horizon && <MetaCell label="ГОРИЗОНТ" value={v.horizon} />}
-          {v.sizing && <MetaCell label="РАЗМЕР ПОЗИЦИИ" value={v.sizing} />}
-        </div>
-      )}
-      {(v.bull || v.bear) && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 12, marginTop: 12 }}>
-          {v.bull && <CaseList title="БЫЧИЙ СЦЕНАРИЙ" items={v.bull} color="#10b981" />}
-          {v.bear && <CaseList title="МЕДВЕЖИЙ СЦЕНАРИЙ" items={v.bear} color="#ef4444" />}
-        </div>
-      )}
-      {v.keyQuestion && (
-        <div style={{ marginTop: 16, padding: '14px 16px', background: `${c}12`, border: `1px solid ${c}33`, borderRadius: 9 }}>
-          <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 }}>ГЛАВНЫЙ ВОПРОС</div>
-          <div style={{ fontSize: 13.5, color: '#e4e4e7', lineHeight: 1.6, fontStyle: 'italic' }}>{v.keyQuestion}</div>
-        </div>
-      )}
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginBottom: 24 }}>
+      {items.map(it => (
+        <button key={it.id}
+          onClick={() => { const el = document.getElementById(it.id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+          style={{ fontSize: 11, color: '#c4c4cc', background: 'rgba(255,255,255,0.02)', border: '1px solid #27272a', borderRadius: 999, padding: '5px 12px', cursor: 'pointer', font: 'inherit', transition: 'all 140ms' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = c; e.currentTarget.style.color = '#fafafa'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = '#27272a'; e.currentTarget.style.color = '#c4c4cc'; }}>
+          {it.label}
+        </button>
+      ))}
     </div>
   );
 }
 
-// Section 3 — Competitive structure
-function CompetitionBlock({ d, c }) {
+// ─ Block 1 — Market sizing (with TAM bar chart) ────────────────────────────
+function TamChart({ rows, c }) {
+  const max = Math.max(...rows.map(r => Number(r.value) || 0), 1);
   return (
-    <DetailSection accent={c} kicker="КОНКУРЕНЦИЯ · КТО ДЕРЖИТ РЫНОК">
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, height: 160, padding: '8px 4px 0' }}>
+      {rows.map((r, i) => (
+        <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%' }}>
+          <div style={{ fontSize: 11, color: '#e4e4e7', fontWeight: 700, marginBottom: 6 }}>{r.label || ('$' + r.value + 'B')}</div>
+          <div style={{ width: '100%', maxWidth: 54, height: Math.max(4, (Number(r.value) / max) * 112) + 'px', background: `linear-gradient(180deg, ${c} 0%, ${c}66 100%)`, borderRadius: '5px 5px 0 0' }} />
+          <div style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 8 }}>{r.year}</div>
+          {r.source && <div style={{ fontSize: 8.5, color: '#52525b', marginTop: 2 }}>{r.source}</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function MarketSizingBlock({ d, c }) {
+  return (
+    <Block id="market" accent={c} kicker="01 · РАЗМЕР РЫНКА И ТРАЕКТОРИЯ" lead={d.cagr}>
+      {d.tam?.length > 0 && (
+        <div style={{ ...cardBg, padding: '16px 18px', marginBottom: 14 }}>
+          <div style={{ ...miniKicker, marginBottom: 2 }}>TAM ПО ГОДАМ ($ МЛРД)</div>
+          <TamChart rows={d.tam} c={c} />
+        </div>
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))', gap: 12 }}>
+        {d.bomShare && <StatCard label="ДОЛЯ В СТОИМОСТИ AI-ЧИПА" value={d.bomShare.value} note={d.bomShare.note} accent={c} src={d.bomShare.source} />}
+        {d.volumeVsPrice?.volume && <div style={miniCard}><div style={miniKicker}>ОБЪЁМ</div><div style={miniBody}>{d.volumeVsPrice.volume}</div></div>}
+        {d.volumeVsPrice?.price && <div style={miniCard}><div style={miniKicker}>ЦЕНА</div><div style={miniBody}>{d.volumeVsPrice.price}</div></div>}
+        {d.volumeVsPrice?.mix && <div style={miniCard}><div style={miniKicker}>СДВИГ МИКСА</div><div style={miniBody}>{d.volumeVsPrice.mix}</div></div>}
+      </div>
+    </Block>
+  );
+}
+
+// ─ Block 2 — Value capture ─────────────────────────────────────────────────
+function ValueCaptureBlock({ d, c }) {
+  return (
+    <Block id="value" accent={c} kicker="02 · КАРТА ЗАХВАТА СТОИМОСТИ">
+      {d.margins?.length > 0 && (
+        <div style={{ overflowX: 'auto', marginBottom: 14 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+            <thead><tr style={thRow}><th style={thCell}>СЛОЙ ЦЕПОЧКИ</th><th style={thCell}>МАРЖА</th><th style={thCell}>ИСТОЧНИК</th></tr></thead>
+            <tbody>{d.margins.map((m, i) => (
+              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
+                <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600 }}>{m.layer}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7' }}>{m.margin}</td>
+                <td style={{ ...tdCell, color: '#71717a', fontSize: 10.5 }}>{m.source}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
+        {d.bottleneckNow && <div style={miniCard}><div style={miniKicker}>УЗКОЕ МЕСТО СЕЙЧАС</div><div style={miniBody}>{d.bottleneckNow}</div></div>}
+        {d.bottleneckNext && <div style={miniCard}><div style={miniKicker}>КУДА СМЕСТИТСЯ</div><div style={miniBody}>{d.bottleneckNext}</div></div>}
+        {d.capitalIntensity && <div style={miniCard}><div style={miniKicker}>КАПИТАЛОЁМКОСТЬ</div><div style={miniBody}>{d.capitalIntensity}</div></div>}
+      </div>
+    </Block>
+  );
+}
+
+// ─ Block 3 — Competition ───────────────────────────────────────────────────
+function CompetitionBlock({ d, c }) {
+  const cols = d.shareTrajectory?.length ? Object.keys(d.shareTrajectory[0]).filter(k => k !== 'period' && k !== 'source') : [];
+  return (
+    <Block id="competition" accent={c} kicker="03 · КОНКУРЕНТНАЯ СТРУКТУРА" lead={d.concentration}>
+      {d.shareTrajectory?.length > 0 && (
+        <div style={{ overflowX: 'auto', marginBottom: 14 }}>
+          <div style={{ ...miniKicker, marginBottom: 8 }}>ДОЛЯ РЫНКА · ТРАЕКТОРИЯ</div>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 420 }}>
+            <thead><tr style={thRow}><th style={thCell}>ПЕРИОД</th>{cols.map(k => <th key={k} style={thCell}>{k}</th>)}</tr></thead>
+            <tbody>{d.shareTrajectory.map((row, i) => {
+              const last = i === d.shareTrajectory.length - 1;
+              return (
+                <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
+                  <td style={{ ...tdCell, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{row.period}</td>
+                  {cols.map(k => <td key={k} style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: last ? '#fafafa' : '#c4c4cc', fontWeight: last ? 700 : 400 }}>{row[k]}</td>)}
+                </tr>);
+            })}</tbody>
+          </table>
+        </div>
+      )}
       {d.players?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
-            <thead>
-              <tr style={{ color: '#71717a', textAlign: 'left', fontFamily: 'ui-monospace,monospace', fontSize: 9.5, letterSpacing: '0.1em' }}>
-                <th style={thCell}>ИГРОК</th><th style={thCell}>ДОЛЯ</th><th style={thCell}>ТРЕНД</th><th style={thCell}>ТЕХ-ЛИД</th>
-              </tr>
-            </thead>
-            <tbody>
-              {d.players.map((p, i) => {
-                const g = trendGlyph(p.trend);
-                return (
-                  <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                    <td style={tdCell}>
-                      <span style={{ color: '#fafafa', fontWeight: 600 }}>{p.name}</span>
-                      {p.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 3, lineHeight: 1.5 }}>{p.note}</div>}
-                    </td>
-                    <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7', whiteSpace: 'nowrap' }}>{p.share}</td>
-                    <td style={tdCell}><span style={{ color: g.c, fontSize: 13 }}>{g.s}</span></td>
-                    <td style={{ ...tdCell, color: '#c4c4cc' }}>{p.tech}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
+            <thead><tr style={thRow}><th style={thCell}>ИГРОК</th><th style={thCell}>ДОЛЯ</th><th style={thCell}>ТРЕНД</th><th style={thCell}>ТЕХ / КВАЛИФИКАЦИЯ</th></tr></thead>
+            <tbody>{d.players.map((p, i) => { const g = trendGlyph(p.trend); return (
+              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
+                <td style={tdCell}><span style={{ color: '#fafafa', fontWeight: 600 }}>{p.name}</span>{p.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 3, lineHeight: 1.5 }}>{p.note}</div>}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7', whiteSpace: 'nowrap' }}>{p.share}</td>
+                <td style={tdCell}><span style={{ color: g.c, fontSize: 13 }}>{g.s}</span></td>
+                <td style={{ ...tdCell, color: '#c4c4cc' }}>{p.tech}</td>
+              </tr>); })}</tbody>
           </table>
         </div>
       )}
@@ -1242,36 +1342,29 @@ function CompetitionBlock({ d, c }) {
         {d.entryBarrier && (
           <div style={miniCard}>
             <div style={miniKicker}>БАРЬЕР ВХОДА</div>
-            <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6, color: (d.entryBarrier.verdict || '').toLowerCase().startsWith('нет') ? '#10b981' : '#f59e0b' }}>
-              Новый игрок за 3 года: {d.entryBarrier.verdict}
-            </div>
+            <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6, color: /нет|маловероят/i.test(d.entryBarrier.verdict || '') ? '#10b981' : '#f59e0b' }}>Новый игрок за 3 года: {d.entryBarrier.verdict}</div>
             <div style={miniBody}>{d.entryBarrier.why}</div>
           </div>
         )}
         {d.switchingCost && <div style={miniCard}><div style={miniKicker}>ИЗДЕРЖКИ ПЕРЕКЛЮЧЕНИЯ · РОВ</div><div style={miniBody}>{d.switchingCost}</div></div>}
-        {d.concentration && <div style={miniCard}><div style={miniKicker}>КОНЦЕНТРАЦИЯ</div><div style={miniBody}>{d.concentration}</div></div>}
       </div>
-    </DetailSection>
+    </Block>
   );
 }
 
-// Section 4 — Demand visibility
+// ─ Block 4 — Demand ────────────────────────────────────────────────────────
 function DemandBlock({ d, c }) {
   return (
-    <DetailSection accent={c} kicker="СПРОС · ВИДИМОСТЬ ЗАКОНТРАКТОВАННОСТИ">
+    <Block id="demand" accent={c} kicker="04 · ВИДИМОСТЬ СПРОСА">
       {d.soldOut?.length > 0 && (
-        <div style={{ marginBottom: 16 }}>
-          <div style={miniKicker}>РАСПРОДАНО / ЗАКОНТРАКТОВАНО ПО ГОДАМ</div>
-          <div style={{ display: 'flex', gap: 14, marginTop: 10, flexWrap: 'wrap' }}>
+        <div style={{ ...cardBg, padding: '16px 18px', marginBottom: 14 }}>
+          <div style={{ ...miniKicker, marginBottom: 10 }}>РАСПРОДАНО / ЗАКОНТРАКТОВАНО ПО ГОДАМ</div>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
             {d.soldOut.map((s, i) => (
               <div key={i} style={{ flex: '1 1 90px', minWidth: 90 }}>
-                <div style={{ height: 8, background: '#1f1f23', borderRadius: 4, overflow: 'hidden' }}>
-                  <div style={{ width: Math.min(100, s.pct) + '%', height: '100%', background: c }} />
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontSize: 11 }}>
-                  <span style={{ color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{s.year}</span>
-                  <span style={{ color: '#e4e4e7', fontWeight: 700 }}>{s.pct}%</span>
-                </div>
+                <div style={{ height: 8, background: '#1f1f23', borderRadius: 4, overflow: 'hidden' }}><div style={{ width: Math.min(100, s.pct) + '%', height: '100%', background: c }} /></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontSize: 11 }}><span style={{ color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{s.year}</span><span style={{ color: '#e4e4e7', fontWeight: 700 }}>{s.pct}%</span></div>
+                {s.note && <div style={{ fontSize: 9.5, color: '#71717a', marginTop: 3, lineHeight: 1.4 }}>{s.note}</div>}
               </div>
             ))}
           </div>
@@ -1280,329 +1373,331 @@ function DemandBlock({ d, c }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.contractStructure && <div style={miniCard}><div style={miniKicker}>СТРУКТУРА КОНТРАКТОВ</div><div style={miniBody}>{d.contractStructure}</div></div>}
         {d.customerConcentration && <div style={miniCard}><div style={miniKicker}>КОНЦЕНТРАЦИЯ КЛИЕНТОВ</div><div style={miniBody}>{d.customerConcentration}</div></div>}
-        {d.backlog && <div style={miniCard}><div style={miniKicker}>БЭКЛОГ</div><div style={miniBody}>{d.backlog}</div></div>}
+        {d.backlog && <div style={miniCard}><div style={miniKicker}>БЭКЛОГ / RPO</div><div style={miniBody}>{d.backlog}</div></div>}
+        {d.pricing && <div style={miniCard}><div style={miniKicker}>ЦЕНОВАЯ ТРАЕКТОРИЯ</div><div style={miniBody}>{d.pricing}</div></div>}
       </div>
-    </DetailSection>
+    </Block>
   );
 }
 
-// Section 5 — Supply response / balance
+// ─ Block 5 — Supply / balance (the key cyclical output) ────────────────────
 function SupplyBlock({ d, c }) {
-  const stateMap = {
-    deficit: { t: 'Дефицит', col: '#10b981' }, tight: { t: 'Напряжённо', col: '#22d3ee' },
-    balanced: { t: 'Баланс', col: '#a1a1aa' }, surplus: { t: 'Профицит', col: '#ef4444' }, unknown: { t: 'Неясно', col: '#52525b' },
-  };
+  const sm = { deficit: { t: 'Дефицит', col: '#10b981' }, tight: { t: 'Напряжённо', col: '#22d3ee' }, balanced: { t: 'Баланс', col: '#a1a1aa' }, surplus: { t: 'Профицит', col: '#ef4444' }, unknown: { t: 'Неясно', col: '#52525b' } };
   return (
-    <DetailSection accent={c} kicker="ПРЕДЛОЖЕНИЕ · БАЛАНС СПРОСА И ПРЕДЛОЖЕНИЯ">
+    <Block id="supply" accent={c} kicker="05 · ОТВЕТ ПРЕДЛОЖЕНИЯ · БАЛАНС" lead="ключ для цикличности">
       {d.balance?.length > 0 && (
-        <div style={{ marginBottom: 8 }}>
+        <div style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            {d.balance.map((b, i) => {
-              const st = stateMap[b.state] || stateMap.unknown;
-              return (
-                <div key={i} style={{ flex: '1 1 110px', minWidth: 110, background: `${st.col}12`, border: `1px solid ${st.col}44`, borderRadius: 9, padding: '12px' }}>
-                  <div style={{ fontSize: 11, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{b.year}</div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: st.col, marginTop: 4 }}>{st.t}</div>
-                  {b.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 3 }}>{b.note}</div>}
-                </div>
-              );
-            })}
+            {d.balance.map((b, i) => { const st = sm[b.state] || sm.unknown; return (
+              <div key={i} style={{ flex: '1 1 120px', minWidth: 120, background: `${st.col}12`, border: `1px solid ${st.col}44`, borderRadius: 10, padding: '14px' }}>
+                <div style={{ fontSize: 11, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{b.year}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: st.col, marginTop: 4 }}>{st.t}</div>
+                {b.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 4, lineHeight: 1.4 }}>{b.note}</div>}
+              </div>); })}
           </div>
           <div style={{ fontSize: 10, color: '#52525b', marginTop: 8, fontStyle: 'italic' }}>Дефицит = ценовая власть у производителя; профицит = падение цен.</div>
         </div>
       )}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12, marginTop: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.leadTime && <div style={miniCard}><div style={miniKicker}>СРОК ЗАПУСКА МОЩНОСТЕЙ</div><div style={miniBody}>{d.leadTime}</div></div>}
         {d.utilization && <div style={miniCard}><div style={miniKicker}>ЗАГРУЗКА</div><div style={miniBody}>{d.utilization}</div></div>}
+        {d.crowdingOut && <div style={miniCard}><div style={miniKicker}>ЭФФЕКТ ВЫТЕСНЕНИЯ</div><div style={miniBody}>{d.crowdingOut}</div></div>}
       </div>
       {d.capacityAdds?.length > 0 && (
         <div style={{ marginTop: 14 }}>
           <div style={miniKicker}>АНОНСИРОВАННЫЕ РАСШИРЕНИЯ</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
-            {d.capacityAdds.map((a, i) => (
-              <div key={i} style={{ display: 'flex', gap: 10, fontSize: 12, color: '#d4d4d8', lineHeight: 1.5, flexWrap: 'wrap' }}>
-                <span style={{ color: '#fafafa', fontWeight: 600, minWidth: 110 }}>{a.player}</span>
-                <span style={{ color: '#c4c4cc', flex: 1 }}>{a.detail}</span>
+            {d.capacityAdds.map((a, i) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 12, color: '#d4d4d8', lineHeight: 1.5, flexWrap: 'wrap' }}><span style={{ color: '#fafafa', fontWeight: 600, minWidth: 110 }}>{a.player}</span><span style={{ color: '#c4c4cc', flex: 1 }}>{a.detail}</span></div>)}
+          </div>
+        </div>
+      )}
+    </Block>
+  );
+}
+
+// ─ Block 6 — Unit economics ────────────────────────────────────────────────
+function UnitEconBlock({ d, c }) {
+  return (
+    <Block id="unit" accent={c} kicker="06 · ЮНИТ-ЭКОНОМИКА">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
+        {d.pricePerUnit && <div style={miniCard}><div style={miniKicker}>ЦЕНА ЗА ЕДИНИЦУ</div><div style={miniBody}>{d.pricePerUnit}</div></div>}
+        {d.grossMargin && <div style={miniCard}><div style={miniKicker}>ВАЛОВАЯ МАРЖА</div><div style={miniBody}>{d.grossMargin}</div></div>}
+        {d.costCurve && <div style={miniCard}><div style={miniKicker}>КРИВАЯ ИЗДЕРЖЕК · ЛИДЕР</div><div style={miniBody}>{d.costCurve}</div></div>}
+      </div>
+      {d.yields?.length > 0 && (
+        <div style={{ marginTop: 14 }}>
+          <div style={miniKicker}>ВЫХОД ГОДНЫХ (YIELD) — критично для HBM</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginTop: 8 }}>
+            {d.yields.map((y, i) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 12, color: '#d4d4d8', flexWrap: 'wrap' }}><span style={{ color: '#fafafa', fontWeight: 600, minWidth: 220 }}>{y.label}</span><span style={{ color: '#c4c4cc', flex: 1 }}>{y.value}</span></div>)}
+          </div>
+        </div>
+      )}
+    </Block>
+  );
+}
+
+// ─ Block 7 — Roadmap + disruption ──────────────────────────────────────────
+function RoadmapBlock({ d, c }) {
+  return (
+    <Block id="roadmap" accent={c} kicker="07 · ТЕХ-ДОРОЖНАЯ КАРТА И УГРОЗЫ">
+      {d.generations?.length > 0 && (
+        <div style={{ overflowX: 'auto', marginBottom: d.disruption?.length ? 16 : 0 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 520 }}>
+            <thead><tr style={thRow}><th style={thCell}>ПОКОЛЕНИЕ</th><th style={thCell}>MASS PROD.</th><th style={thCell}>ЧТО МЕНЯЕТСЯ / КТО ВЫИГРЫВАЕТ</th></tr></thead>
+            <tbody>{d.generations.map((r, i) => (
+              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
+                <td style={{ ...tdCell, color: '#fafafa', fontWeight: 700, whiteSpace: 'nowrap' }}>{r.gen}{r.spec && <div style={{ fontSize: 9.5, color: '#71717a', fontWeight: 400, marginTop: 2 }}>{r.spec}</div>}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7', whiteSpace: 'nowrap' }}>{r.mp}</td>
+                <td style={{ ...tdCell, color: '#c4c4cc' }}>{r.note}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+      )}
+      {d.disruption?.length > 0 && (
+        <div>
+          <div style={miniKicker}>УГРОЗЫ ЗАМЕЩЕНИЯ</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
+            {d.disruption.map((x, i) => (
+              <div key={i} style={{ ...miniCard, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'baseline' }}>
+                <span style={{ color: '#fafafa', fontWeight: 600, fontSize: 12.5, minWidth: 130 }}>{x.tech}</span>
+                <Badge text={x.verdict} col="#10b981" />
+                <span style={{ fontSize: 11.5, color: '#a1a1aa', flex: 1, lineHeight: 1.5, minWidth: 200 }}>{x.detail}</span>
               </div>
             ))}
           </div>
         </div>
       )}
-    </DetailSection>
+    </Block>
   );
 }
 
-// Section 10 — Investable universe
-function PurePlay({ v, c }) {
+// ─ Block 8 — Dependencies ──────────────────────────────────────────────────
+function DependenciesBlock({ d, c }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-      <div style={{ width: 44, height: 6, background: '#1f1f23', borderRadius: 3, overflow: 'hidden' }}>
-        <div style={{ width: (Math.max(0, Math.min(10, v)) * 10) + '%', height: '100%', background: c }} />
+    <Block id="deps" accent={c} kicker="08 · ЗАВИСИМОСТИ · UPSTREAM / DOWNSTREAM">
+      {d.upstream?.length > 0 && (
+        <div style={{ marginBottom: 14 }}>
+          <div style={miniKicker}>ВВЕРХ · КРИТИЧЕСКИЕ ВХОДЫ И МОНОПОЛИИ</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
+            {d.upstream.map((u, i) => (
+              <div key={i} style={{ ...miniCard, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'baseline' }}>
+                <span style={{ color: '#fafafa', fontWeight: 600, fontSize: 12.5, minWidth: 150 }}>{u.item}</span>
+                {u.supplier && <span style={{ fontSize: 11.5, color: c, fontFamily: 'ui-monospace,monospace' }}>{u.supplier}</span>}
+                {u.note && <span style={{ fontSize: 11.5, color: '#a1a1aa', flex: 1, lineHeight: 1.5, minWidth: 200 }}>{u.note}</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
+        {d.downstream && <div style={miniCard}><div style={miniKicker}>ВНИЗ · КТО ПОКУПАЕТ</div><div style={miniBody}>{d.downstream}</div></div>}
+        {d.correlation && <div style={miniCard}><div style={miniKicker}>КОРРЕЛЯЦИЯ / ЛАГ</div><div style={miniBody}>{d.correlation}</div></div>}
       </div>
-      <span style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{v}</span>
-    </div>
+    </Block>
   );
 }
 
-function UniverseBlock({ rows, c }) {
+// ─ Block 9 — Risk register (heat) ──────────────────────────────────────────
+function RiskMatrixBlock({ rows, c }) {
+  const lvl = x => { const s = (x || '').toLowerCase(); return s.includes('выс') ? '#ef4444' : s.includes('сред') ? '#f59e0b' : s.includes('низ') ? '#10b981' : '#a1a1aa'; };
   return (
-    <DetailSection accent={c} kicker="ИНВЕСТ-ВСЕЛЕННАЯ · ГДЕ ВЗЯТЬ ЭКСПОЗИЦИЮ">
+    <Block id="risks" accent={c} kicker="09 · РЕЕСТР РИСКОВ · ВЕРОЯТНОСТЬ × ЭФФЕКТ">
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 560 }}>
-          <thead>
-            <tr style={{ color: '#71717a', textAlign: 'left', fontFamily: 'ui-monospace,monospace', fontSize: 9.5, letterSpacing: '0.1em' }}>
-              <th style={thCell}>КОМПАНИЯ</th><th style={thCell}>ТИКЕР</th><th style={thCell}>КАП.</th><th style={thCell}>ЭКСПОЗИЦИЯ</th><th style={thCell}>ЧИСТОТА</th><th style={thCell}>ОЦЕНКА</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                <td style={tdCell}>
-                  <span style={{ color: '#fafafa', fontWeight: 600 }}>{r.company}</span>
-                  {r.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 3, lineHeight: 1.5 }}>{r.note}</div>}
-                </td>
-                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#a1a1aa', whiteSpace: 'nowrap' }}>{r.ticker}</td>
-                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#c4c4cc' }}>{r.mcap || '—'}</td>
-                <td style={{ ...tdCell, color: '#c4c4cc' }}>{r.exposure}</td>
-                <td style={tdCell}>{r.pureplay != null && <PurePlay v={r.pureplay} c={c} />}</td>
-                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#c4c4cc' }}>{r.valuation || '—'}</td>
-              </tr>
-            ))}
-          </tbody>
+          <thead><tr style={thRow}><th style={thCell}>РИСК</th><th style={thCell}>ВЕРОЯТ.</th><th style={thCell}>ЭФФЕКТ</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
+          <tbody>{rows.map((r, i) => (
+            <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
+              <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600, whiteSpace: 'nowrap' }}>{r.risk}</td>
+              <td style={tdCell}><Badge text={r.prob} col={lvl(r.prob)} /></td>
+              <td style={tdCell}><Badge text={r.impact} col={lvl(r.impact)} /></td>
+              <td style={{ ...tdCell, color: '#c4c4cc' }}>{r.note}</td>
+            </tr>))}</tbody>
         </table>
       </div>
-    </DetailSection>
+    </Block>
   );
 }
 
+// ─ Block 10 — Investable universe ──────────────────────────────────────────
+function UniverseBlock({ rows, c }) {
+  return (
+    <Block id="universe" accent={c} kicker="10 · ИНВЕСТ-ВСЕЛЕННАЯ">
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 640 }}>
+          <thead><tr style={thRow}><th style={thCell}>КОМПАНИЯ</th><th style={thCell}>ТИКЕР</th><th style={thCell}>КАП.</th><th style={thCell}>ЭКСПОЗИЦИЯ</th><th style={thCell}>ЧИСТОТА</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
+          <tbody>{rows.map((r, i) => (
+            <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
+              <td style={tdCell}><span style={{ color: '#fafafa', fontWeight: 600 }}>{r.company}</span>{r.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 3, lineHeight: 1.5 }}>{r.note}</div>}</td>
+              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#a1a1aa', whiteSpace: 'nowrap' }}>{r.ticker}</td>
+              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#c4c4cc', whiteSpace: 'nowrap' }}>{r.mcap || '—'}</td>
+              <td style={{ ...tdCell, color: '#c4c4cc' }}>{r.exposure}</td>
+              <td style={tdCell}>{r.pureplay != null && <PurePlay v={r.pureplay} c={c} />}</td>
+              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#c4c4cc' }}>{r.valuation || '—'}</td>
+            </tr>))}</tbody>
+        </table>
+      </div>
+    </Block>
+  );
+}
+
+// ─ Block 11 — Monitoring + canary ──────────────────────────────────────────
+function MonitoringBlock({ d, c }) {
+  return (
+    <Block id="monitor" accent={c} kicker="11 · ИНДИКАТОРЫ И МОНИТОРИНГ">
+      {d.metrics?.length > 0 && (
+        <div style={{ overflowX: 'auto', marginBottom: 14 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+            <thead><tr style={thRow}><th style={thCell}>МЕТРИКА</th><th style={thCell}>ИСТОЧНИК / ЧАСТОТА</th></tr></thead>
+            <tbody>{d.metrics.map((m, i) => <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}><td style={{ ...tdCell, color: '#e4e4e7' }}>{m.metric}</td><td style={{ ...tdCell, color: '#a1a1aa' }}>{m.source}</td></tr>)}</tbody>
+          </table>
+        </div>
+      )}
+      {d.canary?.length > 0 && (
+        <div style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 10, padding: '14px 16px' }}>
+          <div style={{ fontSize: 9, color: '#ef4444', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 8 }}>КАНАРЕЙКА · ПЕРВЫЙ ПРИЗНАК, ЧТО ТЕЗИС ЛОМАЕТСЯ</div>
+          <ul style={{ margin: 0, paddingLeft: 16, color: '#d4d4d8', fontSize: 12.5, lineHeight: 1.7 }}>{d.canary.map((x, i) => <li key={i} style={{ marginBottom: 4 }}>{x}</li>)}</ul>
+        </div>
+      )}
+    </Block>
+  );
+}
+
+// ─ Block 12 — Scenarios (bull / bear) ──────────────────────────────────────
+function BullBear({ v, c }) {
+  const Col = ({ title, items, color }) => (
+    <div style={{ background: `${color}0c`, border: `1px solid ${color}30`, borderRadius: 10, padding: '16px 18px' }}>
+      <div style={{ fontSize: 9.5, color, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 12 }}>{title}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {items.map((it, i) => {
+          const point = typeof it === 'string' ? it : it.point;
+          const confirm = typeof it === 'string' ? null : it.confirm;
+          return (
+            <div key={i}>
+              <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.55, fontWeight: 600 }}>{point}</div>
+              {confirm && <div style={{ fontSize: 11, color: '#a1a1aa', lineHeight: 1.5, marginTop: 4 }}><span style={{ color, fontWeight: 700 }}>Подтвердить: </span>{confirm}</div>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+  return (
+    <Block id="cases" accent={c} kicker="12 · СЦЕНАРИИ">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 14 }}>
+        {v.bull && <Col title="БЫЧИЙ СЦЕНАРИЙ" items={v.bull} color="#10b981" />}
+        {v.bear && <Col title="МЕДВЕЖИЙ СЦЕНАРИЙ" items={v.bear} color="#ef4444" />}
+      </div>
+    </Block>
+  );
+}
+
+// ─ NodeDetail — assembles the memo ─────────────────────────────────────────
 function NodeDetail({ node, onBack, onJump }) {
   const bucket = DC_BUCKETS[node.bucket];
   const c = bucket?.color || '#a1a1aa';
   const layer = LAYERS[node.layer];
   const layerIdx = node.layer;
   const totalLayers = LAYERS.length;
-  const detail = DC_DETAILS[node.id] && !node.id.startsWith('_') ? DC_DETAILS[node.id] : null;
+  const detail = (DC_DETAILS[node.id] && !node.id.startsWith('_')) ? DC_DETAILS[node.id] : null;
 
-  const upstream   = NEIGHBOURS[node.id].in.map(id => NODES[id]);
+  const upstream = NEIGHBOURS[node.id].in.map(id => NODES[id]);
   const downstream = NEIGHBOURS[node.id].out.map(id => NODES[id]);
-
   const order = { 'High': 0, 'Med-High': 1, 'Medium': 2, 'Low-Med': 3, 'Low': 4 };
   const baseCompanies = DC_COMPANIES
     .filter(co => co.sector === node.sector || (node.secondarySector && co.sector === node.secondarySector))
     .sort((a, b) => (order[a.conviction] ?? 9) - (order[b.conviction] ?? 9));
 
-  const hasDeep = !!(detail && (detail.verdict || detail.competition || detail.demand || detail.supply || detail.universe?.length || detail.sections?.length));
-  const plannedBlocks = ['Вердикт · оценка', 'Конкуренция', 'Спрос', 'Предложение', 'Инвест-вселенная', 'Экономика'];
+  const nav = [];
+  if (detail?.marketSizing) nav.push({ id: 'market', label: 'Рынок' });
+  if (detail?.valueCapture) nav.push({ id: 'value', label: 'Стоимость' });
+  if (detail?.competition) nav.push({ id: 'competition', label: 'Конкуренция' });
+  if (detail?.demand) nav.push({ id: 'demand', label: 'Спрос' });
+  if (detail?.supply) nav.push({ id: 'supply', label: 'Предложение' });
+  if (detail?.unitEconomics) nav.push({ id: 'unit', label: 'Экономика' });
+  if (detail?.roadmap) nav.push({ id: 'roadmap', label: 'Технологии' });
+  if (detail?.dependencies) nav.push({ id: 'deps', label: 'Зависимости' });
+  if (detail?.risks?.length) nav.push({ id: 'risks', label: 'Риски' });
+  if (detail?.universe?.length) nav.push({ id: 'universe', label: 'Игроки' });
+  if (detail?.monitoring) nav.push({ id: 'monitor', label: 'Мониторинг' });
+  if (detail?.verdict?.bull || detail?.verdict?.bear) nav.push({ id: 'cases', label: 'Сценарии' });
+
+  const hasDeep = !!(detail && (detail.verdict || detail.tldr || detail.marketSizing || detail.valueCapture || detail.competition || detail.demand || detail.supply || detail.unitEconomics || detail.roadmap || detail.dependencies || detail.risks?.length || detail.universe?.length || detail.monitoring));
 
   return (
-    <div style={{
-      maxWidth: 920, margin: '0 auto', padding: '8px 20px 80px',
-      animation: 'detail-fade 220ms ease',
-    }}>
-      <style>{`@keyframes detail-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }`}</style>
+    <div style={{ maxWidth: 940, margin: '0 auto', padding: '8px 20px 90px', animation: 'detail-fade 220ms ease' }}>
+      <style>{`@keyframes detail-fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }`}</style>
 
-      {/* Back */}
-      <button
-        onClick={onBack}
-        style={{
-          marginTop: 8, marginBottom: 20,
-          background: 'transparent', border: 'none', cursor: 'pointer',
-          color: '#a1a1aa', font: 'inherit', fontSize: 12.5,
-          letterSpacing: '0.02em', padding: 0,
-          display: 'inline-flex', alignItems: 'center', gap: 7,
-        }}
+      <button onClick={onBack}
+        style={{ marginTop: 8, marginBottom: 20, background: 'transparent', border: 'none', cursor: 'pointer', color: '#a1a1aa', font: 'inherit', fontSize: 12.5, padding: 0, display: 'inline-flex', alignItems: 'center', gap: 7 }}
         onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
-        onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}
-      >← Вернуться к цепочке</button>
+        onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}>← Вернуться к цепочке</button>
 
       {/* Header */}
-      <div style={{
-        background: `linear-gradient(180deg, ${c}18 0%, transparent 100%)`,
-        border: `1px solid ${c}30`,
-        borderRadius: 14,
-        padding: '26px 28px 24px',
-        marginBottom: 18,
-      }}>
-        <div style={{
-          fontSize: 10, color: c,
-          fontFamily: 'ui-monospace,monospace',
-          letterSpacing: '0.18em', fontWeight: 700, marginBottom: 10,
-        }}>
-          ЭТАП {String(layerIdx + 1).padStart(2, '0')} / {String(totalLayers).padStart(2, '0')} · {layer.label}
-        </div>
-        <div style={{
-          fontSize: 30, color: '#fafafa', fontWeight: 700,
-          letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8,
-        }}>
-          {node.label}
-        </div>
-        <div style={{
-          fontSize: 12, color: '#a1a1aa',
-          fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em',
-        }}>
-          {BUCKET_RU[node.bucket] || node.bucket} · {baseCompanies.length} {plural(baseCompanies.length, 'компания', 'компании', 'компаний')}
-        </div>
-
-        {/* chain rail */}
-        <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>
-          {Array.from({ length: totalLayers }).map((_, i) => (
-            <div key={i} style={{
-              flex: 1, height: 4, borderRadius: 2,
-              background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23',
-            }} />
-          ))}
-        </div>
+      <div style={{ background: `linear-gradient(180deg, ${c}18 0%, transparent 100%)`, border: `1px solid ${c}30`, borderRadius: 14, padding: '26px 28px 24px', marginBottom: 18 }}>
+        <div style={{ fontSize: 10, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.18em', fontWeight: 700, marginBottom: 10 }}>ЭТАП {String(layerIdx + 1).padStart(2, '0')} / {String(totalLayers).padStart(2, '0')} · {layer.label}</div>
+        <div style={{ fontSize: 30, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8 }}>{node.label}</div>
+        <div style={{ fontSize: 12, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket} · {baseCompanies.length} {plural(baseCompanies.length, 'компания', 'компании', 'компаний')}</div>
+        <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23' }} />)}</div>
       </div>
 
-      {/* Section 12 — Verdict scorecard (decision summary first) */}
-      {detail?.verdict && <VerdictBlock v={detail.verdict} c={c} />}
+      {detail?.verdict && <VerdictHero v={detail.verdict} c={c} asOf={detail.asOf} />}
+      {detail?.tldr?.length > 0 && <Tldr items={detail.tldr} c={c} />}
+      {nav.length > 0 && <SectionNav items={nav} c={c} />}
 
-      {/* Metrics (if provided) */}
-      {detail?.metrics?.length > 0 && (
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-          gap: 12, marginBottom: 16,
-        }}>
-          {detail.metrics.map((m, i) => (
-            <div key={i} style={{
-              background: '#0d0d0e', border: '1px solid #1f1f23',
-              borderRadius: 10, padding: '14px 16px',
-            }}>
-              <div style={{ fontSize: 22, fontWeight: 700, color: c, letterSpacing: '-0.01em' }}>{m.value}</div>
-              <div style={{ fontSize: 11, color: '#e4e4e7', marginTop: 4, fontWeight: 600 }}>{m.label}</div>
-              {m.note && <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 3, lineHeight: 1.5 }}>{m.note}</div>}
-            </div>
-          ))}
-        </div>
+      {/* About (base copy) */}
+      {(NODE_INTEL[node.id] || NODE_ROLE[node.id]) && (
+        <Block id="about" accent={c} kicker="ЧТО ЭТО И РОЛЬ В ЦЕПОЧКЕ">
+          {NODE_INTEL[node.id] && <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8, marginBottom: NODE_ROLE[node.id] ? 14 : 0 }}>{NODE_INTEL[node.id]}</div>}
+          {NODE_ROLE[node.id] && <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>{NODE_ROLE[node.id]}</div>}
+        </Block>
       )}
 
-      {/* Base: what is this */}
-      {NODE_INTEL[node.id] && (
-        <DetailSection accent={c} kicker="ЧТО ЭТО">
-          <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>{NODE_INTEL[node.id]}</div>
-        </DetailSection>
-      )}
-
-      {/* Base: role in the chain */}
-      {NODE_ROLE[node.id] && (
-        <DetailSection accent={c} kicker="РОЛЬ В ЦЕПОЧКЕ">
-          <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>{NODE_ROLE[node.id]}</div>
-        </DetailSection>
-      )}
-
-      {/* Section 3 — Competition */}
+      {detail?.marketSizing && <MarketSizingBlock d={detail.marketSizing} c={c} />}
+      {detail?.valueCapture && <ValueCaptureBlock d={detail.valueCapture} c={c} />}
       {detail?.competition && <CompetitionBlock d={detail.competition} c={c} />}
-      {/* Section 4 — Demand */}
       {detail?.demand && <DemandBlock d={detail.demand} c={c} />}
-      {/* Section 5 — Supply */}
       {detail?.supply && <SupplyBlock d={detail.supply} c={c} />}
+      {detail?.unitEconomics && <UnitEconBlock d={detail.unitEconomics} c={c} />}
+      {detail?.roadmap && <RoadmapBlock d={detail.roadmap} c={c} />}
+      {detail?.dependencies && <DependenciesBlock d={detail.dependencies} c={c} />}
+      {detail?.risks?.length > 0 && <RiskMatrixBlock rows={detail.risks} c={c} />}
+      {detail?.universe?.length > 0 && <UniverseBlock rows={detail.universe} c={c} />}
+      {detail?.monitoring && <MonitoringBlock d={detail.monitoring} c={c} />}
+      {(detail?.verdict?.bull || detail?.verdict?.bear) && <BullBear v={detail.verdict} c={c} />}
 
-      {/* Free-form deep-dive sections (data-driven) */}
-      {detail?.sections?.length > 0 && detail.sections.map((s, i) => (
-        <DetailSection key={i} accent={c} kicker={(s.title || '').toUpperCase()}>
-          <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>
-            <Paragraphs text={s.body} />
-          </div>
-        </DetailSection>
-      ))}
+      {/* Chain position */}
+      {(upstream.length > 0 || downstream.length > 0) && (
+        <Block id="chain" accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
+          {upstream.length > 0 && <div style={{ marginBottom: downstream.length > 0 ? 16 : 0 }}><div style={{ ...miniKicker, marginBottom: 9 }}>↑ ОТКУДА ПРИХОДИТ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{upstream.map(u => <ChainPill key={u.id} node={u} onClick={() => onJump(u.id)} />)}</div></div>}
+          {downstream.length > 0 && <div><div style={{ ...miniKicker, marginBottom: 9 }}>↓ КУДА ИДЁТ ДАЛЬШЕ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{downstream.map(dn => <ChainPill key={dn.id} node={dn} onClick={() => onJump(dn.id)} />)}</div></div>}
+        </Block>
+      )}
 
-      {/* Placeholder — only when the node has no analytical data yet */}
-      {!hasDeep && (
-        <div style={{
-          background: 'repeating-linear-gradient(135deg, #0d0d0e, #0d0d0e 12px, #0f0f11 12px, #0f0f11 24px)',
-          border: `1px dashed ${c}44`,
-          borderRadius: 12, padding: '26px 28px', marginBottom: 16,
-        }}>
-          <div style={{
-            fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace',
-            letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12,
-          }}>ПОЛНЫЙ РАЗБОР · В РАБОТЕ</div>
-          <div style={{ fontSize: 13.5, color: '#c4c4cc', lineHeight: 1.7, marginBottom: 16 }}>
-            Здесь появится подробный разбор этого звена — глубже, чем карточка: как оно устроено технически, где именно узкое место, кто и сколько на нём зарабатывает, расширенный список компаний и что отслеживать.
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            {plannedBlocks.map(b => (
-              <span key={b} style={{
-                fontSize: 10.5, color: '#71717a',
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid #27272a', borderRadius: 999,
-                padding: '5px 11px',
-              }}>{b}</span>
+      {/* Base companies only when no investable-universe table */}
+      {!detail?.universe?.length && baseCompanies.length > 0 && (
+        <Block id="players" accent={c} kicker="КЛЮЧЕВЫЕ ИГРОКИ">
+          <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 14 }}>Заметные компании этого звена — как примеры, кто им занимается, а не список для покупки.</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: 10 }}>
+            {baseCompanies.map((co, i) => (
+              <div key={co.company + i} style={{ background: '#131316', border: '1px solid #27272a', borderLeft: `3px solid ${c}`, borderRadius: 8, padding: '12px 14px' }}>
+                <div style={{ fontSize: 13, color: '#fafafa', fontWeight: 600 }}>{co.company}</div>
+                <div style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 4, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  <span>{co.ticker}</span><span style={{ color: '#3f3f46' }}>·</span>
+                  <span style={{ color: co.ppr === 'Pub' ? '#10b981' : '#a78bfa' }}>{co.ppr === 'Pub' ? 'ПУБЛИЧНАЯ' : 'ЧАСТНАЯ'}</span>
+                  <span style={{ color: '#3f3f46' }}>·</span><span>{co.geo}</span>
+                </div>
+                {co.note && <div style={{ fontSize: 11.5, color: '#c4c4cc', lineHeight: 1.6, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>{co.note}</div>}
+              </div>
             ))}
           </div>
-        </div>
+        </Block>
       )}
 
-      {/* Chain neighbours */}
-      {(upstream.length > 0 || downstream.length > 0) && (
-        <DetailSection accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
-          {upstream.length > 0 && (
-            <div style={{ marginBottom: downstream.length > 0 ? 16 : 0 }}>
-              <div style={{ fontSize: 9, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 9 }}>↑ ОТКУДА ПРИХОДИТ</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {upstream.map(u => <ChainPill key={u.id} node={u} onClick={() => onJump(u.id)} />)}
-              </div>
-            </div>
-          )}
-          {downstream.length > 0 && (
-            <div>
-              <div style={{ fontSize: 9, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 9 }}>↓ КУДА ИДЁТ ДАЛЬШЕ</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {downstream.map(d => <ChainPill key={d.id} node={d} onClick={() => onJump(d.id)} />)}
-              </div>
-            </div>
-          )}
-        </DetailSection>
-      )}
-
-      {/* Section 10 — Investable universe, else base company list */}
-      {detail?.universe?.length > 0 ? (
-        <UniverseBlock rows={detail.universe} c={c} />
-      ) : (
-      <DetailSection accent={c} kicker="КЛЮЧЕВЫЕ ИГРОКИ">
-        <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 16 }}>
-          Заметные компании этого звена — как примеры, кто им занимается, а не список для покупки.
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10 }}>
-          {(detail?.companies?.length > 0 ? detail.companies : baseCompanies).map((co, i) => (
-            <div key={co.company + i} style={{
-              background: '#131316', border: '1px solid #27272a',
-              borderLeft: `3px solid ${c}`, borderRadius: 8, padding: '12px 14px',
-            }}>
-              <div style={{ fontSize: 13, color: '#fafafa', fontWeight: 600 }}>{co.company}</div>
-              <div style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 4, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                {co.ticker && <span>{co.ticker}</span>}
-                {co.ppr && <><span style={{ color: '#3f3f46' }}>·</span><span style={{ color: co.ppr === 'Pub' ? '#10b981' : '#a78bfa' }}>{co.ppr === 'Pub' ? 'ПУБЛИЧНАЯ' : 'ЧАСТНАЯ'}</span></>}
-                {co.geo && <><span style={{ color: '#3f3f46' }}>·</span><span>{co.geo}</span></>}
-              </div>
-              {(co.detail || co.note) && (
-                <div style={{ fontSize: 11.5, color: '#c4c4cc', lineHeight: 1.6, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>
-                  {co.detail || co.note}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </DetailSection>
-      )}
-
-      {/* Risks + watch (if provided) */}
-      {(detail?.risks?.length > 0 || detail?.watch?.length > 0) && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
-          {detail?.risks?.length > 0 && (
-            <DetailSection accent="#ef4444" kicker="РИСКИ">
-              <ul style={{ margin: 0, paddingLeft: 18, color: '#d4d4d8', fontSize: 13, lineHeight: 1.7 }}>
-                {detail.risks.map((r, i) => <li key={i}>{r}</li>)}
-              </ul>
-            </DetailSection>
-          )}
-          {detail?.watch?.length > 0 && (
-            <DetailSection accent="#22d3ee" kicker="ЧТО ОТСЛЕЖИВАТЬ">
-              <ul style={{ margin: 0, paddingLeft: 18, color: '#d4d4d8', fontSize: 13, lineHeight: 1.7 }}>
-                {detail.watch.map((w, i) => <li key={i}>{w}</li>)}
-              </ul>
-            </DetailSection>
-          )}
+      {/* Placeholder — only when node has no analytical data yet */}
+      {!hasDeep && (
+        <div style={{ background: 'repeating-linear-gradient(135deg, #0d0d0e, #0d0d0e 12px, #0f0f11 12px, #0f0f11 24px)', border: `1px dashed ${c}44`, borderRadius: 12, padding: '26px 28px' }}>
+          <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ПОЛНЫЙ РАЗБОР · В РАБОТЕ</div>
+          <div style={{ fontSize: 13.5, color: '#c4c4cc', lineHeight: 1.7 }}>Здесь появится инвест-разбор этого звена: размер рынка, конкуренция, спрос/предложение, юнит-экономика, риски, инвест-вселенная и вердикт.</div>
         </div>
       )}
     </div>
