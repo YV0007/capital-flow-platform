@@ -221,9 +221,8 @@ function Pie({ b }) {
           </svg>
           {active && (
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', textAlign: 'center', pointerEvents: 'none' }}>
-              <div style={{ fontFamily: 'var(--mono)', fontSize: 22, fontWeight: 600, color: C.ink }}>{active.value}</div>
-              <div style={{ fontSize: 11, color: C.inkSoft, marginTop: 2, maxWidth: 100 }}>{active.label}</div>
-              {active.note && <div style={{ fontSize: 10, color: C.inkFaint, marginTop: 2 }}>{active.note}</div>}
+              <div style={{ fontFamily: 'var(--mono)', fontSize: 26, fontWeight: 600, color: C.ink }}>{active.value}</div>
+              <div style={{ fontSize: 11.5, color: C.inkSoft, marginTop: 3, maxWidth: 118, lineHeight: 1.3 }}>{active.label}</div>
             </div>
           )}
           {!active && (
@@ -237,9 +236,12 @@ function Pie({ b }) {
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 6, marginBottom: 2,
               background: hov === i ? C.line + '44' : 'transparent', cursor: 'pointer', transition: 'background .12s' }}
               onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}>
-              <div style={{ width: 10, height: 10, borderRadius: 2, background: col(it.color), flexShrink: 0 }} />
-              <div style={{ fontSize: 13, color: hov === i ? C.ink : C.inkSoft, flex: 1, lineHeight: 1.3, transition: 'color .12s' }}>{it.label}</div>
-              <div style={{ fontFamily: 'var(--mono)', fontSize: 13, color: C.ink, flexShrink: 0 }}>{it.value}</div>
+              <div style={{ width: 10, height: 10, borderRadius: 2, background: col(it.color), flexShrink: 0, transform: 'translateY(3px)' }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 13, color: hov === i ? C.ink : C.inkSoft, lineHeight: 1.3, transition: 'color .12s' }}>{it.label}</div>
+                {it.note && <div style={{ fontSize: 11, color: C.inkFaint, lineHeight: 1.4, marginTop: 2 }}>{it.note}</div>}
+              </div>
+              <div style={{ fontFamily: 'var(--mono)', fontSize: 13, color: C.ink, flexShrink: 0, transform: 'translateY(1px)' }}>{it.value}</div>
             </div>
           ))}
         </div>
