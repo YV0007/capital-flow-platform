@@ -1,16 +1,67 @@
 {
   "_schema": {
-    "_comment": "Deep-dive content per node id (keys must match NODES_RAW ids in Roadmap.jsx, e.g. 'hbm', 'asic', 'server'). Delete this _schema key or leave it — the app ignores keys starting with '_'. Any node without an entry shows a graceful placeholder plus its base ЧТО ЭТО / РОЛЬ / companies.",
-    "sections": [
-      { "title": "Заголовок подраздела", "body": "Развёрнутый текст. Абзацы разделяйте \\n\\n." }
-    ],
-    "metrics": [
-      { "label": "Метрика", "value": "63%", "note": "короткое пояснение" }
-    ],
-    "companies": [
-      { "company": "Название", "ticker": "NASDAQ: XXX", "geo": "US", "ppr": "Pub", "role": "роль в звене", "detail": "1–2 предложения деталей" }
-    ],
-    "watch": ["Сигнал/метрика, за которой следить"],
-    "risks": ["Ключевой риск звена"]
+    "_comment": "Deep-dive content per node id (keys must match NODES_RAW ids in Roadmap.jsx, e.g. 'hbm','asic','server'). Keys starting with '_' are ignored. A node with no entry shows a placeholder + its base ЧТО ЭТО / РОЛЬ / companies. Pilot renders 5 sections: verdict, competition, demand, supply, universe. Fields below are the full shape — any section/field can be omitted.",
+    "verdict":     { "score": 8, "subScores": { "Рост": 9, "Ров": 8, "Цикличность": 4, "Оценка": 6 }, "horizon": "текст", "sizing": "текст", "keyQuestion": "один главный вопрос", "bull": ["…", "…"], "bear": ["…", "…"] },
+    "competition": { "concentration": "текст", "switchingCost": "текст", "entryBarrier": { "verdict": "Нет | Да | Маловероятно", "why": "текст" }, "players": [ { "name": "SK Hynix", "share": "~55%", "trend": "up | down | flat", "tech": "тех-лид в месяцах/поколениях", "note": "короткая заметка" } ] },
+    "demand":      { "soldOut": [ { "year": "2026", "pct": 100 } ], "contractStructure": "LTA/спот/предоплата", "customerConcentration": "топ-3 клиента = …", "backlog": "текст" },
+    "supply":      { "balance": [ { "year": "2026", "state": "deficit | tight | balanced | surplus | unknown", "note": "необяз." } ], "capacityAdds": [ { "player": "…", "detail": "…" } ], "leadTime": "текст", "utilization": "текст" },
+    "universe":    [ { "company": "Micron", "ticker": "NASDAQ: MU", "mcap": "$…B", "exposure": "HBM ~26% выручки", "pureplay": 8, "valuation": "EV/EBITDA …", "note": "короткая заметка" } ]
+  },
+
+  "hbm": {
+    "verdict": {
+      "score": 8,
+      "subScores": { "Рост": 9, "Ров": 8, "Цикличность": 4, "Оценка": 6 },
+      "horizon": "Структурный цикл на 2–4 года, а не краткосрочный трейд.",
+      "sizing": "Ядро «корзины памяти». Чистая экспозиция — через Micron; SK Hynix / Samsung — конгломератная.",
+      "keyQuestion": "Удержится ли дефицит HBM в 2027, или Samsung и китайский CXMT нарастят выпуск и собьют цены?",
+      "bull": [
+        "Память = ~63% стоимости AI-чипа, спрос растёт с каждым поколением GPU",
+        "Олигополия из трёх с 70%+ маржой; 2026 распродан, 2027 законтрактован",
+        "HBM4 привязывает SK Hynix к TSMC — барьер входа только вырос"
+      ],
+      "bear": [
+        "Это всё ещё DRAM: исторически цикличный рынок, разворот цен бьёт по марже",
+        "Samsung навёрстывает, CXMT давит снизу — риск переизбытка в 2027–28",
+        "Гиперскейлеры могут замедлить capex, а вся тройка расширяет мощности"
+      ]
+    },
+    "competition": {
+      "concentration": "Олигополия трёх производителей — очень высокая концентрация (высокий HHI).",
+      "switchingCost": "Квалификация у Nvidia — 6–12 месяцев; сменить поставщика в цикле почти невозможно. Это и есть ров.",
+      "entryBarrier": { "verdict": "Нет", "why": "Новому игроку нужно ~$30–50 млрд и 7–10 лет плюс доступ к EUV, которого у претендентов нет." },
+      "players": [
+        { "name": "SK Hynix", "share": "~55%+", "trend": "up", "tech": "HBM4 первым, MP с Q1 2026", "note": "Главный поставщик Nvidia; альянс с TSMC по базовому кристаллу." },
+        { "name": "Samsung", "share": "~28%", "trend": "up", "tech": "Прошёл HBM3E (сен 2025) и HBM4 (2026)", "note": "Навёрстывает после провала ранней квалификации." },
+        { "name": "Micron", "share": "остаток", "trend": "up", "tech": "HBM4 квалифицирован, база от TSMC", "note": "Растёт быстрее всех; единственная US-ставка." }
+      ]
+    },
+    "demand": {
+      "soldOut": [ { "year": "2026", "pct": 100 }, { "year": "2027", "pct": 85 }, { "year": "2028", "pct": 30 } ],
+      "contractStructure": "Долгосрочные соглашения (LTA) с денежной предоплатой и элементами take-or-pay; спота почти нет.",
+      "customerConcentration": "Топ-3 (Nvidia, AMD, Broadcom) — подавляющая часть выручки; Nvidia доминирует.",
+      "backlog": "HBM законтрактован за пределы 2027; Micron раскрыл ~$22 млрд предоплат и обязательств."
+    },
+    "supply": {
+      "balance": [
+        { "year": "2025", "state": "deficit", "note": "дефицит ~5%" },
+        { "year": "2026", "state": "deficit", "note": "распродано" },
+        { "year": "2027", "state": "tight", "note": "законтрактовано" },
+        { "year": "2028", "state": "unknown", "note": "риск переизбытка" }
+      ],
+      "capacityAdds": [
+        { "player": "SK Hynix", "detail": "M15X (Чхонджу) + упаковка в Индиане (H2 2028); наращивание 1c-узла к концу 2026." },
+        { "player": "Micron", "detail": "Fab-кластер в Нью-Йорке (старт 2026), упаковка HBM в Сингапуре (H1 2027)." },
+        { "player": "Samsung", "detail": "Расширение под HBM4/4E; конвертация линий с обычной DRAM." }
+      ],
+      "leadTime": "Новая fab-мощность: 2–3 года; упаковка короче. Быстро нарастить нельзя.",
+      "utilization": "Фактически ~100% под HBM; линии переводят с обычной DRAM."
+    },
+    "universe": [
+      { "company": "Micron", "ticker": "NASDAQ: MU", "mcap": "—", "exposure": "HBM+DRAM+NAND; HBM ~26% выручки", "pureplay": 8, "valuation": "—", "note": "Единственная US pure-play памяти — максимальная чистота ставки." },
+      { "company": "SK Hynix", "ticker": "KRX: 000660", "mcap": "—", "exposure": "Память — ядро бизнеса, лидер HBM", "pureplay": 7, "valuation": "—", "note": "Самая чистая HBM-экспозиция, но корейский листинг." },
+      { "company": "Samsung Electronics", "ticker": "KRX: 005930", "mcap": "—", "exposure": "HBM — малая доля конгломерата", "pureplay": 2, "valuation": "—", "note": "Разводнённая экспозиция: память тонет в телефонах и фаундри." },
+      { "company": "Hanmi Semiconductor", "ticker": "KRX: 042700", "mcap": "—", "exposure": "~71% рынка TC-бондеров для HBM", "pureplay": 6, "valuation": "—", "note": "Апстрим-ставка на сборку HBM — «горлышко» цепочки." }
+    ]
   }
 }
