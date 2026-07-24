@@ -8,9 +8,13 @@
 import React, { useMemo, useState } from 'react';
 import dcCompaniesData from '../../../data/dc-companies.json';
 import dcBucketsData from '../../../data/dc-buckets.json';
+import dcDetailsData from '../../../data/dc-details.json';
 
 const DC_COMPANIES = dcCompaniesData;
 const { DC_BUCKETS } = dcBucketsData;
+// Deep-dive content keyed by node id (keys starting with "_" are ignored). Empty
+// for most nodes today — the detail page falls back to a placeholder + base copy.
+const DC_DETAILS = dcDetailsData;
 
 // ─ Canvas geometry ────────────────────────────────────────────────────────
 const CANVAS_W       = 1180;
@@ -429,6 +433,7 @@ export default function Roadmap() {
   const [selected, setSelected] = useState(null);
   const [hovered,  setHovered]  = useState(null);
   const [bucketFilter, setBucketFilter] = useState(null);
+  const [detailNode, setDetailNode] = useState(null);
 
   // Active set decides which nodes/edges are "lit" vs dimmed. Priority:
   // selected node > hovered node > bucket filter > none.
@@ -452,6 +457,17 @@ export default function Roadmap() {
     : [];
 
   const totalCompanies = new Set(DC_COMPANIES.map(c => c.company)).size;
+
+  // Full-page deep-dive takeover (no routes — same in-place pattern as the rest of the app).
+  if (detailNode && NODES[detailNode]) {
+    return (
+      <NodeDetail
+        node={NODES[detailNode]}
+        onBack={() => setDetailNode(null)}
+        onJump={(id) => setDetailNode(id)}
+      />
+    );
+  }
 
   return (
     <div style={{ marginTop: 8 }}>
@@ -702,6 +718,7 @@ export default function Roadmap() {
             downstream={NEIGHBOURS[selectedNode.id].out.map(id => NODES[id])}
             onClose={() => setSelected(null)}
             onJump={(id) => setSelected(id)}
+            onOpenDetail={(id) => setDetailNode(id)}
           />
         )}
 
@@ -797,7 +814,7 @@ export default function Roadmap() {
 // Redesigned: bucket-tinted header, compact chain-position widget,
 // chain neighbour chips, then companies grouped by conviction.
 // ──────────────────────────────────────────────────────────────────────────
-function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies, upstream, downstream, onClose, onJump }) {
+function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies, upstream, downstream, onClose, onJump, onOpenDetail }) {
   const c = bucket?.color || '#a1a1aa';
 
   // Sort companies by conviction tier so the strongest names come first.
@@ -884,6 +901,31 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
             }} />
           ))}
         </div>
+      </div>
+
+      {/* Read-more → full deep-dive page */}
+      <div style={{ padding: '16px 24px 4px' }}>
+        <button
+          onClick={() => onOpenDetail(node.id)}
+          style={{
+            width: '100%',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: '12px 16px',
+            background: `linear-gradient(135deg, ${c}26 0%, ${c}12 100%)`,
+            border: `1px solid ${c}66`,
+            borderRadius: 9,
+            cursor: 'pointer', font: 'inherit',
+            color: '#fafafa',
+            transition: 'all 160ms',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = `linear-gradient(135deg, ${c}3a 0%, ${c}1e 100%)`; e.currentTarget.style.borderColor = c; }}
+          onMouseLeave={e => { e.currentTarget.style.background = `linear-gradient(135deg, ${c}26 0%, ${c}12 100%)`; e.currentTarget.style.borderColor = `${c}66`; }}
+        >
+          <span style={{
+            fontSize: 11.5, fontWeight: 700, letterSpacing: '0.04em',
+          }}>Подробный разбор блока</span>
+          <span style={{ fontSize: 15, color: c, fontWeight: 700 }}>→</span>
+        </button>
       </div>
 
       {/* What is this — plain-Russian context for the sub-sector */}
@@ -1046,5 +1088,255 @@ function ChainPill({ node, onClick }) {
       <span style={{ width: 6, height: 6, borderRadius: '50%', background: c }} />
       <span style={{ fontSize: 11, color: '#e4e4e7' }}>{node.label}</span>
     </button>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────────
+// NodeDetail — full-page deep-dive for a single sub-sector.
+// Data-driven: rich content comes from DC_DETAILS[node.id] when present;
+// otherwise the page shows the base ЧТО ЭТО / РОЛЬ / companies plus a
+// styled placeholder marking where the deeper breakdown will go.
+// ──────────────────────────────────────────────────────────────────────────
+function Paragraphs({ text, style }) {
+  return String(text).split(/\n{2,}/).map((p, i) => (
+    <p key={i} style={{ margin: i === 0 ? 0 : '12px 0 0', ...style }}>{p}</p>
+  ));
+}
+
+function DetailSection({ accent, kicker, children }) {
+  return (
+    <div style={{
+      background: '#0d0d0e',
+      border: '1px solid #1f1f23',
+      borderRadius: 12,
+      padding: '22px 26px',
+      marginBottom: 16,
+    }}>
+      <div style={{
+        fontSize: 9.5, color: accent,
+        fontFamily: 'ui-monospace,monospace',
+        letterSpacing: '0.16em', fontWeight: 700,
+        marginBottom: 12,
+      }}>{kicker}</div>
+      {children}
+    </div>
+  );
+}
+
+function NodeDetail({ node, onBack, onJump }) {
+  const bucket = DC_BUCKETS[node.bucket];
+  const c = bucket?.color || '#a1a1aa';
+  const layer = LAYERS[node.layer];
+  const layerIdx = node.layer;
+  const totalLayers = LAYERS.length;
+  const detail = DC_DETAILS[node.id] && !node.id.startsWith('_') ? DC_DETAILS[node.id] : null;
+
+  const upstream   = NEIGHBOURS[node.id].in.map(id => NODES[id]);
+  const downstream = NEIGHBOURS[node.id].out.map(id => NODES[id]);
+
+  const order = { 'High': 0, 'Med-High': 1, 'Medium': 2, 'Low-Med': 3, 'Low': 4 };
+  const baseCompanies = DC_COMPANIES
+    .filter(co => co.sector === node.sector || (node.secondarySector && co.sector === node.secondarySector))
+    .sort((a, b) => (order[a.conviction] ?? 9) - (order[b.conviction] ?? 9));
+
+  const plannedBlocks = ['Как это устроено', 'Где узкое место', 'Экономика звена', 'Расширенный список игроков', 'Риски', 'Что отслеживать'];
+
+  return (
+    <div style={{
+      maxWidth: 920, margin: '0 auto', padding: '8px 20px 80px',
+      animation: 'detail-fade 220ms ease',
+    }}>
+      <style>{`@keyframes detail-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }`}</style>
+
+      {/* Back */}
+      <button
+        onClick={onBack}
+        style={{
+          marginTop: 8, marginBottom: 20,
+          background: 'transparent', border: 'none', cursor: 'pointer',
+          color: '#a1a1aa', font: 'inherit', fontSize: 12.5,
+          letterSpacing: '0.02em', padding: 0,
+          display: 'inline-flex', alignItems: 'center', gap: 7,
+        }}
+        onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
+        onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}
+      >← Вернуться к цепочке</button>
+
+      {/* Header */}
+      <div style={{
+        background: `linear-gradient(180deg, ${c}18 0%, transparent 100%)`,
+        border: `1px solid ${c}30`,
+        borderRadius: 14,
+        padding: '26px 28px 24px',
+        marginBottom: 18,
+      }}>
+        <div style={{
+          fontSize: 10, color: c,
+          fontFamily: 'ui-monospace,monospace',
+          letterSpacing: '0.18em', fontWeight: 700, marginBottom: 10,
+        }}>
+          ЭТАП {String(layerIdx + 1).padStart(2, '0')} / {String(totalLayers).padStart(2, '0')} · {layer.label}
+        </div>
+        <div style={{
+          fontSize: 30, color: '#fafafa', fontWeight: 700,
+          letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8,
+        }}>
+          {node.label}
+        </div>
+        <div style={{
+          fontSize: 12, color: '#a1a1aa',
+          fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em',
+        }}>
+          {BUCKET_RU[node.bucket] || node.bucket} · {baseCompanies.length} {plural(baseCompanies.length, 'компания', 'компании', 'компаний')}
+        </div>
+
+        {/* chain rail */}
+        <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>
+          {Array.from({ length: totalLayers }).map((_, i) => (
+            <div key={i} style={{
+              flex: 1, height: 4, borderRadius: 2,
+              background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23',
+            }} />
+          ))}
+        </div>
+      </div>
+
+      {/* Metrics (if provided) */}
+      {detail?.metrics?.length > 0 && (
+        <div style={{
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+          gap: 12, marginBottom: 16,
+        }}>
+          {detail.metrics.map((m, i) => (
+            <div key={i} style={{
+              background: '#0d0d0e', border: '1px solid #1f1f23',
+              borderRadius: 10, padding: '14px 16px',
+            }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: c, letterSpacing: '-0.01em' }}>{m.value}</div>
+              <div style={{ fontSize: 11, color: '#e4e4e7', marginTop: 4, fontWeight: 600 }}>{m.label}</div>
+              {m.note && <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 3, lineHeight: 1.5 }}>{m.note}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Base: what is this */}
+      {NODE_INTEL[node.id] && (
+        <DetailSection accent={c} kicker="ЧТО ЭТО">
+          <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>{NODE_INTEL[node.id]}</div>
+        </DetailSection>
+      )}
+
+      {/* Base: role in the chain */}
+      {NODE_ROLE[node.id] && (
+        <DetailSection accent={c} kicker="РОЛЬ В ЦЕПОЧКЕ">
+          <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>{NODE_ROLE[node.id]}</div>
+        </DetailSection>
+      )}
+
+      {/* Deep-dive sections (data-driven) or placeholder */}
+      {detail?.sections?.length > 0 ? (
+        detail.sections.map((s, i) => (
+          <DetailSection key={i} accent={c} kicker={(s.title || '').toUpperCase()}>
+            <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>
+              <Paragraphs text={s.body} />
+            </div>
+          </DetailSection>
+        ))
+      ) : (
+        <div style={{
+          background: 'repeating-linear-gradient(135deg, #0d0d0e, #0d0d0e 12px, #0f0f11 12px, #0f0f11 24px)',
+          border: `1px dashed ${c}44`,
+          borderRadius: 12, padding: '26px 28px', marginBottom: 16,
+        }}>
+          <div style={{
+            fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace',
+            letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12,
+          }}>ПОЛНЫЙ РАЗБОР · В РАБОТЕ</div>
+          <div style={{ fontSize: 13.5, color: '#c4c4cc', lineHeight: 1.7, marginBottom: 16 }}>
+            Здесь появится подробный разбор этого звена — глубже, чем карточка: как оно устроено технически, где именно узкое место, кто и сколько на нём зарабатывает, расширенный список компаний и что отслеживать.
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {plannedBlocks.map(b => (
+              <span key={b} style={{
+                fontSize: 10.5, color: '#71717a',
+                background: 'rgba(255,255,255,0.02)',
+                border: '1px solid #27272a', borderRadius: 999,
+                padding: '5px 11px',
+              }}>{b}</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Chain neighbours */}
+      {(upstream.length > 0 || downstream.length > 0) && (
+        <DetailSection accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
+          {upstream.length > 0 && (
+            <div style={{ marginBottom: downstream.length > 0 ? 16 : 0 }}>
+              <div style={{ fontSize: 9, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 9 }}>↑ ОТКУДА ПРИХОДИТ</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {upstream.map(u => <ChainPill key={u.id} node={u} onClick={() => onJump(u.id)} />)}
+              </div>
+            </div>
+          )}
+          {downstream.length > 0 && (
+            <div>
+              <div style={{ fontSize: 9, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 9 }}>↓ КУДА ИДЁТ ДАЛЬШЕ</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {downstream.map(d => <ChainPill key={d.id} node={d} onClick={() => onJump(d.id)} />)}
+              </div>
+            </div>
+          )}
+        </DetailSection>
+      )}
+
+      {/* Companies — richer list from detail if present, else base */}
+      <DetailSection accent={c} kicker="КЛЮЧЕВЫЕ ИГРОКИ">
+        <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 16 }}>
+          Заметные компании этого звена — как примеры, кто им занимается, а не список для покупки.
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10 }}>
+          {(detail?.companies?.length > 0 ? detail.companies : baseCompanies).map((co, i) => (
+            <div key={co.company + i} style={{
+              background: '#131316', border: '1px solid #27272a',
+              borderLeft: `3px solid ${c}`, borderRadius: 8, padding: '12px 14px',
+            }}>
+              <div style={{ fontSize: 13, color: '#fafafa', fontWeight: 600 }}>{co.company}</div>
+              <div style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 4, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {co.ticker && <span>{co.ticker}</span>}
+                {co.ppr && <><span style={{ color: '#3f3f46' }}>·</span><span style={{ color: co.ppr === 'Pub' ? '#10b981' : '#a78bfa' }}>{co.ppr === 'Pub' ? 'ПУБЛИЧНАЯ' : 'ЧАСТНАЯ'}</span></>}
+                {co.geo && <><span style={{ color: '#3f3f46' }}>·</span><span>{co.geo}</span></>}
+              </div>
+              {(co.detail || co.note) && (
+                <div style={{ fontSize: 11.5, color: '#c4c4cc', lineHeight: 1.6, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>
+                  {co.detail || co.note}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </DetailSection>
+
+      {/* Risks + watch (if provided) */}
+      {(detail?.risks?.length > 0 || detail?.watch?.length > 0) && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+          {detail?.risks?.length > 0 && (
+            <DetailSection accent="#ef4444" kicker="РИСКИ">
+              <ul style={{ margin: 0, paddingLeft: 18, color: '#d4d4d8', fontSize: 13, lineHeight: 1.7 }}>
+                {detail.risks.map((r, i) => <li key={i}>{r}</li>)}
+              </ul>
+            </DetailSection>
+          )}
+          {detail?.watch?.length > 0 && (
+            <DetailSection accent="#22d3ee" kicker="ЧТО ОТСЛЕЖИВАТЬ">
+              <ul style={{ margin: 0, paddingLeft: 18, color: '#d4d4d8', fontSize: 13, lineHeight: 1.7 }}>
+                {detail.watch.map((w, i) => <li key={i}>{w}</li>)}
+              </ul>
+            </DetailSection>
+          )}
+        </div>
+      )}
+    </div>
   );
 }

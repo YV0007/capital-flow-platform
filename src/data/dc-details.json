@@ -1,0 +1,16 @@
+{
+  "_schema": {
+    "_comment": "Deep-dive content per node id (keys must match NODES_RAW ids in Roadmap.jsx, e.g. 'hbm', 'asic', 'server'). Delete this _schema key or leave it — the app ignores keys starting with '_'. Any node without an entry shows a graceful placeholder plus its base ЧТО ЭТО / РОЛЬ / companies.",
+    "sections": [
+      { "title": "Заголовок подраздела", "body": "Развёрнутый текст. Абзацы разделяйте \\n\\n." }
+    ],
+    "metrics": [
+      { "label": "Метрика", "value": "63%", "note": "короткое пояснение" }
+    ],
+    "companies": [
+      { "company": "Название", "ticker": "NASDAQ: XXX", "geo": "US", "ppr": "Pub", "role": "роль в звене", "detail": "1–2 предложения деталей" }
+    ],
+    "watch": ["Сигнал/метрика, за которой следить"],
+    "risks": ["Ключевой риск звена"]
+  }
+}
