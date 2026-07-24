@@ -1569,5 +1569,399 @@
   "Счёт акций и рыночная капитализация расходятся: агрегаторы ~22.6M акций (~CAD 53B) против раскрытого эффективного счёта 20,624,032 (31.03.2026); P/B ~1.3x в USD (выше при пересчёте в CAD). BVPS $1,283 из внешнего якоря НЕ раскрыт — раскрыто $1,250.14 (Q1'26).",
   "Второй долговой выпуск 2026 — US$750M ноты 6.200% до 2056 (прайсинг 03.06.2026, par, 144A) поверх Q1'26 Cdn$650M ($476.6M) — поднимает leverage выше debt/capital 27.8%; точный pro-forma уровень в пресс-релизе не раскрыт.",
   "Отчётность Q2'26 (30.07.2026) на дату сборки не опубликована — все цифры отражают FY2025 / Q1'26."
- ]
+ ],
+ "holdings13F": {
+  "asOf": "13.07.2026",
+  "positions": 29,
+  "totalValue": "$1.94B",
+  "note": "Публичный акционерный портфель Fairfax по 13F-HR: 29 позиций на ~$1.94 млрд. Это только та часть инвестпортфеля, которую видно в SEC (US-листинг) — облигации и крупные доли вроде Eurobank сюда не попадают. Источник: fintel.io / SEC 13F-HR (13.07.2026).",
+  "rows": [
+   {
+    "t": "ORLA",
+    "name": "Orla Mining",
+    "val": 501.58,
+    "pct": 25.82,
+    "delta": 5.49
+   },
+   {
+    "t": "UAA/UA",
+    "name": "Under Armour (оба класса)",
+    "val": 380.64,
+    "pct": 19.59,
+    "delta": 7.41
+   },
+   {
+    "t": "CVS",
+    "name": "CVS Health",
+    "val": 194.78,
+    "pct": 10.03,
+    "delta": -0.3
+   },
+   {
+    "t": "KW",
+    "name": "Kennedy-Wilson",
+    "val": 144.28,
+    "pct": 7.43,
+    "delta": 1.24
+   },
+   {
+    "t": "CLF",
+    "name": "Cleveland-Cliffs",
+    "val": 125.75,
+    "pct": 6.47,
+    "delta": -3.02
+   },
+   {
+    "t": "KHC",
+    "name": "Kraft Heinz",
+    "val": 118.43,
+    "pct": 6.1,
+    "delta": 0.14
+   },
+   {
+    "t": "BB",
+    "name": "BlackBerry",
+    "val": 113.34,
+    "pct": 5.83,
+    "delta": -0.51
+   },
+   {
+    "t": "ATS",
+    "name": "ATS Corporation",
+    "val": 69.35,
+    "pct": 3.57,
+    "delta": 0.29
+   },
+   {
+    "t": "TAP.A",
+    "name": "Molson Coors",
+    "val": 61.94,
+    "pct": 3.19,
+    "delta": 0.19
+   },
+   {
+    "t": "HP",
+    "name": "Helmerich & Payne",
+    "val": 42.3,
+    "pct": 2.18,
+    "delta": 0.56
+   },
+   {
+    "t": "TSM",
+    "name": "Taiwan Semiconductor",
+    "val": 31.68,
+    "pct": 1.63,
+    "delta": 0.26
+   },
+   {
+    "t": "GM",
+    "name": "General Motors",
+    "val": 28.01,
+    "pct": 1.44,
+    "delta": -0.03
+   },
+   {
+    "t": "PFE",
+    "name": "Pfizer",
+    "val": 27.81,
+    "pct": 1.43,
+    "delta": 0.37
+   },
+   {
+    "t": "BNS",
+    "name": "Bank of Nova Scotia",
+    "val": 24.82,
+    "pct": 1.28,
+    "delta": 0.01
+   },
+   {
+    "t": "WEN",
+    "name": "Wendy's",
+    "val": 22.75,
+    "pct": 1.17,
+    "delta": 1.17
+   },
+   {
+    "t": "MRK",
+    "name": "Merck",
+    "val": 20.8,
+    "pct": 1.07,
+    "delta": 0.2
+   },
+   {
+    "t": "JNJ",
+    "name": "Johnson & Johnson",
+    "val": 17.94,
+    "pct": 0.92,
+    "delta": 0.19
+   },
+   {
+    "t": "GTX",
+    "name": "Garrett Motion",
+    "val": 3.35,
+    "pct": 0.17,
+    "delta": -0.05
+   },
+   {
+    "t": "CIGI",
+    "name": "Colliers International",
+    "val": 2.61,
+    "pct": 0.13,
+    "delta": -0.02
+   },
+   {
+    "t": "CNI",
+    "name": "Canadian National Railway",
+    "val": 2.53,
+    "pct": 0.13,
+    "delta": 0.04
+   },
+   {
+    "t": "LULU",
+    "name": "Lululemon",
+    "val": 1.91,
+    "pct": 0.1,
+    "delta": -0.03
+   },
+   {
+    "t": "WBD",
+    "name": "Warner Bros. Discovery",
+    "val": 1.59,
+    "pct": 0.08,
+    "delta": 0.08
+   },
+   {
+    "t": "CPRI",
+    "name": "Capri Holdings",
+    "val": 1.38,
+    "pct": 0.07,
+    "delta": -0.02
+   },
+   {
+    "t": "BRSL",
+    "name": "Brightstar Lottery",
+    "val": 0.87,
+    "pct": 0.045,
+    "delta": 0.02
+   },
+   {
+    "t": "PENN",
+    "name": "Penn Entertainment",
+    "val": 0.83,
+    "pct": 0.043,
+    "delta": 0
+   },
+   {
+    "t": "BRK.A",
+    "name": "Berkshire Hathaway",
+    "val": 0.72,
+    "pct": 0.037,
+    "delta": 0
+   },
+   {
+    "t": "MX",
+    "name": "Magnachip Semiconductor",
+    "val": 0.35,
+    "pct": 0.018,
+    "delta": 0
+   },
+   {
+    "t": "PRTH",
+    "name": "Priority Technology",
+    "val": 0.33,
+    "pct": 0.017,
+    "delta": 0
+   }
+  ],
+  "increases": [
+   {
+    "t": "UAA/UA",
+    "name": "Under Armour",
+    "val": 380.64,
+    "pct": 19.59,
+    "delta": 7.41
+   },
+   {
+    "t": "ORLA",
+    "name": "Orla Mining",
+    "val": 501.58,
+    "pct": 25.82,
+    "delta": 5.49
+   },
+   {
+    "t": "KW",
+    "name": "Kennedy-Wilson",
+    "val": 144.28,
+    "pct": 7.43,
+    "delta": 1.24
+   },
+   {
+    "t": "WEN",
+    "name": "Wendy's",
+    "val": 22.75,
+    "pct": 1.17,
+    "delta": 1.17
+   },
+   {
+    "t": "HP",
+    "name": "Helmerich & Payne",
+    "val": 42.3,
+    "pct": 2.18,
+    "delta": 0.56
+   },
+   {
+    "t": "PFE",
+    "name": "Pfizer",
+    "val": 27.81,
+    "pct": 1.43,
+    "delta": 0.37
+   },
+   {
+    "t": "ATS",
+    "name": "ATS Corporation",
+    "val": 69.35,
+    "pct": 3.57,
+    "delta": 0.29
+   },
+   {
+    "t": "TSM",
+    "name": "Taiwan Semiconductor",
+    "val": 31.68,
+    "pct": 1.63,
+    "delta": 0.26
+   },
+   {
+    "t": "MRK",
+    "name": "Merck",
+    "val": 20.8,
+    "pct": 1.07,
+    "delta": 0.2
+   }
+  ],
+  "decreases": [
+   {
+    "t": "CLF",
+    "name": "Cleveland-Cliffs",
+    "val": 125.75,
+    "pct": 6.47,
+    "delta": -3.02
+   },
+   {
+    "t": "BB",
+    "name": "BlackBerry",
+    "val": 113.34,
+    "pct": 5.83,
+    "delta": -0.51
+   },
+   {
+    "t": "CVS",
+    "name": "CVS Health",
+    "val": 194.78,
+    "pct": 10.03,
+    "delta": -0.3
+   },
+   {
+    "t": "GTX",
+    "name": "Garrett Motion",
+    "val": 3.35,
+    "pct": 0.17,
+    "delta": -0.05
+   },
+   {
+    "t": "LULU",
+    "name": "Lululemon",
+    "val": 1.91,
+    "pct": 0.1,
+    "delta": -0.03
+   },
+   {
+    "t": "GM",
+    "name": "General Motors",
+    "val": 28.01,
+    "pct": 1.44,
+    "delta": -0.03
+   },
+   {
+    "t": "CPRI",
+    "name": "Capri Holdings",
+    "val": 1.38,
+    "pct": 0.07,
+    "delta": -0.02
+   },
+   {
+    "t": "CIGI",
+    "name": "Colliers International",
+    "val": 2.61,
+    "pct": 0.13,
+    "delta": -0.02
+   }
+  ],
+  "byIndustry": [
+   {
+    "name": "Не раскрыто (отрасль)",
+    "val": 379.09,
+    "pct": 30.6
+   },
+   {
+    "name": "Недвижимость",
+    "val": 272.93,
+    "pct": 22.03
+   },
+   {
+    "name": "Промышленное оборудование и техника",
+    "val": 237.81,
+    "pct": 19.2
+   },
+   {
+    "name": "Бумага и целлюлоза",
+    "val": 164.96,
+    "pct": 13.32
+   },
+   {
+    "name": "Стройматериалы (стекло, бетон)",
+    "val": 48.67,
+    "pct": 3.93
+   },
+   {
+    "name": "Нефть и газ",
+    "val": 40.37,
+    "pct": 3.26
+   },
+   {
+    "name": "Горнодобыча",
+    "val": 28.5,
+    "pct": 2.3
+   },
+   {
+    "name": "Химия",
+    "val": 27.87,
+    "pct": 2.25
+   },
+   {
+    "name": "Банки",
+    "val": 24.34,
+    "pct": 1.96
+   },
+   {
+    "name": "Продукты питания",
+    "val": 7.8,
+    "pct": 0.63
+   },
+   {
+    "name": "Страхование",
+    "val": 3.83,
+    "pct": 0.31
+   },
+   {
+    "name": "Ж/д транспорт",
+    "val": 0.7,
+    "pct": 0.06
+   },
+   {
+    "name": "Образование",
+    "val": 0.63,
+    "pct": 0.05
+   }
+  ]
+ }
 }

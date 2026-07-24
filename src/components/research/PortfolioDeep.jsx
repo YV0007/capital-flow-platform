@@ -233,6 +233,105 @@ function SectorPane({ b, filtering, focus }) {
   );
 }
 
+// ── 13F public-holdings view: full named list + top increases/decreases +
+//    composition by industry. Data: portfolio/<id>.json → holdings13F.
+//    Values are in $MM.
+const fmtMM = (v) => v == null ? '' : (v >= 1000 ? '$' + (v / 1000).toFixed(2) + 'B' : (v >= 100 ? '$' + Math.round(v) + 'M' : '$' + v.toFixed(v < 10 ? 2 : 1) + 'M'));
+const Delta = ({ d }) => d == null ? <span style={{ color: C.inkFaint }}>—</span> :
+  <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: Math.abs(d) < 0.005 ? C.inkFaint : (d >= 0 ? C.teal : C.clay) }}>{d >= 0 ? '+' : ''}{d.toFixed(2)}</span>;
+const H13_GRID = '52px 1fr 96px 66px 74px';
+
+function MoveTable({ title, rows, up }) {
+  return (
+    <div style={{ flex: '1 1 320px', minWidth: 280, border: `1px solid ${C.line}`, borderRadius: 10, background: C.card, overflow: 'hidden' }}>
+      <div style={{ padding: '12px 16px 8px' }}>
+        <div style={{ fontSize: 13.5, fontWeight: 600, color: up ? C.teal : C.clay }}>{title}</div>
+        <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 3, lineHeight: 1.4 }}>Изменение доли в портфеле за квартал — от сделок или движения цены.</div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 84px 60px 62px', gap: 8, padding: '7px 16px', background: C.cardAlt, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}` }}>
+        {['Компания', 'Оценка', 'Доля %', 'Δ %'].map((h, i) => <div key={i} style={{ fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, textAlign: i ? 'right' : 'left' }}>{h}</div>)}
+      </div>
+      {rows.map((r, i) => (
+        <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 84px 60px 62px', gap: 8, padding: '9px 16px', borderBottom: i < rows.length - 1 ? `1px solid ${C.lineSoft}` : 'none', alignItems: 'baseline' }}>
+          <div style={{ minWidth: 0, fontSize: 12.5, color: C.ink }}><span style={{ fontFamily: 'var(--mono)', color: C.inkSoft }}>{r.t}</span> {r.name}</div>
+          <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkSoft }}>{fmtMM(r.val)}</div>
+          <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkSoft }}>{r.pct != null ? r.pct.toFixed(2) : '—'}</div>
+          <div style={{ textAlign: 'right' }}><Delta d={r.delta} /></div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Holdings13F({ h }) {
+  const [showAll, setShowAll] = useState(false);
+  const [q, setQ] = useState('');
+  let rows = h.rows || [];
+  if (q) rows = rows.filter((r) => (r.t + ' ' + r.name).toLowerCase().includes(q.toLowerCase()));
+  const shown = (showAll || q) ? rows : rows.slice(0, 20);
+  const ind = (h.byIndustry || []).filter((x) => x.pct > 0).sort((a, b) => b.pct - a.pct);
+  return (
+    <div style={{ marginBottom: 26 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
+        <h3 style={{ fontFamily: 'var(--serif)', fontSize: 21, fontWeight: 500, color: C.ink, margin: 0 }}>Публичный портфель (13F)</h3>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{h.positions || (h.rows || []).length} позиций · {h.totalValue || ''}</span>
+      </div>
+      {h.note && <p style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, margin: '0 0 16px', maxWidth: 720 }}>{h.note}</p>}
+
+      {/* composition by industry */}
+      {ind.length > 0 && (
+        <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px', marginBottom: 16 }}>
+          <div style={{ fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 12 }}>Состав по отраслям</div>
+          <div style={{ display: 'flex', height: 24, borderRadius: 8, overflow: 'hidden', border: `1px solid ${C.line}`, marginBottom: 12 }}>
+            {ind.map((it, i) => <div key={i} title={`${it.name} · ${it.pct}%`} style={{ width: `${it.pct}%`, background: PALETTE[i % PALETTE.length], minWidth: 1, borderRight: i < ind.length - 1 ? `1px solid ${C.paper}` : 'none' }} />)}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '8px 24px' }}>
+            {ind.map((it, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 9 }}>
+                <span style={{ width: 9, height: 9, borderRadius: 2, background: PALETTE[i % PALETTE.length], flexShrink: 0, transform: 'translateY(1px)' }} />
+                <span style={{ flex: 1, fontSize: 12.5, color: C.ink }}>{it.name}</span>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.ink }}>{it.pct}%</span>
+                {it.val != null && <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint, width: 62, textAlign: 'right' }}>{fmtMM(it.val)}</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* full holdings table */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10, flexWrap: 'wrap' }}>
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Поиск по компании…" style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, width: 200, outline: 'none' }} />
+        <span style={{ fontSize: 11, color: C.inkFaint }}>{q ? `${rows.length} найдено` : `топ ${Math.min(shown.length, rows.length)} из ${(h.rows || []).length} по стоимости`}</span>
+      </div>
+      <div style={{ border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden', background: C.card }}>
+        <div style={{ display: 'grid', gridTemplateColumns: H13_GRID, gap: 10, padding: '8px 16px', background: C.cardAlt, borderBottom: `1px solid ${C.line}` }}>
+          {[['Тикер', 'left'], ['Компания', 'left'], ['Оценка', 'right'], ['Доля %', 'right'], ['Δ квартал', 'right']].map(([t, a], i) => <div key={i} style={{ fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, textAlign: a }}>{t}</div>)}
+        </div>
+        {shown.map((r, i) => (
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: H13_GRID, gap: 10, padding: '9px 16px', borderBottom: i < shown.length - 1 ? `1px solid ${C.lineSoft}` : 'none', alignItems: 'baseline' }}>
+            <div style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkSoft }}>{r.t}</div>
+            <div style={{ minWidth: 0, fontSize: 13, color: C.ink }}>{r.name}</div>
+            <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.ink }}>{fmtMM(r.val)}</div>
+            <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.inkSoft }}>{r.pct != null ? r.pct.toFixed(2) : '—'}</div>
+            <div style={{ textAlign: 'right' }}><Delta d={r.delta} /></div>
+          </div>
+        ))}
+      </div>
+      {!q && (h.rows || []).length > 20 && (
+        <button onClick={() => setShowAll(!showAll)} style={{ marginTop: 10, fontSize: 12, padding: '7px 16px', borderRadius: 16, border: `1px solid ${C.line}`, background: 'transparent', color: C.teal, cursor: 'pointer' }}>{showAll ? 'Свернуть' : `Показать все ${(h.rows || []).length}`}</button>
+      )}
+
+      {/* top increases / decreases */}
+      {(h.increases || h.decreases) && (
+        <div style={{ display: 'flex', gap: 16, marginTop: 18, flexWrap: 'wrap' }}>
+          {h.increases && h.increases.length > 0 && <MoveTable title="Крупнейший рост за квартал" rows={h.increases} up />}
+          {h.decreases && h.decreases.length > 0 && <MoveTable title="Крупнейшее сокращение за квартал" rows={h.decreases} />}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function PortfolioDeep({ data, focus }) {
   const n = normalize(data);
   const [tab, setTab] = useState('sector');
@@ -288,6 +387,8 @@ export default function PortfolioDeep({ data, focus }) {
   return (
     <div>
       {n.summary && <p style={{ fontFamily: 'var(--serif)', fontSize: 16, lineHeight: 1.6, color: C.ink, margin: '0 0 22px', maxWidth: 720 }}>{n.summary}</p>}
+
+      {data.holdings13F && <Holdings13F h={data.holdings13F} />}
 
       {/* ── Куда вложены деньги ── */}
       {tabs.length > 0 && (
