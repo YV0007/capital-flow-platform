@@ -736,5 +736,162 @@
   "Суммы сделок (Hologic $18.3 млрд, Sabre ~$3.5 млрд) — это total EV, часто совместно с Blackstone / La Caisse, а не отдельный чек TPG.",
   "AI-позиции (Anthropic / OpenAI / SpaceX), Waste Eliminator / Liberty Waste, Smith + Howard — суммы не раскрыты.",
   "Vehicle сделки HyperVault внутри TPG точно не уточнён. HALA — связь с TPG не подтверждена ни одним источником, не включена."
- ]
+ ],
+ "holdings13F": {
+  "asOf": "Q1 2026 (31.03.2026)",
+  "positions": 75,
+  "totalValue": "$3.68B",
+  "note": "Публичные акции фондов TPG по 13F-HR: $3.68 млрд, 75 эмитентов. В Q1 2026 TPG резко расширил портфель с 10 до 75 позиций — добавил большой ликвидный блок кредита, привилегированных и конвертируемых бумаг поверх старых PE-ставок (LifeStance, Life Time, Jackson Financial). Это активы фондов, а не баланс TPG. Источник: SEC EDGAR 13F-HR (Q1 2026).",
+  "rows": [
+   {
+    "t": "LFST",
+    "name": "LifeStance Health",
+    "val": 892,
+    "pct": 24.25,
+    "delta": -17.87
+   },
+   {
+    "t": "JXN",
+    "name": "Jackson Financial",
+    "val": 498.5,
+    "pct": 13.55,
+    "delta": null
+   },
+   {
+    "t": "LTH",
+    "name": "Life Time Group",
+    "val": 480.4,
+    "pct": 13.06,
+    "delta": -4.58
+   },
+   {
+    "t": "SION",
+    "name": "Sionna Therapeutics",
+    "val": 260.4,
+    "pct": 7.08,
+    "delta": -3.25
+   },
+   {
+    "t": "BETA",
+    "name": "BETA Technologies",
+    "val": 241,
+    "pct": 6.55,
+    "delta": -10.66
+   },
+   {
+    "t": "AMRX",
+    "name": "Amneal Pharmaceuticals",
+    "val": 153.2,
+    "pct": 4.17,
+    "delta": -1.62
+   },
+   {
+    "t": "PCG",
+    "name": "PG&E — облигации/префы",
+    "val": 73.9,
+    "pct": 2.01,
+    "delta": null
+   },
+   {
+    "t": "NGL",
+    "name": "NGL Energy Partners",
+    "val": 73.2,
+    "pct": 1.99,
+    "delta": null
+   },
+   {
+    "t": "CBLL",
+    "name": "Ceribell",
+    "val": 72.7,
+    "pct": 1.98,
+    "delta": -1.26
+   },
+   {
+    "t": "NVRI",
+    "name": "Enviri Corp",
+    "val": 70.9,
+    "pct": 1.93,
+    "delta": null
+   },
+   {
+    "t": "BCAX",
+    "name": "Bicara Therapeutics",
+    "val": 59.9,
+    "pct": 1.63,
+    "delta": -0.26
+   },
+   {
+    "t": "EVRG",
+    "name": "Evergy — облигация",
+    "val": 54,
+    "pct": 1.47,
+    "delta": null
+   },
+   {
+    "t": "STWD",
+    "name": "Starwood Property Trust — облигация",
+    "val": 47,
+    "pct": 1.28,
+    "delta": null
+   },
+   {
+    "t": "BRKR",
+    "name": "Bruker — префы",
+    "val": 47,
+    "pct": 1.28,
+    "delta": null
+   },
+   {
+    "t": "ALLO",
+    "name": "Allogene Therapeutics",
+    "val": 45.7,
+    "pct": 1.24,
+    "delta": 0.29
+   }
+  ],
+  "decreases": [
+   {
+    "t": "LFST",
+    "name": "LifeStance Health",
+    "val": 892,
+    "pct": 24.25,
+    "delta": -17.87
+   },
+   {
+    "t": "BETA",
+    "name": "BETA Technologies",
+    "val": 241,
+    "pct": 6.55,
+    "delta": -10.66
+   },
+   {
+    "t": "LTH",
+    "name": "Life Time Group",
+    "val": 480.4,
+    "pct": 13.06,
+    "delta": -4.58
+   },
+   {
+    "t": "SION",
+    "name": "Sionna Therapeutics",
+    "val": 260.4,
+    "pct": 7.08,
+    "delta": -3.25
+   },
+   {
+    "t": "AMRX",
+    "name": "Amneal Pharmaceuticals",
+    "val": 153.2,
+    "pct": 4.17,
+    "delta": -1.62
+   },
+   {
+    "t": "CBLL",
+    "name": "Ceribell",
+    "val": 72.7,
+    "pct": 1.98,
+    "delta": -1.26
+   }
+  ]
+ }
 }

@@ -1319,5 +1319,164 @@
    "total": 6
   }
  ],
- "notDisclosed": "KKR раскрывает Strategic Holdings ТОЛЬКО в агрегате (operating earnings $178.9 млн за 12 мес, look-through Adjusted EBITDA ~$1.1 млрд) — полного именного списка ~18 core-PE компаний с долями и per-company fair value НЕТ ни в 10-K, ни в 10-Q, ни в earnings release (в 10-Q названы лишь USI и 1-800 Contacts, по которым была переоценка); поимённо подтверждены 6 крупнейших. Также НЕ раскрываются: (1) поимённый состав инвестпортфеля Global Atlantic — только агрегат (book value $11.66 млрд, AUM $220 млрд, NII, дюрация origination); это облигационный портфель страховщика, а не корпоративные доли; (2) поимённые позиции внутри balance-sheet investments ($7.999 млрд) — только разбивка по 8 классам активов в %; (3) собственная доля co-invest KKR внутри каждой названной сделки фондов (Karo, Biotage, Thomson Reuters print, Helix, ECP/KKR Texas, SK renewables, OSTTRA, ST Telemedia, HCRx, Ampol, Allyntra) — публичны только размер фонда/EV, поэтому все они поданы как активы ФОНДОВ, не баланс KKR; (4) активы клиентских фондов KKR (PE/Infra/RE/Credit) поимённо — кроме единственного публичного BDC FS KKR (FSK), чьи ~236 позиций видны в 10-Q. Мирроринг-пробел: у KKR НЕТ filing-grade именного списка объектов недвижимости, сопоставимого с трофейным офисным реестром Brookfield — RE ведётся через фонды/REIT (включая KREST), названий зданий не выдумываем. Неподтверждённое/спорное: Qiagen — только интерес, сделки нет (слух 09.07.2026); увеличение core-PE долей на ~$1.1 млрд (USI/1-800/Heartland) — полный close не подтверждён. Оговорки: значения fair value по FSK-холдингам приблизительны (извлечены из XBRL-разметки 10-Q — абсолютные числа ±, ранжирование надёжно); счёт «~236 компаний» FSK не переподтверждён первичкой; разбивка $7.999 млрд по классам и цифры Global Atlantic $11.66 млрд / $220 млрд — из релиз-экзибитов KKR, независимо не переподтверждены. Рыночная капитализация: агрегаторное значение $130 млрд — ошибка; при ~891 млн акций × $100.94 (22.07.2026) корректно ~$90 млрд. Динамика 1 год: −34.78% по цене против −30.04% total return (разница — дивиденд ~0.9%). 13F-позиции KKR (Masonite/Amedisys/Lamar и др.) — это активы клиентских фондов, НЕ баланс KKR, и в разбор НЕ включены."
+ "notDisclosed": "KKR раскрывает Strategic Holdings ТОЛЬКО в агрегате (operating earnings $178.9 млн за 12 мес, look-through Adjusted EBITDA ~$1.1 млрд) — полного именного списка ~18 core-PE компаний с долями и per-company fair value НЕТ ни в 10-K, ни в 10-Q, ни в earnings release (в 10-Q названы лишь USI и 1-800 Contacts, по которым была переоценка); поимённо подтверждены 6 крупнейших. Также НЕ раскрываются: (1) поимённый состав инвестпортфеля Global Atlantic — только агрегат (book value $11.66 млрд, AUM $220 млрд, NII, дюрация origination); это облигационный портфель страховщика, а не корпоративные доли; (2) поимённые позиции внутри balance-sheet investments ($7.999 млрд) — только разбивка по 8 классам активов в %; (3) собственная доля co-invest KKR внутри каждой названной сделки фондов (Karo, Biotage, Thomson Reuters print, Helix, ECP/KKR Texas, SK renewables, OSTTRA, ST Telemedia, HCRx, Ampol, Allyntra) — публичны только размер фонда/EV, поэтому все они поданы как активы ФОНДОВ, не баланс KKR; (4) активы клиентских фондов KKR (PE/Infra/RE/Credit) поимённо — кроме единственного публичного BDC FS KKR (FSK), чьи ~236 позиций видны в 10-Q. Мирроринг-пробел: у KKR НЕТ filing-grade именного списка объектов недвижимости, сопоставимого с трофейным офисным реестром Brookfield — RE ведётся через фонды/REIT (включая KREST), названий зданий не выдумываем. Неподтверждённое/спорное: Qiagen — только интерес, сделки нет (слух 09.07.2026); увеличение core-PE долей на ~$1.1 млрд (USI/1-800/Heartland) — полный close не подтверждён. Оговорки: значения fair value по FSK-холдингам приблизительны (извлечены из XBRL-разметки 10-Q — абсолютные числа ±, ранжирование надёжно); счёт «~236 компаний» FSK не переподтверждён первичкой; разбивка $7.999 млрд по классам и цифры Global Atlantic $11.66 млрд / $220 млрд — из релиз-экзибитов KKR, независимо не переподтверждены. Рыночная капитализация: агрегаторное значение $130 млрд — ошибка; при ~891 млн акций × $100.94 (22.07.2026) корректно ~$90 млрд. Динамика 1 год: −34.78% по цене против −30.04% total return (разница — дивиденд ~0.9%). 13F-позиции KKR (Masonite/Amedisys/Lamar и др.) — это активы клиентских фондов, НЕ баланс KKR, и в разбор НЕ включены.",
+ "holdings13F": {
+  "asOf": "Q1 2026 (31.03.2026)",
+  "positions": 90,
+  "totalValue": "$5.35B",
+  "note": "Публичные акции в фондах и на балансе KKR по 13F-HR: $5.35 млрд, 90 эмитентов — в основном бывшие частные компании KKR, вышедшие на биржу (BrightSpring, BridgeBio, доля в Henry Schein), плюс собственные структуры (KREF, FSK) и большой портфель конвертируемых облигаций. Это лишь листингованная верхушка — основной капитал KKR в частных сделках вне 13F. Источник: SEC EDGAR 13F-HR (Q1 2026).",
+  "rows": [
+   {
+    "t": "BTSG",
+    "name": "BrightSpring Health Services",
+    "val": 1782.1,
+    "pct": 33.33,
+    "delta": -3.75
+   },
+   {
+    "t": "HSIC",
+    "name": "Henry Schein",
+    "val": 1153.6,
+    "pct": 21.58,
+    "delta": 2.66
+   },
+   {
+    "t": "BBIO",
+    "name": "BridgeBio Pharma",
+    "val": 984.8,
+    "pct": 18.42,
+    "delta": 2.2
+   },
+   {
+    "t": "CRGY",
+    "name": "Crescent Energy",
+    "val": 386.8,
+    "pct": 7.24,
+    "delta": 3.65
+   },
+   {
+    "t": "NIQ",
+    "name": "NielsenIQ (NIQ Global)",
+    "val": 341.4,
+    "pct": 6.38,
+    "delta": -1.53
+   },
+   {
+    "t": "BV",
+    "name": "BrightView Holdings",
+    "val": 257.6,
+    "pct": 4.82,
+    "delta": 0.4
+   },
+   {
+    "t": "KREF",
+    "name": "KKR Real Estate Finance Trust",
+    "val": 61.2,
+    "pct": 1.14,
+    "delta": -0.18
+   },
+   {
+    "t": "PSKY",
+    "name": "Paramount Skydance",
+    "val": 49.9,
+    "pct": 0.93,
+    "delta": -0.89
+   },
+   {
+    "t": "XYZ",
+    "name": "Block — конв. облигации",
+    "val": 31.7,
+    "pct": 0.59,
+    "delta": null
+   },
+   {
+    "t": "OXLC",
+    "name": "Oxford Lane Capital",
+    "val": 31.2,
+    "pct": 0.58,
+    "delta": null
+   },
+   {
+    "t": "BHC",
+    "name": "Bausch Health",
+    "val": 28.3,
+    "pct": 0.53,
+    "delta": -0.05
+   },
+   {
+    "t": "FSK",
+    "name": "FS KKR Capital",
+    "val": 10,
+    "pct": 0.19,
+    "delta": -0.05
+   }
+  ],
+  "increases": [
+   {
+    "t": "CRGY",
+    "name": "Crescent Energy",
+    "val": 386.8,
+    "pct": 7.24,
+    "delta": 3.65
+   },
+   {
+    "t": "HSIC",
+    "name": "Henry Schein",
+    "val": 1153.6,
+    "pct": 21.58,
+    "delta": 2.66
+   },
+   {
+    "t": "BBIO",
+    "name": "BridgeBio Pharma",
+    "val": 984.8,
+    "pct": 18.42,
+    "delta": 2.2
+   },
+   {
+    "t": "BV",
+    "name": "BrightView Holdings",
+    "val": 257.6,
+    "pct": 4.82,
+    "delta": 0.4
+   }
+  ],
+  "decreases": [
+   {
+    "t": "BTSG",
+    "name": "BrightSpring Health",
+    "val": 1782.1,
+    "pct": 33.33,
+    "delta": -3.75
+   },
+   {
+    "t": "NIQ",
+    "name": "NielsenIQ",
+    "val": 341.4,
+    "pct": 6.38,
+    "delta": -1.53
+   },
+   {
+    "t": "PSKY",
+    "name": "Paramount Skydance",
+    "val": 49.9,
+    "pct": 0.93,
+    "delta": -0.89
+   },
+   {
+    "t": "KREF",
+    "name": "KKR Real Estate Finance Trust",
+    "val": 61.2,
+    "pct": 1.14,
+    "delta": -0.18
+   },
+   {
+    "t": "BHC",
+    "name": "Bausch Health",
+    "val": 28.3,
+    "pct": 0.53,
+    "delta": -0.05
+   }
+  ]
+ }
 }
