@@ -1120,8 +1120,9 @@ function Src({ children }) {
   return <span style={{ fontSize: 9.5, color: '#52525b', fontFamily: 'ui-monospace,monospace', marginLeft: 6, whiteSpace: 'nowrap' }}>· {children}</span>;
 }
 
-// Titled section with an anchor id for the jump-nav.
-function Block({ id, accent, kicker, lead, children }) {
+// Titled section with an anchor id for the jump-nav. `takeaway` renders a
+// highlighted "so-what for the investor" strip at the bottom of the block.
+function Block({ id, accent, kicker, lead, takeaway, children }) {
   return (
     <section id={id} style={{ scrollMarginTop: 12, marginBottom: 20 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14, borderBottom: '1px solid #1f1f23', paddingBottom: 10 }}>
@@ -1129,6 +1130,12 @@ function Block({ id, accent, kicker, lead, children }) {
         {lead && <div style={{ marginLeft: 'auto', fontSize: 11, color: '#a1a1aa', textAlign: 'right' }}>{lead}</div>}
       </div>
       {children}
+      {takeaway && (
+        <div style={{ marginTop: 14, padding: '13px 16px', background: `${accent}10`, borderLeft: `3px solid ${accent}`, borderRadius: '0 9px 9px 0' }}>
+          <div style={{ fontSize: 9, color: accent, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 }}>ВЫВОД ДЛЯ ИНВЕСТОРА</div>
+          <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.65 }}>{takeaway}</div>
+        </div>
+      )}
     </section>
   );
 }
@@ -1179,27 +1186,68 @@ function PurePlay({ v, c }) {
 }
 
 // ─ Verdict hero (decision summary) ─────────────────────────────────────────
+// The four canonical scoring dimensions. Each is scored 1–10, higher = better.
+// Plain-Russian labels + a one-line "what it measures / what a high score means"
+// so the reader never has to guess what a number implies.
+const VERDICT_DIMS = {
+  growth:      { label: 'Потенциал роста',          desc: 'Как быстро растёт спрос и сам рынок звена. Выше балл — сильнее рост впереди.' },
+  moat:        { label: 'Защита от конкурентов',    desc: 'Трудно ли новым игрокам войти и отнять долю: барьеры, издержки переключения, контроль над «горлышком». Выше — крепче и долговечнее позиция.' },
+  cyclicality: { label: 'Устойчивость к циклу',     desc: 'Насколько выручка и цены защищены от спада отрасли. Выше — стабильнее; ниже — сильнее бьёт цикл (риск).' },
+  valuation:   { label: 'Привлекательность цены',   desc: 'Насколько дёшевы акции к прибыли и к своей истории. Выше — дешевле, больше запас прочности.' },
+  // legacy Russian keys (fallback so old data still renders)
+  'Рост': { label: 'Потенциал роста', desc: '' },
+  'Ров': { label: 'Защита от конкурентов', desc: '' },
+  'Цикличность': { label: 'Устойчивость к циклу', desc: '' },
+  'Оценка': { label: 'Привлекательность цены', desc: '' },
+};
+
 function VerdictHero({ v, c, asOf }) {
   const subs = v.subScores ? Object.entries(v.subScores) : [];
   const score = v.score != null ? Number(v.score) : (subs.length ? Math.round(subs.reduce((a, [, x]) => a + Number(x), 0) / subs.length) : null);
   const scoreCol = score == null ? '#a1a1aa' : score >= 7 ? '#10b981' : score >= 5 ? '#f59e0b' : '#ef4444';
+  const scoreWord = score == null ? '' : score >= 7 ? 'Привлекательно' : score >= 5 ? 'Средне' : 'Слабо';
   return (
     <div style={{ background: `linear-gradient(180deg, ${c}1c 0%, #0d0d0e 65%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 28px', marginBottom: 16 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 18, flexWrap: 'wrap', gap: 8 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6, flexWrap: 'wrap', gap: 8 }}>
         <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>ВЕРДИКТ · ИНВЕСТ-ОЦЕНКА</div>
         {asOf && <div style={{ fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>данные на {asOf}</div>}
       </div>
-      <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap', alignItems: 'center' }}>
+      <div style={{ fontSize: 10.5, color: '#52525b', marginBottom: 18 }}>Каждая метрика — 1–10, где выше = лучше для инвестора. Общий балл — среднее по четырём.</div>
+      <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap', alignItems: 'flex-start' }}>
         {score != null && (
-          <div style={{ textAlign: 'center', minWidth: 104 }}>
+          <div style={{ textAlign: 'center', minWidth: 120 }}>
             <div style={{ fontSize: 60, fontWeight: 800, color: scoreCol, lineHeight: 1, letterSpacing: '-0.04em' }}>{score}</div>
             <div style={{ fontSize: 10, color: '#71717a', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>ИЗ 10</div>
+            {scoreWord && <div style={{ fontSize: 11, color: scoreCol, fontWeight: 700, marginTop: 8 }}>{scoreWord}</div>}
           </div>
         )}
-        <div style={{ flex: 1, minWidth: 240 }}>{subs.map(([k, val]) => <ScoreBar key={k} label={k} value={val} accent={c} />)}</div>
+        <div style={{ flex: 1, minWidth: 260 }}>
+          {subs.map(([k, val]) => {
+            const dim = VERDICT_DIMS[k] || { label: k, desc: '' };
+            const n = Number(val) || 0;
+            const col = n >= 7 ? '#10b981' : n >= 5 ? '#f59e0b' : '#ef4444';
+            const word = n >= 7 ? 'сильно' : n >= 5 ? 'средне' : 'слабо';
+            return (
+              <div key={k} style={{ marginBottom: 15 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 10 }}>
+                  <span style={{ fontSize: 12.5, color: '#e4e4e7', fontWeight: 600 }}>{dim.label}</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 7, whiteSpace: 'nowrap' }}>
+                    <span style={{ fontSize: 9.5, color: col, fontFamily: 'ui-monospace,monospace', fontWeight: 700, letterSpacing: '0.04em' }}>{word}</span>
+                    <span style={{ fontSize: 14, color: '#fafafa', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{val}<span style={{ color: '#52525b', fontSize: 11 }}>/10</span></span>
+                  </span>
+                </div>
+                <div style={{ height: 6, borderRadius: 3, background: '#1f1f23', overflow: 'hidden', margin: '6px 0 5px' }}>
+                  <div style={{ width: (Math.max(0, Math.min(10, n)) * 10) + '%', height: '100%', background: col, borderRadius: 3 }} />
+                </div>
+                {dim.desc && <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.5 }}>{dim.desc}</div>}
+              </div>
+            );
+          })}
+        </div>
       </div>
+      {v.summary && <div style={{ marginTop: 10, fontSize: 13, color: '#d4d4d8', lineHeight: 1.65 }}>{v.summary}</div>}
       {(v.horizon || v.sizing) && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 12, marginTop: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 12, marginTop: 16 }}>
           {v.horizon && <MetaCell label="ГОРИЗОНТ" value={v.horizon} />}
           {v.sizing && <MetaCell label="РАЗМЕР ПОЗИЦИИ" value={v.sizing} />}
         </div>
@@ -1260,7 +1308,7 @@ function TamChart({ rows, c }) {
 
 function MarketSizingBlock({ d, c }) {
   return (
-    <Block id="market" accent={c} kicker="01 · РАЗМЕР РЫНКА И ТРАЕКТОРИЯ" lead={d.cagr}>
+    <Block id="market" takeaway={d.takeaway} accent={c} kicker="01 · РАЗМЕР РЫНКА И ТРАЕКТОРИЯ" lead={d.cagr}>
       {d.tam?.length > 0 && (
         <div style={{ ...cardBg, padding: '16px 18px', marginBottom: 14 }}>
           <div style={{ ...miniKicker, marginBottom: 2 }}>TAM ПО ГОДАМ ($ МЛРД)</div>
@@ -1280,7 +1328,7 @@ function MarketSizingBlock({ d, c }) {
 // ─ Block 2 — Value capture ─────────────────────────────────────────────────
 function ValueCaptureBlock({ d, c }) {
   return (
-    <Block id="value" accent={c} kicker="02 · КАРТА ЗАХВАТА СТОИМОСТИ">
+    <Block id="value" takeaway={d.takeaway} accent={c} kicker="02 · КТО ЗАБИРАЕТ МАРЖУ">
       {d.margins?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
@@ -1296,7 +1344,7 @@ function ValueCaptureBlock({ d, c }) {
       )}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.bottleneckNow && <div style={miniCard}><div style={miniKicker}>УЗКОЕ МЕСТО СЕЙЧАС</div><div style={miniBody}>{d.bottleneckNow}</div></div>}
-        {d.bottleneckNext && <div style={miniCard}><div style={miniKicker}>КУДА СМЕСТИТСЯ</div><div style={miniBody}>{d.bottleneckNext}</div></div>}
+        {d.bottleneckNext && <div style={miniCard}><div style={miniKicker}>КУДА УЙДЁТ УЗКОЕ МЕСТО</div><div style={miniBody}>{d.bottleneckNext}</div></div>}
         {d.capitalIntensity && <div style={miniCard}><div style={miniKicker}>КАПИТАЛОЁМКОСТЬ</div><div style={miniBody}>{d.capitalIntensity}</div></div>}
       </div>
     </Block>
@@ -1307,7 +1355,7 @@ function ValueCaptureBlock({ d, c }) {
 function CompetitionBlock({ d, c }) {
   const cols = d.shareTrajectory?.length ? Object.keys(d.shareTrajectory[0]).filter(k => k !== 'period' && k !== 'source') : [];
   return (
-    <Block id="competition" accent={c} kicker="03 · КОНКУРЕНТНАЯ СТРУКТУРА" lead={d.concentration}>
+    <Block id="competition" takeaway={d.takeaway} accent={c} kicker="03 · КОНКУРЕНТНАЯ СТРУКТУРА" lead={d.concentration}>
       {d.shareTrajectory?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
           <div style={{ ...miniKicker, marginBottom: 8 }}>ДОЛЯ РЫНКА · ТРАЕКТОРИЯ</div>
@@ -1355,7 +1403,7 @@ function CompetitionBlock({ d, c }) {
 // ─ Block 4 — Demand ────────────────────────────────────────────────────────
 function DemandBlock({ d, c }) {
   return (
-    <Block id="demand" accent={c} kicker="04 · ВИДИМОСТЬ СПРОСА">
+    <Block id="demand" takeaway={d.takeaway} accent={c} kicker="04 · СПРОС · НАСКОЛЬКО ЗАКОНТРАКТОВАН">
       {d.soldOut?.length > 0 && (
         <div style={{ ...cardBg, padding: '16px 18px', marginBottom: 14 }}>
           <div style={{ ...miniKicker, marginBottom: 10 }}>РАСПРОДАНО / ЗАКОНТРАКТОВАНО ПО ГОДАМ</div>
@@ -1373,7 +1421,7 @@ function DemandBlock({ d, c }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.contractStructure && <div style={miniCard}><div style={miniKicker}>СТРУКТУРА КОНТРАКТОВ</div><div style={miniBody}>{d.contractStructure}</div></div>}
         {d.customerConcentration && <div style={miniCard}><div style={miniKicker}>КОНЦЕНТРАЦИЯ КЛИЕНТОВ</div><div style={miniBody}>{d.customerConcentration}</div></div>}
-        {d.backlog && <div style={miniCard}><div style={miniKicker}>БЭКЛОГ / RPO</div><div style={miniBody}>{d.backlog}</div></div>}
+        {d.backlog && <div style={miniCard}><div style={miniKicker}>ПОРТФЕЛЬ ЗАКАЗОВ (RPO)</div><div style={miniBody}>{d.backlog}</div></div>}
         {d.pricing && <div style={miniCard}><div style={miniKicker}>ЦЕНОВАЯ ТРАЕКТОРИЯ</div><div style={miniBody}>{d.pricing}</div></div>}
       </div>
     </Block>
@@ -1384,7 +1432,7 @@ function DemandBlock({ d, c }) {
 function SupplyBlock({ d, c }) {
   const sm = { deficit: { t: 'Дефицит', col: '#10b981' }, tight: { t: 'Напряжённо', col: '#22d3ee' }, balanced: { t: 'Баланс', col: '#a1a1aa' }, surplus: { t: 'Профицит', col: '#ef4444' }, unknown: { t: 'Неясно', col: '#52525b' } };
   return (
-    <Block id="supply" accent={c} kicker="05 · ОТВЕТ ПРЕДЛОЖЕНИЯ · БАЛАНС" lead="ключ для цикличности">
+    <Block id="supply" takeaway={d.takeaway} accent={c} kicker="05 · ПРЕДЛОЖЕНИЕ · ДЕФИЦИТ ИЛИ ПЕРЕИЗБЫТОК" lead="главный вопрос для цикла">
       {d.balance?.length > 0 && (
         <div style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -1418,7 +1466,7 @@ function SupplyBlock({ d, c }) {
 // ─ Block 6 — Unit economics ────────────────────────────────────────────────
 function UnitEconBlock({ d, c }) {
   return (
-    <Block id="unit" accent={c} kicker="06 · ЮНИТ-ЭКОНОМИКА">
+    <Block id="unit" takeaway={d.takeaway} accent={c} kicker="06 · ЦЕНА · МАРЖА · ВЫХОД ГОДНЫХ">
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.pricePerUnit && <div style={miniCard}><div style={miniKicker}>ЦЕНА ЗА ЕДИНИЦУ</div><div style={miniBody}>{d.pricePerUnit}</div></div>}
         {d.grossMargin && <div style={miniCard}><div style={miniKicker}>ВАЛОВАЯ МАРЖА</div><div style={miniBody}>{d.grossMargin}</div></div>}
@@ -1439,7 +1487,7 @@ function UnitEconBlock({ d, c }) {
 // ─ Block 7 — Roadmap + disruption ──────────────────────────────────────────
 function RoadmapBlock({ d, c }) {
   return (
-    <Block id="roadmap" accent={c} kicker="07 · ТЕХ-ДОРОЖНАЯ КАРТА И УГРОЗЫ">
+    <Block id="roadmap" takeaway={d.takeaway} accent={c} kicker="07 · ПОКОЛЕНИЯ ТЕХНОЛОГИИ И УГРОЗЫ">
       {d.generations?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: d.disruption?.length ? 16 : 0 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 520 }}>
@@ -1474,7 +1522,7 @@ function RoadmapBlock({ d, c }) {
 // ─ Block 8 — Dependencies ──────────────────────────────────────────────────
 function DependenciesBlock({ d, c }) {
   return (
-    <Block id="deps" accent={c} kicker="08 · ЗАВИСИМОСТИ · UPSTREAM / DOWNSTREAM">
+    <Block id="deps" takeaway={d.takeaway} accent={c} kicker="08 · ОТ КОГО ЗАВИСИТ И КТО ПОКУПАЕТ">
       {d.upstream?.length > 0 && (
         <div style={{ marginBottom: 14 }}>
           <div style={miniKicker}>ВВЕРХ · КРИТИЧЕСКИЕ ВХОДЫ И МОНОПОЛИИ</div>
@@ -1501,10 +1549,10 @@ function DependenciesBlock({ d, c }) {
 function RiskMatrixBlock({ rows, c }) {
   const lvl = x => { const s = (x || '').toLowerCase(); return s.includes('выс') ? '#ef4444' : s.includes('сред') ? '#f59e0b' : s.includes('низ') ? '#10b981' : '#a1a1aa'; };
   return (
-    <Block id="risks" accent={c} kicker="09 · РЕЕСТР РИСКОВ · ВЕРОЯТНОСТЬ × ЭФФЕКТ">
+    <Block id="risks" accent={c} kicker="09 · РИСКИ · ВЕРОЯТНОСТЬ × ПОСЛЕДСТВИЯ">
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 560 }}>
-          <thead><tr style={thRow}><th style={thCell}>РИСК</th><th style={thCell}>ВЕРОЯТ.</th><th style={thCell}>ЭФФЕКТ</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
+          <thead><tr style={thRow}><th style={thCell}>РИСК</th><th style={thCell}>ВЕРОЯТ.</th><th style={thCell}>ПОСЛЕДСТВИЯ</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
           <tbody>{rows.map((r, i) => (
             <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
               <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600, whiteSpace: 'nowrap' }}>{r.risk}</td>
@@ -1521,10 +1569,13 @@ function RiskMatrixBlock({ rows, c }) {
 // ─ Block 10 — Investable universe ──────────────────────────────────────────
 function UniverseBlock({ rows, c }) {
   return (
-    <Block id="universe" accent={c} kicker="10 · ИНВЕСТ-ВСЕЛЕННАЯ">
+    <Block id="universe" accent={c} kicker="10 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ">
+      <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 12 }}>
+        «Чистота ставки» (1–10) — насколько выручка компании зависит именно от этого звена: 10 = почти вся, 1 = крошечная доля большого бизнеса.
+      </div>
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 640 }}>
-          <thead><tr style={thRow}><th style={thCell}>КОМПАНИЯ</th><th style={thCell}>ТИКЕР</th><th style={thCell}>КАП.</th><th style={thCell}>ЭКСПОЗИЦИЯ</th><th style={thCell}>ЧИСТОТА</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
+          <thead><tr style={thRow}><th style={thCell}>КОМПАНИЯ</th><th style={thCell}>ТИКЕР</th><th style={thCell}>КАП.</th><th style={thCell}>ЭКСПОЗИЦИЯ</th><th style={thCell}>ЧИСТОТА СТАВКИ</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
           <tbody>{rows.map((r, i) => (
             <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
               <td style={tdCell}><span style={{ color: '#fafafa', fontWeight: 600 }}>{r.company}</span>{r.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 3, lineHeight: 1.5 }}>{r.note}</div>}</td>
@@ -1543,7 +1594,7 @@ function UniverseBlock({ rows, c }) {
 // ─ Block 11 — Monitoring + canary ──────────────────────────────────────────
 function MonitoringBlock({ d, c }) {
   return (
-    <Block id="monitor" accent={c} kicker="11 · ИНДИКАТОРЫ И МОНИТОРИНГ">
+    <Block id="monitor" accent={c} kicker="11 · ЧТО ОТСЛЕЖИВАТЬ">
       {d.metrics?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
@@ -1644,11 +1695,21 @@ function NodeDetail({ node, onBack, onJump }) {
       {detail?.tldr?.length > 0 && <Tldr items={detail.tldr} c={c} />}
       {nav.length > 0 && <SectionNav items={nav} c={c} />}
 
-      {/* About (base copy) */}
-      {(NODE_INTEL[node.id] || NODE_ROLE[node.id]) && (
-        <Block id="about" accent={c} kicker="ЧТО ЭТО И РОЛЬ В ЦЕПОЧКЕ">
-          {NODE_INTEL[node.id] && <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8, marginBottom: NODE_ROLE[node.id] ? 14 : 0 }}>{NODE_INTEL[node.id]}</div>}
-          {NODE_ROLE[node.id] && <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>{NODE_ROLE[node.id]}</div>}
+      {/* About — a deeper primer, distinct from the graph-card preview.
+          detail.intro replaces the base copy entirely when present (the base
+          ЧТО ЭТО / РОЛЬ already appeared in the inspector — don't repeat it). */}
+      {(detail?.intro || NODE_INTEL[node.id] || NODE_ROLE[node.id]) && (
+        <Block id="about" accent={c} kicker="КАК УСТРОЕНО ЭТО ЗВЕНО">
+          {detail?.intro ? (
+            <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>
+              <Paragraphs text={detail.intro} />
+            </div>
+          ) : (
+            <>
+              {NODE_INTEL[node.id] && <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8, marginBottom: NODE_ROLE[node.id] ? 14 : 0 }}>{NODE_INTEL[node.id]}</div>}
+              {NODE_ROLE[node.id] && <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>{NODE_ROLE[node.id]}</div>}
+            </>
+          )}
         </Block>
       )}
 
