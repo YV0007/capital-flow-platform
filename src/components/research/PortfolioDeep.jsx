@@ -328,6 +328,30 @@ function Holdings13F({ h }) {
           {h.decreases && h.decreases.length > 0 && <MoveTable title="Крупнейшее сокращение за квартал" rows={h.decreases} />}
         </div>
       )}
+
+      {/* 13D/G filings — >5% ownership stakes */}
+      {h.filings13DG && h.filings13DG.rows && h.filings13DG.rows.length > 0 && (
+        <div style={{ marginTop: 18, border: `1px solid ${C.line}`, borderRadius: 10, background: C.card, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 16px 8px' }}>
+            <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink }}>Крупные доли &gt;5% (13D/G)</div>
+            {h.filings13DG.note && <div style={{ fontSize: 11.5, color: C.inkFaint, marginTop: 3, lineHeight: 1.45, maxWidth: 720 }}>{h.filings13DG.note}</div>}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '78px 56px 1fr 92px', gap: 10, padding: '7px 16px', background: C.cardAlt, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}` }}>
+            {[['Дата', 'left'], ['Форма', 'left'], ['Компания', 'left'], ['Владение', 'right']].map(([t, a], i) => <div key={i} style={{ fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, textAlign: a }}>{t}</div>)}
+          </div>
+          {h.filings13DG.rows.map((r, i) => {
+            const closed = r.status && /закры|выкуп|продан|exit/i.test(r.status);
+            return (
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '78px 56px 1fr 92px', gap: 10, padding: '9px 16px', borderBottom: i < h.filings13DG.rows.length - 1 ? `1px solid ${C.lineSoft}` : 'none', alignItems: 'baseline' }}>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint }}>{r.date}</div>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{r.form}</div>
+                <div style={{ minWidth: 0, fontSize: 12.5, color: C.ink }}><span style={{ fontFamily: 'var(--mono)', color: C.inkSoft }}>{r.t}</span> {r.name}{closed && <span style={{ fontSize: 9, marginLeft: 6, padding: '1px 6px', borderRadius: 8, background: C.gold + '22', color: C.gold, border: `1px solid ${C.gold}55` }}>{r.status}</span>}</div>
+                <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.ink }}>{r.ownPct != null ? r.ownPct.toFixed(2) + '%' : (r.shares || '—')}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

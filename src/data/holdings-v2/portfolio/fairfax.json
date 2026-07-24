@@ -1962,6 +1962,71 @@
     "val": 0.63,
     "pct": 0.05
    }
-  ]
+  ],
+  "filings13DG": {
+   "note": "Формы 13D/13G — уведомление о доле >5% в компании. Для Fairfax это его крупные концентрированные ставки, где он часто входит в совет директоров. Дедуплицировано по компании (последняя подача). Источник: SEC EDGAR.",
+   "rows": [
+    {
+     "date": "16.06.2026",
+     "form": "13D/A",
+     "t": "KW",
+     "name": "Kennedy-Wilson",
+     "shares": "—",
+     "status": "выкуплен"
+    },
+    {
+     "date": "29.12.2025",
+     "form": "13G/A",
+     "t": "UAA",
+     "name": "Under Armour",
+     "shares": "30.5M шт."
+    },
+    {
+     "date": "11.12.2025",
+     "form": "13G",
+     "t": "ORLA",
+     "name": "Orla Mining",
+     "shares": "76.0M шт."
+    },
+    {
+     "date": "10.04.2024",
+     "form": "13G/A",
+     "t": "CCAP",
+     "name": "Crescent Capital BDC",
+     "shares": "1.8M шт."
+    },
+    {
+     "date": "20.02.2024",
+     "form": "13D/A",
+     "t": "BB",
+     "name": "BlackBerry",
+     "shares": "47.2M шт."
+    },
+    {
+     "date": "02.11.2022",
+     "form": "13D/A",
+     "t": "ATCO",
+     "name": "Atlas Corp (Seaspan)",
+     "shares": "131.8M шт.",
+     "status": "выкуплен"
+    },
+    {
+     "date": "07.07.2022",
+     "form": "13D/A",
+     "t": "RFP",
+     "name": "Resolute Forest Products",
+     "shares": "30.5M шт.",
+     "status": "продан"
+    },
+    {
+     "date": "17.01.2019",
+     "form": "13D/A",
+     "t": "SSW",
+     "name": "Seaspan",
+     "shares": "102.6M шт.",
+     "status": "→ Atlas"
+    }
+   ]
+  }
  }
 }

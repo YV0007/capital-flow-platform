@@ -1700,6 +1700,116 @@
     "pct": 0.26,
     "delta": -0.1077
    }
-  ]
+  ],
+  "filings13DG": {
+   "note": "Формы 13D/13G — BlackRock раскрывает долю, когда его индексные фонды переходят порог 5% владения компанией. Это пассивные позиции (не активизм). Показаны 15 крупнейших из ~820 недавних подач. Источник: SEC EDGAR.",
+   "rows": [
+    {
+     "date": "08.07.2026",
+     "form": "13G/A",
+     "t": "NIC",
+     "name": "Nicolet Bankshares",
+     "ownPct": 13
+    },
+    {
+     "date": "04.06.2026",
+     "form": "13G",
+     "t": "BFAM",
+     "name": "Bright Horizons Family Solutions",
+     "ownPct": 12.5
+    },
+    {
+     "date": "08.07.2026",
+     "form": "13G/A",
+     "t": "CDE",
+     "name": "Coeur Mining",
+     "ownPct": 11.7
+    },
+    {
+     "date": "07.04.2026",
+     "form": "13G",
+     "t": "LYFT",
+     "name": "Lyft",
+     "ownPct": 11.7
+    },
+    {
+     "date": "04.12.2025",
+     "form": "13G",
+     "t": "CZR",
+     "name": "Caesars Entertainment",
+     "ownPct": 11.5
+    },
+    {
+     "date": "21.01.2026",
+     "form": "13G/A",
+     "t": "COKE",
+     "name": "Coca-Cola Consolidated",
+     "ownPct": 8.7
+    },
+    {
+     "date": "27.04.2026",
+     "form": "13G",
+     "t": "ADT",
+     "name": "ADT Inc",
+     "ownPct": 8
+    },
+    {
+     "date": "17.10.2025",
+     "form": "13G",
+     "t": "BTBT",
+     "name": "Bit Digital",
+     "ownPct": 7.8
+    },
+    {
+     "date": "27.04.2026",
+     "form": "13G",
+     "t": "AMRX",
+     "name": "Amneal Pharmaceuticals",
+     "ownPct": 7.6
+    },
+    {
+     "date": "17.10.2025",
+     "form": "13G/A",
+     "t": "IBKR",
+     "name": "Interactive Brokers",
+     "ownPct": 6.2
+    },
+    {
+     "date": "27.04.2026",
+     "form": "13G",
+     "t": "SLS",
+     "name": "SELLAS Life Sciences",
+     "ownPct": 5.4
+    },
+    {
+     "date": "27.04.2026",
+     "form": "13G",
+     "t": "FXID",
+     "name": "iShares China Large-Cap ETF",
+     "ownPct": 5.4
+    },
+    {
+     "date": "21.01.2026",
+     "form": "13G",
+     "t": "FCAP",
+     "name": "First Capital",
+     "ownPct": 5.2
+    },
+    {
+     "date": "21.01.2026",
+     "form": "13G",
+     "t": "FRAF",
+     "name": "Franklin Financial Services",
+     "ownPct": 5.1
+    },
+    {
+     "date": "29.04.2026",
+     "form": "13G",
+     "t": "AXIS",
+     "name": "AXIA Energia",
+     "ownPct": 5.1
+    }
+   ]
+  }
  }
 }
