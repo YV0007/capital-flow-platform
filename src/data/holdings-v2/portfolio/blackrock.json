@@ -863,5 +863,843 @@
    ]
   }
  ],
- "notDisclosed": "BlackRock зарабатывает на КОМИССИЯХ с чужих денег, а не владеет базовыми бумагами: позиции iShares, активных, индексных и cash-фондов — это CLIENT ASSETS, не баланс холдинга, поэтому 13F-HR ($5.72 трлн, ~50,651 позиция) сознательно НЕ используется как «портфель BLK». НЕ раскрыто построчно / оговорки по источнику: (1) HPS «~$230 млн base + $115 млн performance fees за Q2» и цель фандрейзинга «$400 млрд к 2030» — данные с earnings-call, НЕ из письменного релиза 8-K (в релизе только агрегат performance fees $305 млн); помечены как management-комментарий. (2) Доли владения и оценки конкретных активов GIP (Aligned, Gatwick, CyrusOne и др.) не публикуются — раскрыты только суммы сделок (EV): Aligned $40 млрд, ACS €2 млрд. (3) Сумма ACV технологий в долларах не раскрыта (только +15% г/г); «$25 трлн на платформе Aladdin» в первичке этого цикла НЕ подтверждено. (4) AUM большинства отдельных iShares ETF (кроме агрегатов каналов и digital $48.8 млрд) и underlying-займы HPS-фондов построчно не раскрываются; IVV ~$686 млрд и IEFA ~$122 млрд — сторонние ETF-трекеры, не первичка BLK. (5) IRR/MOIC по vintage GIP/HPS не раскрыты; балансовые seed/co-investments построчно (10-K Investments note) и dry powder не извлечены. ИСПРАВЛЕНИЕ к прошлой версии файла: разбивка private markets $329.1 млрд ПО ПОДКЛАССАМ РАСКРЫТА в релизе Q2 2026 (стр. 6) — инфраструктура $113.5 млрд, частный кредит $150.9 млрд, private equity $32.3 млрд, недвижимость $22.0 млрд, multi-alternatives $10.4 млрд — это первичные цифры, а не непроверенный прокси. Первичный источник P&L/AUM/потоков — BlackRock Q2 2026 Earnings Release (8-K, 15.07.2026)."
+ "notDisclosed": "BlackRock зарабатывает на КОМИССИЯХ с чужих денег, а не владеет базовыми бумагами: позиции iShares, активных, индексных и cash-фондов — это CLIENT ASSETS, не баланс холдинга, поэтому 13F-HR ($5.72 трлн, ~50,651 позиция) сознательно НЕ используется как «портфель BLK». НЕ раскрыто построчно / оговорки по источнику: (1) HPS «~$230 млн base + $115 млн performance fees за Q2» и цель фандрейзинга «$400 млрд к 2030» — данные с earnings-call, НЕ из письменного релиза 8-K (в релизе только агрегат performance fees $305 млн); помечены как management-комментарий. (2) Доли владения и оценки конкретных активов GIP (Aligned, Gatwick, CyrusOne и др.) не публикуются — раскрыты только суммы сделок (EV): Aligned $40 млрд, ACS €2 млрд. (3) Сумма ACV технологий в долларах не раскрыта (только +15% г/г); «$25 трлн на платформе Aladdin» в первичке этого цикла НЕ подтверждено. (4) AUM большинства отдельных iShares ETF (кроме агрегатов каналов и digital $48.8 млрд) и underlying-займы HPS-фондов построчно не раскрываются; IVV ~$686 млрд и IEFA ~$122 млрд — сторонние ETF-трекеры, не первичка BLK. (5) IRR/MOIC по vintage GIP/HPS не раскрыты; балансовые seed/co-investments построчно (10-K Investments note) и dry powder не извлечены. ИСПРАВЛЕНИЕ к прошлой версии файла: разбивка private markets $329.1 млрд ПО ПОДКЛАССАМ РАСКРЫТА в релизе Q2 2026 (стр. 6) — инфраструктура $113.5 млрд, частный кредит $150.9 млрд, private equity $32.3 млрд, недвижимость $22.0 млрд, multi-alternatives $10.4 млрд — это первичные цифры, а не непроверенный прокси. Первичный источник P&L/AUM/потоков — BlackRock Q2 2026 Earnings Release (8-K, 15.07.2026).",
+ "holdings13F": {
+  "asOf": "Q1 2026 (31.03.2026)",
+  "positions": 5610,
+  "totalValue": "$5.72 трлн",
+  "note": "Это НЕ собственные деньги BlackRock, а активы клиентов под управлением (в основном iShares ETF и индексные фонды), которые BlackRock раскрывает в SEC 13F-HR: ~$5.72 трлн в 5 610 бумагах — по сути весь рынок США по капитализации. Это часть общего AUM $13.89 трлн (остальное — облигации, деньги, не-US и частные активы, вне 13F). Топ-100 ниже. Источник: SEC EDGAR 13F-HR, Q1 2026.",
+  "rows": [
+   {
+    "t": "NVDA",
+    "name": "Nvidia",
+    "val": 336352.9,
+    "pct": 5.8767,
+    "delta": -0.2554
+   },
+   {
+    "t": "AAPL",
+    "name": "Apple",
+    "val": 290570.2,
+    "pct": 5.0768,
+    "delta": -0.2371
+   },
+   {
+    "t": "GOOGL/GOOG",
+    "name": "Alphabet (Google)",
+    "val": 233168.5,
+    "pct": 4.0738,
+    "delta": -0.1805
+   },
+   {
+    "t": "MSFT",
+    "name": "Microsoft",
+    "val": 219679.6,
+    "pct": 3.8382,
+    "delta": -1.0843
+   },
+   {
+    "t": "AMZN",
+    "name": "Amazon",
+    "val": 153431,
+    "pct": 2.6807,
+    "delta": -0.1889
+   },
+   {
+    "t": "AVGO",
+    "name": "Broadcom",
+    "val": 119475.1,
+    "pct": 2.0874,
+    "delta": -0.1368
+   },
+   {
+    "t": "META",
+    "name": "Meta Platforms",
+    "val": 96613.5,
+    "pct": 1.688,
+    "delta": -0.2275
+   },
+   {
+    "t": "TSLA",
+    "name": "Tesla",
+    "val": 77371.9,
+    "pct": 1.3518,
+    "delta": -0.2449
+   },
+   {
+    "t": "JPM",
+    "name": "JPMorgan Chase",
+    "val": 61262,
+    "pct": 1.0704,
+    "delta": -0.084
+   },
+   {
+    "t": "LLY",
+    "name": "Eli Lilly",
+    "val": 61159,
+    "pct": 1.0686,
+    "delta": -0.1447
+   },
+   {
+    "t": "BRK.B",
+    "name": "Berkshire Hathaway",
+    "val": 58082.7,
+    "pct": 1.0148,
+    "delta": -0.0149
+   },
+   {
+    "t": "IVV",
+    "name": "iShares Core S&P 500 ETF",
+    "val": 57125.3,
+    "pct": 0.9981,
+    "delta": 0.0489
+   },
+   {
+    "t": "XOM",
+    "name": "Exxon Mobil",
+    "val": 54756.3,
+    "pct": 0.9567,
+    "delta": 0.3237
+   },
+   {
+    "t": "JNJ",
+    "name": "Johnson & Johnson",
+    "val": 52160,
+    "pct": 0.9113,
+    "delta": 0.181
+   },
+   {
+    "t": "WMT",
+    "name": "Walmart",
+    "val": 43966.5,
+    "pct": 0.7682,
+    "delta": 0.1089
+   },
+   {
+    "t": "V",
+    "name": "Visa",
+    "val": 41162.3,
+    "pct": 0.7192,
+    "delta": -0.1116
+   },
+   {
+    "t": "ITOT",
+    "name": "iShares Core S&P Total US",
+    "val": 35508.2,
+    "pct": 0.6204,
+    "delta": 0.0273
+   },
+   {
+    "t": "MU",
+    "name": "Micron Technology",
+    "val": 34917,
+    "pct": 0.6101,
+    "delta": 0.1243
+   },
+   {
+    "t": "COST",
+    "name": "Costco Wholesale",
+    "val": 34822.3,
+    "pct": 0.6084,
+    "delta": 0.0968
+   },
+   {
+    "t": "MA",
+    "name": "Mastercard",
+    "val": 33494.9,
+    "pct": 0.5852,
+    "delta": -0.0739
+   },
+   {
+    "t": "NFLX",
+    "name": "Netflix",
+    "val": 33303.6,
+    "pct": 0.5819,
+    "delta": 0.0296
+   },
+   {
+    "t": "ABBV",
+    "name": "AbbVie",
+    "val": 32786.5,
+    "pct": 0.5728,
+    "delta": -0.011
+   },
+   {
+    "t": "CVX",
+    "name": "Chevron",
+    "val": 29942.6,
+    "pct": 0.5231,
+    "delta": 0.1592
+   },
+   {
+    "t": "AMD",
+    "name": "Advanced Micro Devices",
+    "val": 29653.3,
+    "pct": 0.5181,
+    "delta": -0.0159
+   },
+   {
+    "t": "LRCX",
+    "name": "Lam Research",
+    "val": 28396.7,
+    "pct": 0.4961,
+    "delta": 0.1077
+   },
+   {
+    "t": "CSCO",
+    "name": "Cisco Systems",
+    "val": 28336.6,
+    "pct": 0.4951,
+    "delta": 0.0025
+   },
+   {
+    "t": "PLTR",
+    "name": "Palantir Technologies",
+    "val": 27655.8,
+    "pct": 0.4832,
+    "delta": -0.0976
+   },
+   {
+    "t": "MRK",
+    "name": "Merck",
+    "val": 27176.7,
+    "pct": 0.4748,
+    "delta": 0.085
+   },
+   {
+    "t": "PG",
+    "name": "Procter & Gamble",
+    "val": 27014.6,
+    "pct": 0.472,
+    "delta": 0.0263
+   },
+   {
+    "t": "AMAT",
+    "name": "Applied Materials",
+    "val": 26992.8,
+    "pct": 0.4716,
+    "delta": 0.1447
+   },
+   {
+    "t": "CAT",
+    "name": "Caterpillar",
+    "val": 26344.8,
+    "pct": 0.4603,
+    "delta": 0.1097
+   },
+   {
+    "t": "BAC",
+    "name": "Bank of America",
+    "val": 26300.6,
+    "pct": 0.4595,
+    "delta": -0.0461
+   },
+   {
+    "t": "HD",
+    "name": "Home Depot",
+    "val": 25911.2,
+    "pct": 0.4527,
+    "delta": 0.0057
+   },
+   {
+    "t": "GE",
+    "name": "GE Aerospace",
+    "val": 25760.4,
+    "pct": 0.4501,
+    "delta": -0.0193
+   },
+   {
+    "t": "KO",
+    "name": "Coca-Cola",
+    "val": 25370,
+    "pct": 0.4433,
+    "delta": 0.0667
+   },
+   {
+    "t": "ORCL",
+    "name": "Oracle",
+    "val": 21093,
+    "pct": 0.3685,
+    "delta": -0.1195
+   },
+   {
+    "t": "RTX",
+    "name": "RTX Corp",
+    "val": 21035.9,
+    "pct": 0.3675,
+    "delta": 0.0423
+   },
+   {
+    "t": "WFC",
+    "name": "Wells Fargo",
+    "val": 20773.1,
+    "pct": 0.3629,
+    "delta": -0.0504
+   },
+   {
+    "t": "GS",
+    "name": "Goldman Sachs",
+    "val": 20294.8,
+    "pct": 0.3546,
+    "delta": 0.0076
+   },
+   {
+    "t": "UNH",
+    "name": "UnitedHealth Group",
+    "val": 19879.6,
+    "pct": 0.3473,
+    "delta": -0.0697
+   },
+   {
+    "t": "INTC",
+    "name": "Intel",
+    "val": 19761.2,
+    "pct": 0.3453,
+    "delta": 0.0757
+   },
+   {
+    "t": "IBM",
+    "name": "IBM",
+    "val": 18801.2,
+    "pct": 0.3285,
+    "delta": -0.0614
+   },
+   {
+    "t": "KLAC",
+    "name": "KLA Corp",
+    "val": 18546.8,
+    "pct": 0.324,
+    "delta": 0.0696
+   },
+   {
+    "t": "VZ",
+    "name": "Verizon",
+    "val": 18475,
+    "pct": 0.3228,
+    "delta": 0.0687
+   },
+   {
+    "t": "LIN",
+    "name": "Linde",
+    "val": 18279.8,
+    "pct": 0.3194,
+    "delta": 0.0517
+   },
+   {
+    "t": "GEV",
+    "name": "GE Vernova",
+    "val": 18238.6,
+    "pct": 0.3187,
+    "delta": 0.088
+   },
+   {
+    "t": "PEP",
+    "name": "PepsiCo",
+    "val": 17989,
+    "pct": 0.3143,
+    "delta": 0.034
+   },
+   {
+    "t": "PM",
+    "name": "Philip Morris Intl",
+    "val": 17789.8,
+    "pct": 0.3108,
+    "delta": 0.0146
+   },
+   {
+    "t": "C",
+    "name": "Citigroup",
+    "val": 17440.2,
+    "pct": 0.3047,
+    "delta": -0.0168
+   },
+   {
+    "t": "MCD",
+    "name": "McDonald's",
+    "val": 17203.1,
+    "pct": 0.3006,
+    "delta": 0.0241
+   },
+   {
+    "t": "TJX",
+    "name": "TJX Companies",
+    "val": 17168.2,
+    "pct": 0.3,
+    "delta": 0.0253
+   },
+   {
+    "t": "NEE",
+    "name": "NextEra Energy",
+    "val": 16609.7,
+    "pct": 0.2902,
+    "delta": 0.0503
+   },
+   {
+    "t": "GILD",
+    "name": "Gilead Sciences",
+    "val": 16586.6,
+    "pct": 0.2898,
+    "delta": 0.0342
+   },
+   {
+    "t": "AMGN",
+    "name": "Amgen",
+    "val": 16572.3,
+    "pct": 0.2895,
+    "delta": 0.0273
+   },
+   {
+    "t": "T",
+    "name": "AT&T",
+    "val": 16263.3,
+    "pct": 0.2841,
+    "delta": 0.0449
+   },
+   {
+    "t": "MS",
+    "name": "Morgan Stanley",
+    "val": 15864,
+    "pct": 0.2772,
+    "delta": -0.0086
+   },
+   {
+    "t": "TXN",
+    "name": "Texas Instruments",
+    "val": 15825.4,
+    "pct": 0.2765,
+    "delta": 0.0447
+   },
+   {
+    "t": "ABT",
+    "name": "Abbott Laboratories",
+    "val": 14968.7,
+    "pct": 0.2615,
+    "delta": -0.0496
+   },
+   {
+    "t": "TMO",
+    "name": "Thermo Fisher Scientific",
+    "val": 14967.4,
+    "pct": 0.2615,
+    "delta": -0.039
+   },
+   {
+    "t": "SPY",
+    "name": "SPDR S&P 500 ETF Trust",
+    "val": 14909.4,
+    "pct": 0.2605,
+    "delta": -0.1077
+   },
+   {
+    "t": "CRM",
+    "name": "Salesforce",
+    "val": 14876,
+    "pct": 0.2599,
+    "delta": -0.1014
+   },
+   {
+    "t": "WELL",
+    "name": "Welltower",
+    "val": 14631.3,
+    "pct": 0.2556,
+    "delta": 0.0273
+   },
+   {
+    "t": "PFE",
+    "name": "Pfizer",
+    "val": 13991.1,
+    "pct": 0.2444,
+    "delta": 0.0369
+   },
+   {
+    "t": "ISRG",
+    "name": "Intuitive Surgical",
+    "val": 13875.5,
+    "pct": 0.2424,
+    "delta": -0.0497
+   },
+   {
+    "t": "ADI",
+    "name": "Analog Devices",
+    "val": 13715.9,
+    "pct": 0.2396,
+    "delta": 0.0414
+   },
+   {
+    "t": "QCOM",
+    "name": "Qualcomm",
+    "val": 13652.7,
+    "pct": 0.2385,
+    "delta": -0.051
+   },
+   {
+    "t": "NEM",
+    "name": "Newmont",
+    "val": 13648.4,
+    "pct": 0.2385,
+    "delta": 0.0191
+   },
+   {
+    "t": "PLD",
+    "name": "Prologis",
+    "val": 13272.7,
+    "pct": 0.2319,
+    "delta": 0.0173
+   },
+   {
+    "t": "DIS",
+    "name": "Walt Disney",
+    "val": 13151.8,
+    "pct": 0.2298,
+    "delta": -0.0253
+   },
+   {
+    "t": "APH",
+    "name": "Amphenol",
+    "val": 12883.4,
+    "pct": 0.2251,
+    "delta": -0.0173
+   },
+   {
+    "t": "AXP",
+    "name": "American Express",
+    "val": 12677,
+    "pct": 0.2215,
+    "delta": -0.0433
+   },
+   {
+    "t": "SCHW",
+    "name": "Charles Schwab",
+    "val": 12514,
+    "pct": 0.2186,
+    "delta": -0.0079
+   },
+   {
+    "t": "COP",
+    "name": "ConocoPhillips",
+    "val": 12034.9,
+    "pct": 0.2103,
+    "delta": 0.0686
+   },
+   {
+    "t": "PANW",
+    "name": "Palo Alto Networks",
+    "val": 11612.2,
+    "pct": 0.2029,
+    "delta": 0.0169
+   },
+   {
+    "t": "UNP",
+    "name": "Union Pacific",
+    "val": 11592,
+    "pct": 0.2025,
+    "delta": 0.0102
+   },
+   {
+    "t": "BA",
+    "name": "Boeing",
+    "val": 11588.6,
+    "pct": 0.2025,
+    "delta": 0.0041
+   },
+   {
+    "t": "ACN",
+    "name": "Accenture",
+    "val": 11330.4,
+    "pct": 0.198,
+    "delta": -0.0563
+   },
+   {
+    "t": "ANET",
+    "name": "Arista Networks",
+    "val": 11284.4,
+    "pct": 0.1972,
+    "delta": -0.0142
+   },
+   {
+    "t": "BKNG",
+    "name": "Booking Holdings",
+    "val": 11170.6,
+    "pct": 0.1952,
+    "delta": -0.0543
+   },
+   {
+    "t": "HWM",
+    "name": "Howmet Aerospace",
+    "val": 11053.6,
+    "pct": 0.1931,
+    "delta": 0.0294
+   },
+   {
+    "t": "HON",
+    "name": "Honeywell Intl",
+    "val": 11047.4,
+    "pct": 0.193,
+    "delta": 0.0195
+   },
+   {
+    "t": "INTU",
+    "name": "Intuit",
+    "val": 11015.1,
+    "pct": 0.1925,
+    "delta": -0.1035
+   },
+   {
+    "t": "ETN",
+    "name": "Eaton",
+    "val": 10924.7,
+    "pct": 0.1909,
+    "delta": 0.0326
+   },
+   {
+    "t": "EQIX",
+    "name": "Equinix",
+    "val": 10911.6,
+    "pct": 0.1906,
+    "delta": 0.0508
+   },
+   {
+    "t": "UBER",
+    "name": "Uber Technologies",
+    "val": 10860.5,
+    "pct": 0.1898,
+    "delta": -0.024
+   },
+   {
+    "t": "LMT",
+    "name": "Lockheed Martin",
+    "val": 10777.9,
+    "pct": 0.1883,
+    "delta": 0.0435
+   },
+   {
+    "t": "VRTX",
+    "name": "Vertex Pharmaceuticals",
+    "val": 10703.4,
+    "pct": 0.187,
+    "delta": 0.005
+   },
+   {
+    "t": "BMY",
+    "name": "Bristol-Myers Squibb",
+    "val": 10412.6,
+    "pct": 0.1819,
+    "delta": 0.0207
+   },
+   {
+    "t": "PGR",
+    "name": "Progressive",
+    "val": 10372.6,
+    "pct": 0.1812,
+    "delta": -0.0193
+   },
+   {
+    "t": "DE",
+    "name": "Deere & Co",
+    "val": 10317.3,
+    "pct": 0.1803,
+    "delta": 0.0315
+   },
+   {
+    "t": "SPGI",
+    "name": "S&P Global",
+    "val": 10238.5,
+    "pct": 0.1789,
+    "delta": -0.0491
+   },
+   {
+    "t": "NOW",
+    "name": "ServiceNow",
+    "val": 10193.8,
+    "pct": 0.1781,
+    "delta": -0.0687
+   },
+   {
+    "t": "ADBE",
+    "name": "Adobe",
+    "val": 9920.1,
+    "pct": 0.1733,
+    "delta": -0.0658
+   },
+   {
+    "t": "MCK",
+    "name": "McKesson",
+    "val": 9891.8,
+    "pct": 0.1728,
+    "delta": 0.0135
+   },
+   {
+    "t": "MDT",
+    "name": "Medtronic",
+    "val": 9807.3,
+    "pct": 0.1713,
+    "delta": -0.0244
+   },
+   {
+    "t": "DHR",
+    "name": "Danaher",
+    "val": 9791.1,
+    "pct": 0.1711,
+    "delta": -0.0303
+   },
+   {
+    "t": "BLK",
+    "name": "BlackRock (собственные акции)",
+    "val": 9744.8,
+    "pct": 0.1703,
+    "delta": -0.0123
+   },
+   {
+    "t": "WDC",
+    "name": "Western Digital",
+    "val": 9675.2,
+    "pct": 0.169,
+    "delta": 0.0656
+   }
+  ],
+  "increases": [
+   {
+    "t": "XOM",
+    "name": "Exxon Mobil",
+    "val": 54756.3,
+    "pct": 0.96,
+    "delta": 0.3237
+   },
+   {
+    "t": "JNJ",
+    "name": "Johnson & Johnson",
+    "val": 52160,
+    "pct": 0.91,
+    "delta": 0.181
+   },
+   {
+    "t": "CVX",
+    "name": "Chevron",
+    "val": 29942.6,
+    "pct": 0.52,
+    "delta": 0.1592
+   },
+   {
+    "t": "AMAT",
+    "name": "Applied Materials",
+    "val": 26992.8,
+    "pct": 0.47,
+    "delta": 0.1447
+   },
+   {
+    "t": "MU",
+    "name": "Micron Technology",
+    "val": 34917,
+    "pct": 0.61,
+    "delta": 0.1243
+   },
+   {
+    "t": "CAT",
+    "name": "Caterpillar",
+    "val": 26344.8,
+    "pct": 0.46,
+    "delta": 0.1097
+   },
+   {
+    "t": "WMT",
+    "name": "Walmart",
+    "val": 43966.5,
+    "pct": 0.77,
+    "delta": 0.1089
+   },
+   {
+    "t": "LRCX",
+    "name": "Lam Research",
+    "val": 28396.7,
+    "pct": 0.5,
+    "delta": 0.1077
+   },
+   {
+    "t": "COST",
+    "name": "Costco",
+    "val": 34822.3,
+    "pct": 0.61,
+    "delta": 0.0968
+   },
+   {
+    "t": "GEV",
+    "name": "GE Vernova",
+    "val": 18238.6,
+    "pct": 0.32,
+    "delta": 0.088
+   }
+  ],
+  "decreases": [
+   {
+    "t": "MSFT",
+    "name": "Microsoft",
+    "val": 219679.6,
+    "pct": 3.84,
+    "delta": -1.0843
+   },
+   {
+    "t": "NVDA",
+    "name": "Nvidia",
+    "val": 336352.9,
+    "pct": 5.88,
+    "delta": -0.2554
+   },
+   {
+    "t": "TSLA",
+    "name": "Tesla",
+    "val": 77371.9,
+    "pct": 1.35,
+    "delta": -0.2449
+   },
+   {
+    "t": "AAPL",
+    "name": "Apple",
+    "val": 290570.2,
+    "pct": 5.08,
+    "delta": -0.2371
+   },
+   {
+    "t": "META",
+    "name": "Meta Platforms",
+    "val": 96613.5,
+    "pct": 1.69,
+    "delta": -0.2275
+   },
+   {
+    "t": "AMZN",
+    "name": "Amazon",
+    "val": 153431,
+    "pct": 2.68,
+    "delta": -0.1889
+   },
+   {
+    "t": "LLY",
+    "name": "Eli Lilly",
+    "val": 61159,
+    "pct": 1.07,
+    "delta": -0.1447
+   },
+   {
+    "t": "AVGO",
+    "name": "Broadcom",
+    "val": 119475.1,
+    "pct": 2.09,
+    "delta": -0.1368
+   },
+   {
+    "t": "ORCL",
+    "name": "Oracle",
+    "val": 21093,
+    "pct": 0.37,
+    "delta": -0.1195
+   },
+   {
+    "t": "SPY",
+    "name": "SPDR S&P 500 ETF",
+    "val": 14909.4,
+    "pct": 0.26,
+    "delta": -0.1077
+   }
+  ]
+ }
 }

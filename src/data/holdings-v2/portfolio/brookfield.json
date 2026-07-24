@@ -2853,5 +2853,493 @@
    ]
   }
  ],
- "notDisclosed": "Брукфилд НЕ раскрывает поимённо: (1) топ-объекты недвижимости BPG — 'кейс 139 объектов': в публичных квартальниках BN/BAM нет построчного перечня с оценкой по каждому office/retail/multifamily-зданию; названы лишь несколько недавних сделок (prime office Tokyo, mixed-use Paris, US senior living). (2) Чистую экономическую долю BEP внутри 51% Westinghouse после LP-партнёров — эффект на NAV количественно не определён. (3) Поимённые data-center объекты внутри BIP (раскрыто агрегатно: >150 ЦОД, 1.3 GW). (4) Конкретные кредитные позиции Oaktree/credit — это client assets, не раскрываются. (5) Поимённую оценку отдельных hydro/wind/solar объектов BEP (раскрыто по странам/регионам). (6) SpaceX и AI-инвестиции BN (Figure, The Deployment Company с OpenAI, Hark Labs) — построчная оценка в Supplemental не раскрыта. По бухгалтерии: 13F-активы Brookfield = клиентские деньги под управлением, в портфель холдинга НЕ включаются."
+ "notDisclosed": "Брукфилд НЕ раскрывает поимённо: (1) топ-объекты недвижимости BPG — 'кейс 139 объектов': в публичных квартальниках BN/BAM нет построчного перечня с оценкой по каждому office/retail/multifamily-зданию; названы лишь несколько недавних сделок (prime office Tokyo, mixed-use Paris, US senior living). (2) Чистую экономическую долю BEP внутри 51% Westinghouse после LP-партнёров — эффект на NAV количественно не определён. (3) Поимённые data-center объекты внутри BIP (раскрыто агрегатно: >150 ЦОД, 1.3 GW). (4) Конкретные кредитные позиции Oaktree/credit — это client assets, не раскрываются. (5) Поимённую оценку отдельных hydro/wind/solar объектов BEP (раскрыто по странам/регионам). (6) SpaceX и AI-инвестиции BN (Figure, The Deployment Company с OpenAI, Hark Labs) — построчная оценка в Supplemental не раскрыта. По бухгалтерии: 13F-активы Brookfield = клиентские деньги под управлением, в портфель холдинга НЕ включаются.",
+ "holdings13F": {
+  "asOf": "31.03.2026",
+  "positions": 153,
+  "totalValue": "$74.2B",
+  "note": "Публичный 13F-портфель Brookfield Corp — это в основном его собственная доля в управляющей компании Brookfield Asset Management (BAM, 71%) плюс позиции в трубопроводах, энергетике и коммунальных (Cheniere, Williams, NextEra) и в других листингованных Brookfield-структурах (BEP, BBUC, BIP). Это лишь малая, публично-торгуемая часть активов Brookfield — основное сидит в приватной инфраструктуре вне 13F. Показаны 47 из 153. Источник: fintel.io / SEC 13F-HR (31.03.2026).",
+  "rows": [
+   {
+    "t": "BAM",
+    "name": "Brookfield Asset Management",
+    "val": 53029.79,
+    "pct": 71.4416,
+    "delta": -5.9539
+   },
+   {
+    "t": "CQP",
+    "name": "Cheniere Energy Partners",
+    "val": 6567.72,
+    "pct": 5.0628,
+    "delta": -1.6668
+   },
+   {
+    "t": "BBUC",
+    "name": "Brookfield Business Corp",
+    "val": 4516.59,
+    "pct": 6.0847,
+    "delta": 6.0847
+   },
+   {
+    "t": "BEP/BEPC",
+    "name": "Brookfield Renewable",
+    "val": 3055.9,
+    "pct": 3.8852,
+    "delta": 0.6906
+   },
+   {
+    "t": "BKFOF",
+    "name": "Brookfield Corp — Preferred",
+    "val": 1885.17,
+    "pct": 1.4532,
+    "delta": -1.1938
+   },
+   {
+    "t": "WMB",
+    "name": "Williams Companies",
+    "val": 377.57,
+    "pct": 0.5087,
+    "delta": 0.0572
+   },
+   {
+    "t": "TRGP",
+    "name": "Targa Resources",
+    "val": 366.66,
+    "pct": 0.494,
+    "delta": 0.1131
+   },
+   {
+    "t": "TAC",
+    "name": "TransAlta",
+    "val": 354.27,
+    "pct": 0.4773,
+    "delta": 0.0555
+   },
+   {
+    "t": "LNG",
+    "name": "Cheniere Energy",
+    "val": 256.08,
+    "pct": 0.345,
+    "delta": 0.1266
+   },
+   {
+    "t": "PCG",
+    "name": "PG&E",
+    "val": 192.87,
+    "pct": 0.2598,
+    "delta": 0.0341
+   },
+   {
+    "t": "NEE",
+    "name": "NextEra Energy",
+    "val": 192.03,
+    "pct": 0.148,
+    "delta": -0.0578
+   },
+   {
+    "t": "CNP",
+    "name": "CenterPoint Energy",
+    "val": 184.31,
+    "pct": 0.2483,
+    "delta": 0.0345
+   },
+   {
+    "t": "CCI",
+    "name": "Crown Castle",
+    "val": 176.92,
+    "pct": 0.2383,
+    "delta": -0.0144
+   },
+   {
+    "t": "NI",
+    "name": "NiSource",
+    "val": 171.72,
+    "pct": 0.2313,
+    "delta": 0.1566
+   },
+   {
+    "t": "BIP",
+    "name": "Brookfield Infrastructure Partners",
+    "val": 169.28,
+    "pct": 0.228,
+    "delta": 0.0264
+   },
+   {
+    "t": "SRE",
+    "name": "Sempra",
+    "val": 156.5,
+    "pct": 0.2108,
+    "delta": 0.0005
+   },
+   {
+    "t": "FE",
+    "name": "FirstEnergy",
+    "val": 132.8,
+    "pct": 0.1024,
+    "delta": -0.0343
+   },
+   {
+    "t": "ET",
+    "name": "Energy Transfer",
+    "val": 124.39,
+    "pct": 0.0959,
+    "delta": -0.0483
+   },
+   {
+    "t": "MPLX",
+    "name": "MPLX LP",
+    "val": 124.06,
+    "pct": 0.0956,
+    "delta": -0.1
+   },
+   {
+    "t": "CSX",
+    "name": "CSX Corp",
+    "val": 116.78,
+    "pct": 0.1573,
+    "delta": 0.0283
+   },
+   {
+    "t": "EQIX",
+    "name": "Equinix",
+    "val": 109.06,
+    "pct": 0.1469,
+    "delta": 0.0508
+   },
+   {
+    "t": "TRP",
+    "name": "TC Energy",
+    "val": 108.65,
+    "pct": 0.0838,
+    "delta": -0.0248
+   },
+   {
+    "t": "UNP",
+    "name": "Union Pacific",
+    "val": 106.9,
+    "pct": 0.0824,
+    "delta": -0.0461
+   },
+   {
+    "t": "KMI",
+    "name": "Kinder Morgan",
+    "val": 95.96,
+    "pct": 0.1293,
+    "delta": 0.0532
+   },
+   {
+    "t": "LW",
+    "name": "Lamb Weston",
+    "val": 94.08,
+    "pct": 0.1267,
+    "delta": 0.0113
+   },
+   {
+    "t": "PAA",
+    "name": "Plains All American Pipeline",
+    "val": 82.43,
+    "pct": 0.0635,
+    "delta": 0.048
+   },
+   {
+    "t": "EPD",
+    "name": "Enterprise Products Partners",
+    "val": 78.37,
+    "pct": 0.1056,
+    "delta": 0.022
+   },
+   {
+    "t": "ENFFF",
+    "name": "Enbridge — Preferred",
+    "val": 69.8,
+    "pct": 0.0538,
+    "delta": -0.0567
+   },
+   {
+    "t": "SWX",
+    "name": "Southwest Gas",
+    "val": 60.8,
+    "pct": 0.0469,
+    "delta": 0.0134
+   },
+   {
+    "t": "WELL",
+    "name": "Welltower",
+    "val": 60.7,
+    "pct": 0.0818,
+    "delta": 0.0133
+   },
+   {
+    "t": "BNT",
+    "name": "Brookfield Wealth Solutions",
+    "val": 56.13,
+    "pct": 0.0433,
+    "delta": -0.0339
+   },
+   {
+    "t": "NKE",
+    "name": "Nike",
+    "val": 53.27,
+    "pct": 0.0718,
+    "delta": -0.0078
+   },
+   {
+    "t": "PLD",
+    "name": "Prologis",
+    "val": 50.7,
+    "pct": 0.0683,
+    "delta": 0.0169
+   },
+   {
+    "t": "PAGP",
+    "name": "Plains GP Holdings",
+    "val": 48.25,
+    "pct": 0.065,
+    "delta": 0.0129
+   },
+   {
+    "t": "IDA",
+    "name": "IDACORP",
+    "val": 44.49,
+    "pct": 0.0343,
+    "delta": -0.005
+   },
+   {
+    "t": "AM",
+    "name": "Antero Midstream",
+    "val": 44.13,
+    "pct": 0.034,
+    "delta": -0.0139
+   },
+   {
+    "t": "GLNG",
+    "name": "Golar LNG",
+    "val": 42.74,
+    "pct": 0.0329,
+    "delta": 0.0007
+   },
+   {
+    "t": "AMT",
+    "name": "American Tower",
+    "val": 37.66,
+    "pct": 0.029,
+    "delta": -0.0181
+   },
+   {
+    "t": "CMS",
+    "name": "CMS Energy",
+    "val": 28.13,
+    "pct": 0.0379,
+    "delta": 0.0342
+   },
+   {
+    "t": "HESM",
+    "name": "Hess Midstream",
+    "val": 28.02,
+    "pct": 0.0216,
+    "delta": -0.02
+   },
+   {
+    "t": "WES",
+    "name": "Western Midstream Partners",
+    "val": 27.63,
+    "pct": 0.0213,
+    "delta": -0.012
+   },
+   {
+    "t": "GLIBK",
+    "name": "Liberty Capital",
+    "val": 27.03,
+    "pct": 0.0208,
+    "delta": -0.0126
+   },
+   {
+    "t": "KKR",
+    "name": "KKR & Co",
+    "val": 26.09,
+    "pct": 0.0201,
+    "delta": 0.0201
+   },
+   {
+    "t": "BX",
+    "name": "Blackstone",
+    "val": 25.94,
+    "pct": 0.0349,
+    "delta": 0.0349
+   },
+   {
+    "t": "SPG",
+    "name": "Simon Property Group",
+    "val": 25.68,
+    "pct": 0.0198,
+    "delta": -0.0134
+   },
+   {
+    "t": "EXR",
+    "name": "Extra Space Storage",
+    "val": 23.34,
+    "pct": 0.0314,
+    "delta": 0.0007
+   },
+   {
+    "t": "DEO",
+    "name": "Diageo",
+    "val": 22.27,
+    "pct": 0.03,
+    "delta": 0.03
+   },
+   {
+    "t": "ES",
+    "name": "Eversource Energy",
+    "val": 19.64,
+    "pct": 0.0265,
+    "delta": -0.0527
+   }
+  ],
+  "increases": [
+   {
+    "t": "BBUC",
+    "name": "Brookfield Business Corp",
+    "val": 4516.59,
+    "pct": 6.08,
+    "delta": 6.0847
+   },
+   {
+    "t": "BEP",
+    "name": "Brookfield Renewable Partners",
+    "val": 2653.85,
+    "pct": 3.58,
+    "delta": 0.8599
+   },
+   {
+    "t": "NI",
+    "name": "NiSource",
+    "val": 171.72,
+    "pct": 0.23,
+    "delta": 0.1566
+   },
+   {
+    "t": "LNG",
+    "name": "Cheniere Energy",
+    "val": 256.08,
+    "pct": 0.35,
+    "delta": 0.1266
+   },
+   {
+    "t": "TRGP",
+    "name": "Targa Resources",
+    "val": 366.66,
+    "pct": 0.49,
+    "delta": 0.1131
+   },
+   {
+    "t": "WMB",
+    "name": "Williams Companies",
+    "val": 377.57,
+    "pct": 0.51,
+    "delta": 0.0572
+   },
+   {
+    "t": "TAC",
+    "name": "TransAlta",
+    "val": 354.27,
+    "pct": 0.48,
+    "delta": 0.0555
+   },
+   {
+    "t": "KMI",
+    "name": "Kinder Morgan",
+    "val": 95.96,
+    "pct": 0.13,
+    "delta": 0.0532
+   },
+   {
+    "t": "EQIX",
+    "name": "Equinix",
+    "val": 109.06,
+    "pct": 0.15,
+    "delta": 0.0508
+   },
+   {
+    "t": "PAA",
+    "name": "Plains All American Pipeline",
+    "val": 82.43,
+    "pct": 0.06,
+    "delta": 0.048
+   }
+  ],
+  "decreases": [
+   {
+    "t": "BAM",
+    "name": "Brookfield Asset Management",
+    "val": 53029.79,
+    "pct": 71.44,
+    "delta": -5.9539
+   },
+   {
+    "t": "CQP",
+    "name": "Cheniere Energy Partners",
+    "val": 6567.72,
+    "pct": 5.06,
+    "delta": -1.6668
+   },
+   {
+    "t": "BKFOF",
+    "name": "Brookfield Corp — Preferred",
+    "val": 1885.17,
+    "pct": 1.45,
+    "delta": -1.1938
+   },
+   {
+    "t": "BEPC",
+    "name": "Brookfield Renewable Corp",
+    "val": 402.05,
+    "pct": 0.31,
+    "delta": -0.1693
+   },
+   {
+    "t": "MPLX",
+    "name": "MPLX LP",
+    "val": 124.06,
+    "pct": 0.1,
+    "delta": -0.1
+   },
+   {
+    "t": "NEE",
+    "name": "NextEra Energy",
+    "val": 192.03,
+    "pct": 0.15,
+    "delta": -0.0578
+   },
+   {
+    "t": "ENFFF",
+    "name": "Enbridge — Preferred",
+    "val": 69.8,
+    "pct": 0.05,
+    "delta": -0.0567
+   },
+   {
+    "t": "ES",
+    "name": "Eversource Energy",
+    "val": 19.64,
+    "pct": 0.03,
+    "delta": -0.0527
+   },
+   {
+    "t": "ET",
+    "name": "Energy Transfer",
+    "val": 124.39,
+    "pct": 0.1,
+    "delta": -0.0483
+   },
+   {
+    "t": "UNP",
+    "name": "Union Pacific",
+    "val": 106.9,
+    "pct": 0.08,
+    "delta": -0.0461
+   }
+  ]
+ }
 }
