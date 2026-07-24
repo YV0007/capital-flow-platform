@@ -263,13 +263,64 @@ function MoveTable({ title, rows, up }) {
   );
 }
 
+// shared company-rows table (flat list + inside sector groups). showDelta=false drops the Δ column.
+function H13Table({ rows, showDelta = true }) {
+  const grid = showDelta ? H13_GRID : '52px 1fr 108px 68px';
+  const cols = showDelta ? [['Тикер', 'left'], ['Компания', 'left'], ['Оценка', 'right'], ['Доля %', 'right'], ['Δ квартал', 'right']]
+    : [['Тикер', 'left'], ['Компания', 'left'], ['Оценка', 'right'], ['Доля %', 'right']];
+  return (
+    <div style={{ border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden', background: C.card }}>
+      <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 10, padding: '8px 16px', background: C.cardAlt, borderBottom: `1px solid ${C.line}` }}>
+        {cols.map(([t, a], i) => <div key={i} style={{ fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, textAlign: a }}>{t}</div>)}
+      </div>
+      {rows.map((r, i) => (
+        <div key={i} style={{ display: 'grid', gridTemplateColumns: grid, gap: 10, padding: '9px 16px', borderBottom: i < rows.length - 1 ? `1px solid ${C.lineSoft}` : 'none', alignItems: 'baseline' }}>
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkSoft }}>{r.t}</div>
+          <div style={{ minWidth: 0, fontSize: 13, color: C.ink }}>{r.name}</div>
+          <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.ink }}>{fmtMM(r.val != null ? r.val : r.valMM)}</div>
+          <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.inkSoft }}>{r.pct != null ? r.pct.toFixed(2) : '—'}</div>
+          {showDelta && <div style={{ textAlign: 'right' }}><Delta d={r.delta} /></div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// collapsible sector groups (for BlackRock's ~1000 holdings). Auto-expands on search.
+function SectorAccordion({ sectors, q }) {
+  const [open, setOpen] = useState({});
+  return (
+    <div>
+      {sectors.map((s, i) => {
+        let rows = s.rows || [];
+        if (q) rows = rows.filter((r) => ((r.t || '') + ' ' + r.name).toLowerCase().includes(q.toLowerCase()));
+        if (q && rows.length === 0) return null;
+        const isOpen = q ? true : !!open[s.name];
+        return (
+          <div key={i} style={{ border: `1px solid ${C.line}`, borderRadius: 10, marginBottom: 8, background: C.card, overflow: 'hidden' }}>
+            <button onClick={() => setOpen((o) => ({ ...o, [s.name]: !o[s.name] }))} style={{ width: '100%', display: 'grid', gridTemplateColumns: '18px 1fr 96px 50px', gap: 12, alignItems: 'center', padding: '12px 16px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
+              <span style={{ fontSize: 11, color: C.inkFaint }}>{isOpen ? '▾' : '▸'}</span>
+              <span style={{ display: 'flex', alignItems: 'baseline', gap: 9, minWidth: 0 }}><span style={{ fontSize: 14.5, fontWeight: 600, color: C.ink }}>{s.name}</span><span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint }}>{q ? rows.length : (s.count || rows.length)}</span></span>
+              <div style={{ width: 90, height: 6, borderRadius: 3, background: C.line, overflow: 'hidden', justifySelf: 'end' }}><div style={{ width: `${Math.min(s.pct, 100)}%`, height: '100%', background: PALETTE[i % PALETTE.length] }} /></div>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: C.teal, justifySelf: 'end' }}>{s.pct.toFixed(1)}%</span>
+            </button>
+            {isOpen && <div style={{ padding: '0 12px 12px' }}><H13Table rows={rows} showDelta={false} /></div>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function Holdings13F({ h }) {
   const [showAll, setShowAll] = useState(false);
   const [q, setQ] = useState('');
+  const grouped = h.sectors && h.sectors.length > 0;
   let rows = h.rows || [];
   if (q) rows = rows.filter((r) => (r.t + ' ' + r.name).toLowerCase().includes(q.toLowerCase()));
   const shown = (showAll || q) ? rows : rows.slice(0, 20);
-  const ind = (h.byIndustry || []).filter((x) => x.pct > 0).sort((a, b) => b.pct - a.pct);
+  const ind = grouped ? h.sectors.map((s) => ({ name: s.name, pct: s.pct, val: s.valMM }))
+    : (h.byIndustry || []).filter((x) => x.pct > 0).sort((a, b) => b.pct - a.pct);
   return (
     <div style={{ marginBottom: 26 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
@@ -298,27 +349,22 @@ function Holdings13F({ h }) {
         </div>
       )}
 
-      {/* full holdings table */}
+      {/* holdings — grouped by sector (BlackRock ~1000) or a flat top list */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10, flexWrap: 'wrap' }}>
         <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Поиск по компании…" style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, width: 200, outline: 'none' }} />
-        <span style={{ fontSize: 11, color: C.inkFaint }}>{q ? `${rows.length} найдено` : `топ ${Math.min(shown.length, rows.length)} из ${(h.rows || []).length} по стоимости`}</span>
+        <span style={{ fontSize: 11, color: C.inkFaint }}>
+          {grouped
+            ? (q ? 'поиск по всем секторам' : `${h.sectors.length} секторов · ${h.sectors.reduce((s, x) => s + (x.count || (x.rows || []).length), 0)} компаний — раскройте сектор`)
+            : (q ? `${rows.length} найдено` : `топ ${Math.min(shown.length, rows.length)} из ${(h.rows || []).length} по стоимости`)}
+        </span>
       </div>
-      <div style={{ border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden', background: C.card }}>
-        <div style={{ display: 'grid', gridTemplateColumns: H13_GRID, gap: 10, padding: '8px 16px', background: C.cardAlt, borderBottom: `1px solid ${C.line}` }}>
-          {[['Тикер', 'left'], ['Компания', 'left'], ['Оценка', 'right'], ['Доля %', 'right'], ['Δ квартал', 'right']].map(([t, a], i) => <div key={i} style={{ fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, textAlign: a }}>{t}</div>)}
-        </div>
-        {shown.map((r, i) => (
-          <div key={i} style={{ display: 'grid', gridTemplateColumns: H13_GRID, gap: 10, padding: '9px 16px', borderBottom: i < shown.length - 1 ? `1px solid ${C.lineSoft}` : 'none', alignItems: 'baseline' }}>
-            <div style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkSoft }}>{r.t}</div>
-            <div style={{ minWidth: 0, fontSize: 13, color: C.ink }}>{r.name}</div>
-            <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.ink }}>{fmtMM(r.val)}</div>
-            <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.inkSoft }}>{r.pct != null ? r.pct.toFixed(2) : '—'}</div>
-            <div style={{ textAlign: 'right' }}><Delta d={r.delta} /></div>
-          </div>
-        ))}
-      </div>
-      {!q && (h.rows || []).length > 20 && (
-        <button onClick={() => setShowAll(!showAll)} style={{ marginTop: 10, fontSize: 12, padding: '7px 16px', borderRadius: 16, border: `1px solid ${C.line}`, background: 'transparent', color: C.teal, cursor: 'pointer' }}>{showAll ? 'Свернуть' : `Показать все ${(h.rows || []).length}`}</button>
+      {grouped ? <SectorAccordion sectors={h.sectors} q={q} /> : (
+        <>
+          <H13Table rows={shown} />
+          {!q && (h.rows || []).length > 20 && (
+            <button onClick={() => setShowAll(!showAll)} style={{ marginTop: 10, fontSize: 12, padding: '7px 16px', borderRadius: 16, border: `1px solid ${C.line}`, background: 'transparent', color: C.teal, cursor: 'pointer' }}>{showAll ? 'Свернуть' : `Показать все ${(h.rows || []).length}`}</button>
+          )}
+        </>
       )}
 
       {/* top increases / decreases */}

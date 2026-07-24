@@ -868,695 +868,7 @@
   "asOf": "Q1 2026 (31.03.2026)",
   "positions": 5610,
   "totalValue": "$5.72 трлн",
-  "note": "Это НЕ собственные деньги BlackRock, а активы клиентов под управлением (в основном iShares ETF и индексные фонды), которые BlackRock раскрывает в SEC 13F-HR: ~$5.72 трлн в 5 610 бумагах — по сути весь рынок США по капитализации. Это часть общего AUM $13.89 трлн (остальное — облигации, деньги, не-US и частные активы, вне 13F). Топ-100 ниже. Источник: SEC EDGAR 13F-HR, Q1 2026. Разбивка по секторам — оценка по крупнейшим позициям (топ мега-капы IT дают ~21%).",
-  "rows": [
-   {
-    "t": "NVDA",
-    "name": "Nvidia",
-    "val": 336352.9,
-    "pct": 5.8767,
-    "delta": -0.2554
-   },
-   {
-    "t": "AAPL",
-    "name": "Apple",
-    "val": 290570.2,
-    "pct": 5.0768,
-    "delta": -0.2371
-   },
-   {
-    "t": "GOOGL/GOOG",
-    "name": "Alphabet (Google)",
-    "val": 233168.5,
-    "pct": 4.0738,
-    "delta": -0.1805
-   },
-   {
-    "t": "MSFT",
-    "name": "Microsoft",
-    "val": 219679.6,
-    "pct": 3.8382,
-    "delta": -1.0843
-   },
-   {
-    "t": "AMZN",
-    "name": "Amazon",
-    "val": 153431,
-    "pct": 2.6807,
-    "delta": -0.1889
-   },
-   {
-    "t": "AVGO",
-    "name": "Broadcom",
-    "val": 119475.1,
-    "pct": 2.0874,
-    "delta": -0.1368
-   },
-   {
-    "t": "META",
-    "name": "Meta Platforms",
-    "val": 96613.5,
-    "pct": 1.688,
-    "delta": -0.2275
-   },
-   {
-    "t": "TSLA",
-    "name": "Tesla",
-    "val": 77371.9,
-    "pct": 1.3518,
-    "delta": -0.2449
-   },
-   {
-    "t": "JPM",
-    "name": "JPMorgan Chase",
-    "val": 61262,
-    "pct": 1.0704,
-    "delta": -0.084
-   },
-   {
-    "t": "LLY",
-    "name": "Eli Lilly",
-    "val": 61159,
-    "pct": 1.0686,
-    "delta": -0.1447
-   },
-   {
-    "t": "BRK.B",
-    "name": "Berkshire Hathaway",
-    "val": 58082.7,
-    "pct": 1.0148,
-    "delta": -0.0149
-   },
-   {
-    "t": "IVV",
-    "name": "iShares Core S&P 500 ETF",
-    "val": 57125.3,
-    "pct": 0.9981,
-    "delta": 0.0489
-   },
-   {
-    "t": "XOM",
-    "name": "Exxon Mobil",
-    "val": 54756.3,
-    "pct": 0.9567,
-    "delta": 0.3237
-   },
-   {
-    "t": "JNJ",
-    "name": "Johnson & Johnson",
-    "val": 52160,
-    "pct": 0.9113,
-    "delta": 0.181
-   },
-   {
-    "t": "WMT",
-    "name": "Walmart",
-    "val": 43966.5,
-    "pct": 0.7682,
-    "delta": 0.1089
-   },
-   {
-    "t": "V",
-    "name": "Visa",
-    "val": 41162.3,
-    "pct": 0.7192,
-    "delta": -0.1116
-   },
-   {
-    "t": "ITOT",
-    "name": "iShares Core S&P Total US",
-    "val": 35508.2,
-    "pct": 0.6204,
-    "delta": 0.0273
-   },
-   {
-    "t": "MU",
-    "name": "Micron Technology",
-    "val": 34917,
-    "pct": 0.6101,
-    "delta": 0.1243
-   },
-   {
-    "t": "COST",
-    "name": "Costco Wholesale",
-    "val": 34822.3,
-    "pct": 0.6084,
-    "delta": 0.0968
-   },
-   {
-    "t": "MA",
-    "name": "Mastercard",
-    "val": 33494.9,
-    "pct": 0.5852,
-    "delta": -0.0739
-   },
-   {
-    "t": "NFLX",
-    "name": "Netflix",
-    "val": 33303.6,
-    "pct": 0.5819,
-    "delta": 0.0296
-   },
-   {
-    "t": "ABBV",
-    "name": "AbbVie",
-    "val": 32786.5,
-    "pct": 0.5728,
-    "delta": -0.011
-   },
-   {
-    "t": "CVX",
-    "name": "Chevron",
-    "val": 29942.6,
-    "pct": 0.5231,
-    "delta": 0.1592
-   },
-   {
-    "t": "AMD",
-    "name": "Advanced Micro Devices",
-    "val": 29653.3,
-    "pct": 0.5181,
-    "delta": -0.0159
-   },
-   {
-    "t": "LRCX",
-    "name": "Lam Research",
-    "val": 28396.7,
-    "pct": 0.4961,
-    "delta": 0.1077
-   },
-   {
-    "t": "CSCO",
-    "name": "Cisco Systems",
-    "val": 28336.6,
-    "pct": 0.4951,
-    "delta": 0.0025
-   },
-   {
-    "t": "PLTR",
-    "name": "Palantir Technologies",
-    "val": 27655.8,
-    "pct": 0.4832,
-    "delta": -0.0976
-   },
-   {
-    "t": "MRK",
-    "name": "Merck",
-    "val": 27176.7,
-    "pct": 0.4748,
-    "delta": 0.085
-   },
-   {
-    "t": "PG",
-    "name": "Procter & Gamble",
-    "val": 27014.6,
-    "pct": 0.472,
-    "delta": 0.0263
-   },
-   {
-    "t": "AMAT",
-    "name": "Applied Materials",
-    "val": 26992.8,
-    "pct": 0.4716,
-    "delta": 0.1447
-   },
-   {
-    "t": "CAT",
-    "name": "Caterpillar",
-    "val": 26344.8,
-    "pct": 0.4603,
-    "delta": 0.1097
-   },
-   {
-    "t": "BAC",
-    "name": "Bank of America",
-    "val": 26300.6,
-    "pct": 0.4595,
-    "delta": -0.0461
-   },
-   {
-    "t": "HD",
-    "name": "Home Depot",
-    "val": 25911.2,
-    "pct": 0.4527,
-    "delta": 0.0057
-   },
-   {
-    "t": "GE",
-    "name": "GE Aerospace",
-    "val": 25760.4,
-    "pct": 0.4501,
-    "delta": -0.0193
-   },
-   {
-    "t": "KO",
-    "name": "Coca-Cola",
-    "val": 25370,
-    "pct": 0.4433,
-    "delta": 0.0667
-   },
-   {
-    "t": "ORCL",
-    "name": "Oracle",
-    "val": 21093,
-    "pct": 0.3685,
-    "delta": -0.1195
-   },
-   {
-    "t": "RTX",
-    "name": "RTX Corp",
-    "val": 21035.9,
-    "pct": 0.3675,
-    "delta": 0.0423
-   },
-   {
-    "t": "WFC",
-    "name": "Wells Fargo",
-    "val": 20773.1,
-    "pct": 0.3629,
-    "delta": -0.0504
-   },
-   {
-    "t": "GS",
-    "name": "Goldman Sachs",
-    "val": 20294.8,
-    "pct": 0.3546,
-    "delta": 0.0076
-   },
-   {
-    "t": "UNH",
-    "name": "UnitedHealth Group",
-    "val": 19879.6,
-    "pct": 0.3473,
-    "delta": -0.0697
-   },
-   {
-    "t": "INTC",
-    "name": "Intel",
-    "val": 19761.2,
-    "pct": 0.3453,
-    "delta": 0.0757
-   },
-   {
-    "t": "IBM",
-    "name": "IBM",
-    "val": 18801.2,
-    "pct": 0.3285,
-    "delta": -0.0614
-   },
-   {
-    "t": "KLAC",
-    "name": "KLA Corp",
-    "val": 18546.8,
-    "pct": 0.324,
-    "delta": 0.0696
-   },
-   {
-    "t": "VZ",
-    "name": "Verizon",
-    "val": 18475,
-    "pct": 0.3228,
-    "delta": 0.0687
-   },
-   {
-    "t": "LIN",
-    "name": "Linde",
-    "val": 18279.8,
-    "pct": 0.3194,
-    "delta": 0.0517
-   },
-   {
-    "t": "GEV",
-    "name": "GE Vernova",
-    "val": 18238.6,
-    "pct": 0.3187,
-    "delta": 0.088
-   },
-   {
-    "t": "PEP",
-    "name": "PepsiCo",
-    "val": 17989,
-    "pct": 0.3143,
-    "delta": 0.034
-   },
-   {
-    "t": "PM",
-    "name": "Philip Morris Intl",
-    "val": 17789.8,
-    "pct": 0.3108,
-    "delta": 0.0146
-   },
-   {
-    "t": "C",
-    "name": "Citigroup",
-    "val": 17440.2,
-    "pct": 0.3047,
-    "delta": -0.0168
-   },
-   {
-    "t": "MCD",
-    "name": "McDonald's",
-    "val": 17203.1,
-    "pct": 0.3006,
-    "delta": 0.0241
-   },
-   {
-    "t": "TJX",
-    "name": "TJX Companies",
-    "val": 17168.2,
-    "pct": 0.3,
-    "delta": 0.0253
-   },
-   {
-    "t": "NEE",
-    "name": "NextEra Energy",
-    "val": 16609.7,
-    "pct": 0.2902,
-    "delta": 0.0503
-   },
-   {
-    "t": "GILD",
-    "name": "Gilead Sciences",
-    "val": 16586.6,
-    "pct": 0.2898,
-    "delta": 0.0342
-   },
-   {
-    "t": "AMGN",
-    "name": "Amgen",
-    "val": 16572.3,
-    "pct": 0.2895,
-    "delta": 0.0273
-   },
-   {
-    "t": "T",
-    "name": "AT&T",
-    "val": 16263.3,
-    "pct": 0.2841,
-    "delta": 0.0449
-   },
-   {
-    "t": "MS",
-    "name": "Morgan Stanley",
-    "val": 15864,
-    "pct": 0.2772,
-    "delta": -0.0086
-   },
-   {
-    "t": "TXN",
-    "name": "Texas Instruments",
-    "val": 15825.4,
-    "pct": 0.2765,
-    "delta": 0.0447
-   },
-   {
-    "t": "ABT",
-    "name": "Abbott Laboratories",
-    "val": 14968.7,
-    "pct": 0.2615,
-    "delta": -0.0496
-   },
-   {
-    "t": "TMO",
-    "name": "Thermo Fisher Scientific",
-    "val": 14967.4,
-    "pct": 0.2615,
-    "delta": -0.039
-   },
-   {
-    "t": "SPY",
-    "name": "SPDR S&P 500 ETF Trust",
-    "val": 14909.4,
-    "pct": 0.2605,
-    "delta": -0.1077
-   },
-   {
-    "t": "CRM",
-    "name": "Salesforce",
-    "val": 14876,
-    "pct": 0.2599,
-    "delta": -0.1014
-   },
-   {
-    "t": "WELL",
-    "name": "Welltower",
-    "val": 14631.3,
-    "pct": 0.2556,
-    "delta": 0.0273
-   },
-   {
-    "t": "PFE",
-    "name": "Pfizer",
-    "val": 13991.1,
-    "pct": 0.2444,
-    "delta": 0.0369
-   },
-   {
-    "t": "ISRG",
-    "name": "Intuitive Surgical",
-    "val": 13875.5,
-    "pct": 0.2424,
-    "delta": -0.0497
-   },
-   {
-    "t": "ADI",
-    "name": "Analog Devices",
-    "val": 13715.9,
-    "pct": 0.2396,
-    "delta": 0.0414
-   },
-   {
-    "t": "QCOM",
-    "name": "Qualcomm",
-    "val": 13652.7,
-    "pct": 0.2385,
-    "delta": -0.051
-   },
-   {
-    "t": "NEM",
-    "name": "Newmont",
-    "val": 13648.4,
-    "pct": 0.2385,
-    "delta": 0.0191
-   },
-   {
-    "t": "PLD",
-    "name": "Prologis",
-    "val": 13272.7,
-    "pct": 0.2319,
-    "delta": 0.0173
-   },
-   {
-    "t": "DIS",
-    "name": "Walt Disney",
-    "val": 13151.8,
-    "pct": 0.2298,
-    "delta": -0.0253
-   },
-   {
-    "t": "APH",
-    "name": "Amphenol",
-    "val": 12883.4,
-    "pct": 0.2251,
-    "delta": -0.0173
-   },
-   {
-    "t": "AXP",
-    "name": "American Express",
-    "val": 12677,
-    "pct": 0.2215,
-    "delta": -0.0433
-   },
-   {
-    "t": "SCHW",
-    "name": "Charles Schwab",
-    "val": 12514,
-    "pct": 0.2186,
-    "delta": -0.0079
-   },
-   {
-    "t": "COP",
-    "name": "ConocoPhillips",
-    "val": 12034.9,
-    "pct": 0.2103,
-    "delta": 0.0686
-   },
-   {
-    "t": "PANW",
-    "name": "Palo Alto Networks",
-    "val": 11612.2,
-    "pct": 0.2029,
-    "delta": 0.0169
-   },
-   {
-    "t": "UNP",
-    "name": "Union Pacific",
-    "val": 11592,
-    "pct": 0.2025,
-    "delta": 0.0102
-   },
-   {
-    "t": "BA",
-    "name": "Boeing",
-    "val": 11588.6,
-    "pct": 0.2025,
-    "delta": 0.0041
-   },
-   {
-    "t": "ACN",
-    "name": "Accenture",
-    "val": 11330.4,
-    "pct": 0.198,
-    "delta": -0.0563
-   },
-   {
-    "t": "ANET",
-    "name": "Arista Networks",
-    "val": 11284.4,
-    "pct": 0.1972,
-    "delta": -0.0142
-   },
-   {
-    "t": "BKNG",
-    "name": "Booking Holdings",
-    "val": 11170.6,
-    "pct": 0.1952,
-    "delta": -0.0543
-   },
-   {
-    "t": "HWM",
-    "name": "Howmet Aerospace",
-    "val": 11053.6,
-    "pct": 0.1931,
-    "delta": 0.0294
-   },
-   {
-    "t": "HON",
-    "name": "Honeywell Intl",
-    "val": 11047.4,
-    "pct": 0.193,
-    "delta": 0.0195
-   },
-   {
-    "t": "INTU",
-    "name": "Intuit",
-    "val": 11015.1,
-    "pct": 0.1925,
-    "delta": -0.1035
-   },
-   {
-    "t": "ETN",
-    "name": "Eaton",
-    "val": 10924.7,
-    "pct": 0.1909,
-    "delta": 0.0326
-   },
-   {
-    "t": "EQIX",
-    "name": "Equinix",
-    "val": 10911.6,
-    "pct": 0.1906,
-    "delta": 0.0508
-   },
-   {
-    "t": "UBER",
-    "name": "Uber Technologies",
-    "val": 10860.5,
-    "pct": 0.1898,
-    "delta": -0.024
-   },
-   {
-    "t": "LMT",
-    "name": "Lockheed Martin",
-    "val": 10777.9,
-    "pct": 0.1883,
-    "delta": 0.0435
-   },
-   {
-    "t": "VRTX",
-    "name": "Vertex Pharmaceuticals",
-    "val": 10703.4,
-    "pct": 0.187,
-    "delta": 0.005
-   },
-   {
-    "t": "BMY",
-    "name": "Bristol-Myers Squibb",
-    "val": 10412.6,
-    "pct": 0.1819,
-    "delta": 0.0207
-   },
-   {
-    "t": "PGR",
-    "name": "Progressive",
-    "val": 10372.6,
-    "pct": 0.1812,
-    "delta": -0.0193
-   },
-   {
-    "t": "DE",
-    "name": "Deere & Co",
-    "val": 10317.3,
-    "pct": 0.1803,
-    "delta": 0.0315
-   },
-   {
-    "t": "SPGI",
-    "name": "S&P Global",
-    "val": 10238.5,
-    "pct": 0.1789,
-    "delta": -0.0491
-   },
-   {
-    "t": "NOW",
-    "name": "ServiceNow",
-    "val": 10193.8,
-    "pct": 0.1781,
-    "delta": -0.0687
-   },
-   {
-    "t": "ADBE",
-    "name": "Adobe",
-    "val": 9920.1,
-    "pct": 0.1733,
-    "delta": -0.0658
-   },
-   {
-    "t": "MCK",
-    "name": "McKesson",
-    "val": 9891.8,
-    "pct": 0.1728,
-    "delta": 0.0135
-   },
-   {
-    "t": "MDT",
-    "name": "Medtronic",
-    "val": 9807.3,
-    "pct": 0.1713,
-    "delta": -0.0244
-   },
-   {
-    "t": "DHR",
-    "name": "Danaher",
-    "val": 9791.1,
-    "pct": 0.1711,
-    "delta": -0.0303
-   },
-   {
-    "t": "BLK",
-    "name": "BlackRock (собственные акции)",
-    "val": 9744.8,
-    "pct": 0.1703,
-    "delta": -0.0123
-   },
-   {
-    "t": "WDC",
-    "name": "Western Digital",
-    "val": 9675.2,
-    "pct": 0.169,
-    "delta": 0.0656
-   }
-  ],
+  "note": "Это НЕ собственные деньги BlackRock, а активы клиентов под управлением (в основном iShares ETF и индексные фонды), которые он раскрывает в SEC 13F-HR: ~$5.72 трлн в 5 610 бумагах — по сути весь рынок США. Ниже 1 100 крупнейших компаний (95% портфеля), сгруппированы по секторам — раскройте любой. Это часть общего AUM $13.89 трлн (остальное — облигации, деньги, не-US и частные активы, вне 13F). Источник: SEC EDGAR 13F-HR, Q1 2026.",
   "increases": [
    {
     "t": "XOM",
@@ -1811,50 +1123,6702 @@
     }
    ]
   },
-  "byIndustry": [
+  "sectors": [
    {
     "name": "Информационные технологии",
-    "pct": 38
+    "pct": 28.76,
+    "valMM": 1646325.8,
+    "count": 155,
+    "rows": [
+     {
+      "t": "NVDA",
+      "name": "Nvidia",
+      "valMM": 336352.9,
+      "pct": 5.8767
+     },
+     {
+      "t": "AAPL",
+      "name": "Apple",
+      "valMM": 290570.2,
+      "pct": 5.0768
+     },
+     {
+      "t": "MSFT",
+      "name": "Microsoft",
+      "valMM": 219679.6,
+      "pct": 3.8382
+     },
+     {
+      "t": "AVGO",
+      "name": "Broadcom",
+      "valMM": 119475.1,
+      "pct": 2.0874
+     },
+     {
+      "t": "MU",
+      "name": "Micron",
+      "valMM": 34917,
+      "pct": 0.6101
+     },
+     {
+      "t": "AMD",
+      "name": "AMD",
+      "valMM": 29653.3,
+      "pct": 0.5181
+     },
+     {
+      "t": "LRCX",
+      "name": "Lam Research",
+      "valMM": 28396.7,
+      "pct": 0.4961
+     },
+     {
+      "t": "CSCO",
+      "name": "Cisco",
+      "valMM": 28336.6,
+      "pct": 0.4951
+     },
+     {
+      "t": "PLTR",
+      "name": "Palantir",
+      "valMM": 27655.8,
+      "pct": 0.4832
+     },
+     {
+      "t": "AMAT",
+      "name": "Applied Materials",
+      "valMM": 26992.8,
+      "pct": 0.4716
+     },
+     {
+      "t": "ORCL",
+      "name": "Oracle",
+      "valMM": 21404.2,
+      "pct": 0.374
+     },
+     {
+      "t": "INTC",
+      "name": "Intel",
+      "valMM": 19761.2,
+      "pct": 0.3453
+     },
+     {
+      "t": "IBM",
+      "name": "IBM",
+      "valMM": 18801.2,
+      "pct": 0.3285
+     },
+     {
+      "t": "KLAC",
+      "name": "KLA",
+      "valMM": 18546.8,
+      "pct": 0.324
+     },
+     {
+      "t": "TXN",
+      "name": "Texas Instruments",
+      "valMM": 15825.4,
+      "pct": 0.2765
+     },
+     {
+      "t": "CRM",
+      "name": "Salesforce",
+      "valMM": 14876,
+      "pct": 0.2599
+     },
+     {
+      "t": "ADI",
+      "name": "Analog Devices",
+      "valMM": 13715.9,
+      "pct": 0.2396
+     },
+     {
+      "t": "QCOM",
+      "name": "Qualcomm",
+      "valMM": 13652.7,
+      "pct": 0.2385
+     },
+     {
+      "t": "APH",
+      "name": "Amphenol",
+      "valMM": 12883.4,
+      "pct": 0.2251
+     },
+     {
+      "t": "PANW",
+      "name": "Palo Alto Networks",
+      "valMM": 11612.2,
+      "pct": 0.2029
+     },
+     {
+      "t": "ACN",
+      "name": "Accenture",
+      "valMM": 11330.4,
+      "pct": 0.198
+     },
+     {
+      "t": "ANET",
+      "name": "Arista Networks",
+      "valMM": 11284.4,
+      "pct": 0.1972
+     },
+     {
+      "t": "INTU",
+      "name": "Intuit",
+      "valMM": 11015.1,
+      "pct": 0.1925
+     },
+     {
+      "t": "NOW",
+      "name": "ServiceNow",
+      "valMM": 10193.8,
+      "pct": 0.1781
+     },
+     {
+      "t": "ADBE",
+      "name": "Adobe",
+      "valMM": 9920.1,
+      "pct": 0.1733
+     },
+     {
+      "t": "WDC",
+      "name": "Western Digital",
+      "valMM": 9864.9,
+      "pct": 0.1724
+     },
+     {
+      "t": "APP",
+      "name": "AppLovin",
+      "valMM": 9408.8,
+      "pct": 0.1644
+     },
+     {
+      "t": "GLW",
+      "name": "Corning",
+      "valMM": 9070.6,
+      "pct": 0.1585
+     },
+     {
+      "t": "CRWD",
+      "name": "CrowdStrike",
+      "valMM": 8344.5,
+      "pct": 0.1458
+     },
+     {
+      "t": "MSI",
+      "name": "Motorola Solutions",
+      "valMM": 7136.6,
+      "pct": 0.1247
+     },
+     {
+      "t": "CDNS",
+      "name": "Cadence",
+      "valMM": 7072.5,
+      "pct": 0.1236
+     },
+     {
+      "t": "MPWR",
+      "name": "Monolithic Power",
+      "valMM": 6639.3,
+      "pct": 0.116
+     },
+     {
+      "t": "SNDK",
+      "name": "SanDisk",
+      "valMM": 6609.7,
+      "pct": 0.1155
+     },
+     {
+      "t": "MRVL",
+      "name": "Marvell",
+      "valMM": 6323.6,
+      "pct": 0.1105
+     },
+     {
+      "t": "SNPS",
+      "name": "Synopsys",
+      "valMM": 6290.5,
+      "pct": 0.1099
+     },
+     {
+      "t": "TSM",
+      "name": "TSMC",
+      "valMM": 6158.9,
+      "pct": 0.1076
+     },
+     {
+      "t": "LITE",
+      "name": "Lumentum",
+      "valMM": 5736.2,
+      "pct": 0.1002
+     },
+     {
+      "t": "STX",
+      "name": "Seagate",
+      "valMM": 5592,
+      "pct": 0.0977
+     },
+     {
+      "t": "TEL",
+      "name": "TE Connectivity",
+      "valMM": 5415.8,
+      "pct": 0.0946
+     },
+     {
+      "t": "KEYS",
+      "name": "Keysight",
+      "valMM": 5255.1,
+      "pct": 0.0918
+     },
+     {
+      "t": "ADSK",
+      "name": "Autodesk",
+      "valMM": 5250.2,
+      "pct": 0.0917
+     },
+     {
+      "t": "CIEN",
+      "name": "Ciena",
+      "valMM": 5192.1,
+      "pct": 0.0907
+     },
+     {
+      "t": "FTNT",
+      "name": "Fortinet",
+      "valMM": 5064.1,
+      "pct": 0.0885
+     },
+     {
+      "t": "TER",
+      "name": "Teradyne",
+      "valMM": 4833.8,
+      "pct": 0.0845
+     },
+     {
+      "t": "NXPI",
+      "name": "NXP Semiconductors",
+      "valMM": 4467.2,
+      "pct": 0.078
+     },
+     {
+      "t": "NET",
+      "name": "Cloudflare",
+      "valMM": 4376.2,
+      "pct": 0.0765
+     },
+     {
+      "t": "SNOW",
+      "name": "Snowflake",
+      "valMM": 4262.4,
+      "pct": 0.0745
+     },
+     {
+      "t": "DDOG",
+      "name": "Datadog",
+      "valMM": 4177.2,
+      "pct": 0.073
+     },
+     {
+      "t": "DELL",
+      "name": "Dell",
+      "valMM": 4062.1,
+      "pct": 0.071
+     },
+     {
+      "t": "MCHP",
+      "name": "Microchip",
+      "valMM": 3680,
+      "pct": 0.0643
+     },
+     {
+      "t": "COHR",
+      "name": "Coherent",
+      "valMM": 3561.9,
+      "pct": 0.0622
+     },
+     {
+      "t": "HPE",
+      "name": "HPE",
+      "valMM": 3559.4,
+      "pct": 0.0622
+     },
+     {
+      "t": "ROP",
+      "name": "Roper Technologies",
+      "valMM": 3354.6,
+      "pct": 0.0586
+     },
+     {
+      "t": "FLEX",
+      "name": "Flex",
+      "valMM": 2948.4,
+      "pct": 0.0515
+     },
+     {
+      "t": "FN",
+      "name": "Fabrinet",
+      "valMM": 2920,
+      "pct": 0.051
+     },
+     {
+      "t": "FSLR",
+      "name": "First Solar",
+      "valMM": 2726.3,
+      "pct": 0.0476
+     },
+     {
+      "t": "CTSH",
+      "name": "Cognizant",
+      "valMM": 2720.1,
+      "pct": 0.0475
+     },
+     {
+      "t": "FIS",
+      "name": "FIS",
+      "valMM": 2674.3,
+      "pct": 0.0467
+     },
+     {
+      "t": "WDAY",
+      "name": "Workday",
+      "valMM": 2608.8,
+      "pct": 0.0456
+     },
+     {
+      "t": "JBL",
+      "name": "Jabil",
+      "valMM": 2571.1,
+      "pct": 0.0449
+     },
+     {
+      "t": "ON",
+      "name": "ON Semiconductor",
+      "valMM": 2536.2,
+      "pct": 0.0443
+     },
+     {
+      "t": "MSTR",
+      "name": "Strategy",
+      "valMM": 2408.6,
+      "pct": 0.0421
+     },
+     {
+      "t": "FICO",
+      "name": "Fair Isaac",
+      "valMM": 2334.7,
+      "pct": 0.0408
+     },
+     {
+      "t": "VRSN",
+      "name": "Verisign",
+      "valMM": 2315.8,
+      "pct": 0.0405
+     },
+     {
+      "t": "ENTG",
+      "name": "Entegris",
+      "valMM": 2275.2,
+      "pct": 0.0398
+     },
+     {
+      "t": "FI",
+      "name": "Fiserv",
+      "valMM": 2224.3,
+      "pct": 0.0389
+     },
+     {
+      "t": "AEIS",
+      "name": "Advanced Energy",
+      "valMM": 2111.1,
+      "pct": 0.0369
+     },
+     {
+      "t": "TWLO",
+      "name": "Twilio",
+      "valMM": 2089.4,
+      "pct": 0.0365
+     },
+     {
+      "t": "NTAP",
+      "name": "NetApp",
+      "valMM": 2038.4,
+      "pct": 0.0356
+     },
+     {
+      "t": "HPQ",
+      "name": "HP",
+      "valMM": 2016.9,
+      "pct": 0.0352
+     },
+     {
+      "t": "MTSI",
+      "name": "MACOM",
+      "valMM": 1947.3,
+      "pct": 0.034
+     },
+     {
+      "t": "CRDO",
+      "name": "Credo Technology",
+      "valMM": 1860.4,
+      "pct": 0.0325
+     },
+     {
+      "t": "Q",
+      "name": "Qnity Electronics",
+      "valMM": 1834.1,
+      "pct": 0.032
+     },
+     {
+      "t": "FFIV",
+      "name": "F5",
+      "valMM": 1803.8,
+      "pct": 0.0315
+     },
+     {
+      "t": "CPAY",
+      "name": "Corpay",
+      "valMM": 1796.4,
+      "pct": 0.0314
+     },
+     {
+      "t": "BR",
+      "name": "Broadridge",
+      "valMM": 1788.2,
+      "pct": 0.0312
+     },
+     {
+      "t": "CDW",
+      "name": "CDW",
+      "valMM": 1781.5,
+      "pct": 0.0311
+     },
+     {
+      "t": "PTC",
+      "name": "PTC",
+      "valMM": 1646.6,
+      "pct": 0.0288
+     },
+     {
+      "t": "ASML",
+      "name": "ASML",
+      "valMM": 1630.3,
+      "pct": 0.0285
+     },
+     {
+      "t": "MKSI",
+      "name": "MKS Instruments",
+      "valMM": 1564,
+      "pct": 0.0273
+     },
+     {
+      "t": "LSCC",
+      "name": "Lattice Semiconductor",
+      "valMM": 1544.9,
+      "pct": 0.027
+     },
+     {
+      "t": "OKTA",
+      "name": "Okta",
+      "valMM": 1502.1,
+      "pct": 0.0262
+     },
+     {
+      "t": "TYL",
+      "name": "Tyler Technologies",
+      "valMM": 1486.3,
+      "pct": 0.026
+     },
+     {
+      "t": "ZM",
+      "name": "Zoom",
+      "valMM": 1429.1,
+      "pct": 0.025
+     },
+     {
+      "t": "MDB",
+      "name": "MongoDB",
+      "valMM": 1411.9,
+      "pct": 0.0247
+     },
+     {
+      "t": "GWRE",
+      "name": "Guidewire",
+      "valMM": 1406.3,
+      "pct": 0.0246
+     },
+     {
+      "t": "RMBS",
+      "name": "Rambus",
+      "valMM": 1402.7,
+      "pct": 0.0245
+     },
+     {
+      "t": "SSNC",
+      "name": "SS&C Technologies",
+      "valMM": 1364.6,
+      "pct": 0.0238
+     },
+     {
+      "t": "TTMI",
+      "name": "TTM Technologies",
+      "valMM": 1328.6,
+      "pct": 0.0232
+     },
+     {
+      "t": "GPN",
+      "name": "Global Payments",
+      "valMM": 1300,
+      "pct": 0.0227
+     },
+     {
+      "t": "AKAM",
+      "name": "Akamai",
+      "valMM": 1276.7,
+      "pct": 0.0223
+     },
+     {
+      "t": "TRMB",
+      "name": "Trimble",
+      "valMM": 1270.6,
+      "pct": 0.0222
+     },
+     {
+      "t": "ALAB",
+      "name": "Astera Labs",
+      "valMM": 1254.9,
+      "pct": 0.0219
+     },
+     {
+      "t": "SNX",
+      "name": "TD Synnex",
+      "valMM": 1230.2,
+      "pct": 0.0215
+     },
+     {
+      "t": "DT",
+      "name": "Dynatrace",
+      "valMM": 1229.4,
+      "pct": 0.0215
+     },
+     {
+      "t": "ZS",
+      "name": "Zscaler",
+      "valMM": 1202,
+      "pct": 0.021
+     },
+     {
+      "t": "FORM",
+      "name": "FormFactor",
+      "valMM": 1187.9,
+      "pct": 0.0208
+     },
+     {
+      "t": "VIAV",
+      "name": "Viavi",
+      "valMM": 1172.7,
+      "pct": 0.0205
+     },
+     {
+      "t": "SWKS",
+      "name": "Skyworks",
+      "valMM": 1148.2,
+      "pct": 0.0201
+     },
+     {
+      "t": "ONTO",
+      "name": "Onto Innovation",
+      "valMM": 1134.9,
+      "pct": 0.0198
+     },
+     {
+      "t": "IDCC",
+      "name": "InterDigital",
+      "valMM": 1118.7,
+      "pct": 0.0195
+     },
+     {
+      "t": "SANM",
+      "name": "Sanmina",
+      "valMM": 1113.9,
+      "pct": 0.0195
+     },
+     {
+      "t": "GDDY",
+      "name": "GoDaddy",
+      "valMM": 1101.7,
+      "pct": 0.0192
+     },
+     {
+      "t": "SMTC",
+      "name": "Semtech",
+      "valMM": 1093.5,
+      "pct": 0.0191
+     },
+     {
+      "t": "IT",
+      "name": "Gartner",
+      "valMM": 1090.1,
+      "pct": 0.019
+     },
+     {
+      "t": "NTNX",
+      "name": "Nutanix",
+      "valMM": 1058.8,
+      "pct": 0.0185
+     },
+     {
+      "t": "SHOP",
+      "name": "Shopify",
+      "valMM": 1054.2,
+      "pct": 0.0184
+     },
+     {
+      "t": "SLAB",
+      "name": "Silicon Labs",
+      "valMM": 1039.5,
+      "pct": 0.0182
+     },
+     {
+      "t": "DOCN",
+      "name": "DigitalOcean",
+      "valMM": 1032.1,
+      "pct": 0.018
+     },
+     {
+      "t": "NBIS",
+      "name": "Nebius",
+      "valMM": 1031.1,
+      "pct": 0.018
+     },
+     {
+      "t": "DOCU",
+      "name": "DocuSign",
+      "valMM": 1022.4,
+      "pct": 0.0179
+     },
+     {
+      "t": "SMCI",
+      "name": "Super Micro",
+      "valMM": 1019.6,
+      "pct": 0.0178
+     },
+     {
+      "t": "HUBS",
+      "name": "HubSpot",
+      "valMM": 1000.4,
+      "pct": 0.0175
+     },
+     {
+      "t": "GEN",
+      "name": "Gen Digital",
+      "valMM": 997.1,
+      "pct": 0.0174
+     },
+     {
+      "t": "SITM",
+      "name": "SiTime",
+      "valMM": 994.9,
+      "pct": 0.0174
+     },
+     {
+      "t": "JKHY",
+      "name": "Jack Henry",
+      "valMM": 941.6,
+      "pct": 0.0165
+     },
+     {
+      "t": "CHKP",
+      "name": "Check Point",
+      "valMM": 925,
+      "pct": 0.0162
+     },
+     {
+      "t": "MANH",
+      "name": "Manhattan Associates",
+      "valMM": 911.1,
+      "pct": 0.0159
+     },
+     {
+      "t": "ZBRA",
+      "name": "Zebra Technologies",
+      "valMM": 878.8,
+      "pct": 0.0154
+     },
+     {
+      "t": "PLXS",
+      "name": "Plexus",
+      "valMM": 865.9,
+      "pct": 0.0151
+     },
+     {
+      "t": "IONQ",
+      "name": "IonQ",
+      "valMM": 861.2,
+      "pct": 0.015
+     },
+     {
+      "t": "ENPH",
+      "name": "Enphase",
+      "valMM": 861.2,
+      "pct": 0.015
+     },
+     {
+      "t": "QRVO",
+      "name": "Qorvo",
+      "valMM": 804.9,
+      "pct": 0.0141
+     },
+     {
+      "t": "LFUS",
+      "name": "Littelfuse",
+      "valMM": 797.1,
+      "pct": 0.0139
+     },
+     {
+      "t": "CGNX",
+      "name": "Cognex",
+      "valMM": 795.7,
+      "pct": 0.0139
+     },
+     {
+      "t": "TEAM",
+      "name": "Atlassian",
+      "valMM": 787.9,
+      "pct": 0.0138
+     },
+     {
+      "t": "CRUS",
+      "name": "Cirrus Logic",
+      "valMM": 758.4,
+      "pct": 0.0133
+     },
+     {
+      "t": "TSEM",
+      "name": "Tower Semiconductor",
+      "valMM": 749.2,
+      "pct": 0.0131
+     },
+     {
+      "t": "PAYC",
+      "name": "Paycom",
+      "valMM": 734.2,
+      "pct": 0.0128
+     },
+     {
+      "t": "YOU",
+      "name": "Clear Secure",
+      "valMM": 732.1,
+      "pct": 0.0128
+     },
+     {
+      "t": "CRWV",
+      "name": "CoreWeave",
+      "valMM": 726.5,
+      "pct": 0.0127
+     },
+     {
+      "t": "TOST",
+      "name": "Toast",
+      "valMM": 720.1,
+      "pct": 0.0126
+     },
+     {
+      "t": "ARW",
+      "name": "Arrow Electronics",
+      "valMM": 708.2,
+      "pct": 0.0124
+     },
+     {
+      "t": "IOT",
+      "name": "Samsara",
+      "valMM": 707.7,
+      "pct": 0.0124
+     },
+     {
+      "t": "ACIW",
+      "name": "ACI Worldwide",
+      "valMM": 697.9,
+      "pct": 0.0122
+     },
+     {
+      "t": "OSIS",
+      "name": "OSI Systems",
+      "valMM": 680.4,
+      "pct": 0.0119
+     },
+     {
+      "t": "CWAN",
+      "name": "Clearwater Analytics",
+      "valMM": 668.6,
+      "pct": 0.0117
+     },
+     {
+      "t": "ITRI",
+      "name": "Itron",
+      "valMM": 653.6,
+      "pct": 0.0114
+     },
+     {
+      "t": "BSY",
+      "name": "Bentley Systems",
+      "valMM": 616.1,
+      "pct": 0.0108
+     },
+     {
+      "t": "BOX",
+      "name": "Box",
+      "valMM": 612.9,
+      "pct": 0.0107
+     },
+     {
+      "t": "AAOI",
+      "name": "Applied Optoelectronics",
+      "valMM": 608.4,
+      "pct": 0.0106
+     },
+     {
+      "t": "",
+      "name": "Covista",
+      "valMM": 602.7,
+      "pct": 0.0105
+     },
+     {
+      "t": "NOVT",
+      "name": "Novanta",
+      "valMM": 596.2,
+      "pct": 0.0104
+     },
+     {
+      "t": "AMKR",
+      "name": "Amkor",
+      "valMM": 584,
+      "pct": 0.0102
+     },
+     {
+      "t": "RUN",
+      "name": "Sunrun",
+      "valMM": 577.2,
+      "pct": 0.0101
+     },
+     {
+      "t": "KLIC",
+      "name": "Kulicke & Soffa",
+      "valMM": 572.3,
+      "pct": 0.01
+     },
+     {
+      "t": "AVT",
+      "name": "Avnet",
+      "valMM": 571.7,
+      "pct": 0.01
+     },
+     {
+      "t": "BDC",
+      "name": "Belden",
+      "valMM": 564.7,
+      "pct": 0.0099
+     },
+     {
+      "t": "EPAM",
+      "name": "EPAM",
+      "valMM": 553.6,
+      "pct": 0.0097
+     },
+     {
+      "t": "CALX",
+      "name": "Calix",
+      "valMM": 546.4,
+      "pct": 0.0095
+     },
+     {
+      "t": "MARA",
+      "name": "MARA Holdings",
+      "valMM": 519.8,
+      "pct": 0.0091
+     },
+     {
+      "t": "APLD",
+      "name": "Applied Digital",
+      "valMM": 515.2,
+      "pct": 0.009
+     },
+     {
+      "t": "STNE",
+      "name": "StoneCo",
+      "valMM": 504.7,
+      "pct": 0.0088
+     },
+     {
+      "t": "DIOD",
+      "name": "Diodes",
+      "valMM": 491.4,
+      "pct": 0.0086
+     },
+     {
+      "t": "DBX",
+      "name": "Dropbox",
+      "valMM": 484,
+      "pct": 0.0085
+     }
+    ]
    },
    {
     "name": "Финансы",
-    "pct": 11.2
-   },
-   {
-    "name": "Связь и медиа",
-    "pct": 11.1
-   },
-   {
-    "name": "Здравоохранение",
-    "pct": 10
-   },
-   {
-    "name": "Потребительские товары (второстепенные)",
-    "pct": 8.9
+    "pct": 11.04,
+    "valMM": 631666.9,
+    "count": 159,
+    "rows": [
+     {
+      "t": "JPM",
+      "name": "JPMorgan Chase",
+      "valMM": 61262,
+      "pct": 1.0704
+     },
+     {
+      "t": "BRK.B",
+      "name": "Berkshire Hathaway",
+      "valMM": 58418.6,
+      "pct": 1.0207
+     },
+     {
+      "t": "V",
+      "name": "Visa",
+      "valMM": 41162.4,
+      "pct": 0.7192
+     },
+     {
+      "t": "MA",
+      "name": "Mastercard",
+      "valMM": 33495,
+      "pct": 0.5852
+     },
+     {
+      "t": "BAC",
+      "name": "Bank of America",
+      "valMM": 26492.5,
+      "pct": 0.4629
+     },
+     {
+      "t": "WFC",
+      "name": "Wells Fargo",
+      "valMM": 21111.7,
+      "pct": 0.3689
+     },
+     {
+      "t": "GS",
+      "name": "Goldman Sachs",
+      "valMM": 20294.8,
+      "pct": 0.3546
+     },
+     {
+      "t": "C",
+      "name": "Citigroup",
+      "valMM": 17440.2,
+      "pct": 0.3047
+     },
+     {
+      "t": "MS",
+      "name": "Morgan Stanley",
+      "valMM": 15864,
+      "pct": 0.2772
+     },
+     {
+      "t": "AXP",
+      "name": "American Express",
+      "valMM": 12677,
+      "pct": 0.2215
+     },
+     {
+      "t": "SCHW",
+      "name": "Charles Schwab",
+      "valMM": 12514.1,
+      "pct": 0.2186
+     },
+     {
+      "t": "PGR",
+      "name": "Progressive",
+      "valMM": 10372.6,
+      "pct": 0.1812
+     },
+     {
+      "t": "SPGI",
+      "name": "S&P Global",
+      "valMM": 10238.6,
+      "pct": 0.1789
+     },
+     {
+      "t": "BLK",
+      "name": "BlackRock",
+      "valMM": 9744.8,
+      "pct": 0.1703
+     },
+     {
+      "t": "CME",
+      "name": "CME Group",
+      "valMM": 9288.2,
+      "pct": 0.1623
+     },
+     {
+      "t": "COF",
+      "name": "Capital One",
+      "valMM": 9270.8,
+      "pct": 0.162
+     },
+     {
+      "t": "CB",
+      "name": "Chubb",
+      "valMM": 9089.8,
+      "pct": 0.1588
+     },
+     {
+      "t": "ICE",
+      "name": "Intercontinental Exchange",
+      "valMM": 8319.5,
+      "pct": 0.1454
+     },
+     {
+      "t": "BK",
+      "name": "BNY Mellon",
+      "valMM": 7308.4,
+      "pct": 0.1277
+     },
+     {
+      "t": "MMC",
+      "name": "Marsh & McLennan",
+      "valMM": 7295.6,
+      "pct": 0.1275
+     },
+     {
+      "t": "USB",
+      "name": "U.S. Bancorp",
+      "valMM": 6676.5,
+      "pct": 0.1166
+     },
+     {
+      "t": "PNC",
+      "name": "PNC Financial",
+      "valMM": 6653.9,
+      "pct": 0.1163
+     },
+     {
+      "t": "TRV",
+      "name": "Travelers",
+      "valMM": 6309.9,
+      "pct": 0.1102
+     },
+     {
+      "t": "BX",
+      "name": "Blackstone",
+      "valMM": 6060.3,
+      "pct": 0.1059
+     },
+     {
+      "t": "MCO",
+      "name": "Moody's",
+      "valMM": 5727,
+      "pct": 0.1001
+     },
+     {
+      "t": "AON",
+      "name": "Aon",
+      "valMM": 5212.4,
+      "pct": 0.0911
+     },
+     {
+      "t": "NU",
+      "name": "Nu Holdings",
+      "valMM": 4884.5,
+      "pct": 0.0853
+     },
+     {
+      "t": "ALL",
+      "name": "Allstate",
+      "valMM": 4538.5,
+      "pct": 0.0793
+     },
+     {
+      "t": "TFC",
+      "name": "Truist",
+      "valMM": 4520.4,
+      "pct": 0.079
+     },
+     {
+      "t": "HOOD",
+      "name": "Robinhood",
+      "valMM": 4397.7,
+      "pct": 0.0768
+     },
+     {
+      "t": "HIG",
+      "name": "Hartford",
+      "valMM": 4292.4,
+      "pct": 0.075
+     },
+     {
+      "t": "KKR",
+      "name": "KKR",
+      "valMM": 4271.2,
+      "pct": 0.0746
+     },
+     {
+      "t": "AJG",
+      "name": "Arthur J. Gallagher",
+      "valMM": 4181.7,
+      "pct": 0.0731
+     },
+     {
+      "t": "AFL",
+      "name": "Aflac",
+      "valMM": 3972.1,
+      "pct": 0.0694
+     },
+     {
+      "t": "APO",
+      "name": "Apollo",
+      "valMM": 3964.8,
+      "pct": 0.0693
+     },
+     {
+      "t": "AMP",
+      "name": "Ameriprise",
+      "valMM": 3833.4,
+      "pct": 0.067
+     },
+     {
+      "t": "FITB",
+      "name": "Fifth Third",
+      "valMM": 3751.8,
+      "pct": 0.0656
+     },
+     {
+      "t": "MET",
+      "name": "MetLife",
+      "valMM": 3636.7,
+      "pct": 0.0635
+     },
+     {
+      "t": "AIG",
+      "name": "AIG",
+      "valMM": 3512,
+      "pct": 0.0614
+     },
+     {
+      "t": "PYPL",
+      "name": "PayPal",
+      "valMM": 3332.6,
+      "pct": 0.0582
+     },
+     {
+      "t": "PRU",
+      "name": "Prudential Financial",
+      "valMM": 3269.3,
+      "pct": 0.0571
+     },
+     {
+      "t": "NDAQ",
+      "name": "Nasdaq",
+      "valMM": 3240.2,
+      "pct": 0.0566
+     },
+     {
+      "t": "MSCI",
+      "name": "MSCI",
+      "valMM": 3094.3,
+      "pct": 0.0541
+     },
+     {
+      "t": "STT",
+      "name": "State Street",
+      "valMM": 3039.3,
+      "pct": 0.0531
+     },
+     {
+      "t": "ACGL",
+      "name": "Arch Capital",
+      "valMM": 3009.7,
+      "pct": 0.0526
+     },
+     {
+      "t": "COIN",
+      "name": "Coinbase",
+      "valMM": 2962.8,
+      "pct": 0.0518
+     },
+     {
+      "t": "CBOE",
+      "name": "Cboe",
+      "valMM": 2954.4,
+      "pct": 0.0516
+     },
+     {
+      "t": "CFG",
+      "name": "Citizens Financial",
+      "valMM": 2830.1,
+      "pct": 0.0494
+     },
+     {
+      "t": "HBAN",
+      "name": "Huntington Bancshares",
+      "valMM": 2752,
+      "pct": 0.0481
+     },
+     {
+      "t": "MTB",
+      "name": "M&T Bank",
+      "valMM": 2687.7,
+      "pct": 0.047
+     },
+     {
+      "t": "XYZ",
+      "name": "Block",
+      "valMM": 2550.5,
+      "pct": 0.0446
+     },
+     {
+      "t": "WTW",
+      "name": "Willis Towers Watson",
+      "valMM": 2358.5,
+      "pct": 0.0412
+     },
+     {
+      "t": "RF",
+      "name": "Regions Financial",
+      "valMM": 2147.5,
+      "pct": 0.0375
+     },
+     {
+      "t": "IBKR",
+      "name": "Interactive Brokers",
+      "valMM": 2104.3,
+      "pct": 0.0368
+     },
+     {
+      "t": "SYF",
+      "name": "Synchrony",
+      "valMM": 2073.2,
+      "pct": 0.0362
+     },
+     {
+      "t": "TROW",
+      "name": "T. Rowe Price",
+      "valMM": 2052.5,
+      "pct": 0.0359
+     },
+     {
+      "t": "RJF",
+      "name": "Raymond James",
+      "valMM": 2044.3,
+      "pct": 0.0357
+     },
+     {
+      "t": "NTRS",
+      "name": "Northern Trust",
+      "valMM": 2005.6,
+      "pct": 0.035
+     },
+     {
+      "t": "CINF",
+      "name": "Cincinnati Financial",
+      "valMM": 1984.4,
+      "pct": 0.0347
+     },
+     {
+      "t": "FCNCA",
+      "name": "First Citizens",
+      "valMM": 1892.7,
+      "pct": 0.0331
+     },
+     {
+      "t": "ARES",
+      "name": "Ares Management",
+      "valMM": 1839.1,
+      "pct": 0.0321
+     },
+     {
+      "t": "FNF",
+      "name": "Fidelity National Financial",
+      "valMM": 1837.1,
+      "pct": 0.0321
+     },
+     {
+      "t": "PFG",
+      "name": "Principal Financial",
+      "valMM": 1831.2,
+      "pct": 0.032
+     },
+     {
+      "t": "KEY",
+      "name": "KeyCorp",
+      "valMM": 1778.9,
+      "pct": 0.0311
+     },
+     {
+      "t": "BAP",
+      "name": "Credicorp",
+      "valMM": 1612.9,
+      "pct": 0.0282
+     },
+     {
+      "t": "WRB",
+      "name": "W.R. Berkley",
+      "valMM": 1543,
+      "pct": 0.027
+     },
+     {
+      "t": "CG",
+      "name": "Carlyle",
+      "valMM": 1501.3,
+      "pct": 0.0262
+     },
+     {
+      "t": "LPLA",
+      "name": "LPL Financial",
+      "valMM": 1496.4,
+      "pct": 0.0261
+     },
+     {
+      "t": "L",
+      "name": "Loews",
+      "valMM": 1495.1,
+      "pct": 0.0261
+     },
+     {
+      "t": "BRO",
+      "name": "Brown & Brown",
+      "valMM": 1429.2,
+      "pct": 0.025
+     },
+     {
+      "t": "PNFP",
+      "name": "Pinnacle Financial",
+      "valMM": 1416.4,
+      "pct": 0.0247
+     },
+     {
+      "t": "EWBC",
+      "name": "East West Bancorp",
+      "valMM": 1412.6,
+      "pct": 0.0247
+     },
+     {
+      "t": "RGA",
+      "name": "Reinsurance Group",
+      "valMM": 1363.6,
+      "pct": 0.0238
+     },
+     {
+      "t": "MKL",
+      "name": "Markel",
+      "valMM": 1360.1,
+      "pct": 0.0238
+     },
+     {
+      "t": "UNM",
+      "name": "Unum",
+      "valMM": 1331.5,
+      "pct": 0.0233
+     },
+     {
+      "t": "FHN",
+      "name": "First Horizon",
+      "valMM": 1301,
+      "pct": 0.0227
+     },
+     {
+      "t": "RNR",
+      "name": "RenaissanceRe",
+      "valMM": 1220.6,
+      "pct": 0.0213
+     },
+     {
+      "t": "ALLY",
+      "name": "Ally Financial",
+      "valMM": 1119.4,
+      "pct": 0.0196
+     },
+     {
+      "t": "SOFI",
+      "name": "SoFi",
+      "valMM": 1104.6,
+      "pct": 0.0193
+     },
+     {
+      "t": "EVR",
+      "name": "Evercore",
+      "valMM": 1089.2,
+      "pct": 0.019
+     },
+     {
+      "t": "EG",
+      "name": "Everest Group",
+      "valMM": 1077.8,
+      "pct": 0.0188
+     },
+     {
+      "t": "SF",
+      "name": "Stifel",
+      "valMM": 1070.9,
+      "pct": 0.0187
+     },
+     {
+      "t": "UMBF",
+      "name": "UMB Financial",
+      "valMM": 1054,
+      "pct": 0.0184
+     },
+     {
+      "t": "ORI",
+      "name": "Old Republic",
+      "valMM": 1049.8,
+      "pct": 0.0183
+     },
+     {
+      "t": "WBS",
+      "name": "Webster Financial",
+      "valMM": 1036.9,
+      "pct": 0.0181
+     },
+     {
+      "t": "EQH",
+      "name": "Equitable Holdings",
+      "valMM": 1013.9,
+      "pct": 0.0177
+     },
+     {
+      "t": "ONB",
+      "name": "Old National",
+      "valMM": 990,
+      "pct": 0.0173
+     },
+     {
+      "t": "CFR",
+      "name": "Cullen/Frost",
+      "valMM": 970.5,
+      "pct": 0.017
+     },
+     {
+      "t": "RKT",
+      "name": "Rocket Companies",
+      "valMM": 948.9,
+      "pct": 0.0166
+     },
+     {
+      "t": "IVZ",
+      "name": "Invesco",
+      "valMM": 941.2,
+      "pct": 0.0164
+     },
+     {
+      "t": "FCFS",
+      "name": "FirstCash",
+      "valMM": 891.2,
+      "pct": 0.0156
+     },
+     {
+      "t": "SNEX",
+      "name": "StoneX",
+      "valMM": 888.2,
+      "pct": 0.0155
+     },
+     {
+      "t": "XP",
+      "name": "XP",
+      "valMM": 885.6,
+      "pct": 0.0155
+     },
+     {
+      "t": "SSB",
+      "name": "SouthState",
+      "valMM": 876.4,
+      "pct": 0.0153
+     },
+     {
+      "t": "WTFC",
+      "name": "Wintrust",
+      "valMM": 874.8,
+      "pct": 0.0153
+     },
+     {
+      "t": "AFG",
+      "name": "American Financial",
+      "valMM": 872.9,
+      "pct": 0.0153
+     },
+     {
+      "t": "AFRM",
+      "name": "Affirm",
+      "valMM": 872.1,
+      "pct": 0.0152
+     },
+     {
+      "t": "VLY",
+      "name": "Valley National",
+      "valMM": 867.7,
+      "pct": 0.0152
+     },
+     {
+      "t": "AIZ",
+      "name": "Assurant",
+      "valMM": 859.5,
+      "pct": 0.015
+     },
+     {
+      "t": "UBSI",
+      "name": "United Bankshares",
+      "valMM": 835.3,
+      "pct": 0.0146
+     },
+     {
+      "t": "ZION",
+      "name": "Zions Bancorporation",
+      "valMM": 807.9,
+      "pct": 0.0141
+     },
+     {
+      "t": "TW",
+      "name": "Tradeweb",
+      "valMM": 803.5,
+      "pct": 0.014
+     },
+     {
+      "t": "PIPR",
+      "name": "Piper Sandler",
+      "valMM": 798.3,
+      "pct": 0.0139
+     },
+     {
+      "t": "AMG",
+      "name": "Affiliated Managers",
+      "valMM": 793.5,
+      "pct": 0.0139
+     },
+     {
+      "t": "SEIC",
+      "name": "SEI Investments",
+      "valMM": 793.4,
+      "pct": 0.0139
+     },
+     {
+      "t": "WAL",
+      "name": "Western Alliance",
+      "valMM": 777.8,
+      "pct": 0.0136
+     },
+     {
+      "t": "GL",
+      "name": "Globe Life",
+      "valMM": 771.4,
+      "pct": 0.0135
+     },
+     {
+      "t": "ABCB",
+      "name": "Ameris Bancorp",
+      "valMM": 765.7,
+      "pct": 0.0134
+     },
+     {
+      "t": "HLI",
+      "name": "Houlihan Lokey",
+      "valMM": 758.4,
+      "pct": 0.0133
+     },
+     {
+      "t": "JHG",
+      "name": "Janus Henderson",
+      "valMM": 758.4,
+      "pct": 0.0133
+     },
+     {
+      "t": "PRI",
+      "name": "Primerica",
+      "valMM": 750.1,
+      "pct": 0.0131
+     },
+     {
+      "t": "FNB",
+      "name": "F.N.B.",
+      "valMM": 745.4,
+      "pct": 0.013
+     },
+     {
+      "t": "KNSL",
+      "name": "Kinsale Capital",
+      "valMM": 742.9,
+      "pct": 0.013
+     },
+     {
+      "t": "COLB",
+      "name": "Columbia Banking",
+      "valMM": 742.4,
+      "pct": 0.013
+     },
+     {
+      "t": "HASI",
+      "name": "HA Sustainable Infra",
+      "valMM": 739,
+      "pct": 0.0129
+     },
+     {
+      "t": "AUB",
+      "name": "Atlantic Union",
+      "valMM": 734.7,
+      "pct": 0.0128
+     },
+     {
+      "t": "JXN",
+      "name": "Jackson Financial",
+      "valMM": 729.5,
+      "pct": 0.0127
+     },
+     {
+      "t": "JEF",
+      "name": "Jefferies",
+      "valMM": 724.5,
+      "pct": 0.0127
+     },
+     {
+      "t": "GBCI",
+      "name": "Glacier Bancorp",
+      "valMM": 715.6,
+      "pct": 0.0125
+     },
+     {
+      "t": "AX",
+      "name": "Axos Financial",
+      "valMM": 708.1,
+      "pct": 0.0124
+     },
+     {
+      "t": "ESNT",
+      "name": "Essent Group",
+      "valMM": 698.7,
+      "pct": 0.0122
+     },
+     {
+      "t": "BEN",
+      "name": "Franklin Resources",
+      "valMM": 679.5,
+      "pct": 0.0119
+     },
+     {
+      "t": "MKTX",
+      "name": "MarketAxess",
+      "valMM": 672.3,
+      "pct": 0.0117
+     },
+     {
+      "t": "HWC",
+      "name": "Hancock Whitney",
+      "valMM": 660.4,
+      "pct": 0.0115
+     },
+     {
+      "t": "LNC",
+      "name": "Lincoln National",
+      "valMM": 656.7,
+      "pct": 0.0115
+     },
+     {
+      "t": "HOMB",
+      "name": "Home BancShares",
+      "valMM": 642.9,
+      "pct": 0.0112
+     },
+     {
+      "t": "VOYA",
+      "name": "Voya",
+      "valMM": 641.7,
+      "pct": 0.0112
+     },
+     {
+      "t": "THG",
+      "name": "Hanover Insurance",
+      "valMM": 638.1,
+      "pct": 0.0111
+     },
+     {
+      "t": "CBSH",
+      "name": "Commerce Bancshares",
+      "valMM": 636.4,
+      "pct": 0.0111
+     },
+     {
+      "t": "PB",
+      "name": "Prosperity Bancshares",
+      "valMM": 629.3,
+      "pct": 0.011
+     },
+     {
+      "t": "RDN",
+      "name": "Radian",
+      "valMM": 626.7,
+      "pct": 0.0109
+     },
+     {
+      "t": "FDS",
+      "name": "FactSet",
+      "valMM": 613.2,
+      "pct": 0.0107
+     },
+     {
+      "t": "MTG",
+      "name": "MGIC",
+      "valMM": 607.5,
+      "pct": 0.0106
+     },
+     {
+      "t": "ASB",
+      "name": "Associated Banc-Corp",
+      "valMM": 579.8,
+      "pct": 0.0101
+     },
+     {
+      "t": "SIGI",
+      "name": "Selective Insurance",
+      "valMM": 565.4,
+      "pct": 0.0099
+     },
+     {
+      "t": "STEP",
+      "name": "StepStone",
+      "valMM": 564.4,
+      "pct": 0.0099
+     },
+     {
+      "t": "UCB",
+      "name": "United Community Banks",
+      "valMM": 562.5,
+      "pct": 0.0098
+     },
+     {
+      "t": "FAF",
+      "name": "First American",
+      "valMM": 556.2,
+      "pct": 0.0097
+     },
+     {
+      "t": "ENVA",
+      "name": "Enova",
+      "valMM": 551.5,
+      "pct": 0.0096
+     },
+     {
+      "t": "BPOP",
+      "name": "Popular",
+      "valMM": 547.5,
+      "pct": 0.0096
+     },
+     {
+      "t": "SFBS",
+      "name": "ServisFirst",
+      "valMM": 543.6,
+      "pct": 0.0095
+     },
+     {
+      "t": "FLG",
+      "name": "Flagstar",
+      "valMM": 541.3,
+      "pct": 0.0095
+     },
+     {
+      "t": "INDB",
+      "name": "Independent Bank",
+      "valMM": 537.2,
+      "pct": 0.0094
+     },
+     {
+      "t": "FULT",
+      "name": "Fulton Financial",
+      "valMM": 536.6,
+      "pct": 0.0094
+     },
+     {
+      "t": "CNO",
+      "name": "CNO Financial",
+      "valMM": 536,
+      "pct": 0.0094
+     },
+     {
+      "t": "OMF",
+      "name": "OneMain",
+      "valMM": 535.5,
+      "pct": 0.0094
+     },
+     {
+      "t": "BGC",
+      "name": "BGC Group",
+      "valMM": 534,
+      "pct": 0.0093
+     },
+     {
+      "t": "PLMR",
+      "name": "Palomar",
+      "valMM": 524,
+      "pct": 0.0092
+     },
+     {
+      "t": "TCBI",
+      "name": "Texas Capital",
+      "valMM": 517.3,
+      "pct": 0.009
+     },
+     {
+      "t": "PJT",
+      "name": "PJT Partners",
+      "valMM": 516,
+      "pct": 0.009
+     },
+     {
+      "t": "FFIN",
+      "name": "First Financial Bankshares",
+      "valMM": 503.8,
+      "pct": 0.0088
+     },
+     {
+      "t": "OZK",
+      "name": "Bank OZK",
+      "valMM": 501.9,
+      "pct": 0.0088
+     },
+     {
+      "t": "MC",
+      "name": "Moelis",
+      "valMM": 501.7,
+      "pct": 0.0088
+     },
+     {
+      "t": "WSFS",
+      "name": "WSFS Financial",
+      "valMM": 500.8,
+      "pct": 0.0087
+     },
+     {
+      "t": "RNST",
+      "name": "Renasant",
+      "valMM": 492.3,
+      "pct": 0.0086
+     },
+     {
+      "t": "BKU",
+      "name": "BankUnited",
+      "valMM": 491.6,
+      "pct": 0.0086
+     },
+     {
+      "t": "FBP",
+      "name": "First BanCorp",
+      "valMM": 489,
+      "pct": 0.0085
+     },
+     {
+      "t": "CATY",
+      "name": "Cathay General",
+      "valMM": 485.9,
+      "pct": 0.0085
+     },
+     {
+      "t": "CRCL",
+      "name": "Circle",
+      "valMM": 482.7,
+      "pct": 0.0084
+     }
+    ]
    },
    {
     "name": "Промышленность",
-    "pct": 7.5
+    "pct": 9.55,
+    "valMM": 546410.4,
+    "count": 195,
+    "rows": [
+     {
+      "t": "CAT",
+      "name": "Caterpillar",
+      "valMM": 26344.7,
+      "pct": 0.4603
+     },
+     {
+      "t": "GE",
+      "name": "GE Aerospace",
+      "valMM": 25760.4,
+      "pct": 0.4501
+     },
+     {
+      "t": "RTX",
+      "name": "RTX",
+      "valMM": 21035.9,
+      "pct": 0.3675
+     },
+     {
+      "t": "GEV",
+      "name": "GE Vernova",
+      "valMM": 18238.6,
+      "pct": 0.3187
+     },
+     {
+      "t": "BA",
+      "name": "Boeing",
+      "valMM": 12145.9,
+      "pct": 0.2122
+     },
+     {
+      "t": "UNP",
+      "name": "Union Pacific",
+      "valMM": 11592,
+      "pct": 0.2025
+     },
+     {
+      "t": "HWM",
+      "name": "Howmet Aerospace",
+      "valMM": 11053.6,
+      "pct": 0.1931
+     },
+     {
+      "t": "HON",
+      "name": "Honeywell",
+      "valMM": 11047.4,
+      "pct": 0.193
+     },
+     {
+      "t": "ETN",
+      "name": "Eaton",
+      "valMM": 10924.7,
+      "pct": 0.1909
+     },
+     {
+      "t": "UBER",
+      "name": "Uber",
+      "valMM": 10904.5,
+      "pct": 0.1905
+     },
+     {
+      "t": "LMT",
+      "name": "Lockheed Martin",
+      "valMM": 10777.9,
+      "pct": 0.1883
+     },
+     {
+      "t": "DE",
+      "name": "Deere",
+      "valMM": 10317.3,
+      "pct": 0.1803
+     },
+     {
+      "t": "VRT",
+      "name": "Vertiv",
+      "valMM": 9530.7,
+      "pct": 0.1665
+     },
+     {
+      "t": "TT",
+      "name": "Trane Technologies",
+      "valMM": 9031.2,
+      "pct": 0.1578
+     },
+     {
+      "t": "PH",
+      "name": "Parker-Hannifin",
+      "valMM": 8953.2,
+      "pct": 0.1564
+     },
+     {
+      "t": "PWR",
+      "name": "Quanta Services",
+      "valMM": 7714,
+      "pct": 0.1348
+     },
+     {
+      "t": "NOC",
+      "name": "Northrop Grumman",
+      "valMM": 7424.5,
+      "pct": 0.1297
+     },
+     {
+      "t": "ADP",
+      "name": "ADP",
+      "valMM": 7212.7,
+      "pct": 0.126
+     },
+     {
+      "t": "WM",
+      "name": "Waste Management",
+      "valMM": 6939.4,
+      "pct": 0.1212
+     },
+     {
+      "t": "JCI",
+      "name": "Johnson Controls",
+      "valMM": 6718.1,
+      "pct": 0.1174
+     },
+     {
+      "t": "FDX",
+      "name": "FedEx",
+      "valMM": 6697.5,
+      "pct": 0.117
+     },
+     {
+      "t": "CSX",
+      "name": "CSX",
+      "valMM": 6588.1,
+      "pct": 0.1151
+     },
+     {
+      "t": "GD",
+      "name": "General Dynamics",
+      "valMM": 6384.6,
+      "pct": 0.1115
+     },
+     {
+      "t": "CMI",
+      "name": "Cummins",
+      "valMM": 6367.7,
+      "pct": 0.1113
+     },
+     {
+      "t": "MMM",
+      "name": "3M",
+      "valMM": 6195.8,
+      "pct": 0.1083
+     },
+     {
+      "t": "LHX",
+      "name": "L3Harris",
+      "valMM": 6170.1,
+      "pct": 0.1078
+     },
+     {
+      "t": "ITW",
+      "name": "Illinois Tool Works",
+      "valMM": 6083.9,
+      "pct": 0.1063
+     },
+     {
+      "t": "EMR",
+      "name": "Emerson Electric",
+      "valMM": 5478.1,
+      "pct": 0.0957
+     },
+     {
+      "t": "TDG",
+      "name": "TransDigm",
+      "valMM": 5332.7,
+      "pct": 0.0932
+     },
+     {
+      "t": "GWW",
+      "name": "W.W. Grainger",
+      "valMM": 5063.2,
+      "pct": 0.0885
+     },
+     {
+      "t": "UPS",
+      "name": "UPS",
+      "valMM": 5028.8,
+      "pct": 0.0879
+     },
+     {
+      "t": "FAST",
+      "name": "Fastenal",
+      "valMM": 4860.6,
+      "pct": 0.0849
+     },
+     {
+      "t": "FIX",
+      "name": "Comfort Systems USA",
+      "valMM": 4844.3,
+      "pct": 0.0846
+     },
+     {
+      "t": "CTAS",
+      "name": "Cintas",
+      "valMM": 4561.6,
+      "pct": 0.0797
+     },
+     {
+      "t": "NSC",
+      "name": "Norfolk Southern",
+      "valMM": 4384.2,
+      "pct": 0.0766
+     },
+     {
+      "t": "ROK",
+      "name": "Rockwell Automation",
+      "valMM": 4325.9,
+      "pct": 0.0756
+     },
+     {
+      "t": "PCAR",
+      "name": "Paccar",
+      "valMM": 4247.6,
+      "pct": 0.0742
+     },
+     {
+      "t": "AME",
+      "name": "Ametek",
+      "valMM": 4036,
+      "pct": 0.0705
+     },
+     {
+      "t": "URI",
+      "name": "United Rentals",
+      "valMM": 3733.2,
+      "pct": 0.0652
+     },
+     {
+      "t": "RSG",
+      "name": "Republic Services",
+      "valMM": 3696.9,
+      "pct": 0.0646
+     },
+     {
+      "t": "WAB",
+      "name": "Wabtec",
+      "valMM": 3433.5,
+      "pct": 0.06
+     },
+     {
+      "t": "BE",
+      "name": "Bloom Energy",
+      "valMM": 3395.5,
+      "pct": 0.0593
+     },
+     {
+      "t": "AXON",
+      "name": "Axon Enterprise",
+      "valMM": 3392.9,
+      "pct": 0.0593
+     },
+     {
+      "t": "CARR",
+      "name": "Carrier",
+      "valMM": 3259.1,
+      "pct": 0.0569
+     },
+     {
+      "t": "CW",
+      "name": "Curtiss-Wright",
+      "valMM": 3077.1,
+      "pct": 0.0538
+     },
+     {
+      "t": "XYL",
+      "name": "Xylem",
+      "valMM": 3065.6,
+      "pct": 0.0536
+     },
+     {
+      "t": "EME",
+      "name": "EMCOR",
+      "valMM": 3033.1,
+      "pct": 0.053
+     },
+     {
+      "t": "DAL",
+      "name": "Delta Air Lines",
+      "valMM": 3027.8,
+      "pct": 0.0529
+     },
+     {
+      "t": "",
+      "name": "NextPower",
+      "valMM": 2998.4,
+      "pct": 0.0524
+     },
+     {
+      "t": "ODFL",
+      "name": "Old Dominion",
+      "valMM": 2910.3,
+      "pct": 0.0508
+     },
+     {
+      "t": "FERG",
+      "name": "Ferguson",
+      "valMM": 2716.7,
+      "pct": 0.0475
+     },
+     {
+      "t": "PAYX",
+      "name": "Paychex",
+      "valMM": 2617.5,
+      "pct": 0.0457
+     },
+     {
+      "t": "WCC",
+      "name": "Wesco",
+      "valMM": 2569.5,
+      "pct": 0.0449
+     },
+     {
+      "t": "BWXT",
+      "name": "BWX Technologies",
+      "valMM": 2553.6,
+      "pct": 0.0446
+     },
+     {
+      "t": "OTIS",
+      "name": "Otis",
+      "valMM": 2483.6,
+      "pct": 0.0434
+     },
+     {
+      "t": "TDY",
+      "name": "Teledyne",
+      "valMM": 2455.8,
+      "pct": 0.0429
+     },
+     {
+      "t": "RKLB",
+      "name": "Rocket Lab",
+      "valMM": 2439.5,
+      "pct": 0.0426
+     },
+     {
+      "t": "HEI",
+      "name": "Heico",
+      "valMM": 2430.4,
+      "pct": 0.0425
+     },
+     {
+      "t": "XPO",
+      "name": "XPO",
+      "valMM": 2367.1,
+      "pct": 0.0414
+     },
+     {
+      "t": "MTZ",
+      "name": "MasTec",
+      "valMM": 2351.8,
+      "pct": 0.0411
+     },
+     {
+      "t": "IR",
+      "name": "Ingersoll Rand",
+      "valMM": 2347.3,
+      "pct": 0.041
+     },
+     {
+      "t": "WWD",
+      "name": "Woodward",
+      "valMM": 2260.1,
+      "pct": 0.0395
+     },
+     {
+      "t": "VRSK",
+      "name": "Verisk",
+      "valMM": 2253.8,
+      "pct": 0.0394
+     },
+     {
+      "t": "KTOS",
+      "name": "Kratos Defense",
+      "valMM": 2232.6,
+      "pct": 0.039
+     },
+     {
+      "t": "VLTO",
+      "name": "Veralto",
+      "valMM": 2204.3,
+      "pct": 0.0385
+     },
+     {
+      "t": "HUBB",
+      "name": "Hubbell",
+      "valMM": 2177.6,
+      "pct": 0.038
+     },
+     {
+      "t": "",
+      "name": "Everpure",
+      "valMM": 2141.3,
+      "pct": 0.0374
+     },
+     {
+      "t": "CPRT",
+      "name": "Copart",
+      "valMM": 2102.5,
+      "pct": 0.0367
+     },
+     {
+      "t": "DOV",
+      "name": "Dover",
+      "valMM": 2089.4,
+      "pct": 0.0365
+     },
+     {
+      "t": "UAL",
+      "name": "United Airlines",
+      "valMM": 1999.2,
+      "pct": 0.0349
+     },
+     {
+      "t": "FTAI",
+      "name": "FTAI Aviation",
+      "valMM": 1990.4,
+      "pct": 0.0348
+     },
+     {
+      "t": "NVT",
+      "name": "nVent",
+      "valMM": 1946.9,
+      "pct": 0.034
+     },
+     {
+      "t": "EXPD",
+      "name": "Expeditors",
+      "valMM": 1777.1,
+      "pct": 0.031
+     },
+     {
+      "t": "AER",
+      "name": "AerCap",
+      "valMM": 1774.9,
+      "pct": 0.031
+     },
+     {
+      "t": "FTV",
+      "name": "Fortive",
+      "valMM": 1748.3,
+      "pct": 0.0305
+     },
+     {
+      "t": "EFX",
+      "name": "Equifax",
+      "valMM": 1703.8,
+      "pct": 0.0298
+     },
+     {
+      "t": "CHRW",
+      "name": "C.H. Robinson",
+      "valMM": 1659.2,
+      "pct": 0.029
+     },
+     {
+      "t": "STRL",
+      "name": "Sterling Infrastructure",
+      "valMM": 1622.7,
+      "pct": 0.0284
+     },
+     {
+      "t": "RBC",
+      "name": "RBC Bearings",
+      "valMM": 1609.3,
+      "pct": 0.0281
+     },
+     {
+      "t": "ITT",
+      "name": "ITT",
+      "valMM": 1606.1,
+      "pct": 0.0281
+     },
+     {
+      "t": "GGG",
+      "name": "Graco",
+      "valMM": 1557,
+      "pct": 0.0272
+     },
+     {
+      "t": "ROL",
+      "name": "Rollins",
+      "valMM": 1528.6,
+      "pct": 0.0267
+     },
+     {
+      "t": "GTLS",
+      "name": "Chart Industries",
+      "valMM": 1513.4,
+      "pct": 0.0264
+     },
+     {
+      "t": "SNA",
+      "name": "Snap-on",
+      "valMM": 1509.3,
+      "pct": 0.0264
+     },
+     {
+      "t": "WSO",
+      "name": "Watsco",
+      "valMM": 1487.9,
+      "pct": 0.026
+     },
+     {
+      "t": "RBA",
+      "name": "RB Global",
+      "valMM": 1478.9,
+      "pct": 0.0258
+     },
+     {
+      "t": "LDOS",
+      "name": "Leidos",
+      "valMM": 1477,
+      "pct": 0.0258
+     },
+     {
+      "t": "CSL",
+      "name": "Carlisle",
+      "valMM": 1415.5,
+      "pct": 0.0247
+     },
+     {
+      "t": "APG",
+      "name": "APi Group",
+      "valMM": 1392,
+      "pct": 0.0243
+     },
+     {
+      "t": "LII",
+      "name": "Lennox",
+      "valMM": 1379.2,
+      "pct": 0.0241
+     },
+     {
+      "t": "CLH",
+      "name": "Clean Harbors",
+      "valMM": 1377,
+      "pct": 0.0241
+     },
+     {
+      "t": "TXT",
+      "name": "Textron",
+      "valMM": 1371,
+      "pct": 0.024
+     },
+     {
+      "t": "ACM",
+      "name": "AECOM",
+      "valMM": 1336.8,
+      "pct": 0.0234
+     },
+     {
+      "t": "J",
+      "name": "Jacobs",
+      "valMM": 1335,
+      "pct": 0.0233
+     },
+     {
+      "t": "PNR",
+      "name": "Pentair",
+      "valMM": 1312.4,
+      "pct": 0.0229
+     },
+     {
+      "t": "DY",
+      "name": "Dycom",
+      "valMM": 1309.1,
+      "pct": 0.0229
+     },
+     {
+      "t": "TRU",
+      "name": "TransUnion",
+      "valMM": 1301.9,
+      "pct": 0.0227
+     },
+     {
+      "t": "LECO",
+      "name": "Lincoln Electric",
+      "valMM": 1300.7,
+      "pct": 0.0227
+     },
+     {
+      "t": "JBHT",
+      "name": "J.B. Hunt",
+      "valMM": 1282.9,
+      "pct": 0.0224
+     },
+     {
+      "t": "SPXC",
+      "name": "SPX Technologies",
+      "valMM": 1245.9,
+      "pct": 0.0218
+     },
+     {
+      "t": "CNH",
+      "name": "CNH Industrial",
+      "valMM": 1243.7,
+      "pct": 0.0217
+     },
+     {
+      "t": "HII",
+      "name": "Huntington Ingalls",
+      "valMM": 1229.4,
+      "pct": 0.0215
+     },
+     {
+      "t": "PRIM",
+      "name": "Primoris",
+      "valMM": 1193,
+      "pct": 0.0208
+     },
+     {
+      "t": "MOG.A",
+      "name": "Moog",
+      "valMM": 1170.5,
+      "pct": 0.0205
+     },
+     {
+      "t": "AGX",
+      "name": "Argan",
+      "valMM": 1156.5,
+      "pct": 0.0202
+     },
+     {
+      "t": "CACI",
+      "name": "CACI",
+      "valMM": 1135.7,
+      "pct": 0.0198
+     },
+     {
+      "t": "ESE",
+      "name": "ESCO Technologies",
+      "valMM": 1119,
+      "pct": 0.0196
+     },
+     {
+      "t": "RRX",
+      "name": "Regal Rexnord",
+      "valMM": 1117.6,
+      "pct": 0.0195
+     },
+     {
+      "t": "OSK",
+      "name": "Oshkosh",
+      "valMM": 1113.1,
+      "pct": 0.0194
+     },
+     {
+      "t": "ZWS",
+      "name": "Zurn Elkay",
+      "valMM": 1077.3,
+      "pct": 0.0188
+     },
+     {
+      "t": "IEX",
+      "name": "IDEX",
+      "valMM": 1075.9,
+      "pct": 0.0188
+     },
+     {
+      "t": "LUV",
+      "name": "Southwest Airlines",
+      "valMM": 1073.5,
+      "pct": 0.0188
+     },
+     {
+      "t": "WTS",
+      "name": "Watts Water",
+      "valMM": 1066.4,
+      "pct": 0.0186
+     },
+     {
+      "t": "NDSN",
+      "name": "Nordson",
+      "valMM": 1051,
+      "pct": 0.0184
+     },
+     {
+      "t": "HXL",
+      "name": "Hexcel",
+      "valMM": 1042.1,
+      "pct": 0.0182
+     },
+     {
+      "t": "AIT",
+      "name": "Applied Industrial",
+      "valMM": 1018.4,
+      "pct": 0.0178
+     },
+     {
+      "t": "WMS",
+      "name": "Advanced Drainage",
+      "valMM": 1017.9,
+      "pct": 0.0178
+     },
+     {
+      "t": "WCN",
+      "name": "Waste Connections",
+      "valMM": 1005.8,
+      "pct": 0.0176
+     },
+     {
+      "t": "OC",
+      "name": "Owens Corning",
+      "valMM": 996.8,
+      "pct": 0.0174
+     },
+     {
+      "t": "FLR",
+      "name": "Fluor",
+      "valMM": 993.9,
+      "pct": 0.0174
+     },
+     {
+      "t": "JBTM",
+      "name": "JBT Marel",
+      "valMM": 986.7,
+      "pct": 0.0172
+     },
+     {
+      "t": "FSS",
+      "name": "Federal Signal",
+      "valMM": 980.3,
+      "pct": 0.0171
+     },
+     {
+      "t": "BAH",
+      "name": "Booz Allen",
+      "valMM": 974.2,
+      "pct": 0.017
+     },
+     {
+      "t": "FLS",
+      "name": "Flowserve",
+      "valMM": 968.3,
+      "pct": 0.0169
+     },
+     {
+      "t": "ALLE",
+      "name": "Allegion",
+      "valMM": 961.5,
+      "pct": 0.0168
+     },
+     {
+      "t": "DCI",
+      "name": "Donaldson",
+      "valMM": 952,
+      "pct": 0.0166
+     },
+     {
+      "t": "CNM",
+      "name": "Core & Main",
+      "valMM": 948.8,
+      "pct": 0.0166
+     },
+     {
+      "t": "MAS",
+      "name": "Masco",
+      "valMM": 942.9,
+      "pct": 0.0165
+     },
+     {
+      "t": "AVAV",
+      "name": "AeroVironment",
+      "valMM": 907.9,
+      "pct": 0.0159
+     },
+     {
+      "t": "ENS",
+      "name": "EnerSys",
+      "valMM": 881.8,
+      "pct": 0.0154
+     },
+     {
+      "t": "VSEC",
+      "name": "VSE",
+      "valMM": 862.7,
+      "pct": 0.0151
+     },
+     {
+      "t": "KNX",
+      "name": "Knight-Swift",
+      "valMM": 859.8,
+      "pct": 0.015
+     },
+     {
+      "t": "AYI",
+      "name": "Acuity",
+      "valMM": 858.3,
+      "pct": 0.015
+     },
+     {
+      "t": "AWI",
+      "name": "Armstrong World",
+      "valMM": 858,
+      "pct": 0.015
+     },
+     {
+      "t": "SAIA",
+      "name": "Saia",
+      "valMM": 839.2,
+      "pct": 0.0147
+     },
+     {
+      "t": "TTC",
+      "name": "Toro",
+      "valMM": 833.3,
+      "pct": 0.0146
+     },
+     {
+      "t": "AL",
+      "name": "Air Lease",
+      "valMM": 831,
+      "pct": 0.0145
+     },
+     {
+      "t": "TEX",
+      "name": "Terex",
+      "valMM": 829.4,
+      "pct": 0.0145
+     },
+     {
+      "t": "R",
+      "name": "Ryder",
+      "valMM": 826.9,
+      "pct": 0.0144
+     },
+     {
+      "t": "CR",
+      "name": "Crane",
+      "valMM": 822.7,
+      "pct": 0.0144
+     },
+     {
+      "t": "MATX",
+      "name": "Matson",
+      "valMM": 821.8,
+      "pct": 0.0144
+     },
+     {
+      "t": "TTEK",
+      "name": "Tetra Tech",
+      "valMM": 816.5,
+      "pct": 0.0143
+     },
+     {
+      "t": "GVA",
+      "name": "Granite Construction",
+      "valMM": 814.6,
+      "pct": 0.0142
+     },
+     {
+      "t": "ACA",
+      "name": "Arcosa",
+      "valMM": 808.7,
+      "pct": 0.0141
+     },
+     {
+      "t": "NPO",
+      "name": "Enpro",
+      "valMM": 789.2,
+      "pct": 0.0138
+     },
+     {
+      "t": "GATX",
+      "name": "GATX",
+      "valMM": 767.2,
+      "pct": 0.0134
+     },
+     {
+      "t": "POWL",
+      "name": "Powell Industries",
+      "valMM": 760.8,
+      "pct": 0.0133
+     },
+     {
+      "t": "VMI",
+      "name": "Valmont",
+      "valMM": 755.9,
+      "pct": 0.0132
+     },
+     {
+      "t": "BMI",
+      "name": "Badger Meter",
+      "valMM": 754.4,
+      "pct": 0.0132
+     },
+     {
+      "t": "FBIN",
+      "name": "Fortune Brands",
+      "valMM": 753.3,
+      "pct": 0.0132
+     },
+     {
+      "t": "GNRC",
+      "name": "Generac",
+      "valMM": 742.3,
+      "pct": 0.013
+     },
+     {
+      "t": "SWK",
+      "name": "Stanley Black & Decker",
+      "valMM": 733.6,
+      "pct": 0.0128
+     },
+     {
+      "t": "BLDR",
+      "name": "Builders FirstSource",
+      "valMM": 721.3,
+      "pct": 0.0126
+     },
+     {
+      "t": "ECG",
+      "name": "Everus Construction",
+      "valMM": 719.1,
+      "pct": 0.0126
+     },
+     {
+      "t": "CWST",
+      "name": "Casella Waste",
+      "valMM": 717.8,
+      "pct": 0.0125
+     },
+     {
+      "t": "PL",
+      "name": "Planet Labs",
+      "valMM": 711.8,
+      "pct": 0.0124
+     },
+     {
+      "t": "UFPI",
+      "name": "UFP Industries",
+      "valMM": 709.4,
+      "pct": 0.0124
+     },
+     {
+      "t": "MIR",
+      "name": "Mirion",
+      "valMM": 703.8,
+      "pct": 0.0123
+     },
+     {
+      "t": "KEX",
+      "name": "Kirby",
+      "valMM": 701.2,
+      "pct": 0.0123
+     },
+     {
+      "t": "SSD",
+      "name": "Simpson Manufacturing",
+      "valMM": 691.9,
+      "pct": 0.0121
+     },
+     {
+      "t": "MWA",
+      "name": "Mueller Water",
+      "valMM": 691,
+      "pct": 0.0121
+     },
+     {
+      "t": "REZI",
+      "name": "Resideo",
+      "valMM": 690,
+      "pct": 0.0121
+     },
+     {
+      "t": "MYRG",
+      "name": "MYR Group",
+      "valMM": 681.3,
+      "pct": 0.0119
+     },
+     {
+      "t": "AIR",
+      "name": "AAR",
+      "valMM": 675.8,
+      "pct": 0.0118
+     },
+     {
+      "t": "AGCO",
+      "name": "AGCO",
+      "valMM": 672.6,
+      "pct": 0.0118
+     },
+     {
+      "t": "GTES",
+      "name": "Gates Industrial",
+      "valMM": 672.2,
+      "pct": 0.0117
+     },
+     {
+      "t": "LYFT",
+      "name": "Lyft",
+      "valMM": 659.4,
+      "pct": 0.0115
+     },
+     {
+      "t": "MRCY",
+      "name": "Mercury Systems",
+      "valMM": 650.4,
+      "pct": 0.0114
+     },
+     {
+      "t": "AAL",
+      "name": "American Airlines",
+      "valMM": 626.1,
+      "pct": 0.0109
+     },
+     {
+      "t": "CSWI",
+      "name": "CSW Industrials",
+      "valMM": 622.9,
+      "pct": 0.0109
+     },
+     {
+      "t": "SKYW",
+      "name": "SkyWest",
+      "valMM": 618.4,
+      "pct": 0.0108
+     },
+     {
+      "t": "FELE",
+      "name": "Franklin Electric",
+      "valMM": 595.7,
+      "pct": 0.0104
+     },
+     {
+      "t": "TKR",
+      "name": "Timken",
+      "valMM": 583.1,
+      "pct": 0.0102
+     },
+     {
+      "t": "EXLS",
+      "name": "ExlService",
+      "valMM": 582.2,
+      "pct": 0.0102
+     },
+     {
+      "t": "MIDD",
+      "name": "Middleby",
+      "valMM": 563.8,
+      "pct": 0.0098
+     },
+     {
+      "t": "RAL",
+      "name": "Ralliant",
+      "valMM": 563.3,
+      "pct": 0.0098
+     },
+     {
+      "t": "SARO",
+      "name": "StandardAero",
+      "valMM": 562.8,
+      "pct": 0.0098
+     },
+     {
+      "t": "G",
+      "name": "Genpact",
+      "valMM": 560,
+      "pct": 0.0098
+     },
+     {
+      "t": "AZZ",
+      "name": "AZZ",
+      "valMM": 553.8,
+      "pct": 0.0097
+     },
+     {
+      "t": "BCO",
+      "name": "Brink's",
+      "valMM": 552.7,
+      "pct": 0.0097
+     },
+     {
+      "t": "AAON",
+      "name": "AAON",
+      "valMM": 542.9,
+      "pct": 0.0095
+     },
+     {
+      "t": "UNF",
+      "name": "UniFirst",
+      "valMM": 537.6,
+      "pct": 0.0094
+     },
+     {
+      "t": "GRAB",
+      "name": "Grab",
+      "valMM": 537.4,
+      "pct": 0.0094
+     },
+     {
+      "t": "GXO",
+      "name": "GXO Logistics",
+      "valMM": 535.4,
+      "pct": 0.0094
+     },
+     {
+      "t": "QXO",
+      "name": "QXO",
+      "valMM": 534.7,
+      "pct": 0.0093
+     },
+     {
+      "t": "MSA",
+      "name": "MSA Safety",
+      "valMM": 533.1,
+      "pct": 0.0093
+     },
+     {
+      "t": "PAC",
+      "name": "Grupo Aeroportuario del Pacifico",
+      "valMM": 518.8,
+      "pct": 0.0091
+     },
+     {
+      "t": "LSTR",
+      "name": "Landstar",
+      "valMM": 518.3,
+      "pct": 0.0091
+     },
+     {
+      "t": "KAI",
+      "name": "Kadant",
+      "valMM": 507.7,
+      "pct": 0.0089
+     },
+     {
+      "t": "MSM",
+      "name": "MSC Industrial",
+      "valMM": 501.3,
+      "pct": 0.0088
+     },
+     {
+      "t": "ESAB",
+      "name": "ESAB",
+      "valMM": 501,
+      "pct": 0.0088
+     },
+     {
+      "t": "KBR",
+      "name": "KBR",
+      "valMM": 497.7,
+      "pct": 0.0087
+     },
+     {
+      "t": "KFY",
+      "name": "Korn Ferry",
+      "valMM": 492.2,
+      "pct": 0.0086
+     },
+     {
+      "t": "FCN",
+      "name": "FTI Consulting",
+      "valMM": 487.3,
+      "pct": 0.0085
+     },
+     {
+      "t": "AOS",
+      "name": "A.O. Smith",
+      "valMM": 485.1,
+      "pct": 0.0085
+     }
+    ]
+   },
+   {
+    "name": "Здравоохранение",
+    "pct": 9.24,
+    "valMM": 528799,
+    "count": 120,
+    "rows": [
+     {
+      "t": "LLY",
+      "name": "Eli Lilly",
+      "valMM": 61159,
+      "pct": 1.0686
+     },
+     {
+      "t": "JNJ",
+      "name": "Johnson & Johnson",
+      "valMM": 52160,
+      "pct": 0.9113
+     },
+     {
+      "t": "ABBV",
+      "name": "AbbVie",
+      "valMM": 32786.5,
+      "pct": 0.5728
+     },
+     {
+      "t": "MRK",
+      "name": "Merck",
+      "valMM": 27176.7,
+      "pct": 0.4748
+     },
+     {
+      "t": "UNH",
+      "name": "UnitedHealth",
+      "valMM": 19879.6,
+      "pct": 0.3473
+     },
+     {
+      "t": "GILD",
+      "name": "Gilead Sciences",
+      "valMM": 16586.6,
+      "pct": 0.2898
+     },
+     {
+      "t": "AMGN",
+      "name": "Amgen",
+      "valMM": 16572.3,
+      "pct": 0.2895
+     },
+     {
+      "t": "ABT",
+      "name": "Abbott",
+      "valMM": 14968.7,
+      "pct": 0.2615
+     },
+     {
+      "t": "TMO",
+      "name": "Thermo Fisher",
+      "valMM": 14967.4,
+      "pct": 0.2615
+     },
+     {
+      "t": "PFE",
+      "name": "Pfizer",
+      "valMM": 13991.1,
+      "pct": 0.2444
+     },
+     {
+      "t": "ISRG",
+      "name": "Intuitive Surgical",
+      "valMM": 13875.5,
+      "pct": 0.2424
+     },
+     {
+      "t": "VRTX",
+      "name": "Vertex Pharmaceuticals",
+      "valMM": 10703.3,
+      "pct": 0.187
+     },
+     {
+      "t": "BMY",
+      "name": "Bristol-Myers Squibb",
+      "valMM": 10412.6,
+      "pct": 0.1819
+     },
+     {
+      "t": "MCK",
+      "name": "McKesson",
+      "valMM": 9891.8,
+      "pct": 0.1728
+     },
+     {
+      "t": "MDT",
+      "name": "Medtronic",
+      "valMM": 9807.3,
+      "pct": 0.1713
+     },
+     {
+      "t": "DHR",
+      "name": "Danaher",
+      "valMM": 9791.1,
+      "pct": 0.1711
+     },
+     {
+      "t": "SYK",
+      "name": "Stryker",
+      "valMM": 9069.8,
+      "pct": 0.1585
+     },
+     {
+      "t": "CVS",
+      "name": "CVS Health",
+      "valMM": 9043.6,
+      "pct": 0.158
+     },
+     {
+      "t": "BSX",
+      "name": "Boston Scientific",
+      "valMM": 8271.8,
+      "pct": 0.1445
+     },
+     {
+      "t": "REGN",
+      "name": "Regeneron",
+      "valMM": 6913.4,
+      "pct": 0.1208
+     },
+     {
+      "t": "HCA",
+      "name": "HCA Healthcare",
+      "valMM": 6324,
+      "pct": 0.1105
+     },
+     {
+      "t": "COR",
+      "name": "Cencora",
+      "valMM": 6265.1,
+      "pct": 0.1095
+     },
+     {
+      "t": "CI",
+      "name": "Cigna",
+      "valMM": 6028.1,
+      "pct": 0.1053
+     },
+     {
+      "t": "CAH",
+      "name": "Cardinal Health",
+      "valMM": 6021.2,
+      "pct": 0.1052
+     },
+     {
+      "t": "ELV",
+      "name": "Elevance Health",
+      "valMM": 5822,
+      "pct": 0.1017
+     },
+     {
+      "t": "IDXX",
+      "name": "IDEXX Labs",
+      "valMM": 4700.5,
+      "pct": 0.0821
+     },
+     {
+      "t": "EW",
+      "name": "Edwards Lifesciences",
+      "valMM": 4222.5,
+      "pct": 0.0738
+     },
+     {
+      "t": "ZTS",
+      "name": "Zoetis",
+      "valMM": 4206.4,
+      "pct": 0.0735
+     },
+     {
+      "t": "BDX",
+      "name": "Becton Dickinson",
+      "valMM": 4112.1,
+      "pct": 0.0718
+     },
+     {
+      "t": "ALNY",
+      "name": "Alnylam",
+      "valMM": 3477.2,
+      "pct": 0.0608
+     },
+     {
+      "t": "UTHR",
+      "name": "United Therapeutics",
+      "valMM": 3201.9,
+      "pct": 0.0559
+     },
+     {
+      "t": "A",
+      "name": "Agilent",
+      "valMM": 2952.4,
+      "pct": 0.0516
+     },
+     {
+      "t": "BIIB",
+      "name": "Biogen",
+      "valMM": 2928.6,
+      "pct": 0.0512
+     },
+     {
+      "t": "INSM",
+      "name": "Insmed",
+      "valMM": 2727.2,
+      "pct": 0.0476
+     },
+     {
+      "t": "RMD",
+      "name": "ResMed",
+      "valMM": 2714.9,
+      "pct": 0.0474
+     },
+     {
+      "t": "IQV",
+      "name": "IQVIA",
+      "valMM": 2562.8,
+      "pct": 0.0448
+     },
+     {
+      "t": "GEHC",
+      "name": "GE HealthCare",
+      "valMM": 2561.4,
+      "pct": 0.0448
+     },
+     {
+      "t": "DXCM",
+      "name": "DexCom",
+      "valMM": 2552.4,
+      "pct": 0.0446
+     },
+     {
+      "t": "WAT",
+      "name": "Waters",
+      "valMM": 2544.1,
+      "pct": 0.0444
+     },
+     {
+      "t": "ILMN",
+      "name": "Illumina",
+      "valMM": 2344.8,
+      "pct": 0.041
+     },
+     {
+      "t": "MTD",
+      "name": "Mettler-Toledo",
+      "valMM": 2233.6,
+      "pct": 0.039
+     },
+     {
+      "t": "NTRA",
+      "name": "Natera",
+      "valMM": 2135.4,
+      "pct": 0.0373
+     },
+     {
+      "t": "VEEV",
+      "name": "Veeva",
+      "valMM": 2030.4,
+      "pct": 0.0355
+     },
+     {
+      "t": "STE",
+      "name": "Steris",
+      "valMM": 1996.1,
+      "pct": 0.0349
+     },
+     {
+      "t": "TEVA",
+      "name": "Teva",
+      "valMM": 1961.9,
+      "pct": 0.0343
+     },
+     {
+      "t": "DGX",
+      "name": "Quest Diagnostics",
+      "valMM": 1797.6,
+      "pct": 0.0314
+     },
+     {
+      "t": "INCY",
+      "name": "Incyte",
+      "valMM": 1786.2,
+      "pct": 0.0312
+     },
+     {
+      "t": "HUM",
+      "name": "Humana",
+      "valMM": 1768.4,
+      "pct": 0.0309
+     },
+     {
+      "t": "NBIX",
+      "name": "Neurocrine",
+      "valMM": 1763.4,
+      "pct": 0.0308
+     },
+     {
+      "t": "LH",
+      "name": "Labcorp",
+      "valMM": 1719.6,
+      "pct": 0.03
+     },
+     {
+      "t": "WST",
+      "name": "West Pharmaceutical",
+      "valMM": 1713.6,
+      "pct": 0.0299
+     },
+     {
+      "t": "HOLX",
+      "name": "Hologic",
+      "valMM": 1702.3,
+      "pct": 0.0297
+     },
+     {
+      "t": "THC",
+      "name": "Tenet Healthcare",
+      "valMM": 1642.7,
+      "pct": 0.0287
+     },
+     {
+      "t": "MRNA",
+      "name": "Moderna",
+      "valMM": 1505.5,
+      "pct": 0.0263
+     },
+     {
+      "t": "ENSG",
+      "name": "Ensign Group",
+      "valMM": 1484,
+      "pct": 0.0259
+     },
+     {
+      "t": "PEN",
+      "name": "Penumbra",
+      "valMM": 1422,
+      "pct": 0.0248
+     },
+     {
+      "t": "ZBH",
+      "name": "Zimmer Biomet",
+      "valMM": 1387.1,
+      "pct": 0.0242
+     },
+     {
+      "t": "PODD",
+      "name": "Insulet",
+      "valMM": 1337.9,
+      "pct": 0.0234
+     },
+     {
+      "t": "BAX",
+      "name": "Baxter",
+      "valMM": 1333.9,
+      "pct": 0.0233
+     },
+     {
+      "t": "EXEL",
+      "name": "Exelixis",
+      "valMM": 1321.7,
+      "pct": 0.0231
+     },
+     {
+      "t": "CNC",
+      "name": "Centene",
+      "valMM": 1303.8,
+      "pct": 0.0228
+     },
+     {
+      "t": "RPRX",
+      "name": "Royalty Pharma",
+      "valMM": 1242.8,
+      "pct": 0.0217
+     },
+     {
+      "t": "ROIV",
+      "name": "Roivant",
+      "valMM": 1225.8,
+      "pct": 0.0214
+     },
+     {
+      "t": "COO",
+      "name": "Cooper Companies",
+      "valMM": 1188.2,
+      "pct": 0.0208
+     },
+     {
+      "t": "MEDP",
+      "name": "Medpace",
+      "valMM": 1186.3,
+      "pct": 0.0207
+     },
+     {
+      "t": "BMRN",
+      "name": "BioMarin",
+      "valMM": 1168.2,
+      "pct": 0.0204
+     },
+     {
+      "t": "VTRS",
+      "name": "Viatris",
+      "valMM": 1139.7,
+      "pct": 0.0199
+     },
+     {
+      "t": "ELAN",
+      "name": "Elanco",
+      "valMM": 1139.6,
+      "pct": 0.0199
+     },
+     {
+      "t": "ARWR",
+      "name": "Arrowhead",
+      "valMM": 1138.7,
+      "pct": 0.0199
+     },
+     {
+      "t": "BBIO",
+      "name": "BridgeBio",
+      "valMM": 1124.7,
+      "pct": 0.0197
+     },
+     {
+      "t": "GH",
+      "name": "Guardant Health",
+      "valMM": 1107.3,
+      "pct": 0.0193
+     },
+     {
+      "t": "CYTK",
+      "name": "Cytokinetics",
+      "valMM": 1090.7,
+      "pct": 0.0191
+     },
+     {
+      "t": "RVMD",
+      "name": "Revolution Medicines",
+      "valMM": 1090.4,
+      "pct": 0.0191
+     },
+     {
+      "t": "JAZZ",
+      "name": "Jazz Pharmaceuticals",
+      "valMM": 1057.1,
+      "pct": 0.0185
+     },
+     {
+      "t": "EHC",
+      "name": "Encompass Health",
+      "valMM": 1041.7,
+      "pct": 0.0182
+     },
+     {
+      "t": "PTGX",
+      "name": "Protagonist",
+      "valMM": 1030.7,
+      "pct": 0.018
+     },
+     {
+      "t": "KRYS",
+      "name": "Krystal Biotech",
+      "valMM": 1017.9,
+      "pct": 0.0178
+     },
+     {
+      "t": "ALKS",
+      "name": "Alkermes",
+      "valMM": 1001.2,
+      "pct": 0.0175
+     },
+     {
+      "t": "GKOS",
+      "name": "Glaukos",
+      "valMM": 978.6,
+      "pct": 0.0171
+     },
+     {
+      "t": "BTSG",
+      "name": "BrightSpring",
+      "valMM": 913,
+      "pct": 0.016
+     },
+     {
+      "t": "GMED",
+      "name": "Globus Medical",
+      "valMM": 904.5,
+      "pct": 0.0158
+     },
+     {
+      "t": "PTCT",
+      "name": "PTC Therapeutics",
+      "valMM": 888.6,
+      "pct": 0.0155
+     },
+     {
+      "t": "HQY",
+      "name": "HealthEquity",
+      "valMM": 880.2,
+      "pct": 0.0154
+     },
+     {
+      "t": "HALO",
+      "name": "Halozyme",
+      "valMM": 867.1,
+      "pct": 0.0151
+     },
+     {
+      "t": "MOH",
+      "name": "Molina",
+      "valMM": 849,
+      "pct": 0.0148
+     },
+     {
+      "t": "MASI",
+      "name": "Masimo",
+      "valMM": 826.1,
+      "pct": 0.0144
+     },
+     {
+      "t": "MDGL",
+      "name": "Madrigal",
+      "valMM": 816.6,
+      "pct": 0.0143
+     },
+     {
+      "t": "IONS",
+      "name": "Ionis",
+      "valMM": 813,
+      "pct": 0.0142
+     },
+     {
+      "t": "UHS",
+      "name": "Universal Health",
+      "valMM": 777.6,
+      "pct": 0.0136
+     },
+     {
+      "t": "",
+      "name": "Medline",
+      "valMM": 753.1,
+      "pct": 0.0132
+     },
+     {
+      "t": "PRAX",
+      "name": "Praxis Precision",
+      "valMM": 749.1,
+      "pct": 0.0131
+     },
+     {
+      "t": "TGTX",
+      "name": "TG Therapeutics",
+      "valMM": 739.2,
+      "pct": 0.0129
+     },
+     {
+      "t": "ALGN",
+      "name": "Align Technology",
+      "valMM": 735.4,
+      "pct": 0.0128
+     },
+     {
+      "t": "RGEN",
+      "name": "Repligen",
+      "valMM": 715.6,
+      "pct": 0.0125
+     },
+     {
+      "t": "SOLV",
+      "name": "Solventum",
+      "valMM": 684.3,
+      "pct": 0.012
+     },
+     {
+      "t": "CRL",
+      "name": "Charles River Labs",
+      "valMM": 665.7,
+      "pct": 0.0116
+     },
+     {
+      "t": "AXSM",
+      "name": "Axsome",
+      "valMM": 661.3,
+      "pct": 0.0116
+     },
+     {
+      "t": "TFX",
+      "name": "Teleflex",
+      "valMM": 644.9,
+      "pct": 0.0113
+     },
+     {
+      "t": "TECH",
+      "name": "Bio-Techne",
+      "valMM": 640.9,
+      "pct": 0.0112
+     },
+     {
+      "t": "PCVX",
+      "name": "Vaxcyte",
+      "valMM": 637.6,
+      "pct": 0.0111
+     },
+     {
+      "t": "RVTY",
+      "name": "Revvity",
+      "valMM": 635.2,
+      "pct": 0.0111
+     },
+     {
+      "t": "LNTH",
+      "name": "Lantheus",
+      "valMM": 631.6,
+      "pct": 0.011
+     },
+     {
+      "t": "COGT",
+      "name": "Cogent Biosciences",
+      "valMM": 617.6,
+      "pct": 0.0108
+     },
+     {
+      "t": "MMSI",
+      "name": "Merit Medical",
+      "valMM": 608.9,
+      "pct": 0.0106
+     },
+     {
+      "t": "LGND",
+      "name": "Ligand",
+      "valMM": 591.3,
+      "pct": 0.0103
+     },
+     {
+      "t": "ARGX",
+      "name": "argenx",
+      "valMM": 590.3,
+      "pct": 0.0103
+     },
+     {
+      "t": "INDV",
+      "name": "Indivior",
+      "valMM": 565.2,
+      "pct": 0.0099
+     },
+     {
+      "t": "RDNT",
+      "name": "RadNet",
+      "valMM": 560.9,
+      "pct": 0.0098
+     },
+     {
+      "t": "HIMS",
+      "name": "Hims & Hers",
+      "valMM": 546.8,
+      "pct": 0.0096
+     },
+     {
+      "t": "APLS",
+      "name": "Apellis",
+      "valMM": 544.6,
+      "pct": 0.0095
+     },
+     {
+      "t": "RYTM",
+      "name": "Rhythm Pharmaceuticals",
+      "valMM": 542.4,
+      "pct": 0.0095
+     },
+     {
+      "t": "TMDX",
+      "name": "TransMedics",
+      "valMM": 535.5,
+      "pct": 0.0094
+     },
+     {
+      "t": "OPCH",
+      "name": "Option Care Health",
+      "valMM": 535.4,
+      "pct": 0.0094
+     },
+     {
+      "t": "HSIC",
+      "name": "Henry Schein",
+      "valMM": 517.6,
+      "pct": 0.009
+     },
+     {
+      "t": "AVTR",
+      "name": "Avantor",
+      "valMM": 515.1,
+      "pct": 0.009
+     },
+     {
+      "t": "CHE",
+      "name": "Chemed",
+      "valMM": 504.9,
+      "pct": 0.0088
+     },
+     {
+      "t": "TERN",
+      "name": "Terns",
+      "valMM": 504.5,
+      "pct": 0.0088
+     },
+     {
+      "t": "NUVL",
+      "name": "Nuvalent",
+      "valMM": 494.3,
+      "pct": 0.0086
+     },
+     {
+      "t": "FOLD",
+      "name": "Amicus Therapeutics",
+      "valMM": 489.9,
+      "pct": 0.0086
+     },
+     {
+      "t": "CORT",
+      "name": "Corcept",
+      "valMM": 489.8,
+      "pct": 0.0086
+     }
+    ]
+   },
+   {
+    "name": "Потребительские товары (второстепенные)",
+    "pct": 8.75,
+    "valMM": 500788.6,
+    "count": 121,
+    "rows": [
+     {
+      "t": "AMZN",
+      "name": "Amazon",
+      "valMM": 153431,
+      "pct": 2.6807
+     },
+     {
+      "t": "TSLA",
+      "name": "Tesla",
+      "valMM": 77371.8,
+      "pct": 1.3518
+     },
+     {
+      "t": "HD",
+      "name": "Home Depot",
+      "valMM": 25911.2,
+      "pct": 0.4527
+     },
+     {
+      "t": "MCD",
+      "name": "McDonald's",
+      "valMM": 17203.1,
+      "pct": 0.3006
+     },
+     {
+      "t": "TJX",
+      "name": "TJX",
+      "valMM": 17168.2,
+      "pct": 0.3
+     },
+     {
+      "t": "BKNG",
+      "name": "Booking Holdings",
+      "valMM": 11170.6,
+      "pct": 0.1952
+     },
+     {
+      "t": "LOW",
+      "name": "Lowe's",
+      "valMM": 9411.4,
+      "pct": 0.1644
+     },
+     {
+      "t": "SBUX",
+      "name": "Starbucks",
+      "valMM": 7128.2,
+      "pct": 0.1245
+     },
+     {
+      "t": "HLT",
+      "name": "Hilton",
+      "valMM": 6439.7,
+      "pct": 0.1125
+     },
+     {
+      "t": "GM",
+      "name": "General Motors",
+      "valMM": 6158,
+      "pct": 0.1076
+     },
+     {
+      "t": "RCL",
+      "name": "Royal Caribbean",
+      "valMM": 6068.4,
+      "pct": 0.106
+     },
+     {
+      "t": "ORLY",
+      "name": "O'Reilly Automotive",
+      "valMM": 6019.3,
+      "pct": 0.1052
+     },
+     {
+      "t": "ROST",
+      "name": "Ross Stores",
+      "valMM": 5384.7,
+      "pct": 0.0941
+     },
+     {
+      "t": "MAR",
+      "name": "Marriott",
+      "valMM": 5068.3,
+      "pct": 0.0886
+     },
+     {
+      "t": "NKE",
+      "name": "Nike",
+      "valMM": 4848.8,
+      "pct": 0.0847
+     },
+     {
+      "t": "TGT",
+      "name": "Target",
+      "valMM": 4595,
+      "pct": 0.0803
+     },
+     {
+      "t": "AZO",
+      "name": "AutoZone",
+      "valMM": 4202.3,
+      "pct": 0.0734
+     },
+     {
+      "t": "YUM",
+      "name": "Yum! Brands",
+      "valMM": 4110.3,
+      "pct": 0.0718
+     },
+     {
+      "t": "ABNB",
+      "name": "Airbnb",
+      "valMM": 4033.8,
+      "pct": 0.0705
+     },
+     {
+      "t": "PDD",
+      "name": "PDD Holdings",
+      "valMM": 4026.7,
+      "pct": 0.0704
+     },
+     {
+      "t": "DASH",
+      "name": "DoorDash",
+      "valMM": 3973.8,
+      "pct": 0.0694
+     },
+     {
+      "t": "DHI",
+      "name": "D.R. Horton",
+      "valMM": 3820.6,
+      "pct": 0.0668
+     },
+     {
+      "t": "F",
+      "name": "Ford",
+      "valMM": 3816.7,
+      "pct": 0.0667
+     },
+     {
+      "t": "EBAY",
+      "name": "eBay",
+      "valMM": 3700.7,
+      "pct": 0.0647
+     },
+     {
+      "t": "CVNA",
+      "name": "Carvana",
+      "valMM": 3625.5,
+      "pct": 0.0633
+     },
+     {
+      "t": "GRMN",
+      "name": "Garmin",
+      "valMM": 3581.6,
+      "pct": 0.0626
+     },
+     {
+      "t": "CMG",
+      "name": "Chipotle",
+      "valMM": 3568.4,
+      "pct": 0.0623
+     },
+     {
+      "t": "DG",
+      "name": "Dollar General",
+      "valMM": 3011.6,
+      "pct": 0.0526
+     },
+     {
+      "t": "TPR",
+      "name": "Tapestry",
+      "valMM": 2589,
+      "pct": 0.0452
+     },
+     {
+      "t": "EXPE",
+      "name": "Expedia",
+      "valMM": 2423.8,
+      "pct": 0.0423
+     },
+     {
+      "t": "HAS",
+      "name": "Hasbro",
+      "valMM": 2368.7,
+      "pct": 0.0414
+     },
+     {
+      "t": "MELI",
+      "name": "MercadoLibre",
+      "valMM": 2363.7,
+      "pct": 0.0413
+     },
+     {
+      "t": "CCL",
+      "name": "Carnival",
+      "valMM": 2328.7,
+      "pct": 0.0407
+     },
+     {
+      "t": "PHM",
+      "name": "PulteGroup",
+      "valMM": 2264.8,
+      "pct": 0.0396
+     },
+     {
+      "t": "BURL",
+      "name": "Burlington",
+      "valMM": 2134.1,
+      "pct": 0.0373
+     },
+     {
+      "t": "ULTA",
+      "name": "Ulta Beauty",
+      "valMM": 2125.2,
+      "pct": 0.0371
+     },
+     {
+      "t": "WSM",
+      "name": "Williams-Sonoma",
+      "valMM": 2114.1,
+      "pct": 0.0369
+     },
+     {
+      "t": "TSCO",
+      "name": "Tractor Supply",
+      "valMM": 2053.9,
+      "pct": 0.0359
+     },
+     {
+      "t": "DRI",
+      "name": "Darden",
+      "valMM": 1891.7,
+      "pct": 0.0331
+     },
+     {
+      "t": "NVR",
+      "name": "NVR",
+      "valMM": 1858,
+      "pct": 0.0325
+     },
+     {
+      "t": "DLTR",
+      "name": "Dollar Tree",
+      "valMM": 1732.8,
+      "pct": 0.0303
+     },
+     {
+      "t": "BBY",
+      "name": "Best Buy",
+      "valMM": 1631.4,
+      "pct": 0.0285
+     },
+     {
+      "t": "LEN",
+      "name": "Lennar",
+      "valMM": 1612.9,
+      "pct": 0.0282
+     },
+     {
+      "t": "SGI",
+      "name": "Somnigroup",
+      "valMM": 1489.1,
+      "pct": 0.026
+     },
+     {
+      "t": "DECK",
+      "name": "Deckers",
+      "valMM": 1479.8,
+      "pct": 0.0259
+     },
+     {
+      "t": "BWA",
+      "name": "BorgWarner",
+      "valMM": 1466.3,
+      "pct": 0.0256
+     },
+     {
+      "t": "LULU",
+      "name": "Lululemon",
+      "valMM": 1454.7,
+      "pct": 0.0254
+     },
+     {
+      "t": "LVS",
+      "name": "Las Vegas Sands",
+      "valMM": 1409.6,
+      "pct": 0.0246
+     },
+     {
+      "t": "GPC",
+      "name": "Genuine Parts",
+      "valMM": 1401,
+      "pct": 0.0245
+     },
+     {
+      "t": "TOL",
+      "name": "Toll Brothers",
+      "valMM": 1357.8,
+      "pct": 0.0237
+     },
+     {
+      "t": "APTV",
+      "name": "Aptiv",
+      "valMM": 1321.5,
+      "pct": 0.0231
+     },
+     {
+      "t": "DKS",
+      "name": "Dick's Sporting Goods",
+      "valMM": 1311.5,
+      "pct": 0.0229
+     },
+     {
+      "t": "CPNG",
+      "name": "Coupang",
+      "valMM": 1225,
+      "pct": 0.0214
+     },
+     {
+      "t": "SCI",
+      "name": "Service Corp",
+      "valMM": 1175.6,
+      "pct": 0.0205
+     },
+     {
+      "t": "FIVE",
+      "name": "Five Below",
+      "valMM": 1145.2,
+      "pct": 0.02
+     },
+     {
+      "t": "TXRH",
+      "name": "Texas Roadhouse",
+      "valMM": 1111.3,
+      "pct": 0.0194
+     },
+     {
+      "t": "LKQ",
+      "name": "LKQ",
+      "valMM": 1083.7,
+      "pct": 0.0189
+     },
+     {
+      "t": "ARMK",
+      "name": "Aramark",
+      "valMM": 1035.6,
+      "pct": 0.0181
+     },
+     {
+      "t": "BLD",
+      "name": "TopBuild",
+      "valMM": 1026.3,
+      "pct": 0.0179
+     },
+     {
+      "t": "IBP",
+      "name": "Installed Building Products",
+      "valMM": 996.5,
+      "pct": 0.0174
+     },
+     {
+      "t": "RIVN",
+      "name": "Rivian",
+      "valMM": 988.3,
+      "pct": 0.0173
+     },
+     {
+      "t": "RL",
+      "name": "Ralph Lauren",
+      "valMM": 973.5,
+      "pct": 0.017
+     },
+     {
+      "t": "FLUT",
+      "name": "Flutter",
+      "valMM": 959.5,
+      "pct": 0.0168
+     },
+     {
+      "t": "EAT",
+      "name": "Brinker",
+      "valMM": 940,
+      "pct": 0.0164
+     },
+     {
+      "t": "MOD",
+      "name": "Modine",
+      "valMM": 885.3,
+      "pct": 0.0155
+     },
+     {
+      "t": "DPZ",
+      "name": "Domino's",
+      "valMM": 849.5,
+      "pct": 0.0148
+     },
+     {
+      "t": "MUSA",
+      "name": "Murphy USA",
+      "valMM": 830.2,
+      "pct": 0.0145
+     },
+     {
+      "t": "GME",
+      "name": "GameStop",
+      "valMM": 826.7,
+      "pct": 0.0144
+     },
+     {
+      "t": "TMHC",
+      "name": "Taylor Morrison",
+      "valMM": 784.3,
+      "pct": 0.0137
+     },
+     {
+      "t": "MTH",
+      "name": "Meritage Homes",
+      "valMM": 777.4,
+      "pct": 0.0136
+     },
+     {
+      "t": "CAVA",
+      "name": "CAVA",
+      "valMM": 774.1,
+      "pct": 0.0135
+     },
+     {
+      "t": "PLNT",
+      "name": "Planet Fitness",
+      "valMM": 736.9,
+      "pct": 0.0129
+     },
+     {
+      "t": "LAUR",
+      "name": "Laureate Education",
+      "valMM": 730.9,
+      "pct": 0.0128
+     },
+     {
+      "t": "KMX",
+      "name": "CarMax",
+      "valMM": 717.6,
+      "pct": 0.0125
+     },
+     {
+      "t": "BROS",
+      "name": "Dutch Bros",
+      "valMM": 703.1,
+      "pct": 0.0123
+     },
+     {
+      "t": "BOOT",
+      "name": "Boot Barn",
+      "valMM": 694.5,
+      "pct": 0.0121
+     },
+     {
+      "t": "ETSY",
+      "name": "Etsy",
+      "valMM": 692.4,
+      "pct": 0.0121
+     },
+     {
+      "t": "RUSHA",
+      "name": "Rush Enterprises",
+      "valMM": 673.1,
+      "pct": 0.0118
+     },
+     {
+      "t": "CZR",
+      "name": "Caesars",
+      "valMM": 671.7,
+      "pct": 0.0117
+     },
+     {
+      "t": "SKY",
+      "name": "Champion Homes",
+      "valMM": 657.8,
+      "pct": 0.0115
+     },
+     {
+      "t": "NCLH",
+      "name": "Norwegian Cruise Line",
+      "valMM": 645.7,
+      "pct": 0.0113
+     },
+     {
+      "t": "TPH",
+      "name": "Tri Pointe Homes",
+      "valMM": 639.3,
+      "pct": 0.0112
+     },
+     {
+      "t": "GPI",
+      "name": "Group 1 Automotive",
+      "valMM": 635.4,
+      "pct": 0.0111
+     },
+     {
+      "t": "CART",
+      "name": "Instacart",
+      "valMM": 632.8,
+      "pct": 0.0111
+     },
+     {
+      "t": "LAD",
+      "name": "Lithia Motors",
+      "valMM": 626.9,
+      "pct": 0.011
+     },
+     {
+      "t": "MHK",
+      "name": "Mohawk",
+      "valMM": 626.8,
+      "pct": 0.011
+     },
+     {
+      "t": "WYNN",
+      "name": "Wynn Resorts",
+      "valMM": 608.9,
+      "pct": 0.0106
+     },
+     {
+      "t": "WH",
+      "name": "Wyndham",
+      "valMM": 599,
+      "pct": 0.0105
+     },
+     {
+      "t": "LEA",
+      "name": "Lear",
+      "valMM": 596.8,
+      "pct": 0.0104
+     },
+     {
+      "t": "LTH",
+      "name": "Life Time",
+      "valMM": 592.7,
+      "pct": 0.0104
+     },
+     {
+      "t": "QSR",
+      "name": "Restaurant Brands",
+      "valMM": 590.4,
+      "pct": 0.0103
+     },
+     {
+      "t": "CHWY",
+      "name": "Chewy",
+      "valMM": 586.6,
+      "pct": 0.0102
+     },
+     {
+      "t": "URBN",
+      "name": "Urban Outfitters",
+      "valMM": 585.6,
+      "pct": 0.0102
+     },
+     {
+      "t": "DAN",
+      "name": "Dana",
+      "valMM": 584.5,
+      "pct": 0.0102
+     },
+     {
+      "t": "MHO",
+      "name": "M/I Homes",
+      "valMM": 582.9,
+      "pct": 0.0102
+     },
+     {
+      "t": "FTDR",
+      "name": "Frontdoor",
+      "valMM": 581.6,
+      "pct": 0.0102
+     },
+     {
+      "t": "CVCO",
+      "name": "Cavco",
+      "valMM": 580.3,
+      "pct": 0.0101
+     },
+     {
+      "t": "CHDN",
+      "name": "Churchill Downs",
+      "valMM": 579.7,
+      "pct": 0.0101
+     },
+     {
+      "t": "H",
+      "name": "Hyatt",
+      "valMM": 575.9,
+      "pct": 0.0101
+     },
+     {
+      "t": "LRN",
+      "name": "Stride",
+      "valMM": 575.7,
+      "pct": 0.0101
+     },
+     {
+      "t": "DKNG",
+      "name": "DraftKings",
+      "valMM": 575.1,
+      "pct": 0.01
+     },
+     {
+      "t": "ABG",
+      "name": "Asbury Automotive",
+      "valMM": 565.1,
+      "pct": 0.0099
+     },
+     {
+      "t": "ASO",
+      "name": "Academy Sports",
+      "valMM": 555.8,
+      "pct": 0.0097
+     },
+     {
+      "t": "KTB",
+      "name": "Kontoor Brands",
+      "valMM": 552.6,
+      "pct": 0.0097
+     },
+     {
+      "t": "VSCO",
+      "name": "Victoria's Secret",
+      "valMM": 549.6,
+      "pct": 0.0096
+     },
+     {
+      "t": "VIK",
+      "name": "Viking Holdings",
+      "valMM": 545.9,
+      "pct": 0.0095
+     },
+     {
+      "t": "ANF",
+      "name": "Abercrombie & Fitch",
+      "valMM": 545.8,
+      "pct": 0.0095
+     },
+     {
+      "t": "PATK",
+      "name": "Patrick Industries",
+      "valMM": 536.1,
+      "pct": 0.0094
+     },
+     {
+      "t": "BABA",
+      "name": "Alibaba",
+      "valMM": 532.4,
+      "pct": 0.0093
+     },
+     {
+      "t": "GAP",
+      "name": "Gap",
+      "valMM": 532.1,
+      "pct": 0.0093
+     },
+     {
+      "t": "SIG",
+      "name": "Signet Jewelers",
+      "valMM": 525.8,
+      "pct": 0.0092
+     },
+     {
+      "t": "FND",
+      "name": "Floor & Decor",
+      "valMM": 520.1,
+      "pct": 0.0091
+     },
+     {
+      "t": "VFC",
+      "name": "VF Corp",
+      "valMM": 518.2,
+      "pct": 0.0091
+     },
+     {
+      "t": "OLLI",
+      "name": "Ollie's Bargain Outlet",
+      "valMM": 516.1,
+      "pct": 0.009
+     },
+     {
+      "t": "SHAK",
+      "name": "Shake Shack",
+      "valMM": 512.7,
+      "pct": 0.009
+     },
+     {
+      "t": "M",
+      "name": "Macy's",
+      "valMM": 511.3,
+      "pct": 0.0089
+     },
+     {
+      "t": "ALV",
+      "name": "Autoliv",
+      "valMM": 508.8,
+      "pct": 0.0089
+     },
+     {
+      "t": "TNL",
+      "name": "Travel + Leisure",
+      "valMM": 494.6,
+      "pct": 0.0086
+     },
+     {
+      "t": "HRB",
+      "name": "H&R Block",
+      "valMM": 493.2,
+      "pct": 0.0086
+     },
+     {
+      "t": "KBH",
+      "name": "KB Home",
+      "valMM": 485.5,
+      "pct": 0.0085
+     },
+     {
+      "t": "WING",
+      "name": "Wingstop",
+      "valMM": 484.5,
+      "pct": 0.0085
+     }
+    ]
+   },
+   {
+    "name": "Связь и медиа",
+    "pct": 8.34,
+    "valMM": 477238,
+    "count": 36,
+    "rows": [
+     {
+      "t": "GOOGL/GOOG",
+      "name": "Alphabet",
+      "valMM": 233233.4,
+      "pct": 4.075
+     },
+     {
+      "t": "META",
+      "name": "Meta Platforms",
+      "valMM": 96613.5,
+      "pct": 1.688
+     },
+     {
+      "t": "NFLX",
+      "name": "Netflix",
+      "valMM": 33303.6,
+      "pct": 0.5819
+     },
+     {
+      "t": "VZ",
+      "name": "Verizon",
+      "valMM": 18475,
+      "pct": 0.3228
+     },
+     {
+      "t": "T",
+      "name": "AT&T",
+      "valMM": 16263.3,
+      "pct": 0.2841
+     },
+     {
+      "t": "DIS",
+      "name": "Walt Disney",
+      "valMM": 13151.8,
+      "pct": 0.2298
+     },
+     {
+      "t": "CMCSA",
+      "name": "Comcast",
+      "valMM": 9043.2,
+      "pct": 0.158
+     },
+     {
+      "t": "TMUS",
+      "name": "T-Mobile",
+      "valMM": 8215.5,
+      "pct": 0.1435
+     },
+     {
+      "t": "SPOT",
+      "name": "Spotify",
+      "valMM": 5517.2,
+      "pct": 0.0964
+     },
+     {
+      "t": "WBD",
+      "name": "Warner Bros. Discovery",
+      "valMM": 5349.3,
+      "pct": 0.0935
+     },
+     {
+      "t": "EA",
+      "name": "Electronic Arts",
+      "valMM": 5117.6,
+      "pct": 0.0894
+     },
+     {
+      "t": "TTWO",
+      "name": "Take-Two",
+      "valMM": 3794.9,
+      "pct": 0.0663
+     },
+     {
+      "t": "OMC",
+      "name": "Omnicom",
+      "valMM": 2221.5,
+      "pct": 0.0388
+     },
+     {
+      "t": "RBLX",
+      "name": "Roblox",
+      "valMM": 2210.4,
+      "pct": 0.0386
+     },
+     {
+      "t": "SATS",
+      "name": "EchoStar",
+      "valMM": 2201.8,
+      "pct": 0.0385
+     },
+     {
+      "t": "LYV",
+      "name": "Live Nation",
+      "valMM": 2103,
+      "pct": 0.0367
+     },
+     {
+      "t": "FOXA",
+      "name": "Fox",
+      "valMM": 1825.2,
+      "pct": 0.0319
+     },
+     {
+      "t": "SE",
+      "name": "Sea",
+      "valMM": 1734.2,
+      "pct": 0.0303
+     },
+     {
+      "t": "CHTR",
+      "name": "Charter Communications",
+      "valMM": 1509,
+      "pct": 0.0264
+     },
+     {
+      "t": "LLYVA",
+      "name": "Liberty Media",
+      "valMM": 1298.8,
+      "pct": 0.0227
+     },
+     {
+      "t": "NYT",
+      "name": "New York Times",
+      "valMM": 1267.1,
+      "pct": 0.0221
+     },
+     {
+      "t": "ASTS",
+      "name": "AST SpaceMobile",
+      "valMM": 1203,
+      "pct": 0.021
+     },
+     {
+      "t": "PINS",
+      "name": "Pinterest",
+      "valMM": 1175.9,
+      "pct": 0.0205
+     },
+     {
+      "t": "TKO",
+      "name": "TKO Group",
+      "valMM": 1071.6,
+      "pct": 0.0187
+     },
+     {
+      "t": "RDDT",
+      "name": "Reddit",
+      "valMM": 1031.8,
+      "pct": 0.018
+     },
+     {
+      "t": "NWSA",
+      "name": "News Corp",
+      "valMM": 958.8,
+      "pct": 0.0168
+     },
+     {
+      "t": "LUMN",
+      "name": "Lumen",
+      "valMM": 955.4,
+      "pct": 0.0167
+     },
+     {
+      "t": "VSAT",
+      "name": "Viasat",
+      "valMM": 942.5,
+      "pct": 0.0165
+     },
+     {
+      "t": "MTCH",
+      "name": "Match Group",
+      "valMM": 883.4,
+      "pct": 0.0154
+     },
+     {
+      "t": "TTD",
+      "name": "The Trade Desk",
+      "valMM": 851.4,
+      "pct": 0.0149
+     },
+     {
+      "t": "ROKU",
+      "name": "Roku",
+      "valMM": 702.7,
+      "pct": 0.0123
+     },
+     {
+      "t": "MSGS",
+      "name": "MSG Sports",
+      "valMM": 646.6,
+      "pct": 0.0113
+     },
+     {
+      "t": "VSNT",
+      "name": "Versant Media",
+      "valMM": 642.6,
+      "pct": 0.0112
+     },
+     {
+      "t": "TDS",
+      "name": "Telephone & Data Systems",
+      "valMM": 628.2,
+      "pct": 0.011
+     },
+     {
+      "t": "NXST",
+      "name": "Nexstar",
+      "valMM": 581.9,
+      "pct": 0.0102
+     },
+     {
+      "t": "ZG",
+      "name": "Zillow",
+      "valMM": 512.9,
+      "pct": 0.009
+     }
+    ]
    },
    {
     "name": "Потребительские товары (базовые)",
-    "pct": 4.9
+    "pct": 4.32,
+    "valMM": 247275.5,
+    "count": 46,
+    "rows": [
+     {
+      "t": "WMT",
+      "name": "Walmart",
+      "valMM": 43966.5,
+      "pct": 0.7682
+     },
+     {
+      "t": "COST",
+      "name": "Costco",
+      "valMM": 34822.3,
+      "pct": 0.6084
+     },
+     {
+      "t": "PG",
+      "name": "Procter & Gamble",
+      "valMM": 27014.6,
+      "pct": 0.472
+     },
+     {
+      "t": "KO",
+      "name": "Coca-Cola",
+      "valMM": 25370,
+      "pct": 0.4433
+     },
+     {
+      "t": "PEP",
+      "name": "PepsiCo",
+      "valMM": 17989,
+      "pct": 0.3143
+     },
+     {
+      "t": "PM",
+      "name": "Philip Morris",
+      "valMM": 17789.8,
+      "pct": 0.3108
+     },
+     {
+      "t": "MO",
+      "name": "Altria",
+      "valMM": 8232.1,
+      "pct": 0.1438
+     },
+     {
+      "t": "CL",
+      "name": "Colgate-Palmolive",
+      "valMM": 6191.4,
+      "pct": 0.1082
+     },
+     {
+      "t": "MDLZ",
+      "name": "Mondelez",
+      "valMM": 6106,
+      "pct": 0.1067
+     },
+     {
+      "t": "MNST",
+      "name": "Monster Beverage",
+      "valMM": 4564.7,
+      "pct": 0.0798
+     },
+     {
+      "t": "KR",
+      "name": "Kroger",
+      "valMM": 3843.6,
+      "pct": 0.0672
+     },
+     {
+      "t": "KDP",
+      "name": "Keurig Dr Pepper",
+      "valMM": 3304.7,
+      "pct": 0.0577
+     },
+     {
+      "t": "ADM",
+      "name": "Archer-Daniels-Midland",
+      "valMM": 3115.4,
+      "pct": 0.0544
+     },
+     {
+      "t": "CASY",
+      "name": "Casey's",
+      "valMM": 3085.1,
+      "pct": 0.0539
+     },
+     {
+      "t": "KMB",
+      "name": "Kimberly-Clark",
+      "valMM": 2913.2,
+      "pct": 0.0509
+     },
+     {
+      "t": "SYY",
+      "name": "Sysco",
+      "valMM": 2838,
+      "pct": 0.0496
+     },
+     {
+      "t": "HSY",
+      "name": "Hershey",
+      "valMM": 2656.9,
+      "pct": 0.0464
+     },
+     {
+      "t": "KVUE",
+      "name": "Kenvue",
+      "valMM": 2504.9,
+      "pct": 0.0438
+     },
+     {
+      "t": "GIS",
+      "name": "General Mills",
+      "valMM": 2267.7,
+      "pct": 0.0396
+     },
+     {
+      "t": "CHD",
+      "name": "Church & Dwight",
+      "valMM": 2070.8,
+      "pct": 0.0362
+     },
+     {
+      "t": "USFD",
+      "name": "US Foods",
+      "valMM": 1884.3,
+      "pct": 0.0329
+     },
+     {
+      "t": "BG",
+      "name": "Bunge",
+      "valMM": 1863.5,
+      "pct": 0.0326
+     },
+     {
+      "t": "KHC",
+      "name": "Kraft Heinz",
+      "valMM": 1694.1,
+      "pct": 0.0296
+     },
+     {
+      "t": "STZ",
+      "name": "Constellation Brands",
+      "valMM": 1667.9,
+      "pct": 0.0291
+     },
+     {
+      "t": "TSN",
+      "name": "Tyson Foods",
+      "valMM": 1594.6,
+      "pct": 0.0279
+     },
+     {
+      "t": "EL",
+      "name": "Estée Lauder",
+      "valMM": 1331,
+      "pct": 0.0233
+     },
+     {
+      "t": "CCEP",
+      "name": "Coca-Cola Europacific",
+      "valMM": 1269.6,
+      "pct": 0.0222
+     },
+     {
+      "t": "BJ",
+      "name": "BJ's Wholesale",
+      "valMM": 1221.7,
+      "pct": 0.0213
+     },
+     {
+      "t": "PFGC",
+      "name": "Performance Food Group",
+      "valMM": 1204.7,
+      "pct": 0.021
+     },
+     {
+      "t": "BTI",
+      "name": "British American Tobacco",
+      "valMM": 1119.5,
+      "pct": 0.0196
+     },
+     {
+      "t": "MKC",
+      "name": "McCormick",
+      "valMM": 1073,
+      "pct": 0.0187
+     },
+     {
+      "t": "CLX",
+      "name": "Clorox",
+      "valMM": 1054.1,
+      "pct": 0.0184
+     },
+     {
+      "t": "COKE",
+      "name": "Coca-Cola Consolidated",
+      "valMM": 1005.7,
+      "pct": 0.0176
+     },
+     {
+      "t": "DAR",
+      "name": "Darling Ingredients",
+      "valMM": 937,
+      "pct": 0.0164
+     },
+     {
+      "t": "SFM",
+      "name": "Sprouts Farmers Market",
+      "valMM": 809.5,
+      "pct": 0.0141
+     },
+     {
+      "t": "CAG",
+      "name": "Conagra",
+      "valMM": 788.4,
+      "pct": 0.0138
+     },
+     {
+      "t": "LW",
+      "name": "Lamb Weston",
+      "valMM": 745.5,
+      "pct": 0.013
+     },
+     {
+      "t": "INGR",
+      "name": "Ingredion",
+      "valMM": 715.4,
+      "pct": 0.0125
+     },
+     {
+      "t": "ACI",
+      "name": "Albertsons",
+      "valMM": 711.2,
+      "pct": 0.0124
+     },
+     {
+      "t": "SJM",
+      "name": "J.M. Smucker",
+      "valMM": 648.7,
+      "pct": 0.0113
+     },
+     {
+      "t": "PSMT",
+      "name": "PriceSmart",
+      "valMM": 615.2,
+      "pct": 0.0107
+     },
+     {
+      "t": "CELH",
+      "name": "Celsius",
+      "valMM": 565.7,
+      "pct": 0.0099
+     },
+     {
+      "t": "CALM",
+      "name": "Cal-Maine Foods",
+      "valMM": 550,
+      "pct": 0.0096
+     },
+     {
+      "t": "HRL",
+      "name": "Hormel",
+      "valMM": 537.1,
+      "pct": 0.0094
+     },
+     {
+      "t": "JBS",
+      "name": "JBS",
+      "valMM": 517.7,
+      "pct": 0.009
+     },
+     {
+      "t": "TAP",
+      "name": "Molson Coors",
+      "valMM": 503.7,
+      "pct": 0.0088
+     }
+    ]
    },
    {
     "name": "Энергетика",
-    "pct": 4
+    "pct": 3.89,
+    "valMM": 222771.5,
+    "count": 61,
+    "rows": [
+     {
+      "t": "XOM",
+      "name": "Exxon Mobil",
+      "valMM": 54756.3,
+      "pct": 0.9567
+     },
+     {
+      "t": "CVX",
+      "name": "Chevron",
+      "valMM": 29942.6,
+      "pct": 0.5231
+     },
+     {
+      "t": "COP",
+      "name": "ConocoPhillips",
+      "valMM": 12034.9,
+      "pct": 0.2103
+     },
+     {
+      "t": "WMB",
+      "name": "Williams Companies",
+      "valMM": 8181,
+      "pct": 0.1429
+     },
+     {
+      "t": "SLB",
+      "name": "SLB",
+      "valMM": 6794.9,
+      "pct": 0.1187
+     },
+     {
+      "t": "VLO",
+      "name": "Valero",
+      "valMM": 6427.2,
+      "pct": 0.1123
+     },
+     {
+      "t": "EOG",
+      "name": "EOG Resources",
+      "valMM": 6398.7,
+      "pct": 0.1118
+     },
+     {
+      "t": "MPC",
+      "name": "Marathon Petroleum",
+      "valMM": 5956.7,
+      "pct": 0.1041
+     },
+     {
+      "t": "BKR",
+      "name": "Baker Hughes",
+      "valMM": 5954.3,
+      "pct": 0.104
+     },
+     {
+      "t": "PSX",
+      "name": "Phillips 66",
+      "valMM": 5834.2,
+      "pct": 0.1019
+     },
+     {
+      "t": "KMI",
+      "name": "Kinder Morgan",
+      "valMM": 5832.8,
+      "pct": 0.1019
+     },
+     {
+      "t": "OKE",
+      "name": "ONEOK",
+      "valMM": 5368.1,
+      "pct": 0.0938
+     },
+     {
+      "t": "TRGP",
+      "name": "Targa Resources",
+      "valMM": 5150.4,
+      "pct": 0.09
+     },
+     {
+      "t": "LNG",
+      "name": "Cheniere Energy",
+      "valMM": 5104.6,
+      "pct": 0.0892
+     },
+     {
+      "t": "EQT",
+      "name": "EQT",
+      "valMM": 3880.7,
+      "pct": 0.0678
+     },
+     {
+      "t": "FANG",
+      "name": "Diamondback Energy",
+      "valMM": 3660.4,
+      "pct": 0.064
+     },
+     {
+      "t": "OXY",
+      "name": "Occidental Petroleum",
+      "valMM": 3421.5,
+      "pct": 0.0598
+     },
+     {
+      "t": "HAL",
+      "name": "Halliburton",
+      "valMM": 3253.8,
+      "pct": 0.0569
+     },
+     {
+      "t": "DVN",
+      "name": "Devon Energy",
+      "valMM": 3044.7,
+      "pct": 0.0532
+     },
+     {
+      "t": "FTI",
+      "name": "TechnipFMC",
+      "valMM": 2854.3,
+      "pct": 0.0499
+     },
+     {
+      "t": "TPL",
+      "name": "Texas Pacific Land",
+      "valMM": 2824.8,
+      "pct": 0.0494
+     },
+     {
+      "t": "CTRA",
+      "name": "Coterra Energy",
+      "valMM": 2240.2,
+      "pct": 0.0391
+     },
+     {
+      "t": "EXE",
+      "name": "Expand Energy",
+      "valMM": 2046,
+      "pct": 0.0357
+     },
+     {
+      "t": "OVV",
+      "name": "Ovintiv",
+      "valMM": 1587.4,
+      "pct": 0.0277
+     },
+     {
+      "t": "PR",
+      "name": "Permian Resources",
+      "valMM": 1515,
+      "pct": 0.0265
+     },
+     {
+      "t": "DTM",
+      "name": "DT Midstream",
+      "valMM": 1470.2,
+      "pct": 0.0257
+     },
+     {
+      "t": "APA",
+      "name": "APA",
+      "valMM": 1433.6,
+      "pct": 0.025
+     },
+     {
+      "t": "SM",
+      "name": "SM Energy",
+      "valMM": 1198.3,
+      "pct": 0.0209
+     },
+     {
+      "t": "DINO",
+      "name": "HF Sinclair",
+      "valMM": 1168.1,
+      "pct": 0.0204
+     },
+     {
+      "t": "AR",
+      "name": "Antero Resources",
+      "valMM": 1164.1,
+      "pct": 0.0203
+     },
+     {
+      "t": "RRC",
+      "name": "Range Resources",
+      "valMM": 1023.1,
+      "pct": 0.0179
+     },
+     {
+      "t": "CHRD",
+      "name": "Chord Energy",
+      "valMM": 987.6,
+      "pct": 0.0173
+     },
+     {
+      "t": "AROC",
+      "name": "Archrock",
+      "valMM": 978,
+      "pct": 0.0171
+     },
+     {
+      "t": "NE",
+      "name": "Noble",
+      "valMM": 931.7,
+      "pct": 0.0163
+     },
+     {
+      "t": "MGY",
+      "name": "Magnolia Oil & Gas",
+      "valMM": 931,
+      "pct": 0.0163
+     },
+     {
+      "t": "NFG",
+      "name": "National Fuel Gas",
+      "valMM": 860.3,
+      "pct": 0.015
+     },
+     {
+      "t": "CRC",
+      "name": "California Resources",
+      "valMM": 856.4,
+      "pct": 0.015
+     },
+     {
+      "t": "AM",
+      "name": "Antero Midstream",
+      "valMM": 846.3,
+      "pct": 0.0148
+     },
+     {
+      "t": "VNOM",
+      "name": "Viper Energy",
+      "valMM": 820.8,
+      "pct": 0.0143
+     },
+     {
+      "t": "VAL",
+      "name": "Valaris",
+      "valMM": 806.3,
+      "pct": 0.0141
+     },
+     {
+      "t": "CNR",
+      "name": "Core Natural Resources",
+      "valMM": 777.4,
+      "pct": 0.0136
+     },
+     {
+      "t": "WFRD",
+      "name": "Weatherford",
+      "valMM": 754.4,
+      "pct": 0.0132
+     },
+     {
+      "t": "MUR",
+      "name": "Murphy Oil",
+      "valMM": 752.2,
+      "pct": 0.0131
+     },
+     {
+      "t": "LBRT",
+      "name": "Liberty Energy",
+      "valMM": 740.4,
+      "pct": 0.0129
+     },
+     {
+      "t": "PBR",
+      "name": "Petrobras",
+      "valMM": 723.8,
+      "pct": 0.0126
+     },
+     {
+      "t": "KGS",
+      "name": "Kodiak Gas",
+      "valMM": 717.9,
+      "pct": 0.0125
+     },
+     {
+      "t": "NOV",
+      "name": "NOV",
+      "valMM": 711.4,
+      "pct": 0.0124
+     },
+     {
+      "t": "MTDR",
+      "name": "Matador Resources",
+      "valMM": 703.7,
+      "pct": 0.0123
+     },
+     {
+      "t": "CNX",
+      "name": "CNX Resources",
+      "valMM": 694.1,
+      "pct": 0.0121
+     },
+     {
+      "t": "PTEN",
+      "name": "Patterson-UTI",
+      "valMM": 659.4,
+      "pct": 0.0115
+     },
+     {
+      "t": "TDW",
+      "name": "Tidewater",
+      "valMM": 605.3,
+      "pct": 0.0106
+     },
+     {
+      "t": "BTU",
+      "name": "Peabody Energy",
+      "valMM": 601,
+      "pct": 0.0105
+     },
+     {
+      "t": "RIG",
+      "name": "Transocean",
+      "valMM": 585.9,
+      "pct": 0.0102
+     },
+     {
+      "t": "OII",
+      "name": "Oceaneering",
+      "valMM": 579.9,
+      "pct": 0.0101
+     },
+     {
+      "t": "PBF",
+      "name": "PBF Energy",
+      "valMM": 567,
+      "pct": 0.0099
+     },
+     {
+      "t": "HP",
+      "name": "Helmerich & Payne",
+      "valMM": 550.3,
+      "pct": 0.0096
+     },
+     {
+      "t": "CCJ",
+      "name": "Cameco",
+      "valMM": 511.8,
+      "pct": 0.0089
+     },
+     {
+      "t": "UEC",
+      "name": "Uranium Energy",
+      "valMM": 506.3,
+      "pct": 0.0088
+     },
+     {
+      "t": "CRGY",
+      "name": "Crescent Energy",
+      "valMM": 504.3,
+      "pct": 0.0088
+     },
+     {
+      "t": "SHEL",
+      "name": "Shell",
+      "valMM": 500.3,
+      "pct": 0.0087
+     },
+     {
+      "t": "WHD",
+      "name": "Cactus",
+      "valMM": 483.4,
+      "pct": 0.0084
+     }
+    ]
+   },
+   {
+    "name": "Фонды и ETF",
+    "pct": 3.5,
+    "valMM": 200328.8,
+    "count": 21,
+    "rows": [
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 104826.3,
+      "pct": 1.8315
+     },
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 28758.2,
+      "pct": 0.5025
+     },
+     {
+      "t": "SPY",
+      "name": "SPDR S&P 500 ETF",
+      "valMM": 14909.4,
+      "pct": 0.2605
+     },
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 9749.4,
+      "pct": 0.1703
+     },
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 7017,
+      "pct": 0.1226
+     },
+     {
+      "t": "",
+      "name": "iShares",
+      "valMM": 6172.7,
+      "pct": 0.1078
+     },
+     {
+      "t": "GLD",
+      "name": "SPDR Gold Trust",
+      "valMM": 5169.9,
+      "pct": 0.0903
+     },
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 4088.4,
+      "pct": 0.0714
+     },
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 3995.9,
+      "pct": 0.0698
+     },
+     {
+      "t": "",
+      "name": "iShares",
+      "valMM": 2938.9,
+      "pct": 0.0513
+     },
+     {
+      "t": "",
+      "name": "BlackRock ETF Trust",
+      "valMM": 2645.4,
+      "pct": 0.0462
+     },
+     {
+      "t": "VOO",
+      "name": "Vanguard Index Fund",
+      "valMM": 2121,
+      "pct": 0.0371
+     },
+     {
+      "t": "",
+      "name": "BlackRock ETF Trust II",
+      "valMM": 1709.6,
+      "pct": 0.0299
+     },
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 1110.3,
+      "pct": 0.0194
+     },
+     {
+      "t": "XLK",
+      "name": "Select Sector SPDR",
+      "valMM": 1099.4,
+      "pct": 0.0192
+     },
+     {
+      "t": "IAU",
+      "name": "iShares Gold Trust",
+      "valMM": 760.2,
+      "pct": 0.0133
+     },
+     {
+      "t": "QQQ",
+      "name": "Invesco QQQ",
+      "valMM": 750.9,
+      "pct": 0.0131
+     },
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 681.4,
+      "pct": 0.0119
+     },
+     {
+      "t": "BND",
+      "name": "Vanguard Bond Index Fund",
+      "valMM": 659.3,
+      "pct": 0.0115
+     },
+     {
+      "t": "",
+      "name": "iShares Trust",
+      "valMM": 618.2,
+      "pct": 0.0108
+     },
+     {
+      "t": "IBIT",
+      "name": "iShares Bitcoin Trust",
+      "valMM": 547,
+      "pct": 0.0096
+     }
+    ]
    },
    {
     "name": "Недвижимость",
-    "pct": 1.7
+    "pct": 2.81,
+    "valMM": 160861.4,
+    "count": 71,
+    "rows": [
+     {
+      "t": "WELL",
+      "name": "Welltower",
+      "valMM": 14631.3,
+      "pct": 0.2556
+     },
+     {
+      "t": "PLD",
+      "name": "Prologis",
+      "valMM": 13272.7,
+      "pct": 0.2319
+     },
+     {
+      "t": "EQIX",
+      "name": "Equinix",
+      "valMM": 10911.6,
+      "pct": 0.1906
+     },
+     {
+      "t": "AMT",
+      "name": "American Tower",
+      "valMM": 7758.2,
+      "pct": 0.1355
+     },
+     {
+      "t": "DLR",
+      "name": "Digital Realty",
+      "valMM": 7118.9,
+      "pct": 0.1244
+     },
+     {
+      "t": "SPG",
+      "name": "Simon Property",
+      "valMM": 6866.9,
+      "pct": 0.12
+     },
+     {
+      "t": "O",
+      "name": "Realty Income",
+      "valMM": 6601.9,
+      "pct": 0.1153
+     },
+     {
+      "t": "VTR",
+      "name": "Ventas",
+      "valMM": 4627.3,
+      "pct": 0.0808
+     },
+     {
+      "t": "PSA",
+      "name": "Public Storage",
+      "valMM": 4535.8,
+      "pct": 0.0792
+     },
+     {
+      "t": "CCI",
+      "name": "Crown Castle",
+      "valMM": 3817.9,
+      "pct": 0.0667
+     },
+     {
+      "t": "CBRE",
+      "name": "CBRE",
+      "valMM": 3759.9,
+      "pct": 0.0657
+     },
+     {
+      "t": "VICI",
+      "name": "VICI Properties",
+      "valMM": 3537.2,
+      "pct": 0.0618
+     },
+     {
+      "t": "IRM",
+      "name": "Iron Mountain",
+      "valMM": 3372.8,
+      "pct": 0.0589
+     },
+     {
+      "t": "EXR",
+      "name": "Extra Space Storage",
+      "valMM": 2949,
+      "pct": 0.0515
+     },
+     {
+      "t": "AVB",
+      "name": "AvalonBay",
+      "valMM": 2864.5,
+      "pct": 0.05
+     },
+     {
+      "t": "EQR",
+      "name": "Equity Residential",
+      "valMM": 2565.1,
+      "pct": 0.0448
+     },
+     {
+      "t": "WPC",
+      "name": "W.P. Carey",
+      "valMM": 2046.2,
+      "pct": 0.0358
+     },
+     {
+      "t": "ESS",
+      "name": "Essex Property",
+      "valMM": 1755.8,
+      "pct": 0.0307
+     },
+     {
+      "t": "SBAC",
+      "name": "SBA Communications",
+      "valMM": 1741.2,
+      "pct": 0.0304
+     },
+     {
+      "t": "NLY",
+      "name": "Annaly Capital",
+      "valMM": 1728.7,
+      "pct": 0.0302
+     },
+     {
+      "t": "KIM",
+      "name": "Kimco Realty",
+      "valMM": 1655.4,
+      "pct": 0.0289
+     },
+     {
+      "t": "WY",
+      "name": "Weyerhaeuser",
+      "valMM": 1645.7,
+      "pct": 0.0288
+     },
+     {
+      "t": "OHI",
+      "name": "Omega Healthcare",
+      "valMM": 1630.2,
+      "pct": 0.0285
+     },
+     {
+      "t": "INVH",
+      "name": "Invitation Homes",
+      "valMM": 1598.5,
+      "pct": 0.0279
+     },
+     {
+      "t": "SUI",
+      "name": "Sun Communities",
+      "valMM": 1597.4,
+      "pct": 0.0279
+     },
+     {
+      "t": "MAA",
+      "name": "Mid-America Apartment",
+      "valMM": 1591.3,
+      "pct": 0.0278
+     },
+     {
+      "t": "REG",
+      "name": "Regency Centers",
+      "valMM": 1567.3,
+      "pct": 0.0274
+     },
+     {
+      "t": "GLPI",
+      "name": "Gaming & Leisure Properties",
+      "valMM": 1566.9,
+      "pct": 0.0274
+     },
+     {
+      "t": "ELS",
+      "name": "Equity Lifestyle",
+      "valMM": 1491.7,
+      "pct": 0.0261
+     },
+     {
+      "t": "HST",
+      "name": "Host Hotels",
+      "valMM": 1485.5,
+      "pct": 0.026
+     },
+     {
+      "t": "JLL",
+      "name": "Jones Lang LaSalle",
+      "valMM": 1412.9,
+      "pct": 0.0247
+     },
+     {
+      "t": "CSGP",
+      "name": "CoStar",
+      "valMM": 1363.8,
+      "pct": 0.0238
+     },
+     {
+      "t": "AHR",
+      "name": "American Healthcare REIT",
+      "valMM": 1355.4,
+      "pct": 0.0237
+     },
+     {
+      "t": "ADC",
+      "name": "Agree Realty",
+      "valMM": 1348.5,
+      "pct": 0.0236
+     },
+     {
+      "t": "EGP",
+      "name": "EastGroup",
+      "valMM": 1342.7,
+      "pct": 0.0235
+     },
+     {
+      "t": "CTRE",
+      "name": "CareTrust REIT",
+      "valMM": 1314.9,
+      "pct": 0.023
+     },
+     {
+      "t": "LAMR",
+      "name": "Lamar Advertising",
+      "valMM": 1264.4,
+      "pct": 0.0221
+     },
+     {
+      "t": "REXR",
+      "name": "Rexford Industrial",
+      "valMM": 1264,
+      "pct": 0.0221
+     },
+     {
+      "t": "AMH",
+      "name": "American Homes 4 Rent",
+      "valMM": 1241.8,
+      "pct": 0.0217
+     },
+     {
+      "t": "UDR",
+      "name": "UDR",
+      "valMM": 1222.1,
+      "pct": 0.0214
+     },
+     {
+      "t": "CUBE",
+      "name": "CubeSmart",
+      "valMM": 1217.4,
+      "pct": 0.0213
+     },
+     {
+      "t": "DOC",
+      "name": "Healthpeak",
+      "valMM": 1205.3,
+      "pct": 0.0211
+     },
+     {
+      "t": "EPRT",
+      "name": "Essential Properties",
+      "valMM": 1131.4,
+      "pct": 0.0198
+     },
+     {
+      "t": "BRX",
+      "name": "Brixmor",
+      "valMM": 1116.4,
+      "pct": 0.0195
+     },
+     {
+      "t": "TRNO",
+      "name": "Terreno Realty",
+      "valMM": 1093.2,
+      "pct": 0.0191
+     },
+     {
+      "t": "NNN",
+      "name": "NNN REIT",
+      "valMM": 1089.8,
+      "pct": 0.019
+     },
+     {
+      "t": "STAG",
+      "name": "Stag Industrial",
+      "valMM": 1032.9,
+      "pct": 0.018
+     },
+     {
+      "t": "RHP",
+      "name": "Ryman Hospitality",
+      "valMM": 996.7,
+      "pct": 0.0174
+     },
+     {
+      "t": "CPT",
+      "name": "Camden Property",
+      "valMM": 989.4,
+      "pct": 0.0173
+     },
+     {
+      "t": "FR",
+      "name": "First Industrial",
+      "valMM": 966.5,
+      "pct": 0.0169
+     },
+     {
+      "t": "HR",
+      "name": "Healthcare Realty",
+      "valMM": 931.8,
+      "pct": 0.0163
+     },
+     {
+      "t": "FRT",
+      "name": "Federal Realty",
+      "valMM": 917.9,
+      "pct": 0.016
+     },
+     {
+      "t": "ARE",
+      "name": "Alexandria Real Estate",
+      "valMM": 914.1,
+      "pct": 0.016
+     },
+     {
+      "t": "MAC",
+      "name": "Macerich",
+      "valMM": 874.3,
+      "pct": 0.0153
+     },
+     {
+      "t": "BXP",
+      "name": "BXP",
+      "valMM": 854.3,
+      "pct": 0.0149
+     },
+     {
+      "t": "PECO",
+      "name": "Phillips Edison",
+      "valMM": 825.1,
+      "pct": 0.0144
+     },
+     {
+      "t": "KRG",
+      "name": "Kite Realty",
+      "valMM": 801.7,
+      "pct": 0.014
+     },
+     {
+      "t": "SBRA",
+      "name": "Sabra Health Care",
+      "valMM": 751.9,
+      "pct": 0.0131
+     },
+     {
+      "t": "SKT",
+      "name": "Tanger",
+      "valMM": 701,
+      "pct": 0.0122
+     },
+     {
+      "t": "RITM",
+      "name": "Rithm Capital",
+      "valMM": 680.1,
+      "pct": 0.0119
+     },
+     {
+      "t": "CDP",
+      "name": "COPT Defense",
+      "valMM": 651.8,
+      "pct": 0.0114
+     },
+     {
+      "t": "OUT",
+      "name": "Outfront Media",
+      "valMM": 643.2,
+      "pct": 0.0112
+     },
+     {
+      "t": "STWD",
+      "name": "Starwood Property",
+      "valMM": 607.1,
+      "pct": 0.0106
+     },
+     {
+      "t": "AGNC",
+      "name": "AGNC Investment",
+      "valMM": 606,
+      "pct": 0.0106
+     },
+     {
+      "t": "RYN",
+      "name": "Rayonier",
+      "valMM": 594.9,
+      "pct": 0.0104
+     },
+     {
+      "t": "VNO",
+      "name": "Vornado",
+      "valMM": 592.2,
+      "pct": 0.0103
+     },
+     {
+      "t": "MRP",
+      "name": "Millrose Properties",
+      "valMM": 577.2,
+      "pct": 0.0101
+     },
+     {
+      "t": "CUZ",
+      "name": "Cousins Properties",
+      "valMM": 536.8,
+      "pct": 0.0094
+     },
+     {
+      "t": "IRT",
+      "name": "Independence Realty",
+      "valMM": 531.5,
+      "pct": 0.0093
+     },
+     {
+      "t": "EPR",
+      "name": "EPR Properties",
+      "valMM": 512,
+      "pct": 0.0089
+     },
+     {
+      "t": "SLG",
+      "name": "SL Green",
+      "valMM": 494.2,
+      "pct": 0.0086
+     }
+    ]
    },
    {
     "name": "Коммунальные услуги",
-    "pct": 1.5
+    "pct": 2.61,
+    "valMM": 149652.5,
+    "count": 51,
+    "rows": [
+     {
+      "t": "NEE",
+      "name": "NextEra Energy",
+      "valMM": 17029.2,
+      "pct": 0.2975
+     },
+     {
+      "t": "DUK",
+      "name": "Duke Energy",
+      "valMM": 9077.3,
+      "pct": 0.1586
+     },
+     {
+      "t": "SO",
+      "name": "Southern Company",
+      "valMM": 8894.4,
+      "pct": 0.1554
+     },
+     {
+      "t": "CEG",
+      "name": "Constellation Energy",
+      "valMM": 6564.9,
+      "pct": 0.1147
+     },
+     {
+      "t": "AEP",
+      "name": "American Electric Power",
+      "valMM": 6265.3,
+      "pct": 0.1095
+     },
+     {
+      "t": "SRE",
+      "name": "Sempra",
+      "valMM": 5821.6,
+      "pct": 0.1017
+     },
+     {
+      "t": "EXC",
+      "name": "Exelon",
+      "valMM": 5527,
+      "pct": 0.0966
+     },
+     {
+      "t": "D",
+      "name": "Dominion Energy",
+      "valMM": 5008.4,
+      "pct": 0.0875
+     },
+     {
+      "t": "ETR",
+      "name": "Entergy",
+      "valMM": 4602.3,
+      "pct": 0.0804
+     },
+     {
+      "t": "ED",
+      "name": "Consolidated Edison",
+      "valMM": 4465.6,
+      "pct": 0.078
+     },
+     {
+      "t": "VST",
+      "name": "Vistra",
+      "valMM": 4291.4,
+      "pct": 0.075
+     },
+     {
+      "t": "XEL",
+      "name": "Xcel Energy",
+      "valMM": 4282.7,
+      "pct": 0.0748
+     },
+     {
+      "t": "PEG",
+      "name": "Public Service Enterprise",
+      "valMM": 4201.2,
+      "pct": 0.0734
+     },
+     {
+      "t": "WEC",
+      "name": "WEC Energy",
+      "valMM": 3970.2,
+      "pct": 0.0694
+     },
+     {
+      "t": "PCG",
+      "name": "PG&E",
+      "valMM": 3625.3,
+      "pct": 0.0633
+     },
+     {
+      "t": "EIX",
+      "name": "Edison International",
+      "valMM": 3378,
+      "pct": 0.059
+     },
+     {
+      "t": "DTE",
+      "name": "DTE Energy",
+      "valMM": 3279.7,
+      "pct": 0.0573
+     },
+     {
+      "t": "ATO",
+      "name": "Atmos Energy",
+      "valMM": 3223.7,
+      "pct": 0.0563
+     },
+     {
+      "t": "ES",
+      "name": "Eversource",
+      "valMM": 2919.6,
+      "pct": 0.051
+     },
+     {
+      "t": "CMS",
+      "name": "CMS Energy",
+      "valMM": 2661,
+      "pct": 0.0465
+     },
+     {
+      "t": "AWK",
+      "name": "American Water Works",
+      "valMM": 2655.7,
+      "pct": 0.0464
+     },
+     {
+      "t": "NRG",
+      "name": "NRG Energy",
+      "valMM": 2630.7,
+      "pct": 0.046
+     },
+     {
+      "t": "AEE",
+      "name": "Ameren",
+      "valMM": 2615.8,
+      "pct": 0.0457
+     },
+     {
+      "t": "PPL",
+      "name": "PPL",
+      "valMM": 2496.1,
+      "pct": 0.0436
+     },
+     {
+      "t": "CNP",
+      "name": "CenterPoint Energy",
+      "valMM": 2492.3,
+      "pct": 0.0435
+     },
+     {
+      "t": "FE",
+      "name": "FirstEnergy",
+      "valMM": 2484.3,
+      "pct": 0.0434
+     },
+     {
+      "t": "NI",
+      "name": "NiSource",
+      "valMM": 2401.8,
+      "pct": 0.042
+     },
+     {
+      "t": "EVRG",
+      "name": "Evergy",
+      "valMM": 2181.4,
+      "pct": 0.0381
+     },
+     {
+      "t": "LNT",
+      "name": "Alliant Energy",
+      "valMM": 1758.1,
+      "pct": 0.0307
+     },
+     {
+      "t": "TLN",
+      "name": "Talen Energy",
+      "valMM": 1305.8,
+      "pct": 0.0228
+     },
+     {
+      "t": "WTRG",
+      "name": "Essential Utilities",
+      "valMM": 1271.3,
+      "pct": 0.0222
+     },
+     {
+      "t": "PNW",
+      "name": "Pinnacle West",
+      "valMM": 1228.4,
+      "pct": 0.0215
+     },
+     {
+      "t": "OGE",
+      "name": "OGE Energy",
+      "valMM": 1207.7,
+      "pct": 0.0211
+     },
+     {
+      "t": "ORA",
+      "name": "Ormat",
+      "valMM": 1069.7,
+      "pct": 0.0187
+     },
+     {
+      "t": "UGI",
+      "name": "UGI",
+      "valMM": 988.2,
+      "pct": 0.0173
+     },
+     {
+      "t": "NJR",
+      "name": "New Jersey Resources",
+      "valMM": 954.6,
+      "pct": 0.0167
+     },
+     {
+      "t": "SWX",
+      "name": "Southwest Gas",
+      "valMM": 933.9,
+      "pct": 0.0163
+     },
+     {
+      "t": "IDA",
+      "name": "Idacorp",
+      "valMM": 928.4,
+      "pct": 0.0162
+     },
+     {
+      "t": "POR",
+      "name": "Portland General",
+      "valMM": 919.6,
+      "pct": 0.0161
+     },
+     {
+      "t": "BKH",
+      "name": "Black Hills",
+      "valMM": 841.9,
+      "pct": 0.0147
+     },
+     {
+      "t": "TXNM",
+      "name": "TXNM Energy",
+      "valMM": 792.8,
+      "pct": 0.0139
+     },
+     {
+      "t": "OKLO",
+      "name": "Oklo",
+      "valMM": 788.9,
+      "pct": 0.0138
+     },
+     {
+      "t": "OGS",
+      "name": "ONE Gas",
+      "valMM": 785.1,
+      "pct": 0.0137
+     },
+     {
+      "t": "SR",
+      "name": "Spire",
+      "valMM": 722.4,
+      "pct": 0.0126
+     },
+     {
+      "t": "CWEN",
+      "name": "Clearway Energy",
+      "valMM": 710.8,
+      "pct": 0.0124
+     },
+     {
+      "t": "AES",
+      "name": "AES",
+      "valMM": 664.6,
+      "pct": 0.0116
+     },
+     {
+      "t": "AVA",
+      "name": "Avista",
+      "valMM": 571.7,
+      "pct": 0.01
+     },
+     {
+      "t": "OTTR",
+      "name": "Otter Tail",
+      "valMM": 563.9,
+      "pct": 0.0099
+     },
+     {
+      "t": "NWE",
+      "name": "NorthWestern Energy",
+      "valMM": 546.1,
+      "pct": 0.0095
+     },
+     {
+      "t": "MDU",
+      "name": "MDU Resources",
+      "valMM": 532.8,
+      "pct": 0.0093
+     },
+     {
+      "t": "AWR",
+      "name": "American States Water",
+      "valMM": 518.9,
+      "pct": 0.0091
+     }
+    ]
    },
    {
     "name": "Сырьё и материалы",
-    "pct": 1.2
+    "pct": 2.51,
+    "valMM": 143711.8,
+    "count": 64,
+    "rows": [
+     {
+      "t": "LIN",
+      "name": "Linde",
+      "valMM": 18279.8,
+      "pct": 0.3194
+     },
+     {
+      "t": "NEM",
+      "name": "Newmont",
+      "valMM": 13648.4,
+      "pct": 0.2385
+     },
+     {
+      "t": "FCX",
+      "name": "Freeport-McMoRan",
+      "valMM": 7398.7,
+      "pct": 0.1293
+     },
+     {
+      "t": "ECL",
+      "name": "Ecolab",
+      "valMM": 6067.1,
+      "pct": 0.106
+     },
+     {
+      "t": "SHW",
+      "name": "Sherwin-Williams",
+      "valMM": 5601.8,
+      "pct": 0.0979
+     },
+     {
+      "t": "CRH",
+      "name": "CRH",
+      "valMM": 5490.5,
+      "pct": 0.0959
+     },
+     {
+      "t": "APD",
+      "name": "Air Products",
+      "valMM": 5244.6,
+      "pct": 0.0916
+     },
+     {
+      "t": "CTVA",
+      "name": "Corteva",
+      "valMM": 4579.8,
+      "pct": 0.08
+     },
+     {
+      "t": "NUE",
+      "name": "Nucor",
+      "valMM": 3256.9,
+      "pct": 0.0569
+     },
+     {
+      "t": "AU",
+      "name": "AngloGold Ashanti",
+      "valMM": 2951.8,
+      "pct": 0.0516
+     },
+     {
+      "t": "MLM",
+      "name": "Martin Marietta",
+      "valMM": 2758.4,
+      "pct": 0.0482
+     },
+     {
+      "t": "VMC",
+      "name": "Vulcan Materials",
+      "valMM": 2712.9,
+      "pct": 0.0474
+     },
+     {
+      "t": "RGLD",
+      "name": "Royal Gold",
+      "valMM": 2665.2,
+      "pct": 0.0466
+     },
+     {
+      "t": "PPG",
+      "name": "PPG Industries",
+      "valMM": 2567.6,
+      "pct": 0.0449
+     },
+     {
+      "t": "ATI",
+      "name": "ATI",
+      "valMM": 2391.6,
+      "pct": 0.0418
+     },
+     {
+      "t": "CRS",
+      "name": "Carpenter Technology",
+      "valMM": 2294.8,
+      "pct": 0.0401
+     },
+     {
+      "t": "B",
+      "name": "Barrick",
+      "valMM": 2281.3,
+      "pct": 0.0399
+     },
+     {
+      "t": "STLD",
+      "name": "Steel Dynamics",
+      "valMM": 2231.1,
+      "pct": 0.039
+     },
+     {
+      "t": "DOW",
+      "name": "Dow",
+      "valMM": 2221.5,
+      "pct": 0.0388
+     },
+     {
+      "t": "LYB",
+      "name": "LyondellBasell",
+      "valMM": 2023.1,
+      "pct": 0.0353
+     },
+     {
+      "t": "CDE",
+      "name": "Coeur Mining",
+      "valMM": 1910.7,
+      "pct": 0.0334
+     },
+     {
+      "t": "AA",
+      "name": "Alcoa",
+      "valMM": 1883.3,
+      "pct": 0.0329
+     },
+     {
+      "t": "ALB",
+      "name": "Albemarle",
+      "valMM": 1817.7,
+      "pct": 0.0318
+     },
+     {
+      "t": "SW",
+      "name": "Smurfit WestRock",
+      "valMM": 1785.5,
+      "pct": 0.0312
+     },
+     {
+      "t": "RS",
+      "name": "Reliance",
+      "valMM": 1774.1,
+      "pct": 0.031
+     },
+     {
+      "t": "HL",
+      "name": "Hecla Mining",
+      "valMM": 1681.8,
+      "pct": 0.0294
+     },
+     {
+      "t": "IP",
+      "name": "International Paper",
+      "valMM": 1650.3,
+      "pct": 0.0288
+     },
+     {
+      "t": "IFF",
+      "name": "IFF",
+      "valMM": 1648.4,
+      "pct": 0.0288
+     },
+     {
+      "t": "PKG",
+      "name": "Packaging Corp",
+      "valMM": 1635.5,
+      "pct": 0.0286
+     },
+     {
+      "t": "SCCO",
+      "name": "Southern Copper",
+      "valMM": 1617.3,
+      "pct": 0.0283
+     },
+     {
+      "t": "CCK",
+      "name": "Crown Holdings",
+      "valMM": 1593.8,
+      "pct": 0.0278
+     },
+     {
+      "t": "CF",
+      "name": "CF Industries",
+      "valMM": 1583,
+      "pct": 0.0277
+     },
+     {
+      "t": "DD",
+      "name": "DuPont",
+      "valMM": 1427.3,
+      "pct": 0.0249
+     },
+     {
+      "t": "BALL",
+      "name": "Ball",
+      "valMM": 1351.6,
+      "pct": 0.0236
+     },
+     {
+      "t": "MLI",
+      "name": "Mueller Industries",
+      "valMM": 1289.3,
+      "pct": 0.0225
+     },
+     {
+      "t": "RPM",
+      "name": "RPM International",
+      "valMM": 1275.9,
+      "pct": 0.0223
+     },
+     {
+      "t": "AMCR",
+      "name": "Amcor",
+      "valMM": 1264.6,
+      "pct": 0.0221
+     },
+     {
+      "t": "EMN",
+      "name": "Eastman Chemical",
+      "valMM": 1258.6,
+      "pct": 0.022
+     },
+     {
+      "t": "VALE",
+      "name": "Vale",
+      "valMM": 1174.1,
+      "pct": 0.0205
+     },
+     {
+      "t": "SOLS",
+      "name": "Solstice Advanced Materials",
+      "valMM": 1140.6,
+      "pct": 0.0199
+     },
+     {
+      "t": "AVY",
+      "name": "Avery Dennison",
+      "valMM": 1102.1,
+      "pct": 0.0193
+     },
+     {
+      "t": "ESI",
+      "name": "Element Solutions",
+      "valMM": 930.4,
+      "pct": 0.0163
+     },
+     {
+      "t": "CMC",
+      "name": "Commercial Metals",
+      "valMM": 906.8,
+      "pct": 0.0158
+     },
+     {
+      "t": "AMRZ",
+      "name": "Amrize",
+      "valMM": 864.5,
+      "pct": 0.0151
+     },
+     {
+      "t": "CE",
+      "name": "Celanese",
+      "valMM": 860.9,
+      "pct": 0.015
+     },
+     {
+      "t": "BCPC",
+      "name": "Balchem",
+      "valMM": 820.6,
+      "pct": 0.0143
+     },
+     {
+      "t": "GFI",
+      "name": "Gold Fields",
+      "valMM": 790.8,
+      "pct": 0.0138
+     },
+     {
+      "t": "ATR",
+      "name": "AptarGroup",
+      "valMM": 766.6,
+      "pct": 0.0134
+     },
+     {
+      "t": "MP",
+      "name": "MP Materials",
+      "valMM": 711.7,
+      "pct": 0.0124
+     },
+     {
+      "t": "EGO",
+      "name": "Eldorado Gold",
+      "valMM": 704.7,
+      "pct": 0.0123
+     },
+     {
+      "t": "SEE",
+      "name": "Sealed Air",
+      "valMM": 702.3,
+      "pct": 0.0123
+     },
+     {
+      "t": "HCC",
+      "name": "Warrior Met Coal",
+      "valMM": 694.1,
+      "pct": 0.0121
+     },
+     {
+      "t": "SON",
+      "name": "Sonoco",
+      "valMM": 616.2,
+      "pct": 0.0108
+     },
+     {
+      "t": "MOS",
+      "name": "Mosaic",
+      "valMM": 603,
+      "pct": 0.0105
+     },
+     {
+      "t": "KNF",
+      "name": "Knife River",
+      "valMM": 569.3,
+      "pct": 0.0099
+     },
+     {
+      "t": "EXP",
+      "name": "Eagle Materials",
+      "valMM": 568.4,
+      "pct": 0.0099
+     },
+     {
+      "t": "SXT",
+      "name": "Sensient",
+      "valMM": 543,
+      "pct": 0.0095
+     },
+     {
+      "t": "CENX",
+      "name": "Century Aluminum",
+      "valMM": 528.8,
+      "pct": 0.0092
+     },
+     {
+      "t": "AXTA",
+      "name": "Axalta",
+      "valMM": 527.9,
+      "pct": 0.0092
+     },
+     {
+      "t": "CBT",
+      "name": "Cabot",
+      "valMM": 498.3,
+      "pct": 0.0087
+     },
+     {
+      "t": "FUL",
+      "name": "H.B. Fuller",
+      "valMM": 495.3,
+      "pct": 0.0087
+     },
+     {
+      "t": "CLF",
+      "name": "Cleveland-Cliffs",
+      "valMM": 495.3,
+      "pct": 0.0087
+     },
+     {
+      "t": "CC",
+      "name": "Chemours",
+      "valMM": 493.2,
+      "pct": 0.0086
+     },
+     {
+      "t": "MTRN",
+      "name": "Materion",
+      "valMM": 487.3,
+      "pct": 0.0085
+     }
+    ]
    }
   ]
  }
