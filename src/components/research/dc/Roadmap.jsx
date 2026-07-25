@@ -1394,7 +1394,7 @@ function CompetitionBlock({ d, c }) {
             <div style={miniBody}>{d.entryBarrier.why}</div>
           </div>
         )}
-        {d.switchingCost && <div style={miniCard}><div style={miniKicker}>ИЗДЕРЖКИ ПЕРЕКЛЮЧЕНИЯ · РОВ</div><div style={miniBody}>{d.switchingCost}</div></div>}
+        {d.switchingCost && <div style={miniCard}><div style={miniKicker}>ПОЧЕМУ КЛИЕНТ НЕ МОЖЕТ БЫСТРО УЙТИ</div><div style={miniBody}>{d.switchingCost}</div></div>}
       </div>
     </Block>
   );
@@ -1447,8 +1447,8 @@ function SupplyBlock({ d, c }) {
         </div>
       )}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
-        {d.leadTime && <div style={miniCard}><div style={miniKicker}>СРОК ЗАПУСКА МОЩНОСТЕЙ</div><div style={miniBody}>{d.leadTime}</div></div>}
-        {d.utilization && <div style={miniCard}><div style={miniKicker}>ЗАГРУЗКА</div><div style={miniBody}>{d.utilization}</div></div>}
+        {d.leadTime && <div style={miniCard}><div style={miniKicker}>СКОЛЬКО СТРОИТСЯ НОВЫЙ ЗАВОД</div><div style={miniBody}>{d.leadTime}</div></div>}
+        {d.utilization && <div style={miniCard}><div style={miniKicker}>ЗАГРУЗКА ЗАВОДОВ</div><div style={miniBody}>{d.utilization}</div></div>}
         {d.crowdingOut && <div style={miniCard}><div style={miniKicker}>ЭФФЕКТ ВЫТЕСНЕНИЯ</div><div style={miniBody}>{d.crowdingOut}</div></div>}
       </div>
       {d.capacityAdds?.length > 0 && (
@@ -1466,7 +1466,7 @@ function SupplyBlock({ d, c }) {
 // ─ Block 6 — Unit economics ────────────────────────────────────────────────
 function UnitEconBlock({ d, c }) {
   return (
-    <Block id="unit" takeaway={d.takeaway} accent={c} kicker="06 · ЦЕНА · МАРЖА · ВЫХОД ГОДНЫХ">
+    <Block id="unit" takeaway={d.takeaway} accent={c} kicker="06 · ЦЕНА · МАРЖА · БРАК">
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.pricePerUnit && <div style={miniCard}><div style={miniKicker}>ЦЕНА ЗА ЕДИНИЦУ</div><div style={miniBody}>{d.pricePerUnit}</div></div>}
         {d.grossMargin && <div style={miniCard}><div style={miniKicker}>ВАЛОВАЯ МАРЖА</div><div style={miniBody}>{d.grossMargin}</div></div>}
@@ -1474,7 +1474,7 @@ function UnitEconBlock({ d, c }) {
       </div>
       {d.yields?.length > 0 && (
         <div style={{ marginTop: 14 }}>
-          <div style={miniKicker}>ВЫХОД ГОДНЫХ (YIELD) — критично для HBM</div>
+          <div style={miniKicker}>СКОЛЬКО ЧИПОВ ВЫХОДИТ БЕЗ БРАКА — ГЛАВНЫЙ РЫЧАГ ПРИБЫЛИ</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginTop: 8 }}>
             {d.yields.map((y, i) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 12, color: '#d4d4d8', flexWrap: 'wrap' }}><span style={{ color: '#fafafa', fontWeight: 600, minWidth: 220 }}>{y.label}</span><span style={{ color: '#c4c4cc', flex: 1 }}>{y.value}</span></div>)}
           </div>
