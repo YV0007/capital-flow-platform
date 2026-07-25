@@ -1503,13 +1503,20 @@ function RoadmapBlock({ d, c }) {
       )}
       {d.disruption?.length > 0 && (
         <div>
-          <div style={miniKicker}>УГРОЗЫ ЗАМЕЩЕНИЯ</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
+          <div style={miniKicker}>МОЖЕТ ЛИ ЧТО-ТО ЗАМЕНИТЬ HBM</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8 }}>
             {d.disruption.map((x, i) => (
-              <div key={i} style={{ ...miniCard, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'baseline' }}>
-                <span style={{ color: '#fafafa', fontWeight: 600, fontSize: 12.5, minWidth: 130 }}>{x.tech}</span>
-                <Badge text={x.verdict} col="#10b981" />
-                <span style={{ fontSize: 11.5, color: '#a1a1aa', flex: 1, lineHeight: 1.5, minWidth: 200 }}>{x.detail}</span>
+              <div key={i} style={{ ...miniCard, padding: '14px 16px' }}>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
+                  <span style={{ color: '#fafafa', fontWeight: 700, fontSize: 13 }}>{x.tech}</span>
+                  <Badge text={x.verdict} col="#10b981" />
+                </div>
+                <div style={{ fontSize: 12.5, color: '#c4c4cc', lineHeight: 1.65 }}>{x.detail}</div>
+                {x.angle && (
+                  <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>
+                    <span style={{ color: c, fontWeight: 700 }}>Для инвестора: </span>{x.angle}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -1525,13 +1532,15 @@ function DependenciesBlock({ d, c }) {
     <Block id="deps" takeaway={d.takeaway} accent={c} kicker="08 · ОТ КОГО ЗАВИСИТ И КТО ПОКУПАЕТ">
       {d.upstream?.length > 0 && (
         <div style={{ marginBottom: 14 }}>
-          <div style={miniKicker}>ВВЕРХ · КРИТИЧЕСКИЕ ВХОДЫ И МОНОПОЛИИ</div>
+          <div style={miniKicker}>ЧТО НУЖНО ДЛЯ ПРОИЗВОДСТВА — И КТО ЭТО ПОСТАВЛЯЕТ</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
             {d.upstream.map((u, i) => (
-              <div key={i} style={{ ...miniCard, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'baseline' }}>
-                <span style={{ color: '#fafafa', fontWeight: 600, fontSize: 12.5, minWidth: 150 }}>{u.item}</span>
-                {u.supplier && <span style={{ fontSize: 11.5, color: c, fontFamily: 'ui-monospace,monospace' }}>{u.supplier}</span>}
-                {u.note && <span style={{ fontSize: 11.5, color: '#a1a1aa', flex: 1, lineHeight: 1.5, minWidth: 200 }}>{u.note}</span>}
+              <div key={i} style={{ ...miniCard, padding: '12px 14px' }}>
+                <div style={{ color: '#fafafa', fontWeight: 600, fontSize: 12.5, marginBottom: 5 }}>{u.item}</div>
+                <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55 }}>
+                  {u.supplier && <><span style={{ color: '#71717a' }}>Поставщик: </span><span style={{ color: c, fontWeight: 600 }}>{u.supplier}</span>{u.note ? ' — ' : ''}</>}
+                  {u.note}
+                </div>
               </div>
             ))}
           </div>
@@ -1605,7 +1614,7 @@ function MonitoringBlock({ d, c }) {
       )}
       {d.canary?.length > 0 && (
         <div style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 10, padding: '14px 16px' }}>
-          <div style={{ fontSize: 9, color: '#ef4444', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 8 }}>КАНАРЕЙКА · ПЕРВЫЙ ПРИЗНАК, ЧТО ТЕЗИС ЛОМАЕТСЯ</div>
+          <div style={{ fontSize: 9, color: '#ef4444', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 8 }}>ПЕРВЫЕ СИГНАЛЫ, ЧТО ТЕЗИС ЛОМАЕТСЯ — ПОРА ВЫХОДИТЬ</div>
           <ul style={{ margin: 0, paddingLeft: 16, color: '#d4d4d8', fontSize: 12.5, lineHeight: 1.7 }}>{d.canary.map((x, i) => <li key={i} style={{ marginBottom: 4 }}>{x}</li>)}</ul>
         </div>
       )}
@@ -1643,6 +1652,59 @@ function BullBear({ v, c }) {
 }
 
 // ─ NodeDetail — assembles the memo ─────────────────────────────────────────
+// Dated "recent developments" block — current debate / news, verdict per story.
+function UpdateBlock({ d, c }) {
+  const toneCol = t => t === 'calm' ? '#10b981' : t === 'watch' ? '#f59e0b' : '#a1a1aa';
+  return (
+    <Block id="update" accent={c} kicker="СВЕЖИЙ РАЗБОР · ЧТО ПРОИСХОДИТ СЕЙЧАС" lead={d.asOf}>
+      {d.headline && <div style={{ fontSize: 15.5, color: '#fafafa', fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>{d.headline}</div>}
+      {d.summary && <div style={{ fontSize: 13, color: '#c4c4cc', lineHeight: 1.7, marginBottom: 14 }}>{d.summary}</div>}
+      {d.stories?.length > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {d.stories.map((s, i) => (
+            <div key={i} style={{ ...miniCard, padding: '14px 16px' }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
+                <span style={{ fontSize: 9.5, color: '#52525b', fontFamily: 'ui-monospace,monospace', fontWeight: 700 }}>{String(i + 1).padStart(2, '0')}</span>
+                <span style={{ color: '#fafafa', fontWeight: 700, fontSize: 13 }}>{s.title}</span>
+                {s.verdict && <Badge text={s.verdict} col={toneCol(s.tone)} />}
+              </div>
+              <div style={{ fontSize: 12.5, color: '#c4c4cc', lineHeight: 1.65 }}>{s.detail}</div>
+            </div>
+          ))}
+        </div>
+      )}
+      {d.bottomLine && (
+        <div style={{ marginTop: 14, padding: '14px 16px', background: `${c}10`, borderLeft: `3px solid ${c}`, borderRadius: '0 9px 9px 0' }}>
+          <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 }}>ИТОГ</div>
+          <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.7 }}>{d.bottomLine}</div>
+        </div>
+      )}
+    </Block>
+  );
+}
+
+// News feed — dated headlines with source + short blurb.
+function NewsBlock({ items, c }) {
+  return (
+    <Block id="news" accent={c} kicker="НОВОСТИ ЗВЕНА">
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        {items.map((n, i) => (
+          <div key={i} style={{ padding: '14px 0', borderTop: i ? '1px solid #1f1f23' : 'none', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <div style={{ minWidth: 92 }}>
+              <div style={{ fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>{n.date}</div>
+              {n.source && <div style={{ fontSize: 9.5, color: c, marginTop: 4, fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{n.source}</div>}
+            </div>
+            <div style={{ flex: 1, minWidth: 240 }}>
+              <div style={{ fontSize: 13.5, color: '#fafafa', fontWeight: 600, lineHeight: 1.4, marginBottom: n.blurb ? 5 : 0 }}>{n.title}</div>
+              {n.blurb && <div style={{ fontSize: 12, color: '#a1a1aa', lineHeight: 1.6 }}>{n.blurb}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Block>
+  );
+}
+
 function NodeDetail({ node, onBack, onJump }) {
   const bucket = DC_BUCKETS[node.bucket];
   const c = bucket?.color || '#a1a1aa';
@@ -1659,6 +1721,8 @@ function NodeDetail({ node, onBack, onJump }) {
     .sort((a, b) => (order[a.conviction] ?? 9) - (order[b.conviction] ?? 9));
 
   const nav = [];
+  if (detail?.update) nav.push({ id: 'update', label: 'Сейчас' });
+  if (detail?.news?.length) nav.push({ id: 'news', label: 'Новости' });
   if (detail?.marketSizing) nav.push({ id: 'market', label: 'Рынок' });
   if (detail?.valueCapture) nav.push({ id: 'value', label: 'Стоимость' });
   if (detail?.competition) nav.push({ id: 'competition', label: 'Конкуренция' });
@@ -1672,7 +1736,7 @@ function NodeDetail({ node, onBack, onJump }) {
   if (detail?.monitoring) nav.push({ id: 'monitor', label: 'Мониторинг' });
   if (detail?.verdict?.bull || detail?.verdict?.bear) nav.push({ id: 'cases', label: 'Сценарии' });
 
-  const hasDeep = !!(detail && (detail.verdict || detail.tldr || detail.marketSizing || detail.valueCapture || detail.competition || detail.demand || detail.supply || detail.unitEconomics || detail.roadmap || detail.dependencies || detail.risks?.length || detail.universe?.length || detail.monitoring));
+  const hasDeep = !!(detail && (detail.update || detail.news?.length || detail.verdict || detail.tldr || detail.marketSizing || detail.valueCapture || detail.competition || detail.demand || detail.supply || detail.unitEconomics || detail.roadmap || detail.dependencies || detail.risks?.length || detail.universe?.length || detail.monitoring));
 
   return (
     <div style={{ maxWidth: 940, margin: '0 auto', padding: '8px 20px 90px', animation: 'detail-fade 220ms ease' }}>
@@ -1713,6 +1777,8 @@ function NodeDetail({ node, onBack, onJump }) {
         </Block>
       )}
 
+      {detail?.update && <UpdateBlock d={detail.update} c={c} />}
+      {detail?.news?.length > 0 && <NewsBlock items={detail.news} c={c} />}
       {detail?.marketSizing && <MarketSizingBlock d={detail.marketSizing} c={c} />}
       {detail?.valueCapture && <ValueCaptureBlock d={detail.valueCapture} c={c} />}
       {detail?.competition && <CompetitionBlock d={detail.competition} c={c} />}
