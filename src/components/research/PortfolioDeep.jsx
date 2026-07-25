@@ -312,9 +312,10 @@ function SectorAccordion({ sectors, q }) {
   );
 }
 
-function Holdings13F({ h }) {
+function Holdings13F({ h, only }) {
   const [showAll, setShowAll] = useState(false);
   const [q, setQ] = useState('');
+  const show = (s) => !only || only === s;
   const grouped = h.sectors && h.sectors.length > 0;
   let rows = h.rows || [];
   if (q) rows = rows.filter((r) => (r.t + ' ' + r.name).toLowerCase().includes(q.toLowerCase()));
@@ -323,6 +324,7 @@ function Holdings13F({ h }) {
     : (h.byIndustry || []).filter((x) => x.pct > 0).sort((a, b) => b.pct - a.pct);
   return (
     <div style={{ marginBottom: 26 }}>
+      {show('holdings') && (<>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
         <h3 style={{ fontFamily: 'var(--serif)', fontSize: 21, fontWeight: 500, color: C.ink, margin: 0 }}>Публичный портфель (13F)</h3>
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{h.positions || (h.rows || []).length} позиций · {h.totalValue || ''}</span>
@@ -366,9 +368,10 @@ function Holdings13F({ h }) {
           )}
         </>
       )}
+      </>)}
 
       {/* top increases / decreases */}
-      {(h.increases || h.decreases) && (
+      {show('moves') && (h.increases || h.decreases) && (
         <div style={{ display: 'flex', gap: 16, marginTop: 18, flexWrap: 'wrap' }}>
           {h.increases && h.increases.length > 0 && <MoveTable title="Крупнейший рост за квартал" rows={h.increases} up />}
           {h.decreases && h.decreases.length > 0 && <MoveTable title="Крупнейшее сокращение за квартал" rows={h.decreases} />}
@@ -376,7 +379,7 @@ function Holdings13F({ h }) {
       )}
 
       {/* 13D/G filings — >5% ownership stakes */}
-      {h.filings13DG && h.filings13DG.rows && h.filings13DG.rows.length > 0 && (
+      {show('filings') && h.filings13DG && h.filings13DG.rows && h.filings13DG.rows.length > 0 && (
         <div style={{ marginTop: 18, border: `1px solid ${C.line}`, borderRadius: 10, background: C.card, overflow: 'hidden' }}>
           <div style={{ padding: '12px 16px 8px' }}>
             <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink }}>Крупные доли &gt;5% (13D/G)</div>
@@ -407,6 +410,7 @@ export default function PortfolioDeep({ data, focus }) {
   const [tab, setTab] = useState('sector');
   const [search, setSearch] = useState('');
   const [keyOnly, setKeyOnly] = useState(false);
+  const [mainTab, setMainTab] = useState('holdings');
   // default to the first sector that actually holds companies (some, e.g. asset
   // management, carry no named positions and would open to an empty pane)
   const [active, setActive] = useState(() => {
@@ -454,14 +458,34 @@ export default function PortfolioDeep({ data, focus }) {
     );
   };
 
+  // BlackRock-scale filer: unify everything into ONE space with logical section-tabs
+  const H = data.holdings13F;
+  const bigFiler = !!(H && H.sectors && H.sectors.length);
+  const sections = [
+    ['holdings', 'Портфель по секторам'],
+    (H && (H.increases || H.decreases)) ? ['moves', 'Движение за квартал'] : null,
+    (H && H.filings13DG) ? ['filings', 'Крупные доли >5%'] : null,
+    n.blocks.length ? ['segments', 'Бизнес-сегменты'] : null,
+  ].filter(Boolean);
+  const showSegments = !bigFiler || mainTab === 'segments';
+
   return (
     <div>
       {n.summary && <p style={{ fontFamily: 'var(--serif)', fontSize: 16, lineHeight: 1.6, color: C.ink, margin: '0 0 22px', maxWidth: 720 }}>{n.summary}</p>}
 
-      {data.holdings13F && <Holdings13F h={data.holdings13F} />}
+      {bigFiler && (
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20, borderBottom: `1px solid ${C.line}`, paddingBottom: 14 }}>
+          {sections.map(([id, lab]) => {
+            const on = mainTab === id;
+            return <button key={id} onClick={() => setMainTab(id)} style={{ fontSize: 13, fontWeight: on ? 600 : 500, padding: '7px 15px', borderRadius: 16, border: `1px solid ${on ? C.teal : C.line}`, background: on ? C.teal + '18' : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{lab}</button>;
+          })}
+        </div>
+      )}
+
+      {H && (bigFiler ? (mainTab !== 'segments' && <Holdings13F h={H} only={mainTab} />) : <Holdings13F h={H} />)}
 
       {/* ── Куда вложены деньги ── */}
-      {tabs.length > 0 && (
+      {showSegments && tabs.length > 0 && (
         <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '13px 16px', marginBottom: 22 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkSoft, marginRight: 6 }}>Куда вложены деньги</span>
@@ -507,6 +531,8 @@ export default function PortfolioDeep({ data, focus }) {
         </div>
       )}
 
+      {showSegments && (<>
+      {bigFiler && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5, margin: '0 0 14px', maxWidth: 720 }}>Как устроен сам бизнес BlackRock — по типам мандатов (ETF, частные рынки, институциональные, розница, деньги, технологии). Это про источники комиссий, а не про то, какие акции держат клиентские фонды (см. вкладку «Портфель по секторам»).</div>}
       {/* ── Filters ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск по компании…" style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, fontFamily: 'var(--sans)', width: 220, outline: 'none' }} />
@@ -541,6 +567,7 @@ export default function PortfolioDeep({ data, focus }) {
           </div>
         );
       })()}
+      </>)}
 
     </div>
   );
