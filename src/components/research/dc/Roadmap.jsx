@@ -1311,7 +1311,7 @@ function MarketSizingBlock({ d, c }) {
     <Block id="market" takeaway={d.takeaway} accent={c} kicker="01 · РАЗМЕР РЫНКА И ТРАЕКТОРИЯ" lead={d.cagr}>
       {d.tam?.length > 0 && (
         <div style={{ ...cardBg, padding: '16px 18px', marginBottom: 14 }}>
-          <div style={{ ...miniKicker, marginBottom: 2 }}>TAM ПО ГОДАМ ($ МЛРД)</div>
+          <div style={{ ...miniKicker, marginBottom: 2 }}>{d.chartTitle || 'РАЗМЕР РЫНКА ПО ГОДАМ ($ МЛРД)'}</div>
           <TamChart rows={d.tam} c={c} />
         </div>
       )}
@@ -1509,7 +1509,7 @@ function RoadmapBlock({ d, c }) {
               <div key={i} style={{ ...miniCard, padding: '14px 16px' }}>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
                   <span style={{ color: '#fafafa', fontWeight: 700, fontSize: 13 }}>{x.tech}</span>
-                  <Badge text={x.verdict} col="#10b981" />
+                  <Badge text={x.verdict} col={x.tone === 'risk' ? '#ef4444' : x.tone === 'watch' ? '#f59e0b' : '#10b981'} />
                 </div>
                 <div style={{ fontSize: 12.5, color: '#c4c4cc', lineHeight: 1.65 }}>{x.detail}</div>
                 {x.angle && (
