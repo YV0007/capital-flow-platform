@@ -74,7 +74,8 @@ const LAYERS = [
   { id: 'L8',  label: 'СВЯЗЬ',          caption: 'сеть · оптика' },
   { id: 'L9',  label: 'СИСТЕМЫ',        caption: 'серверы · охлаждение · стройка' },
   { id: 'L10', label: 'ВЫЧИСЛЕНИЯ',     caption: 'стойка' },
-  { id: 'L11', label: 'РЕЗУЛЬТАТ',      caption: 'модели · ИИ для бизнеса' },
+  { id: 'L11', label: 'ИНФЕРЕНС',       caption: 'работа моделей · цена ответа' },
+  { id: 'L12', label: 'РЕЗУЛЬТАТ',      caption: 'модели · ИИ для бизнеса' },
 ];
 
 // ─ Nodes (sub-sectors) ────────────────────────────────────────────────────
@@ -139,9 +140,12 @@ const NODES_RAW = [
   // L10 — Compute Convergence
   { id: 'rack',        label: 'AI-ВЫЧИСЛЕНИЯ',    sector: 'AI Compute Infra', bucket: 'Compute & Silicon',      layer: 9, big: true, secondarySector: 'AI Compute Infra (pivot)' },
 
-  // L11 — Output
-  { id: 'lab',         label: 'AI-лаборатории',   sector: 'Frontier Lab',   bucket: 'Compute & Silicon',        layer: 10 },
-  { id: 'apps',        label: 'Внедрение ИИ',     sector: 'AI Apps',        bucket: 'Software & Apps',          layer: 10 },
+  // L11 — Inference (serving trained models; where AI earns per answer)
+  { id: 'inference',   label: 'Инференс',         sector: 'Inference',      bucket: 'Compute & Silicon',        layer: 10 },
+
+  // L12 — Output
+  { id: 'lab',         label: 'AI-лаборатории',   sector: 'Frontier Lab',   bucket: 'Compute & Silicon',        layer: 11 },
+  { id: 'apps',        label: 'Внедрение ИИ',     sector: 'AI Apps',        bucket: 'Software & Apps',          layer: 11 },
 ];
 
 // ─ Node intel — plain-Russian "what is this" per sub-sector ────────────────
@@ -228,6 +232,8 @@ const NODE_INTEL = {
   transceivers: 'Готовые оптические модули — «переходники», которые вставляют в порт коммутатора или сервера, чтобы электрический сигнал превратить в свет и отправить по волокну. Нынешнее поколение — 800 гигабит, следующее (1,6 терабита) разгоняется в 2026. Внутри модуля — лазер, оптика и чип-обработчик; это отдельный продукт над «сырой» фотоникой.',
 
   server: 'Точка, где всё железо превращается в машину: вычислительные чипы, память, платы, блоки питания и жидкостное охлаждение собирают в готовый AI-сервер, а серверы — в целую стойку (например, GB200 NVL72 — 72 GPU в одном шкафу). Такая стойка весит под полторы тонны, содержит около 2 миль медных кабелей и почти 200 быстроразъёмных соединений для жидкости.',
+
+  inference: 'Работа уже обученной модели: каждый раз, когда она отвечает на вопрос, пишет код или разбирает картинку, это и есть инференс. Обучение — один дорогой «забег» на месяцы, а инференс идёт непрерывно, миллиарды раз в день, и считается по цене за ответ. Требования тут другие: важна не столько сырая мощность, сколько скорость ответа и то, сколько стоит и сколько энергии съедает каждый запрос.',
 };
 
 // ─ Node role — deeper "why this matters in the whole chain" per sub-sector ─
@@ -310,6 +316,8 @@ const NODE_ROLE = {
 
   transceivers: 'Это один из самых чистых способов сыграть на буме AI-сетей: на каждый ускоритель приходится всё больше оптических линий, и за 2026 объёмы 800G+ выросли в разы. Но настоящее «горлышко» — не сборка модулей, а лазеры EML вверху цепочки: их серийно на 200 Гбит/канал (нужны для 1,6T) делает почти только Lumentum, и они в дефиците до 2027 — Nvidia уже скупает мощности вперёд. Сборку крупнейшей доли модулей держит Fabrinet (Таиланд) — контрактный завод для Nvidia, Cisco, Coherent, строит новый корпус на ~2 млн кв. футов. По объёму же лидируют китайские Innolight и Eoptolink — сильнейшие имена, но их листинг в Китае труднодоступен западному портфелю. Альфа: держать компонентное «горлышко» (Lumentum EML) ценнее, чем массовую сборку.',
 
+  inference: 'Это то звено, где вся стройка обязана окупиться: обучение моделей — это пока чистые расходы, а инференс — единственное место, где ИИ приносит деньги за каждый ответ. Поэтому главная борьба здесь идёт за стоимость запроса: чем дешевле и быстрее отвечает модель, тем выше маржа у всех, кто продаёт ИИ бизнесу. Nvidia доминирует и тут, но именно в инференсе у неё впервые появились реальные конкуренты: чипы, заточенные под скорость ответа, а не под обучение (Groq, Cerebras, d-Matrix), и заказные чипы гигантов от Broadcom. Рядом — отдельный слой облаков, которые продают доступ к готовым моделям по цене за объём текста. Инференс уже стал большей частью всех вычислений ИИ и растёт быстрее обучения, поэтому сюда смещается и спрос на чипы, и главный вопрос темы — окупятся ли вложенные триллионы.',
+
   server: 'Здесь происходит самое дорогое превращение всей цепочки: стойка GB200 стоит $3–4 млн, а следующая, Vera Rubin, — до $8,8 млн. Но власть и маржа устроены неочевидно. Физическую сборку держат тайваньские ODM — Foxconn (крупнейший, его выручка от AI-серверов уже обогнала iPhone), Quanta, Wiwynn; западные бренды Dell и HPE добавляют сервис и финансирование; Supermicro ближе всех к Nvidia, но с багажом бухгалтерских проблем 2024–25. Главный сдвиг для альфы: Nvidia забирает интеграцию себе — с поколения Vera Rubin поставляет уже собранный вычислительный модуль (~90% стоимости), оставляя сборщикам только «прикрутить» стойку и маржу в 2–3%. То есть выручка у ODM огромна и растёт, но прибыль тонкая и сжимается — растут в абсолюте, но не в процентах. Более интересная динамика — у западных сборщиков Celestica и Jabil, чей облачный сегмент растёт на десятки процентов в год.',
 };
 
@@ -386,9 +394,11 @@ const EDGES_RAW = [
   ['liquid',       'server'],
   ['server',       'rack'],
 
-  // Compute → Output
+  // Compute → Inference → Output (labs consume raw capacity to TRAIN;
+  // inference serves the trained models, and apps sell that to business)
+  ['rack',         'inference'],
   ['rack',         'lab'],
-  ['rack',         'apps'],
+  ['inference',    'apps'],
 ];
 
 // ─ Layout: compute (x,y) for each node from layer + per-layer slot ────────
@@ -1600,6 +1610,54 @@ function UniverseBlock({ rows, c }) {
   );
 }
 
+// ─ Block 10 (alt) — Curated picks in tiers: established leaders vs. quieter
+// emerging bets. Each row carries its own "why" plus either what is already
+// priced in (leaders) or the explicit risk (emerging).
+function PicksBlock({ groups, c, takeaway }) {
+  return (
+    <Block id="universe" accent={c} kicker="10 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ" takeaway={takeaway}>
+      {groups.map((g, gi) => {
+        const gc = g.tone === 'emerging' ? '#22d3ee' : c;
+        return (
+          <div key={gi} style={{ marginBottom: gi < groups.length - 1 ? 24 : 0 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginBottom: 6 }}>
+              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#fafafa' }}>{g.group}</span>
+              {g.badge && <Badge text={g.badge} col={gc} />}
+            </div>
+            {g.note && <div style={{ fontSize: 11.5, color: '#71717a', lineHeight: 1.6, marginBottom: 12 }}>{g.note}</div>}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(290px,1fr))', gap: 10 }}>
+              {g.rows.map((r, i) => (
+                <div key={i} style={{ ...miniCard, padding: '14px 16px', borderLeft: `3px solid ${gc}` }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'baseline', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 13, color: '#fafafa', fontWeight: 700 }}>{r.company}</span>
+                    <span style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', whiteSpace: 'nowrap' }}>{r.ticker}</span>
+                  </div>
+                  {(r.mcap || r.exposure) && (
+                    <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 4, fontFamily: 'ui-monospace,monospace' }}>
+                      {[r.mcap, r.exposure].filter(Boolean).join(' · ')}
+                    </div>
+                  )}
+                  {r.why && <div style={{ fontSize: 12, color: '#c4c4cc', lineHeight: 1.6, marginTop: 8 }}>{r.why}</div>}
+                  {r.priced && (
+                    <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>
+                      <span style={{ color: '#f59e0b', fontWeight: 700 }}>Уже в цене: </span>{r.priced}
+                    </div>
+                  )}
+                  {r.risk && (
+                    <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>
+                      <span style={{ color: '#ef4444', fontWeight: 700 }}>Риск: </span>{r.risk}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </Block>
+  );
+}
+
 // ─ Block 11 — Monitoring + canary ──────────────────────────────────────────
 function MonitoringBlock({ d, c }) {
   return (
@@ -1732,11 +1790,11 @@ function NodeDetail({ node, onBack, onJump }) {
   if (detail?.roadmap) nav.push({ id: 'roadmap', label: 'Технологии' });
   if (detail?.dependencies) nav.push({ id: 'deps', label: 'Зависимости' });
   if (detail?.risks?.length) nav.push({ id: 'risks', label: 'Риски' });
-  if (detail?.universe?.length) nav.push({ id: 'universe', label: 'Игроки' });
+  if (detail?.universe?.length || detail?.picks?.length) nav.push({ id: 'universe', label: 'Игроки' });
   if (detail?.monitoring) nav.push({ id: 'monitor', label: 'Мониторинг' });
   if (detail?.verdict?.bull || detail?.verdict?.bear) nav.push({ id: 'cases', label: 'Сценарии' });
 
-  const hasDeep = !!(detail && (detail.update || detail.news?.length || detail.verdict || detail.tldr || detail.marketSizing || detail.valueCapture || detail.competition || detail.demand || detail.supply || detail.unitEconomics || detail.roadmap || detail.dependencies || detail.risks?.length || detail.universe?.length || detail.monitoring));
+  const hasDeep = !!(detail && (detail.update || detail.news?.length || detail.picks?.length || detail.verdict || detail.tldr || detail.marketSizing || detail.valueCapture || detail.competition || detail.demand || detail.supply || detail.unitEconomics || detail.roadmap || detail.dependencies || detail.risks?.length || detail.universe?.length || detail.monitoring));
 
   return (
     <div style={{ maxWidth: 940, margin: '0 auto', padding: '8px 20px 90px', animation: 'detail-fade 220ms ease' }}>
@@ -1788,7 +1846,9 @@ function NodeDetail({ node, onBack, onJump }) {
       {detail?.roadmap && <RoadmapBlock d={detail.roadmap} c={c} />}
       {detail?.dependencies && <DependenciesBlock d={detail.dependencies} c={c} />}
       {detail?.risks?.length > 0 && <RiskMatrixBlock rows={detail.risks} c={c} />}
-      {detail?.universe?.length > 0 && <UniverseBlock rows={detail.universe} c={c} />}
+      {detail?.picks?.length > 0
+        ? <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} />
+        : detail?.universe?.length > 0 && <UniverseBlock rows={detail.universe} c={c} />}
       {detail?.monitoring && <MonitoringBlock d={detail.monitoring} c={c} />}
       {(detail?.verdict?.bull || detail?.verdict?.bear) && <BullBear v={detail.verdict} c={c} />}
 
@@ -1801,7 +1861,7 @@ function NodeDetail({ node, onBack, onJump }) {
       )}
 
       {/* Base companies only when no investable-universe table */}
-      {!detail?.universe?.length && baseCompanies.length > 0 && (
+      {!detail?.universe?.length && !detail?.picks?.length && baseCompanies.length > 0 && (
         <Block id="players" accent={c} kicker="КЛЮЧЕВЫЕ ИГРОКИ">
           <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 14 }}>Заметные компании этого звена — как примеры, кто им занимается, а не список для покупки.</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: 10 }}>

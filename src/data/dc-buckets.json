@@ -1,79 +1,169 @@
 {
-  "DC_CONVICTION_ORDER": ["High", "Med-High", "Medium", "Low-Med", "Low"],
-  "DC_RISK_ORDER": ["Core", "Growth", "Aggressive"],
-  "DC_PPR_ORDER": ["Pub", "Pvt"],
+  "DC_CONVICTION_ORDER": [
+    "High",
+    "Med-High",
+    "Medium",
+    "Low-Med",
+    "Low"
+  ],
+  "DC_RISK_ORDER": [
+    "Core",
+    "Growth",
+    "Aggressive"
+  ],
+  "DC_PPR_ORDER": [
+    "Pub",
+    "Pvt"
+  ],
   "DC_CONVICTION_STYLE": {
-    "High":     { "color": "#10b981", "bg": "rgba(16,185,129,0.15)",  "border": "rgba(16,185,129,0.55)" },
-    "Med-High": { "color": "#34d399", "bg": "rgba(52,211,153,0.10)",  "border": "rgba(52,211,153,0.40)" },
-    "Medium":   { "color": "#a1a1aa", "bg": "rgba(161,161,170,0.10)", "border": "rgba(161,161,170,0.35)" },
-    "Low-Med":  { "color": "#f59e0b", "bg": "rgba(245,158,11,0.10)",  "border": "rgba(245,158,11,0.35)" },
-    "Low":      { "color": "#ef4444", "bg": "rgba(239,68,68,0.10)",   "border": "rgba(239,68,68,0.35)" }
+    "High": {
+      "color": "#10b981",
+      "bg": "rgba(16,185,129,0.15)",
+      "border": "rgba(16,185,129,0.55)"
+    },
+    "Med-High": {
+      "color": "#34d399",
+      "bg": "rgba(52,211,153,0.10)",
+      "border": "rgba(52,211,153,0.40)"
+    },
+    "Medium": {
+      "color": "#a1a1aa",
+      "bg": "rgba(161,161,170,0.10)",
+      "border": "rgba(161,161,170,0.35)"
+    },
+    "Low-Med": {
+      "color": "#f59e0b",
+      "bg": "rgba(245,158,11,0.10)",
+      "border": "rgba(245,158,11,0.35)"
+    },
+    "Low": {
+      "color": "#ef4444",
+      "bg": "rgba(239,68,68,0.10)",
+      "border": "rgba(239,68,68,0.35)"
+    }
   },
   "DC_RISK_STYLE": {
-    "Core":       { "color": "#10b981" },
-    "Growth":     { "color": "#22d3ee" },
-    "Aggressive": { "color": "#f59e0b" }
+    "Core": {
+      "color": "#10b981"
+    },
+    "Growth": {
+      "color": "#22d3ee"
+    },
+    "Aggressive": {
+      "color": "#f59e0b"
+    }
   },
   "DC_BUCKETS": {
     "Power & Grid": {
       "color": "#22d3ee",
-      "sectors": ["Transformers", "Power", "Power Mgmt", "Fuel Cells", "Switchgear", "Nuclear", "SMR", "Gas Pipelines", "Gas Turbines"],
+      "sectors": [
+        "Transformers",
+        "Power",
+        "Power Mgmt",
+        "Fuel Cells",
+        "Switchgear",
+        "Nuclear",
+        "SMR",
+        "Gas Pipelines",
+        "Gas Turbines"
+      ],
       "topCompany": "GE Vernova",
       "topTicker": "NYSE: GEV",
       "why": "Transformers, switchgear, gas turbines, fuel cells, SMRs — where the buildout actually hits the physical world. Power is now scarcer than chips: a ~2,600 GW interconnection backlog (median ~5-year wait) and 30–40-month transformer lead times make this the single most binding constraint in the stack. GE Vernova's gas-turbine backlog hit ~100 GW / $176B with pricing up ~300% in three years."
     },
     "Compute & Silicon": {
       "color": "#a78bfa",
-      "sectors": ["Adv Packaging", "AI Silicon", "Custom ASIC", "Server Systems", "AI Compute Infra", "AI Compute Infra (pivot)", "EDA", "Frontier Lab", "IP/Bonding", "Wide-Bandgap", "PCB"],
+      "sectors": [
+        "Adv Packaging",
+        "AI Silicon",
+        "Custom ASIC",
+        "Server Systems",
+        "Inference",
+        "AI Compute Infra",
+        "AI Compute Infra (pivot)",
+        "EDA",
+        "Frontier Lab",
+        "IP/Bonding",
+        "Wide-Bandgap",
+        "PCB"
+      ],
       "topCompany": "Broadcom",
       "topTicker": "NASDAQ: AVGO",
       "why": "Where capital is most concentrated and most exposed. The EDA duopoly (Synopsys/Cadence) and custom-ASIC design (Broadcom/Marvell, growing ~45%/yr vs ~16% for GPUs) are durable moats. Merchant AI accelerators and frontier labs are not — and the neocloud model now runs on circular financing (Nvidia takes equity → neoclouds buy Nvidia GPUs → GPU-collateralised debt), which holds only while AI demand keeps compounding."
     },
     "Memory & Storage": {
       "color": "#fb7185",
-      "sectors": ["HBM", "DRAM", "NAND/SSD"],
+      "sectors": [
+        "HBM",
+        "DRAM",
+        "NAND/SSD"
+      ],
       "topCompany": "SK Hynix",
       "topTicker": "KRX: 000660",
       "why": "Now ~63% of an AI chip's bill of materials — bigger than the logic die (~13%) and tighter than the GPU itself. An HBM/DRAM/NAND triopoly (SK Hynix, Samsung, Micron) running 70%+ margins, sold out of 2026 HBM with 2027 largely booked. DRAM contract prices rose 90%+ in a single quarter. The scarcest, highest-margin layer in the whole stack — and the one the map was missing."
     },
     "Materials & Chemicals": {
       "color": "#f59e0b",
-      "sectors": ["GOES Steel", "Specialty Chem", "Photoresist", "InP/GaAs", "Titanium", "HBM Materials"],
+      "sectors": [
+        "GOES Steel",
+        "Specialty Chem",
+        "Photoresist",
+        "InP/GaAs",
+        "Titanium",
+        "HBM Materials"
+      ],
       "topCompany": "Cleveland-Cliffs",
       "topTicker": "NYSE: CLF",
       "why": "Quiet near-monopolies. GOES electrical steel (Cleveland-Cliffs is the sole North American producer), EUV photoresists, high-purity silicon wafers, InP / GaAs substrates for photonics, titanium alloys for gas-turbine generators, and the HBM consumables (Ajinomoto ~98% of ABF film, Namics sole-source MR-MUF) that a handful of Japanese suppliers control outright."
     },
     "Connectivity & Photonics": {
       "color": "#10b981",
-      "sectors": ["Dark Fiber", "Fiber/Cable", "Photonics", "Network Silicon", "Interconnect Fabric", "Optical Modules"],
+      "sectors": [
+        "Dark Fiber",
+        "Fiber/Cable",
+        "Photonics",
+        "Network Silicon",
+        "Interconnect Fabric",
+        "Optical Modules"
+      ],
       "topCompany": "Broadcom",
       "topTicker": "NASDAQ: AVGO",
       "why": "The whole 'moving-bits' half of the data center: switch silicon (Broadcom, Marvell), the scale-up (NVLink/UALink) and scale-out (InfiniBand vs Ethernet) fabrics, 800G/1.6T optical modules, plus subsea fibre and hyperscaler dark-fibre IRUs. A GB200 NVL72 rack is ~2 miles of copper and thousands of optical links; networking is the fastest-growing capex line at both Nvidia and Broadcom."
     },
     "Construction & Labor": {
       "color": "#ef4444",
-      "sectors": ["MEP", "Contracting"],
+      "sectors": [
+        "MEP",
+        "Contracting"
+      ],
       "topCompany": "Comfort Systems",
       "topTicker": "NYSE: FIX",
       "why": "Skilled electricians, mechanical contractors, transmission specialists. A 1 GW campus needs 3,000–4,000 electricians at peak; the IBEW pipeline cannot supply at AI cadence. MEP contractors now turn down work — pricing power is structural."
     },
     "Cooling & Thermal": {
       "color": "#60a5fa",
-      "sectors": ["Liquid Cooling"],
+      "sectors": [
+        "Liquid Cooling"
+      ],
       "topCompany": "Vertiv",
       "topTicker": "NYSE: VRT",
       "why": "GB200/GB300 racks at 120+ kW exceed air-cooling limits. Microsoft made liquid cooling the default for its Maia accelerators; Nvidia Vera Rubin is designed for 45°C hot-water cooling. Air→liquid retrofit cycle is forced, not optional."
     },
     "Fab & Test Equipment": {
       "color": "#84cc16",
-      "sectors": ["Litho Tools", "Test"],
+      "sectors": [
+        "Litho Tools",
+        "Test"
+      ],
       "topCompany": "Applied Materials",
       "topTicker": "NASDAQ: AMAT",
       "why": "The picks and shovels behind every chip. Litho tools (ASML for EUV, AMAT/LRCX for deposition and etch, KLA for inspection) print the transistors; test handlers (Teradyne, AEHR) prove the wafers and packages survive. A narrow oligopoly the entire foundry universe runs through — and the part of the stack still being repriced."
     },
     "Software & Apps": {
       "color": "#ec4899",
-      "sectors": ["AI Apps"],
+      "sectors": [
+        "AI Apps"
+      ],
       "topCompany": "ServiceNow",
       "topTicker": "NYSE: NOW",
       "why": "The demand layer. Enterprise AI integration is where model output becomes revenue, and where the trillion-dollar capex bill ultimately gets paid for. ServiceNow leads the front-office integration race; multiple-X upside remains even with the name in the open."
