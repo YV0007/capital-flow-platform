@@ -1879,5 +1879,27 @@
     "ppr": "Pub",
     "geo": "US",
     "note": "Вошёл в кастомные чипы для дата-центров через покупку Alphawave за $2,4 млрд — получил технологии SerDes/UCIe/чиплетов. Бывший CEO Alphawave теперь руководит серверным бизнесом Qualcomm."
+  },
+  {
+    "company": "Keysight",
+    "ticker": "NYSE: KEYS",
+    "sector": "EDA",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5y",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Скрытая EDA-позиция: PathWave Design (RF/высокоскоростной) + купленное оптическое подразделение Synopsys. Рынок оценивает как тестовое оборудование, а не EDA."
+  },
+  {
+    "company": "Empyrean / Huada Jiutian",
+    "ticker": "SZSE: 301269",
+    "sector": "EDA",
+    "conviction": "Low-Med",
+    "riskTier": "Aggressive",
+    "horizon": "3–5y",
+    "ppr": "Pub",
+    "geo": "CN",
+    "note": "Крупнейший китайский EDA (~6% рынка Китая). Государственная поддержка. Бинарная ставка на декаплинг: выиграет, если экспортный контроль ужесточится."
   }
 ]
