@@ -23,6 +23,13 @@ Stages 1, 2a, 2b complete. Stage 3 (Tracker migration) is next.
 - Don't ask permission to read files. Do ask before destructive ops (rm -rf, force-push)
 - Commit author email is set globally — don't change it
 
+## Token budget rules
+- NEVER read full data JSONs (`src/data/*.json`, `src/data/holdings-v2/**/*.json`) — they are 200–400 KB each and burn 50–100K tokens per read.
+  Use `grep` or `Bash` to find the relevant key/section first, then `Read` with `offset` + `limit` to grab only what you need.
+- NEVER read full research MDs (`research/*.md`) — they are 40–65 KB each. Same approach: grep first, targeted read second.
+- When editing a data JSON, read only the 50–100 lines around the target key, not the whole file.
+- If a task only needs to know the schema/structure of a JSON, read the first 30 lines — don't load the entire file.
+
 ## Migration notes
 - `COMPANIES` collision: holdings companies are `HOLD_COMPANIES`, VC tracker companies stay as `COMPANIES`
 - Function refs (e.g. `config: () => SEEDED_CONFIG`) can't be JSON-serialized — use string keys in JSON, resolve in the consuming component

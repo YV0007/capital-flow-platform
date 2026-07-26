@@ -1,338 +1,372 @@
 {
-  "id": "constellation",
-  "asOf": "28.06.2026",
-  "summary": "Constellation Software (CSU.TO) — serial acquirer, который скупает и держит навсегда нишевые vertical market software (VMS) бизнесы, реинвестируя весь FCFA2S в новые сделки по hurdle rate. Деньги текут двумя путями: напрямую через шесть operating groups ядра (Volaris, Harris, Jonas, Vela, Perseus + Modaxo/Andromeda), агрегированных в ОДИН отчётный сегмент по IFRS 8 — поэтому их выручка по группам не раскрывается; и через две публичные суб-платформы внутри периметра — Topicus (TOI.V, ~31,3% экономики / 50,1% голосов) и Lumine (LMN.V, 61,40% экономики), по которым CSI публикует supplemental-цифры. За H1 2026 развёрнуто ~$1,6 млрд на приобретения (рекордный для Q1 темп) — менеджмент действием отвечает на рыночный AI-страх вокруг VMS.",
-  "allocation": {
-    "byPlatform": [
-      {
-        "name": "CSI ex-Topicus/Lumine (Volaris/Harris/Jonas/Vela/Perseus/Modaxo/Andromeda)",
-        "value": "Q1'26 выручка $2,466 млн (~78% консолидированной)",
-        "pct": 78,
-        "assetCount": null,
-        "note": "Прямой контроль. Шесть operating groups ядра — один reportable segment по IFRS 8 (с 2020); построчная выручка по группам не раскрывается. Источник: Q1 2026 MD&A"
-      },
-      {
-        "name": "Topicus (TOI.V)",
-        "value": "Q1'26 выручка $507 млн (~16% консолидированной)",
-        "pct": 16,
-        "assetCount": null,
-        "note": "Super voting share (50,1% голосов) + ~31,3% экономики; 48,6% subordinate voting. Pan-European VMS. Источник: Q1 2026 MD&A"
-      },
-      {
-        "name": "Lumine Group (LMN.V)",
-        "value": "Q1'26 выручка $208 млн (~7% консолидированной)",
-        "pct": 7,
-        "assetCount": null,
-        "note": "Super voting share (50,1% голосов) + 61,40% экономики (157 553 539 subordinate voting shares). Communications & media software. Источник: Q1 2026 MD&A / Lumine Q1'26"
-      }
-    ],
-    "bySector": [
-      {
-        "name": "Maintenance & other recurring revenue (across all verticals)",
-        "pct": 77,
-        "note": "~$2,444 млн из $3,181 млн Q1'26 — основной драйвер; собирается авансом (negative working capital). Источник: Q1 2026 MD&A"
-      },
-      {
-        "name": "Professional services",
-        "pct": 17,
-        "note": "~$546 млн Q1'26; органика −5% FX-adj. Источник: Q1 2026 MD&A"
-      },
-      {
-        "name": "Hardware and other",
-        "pct": 3,
-        "note": "~$100 млн Q1'26; органика −7% FX-adj. Источник: Q1 2026 MD&A"
-      },
-      {
-        "name": "Licenses",
-        "pct": 3,
-        "note": "~$91 млн Q1'26; органика −13% FX-adj. Источник: Q1 2026 MD&A"
-      }
-    ],
-    "byGeography": [
-      {
-        "region": "Северная Америка",
-        "pct": 50
-      },
-      {
-        "region": "Европа",
-        "pct": 40
-      },
-      {
-        "region": "Прочие регионы",
-        "pct": 10
-      }
-    ],
-    "byTheme": [
-      {
-        "theme": "Vertical Market Software (VMS)",
-        "value": "консолидированная выручка Q1'26 $3,181 млн (+20% г/г)",
-        "note": "~100+ вертикалей, 1000+ под-бизнесов; мелкие mission-critical нишевые рынки снижают концентрацию по любому сегменту. Источник: Q1 2026 MD&A"
-      },
-      {
-        "theme": "Permanent ownership / децентрализованная модель",
-        "value": "первое поглощение Volaris 1995; held-forever подход",
-        "note": "Письмо Mark Leonard 15.02.2021: «We are permanent and supportive stakeholders». Источник: President's Letter 15.02.2021"
-      }
-    ]
-  },
-  "platforms": [
-    {
-      "id": "csi-core",
-      "name": "CSI Core — шесть operating groups ядра",
-      "role": "Прямой контроль (100%) над Volaris, Harris, Jonas, Vela, Perseus, плюс Modaxo и Andromeda. Агрегированы в один reportable segment по IFRS 8 — построчная выручка по группам структурно не раскрывается.",
-      "stats": [
-        { "label": "Выручка Q1 2026 (CSI ex-Topicus/Lumine)", "value": "$2,466 млн" },
-        { "label": "Net income Q1 2026 (CSI ex-Topicus/Lumine)", "value": "$318 млн" },
-        { "label": "Доля консолидированной выручки", "value": "~78%" }
-      ],
-      "sectors": [
-        {
-          "name": "Operating groups (одна IFRS-8 секция, цифры по группам не раскрыты)",
-          "shownOf": {
-            "shown": 7,
-            "total": 7,
-            "note": "Семь именованных групп ядра показаны полностью; выручка/EBITA по каждой не раскрывается (один сегмент по IFRS 8 с 2020). Источник: CSI Operating Groups page, Q1 2026 MD&A"
-          },
-          "assets": [
-            {
-              "name": "Volaris Group",
-              "what": "Старейшая группа CSI: over 240 businesses в 40+ вертикалях",
-              "stake": "100% (внутри CSI)",
-              "value": "не раскрыто (внутри IFRS-8 сегмента)",
-              "valueDisclosed": false,
-              "geography": "60+ стран",
-              "status": "Active, первое поглощение 1995",
-              "ai": false,
-              "source": "CSI Operating Groups page"
-            },
-            {
-              "name": "Harris (N. Harris Computer)",
-              "what": "VMS для Public Sector, Healthcare, Utilities, Private Sector, Insurance; держит Altera",
-              "stake": "100% (внутри CSI)",
-              "value": "не раскрыто (внутри IFRS-8 сегмента)",
-              "valueDisclosed": false,
-              "geography": "Globally",
-              "status": "Active",
-              "ai": false,
-              "source": "CSI Operating Groups page"
-            },
-            {
-              "name": "Jonas Software",
-              "what": "Нишевый VMS (20+ лет опыта), десятки вертикалей",
-              "stake": "100% (внутри CSI)",
-              "value": "не раскрыто (внутри IFRS-8 сегмента)",
-              "valueDisclosed": false,
-              "geography": "не детализировано на корп. странице",
-              "status": "Active",
-              "ai": false,
-              "source": "CSI Operating Groups page"
-            },
-            {
-              "name": "Vela Software",
-              "what": "Промышленные/ресурсные вертикали (energy, marine, mining через acQuire); держит Juniper Group/DerbySoft",
-              "stake": "100% (внутри CSI)",
-              "value": "не раскрыто (внутри IFRS-8 сегмента)",
-              "valueDisclosed": false,
-              "geography": "не детализировано на корп. странице",
-              "status": "Active",
-              "ai": false,
-              "source": "CSI Operating Groups page"
-            },
-            {
-              "name": "Perseus",
-              "what": "Телеком, страхование, ПО для бизнеса",
-              "stake": "100% (внутри CSI)",
-              "value": "не раскрыто (внутри IFRS-8 сегмента)",
-              "valueDisclosed": false,
-              "geography": "не детализировано на корп. странице",
-              "status": "Active",
-              "ai": false,
-              "source": "CSI Operating Groups page"
-            },
-            {
-              "name": "Modaxo",
-              "what": "Технологии для people transportation (общественный/частный транспорт)",
-              "stake": "100% (внутри CSI)",
-              "value": "не раскрыто (внутри IFRS-8 сегмента)",
-              "valueDisclosed": false,
-              "geography": "Global",
-              "status": "Active",
-              "ai": false,
-              "source": "CSI Operating Groups page"
-            },
-            {
-              "name": "Andromeda",
-              "what": "Долгосрочный держатель software-бизнесов",
-              "stake": "100% (внутри CSI)",
-              "value": "не раскрыто (внутри IFRS-8 сегмента)",
-              "valueDisclosed": false,
-              "geography": "не детализировано на корп. странице",
-              "status": "Active",
-              "ai": false,
-              "source": "CSI Operating Groups page"
-            }
-          ]
-        },
-        {
-          "name": "Заметные именованные приобретения внутри ядра (с раскрытой supplemental-оценкой / ценой)",
-          "shownOf": {
-            "shown": 2,
-            "total": null,
-            "note": "Только Altera раскрыта как supplemental в MD&A; остальные сотни bolt-on внутри групп индивидуально не раскрываются. Источник: Q1 2026 MD&A"
-          },
-          "assets": [
-            {
-              "name": "Altera Digital Health",
-              "what": "Бывш. Allscripts Hospitals & Large Physician Practices — госпитальный EHR/clinical софт; turnaround-актив",
-              "stake": "100% (через N. Harris Computer)",
-              "value": "Q1'26 выручка $147 млн, NI $7 млн; цена покупки ~$725 млн (вторичная валидация, не в первичке)",
-              "valueDisclosed": true,
-              "geography": "Северная Америка",
-              "status": "Куплен 02.05.2022; органика −13% (слабейший сегмент)",
-              "ai": false,
-              "source": "Q1 2026 MD&A (supplemental); цена — In Practise (помечено как доборка)"
-            },
-            {
-              "name": "DerbySoft",
-              "what": "ПО для дистрибуции в travel/hospitality; мажоритарная доля",
-              "stake": "мажоритарная (через Vela / Juniper Group)",
-              "value": "не раскрыто (цена сделки не раскрыта)",
-              "valueDisclosed": false,
-              "geography": "не раскрыто",
-              "status": "Соглашение 14.04.2026, закрытие 01.06.2026",
-              "ai": false,
-              "source": "CSI press releases index"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "topicus",
-      "name": "Topicus (TOI.V)",
-      "role": "Публичная суб-платформа внутри периметра CSI. Pan-European VMS: acquires, manages and builds vertical market software businesses. CSI контролирует через super voting share (50,1% голосов) при ~31,3% экономики; 48,6% subordinate voting. Корни — Total Specific Solutions (TSS) B.V., куплена CSI 31.12.2013, спин-аут в Topicus.com янв. 2021.",
-      "stats": [
-        { "label": "Выручка Q1 2026", "value": "€435,7 млн (+23%, органика +5%)" },
-        { "label": "Net income Q1 2026", "value": "€55,1 млн (−21% г/г), €0,41 на разводнённую акцию" },
-        { "label": "FCFA2S Q1 2026", "value": "€165,4 млн (+2%)" },
-        { "label": "Investments in associates (на 31.03.2026)", "value": "€527,4 млн (вкл. Asseco Poland)" },
-        { "label": "Доля CSI", "value": "~31,3% экономики / 50,1% голосов" }
-      ],
-      "sectors": [
-        {
-          "name": "Vertical market software (financial technology, healthcare, education, public sector)",
-          "shownOf": {
-            "shown": 1,
-            "total": null,
-            "note": "Topicus не раскрывает построчную выручку по входящим VMS-бизнесам; раскрываются только консолидированные цифры. Сектора (финтех, здравоохранение, образование, госсектор) — из корпоративного позиционирования. Источник: Topicus Q1'26 release, topicus.com",
-            "ai": false
-          },
-          "assets": [
-            {
-              "name": "Q1 2026 органические приобретения (агрегировано)",
-              "what": "Множество мелких VMS-bolt-on в Q1'26",
-              "stake": "контроль / мажоритарные доли",
-              "value": "aggregate cash consideration €15,0 млн + €7,5 млн deferred",
-              "valueDisclosed": true,
-              "geography": "Европа",
-              "status": "Закрыто в Q1'26",
-              "ai": false,
-              "source": "Topicus Q1 2026 release"
-            }
-          ]
-        },
-        {
-          "name": "Заметные именованные активы / инвестиции Topicus",
-          "shownOf": {
-            "shown": 3,
-            "total": null,
-            "note": "Поимённо раскрыты только крупнейшие (Sygnity — консолидируется; Asseco — associate; ReadyTech — pending). Остальные сотни VMS-бизнесов не раскрываются. Источник: Topicus Q1'26 release, topicus.com news",
-            "ai": false
-          },
-          "assets": [
-            {
-              "name": "Sygnity S.A. (WSE)",
-              "what": "Mission-critical софт для госсектора, энергетики и банкинга (Польша); консолидируется в Topicus",
-              "stake": "~72,68% (через Topicus Coop / TSS Europe)",
-              "value": "не раскрыто отдельной строкой (27,32% прибыли → NCI)",
-              "valueDisclosed": false,
-              "geography": "Польша / Центральная Европа",
-              "status": "Контролируется с 2022; листингован на WSE",
-              "ai": false,
-              "source": "Topicus / CSI disclosure (Sygnity stake — вторичная доборка по % из публичных раскрытий)"
-            },
-            {
-              "name": "Asseco Poland S.A. (WSE:ACP)",
-              "what": "Крупнейший IT/software-холдинг в Польше; PEMS-инвестиция (Permanent Engaged Minority Shareholder)",
-              "stake": "~24,8% накоплено через Topicus (9,99% янв.2025 + 14,84% treasury shares); на уровне CSI учитывается как associate ~23,14%",
-              "value": "доля прибыли $11 млн в Q1'26 (equity method, 3-мес. лаг); чистая сумма за Asseco отдельно не выделена",
-              "valueDisclosed": true,
-              "geography": "Польша",
-              "status": "Associate, equity method; листингован на WSE",
-              "ai": false,
-              "source": "Q1 2026 MD&A (CSI ~23,14%, доля прибыли $11 млн); topicus.com news (накопление ~24,8% — доборка)"
-            },
-            {
-              "name": "ReadyTech Holdings Limited",
-              "what": "Австралийский SaaS-провайдер (education, employment, justice/government софт)",
-              "stake": "pending (revised proposal)",
-              "value": "не раскрыто (цена/исход не подтверждены)",
-              "valueDisclosed": false,
-              "geography": "Австралия",
-              "status": "Revised proposal объявлен 01.06.2026; исход не подтверждён",
-              "ai": false,
-              "source": "topicus.com news"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "lumine",
-      "name": "Lumine Group (LMN.V)",
-      "role": "Самая молодая публичная суб-платформа внутри периметра CSI: acquires, strengthens, and grows businesses in the communications and media industry. CSI контролирует через super voting share (50,1% голосов) + 61,40% экономики. Запущена как публичная платформа после покупки WideOrbit и спин-аута 22.02.2023.",
-      "stats": [
-        { "label": "Выручка Q1 2026", "value": "$208,3 млн (+17%, органика 0% / −2% FX)" },
-        { "label": "Net income Q1 2026", "value": "$19,0 млн (−9% г/г)" },
-        { "label": "FCFA2S Q1 2026", "value": "$15,3 млн (−56%, давление интеграции Synchronoss)" },
-        { "label": "Доля CSI", "value": "61,40% экономики / 50,1% голосов" }
-      ],
-      "sectors": [
-        {
-          "name": "Communications & media software",
-          "shownOf": {
-            "shown": 2,
-            "total": null,
-            "note": "Lumine — 30+ businesses (Since 2014), индивидуально по выручке не раскрываются. Поимённо раскрыты крупнейшие приобретения. Источник: Lumine Q1'26 release, CSI Operating Groups page",
-            "ai": false
-          },
-          "assets": [
-            {
-              "name": "Synchronoss Technologies",
-              "what": "SaaS personal-cloud платформа для телеком-операторов; делистинг с Nasdaq",
-              "stake": "100% (через Lumine)",
-              "value": "aggregate cash consideration $309,3 млн",
-              "valueDisclosed": true,
-              "geography": "США / глобально",
-              "status": "Закрыта 13.02.2026; крупнейшая сделка Q1'26 (давит на FCFA2S Lumine)",
-              "ai": false,
-              "source": "Lumine Q1 2026 release (close press release)"
-            },
-            {
-              "name": "WideOrbit Inc.",
-              "what": "Media VMS — система учёта для 5000+ радио/ТВ-станций и кабельных сетей; обрабатывает $35+ млрд рекламной выручки в год",
-              "stake": "100% (через Lumine)",
-              "value": "~$0,5 млн cash + 13,83% акций Lumine (fully diluted); 2021 gross revenue WideOrbit ~$167 млн",
-              "valueDisclosed": true,
-              "geography": "США / глобально",
-              "status": "Закрыта 22.02.2023; дала старт Lumine как публичной платформе",
-              "ai": false,
-              "source": "CSI/Lumine press release 22.02.2023 (GlobeNewswire)"
-            }
-          ]
-        }
-      ]
-    }
+ "id": "constellation",
+ "asOf": "Q1 2026 (31.03.2026)",
+ "summary": "Constellation не держит портфель ценных бумаг — это консолидированный холдинг 1000+ бизнесов нишевого отраслевого ПО. Деньги текут через шесть операционных групп (Volaris, Harris, Jonas, Vela, Perseus + сама Topicus как группа), плюс две публичные spin-out платформы (Topicus.com и Lumine Group). Каждая группа покупает mission-critical софт в своих вертикалях: утилиты (Harris), телеком/медиа (Lumine), финтех/госсектор (Topicus), промышленность (Vela). ~75% выручки — подписная, churn ~0%, CPI-linked pricing. Constellation не подаёт 13F и не раскрывает построчные цифры по группам — единственный отчётный сегмент IFRS 8.",
+ "allocation": {
+  "bySector": [
+   {
+    "name": "Подписная и recurring выручка",
+    "plain": "Ядро бизнеса: maintenance + SaaS + managed services",
+    "pct": 75,
+    "value": "$8.7 млрд FY2025"
+   },
+   {
+    "name": "Professional services",
+    "plain": "Внедрение, кастомизация, консалтинг",
+    "pct": 18,
+    "value": "$2.1 млрд"
+   },
+   {
+    "name": "Лицензии",
+    "plain": "Разовые продажи, сокращаются с переходом на SaaS",
+    "pct": 4,
+    "value": "$415M"
+   },
+   {
+    "name": "Hardware и прочее",
+    "plain": "Оборудование, обучение, прочее",
+    "pct": 3,
+    "value": "$382M"
+   }
   ],
-  "notDisclosed": "Честно: Constellation держит 1000+ VMS-бизнесов, которые индивидуально по выручке/EBITA/оценке НЕ раскрываются. С 2020 г. CSU агрегирует шесть operating groups ядра (Volaris, Harris, Jonas, Vela, Perseus + Modaxo, Andromeda) в ОДИН reportable segment по IFRS 8 — поэтому построчных цифр по группам нет в первичке (MD&A, financials, AIF) в принципе. Что доступно: (1) консолидированные финансы CSI; (2) supplemental-цифры по Topicus, Lumine и Altera как единственным раскрытым юнитам; (3) поимённо — только крупнейшие приобретения с ценами (Synchronoss $309,3 млн, WideOrbit ~$0,5 млн+13,83% акций, Altera ~$725 млн [вторично]) и листингованные ассоциированные доли (Asseco ~23,14% на уровне CSI / ~24,8% накоплено через Topicus, Sygnity ~72,68%). Long-tail из сотен мелких bolt-on (subsequent events Q1'26: $786 млн total по десяткам вертикалей — local government, printing, financial services, healthcare, security, education, gaming, aviation, justice, mining и др.) раскрывается только агрегированно по сумме и списку вертикалей, без имён контрагентов и без индивидуальных оценок. ROIC по vintage и точная hurdle rate числом в первичке также не раскрываются."
+  "byGeography": [
+   {
+    "name": "Северная Америка",
+    "plain": "Канада + США — исторический фокус",
+    "pct": 55,
+    "value": "оценка"
+   },
+   {
+    "name": "Европа",
+    "plain": "Topicus (Нидерланды/Германия/Скандинавия/Польша) + Harris UK + Lumine",
+    "pct": 30,
+    "value": "оценка"
+   },
+   {
+    "name": "Австралия и прочее",
+    "plain": "Constellation Software Australia (~$677M/год, IBISWorld); Латинская Америка, Африка",
+    "pct": 15,
+    "value": "оценка"
+   }
+  ],
+  "byTheme": [
+   {
+    "theme": "Публичный сектор и утилиты",
+    "headline": "Harris: billing электро/вода/газ, госуправление — регуляторная встроенность = рвов",
+    "plain": "Mission-critical ПО для коммунальных служб и госструктур. Клиенты не уходят из-за сертификации и интеграции.",
+    "items": [
+     "Утилиты: биллинг электро/вода/газ",
+     "Local government: налоги, землепользование",
+     "Healthcare: EHR (Altera)",
+     "Public safety и justice"
+    ]
+   },
+   {
+    "theme": "Финтех и европейское VMS",
+    "headline": "Topicus: 50.1% голосов CSU, pan-European VMS + Asseco/Sygnity",
+    "plain": "Финансовые сервисы, образование, госсектор ЕС. Расширяется через инвестиции в Asseco Poland.",
+    "items": [
+     "Финансовые сервисы (Нидерланды/Германия)",
+     "Образование (Eduarte)",
+     "Госсектор ЕС",
+     "Asseco Poland / Sygnity (~23% доля)"
+    ]
+   },
+   {
+    "theme": "Телеком и медиа",
+    "headline": "Lumine: корпоративные carve-out + Synchronoss $309M",
+    "plain": "Communications & media VMS. Специализация: сложные корпоративные carve-out у Nokia, Ericsson, Synchronoss.",
+    "items": [
+     "Personal cloud для телекомов (Synchronoss)",
+     "Media ad-tech (WideOrbit)",
+     "Network software (Nokia/Ericsson carve-out)",
+     "Broadcast и distribution"
+    ]
+   },
+   {
+    "theme": "Промышленность и ресурсы",
+    "headline": "Vela + Jonas: travel, construction, mining, fitness, food",
+    "plain": "Промышленные вертикали (энергия, marine, mining через acQuire) + club & leisure, foodservice.",
+    "items": [
+     "Mining и ресурсы (acQuire)",
+     "Travel/hospitality (DerbySoft)",
+     "Construction и строительство",
+     "Fitness, sports, attractions (Jonas)"
+    ]
+   }
+  ]
+ },
+ "sectors": [
+  {
+   "id": "topicus",
+   "name": "Topicus.com (TSXV: TOI)",
+   "plain": "Публичная spin-out платформа: pan-European VMS. CSU держит 50.1% голосов + ~31.3% экономики",
+   "stat": "€1,552M выручки FY2025 (+20%)",
+   "total": "~16% консол. выручки CSU",
+   "companies": [
+    {
+     "name": "Topicus.com B.V.",
+     "what": "Ядро: финтех, образование, госсектор Нидерландов",
+     "stake": "100% (через TOI)",
+     "value": "внутри mcap TOI",
+     "valueDisclosed": false,
+     "size": "€1.55 млрд выручки",
+     "geography": "Нидерланды, Германия, Скандинавия, Польша",
+     "status": "консолидируется CSU",
+     "ai": false,
+     "detail": {
+      "summary": "Pan-European VMS платформа. Органический рост 4%. FCFA2S €219M. Приобретения €390M за FY2025.",
+      "whyMatters": "Главный канал расширения CSU в Европе + источник spin-out playbook",
+      "metrics": [
+       {
+        "k": "FCFA2S FY2025",
+        "v": "€218.7M"
+       },
+       {
+        "k": "Organic growth",
+        "v": "4%"
+       },
+       {
+        "k": "Net income",
+        "v": "€70.1M (−53%, Asseco)"
+       }
+      ]
+     },
+     "source": "TOI FY2025 пресс-релиз"
+    },
+    {
+     "name": "Asseco Poland (WSE: ACP)",
+     "what": "Крупнейший IT-холдинг Польши",
+     "stake": "~23.14% (associate, equity method)",
+     "value": "$530M инвестиций FY2025",
+     "valueDisclosed": true,
+     "size": "крупный",
+     "geography": "Польша, ЦВЕ",
+     "status": "equity method (с 25.09.2025)",
+     "ai": false,
+     "detail": {
+      "summary": "Публичная польская IT-компания. Topicus Coop приобрёл ~23% через серию покупок.",
+      "whyMatters": "Новый канал: покупка публичных VMS в Европе. Revaluation charge $440M ударила по net income CSU.",
+      "metrics": [
+       {
+        "k": "Инвестиция CSU",
+        "v": "~$530M (FY2025)"
+       },
+       {
+        "k": "IRGA/TSS revaluation",
+        "v": "−$440M net income impact"
+       }
+      ]
+     },
+     "source": "CSU FY2025 MD&A"
+    },
+    {
+     "name": "Sygnity (WSE)",
+     "what": "Польская IT-компания",
+     "stake": "~72.68% (через Topicus Coop)",
+     "value": "внутри Asseco инвестиции",
+     "valueDisclosed": false,
+     "size": "средний",
+     "geography": "Польша",
+     "status": "консолидируется через TOI",
+     "ai": false,
+     "detail": {
+      "summary": "IT-компания для финансового сектора и госсектора Польши.",
+      "whyMatters": "Часть стратегии Topicus по экспансии в Восточную Европу",
+      "metrics": []
+     },
+     "source": "Topicus Q1 2026 отчётность"
+    }
+   ]
+  },
+  {
+   "id": "lumine",
+   "name": "Lumine Group (TSXV: LMN)",
+   "plain": "Публичная spin-out платформа: communications & media VMS. CSU держит 50.1% голосов + 61.4% экономики",
+   "stat": "$765.7M выручки FY2025 (+15%)",
+   "total": "~7% консол. выручки CSU",
+   "companies": [
+    {
+     "name": "Synchronoss Technologies",
+     "what": "Personal-cloud SaaS для телекомов",
+     "stake": "100% (делистинг NASDAQ)",
+     "value": "$309.3M",
+     "valueDisclosed": true,
+     "size": "$309.3M paid",
+     "geography": "США, глобально",
+     "status": "закрыта 13.02.2026",
+     "ai": false,
+     "detail": {
+      "summary": "Personal-cloud платформа. Крупнейшая сделка Lumine. Интеграция давит: Lumine выручка +17% при органике 0%, FCFA2S −56%.",
+      "whyMatters": "Масштабная корпоративная carve-out — характерная для playbook Lumine",
+      "metrics": [
+       {
+        "k": "Цена",
+        "v": "$309.3M cash"
+       },
+       {
+        "k": "Влияние на Lumine FCFA2S",
+        "v": "−56%"
+       }
+      ]
+     },
+     "source": "Lumine Q1 2026 пресс-релиз"
+    },
+    {
+     "name": "WideOrbit",
+     "what": "Media ad-tech платформа",
+     "stake": "100%",
+     "value": "$490M gross (2023)",
+     "valueDisclosed": true,
+     "size": "$490M",
+     "geography": "США",
+     "status": "интегрирован",
+     "ai": false,
+     "detail": {
+      "summary": "Reverse-takeover: акционеры CSU получили акции Lumine. WideOrbit — ядро media-вертикали Lumine.",
+      "whyMatters": "Сделка, которая создала Lumine как отдельную публичную платформу",
+      "metrics": [
+       {
+        "k": "Цена",
+        "v": "$490M gross"
+       },
+       {
+        "k": "Выручка WideOrbit (2022)",
+        "v": "~$169M"
+       }
+      ]
+     },
+     "source": "Lumine проспект"
+    }
+   ]
+  },
+  {
+   "id": "harris",
+   "name": "Harris / N. Harris Computer",
+   "plain": "Старейшая группа CSU: утилиты (биллинг электро/вода/газ), здравоохранение, госсектор, страхование",
+   "stat": "Ring 2 — выручка не раскрывается отдельно",
+   "total": "крупная доля CSI core (~78% от ~$2.47 млрд Q1'26)",
+   "companies": [
+    {
+     "name": "Altera (бывш. Allscripts)",
+     "what": "Healthcare EHR — крупный carve-out",
+     "stake": "100%",
+     "value": "не раскрыта",
+     "valueDisclosed": false,
+     "size": "~$147M выручки Q1'26 (4.6% консол.)",
+     "geography": "США",
+     "status": "реструктурирован в 11 бизнесов",
+     "ai": false,
+     "detail": {
+      "summary": "Куплен 02.05.2022. Трансформационная по размеру. Органика −13% (FX-adj) — worst-in-portfolio. Реструктурирован в 11 бизнесов внутри Harris.",
+      "whyMatters": "Тест модели на крупных carve-out: может ли Constellation стабилизировать крупные сокращающиеся бизнесы?",
+      "metrics": [
+       {
+        "k": "Выручка Q1'26",
+        "v": "~$147M"
+       },
+       {
+        "k": "Organic growth",
+        "v": "−13% FX-adj"
+       },
+       {
+        "k": "Кеш",
+        "v": "$142M"
+       }
+      ]
+     },
+     "source": "CSU Q1 2026 MD&A supplemental"
+    }
+   ]
+  },
+  {
+   "id": "volaris",
+   "name": "Volaris Group",
+   "plain": "Генералист: 240+ бизнесов в 40+ вертикалях, 60+ стран. Agri-food, education, financial services, asset management",
+   "stat": "Ring 2 — выручка не раскрывается отдельно",
+   "total": "крупнейшая группа CSI core",
+   "companies": [
+    {
+     "name": "Volaris (aggregate)",
+     "what": "240+ VMS-бизнесов в 40+ вертикалях",
+     "stake": "100%",
+     "value": "не раскрыта",
+     "valueDisclosed": false,
+     "size": "крупнейшая группа",
+     "geography": "60+ стран",
+     "status": "операционная группа CSI core",
+     "ai": false,
+     "detail": {
+      "summary": "Первое поглощение 1995 года. Самая широкая по вертикалям группа: agri-food, education, financial services, asset management, government. Ring 2 — пообъектная выручка не раскрывается.",
+      "whyMatters": "Масштабный пример модели: 240+ бизнесов доказывают, что децентрализация работает",
+      "metrics": []
+     },
+     "source": "CSI Operating Groups page"
+    }
+   ]
+  },
+  {
+   "id": "other-groups",
+   "name": "Jonas / Vela / Perseus",
+   "plain": "Три операционные группы: leisure (Jonas), промышленность (Vela), телеком и малый бизнес (Perseus)",
+   "stat": "Ring 2 — выручка не раскрывается отдельно",
+   "total": "внутри CSI core",
+   "companies": [
+    {
+     "name": "Jonas Software",
+     "what": "Club & leisure, fitness, construction, foodservice",
+     "stake": "100%",
+     "value": "не раскрыта",
+     "valueDisclosed": false,
+     "size": "средняя группа",
+     "geography": "Сев. Америка, Европа",
+     "status": "операционная группа",
+     "ai": false,
+     "detail": {
+      "summary": "25+ вертикалей. Изначально — club & leisure, теперь расширена на attractions, construction, foodservice. 20+ лет опыта.",
+      "whyMatters": "Одна из наиболее уязвимых к AI групп — «лёгкие» вертикали без регуляторной встроенности",
+      "metrics": []
+     },
+     "source": "CSI Operating Groups page"
+    },
+    {
+     "name": "Vela Software",
+     "what": "Промышленные и капиталоёмкие секторы: energy, marine, mining",
+     "stake": "100%",
+     "value": "не раскрыта",
+     "valueDisclosed": false,
+     "size": "средняя группа",
+     "geography": "глобально",
+     "status": "операционная группа",
+     "ai": false,
+     "detail": {
+      "summary": "Включает Juniper Group (DerbySoft — travel/hospitality, контроль 2026), acQuire (mining ПО). Промышленные вертикали с высокими switching costs.",
+      "whyMatters": "DerbySoft — свежая крупная сделка через Juniper Group (закрытие 01.06.2026)",
+      "metrics": []
+     },
+     "source": "CSI Operating Groups page"
+    },
+    {
+     "name": "Perseus Group",
+     "what": "Малый бизнес: healthcare, homebuilding, телеком",
+     "stake": "100%",
+     "value": "не раскрыта",
+     "valueDisclosed": false,
+     "size": "наименьшая группа",
+     "geography": "Сев. Америка",
+     "status": "операционная группа",
+     "ai": false,
+     "detail": {
+      "summary": "Философия: «маленькие бизнесы должны оставаться маленькими». Healthcare, homebuilding.",
+      "whyMatters": "Наиболее уязвима к AI — «тонкие» SaaS в простых вертикалях",
+      "metrics": []
+     },
+     "source": "CSI Operating Groups page"
+    }
+   ]
+  }
+ ],
+ "notDisclosed": [
+  "Constellation раскрывает ЕДИНЫЙ отчётный сегмент (IFRS 8) — пообъектная выручка, ROIC, органика по шести операционным группам НЕ публикуется. Supplemental раскрываются только Topicus, Lumine и Altera. Точное географическое распределение не раскрывается (оценки по косвенным данным). 13F не применим — Constellation не инвестиционный менеджер. Прокси group-level data: отчётность TOI и LMN."
+ ]
 }
