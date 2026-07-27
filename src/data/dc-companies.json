@@ -2044,5 +2044,60 @@
     "ppr": "Pub",
     "geo": "TW",
     "note": "ABF + HPC платы; прибыль +855%; Morgan Stanley PT NT$515"
+  },
+  {
+    "company": "Monolithic Power Systems",
+    "ticker": "NASDAQ: MPWR",
+    "sector": "Wide-Bandgap",
+    "conviction": "High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "~70% Vera Rubin VRM; Enterprise Data +98% г/г; монолитный аналоговый дизайн; dual-sourcing risk"
+  },
+  {
+    "company": "Texas Instruments",
+    "ticker": "NASDAQ: TXN",
+    "sector": "Wide-Bandgap",
+    "conviction": "Med-High",
+    "riskTier": "Core",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Крупнейший DC analog (~$1,5 млрд CY25, +64%); GM 58%; широкий контент"
+  },
+  {
+    "company": "STMicroelectronics",
+    "ticker": "EPA: STM",
+    "sector": "Wide-Bandgap",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "FR",
+    "note": "SiC №1 (~33–36%); Nvidia 800VDC partner; cyclical auto drag"
+  },
+  {
+    "company": "Innoscience",
+    "ticker": "HKEX: 2577",
+    "sector": "Wide-Bandgap",
+    "conviction": "Low-Med",
+    "riskTier": "Aggressive",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "CN",
+    "note": "GaN №1 мировой (~30%); IDM; 8\" GaN; Nvidia-approved; loss-making"
+  },
+  {
+    "company": "Analog Devices",
+    "ticker": "NASDAQ: ADI",
+    "sector": "Wide-Bandgap",
+    "conviction": "Medium",
+    "riskTier": "Core",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "VRM/power + signal chain для AI; 800VDC partner; диверсифицирован"
   }
 ]

@@ -5224,5 +5224,561 @@
         "blurb": "Стеклянная подложка 10-2-10 stack. CPO на стекле ~2030. Угроза органическим FC-BGA лидерам — но конца десятилетия."
       }
     ]
+  },
+  "wbg": {
+    "asOf": "2026-07-27",
+    "intro": "Силовые чипы управляют электричеством внутри дата-центра: преобразуют напряжение от сети до микровольт, которыми питается GPU. С каждым поколением AI-ускорителей содержание силовых полупроводников в стойке взрывается — от ~$11 200 (B200) до ~$191 000 (Feynman), по оценке Morgan Stanley. Три категории: кремниевые VRM (регуляторы напряжения, MPS доминирует), модули на карбиде кремния (SiC — STMicro, onsemi, Infineon) и чипы на нитриде галлия (GaN — Innoscience, Navitas). В 2027 году Nvidia запускает архитектуру 800VDC (Kyber/Rubin Ultra), которая радикально меняет энергосистему стоек и открывает новый рынок для SiC/GaN.",
+    "tldr": [
+      "Содержание силовых чипов на стойку растёт в ~17 раз: $11 200 (B200) → $17 800 (GB300) → >$33 000 (Rubin) → ~$95 000 (Rubin Ultra) → ~$191 000 (Feynman). Это самый быстрый рост контента во всей AI-цепочке.",
+      "MPS — лидер VRM (регуляторы напряжения, ближайшие к GPU): Enterprise Data +98% г/г, ~33% выручки. Но Nvidia активно подключает вторых поставщиков (Infineon, Renesas) — MPS упал на 24,9% за сессию в ноябре 2024 на этих страхах.",
+      "Infineon — №1 в мире по силовым полупроводникам: AI-выручка €250 млн (FY24) → €1,5 млрд (FY26) → €2,5 млрд (FY27). Лучшее сочетание ширины и масштаба. Открыл фабрику в Дрездене за €5 млрд.",
+      "Переход на 800VDC (с 2027, Nvidia Kyber) — новый рынок SiC/GaN стоимостью $3–10 млрд к 2030. Navitas — единственный партнёр Nvidia с обоими материалами (GaN+SiC), но пока выручка $8,6 млн и убыточна. Binary bet."
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 7,
+        "cyclicality": 5,
+        "valuation": 3
+      },
+      "summary": "Содержание силовых чипов на стойку растёт в ~17 раз за 4 поколения GPU — самый быстрый рост контента в AI-цепочке. MPS (VRM, маржа ~55%) и Infineon (№1, ширина) — доказанные лидеры. Но переход на 800VDC + SiC/GaN в 2027 перераспределяет ценность, а Nvidia активно мультисорсит VRM (MPS -24,9% за день). Оценки высокие: MPS ~50x forward, Vicor +145–179% YTD, Navitas +780%. Base рынок (~$46–55 млрд) цикличен и даже сократился в 2024.",
+      "horizon": "3–5 лет (800VDC/SiC/GaN переход + рост контента на стойку)",
+      "sizing": "Общий рынок силовых полупроводников: ~$46–55 млрд (2025, зависит от определения). AI-подсегмент растёт >40% CAGR: onsemi TAM ~$12,2 млрд к 2029. GaN: $355 млн (2024) → ~$3 млрд (2030, Yole). SiC: до $10,3 млрд к 2030.",
+      "keyQuestion": "Останется ли VRM/преобразование напряжения защищённым рынком для дискретных поставщиков — или Nvidia/TSMC интегрируют питание в пакет GPU, а гиперскейлеры мультисорсят, вымывая маржу лидеров?",
+      "bull": [
+        "Контент на стойку взрывается: $11,2k → $191k (B200 → Feynman). Каждый % экономии энергии на масштабе ГВт = миллиарды долларов. Силовые чипы — обязательный расход.",
+        "800VDC + SiC/GaN переход (с 2027) открывает новый TAM: GaN ~$3 млрд к 2030 (42% CAGR), SiC ~$10 млрд. Nvidia организует экосистему (14+ кремниевых партнёров). Каждая новая стойка >200 кВт требует 800VDC.",
+        "MPS VRM-доминирование + Infineon широта + Vicor IP (ITC exclusion order) = несколько способов выиграть."
+      ],
+      "bear": [
+        "MPS мультисорсинг: -24,9% за день (ноябрь 2024), ~-37% (октябрь 2025). Infineon берёт 60–70% Blackwell (аналитики). Hyperscalers сами закупают VRM, минуя OEM. Deutsche Bank: «до 15% выручки MPS под риском».",
+        "Интеграция: Nvidia/TSMC могут затянуть питание в пакет GPU (backside power delivery), уничтожив дискретный VRM-рынок. Структурный многолетний риск.",
+        "Цикличность + оценки: base рынок сократился в 2024. Auto/industrial всё ещё слабы. MPS ~50x forward, Vicor +179% YTD, Navitas +780%. Priced for perfection."
+      ]
+    },
+    "marketSizing": {
+      "cagr": ">40% CAGR (AI-подсегмент, 2025–2029)",
+      "chartTitle": "Содержание силовых чипов на AI-стойку Nvidia ($ тыс.)",
+      "tam": [
+        {
+          "year": "B200",
+          "value": 11.2,
+          "label": "$11,2k",
+          "source": "Morgan Stanley (базовая)"
+        },
+        {
+          "year": "GB300",
+          "value": 17.8,
+          "label": "$17,8k",
+          "source": "Morgan Stanley (Blackwell)"
+        },
+        {
+          "year": "Rubin",
+          "value": 33,
+          "label": ">$33k",
+          "source": "Morgan Stanley (~3x GB200)"
+        },
+        {
+          "year": "R. Ultra",
+          "value": 95,
+          "label": "~$95k",
+          "source": "Morgan Stanley (800VDC)"
+        },
+        {
+          "year": "Feynman",
+          "value": 191,
+          "label": "~$191k",
+          "source": "Morgan Stanley (~17x Blackwell)"
+        }
+      ],
+      "bomShare": {
+        "value": "~0,5–5%",
+        "note": "силовые чипы = ~0,5–1% стоимости стойки сегодня, растёт к нескольким процентам у Feynman. Малая доля, но абсолютно критическая функция — без них GPU не работает"
+      },
+      "volumeVsPrice": "Рост через оба: объём (больше AI-стоек, +28% отгрузок в 2026) и контент на стойку (x17 от Blackwell к Feynman). 800VDC добавляет полностью новый слой SiC/GaN-конвертации. Удвоение мощности стойки = ~5x рост SiC-контента (Navitas)."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "TI (широкий аналог)",
+          "gm": "~58%",
+          "note": "крупнейший data-center analog бизнес (~$1,5 млрд CY25)"
+        },
+        {
+          "stage": "MPS (VRM, точка нагрузки)",
+          "gm": "~55%",
+          "note": "монолитный аналоговый дизайн; Enterprise Data +98% г/г"
+        },
+        {
+          "stage": "Vicor (высокая плотность, IP)",
+          "gm": "~55%",
+          "note": "цель 70%; ITC exclusion order; backlog +70% QoQ"
+        },
+        {
+          "stage": "onsemi (SiC/дискреты)",
+          "gm": "~38,5%",
+          "note": "третий квартал расширения подряд; цель Treo analog 60–70%"
+        },
+        {
+          "stage": "Navitas (GaN/SiC)",
+          "gm": "~39% non-GAAP",
+          "note": "GAAP ещё отрицательная (-9,3%); убыточна; выручка $8,6 млн"
+        },
+        {
+          "stage": "Infineon (IDM, широта)",
+          "gm": "~17,5% segment margin",
+          "note": "цель ~20% FY26; AI-power €1,5 млрд FY26"
+        }
+      ],
+      "bottleneckNow": "VRM / точка нагрузки (ближайшая к GPU): ~41% стоимости силовых чипов в стойке Feynman (VPD 2nd-stage 26% + lateral VRM 15%). MPS доминирует благодаря монолитному аналоговому дизайну. Это самый высокомаржинальный и сложный слой.",
+      "bottleneckNext": "800VDC конвертация (с 2027): твердотельные трансформаторы + SiC/GaN DC-DC преобразование с сетевого напряжения до GPU. Совершенно новый слой, которого сегодня нет в стойках. Navitas, Infineon, onsemi, Power Integrations — главные претенденты.",
+      "capitalIntensity": "Средняя для fabless (MPS, Navitas); высокая для IDM (Infineon: €2,7 млрд capex FY26, Дрезден €5 млрд; onsemi SiC fabs). SiC-подложки капиталоёмки (Wolfspeed прошёл через банкротство).",
+      "takeaway": "Ценность концентрируется в VRM/точке нагрузки (MPS ~55% GM) и широком аналоге (TI ~58%). 800VDC открывает новый высокостоимостный слой для SiC/GaN. Маржа лучше всего у аналоговых/IP-компаний; дискретные/WBG — ниже, но растут."
+    },
+    "competition": {
+      "concentration": "Умеренная олигополия: Infineon (~17,7% power discretes+modules, №1), onsemi (№2), STMicro (№3) = ~40% глобального рынка. VRM для GPU: MPS исторически ~80%+ на Hopper, но теряет долю.",
+      "shareTrajectory": [
+        {
+          "player": "MPS",
+          "now": "~70% Vera Rubin VRM (оценка)",
+          "direction": "↓",
+          "detail": "было ~80%+ на Hopper; Infineon берёт 60–70% Blackwell; Renesas набирает"
+        },
+        {
+          "player": "Infineon",
+          "now": "№1 общий; AI €1,5 млрд FY26",
+          "direction": "↑↑",
+          "detail": "AI-выручка 6x за 2 года (€250M→€1,5B); Дрезден открыт; 800VDC партнёр"
+        },
+        {
+          "player": "Navitas",
+          "now": "GaN ~16,5% / tiny revenue",
+          "direction": "↑?",
+          "detail": "единственный GaN+SiC партнёр Nvidia 800VDC; binary — рост или гибель"
+        },
+        {
+          "player": "Innoscience",
+          "now": "GaN №1 (~30%)",
+          "direction": "↑",
+          "detail": "IDM; 8\" GaN 13k→20k wafers/mo; Nvidia-approved; Китай, субсидии"
+        },
+        {
+          "player": "onsemi",
+          "now": "SiC №2; power №2",
+          "direction": "↑",
+          "detail": "AI-DC удваивается г/г; GaN funnel >$1,5 млрд; полный 0.8V–800V стек"
+        }
+      ],
+      "players": [
+        {
+          "name": "MPS",
+          "share": "~70% Rubin VRM",
+          "edge": "монолитный аналоговый дизайн; incumbency; Enterprise Data +98% г/г"
+        },
+        {
+          "name": "Infineon",
+          "share": "№1 общий",
+          "edge": "ширина + IDM масштаб + 800VDC + SiC; supply-limited (спрос > мощности)"
+        },
+        {
+          "name": "Vicor",
+          "share": "VPD/IP ниша",
+          "edge": "патенты + ITC exclusion order; факторизованное питание; цель 70% GM"
+        },
+        {
+          "name": "TI",
+          "share": "крупнейший DC analog",
+          "edge": "~$1,5 млрд DC-выручки (+64%); широкий контент по всему power tree"
+        },
+        {
+          "name": "Navitas",
+          "share": "GaN ~16,5%",
+          "edge": "единственный GaN+SiC «grid-to-GPU» партнёр Nvidia 800VDC"
+        }
+      ],
+      "switchingCost": "Высокие: design-win-to-revenue = 1–2 года. Квалификация VRM для GPU = глубокая совместная разработка с Nvidia. Но hyperscalers намеренно dual-source, чтобы снизить зависимость.",
+      "entryBarrier": "Аналоговый/power дизайн — десятилетия опыта. IDM-мощности (Infineon €5 млрд Дрезден). SiC-подложки (Wolfspeed 200mm lead). GaN reliability (Navitas GaNSafe). Но мультисорсинг — сознательная стратегия покупателей.",
+      "takeaway": "MPS — лидер VRM, но теряет долю из-за мультисорсинга Nvidia. Infineon — лучшее сочетание масштаба и роста. 800VDC перераспределяет ценность от кремниевых VRM к SiC/GaN. Китайские конкуренты (Innoscience) давят цены в GaN."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 85,
+          "note": "MPS: Enterprise Data +98% г/г, прогноз повышен до ~85% роста; Infineon supply-limited; Vicor backlog +70% QoQ"
+        },
+        {
+          "year": "2027",
+          "pct": 80,
+          "note": "800VDC/Kyber rollout; Infineon цель €2,5 млрд AI-power; Vicor production programs Q3/Q4; onsemi GaN revenue start"
+        },
+        {
+          "year": "2028",
+          "pct": 65,
+          "note": "Feynman-класс стойки; onsemi TAM ~$12,2 млрд к 2029 (40% CAGR)"
+        }
+      ],
+      "contractStructure": "Design-win → production: 1–2 года lead time. VRM: incumbency + совместная разработка с Nvidia. Vicor: one-year backlog $301 млн, book-to-bill >2:1. MPS: долгосрочная ёмкость повышена с $4 млрд до $6 млрд.",
+      "customerConcentration": "Экстремальная: Nvidia — доминирующий драйвер (roadmap: GB300 → Rubin → Kyber/Rubin Ultra → Feynman). Также AMD, гиперскейлерные ASIC (Google TPU), AI-серверные ODM.",
+      "backlog": "Vicor: $301 млн (+70% QoQ), book-to-bill >2:1. MPS: ёмкость повышена до $6 млрд. TTM Technologies (PSU angle): backlog $1,6 млрд.",
+      "pricing": "VRM content per rack: $11k → $191k. 800VDC добавляет новый ценовой слой (PCS 27% контента Feynman). GaN/SiC компоненты дороже кремниевых, но экономят на эффективности и меди.",
+      "takeaway": "Спрос подтверждён рекордными backlog-ами и корпоративными прогнозами. AI — единственный быстрорастущий сегмент в иначе цикличном рынке. Но зависимость от Nvidia roadmap = уязвимость к любому сдвигу или задержке."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит (AI)",
+          "color": "#ef4444",
+          "detail": "Infineon supply-limited на AI power; GaN capacity расширяется (Innoscience 8\" 13k→20k); базовый рынок в даун-цикле"
+        },
+        {
+          "year": "2027",
+          "state": "расширение",
+          "color": "#f59e0b",
+          "detail": "Infineon Дрезден + Villach; 800VDC первые поставки; GaN переход на 8\"/300mm (Infineon)"
+        },
+        {
+          "year": "2028",
+          "state": "улучшение",
+          "color": "#22d3ee",
+          "detail": "SiC 200mm масштабируется; GaN 300mm; Wolfspeed post-Ch11 ramp"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Infineon: Дрезден Smart Power Fab",
+          "when": "2025–2028",
+          "impact": "€5 млрд потенциал; ~€1 млрд EU Chips Act субсидии; capex повышен до €2,7 млрд (+€500 млн)"
+        },
+        {
+          "name": "Innoscience: 8\" GaN расширение",
+          "when": "2025–2026",
+          "impact": "13k→20k wafers/mo; крупнейшая GaN мощность в мире"
+        },
+        {
+          "name": "MPS: fabless, ёмкость $6 млрд",
+          "when": "ongoing",
+          "impact": "повышена с $4 млрд; proprietary process в сторонних фабах"
+        },
+        {
+          "name": "Wolfspeed: post-Ch11 200mm SiC",
+          "when": "2026–2028",
+          "impact": "долг сокращён на 70% (до ~$2 млрд); 200mm SiC lead; execution risk"
+        }
+      ],
+      "leadTime": "Design-win → production: 1–2 года. SiC substrate: длительный (200mm capacity ограничена). GaN: переход 6\"→8\" ongoing; 300mm (Infineon) = first samples Q4 2025.",
+      "utilization": "AI-сегмент: загрузка высокая (Infineon supply-limited). Базовый рынок (auto/industrial): слабый — overcapacity в не-AI сегментах.",
+      "crowdingOut": "AI-спрос вытесняет industrial/consumer выделение мощностей у IDM (Infineon, onsemi). Китайские поставщики (Innoscience, StarPower) давят цены на базовые GaN/SiC, но не проникают в квалифицированные AI-сокеты.",
+      "takeaway": "AI-сегмент supply-limited, базовый рынок в даун-цикле — «два рынка в одном». Infineon Дрезден + GaN 8\"/300mm + SiC 200mm — главные расширения. Wolfspeed post-Ch11 = execution risk."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "VRM контент: $11,2k (B200) → $191k (Feynman) на стойку. onsemi: $15k (120 кВт стойка) → $115k (600 кВт–1 МВт). Удвоение мощности стойки = ~5x SiC-контент.",
+      "grossMargin": "TI: 58%. MPS: 55%. Vicor: 55% (цель 70%). onsemi: 38,5% (расширяется; цель Treo 60–70%). Navitas: 39% non-GAAP (GAAP отрицательная). Infineon: ~17,5% segment margin (цель 20%).",
+      "costCurve": "Кремний VRM дешевле в производстве (fabless MPS). SiC/GaN — дороже, но экономят энергию: 800VDC + WBG = до 5% экономия end-to-end + ~3x снижение стоимости медных кабелей (Vicor: $14/ft → $5/ft). При GW-масштабе: ~100W на ускоритель × миллионы = тераватты/миллиарды $.",
+      "yields": [
+        {
+          "gen": "VRM operating leverage",
+          "pct": "30% OPM",
+          "note": "MPS Q1 2026: операционная маржа 30,0% (+3,5 п.п. г/г)"
+        },
+        {
+          "gen": "onsemi operating leverage",
+          "pct": "~2x",
+          "note": "рост операционной прибыли = ~2x рост выручки"
+        }
+      ],
+      "takeaway": "Лучшая экономика — у аналоговых/IP компаний (TI 58%, MPS 55%, Vicor 55% → 70%). SiC/GaN пока ниже, но растут и окупаются через энергоэффективность. Operating leverage высокий: рост AI-микса быстро улучшает маржу."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "800VDC архитектура (Nvidia Kyber)",
+          "node": "Rubin Ultra+",
+          "year": "2027+",
+          "note": "13,8kV AC → 800V HVDC через SST; устраняет несколько ступеней AC/DC; ~1 МВт стойки; Nvidia назвал 14+ кремниевых партнёров"
+        },
+        {
+          "name": "Vertical Power Delivery (VPD)",
+          "node": "power-on-package",
+          "year": "2026–2028",
+          "note": "подача питания снизу кристалла; PDN-импеданс -20x; ~100W экономия/GPU (Vicor); MPS, TI, Infineon работают"
+        },
+        {
+          "name": "GaN 300mm (Infineon)",
+          "node": "масштаб",
+          "year": "2025–2027",
+          "note": "первые samples Q4 2025; 8\" >80% спроса к 2030 (Yole); драматическое снижение стоимости"
+        },
+        {
+          "name": "SiC 200mm масштаб",
+          "node": "Wolfspeed lead",
+          "year": "2026–2028",
+          "note": "200mm SiC даёт ~1,7x выход кристаллов vs 150mm; onsemi >50% self-sufficiency (GT Advanced)"
+        },
+        {
+          "name": "Solid-state transformers",
+          "node": "SST",
+          "year": "2027–2030",
+          "note": "Infineon+SolarEdge: medium-voltage → 800–1500VDC, >99% efficiency; Navitas 250 кВт SST demo"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "Интеграция питания в пакет GPU (Nvidia/TSMC)",
+          "verdict": "главный структурный риск для дискретных VRM-вендоров",
+          "tone": "negative",
+          "detail": "Power-on-package / backside power delivery может устранить дискретные VRM, вытеснив MPS и Vicor. TSMC/Nvidia работают над этим. Многолетний горизонт, но структурная угроза.",
+          "angle": "Контраргумент: аналоговое/power масштабирование сложнее цифрового; инкумбенты со-разрабатывают с Nvidia. Но риск реален."
+        },
+        {
+          "tech": "Мультисорсинг Nvidia / hyperscaler self-sourcing",
+          "verdict": "уже происходит — главный текущий риск для MPS",
+          "tone": "negative",
+          "detail": "Nvidia сознательно подключает Infineon, Renesas к VRM. Hyperscalers закупают VRM-контент напрямую, минуя OEM (уже на GB300). MPS: -24,9% за день (ноябрь 2024). SemiAnalysis: MPS теряет долю на GB300/B300.",
+          "angle": "MPS всё ещё ~70% на Vera Rubin (KeyBanc), но тренд — снижение доли. Риск перманентный."
+        },
+        {
+          "tech": "Китайские GaN/SiC конкуренты (Innoscience, StarPower)",
+          "verdict": "давят цены, но пока не в квалифицированных AI-сокетах",
+          "tone": "mixed",
+          "detail": "Innoscience — GaN №1 в мире (~30%), IDM, тяжёлые субсидии. Вошла в топ-20 power-дискретов. Nvidia-approved. StarPower — SiC-модули. BYD — №7 в power discretes.",
+          "angle": "Коммодитизация базовых GaN/SiC реальна. Но квалификация для AI-стоек = высокий барьер."
+        }
+      ],
+      "takeaway": "800VDC (2027) — трансформационный сдвиг: новый TAM для SiC/GaN, новые игроки, новая архитектура. VPD / power-on-package — долгосрочная угроза дискретным VRM. GaN/SiC масштабирование (300mm/200mm) снижает себестоимость. Интеграция питания в GPU — worst-case для MPS/Vicor."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "GaN/SiC подложки",
+          "supplier": "Wolfspeed (SiC 200mm), Coherent, Sumitomo, Rohm; Innoscience (GaN IDM)",
+          "note": "SiC-подложки — узкое место; 200mm capacity ограничена"
+        },
+        {
+          "item": "Кремниевые пластины/фаундри",
+          "supplier": "TSMC, PSMC, GlobalFoundries, X-FAB (для GaN); IDM fabs для SiC",
+          "note": "MPS = fabless, proprietary process"
+        },
+        {
+          "item": "Пассивные компоненты",
+          "supplier": "магнитные сердечники, конденсаторы, шины (медные busbar)",
+          "note": "800VDC драматически снижает потребность в меди (200 кг busbar на стойку 54V vs минимум на 800V)"
+        }
+      ],
+      "downstream": "Nvidia (GB300 → Rubin → Kyber → Feynman), AMD, гиперскейлерные ASIC, AI-серверные ODM (Foxconn, Supermicro, Quanta), PSU-производители (Delta, LITEON, Megmeet), инфраструктура ДЦ (Vertiv, Schneider, Eaton, ABB).",
+      "correlation": "Прямая корреляция с объёмами AI GPU/ускорителей и мощностью стоек. Содержание растёт нелинейно: удвоение мощности стойки = ~5x SiC-контент (Navitas). DOE: ДЦ потребляют ~4,4% электричества США (2023) → 6,7–12% к 2028.",
+      "takeaway": "Силовые чипы — мост между энергосетью и GPU. Вверх: SiC/GaN подложки и фаундри. Вниз: серверная сборка и охлаждение. 800VDC связывает этот узел с сетевой инфраструктурой (SST, распределение)."
+    },
+    "risks": [
+      {
+        "risk": "MPS мультисорсинг / потеря доли",
+        "prob": "Высокая (ongoing)",
+        "impact": "Высокий",
+        "note": "-24,9% за день (ноябрь 2024); ~-37% (октябрь 2025); Infineon 60–70% Blackwell; Deutsche Bank: до 15% выручки под риском"
+      },
+      {
+        "risk": "Интеграция питания в GPU-пакет",
+        "prob": "Средняя",
+        "impact": "Критический",
+        "note": "Nvidia/TSMC: power-on-package / backside power delivery. Многолетний, но структурный."
+      },
+      {
+        "risk": "Цикличность base рынка",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "общий рынок сократился в 2024; auto/industrial слабые; onsemi/STMicro/Infineon всё ещё сильно зависят от auto"
+      },
+      {
+        "risk": "Оценки",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "MPS ~50x forward; Vicor +179% YTD; Navitas +780%. Priced for perfection"
+      },
+      {
+        "risk": "800VDC задержка / медленный rollout",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Kyber/Rubin Ultra = 2027; инфраструктурная перестройка ДЦ; задержка = перенос GaN/SiC-выручки"
+      },
+      {
+        "risk": "Китайская коммодитизация GaN/SiC",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "Innoscience GaN №1 (~30%); тяжёлые субсидии; BYD №7 в power discretes. Давит цены на базовые продукты"
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — доказанные позиции",
+        "tone": "leader",
+        "badge": "VRM + IDM масштаб + IP",
+        "note": "MPS — агрессивное ядро (VRM moat, но dual-sourcing risk). Infineon — ballast (ширина, №1, дешевле MPS). Vicor — high-beta IP/density.",
+        "rows": [
+          {
+            "company": "Monolithic Power Systems",
+            "ticker": "NASDAQ: MPWR",
+            "mcap": "~$55–57 млрд",
+            "exposure": "~70% Vera Rubin VRM; Enterprise Data +98% г/г, ~33% выручки",
+            "why": "Монолитный аналоговый дизайн = главный moat в VRM. Q1 2026 рекорд $804 млн (+26%). Ёмкость повышена до $6 млрд. Первое 800V решение отсемплировано. Consensus Strong Buy.",
+            "priced": "~50x forward. -24,9% за день на dual-sourcing страхах. Infineon берёт 60–70% Blackwell. Deutsche Bank: до 15% выручки под риском. Самый высокий idiosyncratic risk в секторе."
+          },
+          {
+            "company": "Infineon",
+            "ticker": "ETR: IFX",
+            "mcap": "~$104 млрд",
+            "exposure": "№1 в мире power semis; AI-power: €250M→€1,5B→€2,5B (FY24→FY26→FY27)",
+            "why": "Ширина + IDM масштаб + SiC + 800VDC партнёр Nvidia. Дрезден €5 млрд открыт (~€1 млрд EU Chips Act). Supply-limited на AI power. TAM €8–12 млрд к концу десятилетия. Лучший risk-adjusted core.",
+            "priced": "~10% выручки = AI (остальное: cyclical auto/industrial). Дешевле MPS по мультипликатору, но рост размыт базовым бизнесом."
+          },
+          {
+            "company": "Texas Instruments",
+            "ticker": "NASDAQ: TXN",
+            "mcap": "~$260 млрд",
+            "exposure": "крупнейший DC analog (~$1,5 млрд CY25, +64%); GM 58%",
+            "why": "Широкий контент по всему power tree — не зависит от одного GPU-сокета. DC-выручка +90% г/г Q1 2026. Цикличное industrial recovery добавляет. 300mm fabs.",
+            "priced": "Диверсифицирован — не чистый AI play. Рост AI-выручки «размыт» в общей массе."
+          },
+          {
+            "company": "Vicor",
+            "ticker": "NASDAQ: VICR",
+            "mcap": "~$12,9 млрд",
+            "exposure": "VPD / Factorized Power IP; backlog $301M, B/B >2:1; цель $2,5 млрд / 70% GM",
+            "why": "Патенты + ITC exclusion order (~$300M licensing). Высокая плотность (VPD экономит ~100W/GPU). Q1 рекорд $113 млн. Hyperscaler programs → production Q3/Q4 2027.",
+            "priced": "+145–179% YTD. High-beta: был выброшен из H100 (2022–23, заменён MPS), теперь AI resurgence. Production revenue = 2027."
+          }
+        ]
+      },
+      {
+        "group": "Ставки — 800VDC/WBG переход и overlooked value",
+        "tone": "emerging",
+        "badge": "GaN/SiC + cyclical re-rating",
+        "note": "Navitas — binary bet на 800VDC. onsemi — лучшая overlooked value (AI double + auto cyclical low). Power Integrations — conservative GaN.",
+        "rows": [
+          {
+            "company": "Navitas Semiconductor",
+            "ticker": "NASDAQ: NVTS",
+            "mcap": "~$3 млрд",
+            "exposure": "единственный GaN+SiC «grid-to-GPU» партнёр Nvidia 800VDC",
+            "why": "GaN + SiC = стратегический дифференциатор. 20кВт 800V-to-6V demo на GTC. 250кВт SST на APEC 2026. SAM $3,5 млрд к 2030 (60%+ CAGR). GaNSafe: 350нс latency.",
+            "risk": "Revenue $8,6 млн (tiny). GAAP-убыточна (op loss $27,8 млн). Cash $221 млн. Beta 3,62. +780% за год, потом -45%. Binary."
+          },
+          {
+            "company": "ON Semiconductor",
+            "ticker": "NASDAQ: ON",
+            "mcap": "~$36–44 млрд",
+            "exposure": "SiC №2; полный 0.8V–800V стек; AI-DC удваивается г/г; GaN funnel >$1,5 млрд",
+            "why": "Лучшая overlooked value: AI-DC удваивается, $12,2 млрд TAM к 2029 (40% CAGR), Nvidia 800VDC партнёр. GaN revenue с 2027. Содержание: $15k → $115k на стойку. Полный power tree.",
+            "risk": "Всё ещё cyclically depressed на auto/EV экспозиции. GM 38,5% — ниже аналоговых. Рынок оценивает как auto-компанию."
+          },
+          {
+            "company": "STMicroelectronics",
+            "ticker": "EPA: STM",
+            "mcap": "~$63 млрд",
+            "exposure": "SiC №1 (~33–36%); Nvidia 800VDC партнёр",
+            "why": "Глобальный лидер SiC. 800VDC партнёр. Но revenue peaked в 2023, cyclical auto drag, китайская SiC-конкуренция. Дешевле Infineon/onsemi на AI optionality.",
+            "risk": "Слабая execution vs Infineon. Auto-зависимость. Китайский SiC давит. Revenue пик прошёл."
+          },
+          {
+            "company": "Power Integrations",
+            "ticker": "NASDAQ: POWI",
+            "mcap": "~$4,8 млрд",
+            "exposure": "PowiGaN 1250V/1700V для Nvidia Kyber 800VDC aux power",
+            "why": "Более консервативная GaN-ставка (vs Navitas). PowiGaN +>40% (2025). DC SAM >$1 млрд к 2029. Сотрудничество с Nvidia на 1250V/1700V для 800VDC.",
+            "risk": "Consumer-appliance концентрация. AI-revenue пока нематериальна. Некоторые аналитики видят downside."
+          },
+          {
+            "company": "Wolfspeed",
+            "ticker": "NYSE: WOLF",
+            "mcap": "~$1,6 млрд",
+            "exposure": "SiC substrate/device лидер с 200mm lead; post-Chapter 11",
+            "why": "200mm SiC = ~1,7x выход кристаллов. Долг сокращён на 70% (до ~$2 млрд). Turnaround play. High short interest. Если execution — значительный upside.",
+            "risk": "Ch11 только что (июнь-сентябрь 2025). Existing shareholders получили ~3–5%. Execution + demand risk. Глубоко спекулятивная."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Infineon (ballast, №1, cheapest quality) + MPS (aggressive core, VRM moat, dual-sourcing risk) — ядро. Vicor — high-beta IP/density сателлит. onsemi — лучшая overlooked value (AI doubling + auto cyclical low). Navitas — binary 800VDC bet (size small). Ожидайте 25–40% просадки на allocation/multi-sourcing headlines — это нормально для сектора.",
+    "monitoring": {
+      "metrics": [
+        "MPS Enterprise Data квартальная выручка / пересмотры growth floor (следующий отчёт ~конец октября 2026)",
+        "Infineon AI-power выручка vs цели €1,5 млрд/€2,5 млрд; capacity commentary (FY26 ongoing)",
+        "Vicor backlog, book-to-bill, VPD design-win и IP-licensing обновления (~конец октября 2026)",
+        "Navitas / Power Integrations: AI design-win и 800VDC milestones (POWI Q2: 5 августа; NVTS: ~август 2026; Innoscience: 28 августа)",
+        "onsemi AI-DC revenue doubling trajectory и GaN revenue start (2027)",
+        "Nvidia 800VDC/Kyber ecosystem новости (GTC, OCP Global Summit)"
+      ],
+      "canary": [
+        "MPS share-loss/dual-sourcing disclosure → главный idiosyncratic risk",
+        "800VDC design-win конвертируется в revenue → подтверждение GaN/SiC thesis",
+        "GaN/SiC ramp inflection (Innoscience 20k wafers/mo; Infineon 300mm GaN) → масштабирование",
+        "Power-content-per-rack пересмотр вверх от Morgan Stanley/onsemi → thesis подтверждён",
+        "Nvidia объявляет power-on-package → worst-case для дискретных VRM вендоров"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Рекордные AI-power метрики — но MPS dual-sourcing и SOX в медвежьем рынке",
+      "summary": "Парадокс июля 2026: MPS record Enterprise Data +98%, Infineon AI €1,5B, Vicor backlog +70%, onsemi AI doubling — но MPS dual-sourcing risk остаётся (Infineon 60–70% Blackwell), SOX в медвежьем рынке (-20%), Navitas упала -45% от пика. 800VDC/Kyber подтверждён на 2027: 14+ silicon partners, proof points expected Q1/Q2 2027. Содержание на стойку продолжает расти: Vera Rubin BOM +233% PCB = $7,8M/rack.",
+      "stories": [
+        {
+          "title": "Morgan Stanley: контент силовых чипов $11k→$191k на стойку (B200→Feynman)",
+          "tone": "positive",
+          "verdict": "~17x рост контента за 4 поколения GPU. Feynman: PCS 27%, VRM 26%, PSU 19%, lateral VRM 15%. Самый быстрый рост контента в AI-цепочке.",
+          "detail": "onsemi подтверждает: $15k→$115k на стойку. 800VDC Rubin Ultra = $95k, почти 3x Rubin."
+        },
+        {
+          "title": "MPS Q1 2026: рекорд $804M, Enterprise Data +98%, ёмкость до $6B",
+          "tone": "mixed",
+          "verdict": "Рекордные метрики, но dual-sourcing shadow: Infineon берёт 60–70% Blackwell по оценкам. MPS ~70% на Vera Rubin. Growth floor повышен до ~85%.",
+          "detail": "Первое 800V решение отсемплировано. Deutsche Bank: maintained Buy ($900 PT), но «до 15% выручки под риском»."
+        },
+        {
+          "title": "Infineon: AI-power €250M→€1,5B→€2,5B (FY24→FY26→FY27); Дрезден открыт",
+          "tone": "positive",
+          "verdict": "6x за 2 года. Supply-limited. TAM €8–12B к концу десятилетия. €5B fab + €1B EU субсидии.",
+          "detail": "800VDC partner. SiC + GaN (300mm samples). Segment margin target raised to ~20%."
+        },
+        {
+          "title": "Navitas: NVIDIA 800VDC GaN+SiC partner, но -45% от пика",
+          "tone": "mixed",
+          "verdict": "Единственный «grid-to-GPU» GaN+SiC партнёр. 20kW demo. SAM $3,5B. Но revenue $8,6M, убыточна, beta 3,62.",
+          "detail": "Упала с ~$5,4B до ~$3B (mid-June→late July). Proof points Q1/Q2 2027. Binary."
+        }
+      ],
+      "bottomLine": "Содержание силовых чипов на стойку растёт в ~17x — это самый быстрый рост в AI-цепочке. Infineon (ballast core) + MPS (aggressive VRM) + onsemi (overlooked value) — тройка для покрытия. 800VDC/Kyber (2027) — следующий катализатор. Dual-sourcing и integration — перманентные риски, но спрос подтверждён рекордами."
+    },
+    "news": [
+      {
+        "date": "2026-05-04",
+        "source": "Morgan Stanley / wccftech",
+        "title": "Power-semi контент: $11,2k (B200) → $191k (Feynman), ~17x рост",
+        "blurb": "VRM + PCS + PSU = основная масса. 800VDC (Rubin Ultra) удваивает контент vs Rubin. Feynman 2028."
+      },
+      {
+        "date": "2026-05-01",
+        "source": "MPS",
+        "title": "MPS Q1 2026: рекорд $804M; Enterprise Data +98%; ёмкость повышена до $6B",
+        "blurb": "Growth floor повышен с 50% до ~85%. Q2 guide $890–910M. Первое 800V решение."
+      },
+      {
+        "date": "2026-04-30",
+        "source": "Infineon",
+        "title": "Infineon AI-power: €1,5B FY26 → €2,5B FY27; Дрезден открыт",
+        "blurb": "6x за 2 года. Supply-limited. €5B fab. TAM €8–12B end-of-decade. Segment margin target ~20%."
+      },
+      {
+        "date": "2026-02-28",
+        "source": "Vicor",
+        "title": "Vicor Q4 2025: backlog +70% QoQ до $301M; B/B >2:1; targets raised",
+        "blurb": "Цель $2,5B revenue / 70% GM / 40% OI. ITC exclusion order → ~$300M licensing. Production programs Q3/Q4 2027."
+      },
+      {
+        "date": "2025-05-21",
+        "source": "Navitas / Nvidia",
+        "title": "Navitas выбрана для Nvidia 800VDC: GaN+SiC «grid-to-GPU»",
+        "blurb": "Единственный партнёр с обоими материалами. 20кВт 800V-to-6V demo. 250кВт SST на APEC 2026."
+      }
+    ]
   }
 }
