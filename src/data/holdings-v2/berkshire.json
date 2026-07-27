@@ -3,7 +3,7 @@
  "name": "Berkshire Hathaway",
  "ticker": "BRK.A / BRK.B",
  "type": "true holdco",
- "asOf": "28.06.2026",
+ "asOf": "27.07.2026",
  "tagline": "Berkshire оценён близко к собственной исторической норме (P/B ~1.45x против 10-летней медианы ~1.42x) при рекордном кэше $373.5 млрд и символическом buyback $235 млн — нейтральный по цене сигнал HOLD с покупкой на просадках; ключевые узлы решения — первый полный квартал Greg Abel как CEO, кэш-дрэг под падающую ставку и лучшее в peer-группе страховое ядро (combined ratio 87.1%).",
  "kpis": [
   {
@@ -206,7 +206,179 @@
     ]
    },
    "bodyMarkdown": "| Риск | Уровень | Конкретика на 31.03.2026 | Триггер срабатывания |\n|------|---------|--------------------------|----------------------|\n| **Концентрация (топ-1)** | Средний | Apple = 21.99% публичного портфеля ($57.8 млрд); топ-5 = 61% всех акций | Падение Apple на 30% → ~$17 млрд unrealized loss, ~2.4% от equity |\n| **Концентрация энергетики** | Средний | Chevron + Occidental ~13% портфеля; OXY equity-method + $8.5 млрд preferred | Нефть < $50/барр устойчиво → новые OTTI по OXY (уже было FY2025) |\n| **Кэш-дрэг / реинвест-риск** | Высокий | $373.5 млрд под T-Bills; ставка снижается | Падение коротких ставок ниже 3% → ~$10+ млрд недополученного investment income в год; underperformance vs S&P |\n| **Key-person (пост-Buffett)** | Средний→Высокий | Q1 2026 — первый полный квартал Abel как CEO; Buffett — Chairman | Сделка Abel с плохим исходом → re-rating «Buffett-премии», расширение holdco-дисконта |\n| **Страховой catastrophe / cycle** | Средний | Float $176.9 млрд; компания заявила, что будет писать меньше P&C «на период времени» | Крупный кат-год → combined ratio > 100%, удар по underwriting earnings |\n| **Single-asset (Kraft Heinz)** | Низкий→Средний | KHC после OTTI 2025; Abel назвал ставку «disappointing» | Дальнейшее падение KHC → новое OTTI-списание |\n| **Regulatory (BHE/utility)** | Средний | BHE — регулируемые utility; wildfire-обязательства PacifiCorp ~$2.9 млрд кумулятивно (по 10-Q/транскрипту) | Крупный wildfire-вердикт сверх резервов → удар по BHE earnings |\n| **Leverage** | Низкий | Долг Berkshire/BHFC $42.8 млрд против equity $727.2 млрд; BHE/BNSF без гарантии Berkshire | Структурно низкий leverage — не системный риск |\n| **Recession sensitivity** | Средний | BNSF, MSR-сегмент, GEICO — цикличны | Рецессия в США → снижение объёмов BNSF, прибыли MSR; частично компенсируется T-Bill доходом |\n| **AI-disruption (косвенный)** | Низкий | Прямая AI-экспозиция мала (Alphabet ~6.3%); core — страхование/инфраструктура | Не материален для тезиса; AI-линза реальна только через Alphabet и BHE power-cycle |",
-   "hasDeep": true
+   "hasDeep": true,
+   "deep": [
+    {
+     "type": "text",
+     "title": "Карта рисков",
+     "body": "У Berkshire два вида рисков: **структурные** (cash drag, Apple-концентрация, succession) и **операционные** (cat-losses, wildfire, BNSF-спад). Структурные — медленные, но формируют цену акции. Операционные — волатильные, но Berkshire лучше других экипирован для их поглощения. P/B 1.45× говорит: рынок закладывает мягкий переход, но не мега-деплоймент."
+    },
+    {
+     "type": "table",
+     "title": "Матрица рисков",
+     "columns": [
+      "Риск",
+      "Тяжесть",
+      "Вероятность",
+      "Горизонт",
+      "Наблюдаемый триггер"
+     ],
+     "rows": [
+      [
+       "Succession / потеря премии",
+       "Высокая",
+       "Средняя",
+       "1–5 лет",
+       "P/B <1.2 устойчиво; отток топов"
+      ],
+      [
+       "Cash drag ($397 млрд)",
+       "Средняя",
+       "Высокая (реализуется)",
+       "текущий",
+       "Кэш >$400 млрд без M&A >$20 млрд"
+      ],
+      [
+       "Apple concentration (22%)",
+       "Высокая",
+       "Средняя",
+       "текущий",
+       "Apple <$150/акция"
+      ],
+      [
+       "Insurance cat-losses",
+       "Высокая",
+       "Низкая–средняя",
+       "ежегодно",
+       "Underwriting loss >$5 млрд/кв."
+      ],
+      [
+       "BHE wildfire (PacifiCorp)",
+       "Высокая",
+       "Средняя–высокая",
+       "1–3 года",
+       "Accrual >$5 млрд; downgrade PacifiCorp"
+      ],
+      [
+       "BNSF секулярный спад",
+       "Средняя",
+       "Средняя",
+       "3–10 лет",
+       "Объёмы угля/carloads −10%+"
+      ],
+      [
+       "Conglomerate discount",
+       "Средняя",
+       "Средняя",
+       "1–5 лет",
+       "Дисконт к SOTP >15%"
+      ],
+      [
+       "Key-person (Jain 74)",
+       "Средняя",
+       "Высокая",
+       "1–3 года",
+       "Объявление ухода Jain"
+      ],
+      [
+       "Scale / deployment math",
+       "Средняя",
+       "Средняя",
+       "текущий",
+       "Нет M&A >$20 млрд 2+ года"
+      ]
+     ]
+    },
+    {
+     "type": "cards",
+     "title": "Ключевые риски",
+     "items": [
+      {
+       "title": "Succession — Buffett 95",
+       "badge": "1–5 лет",
+       "color": "clay",
+       "desc": "Впервые распределение капитала (суперсила Buffett) отделено от операций (Abel). Combs ушёл, Jain 74 — три ключевых человека на выходе. Риск: испарение «Berkshire premium» к book value. Митигатор: Abel 30-летний инсайдер, зарплату ($15.3 млн) направляет на покупку BRK.",
+       "value": "P/B 1.45× → ?",
+       "foot": "Прецедент: смерть Мангера (ноя 2023) — акция не упала"
+      },
+      {
+       "title": "Cash drag — $397 млрд под ~3.7%",
+       "badge": "текущий",
+       "color": "gold",
+       "desc": "31.7% стоимости в T-bills. При ROIC 10%+ в бизнесах — упущенный доход ~$25-30 млрд/год. 14 кварталов нетто-продавец. Abel: «наш кэш не сигнал отступления» — но рынок хочет deployment.",
+       "value": "$25–30 млрд/год",
+       "foot": "Buffett: «не на этом рынке» (март 2026)"
+      },
+      {
+       "title": "BHE wildfire — PacifiCorp",
+       "badge": "1–3 года",
+       "color": "violet",
+       "desc": "Кумулятивный accrual $2.9 млрд. Иски ~$54-55 млрд. Оценка возможных претензий ~$8 млрд. Нужно ~$9 млрд bonds для апелляций по 1,700 истцам к 2028. Урегулирование с DOJ $575 млн (февраль 2026).",
+       "value": "~$8 млрд exposure",
+       "foot": "Апелляционный суд Орегона отменил вердикт (апрель 2026)"
+      }
+     ]
+    },
+    {
+     "type": "scenarios",
+     "title": "Что будет, если риск сработает?",
+     "items": [
+      {
+       "scenario": "Abel развёртывает 20%+ кеша ($80 млрд+) на мега-сделку",
+       "action": "Bull case — deployment при сохранении ROIC → P/B 1.6–1.7× → ADD. Ключевой тест: не переплатил ли? Сравнить с historical ROIC 10%+.",
+       "signal": "бычий"
+      },
+      {
+       "scenario": "Cash drift: кеш >$450 млрд без deployment 2+ квартала",
+       "action": "Cash drag усиливается. Если buyback <$1 млрд/кв при P/B <1.3× — Abel не пользуется инструментом → HOLD tight, не добавлять.",
+       "signal": "медвежий"
+      },
+      {
+       "scenario": "Cat-loss + wildfire: underwriting loss >$5 млрд + PacifiCorp accrual >$5 млрд в одном квартале",
+       "action": "Двойной удар по earnings и balance sheet. Berkshire переживёт (fortress), но P/B <1.2× возможен → BUY на панике, если float остаётся стабильным.",
+       "signal": "медвежий"
+      }
+     ]
+    },
+    {
+     "type": "facts",
+     "title": "Пороги мониторинга",
+     "items": [
+      {
+       "k": "Operating earnings",
+       "v": "<$9 млрд/кв два квартала подряд → ухудшение бизнеса"
+      },
+      {
+       "k": "P&C combined ratio",
+       "v": ">100% (underwriting loss) → float перестаёт быть бесплатным"
+      },
+      {
+       "k": "Cash + T-bills",
+       "v": "<$100 млрд без M&A = fortress под угрозой; >$450 млрд = усиление drag"
+      },
+      {
+       "k": "Apple позиция",
+       "v": "<150 млн акций → распродажа ускоряется"
+      },
+      {
+       "k": "BVPS рост",
+       "v": "<8% г/г → замедление компаундирования"
+      },
+      {
+       "k": "Buyback",
+       "v": ">$5 млрд/кв = сигнал глубокой недооценки"
+      },
+      {
+       "k": "Float",
+       "v": "снижение >$10 млрд/год → потеря конкурентного преимущества"
+      },
+      {
+       "k": "Wildfire accrual",
+       "v": "кумулятивно >$5 млрд → системный удар по BHE"
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "insider",
@@ -245,7 +417,191 @@
     ]
    },
    "bodyMarkdown": "#### Покупки топ-менеджмента на открытом рынке (Form 4, первичка SEC) — самый сильный сигнал секции\n\nДве реальные открытые рыночные покупки (transaction code «P») за 2026 г., обе впервые с момента смены CEO. Это покупки за личные деньги, не гранты, не благотворительность.\n\n- **Greg Abel (President & CEO, с 01.01.2026) — купил 21 акцию Class A 04.03.2026** по цене $725,210–$733,300 за акцию, **на ~$15.31 млн** (средняя ~$728,970). После сделки держит **249 акций Class A напрямую** + 2,289 и 74 акции Class B через Gregory E. Abel Revocable Trust. Это первая открытая покупка Abel как CEO, через день после публикации годового письма (28.02.2026) и при цене BRK.A у верхней трети 52-нед. диапазона. Сигнал убеждённости нового CEO в собственной акции по полной рыночной цене. (Form 4, accession 0001193125-26-092556, подан 05.03.2026; 18 строк code «P» на дату 04.03.2026 сверены построчно по ownership.xml.)\n- **Michael J. O'Sullivan (Senior Vice President, General Counsel & Secretary) — купил 536 акций Class B 06.05.2026** (483 @ $467.13 + 53 @ $470.22), **на ~$250.5 тыс.** (средняя $467.44). После сделки держит 663 акции Class B в living trust (+422% к позиции). Покупка через 2 дня после подачи 10-Q за Q1. Кросс-валидировано openinsider.com (+536 @ $467.44, +$250,545). (Form 4, accession 0001193125-26-209661, подан 06.05.2026.)\n\nПрямых открытых продаж (code «S») акций Berkshire инсайдерами в 2026 г. в Form 4 не зафиксировано. Активность Buffett и Jain — только конвертации и благотворительность (ниже).\n\n#### Конвертации и благотворительные передачи (не рыночный сигнал)\n- **Warren Buffett (Chairman; директор):** 18.05.2026 конвертировал **25 акций Class A → 37,500 Class B** (code «C») и в тот же день передал в дар (code «G», цена $0) **два транша по 18,646 Class B**; 22.05.2026 — дар 160 Class B. 17.03.2026 — дар 2 акций Class A. Это ежегодные благотворительные передачи в семейные фонды и Gates Foundation, конвертированные из A в B перед передачей — структурно не рыночные продажи, на free float и сигнал не влияют. (Form 4 accessions 0001193125-26-232543, -239886, -116315.)\n- **Ajit Jain (Vice Chairman, Insurance):** 27.03.2026 — дар (code «G») 22 акций Class B; остаток 330 Class B напрямую + семейные трасты и Jain Foundation (17 + 38 + 50 акций Class A). Малый объём, благотворительность. (Form 4 accession 0001728451-26-000001.) Для сравнения — в 2025 г. Jain продавал на открытом рынке: 08.08.2025 −2,000 Class A @ $464.73 (~$929 тыс.) и 26.09.2025 −15,000 Class A (gift/OE). За 2026 г. рыночных продаж Jain нет.\n- **Charlotte Guyman (директор):** 14.05.2026 — дар 574 Class B (code «G»). Не сигнал.\n\n#### Buybacks (главный сигнал капитал-аллокации)\n- **Q1 2026: символическое возобновление после годовой паузы.** Выкуплено **$235 млн** — **33 акции Class A и 431,462 акции Class B** при P/B ~144%. 10-Q формулирует как «relatively minor amounts of treasury stock». (Сверено по statement of equity и cash-flow 10-Q.) Контраст с покупками Abel на $15.31 млн собственных средств: компания почти не выкупает акцию по этой цене, но CEO лично её берёт — сигнал, что Abel видит акцию около intrinsic value, но не глубоко ниже.\n- Ряд темпа: 2021 ~$27 млрд → 2022 ~$8 млрд → 2023 >$9 млрд → 2024 ~$3 млрд → **2025 $0 → Q1 2026 $0.235 млрд**.\n- Buyback-программа без лимита/срока; запрет при cash + T-Bills < $30 млрд. Buybacks ведутся при цене ниже консервативной оценки intrinsic value (письмо Abel) — символический объём Q1 2026 подтверждает: акция не считается заметно недооценённой.\n\n#### Действия компании как инсайдера держателей (Form 4 по DaVita / Liberty Live)\nBerkshire — >10% акционер DaVita и Liberty Live, поэтому подаёт Form 4 по их акциям; раскрывает реальные продажи:\n- **DaVita (DVA):** 29.01.2026 продано **1,658,480 акций @ $120.56** (~$199.9 млн); 01.05.2026 продано **1,220,376 акций @ $149.84** (~$182.9 млн). Итого за период **~2.88 млн акций**; остаток после 01.05 — 28,880,209 акций (из них 13.9 млн через GEICO, 15.0 млн через пенсионные планы BNSF/Berkshire). Это исполнение buyback/standstill-соглашения с DaVita (Berkshire продаёт обратно в выкуп DVA, удерживая долю ниже порога). Согласуется с тримом DVA −5% в 13F. (Form 4 accessions 0001193125-26-033900, -207021.)\n- **Liberty Live (Series C):** 06–16.01.2026 продано **330,518 акций** по $81.22–$84.04 (~$27.4 млн) серией code «S». (Form 4 accession 0001193125-26-054947.)\n\n#### Dividend / эмиссия / spin-off\n- **Дивиденды:** не платятся (с 1967 г.); совет пересматривает политику ежегодно. Вся доходность — рост book value + buyback.\n- **Share issuance:** новой эмиссии акций для оплаты сделок нет (OxyChem ~$9.5 млрд оплачен cash). Class A-эквивалент акций снижается за счёт buyback.\n- **Долговая эмиссия:** йеновые senior notes ¥272.3 млрд (~$1.7 млрд, 424B5 от 14.04.2026, погашение 2029–2056) — финансирование йеновых позиций в торговых домах, не размывает акционеров.\n- **Preferred Berkshire:** авторизован 1 млн, выпущено 0. **Spin-offs:** нет.\n\n**Прочтение для hold/add/cut:** связка «CEO покупает на $15.31 млн личных средств по полной цене + buyback почти на нуле + ноль рыночных продаж акций инсайдерами в 2026» — умеренно бычий инсайдерский сигнал на уровне руководства, но не сигнал глубокой недооценки. Передачи Buffett/Jain — благотворительность, дисконтировать. Продажи DVA/Liberty Live — техническое исполнение соглашений, не смена тезиса.",
-   "hasDeep": true
+   "hasDeep": true,
+   "deep": [
+    {
+     "type": "flows",
+     "title": "Движения инсайдеров (12 мес)",
+     "totals": [
+      {
+       "label": "Buyback",
+       "value": "$226 млн",
+       "sub": "возобновлён 04.03.2026"
+      },
+      {
+       "label": "Продажи инсайдеров",
+       "value": "~$0",
+       "sub": "Buffett не продаёт — дарит"
+      },
+      {
+       "label": "Покупки инсайдеров",
+       "value": "$15.56 млн",
+       "sub": "Abel + O'Sullivan"
+      }
+     ],
+     "timeline": [
+      {
+       "date": "04.03.2026",
+       "type": "Buyback",
+       "label": "Bayбэк $226 млн (309 A-экв.)",
+       "value": "$226M"
+      },
+      {
+       "date": "03.2026",
+       "type": "Покупка",
+       "label": "Abel: зарплата → BRK ($15.3M/год)",
+       "value": "$15.3M"
+      },
+      {
+       "date": "02.2026",
+       "type": "Покупка",
+       "label": "O'Sullivan: +536 BRK.B @ $467.44",
+       "value": "$251K"
+      },
+      {
+       "date": "01.2026",
+       "type": "Дарение",
+       "label": "Buffett: подарил 1,600 A-акций",
+       "value": "~$1.1B"
+      },
+      {
+       "date": "12.2025",
+       "type": "Уход",
+       "label": "Todd Combs ушёл в JPMorgan",
+       "value": "—"
+      },
+      {
+       "date": "11.2025",
+       "type": "Конвертация",
+       "label": "Buffett: конвертация A→B для благотворительности",
+       "value": "—"
+      }
+     ]
+    },
+    {
+     "type": "pie",
+     "title": "Структура владения",
+     "items": [
+      {
+       "name": "Buffett (экономический)",
+       "pct": 13.6,
+       "color": "gold"
+      },
+      {
+       "name": "Менеджмент и совет",
+       "pct": 0.4,
+       "color": "teal"
+      },
+      {
+       "name": "Институциональные инвесторы",
+       "pct": 86,
+       "color": "ink"
+      }
+     ],
+     "note": "Buffett — 37.7% Class A, 29.8% голосов. Все акции уйдут на благотворительность (~10 лет после его смерти)."
+    },
+    {
+     "type": "table",
+     "title": "Ключевые фигуры",
+     "columns": [
+      "Имя",
+      "Роль",
+      "Возраст",
+      "Компенсация",
+      "Акции BRK"
+     ],
+     "rows": [
+      [
+       "Warren Buffett",
+       "Chairman",
+       "95",
+       "$100K/год ($389K total)",
+       "37.7% Class A"
+      ],
+      [
+       "Greg Abel",
+       "CEO (с 01.01.2026)",
+       "63",
+       "$25 млн/год → всё в BRK",
+       "покупает ежегодно"
+      ],
+      [
+       "Ajit Jain",
+       "Vice Chairman Insurance",
+       "74",
+       "не раскрыта",
+       "продал часть 2025"
+      ],
+      [
+       "Ted Weschler",
+       "Инвест-менеджер (~5%)",
+       "62",
+       "не раскрыта",
+       "не раскрыты"
+      ],
+      [
+       "Charles Chang",
+       "CFO (с 01.06.2026)",
+       "—",
+       "$8 млн",
+       "нет данных"
+      ],
+      [
+       "Nancy Pierce",
+       "CEO GEICO (новая)",
+       "—",
+       "не раскрыта",
+       "нет данных"
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "title": "Возврат капитала",
+     "body": "**Дивиденды:** не платятся с 1967 года. Политика: каждый удержанный доллар должен создавать >$1 рыночной стоимости. 59 лет подряд — работает.\n\n**Buyback:** пауза весь 2025. Возобновлён 04.03.2026 ($226 млн). До паузы — 24 квартала подряд (середина 2018 – Q2 2024), ~$78 млрд суммарно. Порог: не выкупать, если кэш <$30 млрд. Abel: больше не будет отдельных анонсов buyback.\n\n**Buffett и благотворительность:** все акции уйдут в течение ~10 лет после смерти. Уже подарил >$55 млрд. Ежегодно конвертирует A→B для дарения."
+    },
+    {
+     "type": "table",
+     "title": "Ключевые корпоративные действия (12 мес)",
+     "columns": [
+      "Дата",
+      "Действие",
+      "Детали"
+     ],
+     "rows": [
+      [
+       "01.01.2026",
+       "Abel — CEO",
+       "Первая смена за 60 лет; Buffett — Chairman"
+      ],
+      [
+       "08.12.2025",
+       "Combs ушёл",
+       "→ JPMorgan $10 млрд SIG"
+      ],
+      [
+       "01.06.2026",
+       "Chang — CFO",
+       "Компенсация $8 млн"
+      ],
+      [
+       "04.03.2026",
+       "Buyback resumed",
+       "$226 млн после годовой паузы"
+      ],
+      [
+       "03.2026",
+       "Yen bonds ¥272.3 млрд",
+       "Фондирование японских торговых домов"
+      ],
+      [
+       "Q1'26",
+       "16 позиций проданы",
+       "Amazon, Visa, MC, UNH, Domino's и др."
+      ]
+     ]
+    }
+   ]
   },
   {
    "id": "peers",
@@ -284,7 +640,210 @@
     ]
    },
    "bodyMarkdown": "Ближайшие сопоставимые — страхо-центричные holdco с инвест-портфелем: Markel (MKL), Fairfax Financial (FFH), Loews (L). Все FY2025.\n\n| Метрика | Berkshire | Markel | Fairfax | Loews |\n|---------|-----------|--------|---------|-------|\n| Combined ratio FY2025 | **87.1%** (P&C группа) | ~93% | ~93.0% | 95.1% reported / 91.7% underlying (Q3'25) |\n| Float / страх. leverage | $176.9 млрд | значительно меньше | растущий | CNA-центричный |\n| P/Book | ~1.45x | ~около/ниже book | ~около/ниже book | holdco-дисконт |\n| BVPS рост | 19.7% CAGR 1965–2025 | методичный компаундинг | +21% г/г FY2025 | стабильный |\n| Дивиденды | 0% | 0% | платит | платит |\n| Cash/dry powder | $373.5 млрд (рекорд) | умеренный | размещён активнее | умеренный |\n\nPeer-метрики Markel/Fairfax/Loews взяты из черновиков агентов и вторичных источников/Q3-данных, не из FY2025 10-K каждого peer построчно — см. пробелы.\n\n**Импликация для hold/add/cut:**\n- **Underwriting:** Berkshire лидирует по combined ratio (87.1%) — лучшее качество страхового ядра в группе (поддерживает hold/add).\n- **Оценка:** Berkshire дороже peer по P/Book (~1.45x против ~1x и ниже) — премия за масштаб и баланс, но меньший margin of safety по цене (ограничивает аргумент для агрессивного add).\n- **Рост book:** Fairfax — самый сильный годовой рост BVPS (+21% FY2025); Berkshire — лучший долгосрочный CAGR, но более низкий текущий темп из-за кэш-дрэга.",
-   "hasDeep": true
+   "hasDeep": true,
+   "deep": [
+    {
+     "type": "compare",
+     "title": "Berkshire vs конкуренты: масштаб и модель",
+     "columns": [
+      "Метрика",
+      "Berkshire Hathaway",
+      "Fairfax Financial",
+      "Markel Group",
+      "Loews Corp"
+     ],
+     "rows": [
+      [
+       "Тип",
+       "Страховой конгломерат",
+       "Страховой holdco",
+       "Specialty insurer + ventures",
+       "Диверсифицированный holdco"
+      ],
+      [
+       "Market cap",
+       "~$1.054 трлн",
+       "~C$47 млрд",
+       "~$22 млрд",
+       "~$18 млрд"
+      ],
+      [
+       "Float",
+       "$176.9 млрд",
+       "~$34 млрд",
+       "~$14 млрд",
+       "~$6 млрд"
+      ],
+      [
+       "Combined ratio FY2025",
+       "87.1%",
+       "~93%",
+       "~95%",
+       "~97%"
+      ],
+      [
+       "P/Book",
+       "~1.45×",
+       "~1.3×",
+       "~1.5×",
+       "~0.75×"
+      ],
+      [
+       "Operating earnings",
+       "$44.5 млрд",
+       "~$4.7 млрд",
+       "~$2.6 млрд",
+       "~$1.5 млрд"
+      ],
+      [
+       "Cash / enterprise",
+       "31.7%",
+       "~10%",
+       "~8%",
+       "~15%"
+      ],
+      [
+       "Портфель акций",
+       "$263.1 млрд (13F)",
+       "~$18 млрд",
+       "~$8 млрд",
+       "минимальный"
+      ],
+      [
+       "Buyback",
+       "$226M (resumed)",
+       "активный",
+       "активный",
+       "активный"
+      ],
+      [
+       "Succession risk",
+       "Высокий (Buffett 95)",
+       "Средний (Watsa 75)",
+       "Низкий (Gayner 63)",
+       "Низкий"
+      ]
+     ]
+    },
+    {
+     "type": "moat",
+     "title": "В чём рвов Berkshire",
+     "body": "**Преимущество:** float $176.9 млрд при отрицательной стоимости — бесплатный леверидж для инвестиций. Combined ratio 87.1% за FY2025 при 10-летней медиане 93.0%. Только Fairfax сопоставим по дисциплине, но при 5× меньшем масштабе.\n\n**Доказательство:** 60+ лет прибыльного андеррайтинга. Float вырос с $88 млрд (2015) до $177 млрд (2026). Cost basis Top-5 позиций $24.5 млрд, дивиденды $2.5 млрд/год (yield on cost ~10%). CAGR Berkshire 19.7% vs S&P 10.5%.\n\n**Почему трудно повторить:** масштаб float + бренд «никогда не продаём хороший бизнес» позволяет покупать целые компании на условиях, недоступных PE. Fairfax при $34 млрд float не может делать $10 млрд+ сделок.\n\n**Честный компромисс:** $397 млрд кеша при ~3.7% = ~$25-30 млрд/год упущенного дохода. Succession: три ключевых человека на выходе. Apple 22% = концентрация. BHE wildfire — потенциал $8 млрд+. P/B 1.45× — около нормы, не дёшево.\n\n**Вывод:** при P/B <1.2× — агрессивно добавлять. При >1.7× без мега-сделки — фиксировать."
+    },
+    {
+     "type": "stats",
+     "title": "Ключевые сравнительные метрики",
+     "items": [
+      {
+       "label": "P/Book Berkshire",
+       "value": "~1.45×",
+       "sub": "10-летняя медиана 1.42×; Fairfax ~1.3×, Markel ~1.5×"
+      },
+      {
+       "label": "Float / market cap",
+       "value": "16.8%",
+       "sub": "BRK: $177B/$1,054B; Fairfax ~72%"
+      },
+      {
+       "label": "Combined ratio spread",
+       "value": "−5.9 п.п.",
+       "sub": "Berkshire 87.1% vs 10-летняя медиана 93.0%"
+      },
+      {
+       "label": "Cash / enterprise",
+       "value": "31.7%",
+       "sub": "рекорд; Fairfax ~10%, Markel ~8%"
+      },
+      {
+       "label": "Operating earnings yield",
+       "value": "~4.2%",
+       "sub": "$44.5B / $1,054B mcap"
+      }
+     ]
+    },
+    {
+     "type": "table",
+     "title": "Кто конкурирует за капитал",
+     "columns": [
+      "Конкурент",
+      "Стратегия",
+      "Float",
+      "Угроза для Berkshire"
+     ],
+     "rows": [
+      [
+       "Fairfax Financial",
+       "Страховой holdco по модели BRK; Prem Watsa = «канадский Баффетт»",
+       "~$34 млрд",
+       "Минимальная — 5× меньше масштаб"
+      ],
+      [
+       "Markel Group",
+       "Specialty insurance + Markel Ventures; Tom Gayner",
+       "~$14 млрд",
+       "Минимальная — нишевой игрок"
+      ],
+      [
+       "AIG / Chubb / Zurich",
+       "Крупные страховщики; float → облигации, не акции",
+       "$50-100 млрд",
+       "Конкурируют за premium volume"
+      ],
+      [
+       "Private Equity",
+       "Leverage buyout; 3–7 лет; конкурируют за целые бизнесы",
+       ">$2 трлн dry powder",
+       "Прямая — поднимает мультипликаторы"
+      ],
+      [
+       "Loews Corp",
+       "CNA Financial + Boardwalk Pipeline + Hotels",
+       "~$6 млрд (CNA)",
+       "Минимальная — значительно меньше"
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "title": "Почему Berkshire стоит дороже всех peers",
+     "body": "Berkshire торгуется с P/B ~1.45× при том, что Fairfax ~1.3×, Loews ~0.75×. Премия — плата за: (1) масштаб float, делающий крупные сделки уникально доступными; (2) 60-летний track record profitable underwriting; (3) эффект Баффетта — продавцы бизнесов идут к Berkshire первыми. Вопрос: сколько из этой премии принадлежит лично Баффетту и испарится после его ухода? Прецедент: смерть Мангера (ноябрь 2023) — акция не упала. Но Мангер был Vice Chairman."
+    },
+    {
+     "type": "quote",
+     "text": "We maintain a fortress-like balance sheet.",
+     "who": "Greg Abel, CEO, Berkshire Hathaway — годовое письмо 2025"
+    },
+    {
+     "type": "facts",
+     "title": "Чем Berkshire отличается от всех",
+     "items": [
+      {
+       "k": "Float при отрицательной стоимости",
+       "v": "$176.9 млрд бесплатного капитала. Underwriting profit делает float дешевле нуля."
+      },
+      {
+       "k": "Никаких earnings calls",
+       "v": "Единственная из трлн-клуба. Коммуникация = годовое письмо + AGM."
+      },
+      {
+       "k": "$397 млрд кеша",
+       "v": "31.7% enterprise value. ~10-е место среди держателей госдолга США."
+      },
+      {
+       "k": "Нет дивидендов с 1967",
+       "v": "59 лет: каждый $1 удержанный → >$1 стоимости."
+      },
+      {
+       "k": "Cost basis Top-5 = $24.5 млрд",
+       "v": "Рыночная >$200 млрд. Yield on cost ~10%. Но deferred tax $48.4 млрд."
+      },
+      {
+       "k": "14 кварталов нетто-продавец",
+       "v": "Самая длинная серия в истории. Сигнал: мало справедливо оценённых крупных целей."
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "strategy",
@@ -323,7 +882,188 @@
     ]
    },
    "bodyMarkdown": "**Кто пишет канон.** Цифры — из первого годового письма CEO **Greg Abel от 28.02.2026** (CEO с 01.01.2026; Buffett — Chairman) и прощального письма **Warren Buffett от 10.11.2025**. Впервые за 60 лет канон-документ подписан не Buffett.\n\n**Edge-тезис менеджмента (дословно, письмо Abel).** *\"Berkshire is a unique conglomerate, intentionally designed to allocate capital rationally and efficiently. Insurance is our core, and we also hold substantial investments in businesses across many other sectors.\"* Цель — *\"maximizing the growth in Berkshire's intrinsic value per share over the long term.\"* Преимущество структурное: страховой float + fortress-баланс.\n\n**Правила капитал-аллокации (дословный список из письма Abel):**\n- Инвестировать в бизнесы с durable advantages, которые менеджмент полностью понимает;\n- Партнёриться с менеджерами высокой честности, думающими как собственники;\n- Избегать бизнесов, способных навредить репутации Berkshire;\n- *\"Act quickly and concentrate our capital in a few high conviction ideas\"*;\n- *\"Maintain discipline and let compounding unfold.\"*\n\nПриоритет активов: *\"We will always aim for ownership of productive businesses over U.S. Treasuries.\"*\n\n**Buybacks:** *\"We will buy back Berkshire shares when they trade below our estimate of intrinsic value, conservatively determined.\"* Факт: в Q1 2026 выкуплено лишь **$235 млн** (10-Q) — сигнал, что менеджмент НЕ считает акцию заметно недооценённой.\n\n**Дивиденды:** не платят, пока каждый удержанный доллар способен создать более доллара рыночной стоимости; совет пересматривает политику ежегодно.\n\n**Слои стратегии:**\n1. **Страхование (ядро).** GEICO + National Indemnity + перестрахование. Float **$176 млрд** на конец 2025 (было $171 млрд в 2024). Combined ratio 2025 = **87.1%**. Ajit Jain руководит страхованием; CEO назван Chief Risk Officer.\n2. **Операционные бизнесы.** BNSF, BHE, промышленность (Precision Castparts, Marmon, Lubrizol), стройматериалы (Clayton), сервис/ритейл (NetJets, Pilot, McLane). Модель — децентрализация: *\"There are no layers of management and no allocated goals or targets set by Berkshire.\"*\n3. **Equity-портфель** — *\"an integral extension of our insurance operations and capital base\"*; концентрация сохранится: *\"This concentrated approach will continue, with limited activity in these holdings.\"*\n4. **Cash + Treasuries** = $373.5 млрд net (10-Q) — *\"our dry powder.\"*\n\n**Новые сделки как иллюстрация:** OxyChem (~$9.5 млрд) и Bell Laboratories (борьба с грызунами; *\"We only wish it had been ten times bigger\"*).",
-   "hasDeep": true
+   "hasDeep": true,
+   "deep": [
+    {
+     "type": "text",
+     "title": "Суть стратегии",
+     "body": "Berkshire — «уникальный конгломерат, намеренно созданный для рационального размещения капитала». Страхование — ядро: float $177 млрд при отрицательной стоимости фондирует весь портфель. Иерархия капитала чёткая: (1) fortress balance sheet; (2) инвестиции в существующие бизнесы; (3) операционные приобретения; (4) equity-инвестиции; (5) buybacks ниже intrinsic value. Дивиденды — только если $1 удержанный не создаёт >$1 стоимости (не платятся с 1967). Abel формализовал foundational values впервые: партнёрская культура, децентрализация, integrity, financial strength, capital discipline."
+    },
+    {
+     "type": "bets",
+     "title": "Четыре столпа",
+     "items": [
+      {
+       "title": "Insurance — двигатель",
+       "badge": "float $177 млрд",
+       "color": "gold",
+       "value": "$176.9 млрд",
+       "valueLabel": "float при отрицательной стоимости",
+       "vehicles": [
+        "GEICO (auto, combined 84.7%)",
+        "BH Primary Group",
+        "BH Reinsurance Group",
+        "Gen Re"
+       ],
+       "outlook": "Float растёт — с $88 млрд (2015) до $177 млрд. Berkshire удерживает риск сам, не покупает перестрахование.",
+       "quote": "Страховой float фондирует инвестиции бесплатно",
+       "quoteBy": "Greg Abel"
+      },
+      {
+       "title": "Операционные бизнесы",
+       "badge": "earnings $44.5 млрд",
+       "color": "violet",
+       "value": "$44.5 млрд",
+       "valueLabel": "operating earnings FY2025",
+       "vehicles": [
+        "BNSF (railroad, $7.2 млрд pre-tax)",
+        "BHE (energy, $2.3 млрд)",
+        "Precision Castparts",
+        "GEICO, Clayton Homes, See's"
+       ],
+       "outlook": "Стабильные cash-generative бизнесы. BNSF — precision railroading. BHE — renewables + HVDC.",
+       "quote": "Assess value carefully, act patiently, hold forever",
+       "quoteBy": "Greg Abel"
+      },
+      {
+       "title": "Equity-портфель",
+       "badge": "13F $263 млрд",
+       "color": "teal",
+       "value": "$263.1 млрд",
+       "valueLabel": "13F portfolio Q1 2026",
+       "vehicles": [
+        "Apple 22%",
+        "AmEx 17%",
+        "Coca-Cola 12%",
+        "BofA 10%",
+        "Японские торговые дома (вне 13F)"
+       ],
+       "outlook": "14 кварталов нетто-продавец. Alphabet утроен. Apple стабилен. Концентрация в финансах 36%.",
+       "quote": "Concentrate capital in few high conviction ideas",
+       "quoteBy": "Warren Buffett"
+      },
+      {
+       "title": "Cash — dry powder",
+       "badge": "$397 млрд",
+       "color": "blue",
+       "value": "$397.4 млрд",
+       "valueLabel": "кеш + T-bills (31.03.2026)",
+       "vehicles": [
+        "T-bills $339 млрд",
+        "Cash equivalents ~$58 млрд"
+       ],
+       "outlook": "Рекорд — 31.7% стоимости. Annualized interest ~$12 млрд. Abel: «не сигнал отступления». Buffett: «ownership of businesses over Treasuries».",
+       "quote": "Our cash position does not signal retreat from investing",
+       "quoteBy": "Greg Abel"
+      }
+     ]
+    },
+    {
+     "type": "stats",
+     "title": "Масштаб — цифры",
+     "items": [
+      {
+       "label": "CAGR BRK vs S&P",
+       "value": "19.7% vs 10.5%",
+       "sub": "с 1965; $1,000 → $44 млн vs $400K"
+      },
+      {
+       "label": "Operating earnings",
+       "value": "$44.5 млрд",
+       "sub": "FY2025; 5-летнее $37.5 млрд"
+      },
+      {
+       "label": "Revenue FY2025",
+       "value": "$371.4 млрд",
+       "sub": "один из крупнейших по выручке в мире"
+      },
+      {
+       "label": "Float рост",
+       "value": "$88 → $177 млрд",
+       "sub": "2015–2026; CAGR ~7%"
+      },
+      {
+       "label": "Buyback cumulative",
+       "value": "~$78 млрд",
+       "sub": "2018–2024; пауза в 2025; resumed 2026"
+      },
+      {
+       "label": "Employees",
+       "value": "~400,000+",
+       "sub": "децентрализованно; HQ ~30 человек"
+      }
+     ]
+    },
+    {
+     "type": "facts",
+     "title": "Принципы Abel",
+     "items": [
+      {
+       "k": "Партнёрская культура",
+       "v": "Децентрализация: менеджеры-owners, без квартальных таргетов, минимум бюрократии."
+      },
+      {
+       "k": "Fortress balance sheet",
+       "v": "Долг «sparingly and prudently». Кэш >$30 млрд — порог для buyback."
+      },
+      {
+       "k": "Capital discipline",
+       "v": "Понятный бизнес с durable advantages. «Act quickly and concentrate capital»."
+      },
+      {
+       "k": "Hold forever",
+       "v": "Предпочитают «навсегда». Продажи — исключение, не правило."
+      },
+      {
+       "k": "Risk management",
+       "v": "CEO = Chief Risk Officer. Berkshire — «актив, а не риск для финансовой системы»."
+      },
+      {
+       "k": "Compensation",
+       "v": "Минимум stock-based. Менеджеры оцениваются по своему юниту. Buffett $100K/год."
+      }
+     ]
+    },
+    {
+     "type": "facts",
+     "title": "Инструменты governance",
+     "items": [
+      {
+       "k": "Годовое письмо",
+       "v": "Единственный формат регулярной коммуникации. Abel продолжил традицию Buffett."
+      },
+      {
+       "k": "AGM (Woodstock капитализма)",
+       "v": "~40,000 участников. Q&A на 5+ часов. Прямые ответы."
+      },
+      {
+       "k": "Без earnings calls",
+       "v": "Abel: «качество, а не частота». Единственная из трлн-клуба."
+      },
+      {
+       "k": "Без guidance",
+       "v": "Не дают прогнозов. Инвестор должен сам оценивать intrinsic value."
+      },
+      {
+       "k": "Без stock options",
+       "v": "Минимум SBO. Стимулы через владение акциями. Abel: вся зарплата → BRK."
+      },
+      {
+       "k": "13D/Schedule reporting",
+       "v": "Buffett 13.6% экономический. Schedule 13D/A обновляется при изменениях."
+      },
+      {
+       "k": "Decentralisation",
+       "v": "HQ ~30 человек. 400,000+ сотрудников в дочках. Нет централизованного HR/legal."
+      }
+     ]
+    },
+    {
+     "type": "quote",
+     "text": "Assess value carefully, act patiently, and hold for the long term — preferably forever.",
+     "who": "Greg Abel, CEO — годовое письмо Berkshire 2025"
+    }
+   ]
   },
   {
    "id": "worldview",
@@ -362,7 +1102,170 @@
     ]
    },
    "bodyMarkdown": "**Базовая макро-установка.** Менеджмент не делает рыночных прогнозов и держит ликвидность как опцион на дислокации. Сигнал об оценках — негативный: Buffett (10.11.2025): *\"Because of Berkshire's size and because of market levels, ideas are few – but not zero.\"* Это объясняет рекордный cash и статус net seller акций.\n\n**Во что верят:**\n- Долгосрочная ставка на США (Buffett: *\"America will come back and so will Berkshire shares\"*).\n- Страхование как структурно выигрышный бизнес при дисциплине.\n- **AI-линза реальна ТОЛЬКО в энергетике:** BHE входит в инвестцикл, *\"driven by rising electricity demand from artificial intelligence computing\"* (Abel). На годовом собрании 02.05.2026 Abel: data-center спрос ~8% пикового потребления BHE в Айове; *\"not going to do AI for the sake of AI.\"*\n\n**Чего избегают:**\n- Переплачивать на дорогом рынке (минимальные buybacks).\n- Покупать другую Class I железную дорогу: по слиянию Union Pacific–Norfolk Southern Berkshire заявила, что *\"it is not interested in acquiring one of the other Class I railroads.\"*\n- Мягкий страховой рынок: *\"we will write less property and casualty business for a period of time.\"*\n- Kraft Heinz назван прямо: *\"Our investment in Kraft Heinz has been disappointing... our return has been well short of adequate.\"*\n\n**За чем следят:**\n- Страховой цикл: смягчение цен в P&C/перестраховании.\n- Retention в GEICO после роста тарифов 2022–2024.\n- Wildfire-риск (BHE/PacifiCorp): кумулятивные оценочные убытки ~$2.9 млрд (по транскрипту/10-Q).",
-   "hasDeep": true
+   "hasDeep": true,
+   "deep": [
+    {
+     "type": "stats",
+     "title": "Как видят мир",
+     "items": [
+      {
+       "label": "Взгляд на рынок",
+       "value": "осторожность",
+       "sub": "14 кварталов нетто-продаж; рекордный кеш"
+      },
+      {
+       "label": "T-bill yield",
+       "value": "~3.6–3.8%",
+       "sub": "снижает opportunity cost кеша"
+      },
+      {
+       "label": "AI / технологии",
+       "value": "избегают хайп",
+       "sub": "«держимся того, что понимаем»"
+      },
+      {
+       "label": "American tailwind",
+       "value": "бычий на US",
+       "sub": "«за 80 лет не было момента ставить против Америки»"
+      },
+      {
+       "label": "Торговая политика",
+       "value": "uncertain",
+       "sub": "тарифы: «unable to reliably predict impact»"
+      }
+     ]
+    },
+    {
+     "type": "cards",
+     "title": "Во что верят — и куда двигают деньги",
+     "items": [
+      {
+       "title": "Durable consumer brands",
+       "badge": "core conviction",
+       "color": "gold",
+       "desc": "Apple, Coca-Cola, AmEx — три крупнейших позиции. Все с durable competitive advantages и pricing power. Cost basis $24.5 млрд, дивиденды $2.5 млрд/год.",
+       "value": "67% портфеля",
+       "foot": "Yield on cost ~10%"
+      },
+      {
+       "title": "Финансовые сервисы",
+       "badge": "36% портфеля",
+       "color": "blue",
+       "desc": "AmEx, BofA, Chubb, Moody's, Capital One. Berkshire сам — финансовая компания (insurance core). Крупнейший сектор в 13F.",
+       "value": "$95 млрд",
+       "foot": "AmEx + BofA + Chubb = 31% портфеля"
+      },
+      {
+       "title": "Энергетика",
+       "badge": "OXY + CVX + BHE",
+       "color": "teal",
+       "desc": "Occidental (6.55%), Chevron (6.64%) + BHE (собственная). OxyChem за $9.7 млрд. Buffett: «нефть нужна миру ещё десятилетия».",
+       "value": "~13% портфеля + BHE",
+       "foot": "BHE: >4,500 МВт renewables"
+      },
+      {
+       "title": "Японские торговые дома",
+       "badge": "hold forever",
+       "color": "violet",
+       "desc": "Itochu, Mitsubishi, Mitsui, Marubeni, Sumitomo — 9.7-10.8% в каждом. Cost $15.4 млрд, market $35.4 млрд. Фондируются yen bonds. Держатся «навсегда».",
+       "value": "$35.4 млрд",
+       "foot": "Вне 13F — не US-бумаги"
+      },
+      {
+       "title": "Рекордный кеш = сигнал",
+       "badge": "$397 млрд",
+       "color": "ink",
+       "desc": "14 кварталов нетто-продавец + рекордный S&P 500 = Berkshire видит мало справедливо оценённых целей. T-bills при 3.7% дают реальный доход. Buffett: «не на этом рынке».",
+       "value": "31.7% enterprise",
+       "foot": "Буквально сидят и ждут"
+      },
+      {
+       "title": "ПРОТИВ: AI-хайп, leverage, финансовая инженерия",
+       "badge": "избегают",
+       "color": "clay",
+       "desc": "Нет позиций в NVIDIA, Microsoft, Meta. Нет деривативов. Нет чрезмерного leverage. «Мы останемся активом, а не риском для финансовой системы».",
+       "value": "0% AI-pure-play",
+       "foot": "Alphabet (+225%) — closest to tech bet"
+      }
+     ]
+    },
+    {
+     "type": "quote",
+     "text": "Never bet against America.",
+     "who": "Warren Buffett — годовое письмо 2020; повторено Abel в 2025"
+    },
+    {
+     "type": "table",
+     "title": "Куда капитал идёт — и куда точно нет",
+     "columns": [
+      "Направление",
+      "Позиция Berkshire",
+      "Действие"
+     ],
+     "rows": [
+      [
+       "Consumer brands",
+       "Core conviction; Coca-Cola 35+ лет",
+       "HOLD forever"
+      ],
+      [
+       "Финансы",
+       "36% портфеля; AmEx с 1990-х",
+       "Selective (BofA сокращается)"
+      ],
+      [
+       "Энергетика",
+       "OXY + CVX + OxyChem + BHE",
+       "ADD (OxyChem $9.7 млрд)"
+      ],
+      [
+       "Японские shosha",
+       "5 компаний, 9.7-10.8% в каждой",
+       "HOLD forever"
+      ],
+      [
+       "AI / полупроводники",
+       "Ноль позиций",
+       "AVOID"
+      ],
+      [
+       "Фарма / healthcare",
+       "Полностью продана UnitedHealth",
+       "EXIT"
+      ]
+     ]
+    },
+    {
+     "type": "facts",
+     "title": "Что сделали в последнем квартале",
+     "items": [
+      {
+       "k": "Alphabet ×3",
+       "v": "Утроили позицию до $15.6 млрд. Единственная крупная покупка."
+      },
+      {
+       "k": "Delta Air Lines",
+       "v": "Новая позиция $2.65 млрд. Первый возврат в авиацию после Covid-распродажи."
+      },
+      {
+       "k": "Amazon продан",
+       "v": "Полностью. Также Visa, Mastercard, UnitedHealth, Domino's."
+      },
+      {
+       "k": "Apple стабилен",
+       "v": "227.9 млн акций — без изменений впервые после 3 кварталов сокращений."
+      },
+      {
+       "k": "OxyChem закрыт",
+       "v": "$9.7 млрд all-cash. Крупнейшее с Alleghany (2022)."
+      },
+      {
+       "k": "Buyback resumed",
+       "v": "$226 млн. Первый с Q2 2024. Abel: «консультировался с Уорреном»."
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "monitor",
@@ -401,7 +1304,168 @@
     ]
    },
    "bodyMarkdown": "**Подтверждённые прошедшие события (база отсчёта):**\n- **02.01.2026** — закрыта сделка OxyChem (~$9.5 млрд).\n- **17.02.2026** — подан 13F-HR за период 31.12.2025 (39 эмитентов, $274.2 млрд).\n- **28.02.2026** — пресс-релиз итогов FY2025; письмо Abel.\n- **02.05.2026** — годовое собрание в Омахе, первое под руководством Abel.\n- **04.05.2026** — подан 10-Q за Q1 (период 31.03.2026); net earnings $10.1 млрд, cash net $373.5 млрд, buyback $235 млн.\n- **15.05.2026** — подан 13F-HR за Q1 (период 31.03.2026, ~26 эмитентов, $263.1 млрд).\n\n**Предстоящие окна (ориентир на 28.06.2026; даты расчётные, не объявлены официально):**\n- **~03.08.2026** — релиз отчёта за Q2 2026. Смотреть: underwriting profit, динамику float, объём buybacks, net buyer/seller статус.\n- **~04.08.2026** — подача 10-Q за Q2 2026 на SEC EDGAR (CIK 0001067983).\n- **~14.08.2026** — дедлайн 13F-HR за Q2 2026 (45 дней после 30.06.2026). Следить за: Alphabet (добавят ли ещё), Apple (тронут ли 227.9M акций впервые), Chevron (продолжат ли резать), новыми позициями (Delta, Macy's).\n- **~03.11.2026** — релиз и 10-Q за Q3 2026.\n- **Конец ноября 2026** — ежегодное «Thanksgiving message» Buffett (письмо 2025 вышло 10.11.2025/27.11.2025) — единственный регулярный публичный текст Buffett впредь.\n\n**Регуляторно-событийные потоки:**\n- **Union Pacific–Norfolk Southern merger** — решение Surface Transportation Board; меняет конкурентный ландшафт BNSF.\n- **PacifiCorp / wildfire-литигация** (BHE) — новые урегулирования сверх ~$2.9 млрд кумулятивных убытков.\n- **Occidental (OXY)** — Form 4 / 13D-G по варрантам и common (Berkshire владеет 264.9M акций + preferred).\n\n**Feeds для мониторинга (первичные):**\n- SEC EDGAR: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001067983\n- IR: https://www.berkshirehathaway.com/news/news.html и /letters/\n- Валидация 13F-дельт: whalewisdom.com / 13f.info (с пометкой «агрегатор»).",
-   "hasDeep": true
+   "hasDeep": true,
+   "deep": [
+    {
+     "type": "stats",
+     "title": "Ближайшие даты",
+     "items": [
+      {
+       "label": "Q2 2026 earnings",
+       "value": "~03.08.2026",
+       "sub": "первый полный квартал Abel"
+      },
+      {
+       "label": "13F Q2 2026",
+       "value": "~14.08.2026",
+       "sub": "15-й квартал нетто-продаж?"
+      },
+      {
+       "label": "Cash position",
+       "value": "$397.4 млрд",
+       "sub": "рекорд; следить >$400 млрд"
+      },
+      {
+       "label": "Wildfire accrual",
+       "value": "$2.9 млрд",
+       "sub": "PacifiCorp; следить >$5 млрд"
+      }
+     ]
+    },
+    {
+     "type": "timeline",
+     "title": "Календарь событий",
+     "items": [
+      {
+       "date": "~03.08.2026",
+       "label": "Q2 2026 earnings release",
+       "importance": "high",
+       "detail": "Первый полный квартал Abel. Operating earnings тренд; кеш; buyback."
+      },
+      {
+       "date": "~14.08.2026",
+       "label": "13F Q2 2026",
+       "importance": "high",
+       "detail": "Apple стабилен? Alphabet растёт? Серия нетто-продаж продолжается?"
+      },
+      {
+       "date": "~03.11.2026",
+       "label": "Q3 2026 earnings",
+       "importance": "high",
+       "detail": "Hurricane season. Cat-losses. BHE wildfire update."
+      },
+      {
+       "date": "02.2027",
+       "label": "FY2026 earnings + годовое письмо Abel",
+       "importance": "high",
+       "detail": "Второе письмо Abel. Полный год operating under new CEO."
+      },
+      {
+       "date": "05.2027",
+       "label": "AGM 2027",
+       "importance": "medium",
+       "detail": "Buffett 96. Первый AGM, где Abel — CEO полный год."
+      },
+      {
+       "date": "2026",
+       "label": "BHE HVDC $3.2 млрд + Wind PRIME $3.9 млрд",
+       "importance": "medium",
+       "detail": "Grid United partnership. Makeover ~$18 млрд."
+      },
+      {
+       "date": "2026",
+       "label": "TerraLithium — решение о коммерциализации",
+       "importance": "low",
+       "detail": "СП с Occidental по литию (DLE). Демонстрационная фаза."
+      },
+      {
+       "date": "2026–2028",
+       "label": "PacifiCorp wildfire — $9 млрд bonds",
+       "importance": "medium",
+       "detail": "1,700 истцов. Апелляции в Орегоне/Калифорнии."
+      }
+     ]
+    },
+    {
+     "type": "facts",
+     "title": "Пороги смены тезиса",
+     "items": [
+      {
+       "k": "Operating earnings",
+       "v": "<$9 млрд/кв два квартала подряд → ухудшение бизнеса"
+      },
+      {
+       "k": "Cash + T-bills",
+       "v": ">$450 млрд без M&A = усиление drag; <$100 млрд без M&A = fortress под угрозой"
+      },
+      {
+       "k": "P&C combined ratio",
+       "v": ">100% = underwriting loss → float не бесплатный"
+      },
+      {
+       "k": "GEICO combined ratio",
+       "v": ">95% = Tech transformation буксует"
+      },
+      {
+       "k": "Apple",
+       "v": "<150 млн акций = распродажа ускоряется"
+      },
+      {
+       "k": "Buyback",
+       "v": ">$5 млрд/кв = сигнал глубокой недооценки по мнению Abel"
+      },
+      {
+       "k": "Нетто-продажи",
+       "v": "разворот в нетто-покупки = Abel видит возможности → бычий сигнал"
+      },
+      {
+       "k": "Float",
+       "v": "снижение >$10 млрд/год = потеря competitive advantage"
+      }
+     ]
+    },
+    {
+     "type": "table",
+     "title": "Источники для мониторинга",
+     "columns": [
+      "Источник",
+      "Что отслеживать",
+      "Частота"
+     ],
+     "rows": [
+      [
+       "SEC EDGAR (10-Q, 10-K)",
+       "Operating earnings, cash, float, wildfire",
+       "Квартально"
+      ],
+      [
+       "13F-HR (SEC EDGAR)",
+       "Позиции портфеля, нетто-продажи/покупки",
+       "Квартально (45 дней лаг)"
+      ],
+      [
+       "Годовое письмо Chairman/CEO",
+       "Стратегия, worldview, capital allocation",
+       "Ежегодно (февраль)"
+      ],
+      [
+       "BRK press releases",
+       "M&A, buyback, earnings headlines",
+       "По событию"
+      ],
+      [
+       "Whale aggregators (WhaleWisdom)",
+       "13F updates, institutional flows",
+       "Квартально"
+      ],
+      [
+       "BHE subsidiary filings",
+       "PacifiCorp wildfire, HVDC progress",
+       "Квартально"
+      ]
+     ]
+    }
+   ]
   },
   {
    "id": "analysis",
@@ -440,7 +1504,76 @@
     ]
    },
    "bodyMarkdown": "*Ниже — выводы аналитика, НЕ цитаты менеджмента. Не valuation, без DCF.*\n\n**Главное событие: смена пера и первый «перетряс» портфеля Abel.** Q1 2026 13F — первый канон под полным контролем Abel: портфель сжат с 39 до ~26 позиций, 16 полных выходов. Сигнал: Abel будет активнее ротировать, чем предполагала репутация Berkshire как «вечного держателя». Триминг — преимущественно из финансово-платёжных и «случайных» позиций.\n\n**Конкретные движения и прочтение:**\n- **Apple ($57.8 млрд, 227.9M акций) — HOLD.** Доля акций не тронута 3 квартала; падение стоимости — рыночное. Письмо Abel подтвердило Apple как core. Продаж не ждать.\n- **Alphabet (~6.3% совокупно, ~$16.6 млрд) — ADD/conviction buy.** ~3x наращивание — крупнейшая покупка квартала и единственная значимая AI-экспозиция в equity-портфеле. Подтверждение тезиса — если в Q2 13F позицию добавят; если заморозят — разовая ставка.\n- **Chevron (-35%) vs Occidental (не тронут) — перераспределение внутри энергетики:** режут публичный Chevron, держат стратегический OXY (preferred + только что купленный OxyChem). Энергетическая ставка концентрируется в OXY-комплексе.\n- **Полные выходы** (Visa, Mastercard, UnitedHealth, Domino's, Aon, Pool, Amazon, Charter, Lamar, Allegion, Heico, Diageo и др.): расчистка «хвоста» мелких позиций Combs/Weschler и фиксация на дорогом рынке — согласуется с тезисом *\"ideas are few.\"* Быстрый выход из UNH — сигнал низкой убеждённости.\n- **Новые/добавленные** (Delta, Macy's, Lennar +43%, NYT ~3x): вероятно работа заместителей, не сигнатура Abel; масштаб мал относительно $263 млрд.\n\n**Эффект на холдинг:**\n- **Cash $373.5 млрд net при buyback $235 млн** — самый громкий сигнал: менеджмент не выкупает акцию (не считает дешёвой) и не находит крупных сделок (рынок дорог). Near-term катализатор роста — операционные earnings и underwriting, а не buyback/мега-сделка.\n- **Страховой цикл развернулся в softening** — меньшие премии в 2026 снимают часть upside по underwriting (combined ratio 87.1% в 2025). Эффект на equity умеренно негативный, но дисциплина («say no») защищает downside.\n- **AI/power-линза — единственная реальная точка роста** в операционном блоке: capex-цикл BHE под data-center спрос. Длинная история (regulated returns), не quick win.\n\n**Сигналы для решения по BRK:**\n- **HOLD / accumulate на просадках.** Buffett дал ориентир: акция падала ~50% трижды за 60 лет — исторически точки входа. Триггер для ADD: значительная коррекция + возобновление buybacks менеджментом.\n- **Триггеры вниз (trim/watch):** (1) изменение позиции по Apple впервые с 2024; (2) резкий рост buybacks БЕЗ просадки цены; (3) крупные wildfire-урегулирования BHE сверх $2.9 млрд; (4) combined ratio выше ~95% на фоне softening.\n- **Key-person риск снижен, но не нулевой:** Buffett остаётся Chairman и держит «A» акции до «привыкания» акционеров к Abel; уход CFO Marc Hamburg — плановый.\n\n**Операционные бизнесы без рыночной котировки (оценка не раскрыта):** BNSF, BHE, GEICO, Precision Castparts, Marmon, NetJets, Pilot, Clayton, See's, OxyChem — оцениваются только по cash flow / margin / segment earnings.",
-   "hasDeep": true
+   "hasDeep": true,
+   "deep": [
+    {
+     "type": "text",
+     "title": "Суть",
+     "body": "Berkshire при P/B ~1.45× — fair value, не дёшево. Ставка не на дисконт, а на три вещи: (1) $397 млрд кеша — крупнейший dry powder в мире; когда Abel развернёт его, вернётся pricing power; (2) float $177 млрд при отрицательной стоимости — конкурентное преимущество, которое растёт каждый год; (3) operating earnings $44.5 млрд стабильнее любого peer. 14 кварталов нетто-продаж — Berkshire ждёт, пока рынок предложит цену."
+    },
+    {
+     "type": "text",
+     "title": "Что мешает и почему рынок не согласен",
+     "body": "**Cash drag:** $397 млрд под ~3.7% при том, что бизнесы зарабатывают ROIC 10%+. Упущенный доход ~$25-30 млрд/год. Кеш — 31.7% стоимости компании.\n\n**Succession:** Buffett 95, Combs ушёл, Jain 74. Abel — операционщик, не stock-picker. Кто управляет портфелем? Формально Abel + Weschler. Рынок пока верит в soft landing — P/B не упал.\n\n**Apple 22%:** концентрация. Встроенный налог на прирост — deferred tax liability $48.4 млрд. Нельзя продать без 21% налогового удара.\n\n**BHE wildfire:** $54-55 млрд исков. Accrual $2.9 млрд. Потенциально ~$8 млрд. Не смертельно для Berkshire, но давит на BHE unit economics.\n\n**Scale:** при $1 трлн mcap нужна сделка $50-100 млрд+, чтобы «сдвинуть иглу». Таких целей математически единицы."
+    },
+    {
+     "type": "cards",
+     "title": "Два сценария",
+     "items": [
+      {
+       "title": "Bull: BRK.B $520–550",
+       "badge": "вероятность ~35%",
+       "color": "teal",
+       "desc": "Abel развёртывает $80 млрд+ на мега-сделку (типа BNSF 2010). Buyback ускоряется >$5 млрд/кв. P/B расширяется до 1.6–1.7×. Combined ratio остаётся <90%. Float растёт.",
+       "value": "$520–550",
+       "foot": "+15–20% от текущих"
+      },
+      {
+       "title": "Bear: BRK.B $350–380",
+       "badge": "вероятность ~25%",
+       "color": "clay",
+       "desc": "Cash drag продолжается 2+ года. Insurance cycle softens (combined >95%). Apple коррекция −30% ($17 млрд удар). Wildfire accrual >$5 млрд. Conglomerate discount post-Buffett.",
+       "value": "$350–380",
+       "foot": "−20–25% от текущих"
+      }
+     ]
+    },
+    {
+     "type": "facts",
+     "title": "Что делать",
+     "items": [
+      {
+       "k": "Рейтинг",
+       "v": "HOLD / accumulate on dips. Справедливо оценён при P/B 1.45×."
+      },
+      {
+       "k": "Добавлять при",
+       "v": ">20% коррекция (P/B <1.2×) + buyback >$2 млрд/кв."
+      },
+      {
+       "k": "Фиксировать при",
+       "v": "P/B >1.7× без мега-сделки; combined ratio >100%; кеш >$450 млрд idle."
+      },
+      {
+       "k": "Q2 отчёт",
+       "v": "~03.08.2026 — первый полный квартал Abel."
+      },
+      {
+       "k": "13F Q2",
+       "v": "~14.08.2026 — продолжится ли серия нетто-продаж?"
+      },
+      {
+       "k": "FY2026 письмо",
+       "v": "~02.2027 — второе письмо Abel; полный год."
+      }
+     ]
+    },
+    {
+     "type": "quote",
+     "text": "Our substantial cash position does not signal retreat from investing.",
+     "who": "Greg Abel, CEO — годовое письмо Berkshire 2025"
+    }
+   ]
   }
  ],
  "sources": [
@@ -658,5 +1791,596 @@
   "Wildfire-резервы ~$2.9 млрд (PacifiCorp) — из черновиков агентов/транскрипта, не сверены построчно с примечаниями 10-Q.",
   "По отдельным японским торговым домам cost basis / market value / дивиденды не раскрыты — компания публикует только агрегат ($15.38 млрд cost / $35.37 млрд market value / $862 млн дивидендов)."
  ],
- "verification": "Построчно через первичные источники переподтверждено: (1) весь 13F-портфель — спарсен из XML SEC, все 29 позиций, акции, стоимости и доли сверены до доллара, суммарно $263.10 млрд; (2) баланс 10-Q — shareholders' equity $727,181 млн, cash+T-Bills net $373.5 млрд (и реконструкция брутто $397.4 млрд), float $176.9 млрд, equity securities fair value $288.0 млрд / cost $84.6 млрд, segment operating earnings Q1 2026, buyback $235 млн (33 Cl A + 431,462 Cl B), OxyChem ~$9.5 млрд, доли OXY/KHC; (3) FY2025 net $66,968 млн, operating $44,486 млн, OTTI $8,255 млн — из пресс-релиза; (4) combined ratio 87.1%, float, японские дома $35.4 млрд (доли 9.7–10.8%) — из письма Abel; (5) цена/P-B BRK.B — из агрегаторов. Исправлены три ошибки FACTS: equity portfolio $297.8 млрд относится к 31.12.2025 (на 31.03.2026 = $288.0 млрд, cost $84.6 млрд); CAGR 18.1% устарел (верно 19.7% vs 10.5%); buyback уточнён до $235 млн; добавлена пропущенная вторая строка Liberty Live ($0.46 млрд). Секция «Действия инсайдеров» усилена первичкой Form 4 (сверены покупки Abel и O'Sullivan, конвертации/дарения Buffett и Jain, продажи DVA и Liberty Live). Общий уровень доверия — высокий: все load-bearing числа подтверждены первичными SEC-filings и IR-документами. Остаточные пробелы (сегменты FY2025, часть peer-метрик) не влияют на decision-grade выводы."
+ "verification": "Построчно через первичные источники переподтверждено: (1) весь 13F-портфель — спарсен из XML SEC, все 29 позиций, акции, стоимости и доли сверены до доллара, суммарно $263.10 млрд; (2) баланс 10-Q — shareholders' equity $727,181 млн, cash+T-Bills net $373.5 млрд (и реконструкция брутто $397.4 млрд), float $176.9 млрд, equity securities fair value $288.0 млрд / cost $84.6 млрд, segment operating earnings Q1 2026, buyback $235 млн (33 Cl A + 431,462 Cl B), OxyChem ~$9.5 млрд, доли OXY/KHC; (3) FY2025 net $66,968 млн, operating $44,486 млн, OTTI $8,255 млн — из пресс-релиза; (4) combined ratio 87.1%, float, японские дома $35.4 млрд (доли 9.7–10.8%) — из письма Abel; (5) цена/P-B BRK.B — из агрегаторов. Исправлены три ошибки FACTS: equity portfolio $297.8 млрд относится к 31.12.2025 (на 31.03.2026 = $288.0 млрд, cost $84.6 млрд); CAGR 18.1% устарел (верно 19.7% vs 10.5%); buyback уточнён до $235 млн; добавлена пропущенная вторая строка Liberty Live ($0.46 млрд). Секция «Действия инсайдеров» усилена первичкой Form 4 (сверены покупки Abel и O'Sullivan, конвертации/дарения Buffett и Jain, продажи DVA и Liberty Live). Общий уровень доверия — высокий: все load-bearing числа подтверждены первичными SEC-filings и IR-документами. Остаточные пробелы (сегменты FY2025, часть peer-метрик) не влияют на decision-grade выводы.",
+ "about": "Страховой конгломерат: float $177 млрд фондирует портфель $263 млрд и кэш $397 млрд при первой смене CEO за 60 лет.",
+ "summary": "Berkshire Hathaway (BRK.A / BRK.B) — крупнейший в мире страховой конгломерат. Страховой float $176.9 млрд фондирует инвестиции при отрицательной стоимости: combined ratio 87.1%. Владеет BNSF, BHE, GEICO, Precision Castparts и десятками бизнесов; операционная прибыль $44.5 млрд. Публичный портфель $263.1 млрд сконцентрирован в Apple (22%). С 1 января 2026 CEO — Greg Abel (63), Warren Buffett (95) остался Chairman. Рекордный кэш $397 млрд (31.7% стоимости) — и сила (dry powder), и риск (drag ~$25 млрд упущенного дохода в год).",
+ "aboutMeta": [
+  {
+   "label": "Тикер",
+   "value": "BRK.A / BRK.B",
+   "sub": "NYSE"
+  },
+  {
+   "label": "Тип",
+   "value": "insurance-anchored holdco",
+   "sub": "диверсифицированный конгломерат"
+  },
+  {
+   "label": "Operating earnings FY2025",
+   "value": "$44.5 млрд",
+   "sub": "2024: $47.4 млрд"
+  },
+  {
+   "label": "HQ / CEO",
+   "value": "Omaha · Greg Abel",
+   "sub": "CEO с 01.01.2026; Buffett — Chairman"
+  }
+ ],
+ "snapshot": {
+  "businessModel": [
+   {
+    "label": "Cash + T-bills",
+    "value": "$397.4 млрд",
+    "delta": "из них T-bills $339 млрд",
+    "note": "рекорд, 31.7% стоимости компании"
+   },
+   {
+    "label": "Страховой float",
+    "value": "$176.9 млрд",
+    "delta": "рост с $88 млрд (2015) до $177 млрд",
+    "note": "стоимость ниже нуля (underwriting profit)"
+   },
+   {
+    "label": "Operating earnings",
+    "value": "$44.5 млрд",
+    "delta": "5-летнее среднее $37.5 млрд",
+    "note": "FY2025, предпочтительная метрика Berkshire"
+   },
+   {
+    "label": "Combined ratio P&C",
+    "value": "87.1%",
+    "delta": "5-летнее 90.7%, 10-летнее 93.0%",
+    "note": "FY2025, лучший в peer-группе"
+   },
+   {
+    "label": "BVPS (BRK.B-экв.)",
+    "value": "~$337",
+    "delta": "Class A ~$505,700",
+    "note": "31.03.2026"
+   }
+  ],
+  "ownership": [
+   {
+    "label": "Рыночная капитализация",
+    "value": "~$1.054 трлн",
+    "delta": "~$127 млрд",
+    "note": "14-я в мире"
+   },
+   {
+    "label": "P/B",
+    "value": "~1.45×",
+    "delta": "10-летняя медиана ~1.42×",
+    "note": "около исторической нормы"
+   },
+   {
+    "label": "Buyback",
+    "value": "$226 млн",
+    "delta": "суммарно ~$78 млрд с 2018",
+    "note": "возобновлён 04.03.2026 после паузы"
+   },
+   {
+    "label": "Доля Buffett",
+    "value": "37.7% Class A",
+    "delta": "13.6% экономического интереса",
+    "note": "все акции уйдут на благотворительность"
+   },
+   {
+    "label": "Дивиденд",
+    "value": "не платится",
+    "delta": "последний — 1967 год",
+    "note": "$1 удержанный = >$1 стоимости"
+   }
+  ]
+ },
+ "overview": {
+  "hero": [
+   {
+    "label": "Operating earnings FY2025",
+    "value": "$44.5 млрд",
+    "sub": "2024: $47.4 млрд; 5-летнее среднее $37.5 млрд"
+   },
+   {
+    "label": "Cash + T-bills",
+    "value": "$397.4 млрд",
+    "sub": "рекорд; 31.7% стоимости компании; dry powder"
+   }
+  ],
+  "previews": [
+   {
+    "label": "Операционные бизнесы",
+    "kind": "bar",
+    "items": [
+     {
+      "name": "Insurance (float $177B)",
+      "pct": 35,
+      "color": "teal"
+     },
+     {
+      "name": "BNSF (railroad)",
+      "pct": 18,
+      "color": "gold"
+     },
+     {
+      "name": "BHE (energy)",
+      "pct": 12,
+      "color": "blue"
+     },
+     {
+      "name": "Manufacturing / Service",
+      "pct": 25,
+      "color": "violet"
+     },
+     {
+      "name": "McLane + Pilot",
+      "pct": 10,
+      "color": "ink"
+     }
+    ],
+    "note": "Pre-tax earnings $44.5 млрд (FY2025)"
+   },
+   {
+    "label": "13F-портфель $263.1 млрд",
+    "kind": "bar",
+    "items": [
+     {
+      "name": "Apple",
+      "pct": 22,
+      "color": "ink"
+     },
+     {
+      "name": "American Express",
+      "pct": 17,
+      "color": "blue"
+     },
+     {
+      "name": "Coca-Cola",
+      "pct": 12,
+      "color": "clay"
+     },
+     {
+      "name": "Bank of America",
+      "pct": 10,
+      "color": "teal"
+     },
+     {
+      "name": "Chevron + OXY",
+      "pct": 13,
+      "color": "gold"
+     },
+     {
+      "name": "Прочие 23 позиции",
+      "pct": 26,
+      "color": "violet"
+     }
+    ],
+    "note": "Топ-5 = 67.1%; 14 кварталов нетто-продавец"
+   },
+   {
+    "label": "Кэш и деплоймент",
+    "kind": "bar",
+    "items": [
+     {
+      "name": "T-bills",
+      "pct": 85,
+      "color": "teal"
+     },
+     {
+      "name": "Cash + equivalents",
+      "pct": 15,
+      "color": "ink"
+     }
+    ],
+    "note": "$397.4 млрд; annualized interest ~$12 млрд"
+   }
+  ]
+ },
+ "recentMoves": [
+  {
+   "date": "02.01.2026",
+   "type": "ПОКУПКА",
+   "title": "OxyChem — химический бизнес Occidental",
+   "value": "$9.7 млрд",
+   "why": "Крупнейшее приобретение Berkshire с Alleghany (2022). All-cash. Управляется президентом Wade Alleman.",
+   "detail": "Активы ~$10.8 млрд. Часть стратегии по ценным промышленным активам."
+  },
+  {
+   "date": "Q1'26",
+   "type": "ПРОДАЖА",
+   "title": "Нетто-продажи акций — 14-й квартал подряд",
+   "value": "$8.2 млрд",
+   "why": "Продолжение самой длинной серии нетто-продаж в истории Berkshire. Полностью проданы Amazon, Visa, Mastercard, UnitedHealth.",
+   "detail": "Портфель с $274.2 → $263.1 млрд; число позиций 42 → 29."
+  },
+  {
+   "date": "Q1'26",
+   "type": "ПОКУПКА",
+   "title": "Alphabet утроен (+225%), Delta — новая позиция",
+   "value": "$15.6 + $2.65 млрд",
+   "why": "Alphabet вырос до ~$15.6 млрд (5.93% портфеля). Delta Air Lines — новая ставка на авиацию.",
+   "detail": "Apple без изменений впервые после трёх кварталов сокращений."
+  },
+  {
+   "date": "04.03.2026",
+   "type": "BUYBACK",
+   "title": "Возобновлён байбэк после паузы 2025",
+   "value": "$226 млн",
+   "why": "309 A-эквивалентов. Abel: «я абсолютно консультировался с Уорреном». Больше не будет отдельных анонсов.",
+   "detail": "До паузы — 24 квартала подряд, ~$78 млрд суммарно."
+  },
+  {
+   "date": "01.01.2026",
+   "type": "РУКОВОДСТВО",
+   "title": "Greg Abel стал CEO, Buffett — Chairman",
+   "value": "смена эпохи",
+   "why": "Впервые за 60 лет CEO не Buffett. Abel (63) — 30-летний инсайдер. Buffett (95) в офисе 5 дней/неделю.",
+   "detail": "Объявлено на AGM 03.05.2025; совет утвердил 04.05.2025."
+  },
+  {
+   "date": "08.12.2025",
+   "type": "РУКОВОДСТВО",
+   "title": "Todd Combs ушёл — ключевой инвест-менеджер",
+   "value": "→ JPMorgan",
+   "why": "Возглавит $10 млрд Strategic Investment Group в JPMorgan. Ted Weschler остаётся, управляет ~5% портфеля.",
+   "detail": "Abel: «ответственность за equity investments лежит на мне как CEO»."
+  }
+ ],
+ "topBets": {
+  "title": "Флагманские ставки · 5 имён",
+  "items": [
+   {
+    "name": "Apple",
+    "sector": "Технологии",
+    "color": "teal",
+    "role": "Крупнейшая позиция в портфеле",
+    "fact": "227.9 млн акций, $57.8 млрд (22% портфеля). Cost basis ~$6.3 млрд — yield on cost ~3.8%. За 2024 сокращён с ~789 до ~300 млн акций (−2/3). В Q1'26 — без изменений впервые.",
+    "embodies": "Consumer franchise + ecosystem lock-in"
+   },
+   {
+    "name": "American Express",
+    "sector": "Финансы",
+    "color": "teal",
+    "role": "Вторая крупнейшая позиция",
+    "fact": "151.6 млн акций, $45.9 млрд (17.4% портфеля). Berkshire — крупнейший акционер AmEx. Держится десятилетиями; Buffett: AmEx создаёт дивидендов больше, чем cost basis каждые 2 года.",
+    "embodies": "Closed-loop платёжная сеть + affluent customer base"
+   },
+   {
+    "name": "Coca-Cola",
+    "sector": "Consumer staples",
+    "color": "teal",
+    "role": "Позиция с 1988 года",
+    "fact": "400 млн акций, $30.4 млрд (11.6% портфеля). Не менялась 35+ лет. Дивиденды ~$776 млн/год при cost basis ~$1.3 млрд = yield on cost ~60%.",
+    "embodies": "Глобальная дистрибуция + бренд-лоялти"
+   },
+   {
+    "name": "GEICO + Insurance float",
+    "sector": "Страхование",
+    "color": "teal",
+    "role": "Ядро бизнес-модели Berkshire",
+    "fact": "Float $176.9 млрд при отрицательной стоимости. GEICO combined ratio 84.7%. Перестрахование принимает риски, недоступные другим. Float фондирует весь инвестиционный портфель бесплатно.",
+    "embodies": "Масштаб + low-cost provider + no reinsurance purchases"
+   },
+   {
+    "name": "BNSF + BHE",
+    "sector": "Инфраструктура",
+    "color": "teal",
+    "role": "Железная дорога и энергетика",
+    "fact": "BNSF: pre-tax $7.2 млрд, ~6,700 локомотивов. BHE: >4,500 МВт renewables, HVDC-проект $3.2 млрд. Вместе — ~$9.5 млрд pre-tax. Капиталоёмкие, но генерируют стабильный cash flow.",
+    "embodies": "Регулируемые монополии + физические рвы"
+   }
+  ]
+ },
+ "news": [
+  {
+   "date": "15.05.2026",
+   "type": "announcement",
+   "title": "13F Q1 2026: портфель $263.1 млрд, 29 позиций",
+   "text": "Alphabet утроен (+225%). Delta Air Lines — новая. Полностью проданы Amazon, Visa, Mastercard, UnitedHealth и ещё 12 позиций. Apple без изменений. 14-й квартал нетто-продаж ($8.2 млрд).",
+   "image": "",
+   "url": ""
+  },
+  {
+   "date": "28.02.2026",
+   "type": "announcement",
+   "title": "FY2025: operating earnings $44.5 млрд, кэш $373 млрд",
+   "text": "GAAP net income $66.97 млрд (2024: $89 млрд). Combined ratio 87.1%. Float $176 млрд. Buyback $0 за 2025. Berkshire впервые отчитывается под CEO Abel.",
+   "image": "",
+   "url": ""
+  },
+  {
+   "date": "04.03.2026",
+   "type": "news",
+   "title": "Buyback возобновлён: $226 млн после годовой паузы",
+   "text": "Первый buyback с Q2 2024. 309 A-эквивалентов. Abel: «я абсолютно консультировался с Уорреном». Анонс больше не будет отдельным — только в квартальной отчётности.",
+   "image": "",
+   "url": ""
+  },
+  {
+   "date": "02.01.2026",
+   "type": "news",
+   "title": "OxyChem куплен за $9.7 млрд — крупнейшая сделка с 2022",
+   "text": "Химический бизнес Occidental Petroleum. All-cash, закрыт в первый рабочий день года. Активы ~$10.8 млрд. Управляется президентом Wade Alleman.",
+   "image": "",
+   "url": ""
+  },
+  {
+   "date": "08.12.2025",
+   "type": "news",
+   "title": "Todd Combs уходит в JPMorgan",
+   "text": "Инвест-менеджер Berkshire (с 2010) возглавит $10 млрд Strategic Investment Group. Ted Weschler остаётся. Abel: ответственность за equity investments теперь на нём.",
+   "image": "",
+   "url": ""
+  }
+ ],
+ "changesDeep": {
+  "title": "Движение капитала",
+  "sub": "Откуда пришло, куда пошло — FY2025 и Q1 2026",
+  "stats": [
+   {
+    "label": "Cash + T-bills (31.03.2026)",
+    "value": "$397.4 млрд",
+    "sub": "рекорд; рост с $334 млрд (YE2024)"
+   },
+   {
+    "label": "Operating earnings FY2025",
+    "value": "$44.5 млрд",
+    "sub": "2024: $47.4 млрд; 5-летнее $37.5 млрд"
+   },
+   {
+    "label": "Нетто-продажи акций Q1'26",
+    "value": "$8.2 млрд",
+    "sub": "14-й квартал подряд нетто-продавец"
+   },
+   {
+    "label": "Buyback (resumed)",
+    "value": "$226 млн",
+    "sub": "04.03.2026; суммарно ~$78 млрд с 2018"
+   }
+  ],
+  "sankey": {
+   "sources": [
+    {
+     "name": "Operating earnings",
+     "value": "$44.5 млрд FY2025"
+    },
+    {
+     "name": "T-bill interest",
+     "value": "~$12 млрд annualized"
+    },
+    {
+     "name": "Нетто-продажи акций",
+     "value": "$8.2 млрд Q1'26"
+    },
+    {
+     "name": "Кеш на балансе",
+     "value": "$397.4 млрд"
+    }
+   ],
+   "destinations": [
+    {
+     "name": "OxyChem (приобретение)",
+     "value": "$9.7 млрд"
+    },
+    {
+     "name": "Buyback",
+     "value": "$226 млн"
+    },
+    {
+     "name": "T-bills (накопление)",
+     "value": "$339 млрд"
+    },
+    {
+     "name": "Операционные capex",
+     "value": "~$15 млрд"
+    }
+   ],
+   "flows": [
+    {
+     "from": "Operating earnings",
+     "to": "T-bills (накопление)",
+     "value": 30
+    },
+    {
+     "from": "Operating earnings",
+     "to": "Операционные capex",
+     "value": 15
+    },
+    {
+     "from": "Нетто-продажи акций",
+     "to": "T-bills (накопление)",
+     "value": 8.2
+    },
+    {
+     "from": "Кеш на балансе",
+     "to": "OxyChem (приобретение)",
+     "value": 9.7
+    },
+    {
+     "from": "T-bill interest",
+     "to": "T-bills (накопление)",
+     "value": 12
+    }
+   ]
+  },
+  "timeline": [
+   {
+    "date": "02.01.2026",
+    "type": "Покупка",
+    "importance": "high",
+    "ai": false,
+    "title": "OxyChem — химический бизнес Occidental",
+    "value": "$9.7 млрд",
+    "counterparty": "Occidental Petroleum",
+    "why": "All-cash, крупнейшее приобретение с Alleghany (2022). Стабильный промышленный бизнес.",
+    "source": "BRK пресс-релиз",
+    "detail": "Активы ~$10.8 млрд. Президент Wade Alleman."
+   },
+   {
+    "date": "Q1'26",
+    "type": "Продажа",
+    "importance": "high",
+    "ai": false,
+    "title": "Полностью проданы 16 позиций (Amazon, Visa, Mastercard...)",
+    "value": "$8.2 млрд нетто",
+    "counterparty": "рынок",
+    "why": "14-й квартал нетто-продаж. Портфель 42 → 29 позиций.",
+    "source": "13F-HR Q1 2026",
+    "detail": "Также UnitedHealth, Domino's и др."
+   },
+   {
+    "date": "Q1'26",
+    "type": "Покупка",
+    "importance": "high",
+    "ai": false,
+    "title": "Alphabet утроен (+225%)",
+    "value": "~$15.6 млрд",
+    "counterparty": "рынок",
+    "why": "Крупнейшее наращивание за квартал. Стал 7-й позицией (5.93%).",
+    "source": "13F-HR Q1 2026",
+    "detail": "Delta Air Lines — новая позиция ($2.65 млрд)."
+   },
+   {
+    "date": "01.01.2026",
+    "type": "Руководство",
+    "importance": "high",
+    "ai": false,
+    "title": "Greg Abel — CEO",
+    "value": "смена эры",
+    "counterparty": "—",
+    "why": "Впервые за 60 лет CEO не Buffett. Abel — 30-летний инсайдер.",
+    "source": "BRK 8-K",
+    "detail": "Buffett остался Chairman, в офисе 5 дней/неделю."
+   },
+   {
+    "date": "04.03.2026",
+    "type": "Buyback",
+    "importance": "medium",
+    "ai": false,
+    "title": "Buyback возобновлён",
+    "value": "$226 млн",
+    "counterparty": "—",
+    "why": "Первый с Q2 2024. Abel консультировался с Buffett.",
+    "source": "10-Q Q1 2026",
+    "detail": "309 A-эквивалентов."
+   },
+   {
+    "date": "08.12.2025",
+    "type": "Руководство",
+    "importance": "medium",
+    "ai": false,
+    "title": "Todd Combs ушёл в JPMorgan",
+    "value": "—",
+    "counterparty": "JPMorgan",
+    "why": "Инвест-менеджер с 2010. Возглавит $10 млрд SIG.",
+    "source": "CNBC",
+    "detail": "Weschler остаётся (~5% портфеля)."
+   }
+  ],
+  "pipeline": [
+   {
+    "date": "~03.08.2026",
+    "type": "Отчётность",
+    "importance": "high",
+    "ai": false,
+    "title": "Q2 2026 earnings",
+    "value": "—",
+    "counterparty": "—",
+    "why": "Первый полный квартал Abel. Тренд кеша, buyback, operating earnings.",
+    "source": "BRK IR",
+    "detail": "Ожидаем: кеш >$400 млрд? buyback >$1 млрд?"
+   },
+   {
+    "date": "~14.08.2026",
+    "type": "Отчётность",
+    "importance": "high",
+    "ai": false,
+    "title": "13F Q2 2026",
+    "value": "—",
+    "counterparty": "—",
+    "why": "Продолжится ли серия нетто-продаж? Apple стабилен?",
+    "source": "SEC EDGAR",
+    "detail": "15-й квартал нетто-продаж или разворот."
+   },
+   {
+    "date": "2026",
+    "type": "Стратегия",
+    "importance": "medium",
+    "ai": false,
+    "title": "BHE HVDC $3.2 млрд + Wind PRIME $3.9 млрд",
+    "value": "$7.1 млрд",
+    "counterparty": "Grid United / PacifiCorp",
+    "why": "Сетевой makeover ~$18 млрд. Поглотит прибыль BHE на десятилетия.",
+    "source": "письмо Abel 2025",
+    "detail": "North Plains Connector + возобновляемая энергетика."
+   },
+   {
+    "date": "2026–2028",
+    "type": "Риск",
+    "importance": "medium",
+    "ai": false,
+    "title": "PacifiCorp wildfire liability",
+    "value": "~$8 млрд exposure",
+    "counterparty": "1,700 истцов",
+    "why": "Кумулятивный accrual $2.9 млрд. Иски ~$54 млрд. Нужно ~$9 млрд bonds.",
+    "source": "10-Q Q1 2026",
+    "detail": "Апелляция в Орегоне — процедурная победа (апрель 2026)."
+   }
+  ]
+ },
+ "priceChart": {
+  "current": "488 USD",
+  "change": "+2.4%",
+  "period": "1Y",
+  "ticker": "BRK-B",
+  "label": "BRK.B",
+  "start": "июл 2025",
+  "end": "июл 2026",
+  "points": [
+   476,
+   468,
+   455,
+   462,
+   470,
+   478,
+   485,
+   492,
+   498,
+   505,
+   510,
+   515,
+   508,
+   502,
+   495,
+   488,
+   480,
+   475,
+   470,
+   465,
+   460,
+   458,
+   462,
+   468,
+   472,
+   478,
+   485,
+   490,
+   495,
+   488,
+   482,
+   478,
+   475,
+   480,
+   485,
+   488
+  ]
+ }
 }
