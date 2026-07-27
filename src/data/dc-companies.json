@@ -1901,5 +1901,71 @@
     "ppr": "Pub",
     "geo": "CN",
     "note": "Крупнейший китайский EDA (~6% рынка Китая). Государственная поддержка. Бинарная ставка на декаплинг: выиграет, если экспортный контроль ужесточится."
+  },
+  {
+    "company": "Besi (BE Semiconductor)",
+    "ticker": "AMS: BESI",
+    "sector": "Litho Tools",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "NL",
+    "note": "Лидер гибридной склейки кристаллов; маржа 64–65%; 21 клиент; AMAT владеет ~9%"
+  },
+  {
+    "company": "Onto Innovation",
+    "ticker": "NYSE: ONTO",
+    "sector": "Litho Tools",
+    "conviction": "Low-Med",
+    "riskTier": "Aggressive",
+    "horizon": "2–3 года",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Метрология/инспекция + литография для упаковки; P/E ~150x; акции +234% за год"
+  },
+  {
+    "company": "Nova",
+    "ticker": "NASDAQ: NVMI",
+    "sector": "Litho Tools",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "IL",
+    "note": "Метрология; маржа 57,6%; шире Camtek; $1,6 млрд наличных"
+  },
+  {
+    "company": "MKS Instruments",
+    "ticker": "NASDAQ: MKSI",
+    "sector": "Litho Tools",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Подсистемы для >85% рынка WFE: RF/DC питание, газ, вакуум; Atotech (упаковочная химия)"
+  },
+  {
+    "company": "NAURA Technology",
+    "ticker": "SZSE: 002371",
+    "sector": "Litho Tools",
+    "conviction": "Low-Med",
+    "riskTier": "Aggressive",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "CN",
+    "note": "Крупнейший китайский WFE; травление/осаждение/очистка; ~$5,84 млрд выручки; импортозамещение"
+  },
+  {
+    "company": "ASM International",
+    "ticker": "AMS: ASM",
+    "sector": "Litho Tools",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "NL",
+    "note": "Лидер ALD/эпитаксии — критическая технология для GAA-транзисторов"
   }
 ]
