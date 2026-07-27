@@ -6914,5 +6914,569 @@
         "blurb": "Board: AMD, Apple, AWS, Google, Intel, Meta, Microsoft, Astera Labs. First products 2026–2027. AMD MI400/Helios = first Tier-1 system."
       }
     ]
+  },
+  "fabric": {
+    "asOf": "2026-07-27",
+    "intro": "Собранные коммутаторы и программное обеспечение, которые соединяют GPU-серверы в единый AI-кластер. Уровень выше сетевых чипов: если «Сетевые чипы» — это Broadcom Tomahawk внутри коробки, то «Сетевая фабрика» — это сама коробка (Arista/Celestica/Cisco) плюс NOS-софт (EOS/SONiC), который управляет маршрутизацией. Рынок AI back-end switch-систем превысит $100 млрд к 2030 (Dell'Oro). Ценность раздваивается: branded-лидеры с софтом (Arista, ~64% GM) И white-box AI-победитель (Celestica, №1 в AI back-end Ethernet по Dell'Oro Q1 2026) — оба выигрывают, но по-разному. Ethernet обогнал InfiniBand: >⅔ AI back-end продаж. Главный сюрприз 2026: NVIDIA стала №1 в datacenter Ethernet switching (21,5% IDC, Spectrum-X $2,1 млрд, +193%).",
+    "tldr": [
+      "AI back-end fabric: >$100 млрд к 2030 (Dell'Oro). Datacenter Ethernet switch = $10 млрд/кв (+61% г/г, IDC Q1 2026). Ethernet = >⅔ AI back-end (победил InfiniBand). 800G→1.6T→3.2T: majority портов 800G сейчас, 1.6T к 2027, 3.2T к 2030.",
+      "NVIDIA — неожиданный №1: datacenter Ethernet switch $2,1 млрд/кв (+193%), 21,5% доля (IDC); networking ~$31 млрд FY26. Spectrum-X ~$10 млрд+ run-rate. Reference-fabric bundling (GPU + switch + DPU + cables) = structural threat для independent fabric.",
+      "Barbell-ставка: Arista (EOS moat, ~64% GM, AI fabric $3,5 млрд target) + Celestica (white-box №1, $19 млрд FY26 guide, 10 active 1.6T programs). Hedges branded-vs-white-box outcome. Cisco re-rating ($9 млрд AI orders). HPE = top overlooked value (networking +148%, >50% operating profit)."
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 6,
+        "cyclicality": 7,
+        "valuation": 4
+      },
+      "summary": "Genuine multi-year growth market (>$100B к 2030), но ценность раздваивается: branded software moat (Arista EOS) vs white-box volume (Celestica/Accton). NVIDIA bundling + SONiC commoditization = двойная угроза для branded margins. Оценки re-rated hard (ANET P/E ~54–62, CLS trailing ~46–52). Ответ: barbell Arista + Celestica — hedges исход branded-vs-white-box напрямую.",
+      "horizon": "3–5 лет (800G→1.6T→3.2T + CPO switch cycle)",
+      "sizing": "AI back-end switch: >$100 млрд к 2030 (Dell'Oro). DC Ethernet switch: $10B/кв (+61%). Ethernet campus: >$20B (2025). SONiC: >$8B к 2027. White-box cloud: $2,1B→$5,3B к 2034.",
+      "keyQuestion": "Branded software/operational moat (Arista EOS) выдержит двойную атаку open SONiC/white-box + NVIDIA reference-fabric bundling? Если да — Arista + ODM winners compound. Если нет — ценность схлопывается в NVIDIA bundle и thin-margin ODMs.",
+      "bull": [
+        "AI back-end = >$100B к 2030 (Dell'Oro); 1.6T ramp быстрее 800G; Ethernet >⅔ AI back-end. DC Ethernet switch $10B/кв (+61%).",
+        "Arista: EOS moat + AI fabric $3,5B (+>2× г/г); 4th customer InfiniBand→Ethernet; deferred revenue $6,2B. Cisco: $9B AI orders FY26 (4,5×).",
+        "Celestica: №1 AI back-end Ethernet (Q1 2026); $19B FY26 guide; 10 active 1.6T programs до 2028. HPE networking +148%, >50% operating profit."
+      ],
+      "bear": [
+        "White-box + SONiC compress branded margins: OCP ~$600 vs Spectrum-X ~$1 500/port; SONiC = de facto standard; Microsoft/Meta driving open.",
+        "NVIDIA bundling: №1 DC Ethernet (21,5%, с <4% за 2 года); reference-fabric (GPU+switch+DPU+cables) forecloses independent fabric.",
+        "Concentration + valuation: Celestica top-10 = 79% revenue; ANET P/E ~54–62; оба упали 15–29% в 2026 despite raising guidance."
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~30–40% (AI back-end switch, 2025–2030)",
+      "chartTitle": "AI back-end сетевые системы ($ млрд)",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 8,
+          "label": "~$8B",
+          "source": "Dell'Oro (AI back-end switch, оценка)"
+        },
+        {
+          "year": "2025",
+          "value": 16,
+          "label": "~$16B",
+          "source": "Dell'Oro (Ethernet >⅔; 800G record)"
+        },
+        {
+          "year": "2026",
+          "value": 25,
+          "label": "~$25B",
+          "source": "IDC: DC Ethernet $10B/кв Q1; AI = major driver"
+        },
+        {
+          "year": "2028",
+          "value": 50,
+          "label": "~$50B",
+          "source": "оценка (1.6T→3.2T + CPO)"
+        },
+        {
+          "year": "2030",
+          "value": 100,
+          "label": ">$100B",
+          "source": "Dell'Oro cumulative 2025–2029/by 2030"
+        }
+      ],
+      "bomShare": {
+        "value": "~10–20%",
+        "note": "network CapEx = small % от GPU BOM, но gates GPU utilization: 33% idle time на saturated 512-GPU кластере = >$1M/год wasted compute"
+      },
+      "volumeVsPrice": "Рост через оба: скорость (800G ~$600–1500/port → 1.6T premium) и объём (hyperscaler capex ~$602B, ~75% = AI). 1.6T surpasses 5M ports за 1–2 года (Dell'Oro). White-box ~20% дешевле branded."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "Cisco (branded + Silicon One)",
+          "gm": "~65%",
+          "note": "AI orders $9B FY26; 3+ yr lock-in; Silicon One + Acacia optics"
+        },
+        {
+          "stage": "Arista Networks (EOS branded)",
+          "gm": "~62–64%",
+          "note": "guide FY26; OPM ~46% target; software + support premium"
+        },
+        {
+          "stage": "Accton (ODM/white-box)",
+          "gm": "thin, net ~10,7%",
+          "note": "Edgecore SONiC leader; volume model; Meta MTIA optionality"
+        },
+        {
+          "stage": "Celestica (ODM/HPS)",
+          "gm": "~12% overall; CCS ~8,4%",
+          "note": "HPS mix lifting; №1 AI Ethernet; thin но rising"
+        },
+        {
+          "stage": "Quanta (ODM)",
+          "gm": "thin (net single-digits)",
+          "note": "AI servers ~70% server rev; switch = minority of mix"
+        }
+      ],
+      "bottleneckNow": "Upstream silicon/optics/memory — не box assembly. Arista: supply constraints persist '1–2 years'; 52-week component lead times. Fabrinet constrained. Box assembly capacity scaling faster чем component supply.",
+      "bottleneckNext": "1.6T CPO switches (Davisson, Spectrum-X Photonics): architecture shift к co-packaged optics. SONiC maturation threatens branded NOS margin. NVIDIA reference-fabric may foreclose independent switching.",
+      "capitalIntensity": "Низкая для branded (fabless, software-heavy: Arista, Cisco). Средняя для ODM assembly (Celestica expanding Thailand/Malaysia/US). High R&D для custom switch platforms.",
+      "takeaway": "Bifurcation: branded = high margin / software moat (Arista 64% GM), white-box = low margin / volume (Celestica 8,4% CCS). NVIDIA per-port ~$1 500 vs OCP ~$600 = 40 cents on the dollar. EOS operational trust vs SONiC standardization = central tension."
+    },
+    "competition": {
+      "concentration": "NVIDIA 21,5% (№1 DC Ethernet by revenue, IDC Q1 2026), Arista ~20,7% (№2). AI back-end: Celestica №1 (regained Q1 2026), NVIDIA №2, Arista №3, Cisco largest share gain (Dell'Oro).",
+      "shareTrajectory": [
+        {
+          "player": "NVIDIA",
+          "now": "21,5% DC Ethernet (№1)",
+          "direction": "↑↑",
+          "detail": "с <4% за 2 года; Spectrum-X $2,1B/кв (+193%); ~$31B FY26 networking"
+        },
+        {
+          "player": "Arista",
+          "now": "~20,7% DC Ethernet (№2)",
+          "direction": "↑",
+          "detail": "AI fabric $3,5B; deferred rev $6,2B; 4th customer IB→ETH; supply-constrained"
+        },
+        {
+          "player": "Celestica",
+          "now": "№1 AI back-end Ethernet",
+          "direction": "↑",
+          "detail": "$19B FY26; HPS +81%; 10 active 1.6T programs; -29% за месяц = entry point"
+        },
+        {
+          "player": "Cisco",
+          "now": "largest AI share gain",
+          "direction": "↑",
+          "detail": "$9B AI orders FY26 (4,5×); Silicon One P200 wins; Acacia >$1B"
+        },
+        {
+          "player": "HPE/Juniper",
+          "now": "emerging AI fabric",
+          "direction": "↑↑",
+          "detail": "networking +148%; DC networking +233%; >50% op profit; 'home run'"
+        }
+      ],
+      "players": [
+        {
+          "name": "NVIDIA",
+          "share": "21,5% DC Ethernet",
+          "edge": "reference-fabric bundle (GPU+switch+DPU+cables); Spectrum-X + InfiniBand"
+        },
+        {
+          "name": "Arista Networks",
+          "share": "~20,7% DC Ethernet",
+          "edge": "EOS software moat + operational trust; 150M cumulative ports; purest AI Ethernet"
+        },
+        {
+          "name": "Celestica",
+          "share": "№1 AI back-end Ethernet",
+          "edge": "white-box AI scale; HPS integration; 1.6T programs; rack-scale + liquid cooling"
+        },
+        {
+          "name": "Cisco",
+          "share": "largest AI share gain",
+          "edge": "Silicon One + Acacia + broadest portfolio; 3+ yr lock-in; cheapest leader"
+        },
+        {
+          "name": "Accton/Edgecore",
+          "share": "ODM ~30–35%",
+          "edge": "SONiC white-box leader; Meta MTIA + Microsoft optionality"
+        }
+      ],
+      "switchingCost": "Branded (Arista EOS): высокие — operational trust, single-binary image, sticky support. White-box (SONiC): низкие — SAI decouples NOS от ASIC vendor; Microsoft/Meta run cross-vendor fleets. NVIDIA bundle: высокие — integrated stack lock-in.",
+      "entryBarrier": "Branded: EOS = decades of software + 150M ports installed base. ODM: lower (commodity silicon + SONiC), но scale и hyperscaler relationships matter. NVIDIA: integrated GPU+network = nobody else can replicate.",
+      "takeaway": "Пятиугольная борьба: NVIDIA (bundle), Arista (branded moat), Celestica (white-box AI), Cisco (re-rater), Accton (ODM). Ethernet победил InfiniBand. SONiC + white-box commoditizes branded margins. NVIDIA bundling = structural threat."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 90,
+          "note": "supply-constrained: Arista '1–2 year shortage'; Celestica HPS constrained; Cisco orders $9B vs ~$3B revenue"
+        },
+        {
+          "year": "2027",
+          "pct": 80,
+          "note": "1.6T ramp; CPO broad adoption beginning; Celestica 10 active 1.6T programs to 2028"
+        },
+        {
+          "year": "2028",
+          "pct": 70,
+          "note": "3.2T starts; CPO switches mainstream; fabric topology shifts (DDC, scale-across)"
+        }
+      ],
+      "contractStructure": "Arista: purchase commitments $8,9B (vs $6,8B); deferred revenue $6,2B. Cisco: AI orders lock customers 3+ years; $9B FY26 target. Celestica: 10 active 1.6T programs booking into 2028. Multi-year commitments standard.",
+      "customerConcentration": "Экстремальная: Celestica top-10 = 79%, three CCS customers = 32%/14%/12%. Arista: cloud-titan heavy. Hyperscaler capex ~$602B (2026), ~75% = AI (~$450B).",
+      "backlog": "Arista: deferred revenue $6,2B + purchase commitments $8,9B. Cisco: $5,3B AI orders YTD Q3, guide $9B. Celestica: $19B FY26 revenue guide. HPE: AI systems orders $1,8B.",
+      "pricing": "NVIDIA Spectrum-X: ~$1 500/800G port. OCP commodity: ~$600/port. QM9700 InfiniBand switch: $80–120K. QM9790 (SHARP): $100–140K. White-box ~20% cheaper than branded. Supply constraints support pricing.",
+      "takeaway": "Demand insatiable; supply = constraint (Arista '1–2 year'). Backlogs record. Hyperscaler capex ~$602B drives. Но concentration extreme — Celestica top-10 = 79%, Arista cloud-titan heavy."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "supply-constrained: wafers/chips/optics/memory; Arista '1–2 year'; 52-week lead times"
+        },
+        {
+          "year": "2027",
+          "state": "tight",
+          "color": "#f59e0b",
+          "detail": "1.6T ramp; component supply improving; но CPO transition creates new bottlenecks"
+        },
+        {
+          "year": "2028",
+          "state": "easing",
+          "color": "#22d3ee",
+          "detail": "3.2T begins; capacity catches up; but CPO mainstream + topology shifts"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Celestica: Thailand, Malaysia, US expansion",
+          "when": "2025–2027",
+          "impact": "raised 2026–2027 capex; new HPS design centers in US and Taiwan; aligning with customer multi-year plans"
+        },
+        {
+          "name": "Quanta: 2× AI server capacity",
+          "when": "end-2026",
+          "impact": "AI server orders secured through 2027; doubles capacity"
+        },
+        {
+          "name": "Arista: multi-year purchase commitments + inventory build",
+          "when": "2025–2027",
+          "impact": "elevated inventory to buffer 52-week lead times; $8,9B commitments"
+        },
+        {
+          "name": "1.6T switch platforms (TH6)",
+          "when": "2026–2027",
+          "impact": "Celestica DS6000 (64× 1.6TbE); Cisco G300 (102.4T); Arista next-gen"
+        }
+      ],
+      "leadTime": "Arista: ~52-week component lead times; supply constraints persist '1–2 years'. Celestica: HPS constrained. Binding constraint = upstream silicon/optics, не box assembly.",
+      "utilization": "ODM assembly capacity scaling faster чем component supply. Celestica: capacity expanding to meet demand. Box assembly is NOT the bottleneck.",
+      "crowdingOut": "Hyperscaler in-house designs (Meta MTIA/Iris, Microsoft SONiC) shift value from branded to ODMs. Но branded switch still wins large enterprise + conservative hyperscalers.",
+      "takeaway": "Supply-constrained market: binding constraint = upstream silicon/optics, не assembly. Box assembly scales faster. Arista/Celestica constrained by components, not their own capacity. Favorable pricing dynamic."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "NVIDIA QM9700 InfiniBand: $80–120K. QM9790 (SHARP): $100–140K. Spectrum-X ~$1 500/port. OCP commodity ~$600/port. 16-node IB cluster: $300–500K. 1024-GPU cluster ~1 280 cable runs.",
+      "grossMargin": "Arista: ~64% (branded EOS). Cisco: ~65%. Celestica: ~12% overall, CCS ~8,4%. Accton net: ~10,7%. Quanta: net single-digits. Software/services = uplift lever.",
+      "costCurve": "White-box ~20% дешевле branded. SONiC = free NOS (vs Arista EOS premium). OCP switch = ~40% стоимости Spectrum-X. CPO switches: ~70% lower optical power, but premium initially.",
+      "yields": [
+        {
+          "gen": "51.2T (TH5, 800G)",
+          "pct": "mature",
+          "note": "mainstream; 800G >20M ports за 3 года (vs 6–7 лет для 400G)"
+        },
+        {
+          "gen": "102.4T (TH6/Davisson, 1.6T)",
+          "pct": "ramping",
+          "note": "Celestica DS6000; Cisco G300; 1.6T surpasses 5M ports за 1–2 года"
+        }
+      ],
+      "takeaway": "Bifurcation: branded high-margin (Arista 64%, Cisco 65%) vs white-box thin (Celestica 8,4%, Accton 10,7%). Operating leverage: Arista held opex flat with revenue growth (43% OPM). 33% idle time на saturated 512-GPU cluster = >$1M/год wasted compute → fabric = critical."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "51.2T / 800G systems (TH5)",
+          "node": "mainstream",
+          "year": "2024–2026",
+          "note": "800G >20M ports за 3 года; majority AI back-end; Supermicro SSE-T8164"
+        },
+        {
+          "name": "102.4T / 1.6T systems (TH6)",
+          "node": "ramping",
+          "year": "2026–2027",
+          "note": "Celestica DS6000, Cisco G300; 1.6T surpasses 5M ports за 1–2 года; Davisson CPO"
+        },
+        {
+          "name": "200T / 3.2T systems (TH7)",
+          "node": "development",
+          "year": "2028–2030",
+          "note": "Broadcom '200-terabit product in development'; Dell'Oro: 3.2T ports mainstream к 2030"
+        },
+        {
+          "name": "CPO switch systems",
+          "node": "shipping",
+          "year": "2025–2028",
+          "note": "Davisson CPO (Oct 2025); NVIDIA Quantum-X Photonics; Spectrum-X Photonics H2 2026; broad adoption 2028–2030"
+        },
+        {
+          "name": "Fabric topology evolution",
+          "node": "evolving",
+          "year": "2026–2030",
+          "note": "Rail-optimized Clos → DDC → scale-across (Arista/Cisco P200/Spectrum-XGS)"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "White-box + SONiC commoditization branded margins",
+          "verdict": "реальная угроза — SONiC de facto standard",
+          "tone": "negative",
+          "detail": "OCP ~$600 vs Spectrum-X ~$1 500/port (40% стоимости). SONiC = SAI decouples NOS от ASIC. >60% hyperscale DC используют white-box. Microsoft/Meta driving. Counter: EOS operational trust wins conservative hyperscalers.",
+          "angle": "Barbell Arista + Celestica hedges этот outcome напрямую."
+        },
+        {
+          "tech": "NVIDIA reference-fabric bundling",
+          "verdict": "serious — NVIDIA = №1 DC Ethernet за 2 года",
+          "tone": "negative",
+          "detail": "GPU+Spectrum-X+BlueField+LinkX cables = integrated stack. 21,5% DC Ethernet (с <4%). Spectrum-X ~$10B+ run-rate. Counter: Ethernet openness + hyperscaler multi-sourcing + UEC.",
+          "angle": "Если NVIDIA forecloses independent fabric — Arista/Cisco margins compress. Celestica/Accton survive как ODM assemblers."
+        },
+        {
+          "tech": "CPO switches change box architecture",
+          "verdict": "favors integrated vendors (Broadcom/NVIDIA/Celestica)",
+          "tone": "mixed",
+          "detail": "Davisson CPO: 16× 6.4T optical engines, −70% optical power. Broad adoption 2028–2030; pluggables remain mainstream 2026. Celestica: 10 active 1.6T programs include CPO.",
+          "angle": "CPO raises integration complexity → favors ODMs с capability (Celestica) и silicon leaders (Broadcom/NVIDIA)."
+        }
+      ],
+      "takeaway": "51.2T→102.4T→200T: каждое поколение увеличивает bandwidth и TAM. CPO shifts architecture к 2028. SONiC + NVIDIA bundling = двойная угроза для branded margins. Barbell = правильная структура."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "Switch silicon (Tomahawk/Spectrum/Teralynx)",
+          "supplier": "Broadcom, NVIDIA, Marvell, Cisco Silicon One (→ раздел Сетевые чипы)",
+          "note": "gating: binding constraint = silicon, не assembly"
+        },
+        {
+          "item": "Оптические трансиверы / CPO",
+          "supplier": "Coherent, Lumentum, InnoLight, Fabrinet (→ раздел Фотоника)",
+          "note": "optics constrained; CPO shifts к co-packaged"
+        },
+        {
+          "item": "Memory / substrates",
+          "supplier": "Samsung, SK Hynix, Micron; Ibiden, Shinko",
+          "note": "wafer/chip/optics/memory shortages = all upstream"
+        },
+        {
+          "item": "ODM assembly",
+          "supplier": "Celestica, Accton, Quanta, Wistron, Delta",
+          "note": "assembly capacity scales faster чем component supply; NOT the bottleneck"
+        }
+      ],
+      "downstream": "Hyperscalers (Google, Amazon, Microsoft, Meta, Oracle, xAI), neoclouds, enterprises, sovereign AI, AI-cluster operators. Fabric = connectivity layer кластера.",
+      "correlation": "High-beta derivative от GPU shipments и hyperscaler capex (~$602B 2026, ~75% AI). Tightly correlated с сетевыми чипами и фотоникой. Fabric utilization gates GPU utilization.",
+      "takeaway": "Fabric зависит вверх от silicon (Broadcom/NVIDIA) и optics (фотоника), вниз от GPU volume и hyperscaler capex. Assembly не bottleneck — components bottleneck. Fabric ≠ optional: 33% idle на saturated кластере = >$1M/год wasted compute."
+    },
+    "risks": [
+      {
+        "risk": "White-box + SONiC commoditization branded margins",
+        "prob": "Средняя–Высокая",
+        "impact": "Высокий",
+        "note": "OCP ~40% стоимости Spectrum-X; SONiC de facto standard; Microsoft/Meta driving"
+      },
+      {
+        "risk": "NVIDIA reference-fabric bundling forecloses independent",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "NVIDIA №1 DC Ethernet (21,5% за 2 года); Spectrum-X ~$10B+ run-rate"
+      },
+      {
+        "risk": "Customer concentration (hyperscalers)",
+        "prob": "Высокая (структурная)",
+        "impact": "Средний–Высокий",
+        "note": "Celestica top-10 = 79%; Arista cloud-titan heavy; capex циклический"
+      },
+      {
+        "risk": "Оценки (re-rated hard)",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "ANET P/E ~54–62; CLS trailing ~46–52 (3yr avg 27,6); оба упали 15–29% despite raising guidance"
+      },
+      {
+        "risk": "InfiniBand rebound (Blackwell Ultra)",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "IB nearly doubled QoQ на BU ramp; Ethernet >⅔ но IB не мёртв"
+      },
+      {
+        "risk": "Supply constraints cap revenue",
+        "prob": "Высокая near-term",
+        "impact": "Средний",
+        "note": "constrains upside, не underlying demand; supports pricing"
+      }
+    ],
+    "picks": [
+      {
+        "group": "Proven leaders — ядро barbell",
+        "tone": "leader",
+        "badge": "branded moat, white-box AI volume, re-raters",
+        "note": "Arista (moat/margins) + Celestica (white-box volume) = core barbell, hedges branded-vs-white-box. Cisco = cheapest leader, re-rating. NVIDIA = system-level kingmaker.",
+        "rows": [
+          {
+            "company": "Arista Networks",
+            "ticker": "NYSE: ANET",
+            "mcap": "~$218–222 млрд",
+            "exposure": "purest AI Ethernet fabric; EOS moat; №2 DC Ethernet (20,7% IDC); AI fabric $3,5B target",
+            "why": "EOS = branded software moat + operational trust; GM ~64%; 4th customer IB→Ethernet; deferred revenue $6,2B; purchase commitments $8,9B. FY26 ~$11,5B (+28%). 150M cumulative ports. Supply-constrained (не demand). CEO: 'best demand ever.'",
+            "priced": "P/E ~54–62 trailing, ~44 forward. Упала ~15% на Q1 print despite beat (guidance raise $250M vs prior $600M). Re-rated hard vs 5yr avg P/E 42."
+          },
+          {
+            "company": "Celestica",
+            "ticker": "NYSE: CLS",
+            "mcap": "~$38–49 млрд",
+            "exposure": "№1 AI back-end Ethernet (Dell'Oro Q1 2026); HPS +81%; $19B FY26 guide; 10 active 1.6T programs",
+            "why": "White-box AI winner: regained №1 Q1 2026. FY26 $19B / $10,15 EPS (raised). HPS = 41% revenue. 1.6T programs booking into 2028. Rack-scale integration + liquid cooling. -29% за месяц (June–July 2026) = entry point.",
+            "priced": "Trailing P/E ~46–52 (3yr avg 27,6). Thin margins (CCS 8,4%). Top-10 customers = 79%. High-beta (1,48). +117% 1yr потом -29% за месяц."
+          },
+          {
+            "company": "Cisco",
+            "ticker": "NASDAQ: CSCO",
+            "mcap": "крупная",
+            "exposure": "AI orders $9B FY26 (4,5×); Silicon One + Acacia; largest AI back-end share gain",
+            "why": "Cheapest leader; re-rating на $9B AI orders. Record Q3 $15,84B (+12%). 5 new hyperscaler design wins Q3. Silicon One P200 scale-across. Acacia >$1B orders. AI orders lock customers 3+ years.",
+            "priced": "Lower multiple чем pure-plays. 'Dot Com' valuation overhang. Restructuring <4 000 roles to refocus на AI/silicon."
+          },
+          {
+            "company": "NVIDIA",
+            "ticker": "NASDAQ: NVDA",
+            "mcap": "~$5,0 трлн",
+            "exposure": "networking ~$31B FY26; №1 DC Ethernet (21,5%); Spectrum-X ~$10B+ run-rate; reference-fabric",
+            "why": "System-level kingmaker: GPU+Spectrum-X+BlueField+LinkX = integrated stack. Sets terms для всех. №1 DC Ethernet за 2 года (с <4% до 21,5%). InfiniBand + Ethernet.",
+            "priced": "Not a pure fabric play — networking = slice of $5T story. Reference-fabric bundling benefits NVIDIA, threatens everyone else."
+          }
+        ]
+      },
+      {
+        "group": "Emerging и overlooked — ODM leverage, integration re-rating, quiet fiber",
+        "tone": "emerging",
+        "badge": "ODM asymmetry, Juniper 'home run', DCI/scale-across",
+        "note": "Accton — most direct white-box AI beneficiary (Meta MTIA + MSFT optionality). HPE — top overlooked value ('home run' Juniper, networking >50% profit). Ciena — 'quiet fiber' DCI play.",
+        "rows": [
+          {
+            "company": "Accton",
+            "ticker": "TWSE: 2345",
+            "mcap": "~$46 млрд",
+            "exposure": "ODM ~30–35%; Edgecore SONiC leader; FY25 rev NT$248B (+125%); Q1 2026 +64%",
+            "why": "Most direct white-box AI beneficiary. Edgecore = SONiC leader. Meta MTIA/Iris ($0,5–2,5B upside). Potential Microsoft switch win. FY25 EPS NT$47,13.",
+            "risk": "Customer concentration, in-sourcing risk, thin ODM margins. P/E ~41. All-time high NT$2 695 (May 2026) — heavily re-rated."
+          },
+          {
+            "company": "HPE",
+            "ticker": "NYSE: HPE",
+            "mcap": "крупная",
+            "exposure": "networking $2,7B/кв (+148%); DC networking +233%; >50% operating profit; Juniper 'home run'",
+            "why": "Top overlooked value: networking now ~30% revenue, >50% of operating profit. FY26 networking growth 72–75%. First credible full-stack Cisco alternative (Aruba+Mist+QFX/PTX). Pulling 2028 targets into 2026. Mispriced на integration skepticism.",
+            "risk": "Integration execution post-Juniper ($14B). Enterprise diversification dilutes AI pure-play."
+          },
+          {
+            "company": "Nokia",
+            "ticker": "NYSE: NOK",
+            "mcap": "крупная",
+            "exposure": "AI/cloud sales >2×; Optical Networks +20%; multiyear Microsoft Azure SONiC deal",
+            "why": "Q2 2026 €4,82B (+8%); FY guide raised €2,1–2,6B. +168,7% 1yr но всё ещё cheap vs peers. DCI/optical + IP routing AI-adjacent. Microsoft deal validates AI networking.",
+            "risk": "Telecom exposure dilutes. Медленнее растёт чем pure AI names."
+          },
+          {
+            "company": "Ciena",
+            "ticker": "NYSE: CIEN",
+            "mcap": "крупная",
+            "exposure": "DCI/coherent + scale-across; Q2 FY26 record $1,57B (+40%); backlog $7,7B",
+            "why": "'Quiet fiber' AI-adjacent. Record revenue (+40%); adj EPS $1,64 (~4× г/г). Cloud customer revenue +70%. TAM to ~$50B к 2029. ~5,8× sales — cheaper than pure-optics.",
+            "risk": "Не pure AI play; telecom. Already in Photonics picks."
+          },
+          {
+            "company": "Quanta",
+            "ticker": "TWSE: 2382",
+            "mcap": "~$41,6 млрд",
+            "exposure": "2025 rev ~$67,6B (+50%); AI servers ~70% server rev; QCT QuantaMesh switches",
+            "why": "Lower-beta ODM alternative to Accton. Record EPS NT$19,45. Supplies AWS/Google/Microsoft/Oracle. Doubles AI server capacity by end-2026.",
+            "risk": "Server-heavy; switch = minority of mix. Thin margins. Less pure AI-fabric exposure."
+          },
+          {
+            "company": "Super Micro",
+            "ticker": "NASDAQ: SMCI",
+            "mcap": "~$19,5 млрд",
+            "exposure": "SSE-T8164 (51.2T) + SSE-T8196; AI GPU >80% Q3 rev; $60B backlog",
+            "why": "Cheapest AI-systems name: trailing P/E ~15,8, forward ~9,3. Q3 $10,2B. GM guided 15–17%. Switch business small but real.",
+            "risk": "Higher governance risk (past filing issues). Switch = small portion. Q4 GM guided up but historically volatile."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Barbell: Arista (EOS moat, 64% GM) + Celestica (white-box №1, $19B) = hedges branded-vs-white-box outcome. Cisco — cheapest leader, re-rating на $9B AI orders. NVIDIA = kingmaker. Accton — most direct ODM asymmetric bet (Meta MTIA). HPE — top overlooked value (Juniper 'home run', networking >50% profit). Ciena — 'quiet fiber'. Входить на drawdowns: ANET −15%, CLS −29% despite raising guidance = disciplined entry.",
+    "monitoring": {
+      "metrics": [
+        "Arista: AI fabric target + deferred revenue ($6,2B) + purchase commitments; next earnings Aug 4 2026",
+        "Celestica: CCS/HPS revenue + 1.6T program count + segment margin (quarterly)",
+        "Cisco: AI infrastructure orders (quarterly; $9B FY26 target) + Silicon One design wins",
+        "NVIDIA: networking revenue + Spectrum-X run-rate (post-FY27 restructured reporting)",
+        "HPE: Networks-for-AI orders + AI backlog + networking % of profit",
+        "Accton/Quanta/Wistron: monthly Taiwan revenue (TWSE) — highest-frequency leading indicator",
+        "Dell'Oro + IDC: quarterly DC switch + AI back-end reports; SONiC adoption data"
+      ],
+      "canary": [
+        "Hyperscaler white-box/SONiC share-gain announcement displacing branded → margin compression signal",
+        "NVIDIA reference-fabric win displacing Arista/Cisco incumbent → bundling threat confirmation",
+        "Arista AI-fabric guidance cut или deferred-revenue reversal → demand signal",
+        "Branded-to-white-box mix shift в Dell'Oro AI back-end data → structural shift",
+        "Hyperscaler capex deceleration → cyclicality risk; Arista supply shortage easing → pricing softens"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Records across the board — но NVIDIA = №1, valuations extreme, и оба лидера упали on guidance raises",
+      "summary": "Июль 2026: NVIDIA №1 DC Ethernet (21,5%, $2,1B/кв, +193%). Arista AI fabric $3,5B; deferred rev $6,2B; 4th customer IB→Eth. Celestica №1 AI back-end Ethernet, $19B guide; -29% за месяц. Cisco $9B AI orders. HPE networking +148%, 'home run'. Но ANET P/E ~54–62, CLS trailing ~46–52, оба упали 15–29% despite raising guidance.",
+      "stories": [
+        {
+          "title": "NVIDIA стала №1 в datacenter Ethernet switching (IDC: 21,5%, +193%, с <4% за 2 года)",
+          "tone": "mixed",
+          "verdict": "Reference-fabric bundling работает. Spectrum-X ~$10B+ run-rate. Serious structural threat для independent fabric (Arista/Cisco). Но Ethernet openness + hyperscaler multi-sourcing = counterbalance.",
+          "detail": "FY26 networking ~$31B (×10 за 5 лет). InfiniBand nearly doubled QoQ на Blackwell Ultra. №1 в Ethernet И InfiniBand."
+        },
+        {
+          "title": "Celestica №1 AI back-end Ethernet (Dell'Oro Q1 2026); guide raised to $19B; потом -29%",
+          "tone": "mixed",
+          "verdict": "White-box AI winner confirmed. 10 active 1.6T programs to 2028. Но -29% за месяц (June–July) despite raising guidance = volatility IS the entry mechanism.",
+          "detail": "HPS +81% г/г, 41% revenue. CCS margin 8,4% (rising). Top-10 = 79% revenue. High-beta (1,48)."
+        },
+        {
+          "title": "Arista AI fabric $3,5B target; 4th customer InfiniBand→Ethernet; -15% on print",
+          "tone": "mixed",
+          "verdict": "EOS moat holds; demand 'best ever'. Но guidance raise $250M (vs prior $600M) + supply constraints = -15%. Deferred revenue $6,2B = pent-up demand.",
+          "detail": "FY26 ~$11,5B (+28%). Supply constraints '1–2 years'. 150M cumulative ports. CEO 'best demand environment.'"
+        },
+        {
+          "title": "HPE/Juniper: networking +148%, DC networking +233%, CEO 'home run'",
+          "tone": "positive",
+          "verdict": "Top overlooked value. Networking now >50% of operating profit. Pulling 2028 targets into 2026. First credible full-stack Cisco alternative.",
+          "detail": "Q2 FY26 networking $2,7B. AI systems orders $1,8B. FY26 networking growth 72–75% guide."
+        }
+      ],
+      "bottomLine": "AI fabric-systems = genuine multi-year growth (>$100B к 2030, Dell'Oro). Ethernet won. NVIDIA = №1 DC Ethernet (structural threat). Arista EOS moat holds. Celestica = white-box AI winner. Barbell (Arista+Celestica) hedges branded-vs-white-box. Входить на drawdowns (ANET -15%, CLS -29%): demand record, supply constrains — но оценки не прощают."
+    },
+    "news": [
+      {
+        "date": "2026-06-02",
+        "source": "Dell'Oro / IDC",
+        "title": "DC Ethernet switch $10B/кв (+61%); NVIDIA №1 (21,5%); Celestica №1 AI back-end Ethernet",
+        "blurb": "Ethernet >⅔ AI back-end. InfiniBand nearly doubled QoQ. Celestica regained leading position. Cisco = largest AI share gain."
+      },
+      {
+        "date": "2026-05-06",
+        "source": "Arista Networks",
+        "title": "Arista Q1 FY26: $2,71B (+35%); AI fabric $3,5B target; deferred rev $6,2B; shares -15%",
+        "blurb": "4th customer IB→Ethernet. Guidance raise $250M (smaller than prior $600M). Supply '1–2 year constraint'. Purchase commitments $8,9B."
+      },
+      {
+        "date": "2026-04-27",
+        "source": "Celestica",
+        "title": "Celestica Q1 2026: raised FY26 to $19B / $10,15 EPS; 10 active 1.6T programs",
+        "blurb": "HPS +81% г/г. CCS margin 8,4%. Потом -29% за месяц (June–July). Entry-point opportunity."
+      },
+      {
+        "date": "2026-05-14",
+        "source": "Cisco",
+        "title": "Cisco Q3 FY26: record $15,84B (+12%); AI orders $9B FY26 target (raised от $5B)",
+        "blurb": "5 new hyperscaler design wins. Silicon One P200 scale-across wins. Acacia >$1B orders. Restructuring <4K roles for AI/silicon."
+      },
+      {
+        "date": "2026-04-30",
+        "source": "HPE",
+        "title": "HPE Q2 FY26: networking $2,7B (+148%); DC networking +233%; Juniper = 'home run'",
+        "blurb": "Networking >50% operating profit. FY26 networking growth 72–75%. Pulling 2028 targets into 2026. AI orders $1,8B."
+      }
+    ]
   }
 }

@@ -2209,5 +2209,60 @@
     "ppr": "Omni-Path CN5000/6000/7000; alternative to InfiniBand/Ethernet for HPC/AI",
     "geo": "US",
     "note": "Intel-backed; DOE/LLNL deployments; IPO candidate; CN7000 = 1.6T Ultra Ethernet"
+  },
+  {
+    "company": "Accton",
+    "ticker": "TWSE: 2345",
+    "sector": "Interconnect Fabric",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "ODM ~30–35%; Edgecore SONiC leader; Meta MTIA/Iris + Microsoft optionality",
+    "geo": "TW",
+    "note": "FY25 +125%; P/E ~41; all-time high; most direct white-box AI beneficiary"
+  },
+  {
+    "company": "Quanta",
+    "ticker": "TWSE: 2382",
+    "sector": "Interconnect Fabric",
+    "conviction": "low",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "ODM; QCT QuantaMesh switches; AI servers ~70% rev; supplies AWS/Google/MSFT/Oracle",
+    "geo": "TW",
+    "note": "2025 rev ~$67,6B (+50%); switch = minority of mix; lower-beta ODM alternative to Accton"
+  },
+  {
+    "company": "Wistron",
+    "ticker": "TWSE: 3231",
+    "sector": "Interconnect Fabric",
+    "conviction": "low",
+    "riskTier": "mid",
+    "horizon": "2–3 года",
+    "ppr": "ODM; networking 'tenfold growth' potential; AI ~70% rev",
+    "geo": "TW",
+    "note": "2025 rev +108%; AMD-GPU dependent; high-margin networking bright spot"
+  },
+  {
+    "company": "Nokia",
+    "ticker": "NYSE: NOK",
+    "sector": "Interconnect Fabric",
+    "conviction": "medium",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "DCI/optical + IP routing AI-adjacent; multiyear Microsoft Azure SONiC deal",
+    "geo": "FI",
+    "note": "AI/cloud sales >2×; Optical +20%; +168,7% 1yr but still cheap; telecom dilution"
+  },
+  {
+    "company": "Extreme Networks",
+    "ticker": "NASDAQ: EXTR",
+    "sector": "Interconnect Fabric",
+    "conviction": "low",
+    "riskTier": "mid",
+    "horizon": "2–3 года",
+    "ppr": "enterprise/campus networking; SaaS ARR $236M (+29%); Platform ONE AI management",
+    "geo": "US",
+    "note": "least pure-play; enterprise recovery name; not hyperscale AI back-end"
   }
 ]
