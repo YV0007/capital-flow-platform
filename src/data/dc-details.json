@@ -6349,5 +6349,570 @@
         "blurb": "CPO лидер: Bailly TH5 с 2023, теперь Davisson. 70% lower optical power, 8x silicon-area efficiency."
       }
     ]
+  },
+  "netsilicon": {
+    "asOf": "2026-07-27",
+    "intro": "Микросхемы, которые управляют передачей данных между GPU внутри кластера (scale-up) и между кластерами (scale-out). Два доминирующих игрока: NVIDIA (NVLink/NVSwitch внутри стойки + Spectrum-X/InfiniBand между стойками, сетевая выручка $14,8 млрд за квартал, +199% г/г) и Broadcom (коммерческие switch-чипы Tomahawk + кастомные XPU, ~70% высокопроизводительного Ethernet-switching, AI-полупроводниковая выручка $10,8 млрд/кв, +143% г/г). Главное структурное изменение 2025–2026: Ethernet обогнал InfiniBand в AI back-end (>⅔ продаж коммутаторов, два года назад было ~80% InfiniBand). Dell'Oro прогнозирует расходы на AI back-end коммутаторы >$100 млрд к 2030. Сеть = 10–20% стоимости AI-кластера, и доля растёт сверхлинейно с размером кластера.",
+    "tldr": [
+      "NVIDIA Data Center networking: рекорд $14,8 млрд за Q1 FY2027 (+199% г/г, +35% QoQ); >$31 млрд за FY2026 (×10 за 5 лет). Стал №1 в мире по Ethernet-коммутаторам (21,5% доля по IDC, Spectrum-X $2,1 млрд). NVLink 5 = 1,8 ТБ/с на GPU (Blackwell), NVLink 6 = 3,6 ТБ/с (Rubin, 2H2026).",
+      "Broadcom AI-semi: рекорд $10,8 млрд/кв (+143% г/г); networking ~40% от AI revenue. FY2026 guide $56 млрд (~+180% г/г), FY2027 >$100 млрд; backlog ~$73 млрд. Tomahawk 6 = первый в мире 102.4T switch-чип. 200G/lane SerDes — узкое место и конкурентное преимущество.",
+      "Ethernet обогнал InfiniBand: >⅔ AI back-end коммутаторных продаж (Dell'Oro, конец 2025). Главный вопрос: NVLink scale-up lock-in сохранится — или UALink/Ethernet откроют стойку, как Ethernet открыл scale-out? AMD MI400/Helios = первая Tier-1 UALink-система (3,6 ТБ/с/GPU, 72 GPU). Dell'Oro: Ethernet победит и в scale-up долгосрочно."
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 7,
+        "cyclicality": 8,
+        "valuation": 4
+      },
+      "summary": "Один из самых быстрорастущих и стратегически важных слоёв AI-инфраструктуры: сеть масштабируется сверхлинейно с размером кластера. Ценность концентрируется в двух компаниях (NVIDIA + Broadcom >80% profit pool). Маржи высочайшие (59–76% GM). Но оценки уже вбирают много хорошего, а UALink vs NVLink решит, кто получит самый прибыльный кусок. Ответ: владей Broadcom как ядром (выигрывает при любом сценарии), NVIDIA для integrated scale-up, Arista для чистого Ethernet.",
+      "horizon": "3–5 лет (800G→1.6T→3.2T, UALink ramp, CPO switch cycle)",
+      "sizing": "AI back-end switch: >$100 млрд к 2030 (Dell'Oro). NIC/DPU: 59% CAGR до 2029. SONiC AI scale-out: >$10 млрд к 2030. Сеть ~10–20% AI cluster capex, доля растёт.",
+      "keyQuestion": "NVLink scale-up lock-in сохранится — или UALink + Ethernet откроют стойку? Если откроют, Broadcom/Astera/Marvell/AMD получат огромный новый TAM; если NVLink удержится (NVLink 6 + Fusion), самый прибыльный кусок останется у NVIDIA.",
+      "bull": [
+        "Сверхлинейный рост с кластером: 10K→100K→1M GPU — сетевой контент/GPU растёт. NVIDIA networking ×10 за 5 лет. Dell'Oro: >$100B AI back-end switch к 2030. NIC 59% CAGR.",
+        "Scale-up bandwidth explosion: NVLink 1,8→3,6 ТБ/с; UALink открывает новый multi-billion TAM; Astera targets >$1 000 контента/XPU. Три протокола (NVLink/UALink/Ethernet) — все растут.",
+        "Ethernet shift: >⅔ AI back-end; merchant silicon (Broadcom/Arista/Marvell/Astera) = главные бенефициары. UEC 1.0 spec (июнь 2025) стандартизирует RDMA over Ethernet."
+      ],
+      "bear": [
+        "NVIDIA networking dominance: $14,8B/кв, +199%, №1 в Ethernet switching — challengers лицом к лицу с интегрированным инкумбентом. NVLink Fusion co-opts UALink partners.",
+        "Customer concentration: Broadcom top-3 (Google/Anthropic/Meta) ~70% AI revenue; Arista cloud-titan exposure; hyperscaler capex циклический — 52-нед lead-times работают в обе стороны.",
+        "Оценки: ALAB trading ~44% выше среднего PT аналитиков; CRDO +~390% market cap г/г; AVGO/ANET re-rated. Priced for perfection — DeepSeek-type scare = −40% drawdown."
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~30–40% (AI back-end switch, 2024–2030)",
+      "chartTitle": "AI back-end сетевое оборудование ($ млрд, кумулятивно к 2030)",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 12,
+          "label": "~$12B",
+          "source": "Dell'Oro AI back-end switch (оценка)"
+        },
+        {
+          "year": "2025",
+          "value": 22,
+          "label": "~$22B",
+          "source": "Dell'Oro (Ethernet >⅔)"
+        },
+        {
+          "year": "2026",
+          "value": 35,
+          "label": "~$35B",
+          "source": "оценка (Broadcom $56B AI-semi, networking ~40%)"
+        },
+        {
+          "year": "2028",
+          "value": 60,
+          "label": "~$60B",
+          "source": "оценка (scale-up + CPO + UALink)"
+        },
+        {
+          "year": "2030",
+          "value": 100,
+          "label": ">$100B",
+          "source": "Dell'Oro (AI back-end switch cumulative)"
+        }
+      ],
+      "bomShare": {
+        "value": "~10–20%",
+        "note": "сеть = 10–20% AI cluster capex; доля растёт сверхлинейно с размером кластера. Bank of America: ~$20B per GW."
+      },
+      "volumeVsPrice": "Рост через оба: скорость портов (800G→1.6T→3.2T) и количество (кластеры растут до 100K+ GPU). Astera: >$1 000 кремния/XPU. UALink switches = существенно выше ASP чем PCIe switches. 102.4T Tomahawk 6 = premium ASP."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "Astera Labs (connectivity silicon)",
+          "gm": "~76,4% non-GAAP",
+          "note": "highest; IP-rich connectivity; PCIe Gen 6 + Scorpio scale-up fabric"
+        },
+        {
+          "stage": "NVIDIA (networking, bundled)",
+          "gm": "~75%",
+          "note": "корпоративная GM; NVLink/NVSwitch scale-up = самая прибыльная часть"
+        },
+        {
+          "stage": "Broadcom (semi solutions)",
+          "gm": "mid-60s%+",
+          "note": "semi solutions выше; operating margin record 67% Q2 FY2026"
+        },
+        {
+          "stage": "Arista Networks (systems)",
+          "gm": "~62–64%",
+          "note": "guide FY2026; системы, не pure silicon; OPM ~47,8%"
+        },
+        {
+          "stage": "Marvell Technology (DC 76%)",
+          "gm": "~58,9% non-GAAP",
+          "note": "custom + interconnect + scale-out switch; OPM ~35%"
+        }
+      ],
+      "bottleneckNow": "200G/lane SerDes: gating technology для 102.4T switches и 1.6T optics. Broadcom shipping (Condor cores, 8×212.5 Gb/s PAM4); lead-times >40 недель на пике. NVLink scale-up — proprietary и bundled с GPU.",
+      "bottleneckNext": "UALink products (2026–2027): если масштабируется — открывает scale-up для merchant silicon. CPO switches (Davisson 102.4T + NVIDIA Spectrum-X Photonics): следующий ценовой слой. 3.2T switch (Tomahawk 7, 200T-class) в разработке.",
+      "capitalIntensity": "Высокая для ASIC (TSMC 3nm + CoWoS); средняя для IP/fabless. SerDes IP (Synopsys/Cadence/Qualcomm-Alphawave) — reusable crown jewel с минимальным capex.",
+      "takeaway": "Profit pool концентрирован: NVIDIA (NVLink scale-up) + Broadcom (merchant switch + custom XPU + SerDes). Broadcom = widest moat + growth/margin blend + выигрывает при любом тренде. SerDes IP — picks-and-shovels angle (Synopsys/Cadence). Astera Labs = highest-margin emerging (76% GM)."
+    },
+    "competition": {
+      "concentration": "Экстремальная: Broadcom ~70%+ high-end merchant switch silicon; Broadcom+Marvell ~86% merchant вместе. NVIDIA доминирует в scale-up (NVLink) и стал №1 в datacenter Ethernet (21,5% по IDC). DSP: Marvell ~60–70% + Broadcom >30%.",
+      "shareTrajectory": [
+        {
+          "player": "Broadcom",
+          "now": "~70%+ high-end merchant switch",
+          "direction": "↑",
+          "detail": "Tomahawk 6 = first 102.4T; AI-semi $56B FY26, >$100B FY27; 200G SerDes lead"
+        },
+        {
+          "player": "NVIDIA",
+          "now": "scale-up dominant + №1 Ethernet",
+          "direction": "↑",
+          "detail": "$14,8B/кв networking; Spectrum-X 21,5% share; NVLink 6 = 3,6TB/s"
+        },
+        {
+          "player": "Arista Networks",
+          "now": "№1 >10GbE high-speed switch",
+          "direction": "↑",
+          "detail": "AI fabric $3,5B target (>2x); 4th customer InfiniBand→Ethernet; supply-constrained"
+        },
+        {
+          "player": "Marvell",
+          "now": "~10–17% merchant switch",
+          "direction": "↑",
+          "detail": "scale-out switch >$600M FY27 (2x); custom >2x FY28; NVIDIA $2B investment"
+        },
+        {
+          "player": "Astera Labs",
+          "now": "emerging scale-up fabric",
+          "direction": "↑↑",
+          "detail": "Scorpio X-Series; PCIe Gen 6 >⅓ rev; targets >$1K/XPU; UALink board member"
+        }
+      ],
+      "players": [
+        {
+          "name": "Broadcom",
+          "share": "~70%+ merchant switch",
+          "edge": "Tomahawk bandwidth lead + 200G SerDes + custom XPU + CPO + widest moat"
+        },
+        {
+          "name": "NVIDIA",
+          "share": "scale-up + №1 Ethernet",
+          "edge": "NVLink lock-in + NCCL/CUDA software + integrated GPU+network"
+        },
+        {
+          "name": "Arista Networks",
+          "share": "№1 >10GbE",
+          "edge": "EOS software + cloud-titan relationships + purest Ethernet systems play"
+        },
+        {
+          "name": "Marvell",
+          "share": "~10–17% + custom",
+          "edge": "Teralynx + interconnect + NVLink Fusion + cheapest Tier-1 multiple"
+        },
+        {
+          "name": "Astera Labs",
+          "share": "emerging",
+          "edge": "Scorpio scale-up fabric + PCIe Gen 6 + UALink switch + 76% GM"
+        }
+      ],
+      "switchingCost": "Очень высокие: multi-year hyperscaler design cycles; TSMC advanced-node access; NVLink lock-in усилен NCCL/CUDA software stack. Квалификация switch ASIC у hyperscaler = месяцы.",
+      "entryBarrier": "Экстремальные: 200G SerDes = единицы компаний в мире. 3nm tapeout = $500M+. NVLink/NVSwitch = proprietary. Scale-up требует интеграции silicon + packaging + software. Installed-base network effects.",
+      "takeaway": "Дуополия NVIDIA+Broadcom контролирует >80% profit pool. UALink vs NVLink = центральный вопрос: если scale-up открывается, Broadcom/Astera/Marvell получают огромный новый TAM. Ethernet уже победил в scale-out; Dell'Oro: победит и в scale-up долгосрочно."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 95,
+          "note": "supply-constrained по всей цепочке; Arista: '1–2 year component shortage'; Broadcom: bookings $30B vs shipped $10,8B"
+        },
+        {
+          "year": "2027",
+          "pct": 85,
+          "note": "1.6T ramp; UALink first products; NVLink 6/Rubin; Broadcom FY27 >$100B"
+        },
+        {
+          "year": "2028",
+          "pct": 75,
+          "note": "3.2T начинается; CPO switches масштабируются; scale-up protocols определяются"
+        }
+      ],
+      "contractStructure": "Broadcom: 6 mega-deals (Anthropic >1GW 2026→5GW 2027; OpenAI 1,3GW 2027/10GW к 2029; Meta 3GW к 2028; Google). Arista: purchase commitments $8,9B (vs $6,8B). Marvell: targeting >$10B custom к FY2029.",
+      "customerConcentration": "Экстремальная: Broadcom top-3 (Google/Anthropic/Meta) ~70% AI revenue. Arista cloud-titan concentrated. ~75% от ~$600B hyperscaler capex (2026) = AI. Nvidia ~80% мировых 1.6T модулей.",
+      "backlog": "Broadcom: ~$73 млрд backlog. Arista: $8,9 млрд purchase commitments. Cisco: $5,3B AI orders YTD, guide ~$9B FY2026. Marvell: FY2028 raised to $16,5B.",
+      "pricing": "Supply-constrained → pricing power сохраняется. Tomahawk 6 (102.4T) = premium ASP. NVSwitch bundled с GPU = premium. UALink switches: substantially higher ASPs чем PCIe switches.",
+      "takeaway": "Спрос insatiable (Broadcom CEO); bookings в 3× превышают отгрузки. Supply-constrained market поддерживает pricing. Но hyperscaler capex циклический — 52-нед lead-times работают в обе стороны."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "supply-constrained: lead-times >40 нед на пике; Arista '1–2 year shortage'; Broadcom bookings 3× shipped"
+        },
+        {
+          "year": "2027",
+          "state": "tight",
+          "color": "#f59e0b",
+          "detail": "TSMC 3nm ramp + CoWoS expansion; UALink first products; 1.6T switch transition"
+        },
+        {
+          "year": "2028",
+          "state": "easing",
+          "color": "#22d3ee",
+          "detail": "3.2T ramp; CPO switches; capacity catches up; но scale-up shift может создать новый дефицит"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "TSMC 3nm + CoWoS для switch ASIC",
+          "when": "2025–2027",
+          "impact": "gating: Tomahawk 6 на 3nm; advanced packaging для CPO и NVSwitch"
+        },
+        {
+          "name": "Broadcom Tomahawk 6 → Tomahawk 7 (200T)",
+          "when": "2025–2028",
+          "impact": "102.4T shipping June 2025; samples→production <3 кварталов; TH7 200T-class в разработке"
+        },
+        {
+          "name": "UALink ecosystem ramp",
+          "when": "2026–2027",
+          "impact": "AMD MI400/Helios; Astera Labs + Broadcom UALink switches; новый supply chain"
+        },
+        {
+          "name": "200G SerDes capacity",
+          "when": "2026–2027",
+          "impact": "Broadcom Condor cores shipping; gating для 102.4T и 1.6T; lead-times falling from >40 to ~16–20 нед"
+        }
+      ],
+      "leadTime": "Switch ASIC: >40 нед на пике → ~16–20 нед к концу 2025; Arista: '1–2 year component shortage' сохраняется в 2026–2027.",
+      "utilization": "TSMC advanced nodes: fully allocated. Broadcom: bookings $30B vs $10,8B shipped = 3× gap. Arista: supply (не demand) — constraint.",
+      "crowdingOut": "Hyperscaler in-house silicon — долгосрочная угроза, но Broadcom/Marvell = design houses для этих кастомных чипов. NVIDIA NVLink Fusion co-opts potential competitors (MediaTek, Marvell, Alchip).",
+      "takeaway": "Market supply-constrained, не demand-constrained — благоприятная ценовая динамика. 200G SerDes и TSMC 3nm — gating factors. UALink ramp создаёт новый demand-supply cycle в 2026–2027."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "Astera targets >$1 000 кремния/XPU (с компонентов к fabric). Networking = 10–20% cluster capex. GB200 NVL72: 130 ТБ/с aggregate; Vera Rubin NVL72: 260 ТБ/с. Exact per-GPU networking $ = vendor-confidential.",
+      "grossMargin": "Astera: ~76,4%. NVIDIA: ~75% (bundled). Broadcom: mid-60s%+ (semi higher; OPM record 67%). Arista: 62–64% (systems). Marvell: ~58,9%. SerDes IP (Synopsys/Cadence): ещё выше — reusable, minimal incremental cost.",
+      "costCurve": "200G SerDes: единицы компаний в мире, premium pricing. 102.4T single-chip (Broadcom) = double prior bandwidth = premium ASP. NVSwitch bundled → невозможно выделить unit cost.",
+      "yields": [
+        {
+          "gen": "Tomahawk 6 (3nm)",
+          "pct": "production-ready",
+          "note": "samples→production <3 кварталов; first 102.4T switch ASIC"
+        },
+        {
+          "gen": "Davisson CPO (102.4T + COUPE)",
+          "pct": "shipping",
+          "note": "16× 6.4Tbps optical engines на TSMC COUPE; production Oct 2025"
+        }
+      ],
+      "takeaway": "Маржи высочайшие в AI supply chain (Astera 76%, NVIDIA 75%). Operating leverage огромный (Broadcom OPM 67%). Scale-up content/GPU растёт с каждым поколением. SerDes IP = purest picks-and-shovels (Synopsys/Cadence)."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "51.2T → 102.4T switch (Tomahawk 5→6)",
+          "node": "shipping",
+          "year": "2025–2026",
+          "note": "TH6 = first 102.4T, production June 2025; Davisson CPO Oct 2025; 200G SerDes"
+        },
+        {
+          "name": "200T-class (Tomahawk 7)",
+          "node": "development",
+          "year": "2027–2028",
+          "note": "Broadcom: '200-terabit product in development'; 3.2T port speed; next-gen SerDes"
+        },
+        {
+          "name": "NVLink 6 (3.6 ТБ/с)",
+          "node": "announced",
+          "year": "2H2026",
+          "note": "Rubin architecture; 2× NVLink 5; NVLink Fusion открывает для 3rd-party silicon"
+        },
+        {
+          "name": "UALink 200G 1.0 products",
+          "node": "sampling",
+          "year": "2026–2027",
+          "note": "AMD MI400/Helios = first Tier-1; Astera Labs + Broadcom UALink switches; 1024 accelerators"
+        },
+        {
+          "name": "UEC 1.0 (Ultra Ethernet)",
+          "node": "spec released",
+          "year": "2025–2027",
+          "note": "562 стр, Ultra Ethernet Transport + RDMA; AMD Pollara 400 = first compliant NIC"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "UALink/Ethernet erodирует NVLink scale-up lock-in",
+          "verdict": "реальная угроза, но ранняя; NVLink 6 keeps bandwidth lead",
+          "tone": "mixed",
+          "detail": "UALink 200G spec ratified Apr 2025; AMD MI400/Helios = 3,6 ТБ/с/GPU (72 GPU). Но NVLink 6 = 3,6 ТБ/с и Fusion co-opts partners. Dell'Oro: Ethernet победит scale-up долгосрочно.",
+          "angle": "Timeline 2027+. NVLink Fusion = 'toll booth', не openness. Broadcom/Astera/Marvell выигрывают если scale-up открывается."
+        },
+        {
+          "tech": "Ethernet вытесняет InfiniBand (уже происходит)",
+          "verdict": "structural — Ethernet >⅔ AI back-end",
+          "tone": "positive",
+          "detail": "2 года назад InfiniBand ~80%; теперь Ethernet >⅔. Arista: 4th customer перешёл с InfiniBand→Ethernet. NVIDIA defending через Spectrum-X.",
+          "angle": "Structural positive для Broadcom/Arista/Marvell; structural negative для NVIDIA InfiniBand (но NVIDIA компенсирует через Spectrum-X)."
+        },
+        {
+          "tech": "Hyperscaler in-house networking silicon",
+          "verdict": "долгосрочная угроза, mitigated",
+          "tone": "mixed",
+          "detail": "Hyperscalers разрабатывают custom silicon, но Broadcom/Marvell = design houses для этих чипов. Mitigated, не eliminated.",
+          "angle": "Watch: если hyperscaler начнёт fully in-house design (без Broadcom/Marvell), это risk. Пока не происходит."
+        }
+      ],
+      "takeaway": "51.2T→102.4T→200T switch + NVLink 5→6 + UALink + UEC 1.0: каждый шаг увеличивает bandwidth и TAM. UALink vs NVLink = центральный вопрос отрасли. Ethernet побеждает в scale-out и, по Dell'Oro, победит в scale-up долгосрочно. Broadcom выигрывает при любом сценарии."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "TSMC 3nm + CoWoS/COUPE",
+          "supplier": "TSMC",
+          "note": "gating: Tomahawk 6, NVSwitch, Davisson CPO на advanced nodes; advanced packaging для всего"
+        },
+        {
+          "item": "SerDes IP",
+          "supplier": "Broadcom (in-house), Synopsys, Cadence, Qualcomm/Alphawave",
+          "note": "200G/lane = reusable crown jewel; gating для 102.4T и 1.6T"
+        },
+        {
+          "item": "Оптические трансиверы / CPO",
+          "supplier": "Coherent, Lumentum, InnoLight (→ раздел Фотоника)",
+          "note": "CPO switches = Tomahawk 6 + optical engines; pluggable для scale-out"
+        },
+        {
+          "item": "Подложки / PCB",
+          "supplier": "Ibiden, Shinko, Samsung E-M (→ раздел PCB)",
+          "note": "advanced substrates для 102.4T switch packaging"
+        }
+      ],
+      "downstream": "Hyperscalers (Google, Amazon, Microsoft, Meta, Oracle, xAI, Anthropic), NVIDIA GPU ecosystem, ODMs (Celestica, Accton, Supermicro), AI-кластеры любого масштаба.",
+      "correlation": "Сверхлинейная с GPU volume и размером кластера. ~10–20% cluster capex, растёт. ~75% от ~$600 млрд hyperscaler capex (2026) = AI. Тесные связи с фотоникой, switch-fabric, custom silicon.",
+      "takeaway": "Networking зависит вверх от TSMC (3nm, packaging) и SerDes IP, вниз от GPU volume и hyperscaler capex. Scale-up = самая прибыльная и зависимая от NVLink/UALink развязка. CPO связывает с разделом фотоники."
+    },
+    "risks": [
+      {
+        "risk": "NVLink dominance сохраняется → merchant silicon не получает scale-up",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "NVLink 6 = 3,6 ТБ/с + Fusion co-opts. Если NVLink holds, Broadcom/Astera теряют biggest opportunity"
+      },
+      {
+        "risk": "Customer concentration (Broadcom top-3 ~70%)",
+        "prob": "Высокая (структурная)",
+        "impact": "Высокий",
+        "note": "Google multi-sourcing уже обсуждается; hyperscaler capex циклический"
+      },
+      {
+        "risk": "Оценки (priced for perfection)",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "ALAB ~44% выше среднего PT; CRDO +390% mcap; DeepSeek scare = −40% drawdown"
+      },
+      {
+        "risk": "Hyperscaler in-house silicon",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "mitigated: Broadcom/Marvell = design houses; но долгосрочно реально"
+      },
+      {
+        "risk": "Supply shortage constrains revenue",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "Arista: '1–2 year shortage'; поддерживает pricing, но ограничивает рост"
+      },
+      {
+        "risk": "NVIDIA Ethernet dominance (#1 by IDC)",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "NVIDIA captures share даже в Ethernet; challengers face integrated incumbent"
+      }
+    ],
+    "picks": [
+      {
+        "group": "Proven leaders — ядро позиции",
+        "tone": "leader",
+        "badge": "merchant silicon, integrated scale-up, pure Ethernet",
+        "note": "Broadcom — highest-conviction core (widest moat, best blend). NVIDIA — integrated scale-up franchise. Arista — purest Ethernet systems play. Marvell — cheapest Tier-1 multiple.",
+        "rows": [
+          {
+            "company": "Broadcom",
+            "ticker": "NASDAQ: AVGO",
+            "mcap": "~$1,76–1,85 трлн",
+            "exposure": "~70%+ merchant switch + custom XPU + 200G SerDes + CPO; ~40% AI rev = networking",
+            "why": "Widest moat: Tomahawk bandwidth lead + SerDes + custom XPU + CPO. AI-semi $10,8B/кв (+143%), FY26 $56B, FY27 >$100B. Backlog ~$73B. OPM record 67%. Выигрывает при любом сценарии (Ethernet, UALink, custom, CPO). 7-я компания мира по капитализации.",
+            "priced": "Re-rated; earnings catching up. Sold off на OpenAI commentary / Google multi-sourcing. Top-3 клиенты ~70% AI revenue — concentration risk."
+          },
+          {
+            "company": "NVIDIA",
+            "ticker": "NASDAQ: NVDA",
+            "mcap": "~$5,0 трлн",
+            "exposure": "scale-up (NVLink/NVSwitch) + InfiniBand + Spectrum-X + ConnectX/BlueField; networking >$31B FY26",
+            "why": "Integrated scale-up franchise: NVLink 5 = 1,8 ТБ/с, NVLink 6 = 3,6 ТБ/с. $14,8B/кв networking (+199%). №1 в datacenter Ethernet (21,5%). NCCL/CUDA software lock-in. NVLink Fusion co-opts ecosystem.",
+            "priced": "Networking = slice of the $5T story. UALink erosion — real но early. Supply-constrained supports pricing. Best whole-company AI bet, но networking-specific exposure limited."
+          },
+          {
+            "company": "Arista Networks",
+            "ticker": "NYSE: ANET",
+            "mcap": "~$218–222 млрд",
+            "exposure": "purest Ethernet-systems AI play; №1 in >10GbE; AI fabric $3,5B target (>2× г/г)",
+            "why": "FY26 ~$11,5B (+28%); billings +54% г/г; purchase commitments $8,9B. 4th customer InfiniBand→Ethernet. CEO: 'best demand environment I've ever seen.' >100 cumulative 800G customers. Supply-constrained.",
+            "priced": "Premium valuation. Cloud-titan concentration. Systems margins (62–64%) ниже чем silicon peers. Наиболее чувствительна к оценке."
+          },
+          {
+            "company": "Marvell Technology",
+            "ticker": "NASDAQ: MRVL",
+            "mcap": "~$170–189 млрд",
+            "exposure": "~10–17% merchant switch + custom silicon + interconnect; NVIDIA $2B investment + NVLink Fusion",
+            "why": "Scale-out switch >$600M FY27 (2×, path >$1B FY28). Custom >2×, targeting >$10B FY29. FY28 raised to $16,5B. Cheapest Tier-1 multiple. Interconnect +70% FY27.",
+            "priced": "Execution/customer-concentration risk. Smaller merchant share vs Broadcom. Sold off mid-July 2026."
+          }
+        ]
+      },
+      {
+        "group": "Emerging и overlooked — scale-up fabric, SerDes IP, re-raters",
+        "tone": "emerging",
+        "badge": "scale-up optionality, SerDes IP, overlooked value",
+        "note": "Astera Labs — best asymmetric emerging bet (но extreme valuation). Cisco — most compelling overlooked value (re-rating на ~$9B AI orders). SerDes IP (Synopsys/Cadence) — purest picks-and-shovels.",
+        "rows": [
+          {
+            "company": "Astera Labs",
+            "ticker": "NASDAQ: ALAB",
+            "mcap": "~$40–70 млрд+",
+            "exposure": "Scorpio scale-up fabric + PCIe Gen 6 >⅓ rev + planned UALink switch; 76,4% GM",
+            "why": "Highest-margin connectivity silicon (76% GM). Scorpio = largest product line к концу 2026. >$1 000 content/XPU. UALink board member + NVLink Fusion partner. Rev $308M/кв (+93%).",
+            "risk": "Extreme valuation: ~44% выше среднего PT аналитиков (~$272 vs ~$483). Single-product concentration. Warrant-driven margin noise."
+          },
+          {
+            "company": "Cisco",
+            "ticker": "NASDAQ: CSCO",
+            "mcap": "крупная",
+            "exposure": "Silicon One + AI infra orders; FY26 AI orders ~$9B (raised от $5B); Acacia optics >$1B",
+            "why": "Most compelling overlooked value. $5,3B YTD Q3 AI orders. Silicon One P200 (scale-across) design wins. 1-millionth Silicon One shipped. Lower multiple чем pure-plays. UEC founding member.",
+            "risk": "Legacy enterprise dilutes AI pure-play narrative. Slower growth чем Broadcom/Arista."
+          },
+          {
+            "company": "Credo Technology",
+            "ticker": "NASDAQ: CRDO",
+            "mcap": "~$22–50 млрд",
+            "exposure": "AEC (active electrical cables) + SerDes + retimers + optical DSP (DustPhotonics)",
+            "why": "AEC pull-through в copper scale-up; hyperscaler adoption. FY26 ~$1,34B (+206%). Copper-to-optical 'heterogeneous' bet.",
+            "risk": "Customer concentration, extreme valuation (+~390% mcap г/г). Optical пока нематериальна."
+          },
+          {
+            "company": "Synopsys",
+            "ticker": "NASDAQ: SNPS",
+            "mcap": "крупная",
+            "exposure": "SerDes IP + UALink/UCIe IP; every custom accelerator licenses this; NVLink Fusion partner",
+            "why": "Purest picks-and-shovels: reusable SerDes IP = crown jewel. Поставляет IP для Broadcom, NVIDIA, hyperscaler custom chips. UALink member. AI networking = small % выручки, но highest-quality exposure.",
+            "risk": "AI networking = small % total revenue. EDA valuation already elevated."
+          },
+          {
+            "company": "Qualcomm",
+            "ticker": "NASDAQ: QCOM",
+            "mcap": "крупная",
+            "exposure": "Alphawave (acquired Dec 2025, ~$2,3B) = SerDes/connectivity IP; NVLink Fusion partner",
+            "why": "SerDes-IP owner через Alphawave. Tony Pialis leads DC business. Data-center push + IP licensing. Дешевле чем pure-play connectivity names.",
+            "risk": "DC = small часть бизнеса (mobile dominant). Execution risk в новом DC-сегменте."
+          },
+          {
+            "company": "HPE",
+            "ticker": "NYSE: HPE",
+            "mcap": "крупная",
+            "exposure": "Slingshot 'Ethernet-with-a-twist' в top supercomputers; post-Juniper; UEC founding member",
+            "why": "Overlooked AI-networking systems angle. Slingshot deployed в крупнейших суперкомпьютерах. Post-Juniper integration расширяет networking portfolio.",
+            "risk": "Enterprise diversification dilutes AI story. Integration risk post-Juniper."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Broadcom — highest-conviction core (widest moat, каждый тренд в плюс, OPM 67%). NVIDIA — integrated scale-up franchise ($14,8B/кв). Arista — purest Ethernet play (но premium valuation). Astera Labs — best emerging bet (76% GM, >$1K/XPU, но ~44% выше PT). Cisco — most overlooked value (~$9B AI orders, discount multiple). SerDes IP (Synopsys/Cadence, Qualcomm/Alphawave) — purest picks-and-shovels. Входить на drawdowns типа DeepSeek (−40%): оценки не прощают замедления.",
+    "monitoring": {
+      "metrics": [
+        "NVIDIA networking revenue (quarterly 8-K; Q2 FY2027 guided $91B total, ~август 2026)",
+        "Broadcom AI-semi + networking % breakdown (quarterly; FY26 $56B, FY27 >$100B guide)",
+        "Arista AI fabric revenue + InfiniBand→Ethernet conversion count (quarterly; $3,5B AI fabric target)",
+        "Astera Labs Scorpio ramp + PCIe Gen 6 mix (quarterly; >$1K/XPU target)",
+        "Marvell scale-out switch + custom + interconnect (quarterly; FY28 $16,5B guide)",
+        "Dell'Oro AI-Back-end-Network + Ethernet Switch quarterly reports",
+        "UALink consortium (ualinkconsortium.org) product milestones — first volume deployment",
+        "Hyperscaler capex: Google/Amazon/Microsoft/Meta/Oracle earnings"
+      ],
+      "canary": [
+        "UALink product ramp с named hyperscaler в volume (2026–2027) → scale-up opening confirmation",
+        "Ethernet share gain в scale-up specifically (не только scale-out) → NVLink erosion signal",
+        "NVLink Fusion custom-silicon deployment at scale → NVIDIA co-opts open ecosystem",
+        "Broadcom networking % of AI revenue trend (CEO: trending к ~30%) → mix shift signal",
+        "Hyperscaler capex deceleration / inventory digestion → cyclicality risk; Arista '1–2 year shortage' easing"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Рекорды у обоих лидеров — и UALink на пороге",
+      "summary": "Июль 2026: NVIDIA networking record $14,8B/кв (+199%), стал №1 в Ethernet switching (21,5%). Broadcom AI-semi record $10,8B/кв (+143%), FY27 guide >$100B. Arista $3,5B AI fabric target. Astera $308M/кв (+93%). Ethernet >⅔ AI back-end (победил InfiniBand). UALink 200G spec ratified; AMD MI400/Helios = first Tier-1 system. Но оценки extreme: ALAB ~44% выше PT, DeepSeek scare показал −40% downside.",
+      "stories": [
+        {
+          "title": "NVIDIA networking = $14,8B/кв (+199% г/г), №1 в datacenter Ethernet (IDC: 21,5%)",
+          "tone": "positive",
+          "verdict": "NVIDIA не отдаёт networking даже при Ethernet shift: Spectrum-X $2,1B (+193%). Защищает позицию через интеграцию GPU+network+software. Biggest revenue in networking history.",
+          "detail": ">$31B FY2026 networking (×10 за 5 лет). NVLink 6 = 3,6 ТБ/с (Rubin, 2H2026). NVLink Fusion opens ecosystem но keeps NVIDIA as toll booth."
+        },
+        {
+          "title": "Broadcom AI-semi $10,8B/кв (+143%); FY27 guide >$100B; backlog ~$73B",
+          "tone": "positive",
+          "verdict": "Networking ~40% AI rev. Tomahawk 6 = world-first 102.4T. 6 mega-deals (Anthropic >1GW, OpenAI 10GW, Meta 3GW). Demand 'insatiable' — bookings 3× shipped.",
+          "detail": "OPM record 67%. 200G SerDes lead = gating for 102.4T + 1.6T. But Google multi-sourcing acknowledged → concentration risk real."
+        },
+        {
+          "title": "Ethernet >⅔ AI back-end; UALink 200G 1.0 ratified; AMD MI400/Helios = first Tier-1 system",
+          "tone": "mixed",
+          "verdict": "Structural shift: Ethernet won scale-out, теперь targets scale-up. UALink 200G: 1024 accelerators, memory-semantic. AMD Helios 3,6 ТБ/с = matches NVLink 6. Но NVLink Fusion co-opts, и products ещё 2026–2027.",
+          "detail": "Dell'Oro: Ethernet победит и в scale-up долгосрочно. UEC 1.0 released (June 2025). Arista: 4th customer InfiniBand→Ethernet at production scale."
+        },
+        {
+          "title": "DeepSeek-type drawdowns: ALAB/CRDO −40%+; Broadcom sold off на OpenAI commentary",
+          "tone": "negative",
+          "verdict": "High-beta: оценки priced for perfection. ALAB ~44% выше среднего PT. CRDO +~390% mcap г/г. Drawdowns — точки входа, если fundamentals hold.",
+          "detail": "Arista: demand 'best I've ever seen' но supply-constrained. Входить на просадках 10–20%, а не гнаться. Cyclicality high."
+        }
+      ],
+      "bottomLine": "AI networking silicon = один из самых быстрорастущих и стратегических слоёв (NVIDIA +199%, Broadcom +143%, Dell'Oro >$100B к 2030). Дуополия NVIDIA+Broadcom контролирует profit pool. UALink vs NVLink = ключевой вопрос (2027+). Broadcom = highest-conviction core (wins at every scenario). Входить на drawdowns: fundamentals record, но оценки не прощают."
+    },
+    "news": [
+      {
+        "date": "2026-06-03",
+        "source": "Broadcom",
+        "title": "Broadcom Q2 FY2026: AI-semi record $10,8B (+143%); networking ~40%; FY27 >$100B",
+        "blurb": "Backlog ~$73B. 6 mega-deals. OPM 67%. Demand 'insatiable': bookings $30B vs shipped $10,8B."
+      },
+      {
+        "date": "2026-05-28",
+        "source": "NVIDIA",
+        "title": "NVIDIA Q1 FY2027: networking record $14,8B (+199% г/г); №1 Ethernet switching (21,5% IDC)",
+        "blurb": "Spectrum-X $2,1B (+193%). NVLink 6 = 3,6 ТБ/с (Rubin, 2H2026). NVLink Fusion partners: MediaTek, Marvell, Astera, Synopsys."
+      },
+      {
+        "date": "2026-03-31",
+        "source": "NVIDIA / Marvell",
+        "title": "NVIDIA invested $2B in Marvell; NVLink Fusion deepening",
+        "blurb": "Marvell = custom silicon + interconnect + NVLink Fusion partner. Targeting >$10B custom by FY2029."
+      },
+      {
+        "date": "2025-06-11",
+        "source": "Ultra Ethernet Consortium",
+        "title": "UEC 1.0 spec released (562 pages, Ultra Ethernet Transport + RDMA)",
+        "blurb": "Founding: AMD, Arista, Broadcom, Cisco, HPE, Intel, Meta, Microsoft. 100+ members including NVIDIA."
+      },
+      {
+        "date": "2025-04-08",
+        "source": "UALink Consortium",
+        "title": "UALink 200G 1.0 spec ratified: up to 1 024 accelerators, memory-semantic",
+        "blurb": "Board: AMD, Apple, AWS, Google, Intel, Meta, Microsoft, Astera Labs. First products 2026–2027. AMD MI400/Helios = first Tier-1 system."
+      }
+    ]
   }
 }

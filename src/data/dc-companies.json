@@ -2154,5 +2154,60 @@
     "ppr": "CDR/PMD для LPO; CopperEdge AEC; signal-integrity components",
     "geo": "US",
     "note": "LPO component supplier alongside MACOM; smaller photonics exposure"
+  },
+  {
+    "company": "HPE",
+    "ticker": "NYSE: HPE",
+    "sector": "Network Silicon",
+    "conviction": "low",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "Slingshot AI networking + post-Juniper; UEC founding member; overlooked systems angle",
+    "geo": "US",
+    "note": "deployed in top supercomputers; enterprise diversification dilutes AI story"
+  },
+  {
+    "company": "Lattice Semiconductor",
+    "ticker": "NASDAQ: LSCC",
+    "sector": "Network Silicon",
+    "conviction": "low",
+    "riskTier": "mid",
+    "horizon": "2–3 года",
+    "ppr": "low-power FPGA 'glue' for server management/security around accelerators",
+    "geo": "US",
+    "note": "indirect AI-server attach; overlooked small-cap"
+  },
+  {
+    "company": "MaxLinear",
+    "ticker": "NASDAQ: MXL",
+    "sector": "Network Silicon",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "2–3 года",
+    "ppr": "connectivity/optical PHY/interconnect; small-cap optical-networking exposure",
+    "geo": "US",
+    "note": "higher risk; overlooked; smaller networking exposure"
+  },
+  {
+    "company": "Enfabrica",
+    "ticker": "private",
+    "sector": "Network Silicon",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "ACF SuperNIC (3.2Tbps); scale-up fabric disruptor; $115M Series C",
+    "geo": "US",
+    "note": "backed by Arm, Cisco, Samsung; pre-revenue startup; IPO candidate"
+  },
+  {
+    "company": "Cornelis Networks",
+    "ticker": "private",
+    "sector": "Network Silicon",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "Omni-Path CN5000/6000/7000; alternative to InfiniBand/Ethernet for HPC/AI",
+    "geo": "US",
+    "note": "Intel-backed; DOE/LLNL deployments; IPO candidate; CN7000 = 1.6T Ultra Ethernet"
   }
 ]
