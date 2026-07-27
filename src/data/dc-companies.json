@@ -2264,5 +2264,71 @@
     "ppr": "enterprise/campus networking; SaaS ARR $236M (+29%); Platform ONE AI management",
     "geo": "US",
     "note": "least pure-play; enterprise recovery name; not hyperscale AI back-end"
+  },
+  {
+    "company": "Ribbon Communications",
+    "ticker": "NASDAQ: RBBN",
+    "sector": "Optical Modules",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "2–3 года",
+    "ppr": "IP Optical Networks (ex-ECI); DCI/metro; Verizon + India wins",
+    "geo": "US",
+    "note": "FY25 $845M; P/S <1; turnaround; sub-scale; not pure AI-DCI"
+  },
+  {
+    "company": "Adtran",
+    "ticker": "NASDAQ: ADTN",
+    "sector": "Optical Modules",
+    "conviction": "low",
+    "riskTier": "mid",
+    "horizon": "2–3 года",
+    "ppr": "100–800G coherent pluggables; up-to-1.6T DCI open line systems",
+    "geo": "US",
+    "note": "Q1 2026 $286M (+15,5%); fiber-access + optical; European base; broadband/telco-tied"
+  },
+  {
+    "company": "Ekinops",
+    "ticker": "EPA: EKI",
+    "sector": "Optical Modules",
+    "conviction": "low",
+    "riskTier": "mid",
+    "horizon": "2–3 года",
+    "ppr": "European sovereign optical + SASE; DCI + metro; Proximus/NEURON nationwide WDM",
+    "geo": "FR",
+    "note": "micro-cap; Q2 2026 €30,6M (best in 3yr); minimal hyperscaler DCI"
+  },
+  {
+    "company": "Fujitsu",
+    "ticker": "TYO: 6702",
+    "sector": "Optical Modules",
+    "conviction": "low",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "1FINITY open optical + liquid-cooled line systems; top-5 non-China vendor",
+    "geo": "JP",
+    "note": "diversified conglomerate; optical = small but growing AI-DCI lever"
+  },
+  {
+    "company": "NEC",
+    "ticker": "TYO: 6701",
+    "sector": "Optical Modules",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "top-3 subsea cable builder (с SubCom и ASN); 24-fiber-pair systems; cleanest public subsea proxy",
+    "geo": "JP",
+    "note": "strategically scarce subsea layer; transatlantic ~0,5 Pbps record; conglomerate discount"
+  },
+  {
+    "company": "Applied Optoelectronics",
+    "ticker": "NASDAQ: AAOI",
+    "sector": "Optical Modules",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "1–2 года",
+    "ppr": "ZR module ecosystem; speculative optical play; +233–440% YTD 2026",
+    "geo": "US",
+    "note": "highly speculative; small-cap; volatile"
   }
 ]

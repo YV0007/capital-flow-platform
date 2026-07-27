@@ -7478,5 +7478,569 @@
         "blurb": "Networking >50% operating profit. FY26 networking growth 72–75%. Pulling 2028 targets into 2026. AI orders $1,8B."
       }
     ]
+  },
+  "transceivers": {
+    "asOf": "2026-07-27",
+    "intro": "Оптические транспортные системы, когерентные модули и линейные системы, которые соединяют дата-центры между собой (DCI — datacenter interconnect) и передают данные на средние/дальние расстояния. AI-driven DCI превратил «сонный» телеком-рынок в структурный growth story: Dell'Oro прогнозирует оптический транспорт >$18 млрд в 2026 (+16%) — впервые с 2000 года. Прямые закупки DCI у гиперскейлеров выросли ~40% г/г. Scale-across архитектура AI-кластеров требует в 5–20× больше bandwidth чем традиционный DCI (Cignal AI). Ключевое изменение: pluggable-coherent модули (400ZR/800ZR) вставляются прямо в коммутатор (IPoDWDM), вытесняя standalone transponder-боксы — это хорошо для DSP/модулей/линейных систем, но сжимает маржу транспортных систем.",
+    "tldr": [
+      "Оптический транспорт: ~$16 млрд (2025) → >$18 млрд (2026, +16%; Dell'Oro — впервые с 2000 года). Прямые DCI-закупки +40% г/г. Scale-across = 5–20× bandwidth vs traditional DCI. Coherent pluggables ~$1,8–2,0 млрд (2025) → >$5 млрд к 2029 (~30% CAGR); >50% WDM bandwidth уже на pluggables.",
+      "Ciena = purest play: FY26 guide $6,3 млрд (+32%); cloud +70% г/г; backlog $7,7 млрд; WaveLogic 6 = 1.6T single-carrier с >18-мес first-mover lead. Cisco/Acacia: >$1 млрд оптических заказов/кв, +200% FY26. Nokia+Infinera: объединённая доля ~20%, tied for №2.",
+      "Central tension: pluggable-ZR disintermediation shifts value from transponder-boxes к DSP/modules/line-systems. Гиперскейлеры покупают ZR напрямую. Но Ciena margins расширяются (OPM +1 130 bps г/г) — пока AI-demand > disruption pressure. Best balance: Coherent (growth/valuation) + Fabrinet (cheapest chokepoint)."
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 7,
+        "cyclicality": 7,
+        "valuation": 4
+      },
+      "summary": "AI-DCI/scale-across = genuine multi-year structural driver; transport рынок растёт 16% (лучший с 2000). Moat-ы в coherent DSP IP (3nm), InP фабриках, installed ROADM base и tier-1 qualification. Но pluggable-ZR сжимает transponder-content, а valuations extreme (Ciena P/E ~120–170×). Ответ: Coherent (best growth/valuation blend, NVIDIA $2B) + Fabrinet (cheapest chokepoint), Ciena на просадках.",
+      "horizon": "2–4 года (800ZR→1.6T ZR + scale-across cycle)",
+      "sizing": "Optical transport: $16B→>$18B. Pluggables: ~$2B→>$5B к 2029. IPoDWDM: $4,4B к 2030. DCI doubles к ~2030 при low-to-mid-teens CAGR.",
+      "keyQuestion": "AI-DCI demand растёт быстрее чем pluggable-ZR + hyperscaler direct-buy erode per-port value для systems vendors? Если да — leaders + value chain compound. Если нет — ценность мигрирует к cheap picks-and-shovels (Fabrinet) и scarce subsea.",
+      "bull": [
+        "AI-DCI demand accelerating: Ciena cloud +70%, backlog $7,7B; Nokia AI&Cloud +49%, €1B orders/кв; Cisco Acacia +200%. Supply = constraint, не demand.",
+        "Scale-across = 5–20× bandwidth vs traditional DCI (Cignal AI). Multi-GW campuses interconnect. Big-Five capex ~$650B (2026), ~75% = AI.",
+        "Coherent DSP + line-system moat: Ciena 18-мес 1.6T lead, Acacia DSP leadership, Lumentum WSS/EDFA dominance, Coherent InP scale. Incumbents capture incremental bandwidth."
+      ],
+      "bear": [
+        "Pluggable-ZR disintermediation + hyperscaler direct-buy компрессирует transponder-content; shifts value к модулям (lower-margin).",
+        "Telco capex слабый: metro +3% в 2025; China −10%. Customer concentration: Ciena two customers = 34%.",
+        "Valuations extreme: Ciena P/E ~120–170×; COHR/LITE +80–100% YTD потом July drawdowns 20–30%. Zero margin of safety."
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~13–16% (optical transport, 2025–2030)",
+      "chartTitle": "Оптический транспорт / DCI ($ млрд)",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 14.5,
+          "label": "~$14,5B",
+          "source": "Dell'Oro optical transport"
+        },
+        {
+          "year": "2025",
+          "value": 16,
+          "label": "~$16B",
+          "source": "Dell'Oro (+10% г/г); Cignal AI $16,5B hardware"
+        },
+        {
+          "year": "2026",
+          "value": 18.5,
+          "label": ">$18B",
+          "source": "Dell'Oro (+16%; 'first time since 2000')"
+        },
+        {
+          "year": "2029",
+          "value": 25,
+          "label": "~$25B",
+          "source": "оценка (pluggables >$5B + systems)"
+        },
+        {
+          "year": "2030",
+          "value": 30,
+          "label": "$25–37B",
+          "source": "разброс прогнозов (DCI doubles; pluggables >$7,5B)"
+        }
+      ],
+      "bomShare": {
+        "value": "~5–10%",
+        "note": "optical transport/DCI = меньшая доля AI cluster capex чем switch-fabric, но gates inter-datacenter connectivity. Scale-across = structural multiplier."
+      },
+      "volumeVsPrice": "Рост через объём: 800ZR >200K ports (2026); 1.6T ZR к 2027. ASP: 400ZR ~$1 500–3 000, 800ZR ~$3 000–6 000. Pluggable CAGR ~30–70%. Total coherent modules ~$6B (2025). DCI direct purchases +40% г/г."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "Ciena (transport systems)",
+          "gm": "~44,9% adj.",
+          "note": "FQ2 2026; FY guide 44,5–45%; OPM expanded +1 130bps г/г to 19,5%"
+        },
+        {
+          "stage": "Coherent (components + modules)",
+          "gm": "~39,6% non-GAAP",
+          "note": "FQ3 2026; D&C 75% revenue; InP + ZR module + OCS/CPO breadth"
+        },
+        {
+          "stage": "Lumentum (ROADM/WSS/EDFA + lasers)",
+          "gm": "high-30s% recovering",
+          "note": ">200K EDFAs deployed; ~$2B NVIDIA partnership; line-system arms-dealer"
+        },
+        {
+          "stage": "Cisco/Acacia (coherent DSP)",
+          "gm": "~28% OPM optical",
+          "note": ">750K 400G + >40K 800G shipped; DSP leadership; 450+ customers"
+        },
+        {
+          "stage": "Fabrinet (contract manufacturing)",
+          "gm": "~12–13%",
+          "note": "high ROIC; ~$941M net cash; DCI modules +42%; cheapest chokepoint"
+        }
+      ],
+      "bottleneckNow": "InP laser capacity: datacenter growth supply-constrained by InP lasers. Coherent ramping 6\" InP. Dell'Oro: 'supply may be the biggest factor keeping growth from being even higher.' Demand outstripping supply across coherent DSP, modules, line systems.",
+      "bottleneckNext": "3nm coherent DSP (WaveLogic 6 / Kibo / COLORZ 1600): gating for 1.6T generation. CPO/linear-drive for inside-datacenter (Ciena Nubis acquisition). Subsea capacity = strategically scarce.",
+      "capitalIntensity": "Высокая для InP fabs (Coherent, Nokia/Infinera, Lumentum). Средняя для systems (Ciena = fabless, outsources to Fabrinet). SerDes/DSP = TSMC 3nm tapeout.",
+      "takeaway": "Value layers: systems (Ciena ~45% GM), components (Coherent ~40%), line-systems (Lumentum ~high-30s%), DSP (Acacia ~28% OPM), manufacturing (Fabrinet ~13%). Pluggable-ZR shifts value from boxes to DSP/modules but expands total pie. InP supply = current growth cap."
+    },
+    "competition": {
+      "concentration": "Top-4 (Huawei, Ciena, Nokia, ZTE) = >80% optical transport. В Western market: Ciena–Nokia(+Infinera) duopoly/oligopoly (Huawei/ZTE banned). DCI top-3: Ciena, Nokia, Cisco.",
+      "shareTrajectory": [
+        {
+          "player": "Ciena",
+          "now": "~19% global, №1 West DCI",
+          "direction": "↑",
+          "detail": "FY26 $6,3B (+32%); cloud +70%; backlog $7,7B; WaveLogic 6 1.6T lead"
+        },
+        {
+          "player": "Nokia+Infinera",
+          "now": "~20% combined (tied №2)",
+          "direction": "↑",
+          "detail": "Optical €3,02B (+85% incl Infinera); AI&Cloud +49%; €200M synergy target"
+        },
+        {
+          "player": "Cisco/Acacia",
+          "now": "fastest growth among majors",
+          "direction": "↑↑",
+          "detail": ">$1B optical orders/кв; Acacia +200% FY26; 450+ customers; DSP leadership"
+        },
+        {
+          "player": "Coherent",
+          "now": "component/module leader",
+          "direction": "↑",
+          "detail": "D&C $1,36B (+41%); NVIDIA $2B; S&P 500; InP + ZR + OCS breadth"
+        },
+        {
+          "player": "Marvell",
+          "now": "merchant DSP (Orion 800G)",
+          "direction": "→↑",
+          "detail": "first-time WDM hardware share; COLORZ 1600 sampling H2 2026; 800ZR+ PCS respin needed"
+        }
+      ],
+      "players": [
+        {
+          "name": "Ciena",
+          "share": "~19% (№1 West DCI)",
+          "edge": "WaveLogic DSP IP + RLS HyperRail + Nubis linear-drive; 18-мес 1.6T lead"
+        },
+        {
+          "name": "Nokia+Infinera",
+          "share": "~20% combined",
+          "edge": "ICE DSP + InP fab + scale; Microsoft Azure SONiC deal; Infinera hyperscaler base"
+        },
+        {
+          "name": "Cisco/Acacia",
+          "share": "top-5 systems + DSP leader",
+          "edge": "Jannu 1.2T + Kibo 1.6T DSP; 450+ customers; router-integrated ZR"
+        },
+        {
+          "name": "Coherent",
+          "share": "component/module leader",
+          "edge": "InP scale (6\") + ZR modules + OCS/CPO; NVIDIA $2B; full-stack component"
+        },
+        {
+          "name": "Lumentum",
+          "share": "ROADM/WSS/EDFA leader",
+          "edge": ">200K EDFAs deployed; installed-base moat; arms-dealer to all systems vendors"
+        }
+      ],
+      "switchingCost": "Высокие: coherent DSP IP (3nm design + algorithms), tier-1 qualification cycles, installed ROADM line-system base, multi-year deployment contracts. Rising risk: hyperscaler direct ZR procurement bypasses systems vendors.",
+      "entryBarrier": "Экстремальные: 3nm DSP tape-out, InP fabs, electro-optics integration, decades of coherent algorithm IP. Key reason Nokia bought Infinera = R&D scale vs Huawei/Ciena.",
+      "takeaway": "Western market = Ciena–Nokia oligopoly (Huawei/ZTE banned). Cisco/Acacia growing fastest. Coherent/Lumentum dominate components. Merchant DSP (Marvell) expanding. Pluggable-ZR disrupts boxes but systems vendors sell ZR too."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 90,
+          "note": "supply = constraint; Dell'Oro: supply keeping growth from being higher; Ciena backlog $7,7B; InP constrained"
+        },
+        {
+          "year": "2027",
+          "pct": 80,
+          "note": "1.6T ZR ramp; scale-across demand accelerates; CPO/linear-drive begins"
+        },
+        {
+          "year": "2028",
+          "pct": 70,
+          "note": "subsea supercycle; coherent-lite inside DC; multi-band line systems"
+        }
+      ],
+      "contractStructure": "Ciena: first HyperRail multi-rail order (multi-year, 'hundreds of millions'). Cisco/Acacia: 3+ yr lock-in contracts. Nokia: book-to-bill >1. Coherent: record bookings extending >1yr. Multi-year deployment standard.",
+      "customerConcentration": "High: Ciena two customers = 34% revenue. Cloud providers = 46% of Ciena sales (was much less). Hyperscaler capex ~$650B (2026), ~75% AI = structural driver.",
+      "backlog": "Ciena: $7,7B (+$600M sequentially). Cisco Acacia: >$1B orders/кв. Coherent: record bookings. Nokia: AI&Cloud €1B orders in Q1.",
+      "pricing": "400ZR: ~$1 500–3 000. 800ZR: ~$3 000–6 000. Pluggable cost/bit dramatically better vs legacy. Supply-constrained → pricing power. But pluggable-ZR long-term compresses system-level ASP.",
+      "takeaway": "Demand outstripping supply across the chain. Backlogs record. Cloud = fastest growth (Ciena +70%). Scale-across = structural driver (5–20×). Но concentration high (Ciena two customers = 34%), hyperscaler capex cyclical."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "Dell'Oro: 'supply may be biggest factor keeping growth from being higher'; InP constrained; lead-times extended"
+        },
+        {
+          "year": "2027",
+          "state": "easing",
+          "color": "#f59e0b",
+          "detail": "Coherent 6\" InP ramp; Marvell COLORZ 1600; 1.6T DSPs entering production; module capacity expanding"
+        },
+        {
+          "year": "2028",
+          "state": "balanced",
+          "color": "#22d3ee",
+          "detail": "capacity catches up; CPO/linear-drive inside DC; multi-band expands fiber capacity"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Coherent 6\" InP ramp",
+          "when": "2025–2027",
+          "impact": "6\" yield > 3\"; >4× devices at <half cost; supply-constrained in early FY2026, now ramping"
+        },
+        {
+          "name": "Marvell COLORZ 800/1600 + Libra/Electra DSP",
+          "when": "H2 2026–2027",
+          "impact": "merchant DSP expands supply; 1.6T sampling; broadens module ecosystem"
+        },
+        {
+          "name": "Ciena WaveLogic 6 (3nm, 1.6T)",
+          "when": "2026",
+          "impact": "1.6T single-carrier; >18-мес first-mover; unlocks next-gen capacity"
+        },
+        {
+          "name": "Nokia/Infinera: combined R&D + InP fab",
+          "when": "2025–2027",
+          "impact": "€200M synergies; ICE DSP + vertical integration; scale vs Ciena"
+        }
+      ],
+      "leadTime": "Extended across the chain. Ciena: 'demand outstripping supply', multi-quarter backlog. Nokia: 'longer lead times becoming normal.' InP lasers = binding constraint.",
+      "utilization": "InP fabs: constrained. TSMC 3nm: allocated. Fabrinet: optical comms +35%. Module assembly capacity: expanding (Fabrinet, InnoLight, Eoptolink).",
+      "crowdingOut": "Hyperscaler direct ZR procurement bypasses systems vendors — но same modules ride over same ROADM line systems. Pluggable volume benefits module/DSP makers at expense of transponder-box content.",
+      "takeaway": "Supply = growth cap. InP lasers = binding constraint. 6\" InP ramp + merchant DSP (Marvell) + 1.6T production will ease constraints by 2027. Demand outstrips supply across all layers."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "400ZR: ~$1 500–3 000. 800ZR/ZR+: ~$3 000–6 000 (blended ~$5 000). Total coherent modules: ~$6B (2025). 800G cuts power-per-bit up to ~99% vs legacy (Cignal AI). 'Cost per bit for pluggable coherent, you can't beat it.'",
+      "grossMargin": "Ciena: ~44,9% adj. Coherent: ~39,6%. Lumentum: high-30s% recovering. Cisco/Acacia: ~28% OPM. Fabrinet: ~12–13% (high ROIC). Cloud mix = watch-item (higher-volume, potentially lower-margin).",
+      "costCurve": "6\" InP: >4× devices at <half cost vs 3\". 3nm DSP = higher performance/watt. Pluggable-ZR dramatically better cost/bit and power/bit vs legacy transponders. 800G coherent: ~99% power-per-bit reduction vs legacy.",
+      "yields": [
+        {
+          "gen": "WaveLogic 6 (3nm, 1.6T)",
+          "pct": "production-ready",
+          "note": ">18-мес first-mover; 200GBaud; 1.6T metro, 1.2T over 1 000km"
+        },
+        {
+          "gen": "Acacia Kibo (3nm, 1.6T)",
+          "pct": "sampling",
+          "note": "100K+ Jannu 1.2T ports shipped; Kibo = next-gen"
+        }
+      ],
+      "takeaway": "Pluggable-ZR = dramatically better economics (cost/bit, power/bit). But lower per-port revenue than proprietary transponders. Ciena expanding margins despite cloud mix (+1 130bps OPM г/г) — pока demand > disruption. Fabrinet = cheapest exposure (12–13% GM, high ROIC, net cash)."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "400ZR pluggables",
+          "node": "deployed",
+          "year": "2022–2026",
+          "note": "mainstream; >750K shipped (Acacia alone); compounding ~71% CAGR since 2021"
+        },
+        {
+          "name": "800ZR/ZR+ pluggables",
+          "node": "ramping",
+          "year": "2025–2027",
+          "note": ">200K ports forecast 2026; ASP ~$3–6K; 800ZR CAGR ~145% 2025–2029"
+        },
+        {
+          "name": "1.6T ZR / WaveLogic 6",
+          "node": "shipping/sampling",
+          "year": "2026–2028",
+          "note": "Ciena WL6 = 1.6T single-carrier (>18-мес lead); Acacia Kibo + Marvell COLORZ 1600 sampling"
+        },
+        {
+          "name": "Coherent-Lite / inside-DC",
+          "node": "emerging",
+          "year": "2027–2029",
+          "note": "Ciena Nubis linear-drive engines (6.4Tbps); campus/fabric volumes ~10× DCI (Cignal AI)"
+        },
+        {
+          "name": "Multi-band (C+L) + hollow-core fiber",
+          "node": "developing",
+          "year": "2028+",
+          "note": "doubles fiber capacity; hollow-core fiber = lower latency, longer term"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "Pluggable-ZR disintermediation transponder boxes",
+          "verdict": "REAL — >50% WDM bandwidth already on pluggables",
+          "tone": "mixed",
+          "detail": "400ZR/800ZR вставляются прямо в router/switch (IPoDWDM). Standalone pluggables ~$1,8–2B (2025), CAGR ~71%. Winners: DSP (Marvell/Acacia), modules (Coherent/Lumentum), manufacturing (Fabrinet). Under pressure: transponder-box content.",
+          "angle": "Systems vendors (Ciena/Nokia) sell ROADM line systems + ship own ZR modules — they participate, не eliminated. Но net negative for per-port system revenue."
+        },
+        {
+          "tech": "Hyperscaler direct procurement bypasses systems vendors",
+          "verdict": "accelerating — cloud = 46% of Ciena sales",
+          "tone": "mixed",
+          "detail": "Hyperscalers buy ZR directly from module makers, ride over incumbent line systems. Cloud grew to 46% of Ciena revenue. Ciena margins EXPANDED despite cloud mix — пока demand > pressure.",
+          "angle": "Risk: cloud = higher-volume, potentially lower-margin. Counter: Ciena OPM +1 130bps г/г. Watch cloud-margin mix closely."
+        },
+        {
+          "tech": "CPO/linear-drive for inside-datacenter",
+          "verdict": "additive new TAM — Ciena acquired Nubis for this",
+          "tone": "positive",
+          "detail": "Nubis linear-drive engines up to 6.4Tbps + Nitro redriver for inside-DC. Coherent-Lite volumes could reach ~10× DCI volumes (Cignal AI). Opens new market.",
+          "angle": "Ciena positioning for inside-DC via Nubis. Broadcom/Marvell/Arista also developing CPO for 51.2T/102.4T switches."
+        }
+      ],
+      "takeaway": "400ZR→800ZR→1.6T ZR: каждое поколение увеличивает bandwidth и TAM. Pluggable-ZR = real disruption но additive to total coherent value chain. 1.6T leadership race: Ciena >18 мес lead. Coherent-Lite/inside-DC = next frontier (10× volumes). Subsea supercycle = strategically scarce."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "Coherent DSP (3nm)",
+          "supplier": "Ciena WaveLogic, Acacia/Cisco, Marvell, Nokia/Infinera ICE",
+          "note": "highest-IP layer; TSMC 3nm; gating for 1.6T"
+        },
+        {
+          "item": "InP lasers / photonics",
+          "supplier": "Coherent, Lumentum, Nokia/Infinera (→ раздел Фотоника)",
+          "note": "binding supply constraint; 6\" InP ramp easing"
+        },
+        {
+          "item": "ROADM/WSS/EDFA",
+          "supplier": "Lumentum (leader), Coherent, Molex, Cisco",
+          "note": ">200K EDFAs deployed; installed-base moat; concentrated"
+        },
+        {
+          "item": "Optical fiber",
+          "supplier": "Corning, Fujikura, Prysmian",
+          "note": "C+L band / multi-band expands capacity; hollow-core fiber longer-term"
+        }
+      ],
+      "downstream": "Hyperscalers (AI DCI/scale-across — now largest optical buyers; ~2× service-provider spend), telcos (recovering but sluggish), neoclouds, AI datacenter operators, subsea operators.",
+      "correlation": "Highly correlated с AI datacenter campus buildout, distributed-training (scale-across), hyperscaler capex (~$650B 2026). DCI physically connects multi-GW campuses. Links to networking-chips (IPoDWDM), network-fabric, photonics (shared InP/laser supply).",
+      "takeaway": "Optical transport зависит вверх от InP lasers (constraint), DSP IP (3nm), ROADM components (Lumentum). Вниз от hyperscaler capex и scale-across adoption. DCI = physical layer connecting AI campuses."
+    },
+    "risks": [
+      {
+        "risk": "Pluggable-ZR disintermediation transponder boxes",
+        "prob": "Высокая",
+        "impact": "Средний (mixed)",
+        "note": "real, но additive к DSP/module/line-system; systems vendors sell ZR too"
+      },
+      {
+        "risk": "Hyperscaler direct procurement / cloud-margin mix",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "cloud = 46% Ciena sales; higher-volume, potentially lower-margin; but margins expanded"
+      },
+      {
+        "risk": "Valuations extreme (Ciena P/E ~120–170×)",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "COHR/LITE +80–100% YTD; July 2026 drawdowns 20–30%. Zero margin of safety"
+      },
+      {
+        "risk": "Customer concentration",
+        "prob": "Высокая",
+        "impact": "Средний–Высокий",
+        "note": "Ciena two customers = 34%; hyperscaler capex lumpy/cyclical"
+      },
+      {
+        "risk": "Telco capex weakness",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "metro +3% в 2025; China −10%. Traditional base still telco-tied"
+      },
+      {
+        "risk": "Competitive intensity (Nokia+Infinera scale)",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Nokia combined ~20%, tied №2; scale enables aggressive pricing"
+      }
+    ],
+    "picks": [
+      {
+        "group": "Proven leaders — systems + components core",
+        "tone": "leader",
+        "badge": "pure-play DCI, component breadth, ROADM moat",
+        "note": "Coherent = best growth/valuation blend (forward P/E ~35× vs Ciena ~120–170×). Ciena = highest-conviction pure-play на просадках. Fabrinet = cheapest chokepoint.",
+        "rows": [
+          {
+            "company": "Coherent",
+            "ticker": "NYSE: COHR",
+            "mcap": "~$50,7 млрд",
+            "exposure": "D&C 75% rev (+41%); InP + ZR modules + OCS/CPO; NVIDIA $2B; S&P 500",
+            "why": "Best growth/valuation balance: forward P/E ~34,6× (vs Ciena triple-digit). Component + module + InP breadth. NVIDIA $2B nonexclusive partnership + multibillion-dollar purchase commitment. Record bookings >1yr out. S&P 500 entrant.",
+            "priced": "Pulled back от ~$440 highs. GM 39,6% расширяется. Diversified (industrial/comms). D&C = 75% — optical leverage strong но не pure."
+          },
+          {
+            "company": "Ciena",
+            "ticker": "NYSE: CIEN",
+            "mcap": "~$52–63 млрд",
+            "exposure": "purest large-cap DCI play; FY26 $6,3B (+32%); cloud +70%; backlog $7,7B; WaveLogic 6 1.6T",
+            "why": "Highest-conviction pure-play: coherent DSP IP + systems + cloud share gains. WaveLogic 6 = 1.6T single-carrier, >18-мес first-mover. OPM expanded +1 130bps г/г to 19,5%. First HyperRail multi-rail order ('hundreds of millions'). Stock +400%+ г/г.",
+            "priced": "P/E ~120–170× trailing. Highest quality BUT highest valuation. Starter position only; add на drawdowns 20%+. Two customers = 34%."
+          },
+          {
+            "company": "Lumentum",
+            "ticker": "NASDAQ: LITE",
+            "mcap": "~$55 млрд",
+            "exposure": "ROADM/WSS/EDFA leader; NeoPhotonics coherent; ~$2B NVIDIA partnership",
+            "why": "Line-system arms-dealer to ALL systems vendors. >200K EDFAs deployed. Installed-base moat in WSS/tunable lasers. NVIDIA $2B. Laser + OCS/CPO backlog growing.",
+            "priced": "Forward P/E ~44×. High beta (~89% annualized vol). Off ~$68B May peak. 30%+ drawdowns normal."
+          },
+          {
+            "company": "Fabrinet",
+            "ticker": "NYSE: FN",
+            "mcap": "~$25 млрд",
+            "exposure": "contract manufacturer; optical comms $889M (+35%); DCI modules $142M (+42%)",
+            "why": "Cheapest way to own AI-optics volume ramp. Forward P/E ~13–44×. Critical chokepoint for coherent/ZR/DCI modules. ~$941M net cash. FY25 rev $3,42B. Agnostic к победителю (Ciena/Coherent/Lumentum = all customers). +10% YTD vs COHR +80%.",
+            "priced": "Contract-manufacturing multiple limits re-rating. Customer concentration fears. Thailand/geo risk. Но cheapest and most protected in downturn."
+          }
+        ]
+      },
+      {
+        "group": "Emerging и overlooked — merchant DSP, turnaround, subsea",
+        "tone": "emerging",
+        "badge": "merchant coherent DSP, Nokia turnaround, subsea scarcity",
+        "note": "Marvell = merchant DSP wins as pluggables take volume. Nokia = value/turnaround. Subsea (NEC) = strategically scarce. Cisco = lowest-beta exposure.",
+        "rows": [
+          {
+            "company": "Marvell Technology",
+            "ticker": "NASDAQ: MRVL",
+            "mcap": "~$170–181 млрд",
+            "exposure": "merchant coherent DSP (Canopus 400G, Orion 800G, Libra/Electra 1.6T sampling H2 2026)",
+            "why": "Merchant-DSP wins as pluggables take volume from captive systems. COLORZ 800/1600 + Libra/Electra sampling. First-time WDM hardware share. Custom-AI optionality.",
+            "risk": "Coherent DSP = small slice of huge AI-silicon valuation. 800ZR+ PCS respin needed. Valuation embeds a lot."
+          },
+          {
+            "company": "Nokia",
+            "ticker": "NYSE: NOK",
+            "mcap": "~$54–58 млрд",
+            "exposure": "Optical Networks €3,02B (+85%); ~20% combined with Infinera; AI&Cloud +49%",
+            "why": "Value/turnaround: forward P/E ~37,6× (vs Ciena ~120–170×). Tied №2 in transport. Infinera gives hyperscaler base + InP + ICE DSP. Microsoft Azure SONiC deal. €200M synergies.",
+            "risk": "Optical = ~15% of group (diluted by mobile/RAN). Integration execution. Telecom exposure."
+          },
+          {
+            "company": "Cisco",
+            "ticker": "NASDAQ: CSCO",
+            "mcap": "крупная",
+            "exposure": "Acacia coherent DSP + ZR; >$1B optical orders/кв; Acacia +200% FY26; 450+ customers",
+            "why": "Lowest-beta way to own coherent theme. Acacia DSP leadership (Jannu 1.2T, Kibo 1.6T). >750K 400G + >40K 800G shipped. Most customers run on third-party line systems (Ciena/Nokia).",
+            "risk": "Optical = small % of mega-cap Cisco. Not a pure play."
+          },
+          {
+            "company": "NEC",
+            "ticker": "TYO: 6701",
+            "mcap": "крупная",
+            "exposure": "top-3 subsea cable builder (с SubCom и ASN); open optical; transatlantic ~0,5 Pbps record",
+            "why": "Subsea = strategically scarce: only 3 global builders. AI cross-region traffic drives subsea supercycle. 24-fiber-pair systems (~50% fiber improvement). Cleanest public subsea proxy.",
+            "risk": "Conglomerate discount (optical = small portion). Japan-listed, limited Western coverage."
+          },
+          {
+            "company": "Ribbon Communications",
+            "ticker": "NASDAQ: RBBN",
+            "mcap": "~$0,4 млрд",
+            "exposure": "IP Optical Networks (ex-ECI); DCI/metro; Verizon + India wins",
+            "why": "Cheap (P/S <1); turnaround; optical DCI exposure. FY25 $845M; FY26 guide $840–875M.",
+            "risk": "Low growth, lumpy, sub-scale. Not pure AI-DCI play."
+          },
+          {
+            "company": "Adtran",
+            "ticker": "NASDAQ: ADTN",
+            "mcap": "средняя",
+            "exposure": "100–800G coherent pluggables; up-to-1.6T DCI open line systems; AI & cloud interconnect",
+            "why": "Fiber-access + optical optionality. Q1 2026 $286M (+15,5%). European base. AI & cloud interconnect positioning.",
+            "risk": "Broadband/telco-tied. Thin margins. Minimal hyperscaler DCI."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Coherent = best growth/valuation blend (forward P/E ~35×, NVIDIA $2B, InP breadth). Ciena = highest-conviction pure-play, но P/E ~120–170× → starter position, add на drawdowns. Fabrinet = cheapest chokepoint ($941M net cash, DCI +42%, contract-manufacturing multiple). Marvell = merchant DSP leverage. Nokia = value turnaround. NEC = subsea scarcity play. Staged entry: текущие valuations argue against full positions в июле 2026.",
+    "monitoring": {
+      "metrics": [
+        "Ciena: revenue + cloud % + backlog ($7,7B); FQ3 expected early Sept 2026",
+        "Coherent: D&C revenue + InP capacity + bookings (quarterly; FQ4 late summer)",
+        "Cisco/Acacia: optical orders + 400G/800G shipment counts + hyperscaler design wins",
+        "Lumentum: ROADM/WSS/EDFA revenue + OCS/CPO backlog (quarterly; FQ4 late summer)",
+        "Fabrinet: optical comms + DCI module revenue (quarterly)",
+        "Cignal AI + Dell'Oro: Optical Transport, Coherent Optics, DSP Supply Chain reports (quarterly)",
+        "Hyperscaler capex: Microsoft/Google/Amazon/Meta quarterly + AI-infra commentary"
+      ],
+      "canary": [
+        "800ZR/ZR+ shipment share surge >60% WDM bandwidth (pluggable disruption accelerating)",
+        "Ciena cloud revenue inflection (up = confirmation; down = capex digestion signal)",
+        "InP laser supply easing → lifts growth cap; or stays constrained → revenue capped",
+        "WaveLogic 6 / Kibo / COLORZ 1600 design-win milestones → 1.6T adoption pace",
+        "Hyperscaler capex-digestion pause = downside canary для всей optical chain"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Transport market best since 2000 — но valuations leave zero margin of safety",
+      "summary": "Июль 2026: Dell'Oro raised transport forecast to +16% (>$18B, first since 2000). Ciena FY26 $6,3B (+32%), cloud +70%, backlog $7,7B. Cisco Acacia >$1B orders/кв (+200%). Coherent D&C +41%, NVIDIA $2B. Nokia+Infinera Optical +85%. Pluggables ~$2B, >50% WDM bandwidth. Но Ciena P/E ~120–170×, COHR/LITE +80–100% YTD потом July drawdowns 20–30%.",
+      "stories": [
+        {
+          "title": "Dell'Oro: optical transport >$18B в 2026 (+16%) — first time since 2000",
+          "tone": "positive",
+          "verdict": "AI-DCI turning a 'sleepy' market into structural growth. 1Q 2026 +20% г/г. Direct DCI +40%. Supply = constraint, не demand.",
+          "detail": "Jimmy Yu: 'supply may be biggest factor keeping growth from being even higher.' Scale-across = 5–20× bandwidth multiplier."
+        },
+        {
+          "title": "Ciena: cloud +70%, backlog $7,7B, OPM +1 130bps; но stock +400% г/г → P/E ~120–170×",
+          "tone": "mixed",
+          "verdict": "Highest-quality pure-play: WaveLogic 6 1.6T lead, HyperRail orders, margin expansion. Но triple-digit multiple leaves zero room for disappointment.",
+          "detail": "FY26 $6,3B (+32%). Two customers = 34%. TAM tripled 2024→2025, expected to double again. Starter position; add на drawdowns."
+        },
+        {
+          "title": "NVIDIA $2B в Coherent; Coherent enters S&P 500; D&C +41%",
+          "tone": "positive",
+          "verdict": "Component leader gets NVIDIA validation + multibillion purchase commitment. Forward P/E ~35× = more reasonable чем Ciena. InP + ZR + OCS breadth.",
+          "detail": "FQ3 rev $1,81B (+21%); D&C = 75%. Record bookings. Pulled back от $440 highs = entry opportunity."
+        },
+        {
+          "title": "Pluggable-coherent >50% WDM bandwidth; standalone pluggables ~$2B (+37%)",
+          "tone": "mixed",
+          "verdict": "ZR disruption is real: IPoDWDM вставляется в router/switch. Winners = DSP/module/manufacturing. Losers = transponder-box margin. Но expands total coherent TAM.",
+          "detail": "400ZR deployed. 800ZR >200K ports 2026. 1.6T ZR к 2027. Pluggables CAGR ~30–71%. Ciena/Nokia ship own ZR — participate, не eliminated."
+        }
+      ],
+      "bottomLine": "AI-DCI = structural growth (transport best since 2000, scale-across 5–20× bandwidth). Incumbents (Ciena/Nokia/Cisco) capture demand. Pluggable-ZR disrupts boxes но expands total value chain. InP = supply cap. Valuations extreme — staged entry, not full position. Coherent (best blend) + Fabrinet (cheapest) = core; Ciena на просадках."
+    },
+    "news": [
+      {
+        "date": "2026-05-19",
+        "source": "Dell'Oro",
+        "title": "Optical transport forecast raised to +16% в 2026, >$18B — first since 2000",
+        "blurb": "1Q 2026 +20% г/г. Direct DCI +40%. 'Supply may be biggest factor keeping growth from being higher.'"
+      },
+      {
+        "date": "2026-06-12",
+        "source": "Ciena",
+        "title": "Ciena FQ2: $1,57B (+40%); cloud +70%; backlog $7,7B; adj EPS $1,64 (+290%)",
+        "blurb": "First HyperRail multi-rail order (multi-year, 'hundreds of millions'). OPM 19,5% (+1 130bps). FY26 guide $6,3B."
+      },
+      {
+        "date": "2026-03-02",
+        "source": "NVIDIA / Coherent",
+        "title": "NVIDIA investing $2B in Coherent; multibillion-dollar purchase commitment",
+        "blurb": "Nonexclusive, multiyear agreement. COHR +15,4% on news. R&D, capacity and operations support. Coherent enters S&P 500."
+      },
+      {
+        "date": "2026-04-16",
+        "source": "Cignal AI",
+        "title": "Optical hardware $16,5B in 2025; standalone coherent pluggables ~$2B (+37%); >50% WDM bandwidth",
+        "blurb": "Cloud operators ~30% of optical spend. Pluggables compounding ~71% annually since 2021. Scale-across = 5–20× bandwidth."
+      },
+      {
+        "date": "2025-10-15",
+        "source": "Ciena / Nubis",
+        "title": "Ciena acquires Nubis Communications for $270M (linear-drive optical engines)",
+        "blurb": "Nitro redriver + up-to-6.4Tbps engines for inside-datacenter. Expands Ciena beyond transport into DC fabric."
+      }
+    ]
   }
 }
