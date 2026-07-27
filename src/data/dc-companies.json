@@ -2099,5 +2099,60 @@
     "ppr": "Pub",
     "geo": "US",
     "note": "VRM/power + signal chain для AI; 800VDC partner; диверсифицирован"
+  },
+  {
+    "company": "MACOM",
+    "ticker": "NASDAQ: MTSI",
+    "sector": "Photonics",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "overlooked LPO component supplier; 58,5% GM; drivers/TIA/CW-lasers",
+    "geo": "US",
+    "note": "DC +14,5% QoQ; raised DC growth to 35–40%; analog/photonics value play"
+  },
+  {
+    "company": "InnoLight",
+    "ticker": "SHE: 300308",
+    "sector": "Photonics",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "мировой лидер оптических модулей (>23% доля); ~80% 1.6T для Nvidia",
+    "geo": "CN",
+    "note": "Q1 2026 +192% г/г; SiPh ~70%; HK IPO ~$7B pending; China/geopolitical risk"
+  },
+  {
+    "company": "POET Technologies",
+    "ticker": "NASDAQ: POET",
+    "sector": "Photonics",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "highest-risk CPO bet; Optical Interposer platform; wafer-scale hybrid integration",
+    "geo": "CA",
+    "note": "revenue $503K Q1 2026; Lumilens $500M+ framework; micro-cap; binary outcome"
+  },
+  {
+    "company": "Ciena",
+    "ticker": "NYSE: CIEN",
+    "sector": "Photonics",
+    "conviction": "medium",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "DCI/coherent + pluggables; FY26 outlook ~$6,3B (+32%)",
+    "geo": "US",
+    "note": "Q2 FY26 $1,57B (+40%); ~5,8x sales — cheaper than pure-optics; telecom dilution"
+  },
+  {
+    "company": "Semtech",
+    "ticker": "NASDAQ: SMTC",
+    "sector": "Photonics",
+    "conviction": "low",
+    "riskTier": "mid",
+    "horizon": "2–3 года",
+    "ppr": "CDR/PMD для LPO; CopperEdge AEC; signal-integrity components",
+    "geo": "US",
+    "note": "LPO component supplier alongside MACOM; smaller photonics exposure"
   }
 ]

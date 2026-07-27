@@ -5780,5 +5780,574 @@
         "blurb": "Единственный партнёр с обоими материалами. 20кВт 800V-to-6V demo. 250кВт SST на APEC 2026."
       }
     ]
+  },
+  "photonics": {
+    "asOf": "2026-07-27",
+    "intro": "Технология передавать данные светом вместо электрических сигналов по меди. Оптика связывает серверы между собой внутри AI-кластера, а самая новая версия (CPO — co-packaged optics) ставит источник света вплотную к чипу. Рынок AI-оптических модулей вырос до $16,5 млрд в 2025 и идёт к $26 млрд в 2026 (+60%, LightCounting). Три узких места: лазеры/EML (Coherent, Lumentum — спрос превышает предложение на ~30%), оптические DSP (дуополия Marvell ~60–70% + Broadcom >30%), и InP-пластины. Nvidia вложила по $2 млрд в Coherent и Lumentum (март 2026) — прямое подтверждение дефицита. ~6 трансиверов на каждый GPU в scale-out фабрике.",
+    "tldr": [
+      "Рынок AI/Ethernet-оптики: $16,5 млрд (2025) → $26 млрд (2026, +60%). Поставки 800G+ модулей: 24 млн (2025) → 63 млн (2026, ×2,6). Три поколения (800G/1.6T/3.2T) разгоняются одновременно, а не последовательно.",
+      "EML-лазеры — бутылочная горловина: спрос превышает предложение на ~30% (LightCounting). Lumentum — единственный поставщик 200G/lane EML в объёме. Nvidia вложила $4 млрд ($2 млрд в каждую) в Coherent и Lumentum, чтобы зафиксировать поставки.",
+      "InnoLight — №1 в мире по оптическим модулям (>23% доля): ~80% модулей 1.6T для Nvidia GB200. Выручка Q1 2026 +192% г/г. Китайские производители занимают 7 из 10 мест в топе, но EML/DSP/TIA внутри их модулей — почти все западные/японские.",
+      "CPO (co-packaged optics) — следующий сдвиг: Nvidia Spectrum-X в серии (май 2026), Broadcom Davisson 102.4T. CPO снижает потребление оптики на ~70%, но лидеры модулей (Coherent, Lumentum) поставляют лазеры и для CPO. Главный вопрос: ценность остаётся в модуле или уходит в пакет чипа?"
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 7,
+        "cyclicality": 6,
+        "valuation": 4
+      },
+      "summary": "Один из самых быстрорастущих подсегментов полупроводников: AI-оптика +60% в 2026, Lumentum +90%, InnoLight +192%. Глубокие moat-ы в EML/InP лазерах и DSP-дуополии. Но CPO угрожает pluggable-модулям (2028+), китайская сборка доминирует (63% рынка), а оценки заоблачные (Coherent/Lumentum 100–158x P/E). Ответ: владей бутылочной горловиной (лазеры, DSP IP), а не коробкой (модульной сборкой).",
+      "horizon": "3–5 лет (800G→1.6T→3.2T→CPO цикл)",
+      "sizing": "AI-оптические модули: $16,5 млрд (2025) → $26 млрд (2026). DSP-чипсеты: ~$3,5 млрд (2024) → >$11 млрд к 2030. CPO: $46 млн (2024) → $8,1 млрд к 2030 (Yole, 137% CAGR). Общий рынок трансиверов: ~$24 млрд (2025).",
+      "keyQuestion": "Ценность в AI-оптике останется в pluggable-модуле (InnoLight/Coherent/Lumentum/Fabrinet) — или уйдёт в co-packaged optics и пакет коммутатора/GPU (Broadcom/Nvidia/TSMC/Marvell)?",
+      "bull": [
+        "~6 трансиверов на GPU в scale-out; контент растёт с каждым поколением (800G ~$400 → 1.6T ~$1 400). Три поколения разгоняются одновременно — без обычной паузы inventory digestion.",
+        "EML/InP дефицит: спрос > предложение ~30%; Nvidia вложила $4 млрд в Coherent+Lumentum — прямое подтверждение бутылочной горловины. Pricing power у лазерных компаний.",
+        "800G+ поставки: 24M → 63M (2026, ×2,6). Hyperscaler capex ~$750 млрд (2026, +67% г/г). Оптика = ~$0,15–0,20 на $1 GPU-compute."
+      ],
+      "bear": [
+        "CPO: Nvidia Spectrum-X в серии, Broadcom Davisson 102.4T; pluggable оптика = >50% стоимости и мощности коммутатора — именно это CPO перераспределяет к switch-silicon + TSMC packaging.",
+        "Китайская коммодитизация: 7 из 10 крупнейших производителей — китайские; цены на 20–25% ниже западных. InnoLight: top-5 клиентов = 76% продаж, 90% за рубежом — хрупко при экспортном контроле.",
+        "Оценки: Coherent P/E ~110–158x, Lumentum ~114–156x. 2 июля 2026: AOI −17%, Coherent/Lumentum −10% за день. LPO угрожает DSP TAM."
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~40–60% (AI-оптика, 2024–2026)",
+      "chartTitle": "Рынок AI/Ethernet оптических модулей ($ млрд)",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 10,
+          "label": "~$10B",
+          "source": "LightCounting (AI/Ethernet subset)"
+        },
+        {
+          "year": "2025",
+          "value": 16.5,
+          "label": "$16,5B",
+          "source": "LightCounting (+60%)"
+        },
+        {
+          "year": "2026",
+          "value": 26,
+          "label": "$26B",
+          "source": "LightCounting (+60%)"
+        },
+        {
+          "year": "2028",
+          "value": 35,
+          "label": "~$35B",
+          "source": "оценка (CPO+pluggable)"
+        },
+        {
+          "year": "2030",
+          "value": 45,
+          "label": "$20–45B+",
+          "source": "разброс прогнозов (огромный)"
+        }
+      ],
+      "bomShare": {
+        "value": "~3–5%",
+        "note": "оптика = ~3–5% стоимости AI compute-node; ~$0,15–0,20 оптики на $1 GPU-compute. Но pluggable оптика = >50% стоимости и мощности коммутаторной системы"
+      },
+      "volumeVsPrice": "Рост через оба: объём (800G+ units 24M→63M) и ASP (800G ~$400 → 1.6T ~$1 400). Три поколения разгоняются одновременно. CPO добавляет новый ценовой слой (пока $46M→$8,1B к 2030)."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "Marvell (оптический DSP)",
+          "gm": "~58,9% non-GAAP",
+          "note": "~60–70% доля PAM4; 1.6T Ara first-mover; DC ~76% выручки"
+        },
+        {
+          "stage": "MACOM (компоненты LPO)",
+          "gm": "~58,5% non-GAAP",
+          "note": "драйверы, TIA, CW-лазеры; DC +14,5% QoQ; недооценён"
+        },
+        {
+          "stage": "Eoptolink (модули)",
+          "gm": "~47,8%",
+          "note": "LPO strength (Meta/Amazon); +187% выручка; 96% overseas"
+        },
+        {
+          "stage": "InnoLight (модули)",
+          "gm": "~42,8%",
+          "note": "SiPh ~70% high-speed; >23% мировая доля; HK IPO pending"
+        },
+        {
+          "stage": "Coherent (full-stack)",
+          "gm": "~38–40%",
+          "note": "InP лазеры + модули + CPO; D&C 75% выручки; guided 38–40%"
+        },
+        {
+          "stage": "Lumentum (EML/лазеры)",
+          "gm": "расширяется (+540bps QoQ)",
+          "note": "1.6T structurally accretive; OPM 35–36% guided"
+        }
+      ],
+      "bottleneckNow": "EML/InP лазеры: спрос > предложение на ~30% (LightCounting). Lumentum — единственный поставщик 200G/lane EML в объёме. Coherent: InP дисбаланс сохраняется до 2026–2027. Nvidia $4 млрд = прямое подтверждение.",
+      "bottleneckNext": "CPO-лазеры и silicon-photonics packaging: когда CPO масштабируется (2028+), ценность мигрирует к поставщикам external laser sources (Lumentum, Coherent), SiPh foundry (TSMC COUPE), и switch-silicon (Broadcom, Nvidia).",
+      "capitalIntensity": "Средняя для модульной сборки; высокая для InP/EML fab (Coherent 6\" InP в Sherman TX + Zurich; Lumentum Japan EML fab fully allocated). TSMC COUPE = отдельная инвестиция в SiPh foundry.",
+      "takeaway": "Ценность концентрируется в EML/InP лазерах и DSP IP — не в модульной сборке. Китай доминирует в сборке (63%), но EML/DSP/TIA внутри этих модулей — почти все западные/японские. «Владей бутылочной горловиной, а не коробкой.»"
+    },
+    "competition": {
+      "concentration": "Модули: InnoLight >23% (№1), Coherent ~20–25%, далее Eoptolink, Huawei, Accelink. DSP: Marvell ~60–70% + Broadcom >30% = >90%. EML: Coherent + Lumentum доминируют.",
+      "shareTrajectory": [
+        {
+          "player": "InnoLight",
+          "now": ">23% модулей; №1 три года подряд",
+          "direction": "↑",
+          "detail": "~80% 1.6T для Nvidia; Q1 2026 +192%; SiPh ~70%; HK IPO"
+        },
+        {
+          "player": "Lumentum",
+          "now": "EML/laser leader",
+          "direction": "↑↑",
+          "detail": "+90% выручка; единственный 200G/lane EML в объёме; OCS backlog >$400M; S&P 500"
+        },
+        {
+          "player": "Marvell",
+          "now": "~60–70% DSP",
+          "direction": "↑",
+          "detail": "Ara 1.6T first; Celestial AI acquired ($3,25B); interconnect +70% FY27"
+        },
+        {
+          "player": "Eoptolink",
+          "now": "№3 модули",
+          "direction": "↑↑",
+          "detail": "+187% выручка; GM 47,8%; LPO strength; с №7 на №3 за год"
+        },
+        {
+          "player": "Broadcom",
+          "now": "CPO leader + >30% DSP",
+          "direction": "↑",
+          "detail": "Bailly/Davisson CPO shipping; TH6 102.4T; AI ~$8,2B/кв"
+        }
+      ],
+      "players": [
+        {
+          "name": "InnoLight",
+          "share": ">23% модулей",
+          "edge": "масштаб + SiPh vertical integration + Nvidia incumbency (~80% 1.6T)"
+        },
+        {
+          "name": "Lumentum",
+          "share": "EML leader",
+          "edge": "единственный 200G/lane EML; OCS; CPO external lasers; Nvidia $2B"
+        },
+        {
+          "name": "Coherent",
+          "share": "~20–25% + InP",
+          "edge": "full-stack: InP лазеры + SiPh + модули + CPO; 6\" InP; Nvidia $2B"
+        },
+        {
+          "name": "Marvell",
+          "share": "~60–70% DSP",
+          "edge": "Ara 1.6T first-to-market; Celestial AI (scale-up optical); IP moat"
+        },
+        {
+          "name": "Fabrinet",
+          "share": "dominant CM",
+          "edge": "контрактная сборка для всех; agnostic к победителю; 3 CPO клиента"
+        }
+      ],
+      "switchingCost": "Высокие: квалификация трансивера у hyperscaler = месяцы. Hyperscalers сертифицируют ≥3 источника на speed grade. Патентные royalties до ~8% ASP. Но модульная сборка — более конкурентна.",
+      "entryBarrier": "EML/InP fab: десятилетия опыта, 6\" InP wafer yield — единицы умеют. DSP: $500M+ на тapeout 3nm. Модульная сборка: ниже (китайцы вошли), но SiPh vertical integration повышает барьер.",
+      "takeaway": "Три слоя защиты: EML/InP лазеры (Lumentum/Coherent), DSP дуополия (Marvell/Broadcom), SiPh/CPO packaging (TSMC/Broadcom). Модульная сборка — commoditizing (китайцы 63%). CPO перераспределяет ценность вверх."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 90,
+          "note": "EML дефицит ~30%; 800G+ units 24M→63M; Lumentum Japan fab fully allocated; Fabrinet constrained"
+        },
+        {
+          "year": "2027",
+          "pct": 80,
+          "note": "1.6T ramp: 5–20M units; CPO broad availability (Spectrum-X); EML дефицит easing (LightCounting)"
+        },
+        {
+          "year": "2028",
+          "pct": 65,
+          "note": "3.2T начинается; CPO масштабируется; pluggable vs CPO определяется"
+        }
+      ],
+      "contractStructure": "Hyperscalers: ≥3 qualified sources на speed grade. Nvidia: InnoLight ~80% 1.6T, Coherent ~20%+, Eoptolink добавляется. Lumentum OCS backlog >$400M. Marvell Ara 1.6T в production. Design-win stickiness высокая.",
+      "customerConcentration": "Экстремальная: Nvidia ~80% мировых 1.6T в 2025 (~2,5–3,5M units). InnoLight: top-5 клиентов = 76% продаж. Hyperscaler capex ~$750 млрд (2026, +67%): Amazon ~$200B, Alphabet $175–185B, Meta $115–135B.",
+      "backlog": "Lumentum OCS: >$400M, цель $100M/кв к концу 2026. Fabrinet: constrained (laser/memory/ASIC shortages). Vicor: backlog $301M (пересекается через power).",
+      "pricing": "800G: ~$360–450/модуль. 1.6T: ~$1 300–1 500, снижается к ~$1 100. Китайские модули: −20–25% vs западные. EML/DSP: pricing power сохраняется (дефицит).",
+      "takeaway": "Спрос подтверждён hyperscaler capex ($750 млрд), рекордными backlog-ами и Nvidia инвестициями ($4 млрд). EML — физический дефицит. Но зависимость от Nvidia/hyperscaler capex = уязвимость к любому замедлению."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит (EML)",
+          "color": "#ef4444",
+          "detail": "спрос > предложение ~30%; Lumentum Japan fully allocated; Coherent InP ×3 за год; Fabrinet constrained"
+        },
+        {
+          "year": "2027",
+          "state": "easing",
+          "color": "#f59e0b",
+          "detail": "Coherent: 6\" InP doubled by end-CY2026; Lumentum EML +>50%; LightCounting: дефицит уходит к концу 2026"
+        },
+        {
+          "year": "2028",
+          "state": "balanced → CPO shift",
+          "color": "#22d3ee",
+          "detail": "CPO масштабируется; SiPh foundry (TSMC COUPE Gen2); pluggable volume может стабилизироваться"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Coherent: 6\" InP (Sherman TX + Zurich)",
+          "when": "2025–2027",
+          "impact": "6\" yield > 3\"; >4x devices at <half cost; InP ×3 за год; plan double by end-CY2026"
+        },
+        {
+          "name": "Lumentum: EML capacity +>50%",
+          "when": "2026",
+          "impact": "~40% через InP expansion; Japan fab fully allocated; 200G/lane EML only supplier at volume"
+        },
+        {
+          "name": "TSMC COUPE SiPh",
+          "when": "2026",
+          "impact": "mass production; Gen1 for OSFP (1.6T); Gen2 CoWoS co-packaged (6.4T)"
+        },
+        {
+          "name": "InnoLight HK IPO → capacity",
+          "when": "2026–2027",
+          "impact": "~$7B raise; 1.6T/3.2T R&D + capacity; SiPh vertical integration"
+        }
+      ],
+      "leadTime": "EML: дефицит ~30%, easing к концу 2026. Квалификация трансивера: месяцы. CPO: complex yield/testing (18 SiPh chiplets per Quantum-X).",
+      "utilization": "Lumentum Japan: fully allocated. Coherent InP: supply-constrained. Fabrinet: demand far exceeded shipments (laser/memory/ASIC shortages).",
+      "crowdingOut": "Китайская модульная сборка расширяется агрессивно (InnoLight +192%, Eoptolink +187%), но EML/DSP внутри — всё ещё западные. CPO supply chain: ≥6 areas de-facto single-source.",
+      "takeaway": "EML/InP — физический дефицит, easing к концу 2026–2027. CPO scaling requires TSMC COUPE + complex testing. Pluggable модули масштабируются быстрее (китайские производители). «GPU production — более критичное узкое место, чем оптика» (LightCounting)."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "800G модуль: ~$360–450. 1.6T модуль: ~$1 300–1 500 (→ ~$1 100). ~6 трансиверов на GPU. Pluggable оптика = >50% стоимости и мощности коммутатора. CPO: 70% ниже optical-interconnect power.",
+      "grossMargin": "Marvell DSP: ~58,9%. MACOM: ~58,5%. Eoptolink: ~47,8%. InnoLight: ~42,8%. Coherent: ~38–40%. Lumentum: расширяется (+540bps QoQ). AI-mix и 1.6T accretive к марже.",
+      "costCurve": "6\" InP wafer: >4x devices at <half cost vs 3\". SiPh: TSMC COUPE снижает стоимость интеграции. LPO: −40–50% мощности vs DSP-based → ниже стоимость ownership. CPO: −70% optical power, 8x silicon-area efficiency (Broadcom).",
+      "yields": [
+        {
+          "gen": "6\" InP (Coherent)",
+          "pct": ">3\" yield",
+          "note": "Sherman TX — most advanced site; >4x devices at <half cost"
+        },
+        {
+          "gen": "CPO testing",
+          "pct": "complex",
+          "note": "18 SiPh chiplets per Quantum-X, each 2 lasers + 16 fibers; testing is the hard part"
+        }
+      ],
+      "takeaway": "Маржа лучше всего у DSP (Marvell ~59%, MACOM ~59%) и лазеров (Lumentum расширяется). Модульная сборка — тоньше, но InnoLight/Eoptolink держат 40–48% на SiPh integration. 1.6T structurally accretive. CPO снижает стоимость оптики, но ценность мигрирует к laser/SiPh/switch-silicon."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "1.6T модули (200G/lane EML)",
+          "node": "mainstream",
+          "year": "2025–2027",
+          "note": "2,7M units (2025) → 5–20M (2026); Marvell Ara DSP; ~$1 300–1 500; hyperscalers подняли закупки с 10M до 20M"
+        },
+        {
+          "name": "3.2T (400G/lane)",
+          "node": "demo",
+          "year": "2027–2028",
+          "note": "Coherent 400G diff-EML demo на OFC 2025; foundational step"
+        },
+        {
+          "name": "CPO scale-out (Nvidia/Broadcom)",
+          "node": "shipping",
+          "year": "2026–2028",
+          "note": "Spectrum-X в серии (май 2026); Davisson 102.4T; TSMC COUPE Gen1/Gen2"
+        },
+        {
+          "name": "GPU-attach optical I/O",
+          "node": "scale-up frontier",
+          "year": "2027–2030",
+          "note": "Ayar Labs TeraPHY (8 Tbps UCIe); Lightmatter Passage L200 (200+ Tbps); Marvell/Celestial AI"
+        },
+        {
+          "name": "LPO/LRO (без DSP)",
+          "node": "cash cow 2026–27",
+          "year": "2026–2027",
+          "note": ">1/3 800G intra-DC к 2026–27; −40–50% power; но LPO → DSP TAM risk (Marvell/Broadcom)"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "CPO вытесняет pluggable модули",
+          "verdict": "additive near-term (2026–2027), substitutive long-term (2028+)",
+          "tone": "mixed",
+          "detail": "Nvidia Spectrum-X CPO в серии (CoreWeave, Lambda, Oracle). Broadcom Bailly/Davisson. CPO = −70% optical power, −50%+ cost. Но лидеры модулей (Coherent, Lumentum) поставляют и CPO-лазеры.",
+          "angle": "Base case: pluggable сохраняются до 2027–2028; CPO масштабируется 2028+. Лазерные компании выигрывают в обоих сценариях."
+        },
+        {
+          "tech": "Китайская коммодитизация модульной сборки",
+          "verdict": "уже происходит — 63% рынка",
+          "tone": "negative",
+          "detail": "Китайские производители: 7 из 10 топ. InnoLight >23%, Eoptolink №3. Цены −20–25%. Доля выросла с 55,6% до 63,2% (2025). Но EML/DSP/TIA внутри — почти все западные.",
+          "angle": "Сборка commoditizing; ценность мигрирует к компонентам (лазеры, DSP, SiPh). InnoLight исключение: SiPh vertical integration даёт pricing power."
+        },
+        {
+          "tech": "LPO вытесняет DSP-based модули",
+          "verdict": "реальная угроза для Marvell/Broadcom DSP TAM",
+          "tone": "mixed",
+          "detail": "LPO: −40–50% power, near-zero latency. >1/3 800G intra-DC к 2026–27. MACOM, Semtech выигрывают. Marvell/Broadcom: «re-timed и LPO coexist.»",
+          "angle": "LPO — «cash cow» 2026–2027 для low-risk deployments. Но 200G/lane → DSP всё ещё нужен для coherent/DCI."
+        }
+      ],
+      "takeaway": "800G→1.6T→3.2T + CPO + optical I/O: каждый следующий шаг увеличивает контент и сложность. CPO — additive сейчас, substitutive к 2028+. Лазерные компании выигрывают при любом сценарии (pluggable или CPO). GPU-attach optical I/O (Ayar, Lightmatter) — biggest long-term prize."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "InP пластины и EML-лазеры",
+          "supplier": "Coherent, Lumentum, Sumitomo, Mitsubishi, IQE",
+          "note": "бутылочная горловина; дефицит ~30%; de-facto single-source в нескольких областях"
+        },
+        {
+          "item": "Оптические DSP",
+          "supplier": "Marvell (~60–70%), Broadcom (>30%)",
+          "note": "дуополия >90% high-end PAM4; 3nm tapeout = высокий барьер"
+        },
+        {
+          "item": "SiPh foundry",
+          "supplier": "TSMC COUPE, GlobalFoundries Fotonix, Tower, UMC (imec iSiPP300)",
+          "note": "TSMC mass production 2026; Samsung entering"
+        },
+        {
+          "item": "Контрактная сборка",
+          "supplier": "Fabrinet (dominant), InnoLight (in-house)",
+          "note": "Fabrinet agnostic к победителю; 3 CPO клиента"
+        }
+      ],
+      "downstream": "Nvidia (GB200/Rubin), hyperscalers (Google, Amazon, Microsoft, Meta), switch makers (Arista, Cisco), AI-серверные ODM. Оптика = связь/connectivity layer кластера.",
+      "correlation": "Прямая с GPU volume и AI-cluster buildout. ~6 трансиверов/GPU × 800G→1.6T ASP uplift. Hyperscaler capex ~$750 млрд (2026). ~$0,15–0,20 оптики на $1 GPU-compute.",
+      "takeaway": "Оптика зависит вверх от InP/EML (дефицит) и DSP (дуополия), вниз от GPU volume и hyperscaler capex. CPO supply chain: ≥6 de-facto single-source areas. Fabrinet — единственная точка контрактной сборки."
+    },
+    "risks": [
+      {
+        "risk": "CPO вытесняет pluggable (2028+)",
+        "prob": "Средняя near-term / Высокая 2028+",
+        "impact": "Высокий для сборщиков; Низкий для laser/DSP",
+        "note": "Nvidia/Broadcom CPO shipping; лидеры модулей поставляют и CPO-лазеры"
+      },
+      {
+        "risk": "Китайская конкуренция + геополитика",
+        "prob": "Высокая",
+        "impact": "Средний–Высокий",
+        "note": "63% рынка; InnoLight 90% overseas — хрупко; export controls cut both ways"
+      },
+      {
+        "risk": "Оценки (100x+ P/E)",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "Coherent ~110–158x, Lumentum ~114–156x; 2 июля 2026: −10–17% за день"
+      },
+      {
+        "risk": "Концентрация на Nvidia",
+        "prob": "Высокая (структурная)",
+        "impact": "Высокий",
+        "note": "Nvidia ~80% мировых 1.6T; InnoLight top-5 = 76% продаж"
+      },
+      {
+        "risk": "LPO угрожает DSP TAM",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": ">1/3 800G intra-DC; MACOM/Semtech выигрывают; Marvell/Broadcom: «coexist»"
+      },
+      {
+        "risk": "EML дефицит easing → margin peak",
+        "prob": "Высокая (конец 2026)",
+        "impact": "Средний",
+        "note": "LightCounting: дефицит уходит к концу 2026; pricing softens → laser-maker margin peak"
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — бутылочные горловины и дуополии",
+        "tone": "leader",
+        "badge": "EML лазеры, DSP IP, picks-and-shovels",
+        "note": "Lumentum — чистейшая EML ставка. Marvell — DSP first-mover + scale-up. Fabrinet — agnostic assembler. Coherent — full-stack diversified.",
+        "rows": [
+          {
+            "company": "Lumentum",
+            "ticker": "NASDAQ: LITE",
+            "mcap": "~$57 млрд",
+            "exposure": "единственный 200G/lane EML в объёме; OCS backlog >$400M; S&P 500",
+            "why": "Чистейшая ставка на EML-бутылочную горловину. Q3 FY26: рекорд $808M (+90%). Nvidia $2B инвестиция. OCS + CPO external lasers. Цель $2B/кв. OPM 35–36%. >60% выручки = AI infra/cloud.",
+            "priced": "P/E ~114–156x. Был выброшен из H100 (2022–23, заменён MPS), теперь AI resurgence. EML дефицит easing к концу 2026 → возможный margin peak."
+          },
+          {
+            "company": "Coherent",
+            "ticker": "NYSE: COHR",
+            "mcap": "~$25–26 млрд",
+            "exposure": "InP лазеры + модули + CPO; D&C 75% Q3 выручки; Nvidia $2B",
+            "why": "Full-stack: 6\" InP (Sherman TX), SiPh, модули, CPO (5 product families). FY25: $5,81B (+23%). D&C +40,6% г/г. InP capacity ×3 за год. Diversified generalist — best full-stack exposure.",
+            "priced": "P/E ~110–158x. +80% за год. Diversification = ниже beta чем Lumentum, но и ниже pure-play premium."
+          },
+          {
+            "company": "Marvell Technology",
+            "ticker": "NASDAQ: MRVL",
+            "mcap": "~$170–189 млрд",
+            "exposure": "~60–70% DSP; Ara 1.6T first-mover; Celestial AI ($3,25B); DC 76% выручки",
+            "why": "DSP-дуополия + scale-up optical (Celestial AI). Interconnect +70% FY27. FY26: $8,2B (+42%). 1.6T Ara рamp rapidly. Deepest IP moat в optical DSP.",
+            "priced": "Optical = ~20–30% story (также custom silicon, networking). Sold off mid-July. LPO = partial DSP TAM risk."
+          },
+          {
+            "company": "Fabrinet",
+            "ticker": "NYSE: FN",
+            "mcap": "крупная",
+            "exposure": "dominant optical contract manufacturer; 3 CPO клиента; agnostic",
+            "why": "Picks-and-shovels: агностик к победителю (pluggable vs CPO). Q3 FY26: рекорд $1,214B (+39%). Datacom constrained — demand far exceeded shipments. DCI +90% г/г.",
+            "priced": "Акции +63% за год. Non-GAAP EPS $3,72. Дешевле Coherent/Lumentum по мультипликатору. Overlooked assembler."
+          }
+        ]
+      },
+      {
+        "group": "Emerging и overlooked — CPO/SiPh + компоненты",
+        "tone": "emerging",
+        "badge": "CPO optionality, LPO компоненты, китайский рост",
+        "note": "MACOM — best overlooked value (58% GM, LPO leverage). POET — highest-risk/highest-reward CPO. InnoLight — scale champion с China risk.",
+        "rows": [
+          {
+            "company": "MACOM",
+            "ticker": "NASDAQ: MTSI",
+            "mcap": "~$20,6 млрд",
+            "exposure": "драйверы, TIA, CW-лазеры, 200G/lane photodetectors; DC +14,5% QoQ",
+            "why": "High-margin (58,5%) component supplier для LPO и optical. DC growth raised to 35–40%. Analog/photonics — overlooked vs pure-plays. Analyst fair value ~$389.",
+            "risk": "Не pure AI play; RF/industrial бизнес. Sold off от ~$29B spring peak."
+          },
+          {
+            "company": "InnoLight",
+            "ticker": "SHE: 300308",
+            "mcap": "~RMB 1,09 трлн (~$180B)",
+            "exposure": ">23% мировая доля; ~80% Nvidia 1.6T; Q1 +192%; HK IPO ~$7B",
+            "why": "Масштаб + SiPh vertical integration. FY25: $5,6B (+60%), net +116%. GM ~42,8%. №1 три года подряд. HK IPO расширяет capacity и доступ.",
+            "risk": "China/геополитика: 90% overseas, top-5 = 76% продаж. Export controls. Оценка ~RMB 1T — дорого."
+          },
+          {
+            "company": "Eoptolink",
+            "ticker": "SZSE: 300502",
+            "mcap": "~$99–108 млрд",
+            "exposure": "LPO strength (Meta/Amazon); GM 47,8%; overseas 96%; с №7 на №3",
+            "why": "Fastest-growing + best margins среди китайских. FY25: $3,6B (+187%), net +236%. LPO — «cash cow» 2026–27. С №7 до №3 за год.",
+            "risk": "52-нед: CN¥79–619 — extreme volatility. China risk. Customer concentration."
+          },
+          {
+            "company": "Credo Technology",
+            "ticker": "NASDAQ: CRDO",
+            "mcap": "крупная",
+            "exposure": "AEC (copper) core + ZeroFlap optical + 800G/1.6T optical DSP",
+            "why": "Copper-to-optical «heterogeneous» bet. FY26: $1,34B (+206%). Optical = emerging optionality. AEC core + optical expansion.",
+            "risk": "~15x forward P/S — priced for perfection. Optical пока нематериальна."
+          },
+          {
+            "company": "POET Technologies",
+            "ticker": "NASDAQ: POET",
+            "mcap": "~$2,5 млрд (volatile)",
+            "exposure": "Optical Interposer platform; wafer-scale hybrid integration",
+            "why": "Highest-risk/highest-reward CPO bet. Lumilens agreement ($50M initial, framework $500M+). «Outside Broadcom's closed ecosystem.» +190% Q2 2026.",
+            "risk": "Revenue $503K (Q1 2026). Net loss $12,3M. Unproven at volume. Micro-cap. Binary."
+          },
+          {
+            "company": "Ciena",
+            "ticker": "NYSE: CIEN",
+            "mcap": "крупная",
+            "exposure": "DCI/coherent + pluggables; FY26 outlook ~$6,3B (+32%)",
+            "why": "Coherent/DCI и long-haul AI-bandwidth. Q2 FY26: $1,57B (+40%). Optical Networking $1,10B. ~5,8x sales — дешевле pure-optics names.",
+            "risk": "Не pure AI play; telecom exposure. Медленнее растёт чем module makers."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Lumentum (EML bottleneck) + Marvell (DSP first-mover) — ядро позиции. Fabrinet — agnostic picks-and-shovels. MACOM — best overlooked value (58% GM, LPO). InnoLight — scale champion (но China risk). POET/Ayar (на IPO) — CPO binary bets. Входить на просадках 10–20% (как 2 июля 2026): оценки 100x+ не прощают замедления.",
+    "monitoring": {
+      "metrics": [
+        "Coherent D&C + InP/EML commentary (квартальный 8-K; следующий ~август 2026)",
+        "Lumentum Components (EML/laser) выручка + OCS/CPO (квартальный; ~август 2026)",
+        "InnoLight (300308.SZ) и Eoptolink (300502.SZ) квартальные Shenzhen filings — fastest read на модульный спрос",
+        "Fabrinet optical/datacom выручка + shortage commentary",
+        "Marvell interconnect рост + Ara 1.6T ramp; Broadcom CPO + AI revenue (квартальный)",
+        "LightCounting / Yole / TrendForce transceiver data и CPO forecasts"
+      ],
+      "canary": [
+        "EML дефицит easing (LightCounting: конец 2026) → pricing softens → laser-maker margin peak",
+        "1.6T ramp inflection (unit numbers от InnoLight/Coherent) → confirmation",
+        "CPO design-win/ramp at scale (Nvidia Spectrum-X volume, hyperscaler standardizes) → pluggable TAM risk",
+        "Китайская доля растёт или export-control escalation → structure shift",
+        "LPO share >1/3 800G intra-DC → DSP TAM risk (Marvell/Broadcom commentary)"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Рекорды у всех лидеров — но CPO shipping и оценки на 100x+",
+      "summary": "Июль 2026: Lumentum record +90%, InnoLight Q1 +192%, Eoptolink +187%, Fabrinet +39%, Marvell DC +27% — рекорды по всей цепочке. Nvidia Spectrum-X CPO «in production» (май 2026). EML дефицит ~30% сохраняется. Но оценки 100–158x P/E, и 2 июля: AOI −17%, Coherent/Lumentum −10% за день. Три поколения (800G/1.6T/3.2T) разгоняются одновременно — необычно для сектора.",
+      "stories": [
+        {
+          "title": "Nvidia вложила $4 млрд в Coherent и Lumentum (по $2 млрд), март 2026",
+          "tone": "positive",
+          "verdict": "Прямое подтверждение EML-бутылочной горловины. Nvidia закрепляет поставки лазеров + получает доступ к CPO product families.",
+          "detail": "Coherent: доступ к 5 CPO product families. Lumentum: added to S&P 500. Обе компании — поставщики и для pluggable, и для CPO."
+        },
+        {
+          "title": "Nvidia Spectrum-X CPO «in production» (май 2026); broad availability 2H2026",
+          "tone": "mixed",
+          "verdict": "CPO переходит из лабораторий в серию. CoreWeave, Lambda, Oracle — первые. Но pluggable рынок продолжает расти (+60%). Additive near-term.",
+          "detail": "Broadcom Davisson 102.4T shipping с октября 2025. TSMC COUPE mass production 2026. CPO = $46M (2024) → $8,1B (2030, Yole)."
+        },
+        {
+          "title": "800G+ units: 24M → 63M (2026, ×2,6); 1.6T procurement raised to 20M",
+          "tone": "positive",
+          "verdict": "Три поколения (800G/1.6T/3.2T) разгоняются одновременно — без обычной inventory digestion. Hyperscalers подняли 1.6T закупки с 10M до 20M.",
+          "detail": "800G+ доля поставок: 19,5% (2024) → >60% (2026). 1.6T pricing ~$1 300–1 500."
+        },
+        {
+          "title": "2 июля 2026: AOI −17%, Coherent/Lumentum −10% за один день",
+          "tone": "negative",
+          "verdict": "High-beta optical names: 100x+ P/E не прощают ничего. Просадки 10–20% — нормальные для сектора. Точки входа, если fundamentals hold.",
+          "detail": "POET: +190% Q2, потом micro-cap volatility. Eoptolink 52-нед: CN¥79–619."
+        }
+      ],
+      "bottomLine": "AI-оптика = один из самых быстрорастущих подсегментов (Ethernet +60%, 800G+ ×2,6). EML bottleneck подтверждён $4 млрд Nvidia. CPO shipping, но additive — лазерные компании выигрывают в обоих сценариях. Входить на просадках (как 2 июля): fundamentals record, но 100x+ P/E = zero margin of safety."
+    },
+    "news": [
+      {
+        "date": "2026-05-15",
+        "source": "Nvidia",
+        "title": "Nvidia Spectrum-X CPO «in production»; broad availability 2H2026",
+        "blurb": "CoreWeave, Lambda, Oracle — первые клиенты. CPO switch + pluggable coexist. Quantum-X InfiniBand CPO — early 2026."
+      },
+      {
+        "date": "2026-03-02",
+        "source": "Nvidia / Coherent / Lumentum",
+        "title": "Nvidia вложила $4 млрд: $2B в Coherent + $2B в Lumentum",
+        "blurb": "Прямое подтверждение EML bottleneck. Coherent: 5 CPO product families. Lumentum: S&P 500 + OCS."
+      },
+      {
+        "date": "2026-02-20",
+        "source": "Lumentum",
+        "title": "Lumentum Q3 FY26: рекорд $808M (+90%); guided Q4 $960–1 010M, OPM 35–36%",
+        "blurb": "EML units on track +>50%. Narrow-linewidth DCI +120% (9th consecutive record). Target $2B/кв run-rate."
+      },
+      {
+        "date": "2026-01-15",
+        "source": "LightCounting",
+        "title": "AI/Ethernet optics: $16,5B (2025) → $26B (2026, +60%)",
+        "blurb": "800G+ units 24M→63M. EML спрос > предложение ~30%. Три поколения одновременно. Дефицит easing к концу 2026."
+      },
+      {
+        "date": "2025-10-01",
+        "source": "Broadcom",
+        "title": "Broadcom Davisson (TH6) 102.4T CPO switch shipping",
+        "blurb": "CPO лидер: Bailly TH5 с 2023, теперь Davisson. 70% lower optical power, 8x silicon-area efficiency."
+      }
+    ]
   }
 }
