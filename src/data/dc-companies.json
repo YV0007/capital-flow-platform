@@ -1967,5 +1967,82 @@
     "ppr": "Pub",
     "geo": "NL",
     "note": "Лидер ALD/эпитаксии — критическая технология для GAA-транзисторов"
+  },
+  {
+    "company": "Samsung Electro-Mechanics",
+    "ticker": "KRX: 009150",
+    "sector": "PCB",
+    "conviction": "High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "KR",
+    "note": "FC-BGA + AI MLCC; первый вендор Groq LPU; AMD HPC; +756% H1 2026"
+  },
+  {
+    "company": "Elite Material (EMC)",
+    "ticker": "TPE: 2383",
+    "sector": "PCB",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "TW",
+    "note": "~40% высокоскоростного CCL; M8/M9; выручка TWD 94,26 млрд (+46%)"
+  },
+  {
+    "company": "ISU Petasys",
+    "ticker": "KRX: 007660",
+    "sector": "PCB",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "KR",
+    "note": "40+ слойные MLB для Alphabet/Nvidia/Microsoft; AI-PCB специалист; +360% за год"
+  },
+  {
+    "company": "SKC / Absolics",
+    "ticker": "KRX: 011790",
+    "sector": "PCB",
+    "conviction": "Low-Med",
+    "riskTier": "Aggressive",
+    "horizon": "5+ лет",
+    "ppr": "Pub",
+    "geo": "KR",
+    "note": "Стеклянные подложки first mover; Georgia завод; AMD/AWS квалификация; binary bet"
+  },
+  {
+    "company": "Shengyi Technology",
+    "ticker": "SSE: 600183",
+    "sector": "PCB",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "CN",
+    "note": "M9 CCL для Nvidia Rubin/GB300; ~90% выход; Китай №1 высокоскоростной CCL"
+  },
+  {
+    "company": "WUS Printed Circuit",
+    "ticker": "SZSE: 002463",
+    "sector": "PCB",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "CN",
+    "note": "≥50% switch/router PCB; AI-PCB микс >70%; Китай №1 AI-PCB"
+  },
+  {
+    "company": "Nan Ya PCB",
+    "ticker": "TPE: 8046",
+    "sector": "PCB",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "TW",
+    "note": "ABF + HPC платы; прибыль +855%; Morgan Stanley PT NT$515"
   }
 ]
