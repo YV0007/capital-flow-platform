@@ -2330,5 +2330,192 @@
     "ppr": "ZR module ecosystem; speculative optical play; +233–440% YTD 2026",
     "geo": "US",
     "note": "highly speculative; small-cap; volatile"
+  },
+  {
+    "company": "Furukawa Electric",
+    "ticker": "TSE: 5801",
+    "sector": "Dark Fiber",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Best merchant hollow-core fiber exposure (AccuCore ~26% share); OFS/Lightera platform; world-top fusion-splicer",
+    "geo": "JP",
+    "note": "V-shaped AI recovery; market cap ~$8–10B (estimate, flagged)"
+  },
+  {
+    "company": "Sterlite Technologies",
+    "ticker": "NSE: STLTECH",
+    "sector": "Dark Fiber",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "Cheapest vertically-integrated cable maker (glass→cable→software); India leader ~40–45% + US plant",
+    "geo": "IN",
+    "note": "Turnaround post-glut; demerged STL Networks (Apr 2025); revenue estimates flagged"
+  },
+  {
+    "company": "YOFC",
+    "ticker": "HKEX: 6869",
+    "sector": "Fiber/Cable",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "China #1 fiber maker (~12% global); integrated preform-fiber-cable; HollowBand HCF leader (0.04 dB/km OFC 2026)",
+    "geo": "CN",
+    "note": "Anti-dumping walls on West; extreme volatility (peak >RMB 300B then -34-50%); H1 2026 profit +711-914%"
+  },
+  {
+    "company": "Hengtong",
+    "ticker": "SSE: 600487",
+    "sector": "Fiber/Cable",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "~16% global fiber share; targeting 40% international revenue; first China commercial HCF line",
+    "geo": "CN",
+    "note": "Commoditized mix; China policy risk; +312%/yr"
+  },
+  {
+    "company": "CommScope",
+    "ticker": "NASDAQ: COMM",
+    "sector": "Fiber/Cable",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "2–4 лет",
+    "ppr": "Deep-value turnaround; data-center revenue +73%; ~9x fwd EBITDA — steep discount to peers",
+    "geo": "US",
+    "note": "CCS-sale to Amphenol reshapes thesis; de-levered focused-connectivity post-deal"
+  },
+  {
+    "company": "Shin-Etsu Chemical",
+    "ticker": "TSE: 4063",
+    "sector": "Fiber/Cable",
+    "conviction": "medium",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "Only directly investable pure preform chokepoint; synthetic quartz leader; China JVs with YOFC/Fasten",
+    "geo": "JP",
+    "note": "Diversified chemicals giant — fiber is small but strategic slice; overlooked as preform play"
+  },
+  {
+    "company": "nLight",
+    "ticker": "NASDAQ: LASR",
+    "sector": "Fiber/Cable",
+    "conviction": "low",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "Fiber-laser/defense (70kW, up-to-$627M contract) + AI optical-engine optionality",
+    "geo": "US",
+    "note": "FY2025 revenue $261M (+31.6%); still loss-making; high-beta small-cap"
+  },
+  {
+    "company": "Oracle",
+    "ticker": "NYSE: ORCL",
+    "sector": "AI Compute Infra",
+    "conviction": "high",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "Lowest-risk AI-cloud: $553B RPO, OCI +84%, ~28x earnings, Stargate partner, cash-generative",
+    "geo": "US",
+    "note": "~54% RPO from OpenAI (concentration); debt-funded capex"
+  },
+  {
+    "company": "IREN",
+    "ticker": "NASDAQ: IREN",
+    "sector": "AI Compute Infra",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Power-rich crypto-to-AI pivot: >4.5GW power, 150K GPU, $4B+ ARR target, NVIDIA $3.4B contract",
+    "geo": "AU",
+    "note": "Bitcoin overhang; $9.2B+ secured debt; -52% from peak"
+  },
+  {
+    "company": "Core Scientific",
+    "ticker": "NASDAQ: CORZ",
+    "sector": "AI Compute Infra",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Cheapest crypto-to-AI (~25x sales); CoreWeave landlord $10.2B/12yr; 80-85% cash GM target",
+    "geo": "US",
+    "note": "Winding down Bitcoin; possible CoreWeave acquisition target (verify)"
+  },
+  {
+    "company": "TeraWulf",
+    "ticker": "NASDAQ: WULF",
+    "sector": "AI Compute Infra",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Google-backed ($3.2B) crypto-to-AI pivot; $12.8B HPC contracted; Fluidstack partner",
+    "geo": "US",
+    "note": "Higher multiple; Bitcoin overhang; smaller scale vs IREN"
+  },
+  {
+    "company": "Cipher Mining",
+    "ticker": "NASDAQ: CIFR",
+    "sector": "AI Compute Infra",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "$9B contracted AI pipeline; Fluidstack/Google backstop; multi-hyperscaler client base",
+    "geo": "US",
+    "note": "207MW Texas; crypto-to-AI transition"
+  },
+  {
+    "company": "Hut 8",
+    "ticker": "NASDAQ: HUT",
+    "sector": "AI Compute Infra",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "$9.8B Beacon Point 15-year lease (up to $25B+); Fluidstack/Anthropic 245MW; GPU-as-a-Service",
+    "geo": "CA",
+    "note": "~82x sales; rent = largely future revenue"
+  },
+  {
+    "company": "DigitalOcean",
+    "ticker": "NYSE: DOCN",
+    "sector": "AI Compute Infra",
+    "conviction": "medium",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "Overlooked inference cloud for SMB; AI ARR $170M (+221%); 41% EBITDA margin; 2027 growth >50%",
+    "geo": "US",
+    "note": "Smaller/slower vs GPU-training giants; SMB exposure"
+  },
+  {
+    "company": "Nscale",
+    "ticker": "Private",
+    "sector": "AI Compute Infra",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "$14.6B private; Microsoft 200K GB300 deal; Stargate Norway; NVIDIA/Dell/Nokia backed",
+    "geo": "UK/NO",
+    "note": "Thin operating history; $24M loss on only public accounts; debt-funded"
+  },
+  {
+    "company": "Fluidstack",
+    "ticker": "Private",
+    "sector": "AI Compute Infra",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "~$18B private; $50B Anthropic deal; Google-backed; $10B GPU-debt capacity (Macquarie)",
+    "geo": "US",
+    "note": "Asset-light aggregator; counterparty concentration; thin equity cushion"
+  },
+  {
+    "company": "Vast Data",
+    "ticker": "Private",
+    "sector": "AI Compute Infra",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "$30B private; >$500M ARR, >$4B bookings; data platform underpinning CoreWeave + xAI; IPO candidate",
+    "geo": "US",
+    "note": "Cleanest picks-and-shovels neocloud play; company-sourced financials (verify)"
   }
 ]

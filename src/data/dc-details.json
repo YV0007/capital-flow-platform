@@ -8042,5 +8042,1797 @@
         "blurb": "Nitro redriver + up-to-6.4Tbps engines for inside-datacenter. Expands Ciena beyond transport into DC fabric."
       }
     ]
+  },
+  "darkfiber": {
+    "asOf": "2026-07-28",
+    "intro": "Тёмное волокно и межгородские волоконные маршруты — физическая инфраструктура, по которой идёт весь дальний трафик между дата-центрами. AI-стройка вызвала «земельную лихорадку» за редкие маршруты: гиперскейлеры теперь требуют 144–432+ волокон на коридор (вместо прежних 8–12). Lumen закрыл ~$13 млрд контрактов PCF с Microsoft, Meta, Google, AWS и Anthropic. Corning Optical выросла на 35% до $6,27 млрд в 2025 году, а мощности распроданы. Рынок тёмного волокна ~$8–9 млрд (2026) с CAGR ~11–15%. Ключевое ограничение — не стекло, а права прохода и разрешения на прокладку новых маршрутов: именно поэтому существующие владельцы сетей (Lumen, Zayo) получают премию.",
+    "tldr": [
+      "Рынок тёмного волокна ~$8–9 млрд (2026), CAGR ~11–15%. Гиперскейлеры (capex ~$725 млрд в 2026, +77% г/г) скупают волокно по контрактам IRU на 20 лет: Lumen ~$13 млрд PCF, Corning до $6 млрд Meta-сделка, Prysmian до €5,5 млрд Molex. Волокно на маршрут выросло с 8–12 до 144–432+ жил.",
+      "Ценность — в редких межгородских маршрутах и правах прохода, которые почти невозможно воспроизвести. Владельцы (Lumen, Zayo) получают IRU-контракты с очень высокой инкрементальной маржой: маршрут — уже sunk cost, каждая новая жила — почти чистая прибыль. Кабельная олигополия (Corning ~21,5%, top-5 = 46,5%) восстановила ценовую силу после глата 2022–23.",
+      "Центральное напряжение: призрак fiber-glut 2000–01 (85–95% волокна 1990-х осталось неосвещённым, цены упали ~90%) vs. структурно иная база сегодня (take-or-pay контракты, реальные денежные потоки гиперскейлеров). Hollow-core fiber — реальный долгосрочный disruption, но нишевой (~$352 млн в 2025). Главный вопрос: выдержат ли IRU-контракты паузу AI-capex?"
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 8,
+        "cyclicality": 6,
+        "valuation": 4
+      },
+      "summary": "AI-DCI вызвал настоящую «земельную лихорадку» за межгородское волокно — гиперскейлеры платят миллиарды за 20-летние IRU на существующих маршрутах. Moat-ы сильнейшие в цепочке: права прохода, разрешения на прокладку и физически проложенный кабель невозможно скопировать. Кабельная олигополия (Corning + Prysmian + японская тройка) восстановила pricing power после глата 2022–23. Но valuations высоки (Corning ~70× P/E, японцы переоценены в 5–10×), а ключевой proven-leader маршрутов — Lumen — несёт ~$13 млрд долга. Margin quality двоякая: IRU-экономика на существующих маршрутах великолепна, но turnaround-компании (Lumen, Cogent, Uniti) пока не доказали устойчивую EBITDA. Лучший баланс risk/reward: Corning (moat + баланс) для ядра, Prysmian (дешевле) как overlooked альтернатива, Lumen для торквового exposure к тёмному волокну.",
+      "horizon": "3–5 лет (инфраструктурный тезис, не trade)",
+      "sizing": "Тёмное волокно ~$8–9 млрд (2026) → ~$17–29 млрд к 2031–35 (CAGR 11–15%). Оптоволоконный кабель ~$13–16 млрд (2025) → ~$23–36 млрд к 2030–35 (CAGR ~9,5%)",
+      "keyQuestion": "Выдержат ли take-or-pay/IRU-контракты гиперскейлеров паузу AI-capex — или сектор повторит fiber-glut 2001 года?",
+      "bull": [
+        "Гиперскейлеры скупают волокно на контрактах: Lumen ~$13 млрд PCF, Corning до $6 млрд Meta, Prysmian до €5,5 млрд Molex — реальные cash flows, не спекуляция",
+        "Дефицит межгородских маршрутов структурный: права прохода и разрешения — binding constraints; Zayo — единственный строитель long-haul масштаба за десятилетие",
+        "Кабельная олигополия Corning (~21,5% share) + Prysmian распродала мощности, ASP восстанавливаются; Springboard target Corning до $40 млрд к 2030"
+      ],
+      "bear": [
+        "Призрак 2000–01: 85–95% волокна 1990-х осталось тёмным, bandwidth prices упали ~90% — air pocket в AI-capex повторит историю для new-build",
+        "Hollow-core fiber + multi-band coherent увеличивают ёмкость существующего волокна, снижая потребность в новой прокладке на горизонте 5–10 лет",
+        "Valuations extreme: Corning ~70× trailing P/E; Fujikura −50% drawdown с пика; Lumen/Cogent/Uniti — leveraged turnarounds с непроверенной EBITDA"
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~11–15% CAGR (2025–2031, разброс по определениям)",
+      "chartTitle": "Рынок тёмного волокна, $ млрд",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 7.0,
+          "label": "~$7 млрд",
+          "source": "Mordor / DataM / IndustryARC (среднее)"
+        },
+        {
+          "year": "2025",
+          "value": 8.1,
+          "label": "~$8 млрд",
+          "source": "Mordor Intelligence"
+        },
+        {
+          "year": "2026",
+          "value": 9.2,
+          "label": "~$9 млрд",
+          "source": "Mordor Intelligence"
+        },
+        {
+          "year": "2028",
+          "value": 12.5,
+          "label": "~$13 млрд",
+          "source": "оценка при CAGR ~13%"
+        },
+        {
+          "year": "2031",
+          "value": 17.0,
+          "label": "~$17 млрд",
+          "source": "Mordor Intelligence"
+        }
+      ],
+      "bomShare": {
+        "value": "~5–10%",
+        "note": "Физическое волокно — малая доля стоимости AI-кластера, но абсолютный bottleneck: без проложенного маршрута кластер не работает"
+      },
+      "volumeVsPrice": "Рост volume-driven: гиперскейлеры увеличили число волокон на коридор в 12–36× (с 8–12 до 144–432+). Цены на кабель восстанавливаются после глата 2022–23 (CRU: −28% г/г в 2023, стабилизация с 2024). IRU-pricing растёт на дефиците маршрутов."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "Lumen (владелец маршрутов, IRU)",
+          "gm": "~60–70% инкремент",
+          "note": "Маршрут — sunk cost; каждая новая жила — near-pure profit. Adj EBITDA margin ~35–40%"
+        },
+        {
+          "stage": "Corning (кабельная олигополия)",
+          "gm": "~45–50%",
+          "note": "Core operating margin ~19–20% (Springboard); optical = крупнейший и самый быстрорастущий сегмент"
+        },
+        {
+          "stage": "Prysmian (кабель + энергия)",
+          "gm": "~35–40%",
+          "note": "Digital Solutions ~20% CAGR 2026–30; энергокабель стабилизирует"
+        },
+        {
+          "stage": "Sterlite (верт. интеграция)",
+          "gm": "~30–35%",
+          "note": "Glass → cable → software; margin recovery после глата"
+        },
+        {
+          "stage": "Строительство / прокладка",
+          "gm": "~10–15%",
+          "note": "Фрагментированная, самая низкая маржа; bottleneck по труду и разрешениям"
+        }
+      ],
+      "bottleneckNow": "Права прохода (rights-of-way), разрешения на прокладку и квалифицированный труд — binding constraints для новых маршрутов",
+      "bottleneckNext": "Мощности по производству кабеля: Corning распродан, Prysmian удваивает US capacity; preform/стекло (Heraeus, Shin-Etsu)",
+      "capitalIntensity": "Очень высокая для новых маршрутов (прокладка $50–500K+ за IRU); низкая инкрементальная для существующих маршрутов (добавление жил на sunk-cost инфраструктуре)",
+      "takeaway": "Устойчивая ценность — у владельцев существующих маршрутов (IRU-экономика) и кабельной олигополии (Corning/Prysmian). Строительство — bottleneck, но не capturer ценности."
+    },
+    "competition": {
+      "concentration": "Маршруты: олигополия 3–4 владельцев в US (Lumen, Zayo, Uniti, Cogent). Кабель: top-5 = 46,5% глобально (Corning ~21,5%, Prysmian, YOFC, Hengtong, Sumitomo). Антидемпинговые пошлины отсекают китайских производителей от Запада.",
+      "shareTrajectory": [
+        {
+          "player": "Corning",
+          "now": "~21,5% глобально (лидер)",
+          "direction": "→",
+          "detail": "Мощности распроданы; расширяет 34 завода в 15 штатах. Springboard target $40 млрд к 2030"
+        },
+        {
+          "player": "Lumen",
+          "now": "Крупнейшая US intercity сеть, 17M fiber miles",
+          "direction": "↑",
+          "detail": "Целевые 47M (2028) → 58M (2031); ~$13 млрд PCF backlog"
+        },
+        {
+          "player": "Zayo (частная)",
+          "now": "~19,9M fiber miles, №2 US",
+          "direction": "↑",
+          "detail": "Купила Crown Castle Fiber ($4,25 млрд); строит 5 000+ route miles для AI"
+        },
+        {
+          "player": "Prysmian",
+          "now": "Top-3 глобально",
+          "direction": "↑",
+          "detail": "Удваивает US мощности; до €5,5 млрд Molex + €10 млрд+ pipeline к 2035"
+        },
+        {
+          "player": "YOFC / Hengtong",
+          "now": "~12% + ~16% глобально",
+          "direction": "→",
+          "detail": "Доминируют в Азии, заблокированы на Западе пошлинами"
+        }
+      ],
+      "players": [
+        {
+          "name": "Corning",
+          "share": "~21,5%",
+          "edge": "Вертикальная интеграция (preform → кабель), крупнейший масштаб, приоритетные контракты с гиперскейлерами"
+        },
+        {
+          "name": "Lumen",
+          "share": "Крупнейшая US intercity",
+          "edge": "17M→58M fiber miles; PCF-модель с take-or-pay; rights-of-way невозможно воспроизвести"
+        },
+        {
+          "name": "Zayo (частная)",
+          "share": "~19,9M fiber miles",
+          "edge": "Единственный long-haul builder at scale за десятилетие; Crown Castle Fiber acquisition"
+        },
+        {
+          "name": "Prysmian",
+          "share": "Top-3 глобально",
+          "edge": "Крупнейший кабельный производитель; Digital Solutions ~20% CAGR; энергокабель = диверсификация"
+        },
+        {
+          "name": "Fujikura",
+          "share": "Top-5 Япония",
+          "edge": "~75% на экспорт; AccuCore HCF ~26% merchant share; fusion-splicer leadership"
+        }
+      ],
+      "switchingCost": "Очень высокий: IRU-контракты на 20–30 лет; физически проложенное волокно привязывает к маршруту. Смена маршрута = новая прокладка на миллионы.",
+      "entryBarrier": "Экстремальный: права прохода, разрешения, десятилетия прокладки. Zayo — единственный новый long-haul builder за 10 лет. Для кабеля: preform/glass technology + масштаб + qualification.",
+      "takeaway": "Структурная олигополия и в маршрутах, и в кабеле. Антидемпинговые пошлины защищают западных игроков от YOFC/Hengtong. Новый вход практически невозможен."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 95,
+          "note": "Corning мощности распроданы; Lumen backlog ~$13 млрд; гиперскейлеры capex ~$725 млрд (+77% г/г)"
+        },
+        {
+          "year": "2027",
+          "pct": 85,
+          "note": "Lumen целевые 47M fiber miles к 2028; Prysmian pipeline €10 млрд+ к 2035; AI-campus стройка продолжается"
+        },
+        {
+          "year": "2028",
+          "pct": 70,
+          "note": "Hollow-core + multi-band coherent могут снизить потребность; зависит от AI-capex trajectory"
+        }
+      ],
+      "contractStructure": "IRU (Indefeasible Rights of Use) на 20–30 лет: 50% при подписании + 50% при приёмке + annual maintenance ~$125–250/strand-mile/год. Take-or-pay — гиперскейлеры платят независимо от использования.",
+      "customerConcentration": "Высокая: Microsoft, Meta, Google, AWS, Anthropic — основные покупатели. Creditworthy, но 4–5 клиентов = большая часть спроса.",
+      "backlog": "Lumen ~$13 млрд PCF (из них $2,5 млрд в Q4 2025). Corning до $6 млрд Meta + NVIDIA/Amazon. Zayo >$1 млрд AI-контрактов (2024) + $3 млрд pipeline.",
+      "pricing": "IRU upfront: $50K–$500K+ за маршрут. Коммерческая аренда: $1K–$5K/мес (metro <50 mi), $5K–$25K+/мес (long-haul 100+ mi). Fiber ASP восстанавливаются после −28% г/г в 2023.",
+      "takeaway": "Спрос законтрактован на десятилетия вперёд с самыми кредитоспособными покупателями на планете. Но концентрация = systemic risk: пауза AI-capex ударит по всем."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "Corning мощности распроданы; lead times увеличены; новые маршруты ограничены разрешениями и трудом"
+        },
+        {
+          "year": "2027",
+          "state": "напряжённо",
+          "color": "#f59e0b",
+          "detail": "Corning + Prysmian расширяют US мощности; Lumen + Zayo прокладывают маршруты; demand растёт"
+        },
+        {
+          "year": "2028",
+          "state": "постепенное ослабление",
+          "color": "#22d3ee",
+          "detail": "Новые мощности выходят; hollow-core + multi-band повышают ёмкость существующего волокна"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Corning: расширение 34 заводов в 15 штатах US; ~10% глобальных мощностей зарезервировано для Lumen",
+          "when": "2025–2027",
+          "impact": "Крупнейший прирост кабельных мощностей на Западе"
+        },
+        {
+          "name": "Prysmian: удвоение US fiber capacity; €5,5 млрд Molex/Koch deal + расширение",
+          "when": "2025–2028",
+          "impact": "Усиление позиции №2 на Западе"
+        },
+        {
+          "name": "Lumen: 17M → 47M (2028) → 58M (2031) intercity fiber miles; 55 новых IRU conduit routes",
+          "when": "2025–2031",
+          "impact": "Утроение крупнейшей US intercity сети"
+        },
+        {
+          "name": "Zayo: 5 000+ новых long-haul route miles + Crown Castle Fiber (~90K route miles)",
+          "when": "2025–2027",
+          "impact": "Единственный масштабный long-haul builder"
+        },
+        {
+          "name": "Sterlite: завод в South Carolina; мощности 42M fiber-km / 50M cable-km",
+          "when": "2023–2026",
+          "impact": "Вход индийского вертикально-интегрированного игрока в US"
+        }
+      ],
+      "leadTime": "Увеличены: Corning распродан; новые маршруты занимают годы (permitting + construction). IRU conduit на существующих маршрутах — быстрее (месяцы).",
+      "utilization": "Кабельные заводы ~95%+ (Corning sold out). Существующие маршруты: высокая загрузка (Lumen: 17M → 47M fiber miles). Hollow-core: <1% рынка.",
+      "crowdingOut": "Гиперскейлеры вытесняют telco/enterprise: Lumen зарезервировала 10% Corning мощностей + контрактует conduit на десятилетия. Telco FTTH-спрос конкурирует за тот же кабель.",
+      "takeaway": "Настоящий дефицит в 2026: и в кабеле (Corning sold out), и в маршрутах (permit constraint). Расширение мощностей идёт, но demand растёт быстрее."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "IRU upfront: ~$750/strand-mile + $125–250/strand-mile/год maintenance (20-year). Аренда: $1K–25K+/мес по расстоянию. 72-GPU Blackwell rack = ~16× больше волокна чем traditional cloud switch.",
+      "grossMargin": "Corning optical ~45–50% GM, ~19–20% OPM. Lumen IRU ~60–70% incremental margin (sunk-cost route). Prysmian ~35–40%. Строительство ~10–15%.",
+      "costCurve": "Существующие маршруты: near-zero incremental cost per strand → extreme margin. Новые маршруты: capital-intensive, back-loaded. Corning Contour Flow Cable удваивает волокно на duct → снижает cost/bit.",
+      "yields": [
+        {
+          "gen": "Conventional G.652D fiber",
+          "pct": "~0,14 dB/km",
+          "note": "Стандарт; mature, высокий yield"
+        },
+        {
+          "gen": "Hollow-core (Microsoft)",
+          "pct": "0,091 dB/km",
+          "note": "Ниже conventional впервые (Nature Photonics, Sept 2025); ~31% lower latency"
+        },
+        {
+          "gen": "Hollow-core (YOFC)",
+          "pct": "0,04 dB/km",
+          "note": "Рекорд OFC 2026; лабораторный масштаб"
+        },
+        {
+          "gen": "432-fiber cables (Corning)",
+          "pct": "mainstream",
+          "note": "Dual-sheath; Contour Flow = 2× fiber/duct; bend-insensitive"
+        }
+      ],
+      "takeaway": "Экономика существующих маршрутов — одна из лучших в инфраструктуре: sunk-cost база + IRU = near-pure incremental profit. Кабельная олигополия восстановила pricing power."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "G.652D conventional (8–12 fibers)",
+          "node": "mainstream",
+          "year": "до 2020",
+          "note": "Стандартное волокно, маленькие кабели; наследие telco-эры"
+        },
+        {
+          "name": "144–432 fiber cables",
+          "node": "shipping",
+          "year": "2023–2026",
+          "note": "AI-era стандарт; Corning dual-sheath 432; гиперскейлеры требуют 144–432+ на коридор"
+        },
+        {
+          "name": "864–1 728 fiber cables",
+          "node": "ramping",
+          "year": "2025–2028",
+          "note": "Ultra-high-count; Corning RocketRibbon + Contour Flow (2× fiber/duct)"
+        },
+        {
+          "name": "Hollow-core fiber (HCF)",
+          "node": "sampling",
+          "year": "2025–2030",
+          "note": "Microsoft 0,091 dB/km (>1 280 km deployed); YOFC 0,04 dB/km; ~31% lower latency"
+        },
+        {
+          "name": "Multi-band (C+L) coherent",
+          "node": "ramping",
+          "year": "2025–2028",
+          "note": "Увеличивает ёмкость существующего волокна → хорошо для owners, marginal для new-build cable"
+        },
+        {
+          "name": "Multi-core fiber (MCF)",
+          "node": "development",
+          "year": "2028+",
+          "note": "Множество световодов в одном волокне; research stage"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "Hollow-core fiber (HCF)",
+          "verdict": "Реальный долгосрочный disruption, но нишевой (~$352 млн, 2025). Incumbents тоже производят HCF",
+          "tone": "mixed",
+          "detail": "Microsoft: 0,091 dB/km, >1 280 km deployed, zero field failures. YOFC: 0,04 dB/km (OFC 2026). ~31% lower latency. Furukawa AccuCore ~26% merchant HCF share. euNetworks — первый европейский deployer. 5–10-летний risk, не 1–2-летний.",
+          "angle": "Favors existing route-owners + incumbent кабельщиков. Угроза для pure new-build cable demand."
+        },
+        {
+          "tech": "Multi-band coherent / capacity gains",
+          "verdict": "Усиливает ценность существующих маршрутов, снижает потребность в новой прокладке",
+          "tone": "mixed",
+          "detail": "C+L band + higher-order coherent извлекают больше bits/fiber. EXA → Nokia ICE7 (1,2 Tbps/channel, +15%). Хорошо для owners (Lumen, Zayo), marginal негатив для cable volume. → раздел Оптические модули",
+          "angle": "Позитивно для route-owners. Coherent + fiber = co-dependent."
+        },
+        {
+          "tech": "Hyperscaler self-build (обход лизинга)",
+          "verdict": "Пока не реализуется — PCF-модель показывает: гиперскейлеры предпочитают арендовать",
+          "tone": "positive",
+          "detail": "Гиперскейлеры могли бы строить own routes, но PCF-модель (Lumen ~$13 млрд) показывает предпочтение lease/IRU для скорости. New routes = годы permitting.",
+          "angle": "Защищает ценность route-owners. Canary: если гиперскейлер объявит own long-haul build."
+        }
+      ],
+      "takeaway": "Roadmap усиливает scarcity: higher fiber counts и HCF увеличивают value маршрутов; multi-band coherent снижает new-build demand. Net: хорошо для owners, mixed для cable volume."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "Оптоволоконный кабель",
+          "supplier": "Corning, Prysmian, Fujikura, Sumitomo, Sterlite",
+          "note": "Corning ~21,5% глобально; мощности распроданы"
+        },
+        {
+          "item": "Preform / кварцевое стекло",
+          "supplier": "Corning, Heraeus, Shin-Etsu",
+          "note": "Вертикальная интеграция Corning — ключевое преимущество"
+        },
+        {
+          "item": "Когерентные транспортные системы",
+          "supplier": "Ciena, Nokia/Infinera",
+          "note": "Оборудование, которое «зажигает» волокно. → раздел Оптические модули"
+        },
+        {
+          "item": "Разрешения и права прохода",
+          "supplier": "Муниципалитеты, DOT, коммунальные компании",
+          "note": "Binding constraint для новых маршрутов; годы на получение"
+        },
+        {
+          "item": "Строительные подрядчики",
+          "supplier": "Фрагментированный рынок",
+          "note": "Дефицит квалифицированного труда — усиливает scarcity маршрутов"
+        }
+      ],
+      "downstream": "Гиперскейлеры (Microsoft, Meta, Google, AWS, Anthropic) — dominant покупатели через PCF/IRU. Carriers (AT&T, Verizon FTTH). Enterprise. AI-campus operators.",
+      "correlation": "Высокая корреляция с capex гиперскейлеров (~$725 млрд в 2026, +77% г/г) и AI-campus buildout. Meta $600 млрд US infrastructure commitment через 2028.",
+      "takeaway": "Тёмное волокно — физический фундамент AI-инфраструктуры. Без маршрута нет DCI, нет распределённого training. Привязка к hyperscaler capex — и сила, и уязвимость."
+    },
+    "risks": [
+      {
+        "risk": "Fiber-glut / overbuild (повторение 2000–01)",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "85–95% волокна 1990-х осталось тёмным; prices −90%. Сегодня: take-or-pay/IRU, реальные cash flows. Но память жива, valuations embed optimism."
+      },
+      {
+        "risk": "Hollow-core disrupts conventional cable",
+        "prob": "Низкая-Средняя",
+        "impact": "Средний",
+        "note": "HCF нишевой (~$352 млн, 2025); incumbents тоже производят. 5–10-летний риск."
+      },
+      {
+        "risk": "Концентрация клиентов (гиперскейлеры)",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "4–5 гиперскейлеров = основной спрос. Creditworthy, но пауза AI-capex ударит по всему сектору."
+      },
+      {
+        "risk": "Баланс Lumen / execution risk",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Net debt <$13 млрд; turnaround не доказан на recurring EBITDA. Restructuring risk при слабом PCF cashflow."
+      },
+      {
+        "risk": "Valuation risk",
+        "prob": "Средняя-Высокая",
+        "impact": "Высокий",
+        "note": "Corning ~70× P/E; Fujikura −50% drawdown; японцы 5–10×. JPMorgan Negative Catalyst Watch (июль 2026)."
+      },
+      {
+        "risk": "Multi-band / coherent capacity gains",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Больше bits/fiber = меньше new-build demand. Хорошо для route-owners, marginal негатив для cable volume."
+      },
+      {
+        "risk": "Interest-rate sensitivity",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Capital-intensive, levered assets; rate cuts помогут valuations и финансированию."
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — кабельная олигополия и владельцы маршрутов",
+        "tone": "leader",
+        "badge": "MOAT + КОНТРАКТЫ",
+        "note": "Corning — самый широкий moat и чистый баланс среди cable-makers. Lumen — highest-torque route-owner play с ~$13 млрд PCF. Prysmian — overlooked альтернатива Corning по дешевле. Cogent — distressed optionality на wavelength ramp.",
+        "rows": [
+          {
+            "company": "Corning",
+            "ticker": "NYSE: GLW",
+            "mcap": "~$126 млрд",
+            "exposure": "Кабельная олигополия: ~21,5% глобальной доли. Optical Communications $6,27 млрд (2025, +35%); enterprise/hyperscale +61%",
+            "why": "Самый широкий moat: вертикальная интеграция preform → cable, 34 завода в 15 штатах, приоритетные контракты (Meta до $6 млрд, NVIDIA, Amazon, ~10% мощностей → Lumen). Springboard target $40 млрд к 2030. Мощности распроданы = pricing power. Clean balance sheet. Picks-and-shovels фундамент AI-connectivity.",
+            "priced": "~70× trailing P/E, ~34× EV/EBITDA; stock +160%+ за 52 недели. JPMorgan Negative Catalyst Watch. Priced for perfection — любой miss в AI-capex = sharp de-rate."
+          },
+          {
+            "company": "Lumen",
+            "ticker": "NYSE: LUMN",
+            "mcap": "~$6,9 млрд",
+            "exposure": "Крупнейшая US intercity сеть: 17M → 47M → 58M fiber miles. ~$13 млрд PCF backlog (Microsoft, Meta, Google, AWS, Anthropic)",
+            "why": "Purest dark-fiber play: IRU-контракты на 20 лет с гиперскейлерами, near-pure incremental margin на existing routes. PCF-модель превратила 'dying telco' в 'AI infrastructure landlord'. Anthropic: dedicated North American network через Lumen.",
+            "priced": "Net debt <$13 млрд; turnaround на recurring EBITDA не доказан; GAAP-unprofitable. Stock +226% (2024) но volatile. Leveraged bet на AI-demand durability."
+          },
+          {
+            "company": "Prysmian",
+            "ticker": "BIT: PRY",
+            "mcap": "~€18 млрд",
+            "exposure": "Top-3 мировой кабельный производитель. Digital Solutions ~20% CAGR 2026–30. До €5,5 млрд Molex/Koch + €10 млрд+ pipeline к 2035",
+            "why": "Самый overlooked cable-maker: прямой AI-fiber exposure по дешевле Corning. Удваивает US capacity. Энергокабель стабилизирует при AI-downturn. Jefferies PT €176 (июнь 2026).",
+            "priced": "European discount; менее pure-play чем Corning (энергокабель ~50% выручки). Digital Solutions margin expansion ещё не подтверждена."
+          },
+          {
+            "company": "Cogent",
+            "ticker": "NASDAQ: CCOI",
+            "mcap": "~$1,0–1,4 млрд",
+            "exposure": "Backbone + Sprint fiber; wavelength revenue +90% г/г ($13,6 млн/кв). <2% NA wavelength share = large runway",
+            "why": "Deep-value / distressed optionality: wavelength ramp быстрый (+90% г/г) с tiny base. Продала 10 дата-центров (июнь 2026) на deleveraging. ~11%+ dividend yield. Massive upside если wavelength monetization сработает.",
+            "priced": "Gross debt $2,4 млрд, >8× net leverage, negative operating cash flow. Total revenue −5,8% (Sprint wireline collapse). Debt-wall race."
+          }
+        ]
+      },
+      {
+        "group": "Emerging и overlooked — японская тройка, India turnaround, US route-owner",
+        "tone": "emerging",
+        "badge": "RE-RATING + ВОЛОКНО",
+        "note": "Японские кабельщики — бенефициары AI-fiber бума, но переоценены в 5–10×. Sterlite — cheapest turnaround с vertical integration. Uniti — US route-owner с leverage risk.",
+        "rows": [
+          {
+            "company": "Fujikura",
+            "ticker": "TSE: 5803",
+            "mcap": "~$33 млрд",
+            "exposure": "Top-5 мировой кабельщик; ~75% волокна на экспорт (вкл. Alphabet). FY Mar-2026: ¥1,18T (+20,7%), чистая прибыль ¥157B (+72,5%)",
+            "why": "Архетипный AI-fiber winner: stock +6× (2024, #1 Nikkei 225), +2,6× (2025). AccuCore hollow-core = ~26% merchant HCF share. World-top fusion-splicer. Dividend удвоен (¥100→¥225).",
+            "risk": "−50% peak-to-trough drawdown (май 2026) на soft 3-yr guidance. Poster child для AI-infra valuation fragility. Re-rated hard; volatile."
+          },
+          {
+            "company": "Sumitomo Electric",
+            "ticker": "TSE: 5802",
+            "mcap": "~$60 млрд",
+            "exposure": "Крупнейший из японской тройки. Info & Comms → ~triple FY2025→FY2028 на AI-DCI. World's-lowest-loss Z-fiber. Submarine cables",
+            "why": "Medium-Term Plan 2028: ¥6T sales, ¥600B OP, ROIC ≥15%, ¥1T capex. AI-DCI optical/CPO products. Диверсификация (авто, электроника) снижает concentration risk. +332% за 52 недели.",
+            "risk": "+332% = extreme re-rating. Optical — малая доля overall. Conglomerate discount."
+          },
+          {
+            "company": "Furukawa Electric",
+            "ticker": "TSE: 5801",
+            "mcap": "~$8–10 млрд (оценка)",
+            "exposure": "OFS/Lightera cable platform. AccuCore HCF ~26% merchant share. World-top fusion-splicer share. V-shaped AI recovery",
+            "why": "Best merchant HCF exposure среди японской тройки: AccuCore = leading hollow-core product. OFS Lightera = next-gen cable. V-shaped recovery: limit-high Feb 2026.",
+            "risk": "Market cap не подтверждён на Jul 2026 (flagged). Менее pure-play чем Fujikura. HCF — нишевой рынок (~$352 млн)."
+          },
+          {
+            "company": "Sterlite Technologies",
+            "ticker": "NSE: STLTECH",
+            "mcap": "~$1–2 млрд (оценка)",
+            "exposure": "India leader (~40–45% India, ~8% global ex-China). Fully vertically integrated: glass → cable → software. US завод в South Carolina",
+            "why": "Cheapest turnaround-levered cable maker. India + BEAD (US broadband stimulus) + hyperscaler DCI upside. Full vertical integration = margin potential. Demerged STL Networks (апр 2025) — cleaner focus.",
+            "risk": "Margin recovery не доказана post-glut. India-centric; US/EMEA с low base. Revenue estimates rely on secondary sources."
+          },
+          {
+            "company": "Uniti Group",
+            "ticker": "NASDAQ: UNIT",
+            "mcap": "~$1,5–2 млрд",
+            "exposure": "~240 000 route miles (47 штатов) post-Windstream merger (авг 2025). FY2025 revenue $2,23 млрд",
+            "why": "Insurgent fiber + AI/convergence thesis: огромная сеть route miles после Windstream. Potential monetization по модели Lumen PCF. Net income $1,3 млрд (tax step-up).",
+            "risk": "Heavily levered; analyst Sell/$3,50 target. Windstream integration execution. Tax step-up ≠ recurring earnings."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Лучший proven-leader core: Corning — самый широкий moat и чистый баланс, хотя priced for perfection (~70× P/E). Lumen — highest-torque route-owner turnaround, но leveraged. Самый overlooked: Prysmian — дешевле Corning с прямым fiber exposure. Самый asymmetric: Zayo (частная) или Fujikura/Furukawa с HCF-exposure. Cheapest turnaround: Sterlite. Ключевое правило: fiber = capital-intensive, 3–5 year thesis, stagger entries.",
+    "monitoring": {
+      "metrics": [
+        "Lumen PCF backlog & deal announcements — ir.lumen.com, quarterly (next: 4 авг 2026)",
+        "Corning Optical Communications revenue + Springboard run-rate — quarterly IR (next: 28 июл 2026)",
+        "Cogent wavelength revenue & connections, leverage — quarterly 8-K (next: ~5 авг 2026)",
+        "Zayo bookings + ABS issuance — Zayo newsroom / DigitalBridge IR",
+        "Fiber-cable ASP (CRU Group) — восстановление после −28% г/г в 2023",
+        "Hyperscaler capex: MSFT/GOOGL/META/AMZN quarterly (~$725 млрд в 2026)",
+        "Hollow-core fiber milestones — Microsoft Azure blog, Corning/YOFC/Furukawa releases"
+      ],
+      "canary": [
+        "Новый multi-billion hyperscaler dark-fiber mega-deal (bullish) или отсутствие deals >6 мес (bearish)",
+        "Corning pricing: повышение ASP (bullish) vs. rollover — fiber-glut canary",
+        "Hyperscaler capex guidance CUT — bearish trigger для всего сектора",
+        "Lumen PCF/wave bookings: рост = confirmation; стагнация = warning",
+        "Рост доли неиспользуемых (тёмных) жил — ранний сигнал oversupply",
+        "IRU/take-or-pay renegotiations — признак ослабления demand durability"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Гиперскейлеры скупают тёмное волокно: Lumen ~$13 млрд, Corning sold out, Prysmian €5,5 млрд",
+      "summary": "AI-стройка трансформировала рынок тёмного волокна из telco-legacy в structural growth story. Гиперскейлеры capex ~$725 млрд (+77% г/г) и контракты на 20 лет обеспечивают многолетний backlog. Hollow-core fiber (Microsoft 0,091 dB/km) — реальный disruption, но incumbents тоже производят.",
+      "stories": [
+        {
+          "title": "Lumen PCF backlog достиг ~$13 млрд",
+          "tone": "positive",
+          "verdict": "Крупнейший dark-fiber backlog в истории с take-or-pay на 20 лет",
+          "detail": "Microsoft, Meta, Google, AWS, Anthropic. $2,5 млрд добавлено в Q4 2025. Anthropic: dedicated North American network."
+        },
+        {
+          "title": "Corning Springboard: target $40 млрд к 2030",
+          "tone": "positive",
+          "verdict": "Optical $6,27 млрд (+35%); enterprise/hyperscale +61%. Мощности распроданы",
+          "detail": "Meta deal до $6 млрд. Upgraded с $20 млрд. JPMorgan Negative Catalyst Watch (~70× P/E)."
+        },
+        {
+          "title": "Zayo + Crown Castle Fiber = $4,25 млрд",
+          "tone": "positive",
+          "verdict": "Zayo — dominant №2 US intercity; единственный long-haul builder at scale",
+          "detail": "~90 000 route miles + 70 000 on-net locations. 5 000+ новых long-haul miles для AI."
+        },
+        {
+          "title": "Hollow-core: Microsoft 0,091 dB/km; YOFC 0,04 dB/km",
+          "tone": "mixed",
+          "verdict": "Ниже conventional silica впервые. ~31% lower latency. Но production нишевой",
+          "detail": "Microsoft >1 280 km deployed, zero failures. YOFC record OFC 2026. Market ~$352 млн. Incumbents тоже делают HCF."
+        },
+        {
+          "title": "Fujikura: −50% drawdown после record earnings",
+          "tone": "negative",
+          "verdict": "Poster child для AI-infra valuation fragility",
+          "detail": "Stock +6× (2024) → −50% (май 2026) на soft 3-yr guidance → rebound (июнь 2026, OP ¥310B)."
+        }
+      ],
+      "bottomLine": "Dark fiber = физический фундамент AI-инфраструктуры с multi-year contracted demand. Дефицит реальный, но valuations rich и levered turnarounds — ставка на durability AI-capex."
+    },
+    "news": [
+      {
+        "date": "2026-07-16",
+        "source": "JPMorgan",
+        "title": "JPMorgan: Corning на Negative Catalyst Watch",
+        "blurb": "~70× P/E priced for perfection; miss в AI-capex или Springboard execution = sharp de-rate."
+      },
+      {
+        "date": "2026-06-02",
+        "source": "Jefferies",
+        "title": "Jefferies: Prysmian PT €176 — overlooked AI-fiber play",
+        "blurb": "Digital Solutions ~20% CAGR 2026–30; до €5,5 млрд Molex deal. Дешевле Corning."
+      },
+      {
+        "date": "2026-05-06",
+        "source": "Corning Investor Day",
+        "title": "Corning: Springboard upgraded до $40 млрд к 2030",
+        "blurb": "Meta deal до $6 млрд; NVIDIA, Amazon partnerships. Optical = largest, fastest-growing segment."
+      },
+      {
+        "date": "2026-05-01",
+        "source": "Zayo / Crown Castle",
+        "title": "Zayo закрыла покупку Crown Castle Fiber за $4,25 млрд",
+        "blurb": "~90 000 route miles + 70 000 on-net locations. Crown Castle теперь pure tower REIT."
+      },
+      {
+        "date": "2026-02-25",
+        "source": "Lumen Investor Day",
+        "title": "Lumen: PCF backlog ~$13 млрд; 47M fiber miles к 2028",
+        "blurb": "CEO Kate Johnson: PCF = 'biggest proof point'. Microsoft, Meta, Google, AWS, Anthropic."
+      }
+    ]
+  },
+  "fiber": {
+    "asOf": "2026-07-28",
+    "intro": "Производство оптоволокна и кабелей — физический фундамент всей дальней связи между дата-центрами. AI-стройка перевернула рынок: спрос на волокно для дата-центров вырос на 75,9% в 2025 году, а AI-стойка (72-GPU Blackwell) требует в 16–36× больше волокна, чем обычная. Индекс цен CRU взлетел с рекордного минимума 78,6 (март 2024) до 263,0 (март 2026) — самый резкий рост с начала мониторинга. Главный bottleneck — преформы (заготовки для вытяжки волокна): мощности загружены почти на 100%, цикл расширения 18–24 месяца, дефицит ~12,5% в 2026 году (Morgan Stanley). Ценность концентрируется у вертикально интегрированных лидеров (Corning, Prysmian) и у контроллеров преформ-chokepoint (Heraeus, Shin-Etsu).",
+    "tldr": [
+      "Рынок оптоволоконного кабеля ~$13–18 млрд (2025, разброс по определениям), CAGR ~9,5–10%. Спрос от дата-центров вырос на 75,9% в 2025 и вырастет с ~5% до ~30% глобального к 2027 (CRU). Цены CRU: рекордный минимум 78,6 (март 2024) → 263,0 (март 2026, +418% г/г по G.652.D в Китае). Дефицит преформ ~12,5% в 2026 (Morgan Stanley).",
+      "Ценность — в трёх позициях: (1) стеклянные преформы (chokepoint: 18–24 мес цикл расширения, ~100% загрузка), (2) вертикально интегрированные glass-to-cable лидеры с customer-funded capacity (Corning: Meta до $6 млрд + NVIDIA $3,2 млрд; Prysmian: Molex до €5,5 млрд), (3) specialty fiber (bend-insensitive, hollow-core, high-density 1 728–13 824 волокон в кабеле).",
+      "Центральное напряжение: recovery реальный и структурный, но сектор несёт свежую память о глате 2022–23 (ASP −28%), valuations re-rated hard (Corning ~52–57× forward P/E, Fujikura +344% за 12 мес), а hollow-core fiber + multi-band coherent угрожают conventional glass на горизонте 5–10 лет. Ключевой вопрос: поглотит ли AI-спрос новые преформ-мощности, выходящие в конце 2027, или сектор повторит глат?"
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 7,
+        "cyclicality": 7,
+        "valuation": 3
+      },
+      "summary": "AI-driven density surge (16–36× волокна на стойку) и дефицит преформ (~12,5% shortfall, Morgan Stanley) создают structural shortage, который загнал цены CRU с рекордного минимума 78,6 до 263,0 за два года. Moat-ы сильные у преформ-chokepoint (Heraeus/Shin-Etsu) и вертикально интегрированных лидеров (Corning, Prysmian) с customer-funded capacity locks. Но valuations extreme: Corning ~52–57× forward P/E, японцы +150–344% за 12 мес, YOFC +12× — сектор уже прайсит recovery. Cyclicality реальная: glat 2022–23 свежий, новые преформ-мощности выходят в конце 2027 — окно risk. Лучший core: Corning (интеграция + HCF hedge). Overlooked: Shin-Etsu (единственный публичный preform chokepoint) и CommScope (deep-value turnaround).",
+      "horizon": "3–5 лет (AI-инфраструктурный тезис с cyclical tail risk в 2027–28)",
+      "sizing": "Кабель ~$13–18 млрд (2025) → ~$23–50 млрд к 2031–35 (CAGR ~9,5–10%). AI-DC оптоволокно ~$764 млн (2025) → ~$4,3 млрд к 2032 (21% CAGR). Преформы ~$6,7 млрд (2024) с растущей долей",
+      "keyQuestion": "Поглотит ли AI-спрос на волокно новые преформ-мощности, выходящие в конце 2027, без нового глата — или повторится цикл 2022–23?",
+      "bull": [
+        "Структурный density surge: AI-стойки требуют 16–36× волокна; DC-спрос +75,9% (2025), доля DC в глобальном спросе с ~5% до ~30% к 2027 (CRU)",
+        "Pricing recovery + преформ-дефицит: CRU index 78,6 → 263,0; China G.652.D +418% г/г; преформы ~100% загрузка, ~12,5% shortfall (Morgan Stanley), возврат к 2024 lows 'virtually impossible' (CRU)",
+        "Customer-funded capacity de-risks capex: Corning/NVIDIA $3,2 млрд + Meta $6 млрд + Prysmian/Molex €5,5 млрд — demand locked, risk снижен"
+      ],
+      "bear": [
+        "Glat memory: ASP −28% в 2023; новые преформ-мощности выходят в конце 2027 — окно для нового overcapacity cycle",
+        "Hollow-core (<0,1 dB/km) + multi-band coherent угрожают conventional fiber-km demand на горизонте 5–10 лет",
+        "Chinese commoditization (~56% global output) + extreme valuations: Corning 52–57× fwd P/E, Fujikura +344%, YOFC +12× после 150–1 100% runs"
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~9,5–10% CAGR (кабель, 2025–2032); AI-DC niche ~21% CAGR",
+      "chartTitle": "Рынок оптоволоконного кабеля, $ млрд",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 12.0,
+          "label": "~$12 млрд",
+          "source": "Mordor Intelligence (нижняя граница)"
+        },
+        {
+          "year": "2025",
+          "value": 15.9,
+          "label": "~$16 млрд",
+          "source": "360iResearch / Precedence Research (среднее)"
+        },
+        {
+          "year": "2026",
+          "value": 17.3,
+          "label": "~$17 млрд",
+          "source": "360iResearch"
+        },
+        {
+          "year": "2028",
+          "value": 22.0,
+          "label": "~$22 млрд",
+          "source": "оценка при CAGR ~10%"
+        },
+        {
+          "year": "2032",
+          "value": 30.7,
+          "label": "~$31 млрд",
+          "source": "360iResearch"
+        }
+      ],
+      "bomShare": {
+        "value": "~3–8%",
+        "note": "Волокно — малая доля стоимости AI-кластера, но абсолютный bottleneck: без кабеля нет связи между стойками и между дата-центрами. AI-DC fiber ~$764 млн (2025) → ~$4,3 млрд к 2032"
+      },
+      "volumeVsPrice": "Рост и volume, и price driven. Volume: AI-стойки 16–36× больше волокна; global shipments 662M core-km (2025, +15,3%). Price: CRU index 78,6 → 263,0; G.652.D China +418% г/г. Specialty (bend-insensitive, high-density) = premium pricing."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "Преформы / specialty glass (Heraeus, Shin-Etsu)",
+          "gm": "~40–50%",
+          "note": "Chokepoint: 18–24 мес lead time, ~100% загрузка, ~12,5% shortfall. AIDC fiber ~40% GM (QY Research)"
+        },
+        {
+          "stage": "Corning (glass-to-cable интеграция)",
+          "gm": "~45–50%",
+          "note": "Optical Q1 2026: $387M net income на $1,85 млрд (~21% net margin). FY2025 optical ~16% net margin"
+        },
+        {
+          "stage": "Prysmian (кабель + digital solutions)",
+          "gm": "~35–40%",
+          "note": "Digital Solutions EBITDA margin 20,6% Q1 2026 (+7,4 п.п. г/г)"
+        },
+        {
+          "stage": "STL (вертикальная интеграция, India)",
+          "gm": "~30–35%",
+          "note": "Q1 FY27 EBITDA margin 20,8% — лучший за ~20 кварталов. Glass → cable → software, 740+ патентов"
+        },
+        {
+          "stage": "Стандартный G.652.D кабель (commodity)",
+          "gm": "~15–25%",
+          "note": "Commoditized; Chinese ~56% share. Premium — в specialty и high-density"
+        }
+      ],
+      "bottleneckNow": "Стеклянные преформы: ~100% загрузка, 18–24 мес цикл расширения, ~12,5% shortfall в 2026 (Morgan Stanley). AI-grade specialty fiber effectively sold out",
+      "bottleneckNext": "Новые преформ-мощности выходят в конце 2027 (CRU) — если AI-спрос не поглотит их, возникает риск overcapacity",
+      "capitalIntensity": "Высокая: preform заводы, draw towers, cable plants. Снижается через customer-funded capacity (Corning/NVIDIA $3,2 млрд, Meta $6 млрд, Prysmian/Molex €5,5 млрд)",
+      "takeaway": "Устойчивая ценность — у преформ-chokepoint (Heraeus, Shin-Etsu) и вертикально интегрированных лидеров (Corning, Prysmian). Commodity cable — на дне value chain."
+    },
+    "competition": {
+      "concentration": "Top-5 кабельщиков (Corning, Prysmian, YOFC, Hengtong, Sumitomo) = ~46,5% глобально (GM Insights). Corning лидирует с >21,5%. Преформы: top-3 (YOFC, Corning, Prysmian) >40%. Китай = ~56% глобального output, но заблокирован на Западе пошлинами.",
+      "shareTrajectory": [
+        {
+          "player": "Corning",
+          "now": ">21,5% глобально (лидер)",
+          "direction": "↑",
+          "detail": "Springboard $40 млрд к 2030; NVIDIA $3,2 млрд + Meta $6 млрд + 2 гиперскейлера. 10× US optical capacity"
+        },
+        {
+          "player": "Prysmian",
+          "now": "Top-3 глобально",
+          "direction": "↑",
+          "detail": "Molex €5,5 млрд; >€10 млрд hyperscaler pipeline к 2035; удваивает US fiber capacity"
+        },
+        {
+          "player": "YOFC",
+          "now": "~12% глобально, №1 в Китае",
+          "direction": "↑ (в Азии)",
+          "detail": "AI-2030 strategy; H1 2026 прибыль +711–914% г/г. Заблокирован на Западе"
+        },
+        {
+          "player": "Fujikura",
+          "now": "Top-5 Япония",
+          "direction": "↑",
+          "detail": "Заказы от almost all US hyperscalers; повышает цены; +344% за 12 мес"
+        },
+        {
+          "player": "Hengtong",
+          "now": "~16% глобально",
+          "direction": "→",
+          "detail": "Целевые 40% international revenue к 2026; Q1 2026 +34%"
+        }
+      ],
+      "players": [
+        {
+          "name": "Corning",
+          "share": ">21,5%",
+          "edge": "Единственный near-pure integrated AI-fiber leader: glass-to-cable IP, customer-funded capacity, HCF hedge"
+        },
+        {
+          "name": "Prysmian",
+          "share": "Top-3",
+          "edge": "Крупнейший кабельный производитель в мире; Digital Solutions fastest-margin-expanding; cheaper чем Corning"
+        },
+        {
+          "name": "YOFC",
+          "share": "~12% (№1 Китай)",
+          "edge": "Integrated preform-fiber-cable; HollowBand HCF; China domestic dominance"
+        },
+        {
+          "name": "Shin-Etsu Chemical",
+          "share": "Preform leader",
+          "edge": "Synthetic quartz preform + UV-coatings; единственный публичный pure preform chokepoint"
+        },
+        {
+          "name": "Fujikura",
+          "share": "Top-5 Япония",
+          "edge": "Highest-torque AI-fiber; orders от всех US hyperscalers; 13 824-fiber cable через Furukawa партнёрство"
+        }
+      ],
+      "switchingCost": "Высокий для specialty/AI-grade fiber: qualification, testing, co-development с гиперскейлерами. Moderate для commodity G.652.D (price-driven).",
+      "entryBarrier": "Очень высокий: preform technology (18–24 мес), vertical integration, >$1 млрд R&D (Corning), customer-funded capacity locks. Anti-dumping пошлины (China→US 33–78%, China→EU, China→India) фрагментируют рынок.",
+      "takeaway": "Олигополия с двойной защитой: vertical integration moat + anti-dumping walls. Specialty/AI-grade = premium pricing. Commodity G.652.D = Chinese dominance, но ограниченная на Западе."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 95,
+          "note": "Преформы ~100% загрузка, ~12,5% shortfall (Morgan Stanley). AI-grade specialty sold out. CRU index 263,0"
+        },
+        {
+          "year": "2027",
+          "pct": 80,
+          "note": "Новые преформ-мощности начинают выходить (конец 2027). Global shipments ~807M core-km (CRU). DC-доля спроса ~30%"
+        },
+        {
+          "year": "2028",
+          "pct": 65,
+          "note": "Risk window: новые мощности + потенциальный AI-capex slowdown. Зависит от hollow-core adoption"
+        }
+      ],
+      "contractStructure": "Сдвиг от spot к take-or-pay/long-term с upfront capital contributions: Corning/NVIDIA $3,2 млрд (10× US capacity + >50% US fiber + 3 завода + 3 000 рабочих мест), Meta до $6 млрд, Prysmian/Molex €5,5 млрд (10-year, €550 млн upfront). Это структурное снижение cyclicality.",
+      "customerConcentration": "Высокая: Meta, Microsoft, Google, Amazon, Oracle, CoreWeave — основные покупатели AI-fiber. Corning: 50%+ incremental optical revenue от hyperscaler DC orders. Creditworthy, но concentrated.",
+      "backlog": "Corning Springboard: $20 млрд annualized к end-2026, $40 млрд к 2030. Prysmian: >€10 млрд hyperscaler pipeline к 2035. STL: order book ₹18 618 Cr. YOFC: H1 2026 profit +711–914%.",
+      "pricing": "CRU Global Index: 78,6 (март 2024) → 107,9 (янв 2026) → 263,0 (март 2026). G.652.D China: ¥83,40/fiber-km (+418% г/г). Europe: €7,94 (+159% г/г). AIDC fiber ~$7,14/fiber-km. Specialty = clear premium.",
+      "takeaway": "Спрос structural и accelerating: 16–36× fiber на AI-стойку, DC-доля с 5% до 30% к 2027. Customer-funded capacity снижает risk. Но cyclical tail: новые мощности в 2027 + concentration."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "Преформы ~100% загрузка, ~12,5% shortfall. CRU: возврат к 2024 lows 'virtually impossible'. AI-grade sold out"
+        },
+        {
+          "year": "2027",
+          "state": "напряжённо",
+          "color": "#f59e0b",
+          "detail": "Новые преформ-мощности начинают выходить (конец 2027). Corning + Prysmian расширяют US capacity. ~807M core-km forecast"
+        },
+        {
+          "year": "2028",
+          "state": "risk window",
+          "color": "#22d3ee",
+          "detail": "Если AI-спрос не поглотит новые мощности — overcapacity risk. Glat 2022–23 = cautionary tale"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Corning: NVIDIA $3,2 млрд → 10× US optical capacity + >50% US fiber capacity + 3 завода NC/TX",
+          "when": "2025–2027",
+          "impact": "Крупнейшее расширение в истории Corning; customer-funded"
+        },
+        {
+          "name": "Prysmian: удвоение+ US fiber capacity (объявлено 20 июл 2026)",
+          "when": "2026–2028",
+          "impact": "Усиление Digital Solutions, поддержка €10 млрд+ pipeline"
+        },
+        {
+          "name": "Shin-Etsu: расширение Kashima + China JV (YOFC/Fasten)",
+          "when": "2025–2027",
+          "impact": "Увеличение преформ-supply; ключевой chokepoint supplier"
+        },
+        {
+          "name": "STL: South Carolina завод; мощности 42M fiber-km / 50M cable-km",
+          "when": "2023–2026",
+          "impact": "India player входит в US; BEAD + hyperscaler exposure"
+        },
+        {
+          "name": "Fujikura + Furukawa: расширение fiber capacity",
+          "when": "2025–2026",
+          "impact": "Японские игроки наращивают export capacity для US hyperscalers"
+        }
+      ],
+      "leadTime": "Преформы: 18–24 мес для новых мощностей (CRU). Cable capacity быстрее (~6–12 мес). AI-grade specialty: extended lead times, effectively sold out.",
+      "utilization": "Преформы: ~100% (Morgan Stanley). Cable: high и растущая. Global shipments 662M core-km (2025), forecast 725M (2026), 807M (2027).",
+      "crowdingOut": "AI/hyperscaler спрос вытесняет telco (FTTH) и enterprise покупателей. Corning: 50%+ incremental revenue от hyperscaler DC. BEAD $42,45 млрд (44 штата) конкурирует за те же мощности.",
+      "takeaway": "Real дефицит в 2026: преформы = binding constraint. Массивные capacity adds (Corning/NVIDIA, Prysmian) идут, но выходят в 2027–28 — создавая risk window для overcapacity."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "G.652.D bare fiber: RMB 83,40/fiber-km в Китае (+418% г/г, март 2026); EUR 7,94 в Европе (+159% г/г). AIDC fiber ~$7,14/fiber-km (QY Research). Specialty (bend-insensitive G.657): 50+ yuan/fiber-km.",
+      "grossMargin": "Corning optical: ~21% net margin (Q1 2026), ~16% FY2025. Prysmian Digital Solutions: 20,6% EBITDA (Q1 2026). STL: 20,8% EBITDA. AIDC fiber: ~40% GM (QY Research). Commodity G.652.D: 15–25%.",
+      "costCurve": "Высокая operating leverage: utilization drove и collapse 2023, и surge 2025–26. Corning core OPM +220 bps г/г (Q1 2026). Customer-funded capacity (NVIDIA/Meta) снижает capex risk.",
+      "yields": [
+        {
+          "gen": "Standard G.652.D",
+          "pct": "commodity",
+          "note": "~56% output из Китая; ASP volatile (−28% в 2023, +418% в 2026). Mature yield"
+        },
+        {
+          "gen": "Bend-insensitive G.657.A",
+          "pct": "premium",
+          "note": "30+ → 50+ yuan/fiber-km за один месяц. Specialty для AI-DC"
+        },
+        {
+          "gen": "High-density ribbon (1 728–13 824F)",
+          "pct": "premium",
+          "note": "Furukawa 13 824F — мировой рекорд. Corning 3 456/6 912F. Premium pricing"
+        },
+        {
+          "gen": "Hollow-core fiber",
+          "pct": "<0,1 dB/km",
+          "note": "Microsoft 0,091 dB/km (>1 280 km deployed). Niche (~$352 млн). Cost premium vs conventional"
+        },
+        {
+          "gen": "Multi-core fiber (MCF)",
+          "pct": "4× capacity",
+          "note": "Corning: 4× capacity в стандартном 125µm cladding; 75% fewer connectors. OFC 2026"
+        }
+      ],
+      "takeaway": "Pricing power вернулась после рекордного глата: CRU 78,6 → 263,0. Preform chokepoint + specialty mix = durable margins у лидеров. Customer-funded capacity = structural de-risking capex."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "Standard G.652.D (commodity)",
+          "node": "mainstream",
+          "year": "ongoing",
+          "note": "~56% global output из Китая. Commodity, но ASP volatile"
+        },
+        {
+          "name": "High-density ribbon 1 728–3 456F",
+          "node": "shipping",
+          "year": "2024–2026",
+          "note": "Corning Contour Flow micro cable (1 728F, ~half legacy diameter); 3 456/6 912F"
+        },
+        {
+          "name": "Ultra-high-density 6 912–13 824F",
+          "node": "ramping",
+          "year": "2025–2027",
+          "note": "Furukawa 13 824F — мировой рекорд плотности. Mass production started"
+        },
+        {
+          "name": "Hollow-core fiber (HCF)",
+          "node": "sampling",
+          "year": "2026–2030+",
+          "note": "Microsoft <0,1 dB/km, 1 280+ km deployed. Pilots 2026–28, metro 2029–31, mainstream 2032–35+"
+        },
+        {
+          "name": "Multi-core fiber (MCF)",
+          "node": "development",
+          "year": "2026–2030",
+          "note": "Corning 4× capacity в 125µm; STL: India QKD 100km 4-core. Research → early commercial"
+        },
+        {
+          "name": "Reduced-diameter fiber (160–200µm)",
+          "node": "ramping",
+          "year": "2025–2027",
+          "note": "Corning SMF-28 Ultra 200µm; STL 160/180µm. Больше волокон на duct"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "Hollow-core fiber (HCF)",
+          "verdict": "Реальная долгосрочная угроза conventional glass, но gradual timeline и incumbents hedged",
+          "tone": "mixed",
+          "detail": "Microsoft/Southampton: <0,1 dB/km (Nature Photonics, Sept 2025) vs 0,14 conventional. 1 280+ km live Azure, zero failures. ~33% lower latency. Но production нишевой (~$352 млн). Metro 2029–31, mainstream 2032–35+. Corning + Heraeus = positioned on both sides.",
+          "angle": "Corning hedged (и conventional, и HCF producer). Threat для pure conventional makers без HCF capability."
+        },
+        {
+          "tech": "Multi-band coherent / capacity per fiber",
+          "verdict": "Реальный medium-term headwind для fiber-km volume growth",
+          "tone": "negative",
+          "detail": "C+L band + higher-order coherent извлекают больше capacity из existing fiber, снижая потребность в новых fiber-km. → раздел Оптические модули. Real structural dampener на volume.",
+          "angle": "Негатив для cable volume growth. Но AI density surge (16–36×) пока перевешивает."
+        },
+        {
+          "tech": "CPO / co-packaged optics (NVIDIA Spectrum-X)",
+          "verdict": "Net positive для fiber content — extends fiber closer к чипу",
+          "tone": "positive",
+          "detail": "NVIDIA Spectrum-X Photonics CPO shipping H2 2026. Corning/NVIDIA $3,2 млрд partnership включает CPO. Больше волокна на rack, не меньше.",
+          "angle": "CPO = позитив для fiber demand. Corning прямой бенефициар через NVIDIA deal."
+        }
+      ],
+      "takeaway": "Density surge (1 728 → 13 824F) + reduced diameter = больше волокна в тех же conduits. HCF + multi-band coherent — реальные threats, но gradual и incumbents hedged. CPO = net positive."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "Стеклянные преформы (chokepoint)",
+          "supplier": "Heraeus, Shin-Etsu, Corning, YOFC",
+          "note": "18–24 мес lead time, ~100% загрузка, ~12,5% shortfall (Morgan Stanley). Binding constraint"
+        },
+        {
+          "item": "Кварцевое стекло / fused silica",
+          "supplier": "Heraeus, Shin-Etsu, Corning",
+          "note": "Heraeus RIC process: один 200mm×3m preform → >7 000 km волокна"
+        },
+        {
+          "item": "Германий / легирующие добавки",
+          "supplier": "GeCl₄ (China supply risk)",
+          "note": "Критический dopant для волокна; China-linked supply chain"
+        },
+        {
+          "item": "Draw tower оборудование",
+          "supplier": "Специализированные поставщики",
+          "note": "Capital-intensive; long lead time для новых линий"
+        },
+        {
+          "item": "UV-cure покрытия",
+          "supplier": "Shin-Etsu (OF series)",
+          "note": "Specialty chemical; Shin-Etsu — key supplier"
+        }
+      ],
+      "downstream": "Гиперскейлеры (Meta, Microsoft, Google, Amazon, Oracle, CoreWeave) для intra-DC + DCI. Carriers (FTTH, BEAD $42,45 млрд). Dark-fiber owners (Lumen, Zayo). → раздел Тёмное волокно",
+      "correlation": "Высокая корреляция с capex гиперскейлеров (~$725 млрд в 2026). North America DC capacity: 63 GW (2025) → 126 GW к 2030 (STL). Meta $600 млрд US infrastructure через 2028.",
+      "takeaway": "Волокно — upstream от тёмного волокна (→ раздел Тёмное волокно) и оптических модулей (→ раздел Оптические модули). Преформы = binding constraint всей цепочки."
+    },
+    "risks": [
+      {
+        "risk": "Глат / overcapacity (повторение 2022–23)",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "ASP −28% в 2023. Новые преформ-мощности в конце 2027 — risk window. Но take-or-pay contracts + structural density surge снижают вероятность vs 2023."
+      },
+      {
+        "risk": "Hollow-core disrupts conventional fiber",
+        "prob": "Низкая-Средняя (near-term)",
+        "impact": "Высокий (long-term)",
+        "note": "HCF <0,1 dB/km; mainstream 2032–35+. Incumbents (Corning, Heraeus) hedged. 5–10 year risk."
+      },
+      {
+        "risk": "Multi-band coherent снижает fiber-km demand",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Больше capacity/fiber = меньше new-build km. Но AI density surge (16–36×) пока перевешивает."
+      },
+      {
+        "risk": "Chinese commoditization + anti-dumping",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "China ~56% output. Пошлины (33–78% US, EU/India duties) защищают Запад, но ограничивают рост для Western makers в Азии."
+      },
+      {
+        "risk": "Концентрация клиентов (гиперскейлеры)",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Corning: 50%+ incremental revenue от hyperscaler DC. Capex pause = sharp hit."
+      },
+      {
+        "risk": "Valuation risk",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "Corning ~52–57× fwd P/E (+163% за 52 нед). Fujikura +344%. YOFC +12×. Fujikura −40%+ от пика (май 2026) — fragility."
+      },
+      {
+        "risk": "Germanium / input supply (China-linked)",
+        "prob": "Низкая-Средняя",
+        "impact": "Средний",
+        "note": "GeCl₄ dopant — China supply chain risk. Геополитика может disrupt."
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — вертикальная интеграция и преформ-chokepoint",
+        "tone": "leader",
+        "badge": "GLASS + SCALE",
+        "note": "Corning = единственный near-pure integrated AI-fiber leader с HCF hedge. Prysmian = дешевле, с diverse base. Sumitomo = наименее перегретый японец. Shin-Etsu = единственный публичный preform chokepoint.",
+        "rows": [
+          {
+            "company": "Corning",
+            "ticker": "NYSE: GLW",
+            "mcap": "~$126–133 млрд",
+            "exposure": "Кабельная олигополия >21,5%. Optical $6,27 млрд (2025, +35%). Springboard $40 млрд к 2030. NVIDIA $3,2 млрд + Meta $6 млрд + 2 hyperscalers",
+            "why": "Единственный near-pure integrated AI-fiber leader: glass-to-cable IP, customer-funded capacity (10× US optical + >50% US fiber + 3 завода), HCF production hedge (NC plant с Heraeus). Q1 2026 optical net margin ~21%. 50%+ incremental revenue от hyperscaler DC.",
+            "priced": "~52–57× forward P/E, ~70–91× trailing; +163% за 52 нед. JPMorgan Negative Catalyst Watch. Priced for perfection. 52-week range $51–$272."
+          },
+          {
+            "company": "Prysmian",
+            "ticker": "BIT: PRY",
+            "mcap": "~€27 млрд (~$34–44 млрд)",
+            "exposure": "Крупнейший кабельный производитель в мире. Digital Solutions EBITDA 20,6% Q1 2026 (+7,4 п.п.). Molex €5,5 млрд + >€10 млрд pipeline к 2035",
+            "why": "Дешевле Corning (~35× P/E) с прямым AI-fiber exposure. Digital Solutions = fastest-margin-expanding segment. Удваивает+ US fiber capacity. Diversified (Transmission, Power Grid) = downside hedge.",
+            "priced": "Менее pure-play (energy cable ~50% revenue). European discount. Digital Solutions margin expansion ещё не полностью reflected."
+          },
+          {
+            "company": "Sumitomo Electric",
+            "ticker": "TSE: 5802",
+            "mcap": "~¥9,44T (~$60 млрд)",
+            "exposure": "Diversified (авто, энергия, submarine, fiber). NVIDIA silicon-photonics ecosystem. World's-lowest-loss Z-fiber. Info & Comms triple FY25→28",
+            "why": "Наименее перегретый из японской тройки (~25× P/E vs Fujikura ~48×). Medium-Term Plan 2028: ¥6T sales, ¥600B OP. Submarine cables + AI-fiber + CPO optionality.",
+            "priced": "+332% за 12 мес — всё ещё expensive. Conglomerate discount (fiber = малая часть). Japan-listed, currency risk."
+          },
+          {
+            "company": "Shin-Etsu Chemical",
+            "ticker": "TSE: 4063",
+            "mcap": "~¥10T+ (~$65 млрд+)",
+            "exposure": "Synthetic quartz preform leader + UV-cure coatings (OF series). China JV (YOFC/Fasten). Diversified chemicals giant",
+            "why": "Единственный напрямую investable pure preform chokepoint. Преформы = binding constraint (18–24 мес, ~100% загрузка). Overlooked: fiber — малая но стратегическая часть бизнеса. Расширение Kashima.",
+            "priced": "Fiber = small fraction of overall revenue (semiconductor wafers dominate). Diversified → diluted exposure. Но preform scarcity = structural value."
+          }
+        ]
+      },
+      {
+        "group": "Emerging и overlooked — high-torque кабельщики и deep-value turnarounds",
+        "tone": "emerging",
+        "badge": "TORQUE + RECOVERY",
+        "note": "Fujikura = maximum torque с maximum drawdown risk. YOFC = China #1, extreme volatility. STL = India turnaround. CommScope = deep-value post-Amphenol. nLight = fiber-laser optionality.",
+        "rows": [
+          {
+            "company": "Fujikura",
+            "ticker": "TSE: 5803",
+            "mcap": "~¥7,57T (~$33 млрд)",
+            "exposure": "Highest-torque AI-fiber play. Orders от почти всех US hyperscalers. ROE 31,5%. ~75% output на экспорт",
+            "why": "+344% за 12 мес (#1 Nikkei 225 в 2024). Повышает цены. 6-for-1 split (март 2026). Most aggressive capacity ramp среди японцев.",
+            "risk": "−40%+ от пика (май 2026) на capacity/competition fears. ~48× trailing P/E. Poster child для AI-fiber volatility. Fragile at these multiples."
+          },
+          {
+            "company": "Sterlite Technologies",
+            "ticker": "NSE: STLTECH",
+            "mcap": "~₹29 000 Cr (~$3,3 млрд)",
+            "exposure": "India leader ~40–45%. Vertical integration glass → cable → software, 740+ патентов. India's first HCF cable. US завод (SC)",
+            "why": "Q1 FY27: record revenue ₹1 910 Cr (+87%); EBITDA ₹397 Cr (+184%); order book ₹18 618 Cr. Net debt-free после QIP. BEAD + India DC exposure. Cheapest integrated cable maker.",
+            "risk": "~490× trailing P/E (turnaround ещё young). India-market concentration. Secondary source revenue estimates. Margin sustainability не доказана."
+          },
+          {
+            "company": "YOFC",
+            "ticker": "HKEX: 6869 / SSE: 601869",
+            "mcap": "~RMB 200–300 млрд (volatile)",
+            "exposure": "China №1 (~12% глобально). Integrated preform-fiber-cable. HollowBand HCF. AI-2030 strategy",
+            "why": "H1 2026 net profit +711–914% г/г. Peak >RMB 300 млрд market cap (первая компания Хубэй). Domestic AI/DC boom. HCF leadership (0,04 dB/km record OFC 2026).",
+            "risk": "−34–50% correction от June peak. Anti-dumping walls на Западе. China commoditization. Extreme volatility. Geopolitical risk."
+          },
+          {
+            "company": "CommScope",
+            "ticker": "NASDAQ: COMM",
+            "mcap": "~$4–5 млрд",
+            "exposure": "Q3 2025: sales $1,63 млрд (+50,6%), data-center revenue +73%. ~9× fwd EBITDA / ~0,99 PEG — steep discount к peers",
+            "why": "Deep-value turnaround из 6-year bear market. Stock +200%+ YTD (2025). Data-center connectivity strength. Дешевле всех peers на EV/EBITDA.",
+            "risk": "$10,5 млрд CCS-sale к Amphenol убирает fiber crown jewel. Post-sale = focused-connectivity story, не pure fiber. De-leveraging зависит от deal close."
+          },
+          {
+            "company": "nLight",
+            "ticker": "NASDAQ: LASR",
+            "mcap": "~$3,8–4,1 млрд",
+            "exposure": "Fiber-laser / defense (70kW-class, до $627 млн контракт) + AI optical-engine optionality. FY2025 revenue $261 млн (+31,6%)",
+            "why": "Q1 FY26: revenue +55%, EPS beat 161%. Defense fiber-laser leadership + emerging AI optical compute. Small cap с high-beta upside.",
+            "risk": "Still loss-making. AI-optical = optionality, не proven revenue. High-beta, small-cap volatility. Defense-contract lumpy."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Лучший proven core: Corning — единственный integrated AI-fiber leader с customer-funded capacity и HCF hedge, но priced for perfection. Prysmian — дешевле, diversified. Overlooked: Shin-Etsu (единственный публичный preform chokepoint) и CommScope (deep-value turnaround, ~9× fwd EBITDA). Emerging: STL (India, cheapest integrated maker) и Fujikura (maximum torque, maximum drawdown). Sizing: 3–5 year theme, stagger entries, valuation = binding constraint.",
+    "monitoring": {
+      "metrics": [
+        "CRU optical fibre price index — crugroup.com, monthly. Главный canary: watch за roll-over от 263,0 (март 2026)",
+        "Corning optical revenue + Springboard progress — investor.corning.com, quarterly (next: 28 июл 2026)",
+        "Prysmian Digital Solutions revenue / EBITDA margin — quarterly (Feb/Apr/Jul/Oct)",
+        "STL / YOFC / Hengtong quarterly results & order books — exchange filings",
+        "Японские кабельщики: Fujikura (last May 14), Sumitomo (May 12), Furukawa — fiber revenue breakdown",
+        "Hyperscaler fiber deals: Corning/Meta/NVIDIA, Prysmian/Molex — ad hoc announcements",
+        "Preform utilization / new capacity: Heraeus, Shin-Etsu, Corning expansions",
+        "HCF deployment milestones — Microsoft Azure blog, Corning/YOFC/Furukawa releases"
+      ],
+      "canary": [
+        "CRU price index roll-over от 263,0 — первый сигнал ослабления pricing power",
+        "Новые преформ-мощности выходящие на рынок (конец 2027) — overcapacity window opens",
+        "Hyperscaler capex guidance CUT — bearish для всей цепочки fiber demand",
+        "Рост share commodity G.652.D vs specialty — margin compression signal",
+        "Corning Springboard miss vs $20 млрд annualized target (end-2026) — execution canary",
+        "Anti-dumping duty changes (China→US/EU) — структурный shift в competition landscape"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "CRU index 78,6 → 263,0: pricing surge на фоне дефицита преформ и AI density boom",
+      "summary": "Оптоволоконный рынок перевернулся из глата (2022–23, ASP −28%) в structural shortage: преформы на ~100% загрузке, ~12,5% shortfall (Morgan Stanley), AI-стойки требуют 16–36× больше волокна. Customer-funded capacity (Corning/NVIDIA $3,2 млрд, Meta $6 млрд, Prysmian/Molex €5,5 млрд) de-risks capex и locks demand.",
+      "stories": [
+        {
+          "title": "CRU index 78,6 → 263,0: рекордный pricing surge",
+          "tone": "positive",
+          "verdict": "Самый резкий рост с начала мониторинга CRU (2017). China G.652.D +418% г/г",
+          "detail": "Март 2024 record low → март 2026 record high. Europe +159% г/г. US +48% vs Jan 2026. Преформ-дефицит делает возврат к 2024 lows 'virtually impossible' (CRU)."
+        },
+        {
+          "title": "Corning/NVIDIA: $3,2 млрд partnership + Springboard $40 млрд",
+          "tone": "positive",
+          "verdict": "10× US optical capacity + >50% US fiber capacity + 3 завода. Customer-funded de-risking",
+          "detail": "NVIDIA: 15M shares at $180 + 3M pre-funded warrants. Tied to Spectrum-X Photonics CPO (H2 2026). Plus Meta $6 млрд + 2 hyperscalers."
+        },
+        {
+          "title": "Morgan Stanley: преформ-дефицит ~12,5% в 2026",
+          "tone": "negative",
+          "verdict": "Demand ~800M vs supply ~700M fiber-km. Новые мощности не раньше конца 2027",
+          "detail": "Преформ-линии ~100% utilization. 18–24 мес expansion cycle. Binding constraint для всей индустрии."
+        },
+        {
+          "title": "Furukawa: 13 824-fiber cable — мировой рекорд плотности",
+          "tone": "positive",
+          "verdict": "Mass production started. Один из highest-density cables в мире",
+          "detail": "Corning: 3 456/6 912F + multicore (4× capacity в 125µm). Density race ускоряется."
+        },
+        {
+          "title": "YOFC: peak >RMB 300 млрд → −34–50% correction",
+          "tone": "negative",
+          "verdict": "Extreme volatility: первая компания Хубэй по market cap, затем sharp correction",
+          "detail": "H1 2026 profit +711–914% г/г. AI-2030 strategy. Но anti-dumping walls + China commoditization = structural constraints."
+        }
+      ],
+      "bottomLine": "Оптоволокно перешло из глата в structural shortage на AI density surge. Преформ-chokepoint (18–24 мес, ~100% загрузка) — binding constraint до конца 2027. Лидеры (Corning, Prysmian) de-risked через customer-funded capacity, но valuations extreme (52–57× fwd P/E) и 2027–28 = overcapacity risk window."
+    },
+    "news": [
+      {
+        "date": "2026-07-20",
+        "source": "Prysmian",
+        "title": "Prysmian: удвоение+ US fiber capacity",
+        "blurb": "Объявлено расширение для поддержки >€10 млрд hyperscaler pipeline к 2035 и Molex/Koch €5,5 млрд deal."
+      },
+      {
+        "date": "2026-05-06",
+        "source": "Corning Investor Day",
+        "title": "Corning: Springboard $40 млрд к 2030; NVIDIA $3,2 млрд partnership",
+        "blurb": "10× US optical + >50% US fiber capacity. 3 завода NC/TX. Spectrum-X Photonics CPO shipping H2 2026."
+      },
+      {
+        "date": "2026-03-26",
+        "source": "CRU Group",
+        "title": "CRU Global Fiber Index достиг 263,0 — рекорд с 2017",
+        "blurb": "China G.652.D: RMB 83,40/fiber-km (+418% г/г). Europe: EUR 7,94 (+159%). Самый резкий рост за всю историю мониторинга."
+      },
+      {
+        "date": "2026-02-10",
+        "source": "Furukawa Electric",
+        "title": "Furukawa: 13 824-fiber cable в mass production; прогноз повышен",
+        "blurb": "Один из highest-density cables в мире. V-shaped AI recovery; limit-high на TSE. Upwardly revised forecast."
+      },
+      {
+        "date": "2025-09-01",
+        "source": "Nature Photonics / Microsoft",
+        "title": "Microsoft HCF: <0,1 dB/km — ниже conventional silica впервые",
+        "blurb": "0,091 dB/km на >1 200 km production fiber. Zero field failures на 1 280+ km Azure deployment. Partnership с Corning + Heraeus."
+      }
+    ]
+  },
+  "rack": {
+    "asOf": "2026-07-28",
+    "intro": "GPU-облака (neoclouds) и AI-compute инфраструктура — компании, которые покупают GPU (в основном NVIDIA), строят или арендуют дата-центры и сдают вычислительные мощности AI-лабораториям и предприятиям. Neocloud-выручка превысила $25 млрд за 2025 год (+3× г/г), Synergy Research прогнозирует ~$400 млрд к 2031 (58% CAGR). CoreWeave — лидер с backlog $99,4 млрд; Oracle RPO = $553 млрд. Гиперскейлеры направляют ~$600–750 млрд capex в 2026 году (~75% на AI). Модель capital-intensive: высокий adjusted EBITDA (CoreWeave 56%), но глубокий GAAP net loss (−$740 млн) из-за depreciation и interest. Ключевое преимущество — доступ к электроэнергии (binding constraint) и GPU-allocation от NVIDIA. Сектор упал на 30–57% в июне–июле 2026.",
+    "tldr": [
+      "Neocloud-выручка >$25 млрд (2025, +3× г/г) → ~$400 млрд к 2031 (58% CAGR, Synergy Research). CoreWeave backlog $99,4 млрд; Oracle RPO $553 млрд. Гиперскейлеры capex ~$600–750 млрд в 2026, ~75% на AI. H100 pricing rebounded ~40% до ~$2,35/час (апр 2026). Capacity sold out через 2026.",
+      "Модель levered: CoreWeave adjusted EBITDA 56%, но GAAP net loss −$740 млн (Q1 FY26); net interest $536 млн/кв; долг ~$15 млрд+. Depreciation debate: CoreWeave 6 лет vs Burry '2–3 года реально; $176 млрд understated 2026–28'. Circular financing: NVIDIA инвестирует в neoclouds → они покупают NVIDIA GPU.",
+      "Сектор упал 30–57% (июнь–июль 2026): CoreWeave −57% ($87 млрд → $39 млрд), IREN −52%, Nebius −43%. Re-rating улучшил risk/reward для выживших. Ключевой вопрос: конвертируются ли contracted backlogs в cash до того, как долг и depreciation придут к расчёту — или AI-capex pause сломает модель?"
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 4,
+        "cyclicality": 3,
+        "valuation": 5
+      },
+      "summary": "Explosive contracted demand (CoreWeave $99,4 млрд, Oracle $553 млрд RPO) vs. levered, obsolescence-exposed, concentrated, circularly-financed модель. Growth = один из самых быстрорастущих секторов публичных рынков (CoreWeave +112%, Nebius ARR +674%). Но moat-ы тонкие: GPU rental commoditizing, гиперскейлеры in-source (Meta входит в cloud rental). Margin quality низкая: высокий EBITDA маскирует GAAP losses (depreciation + interest). Valuations улучшились после −30–57% selloff, но leverage amplifies и upside, и downside. Лучший risk-adjusted play: Oracle (~28× earnings, diversified). Pure neocloud: CoreWeave (лидер, лучший backlog). Power-rich pivots: IREN и Core Scientific (pre-secured power = scarce advantage).",
+      "horizon": "3–5 лет (AI-capex cycle bet с venture-like volatility)",
+      "sizing": "Neoclouds ~$20–42 млрд (2026) → ~$180–400 млрд к 2030–31 (46–58% CAGR). Hyperscaler capex ~$600–750 млрд (2026). GPU-as-a-Service = levered slice этого рынка",
+      "keyQuestion": "Конвертируются ли contracted backlogs neoclouds в cash быстрее, чем накопится долг и depreciation — или AI-capex pause сломает levered модель?",
+      "bull": [
+        "Demand contracted и реальный: CoreWeave $99,4 млрд backlog, Oracle $553 млрд RPO, capex ~$600–750 млрд — signed multi-year take-or-pay с investment-grade counterparties",
+        "Power = binding constraint, и crypto-to-AI pivots владеют им: IREN >4,5 GW, Core Scientific, TeraWulf, Hut 8 — 6–18 мес deployment vs 3–5 лет для hyperscalers",
+        "Pricing power intact: H100 rents +40% (окт 2025→апр 2026); capacity sold out; A100 (2020) fully booked; expired-contract H100 rebooked at 95% — подрывает тезис obsolescence"
+      ],
+      "bear": [
+        "Levered model renting depreciating assets: CoreWeave −$740 млн GAAP loss, ~$15 млрд+ долга, $536 млн/кв interest; Burry: $176 млрд depreciation understatement 2026–28",
+        "Circular financing + concentration: Bain ~$800 млрд revenue shortfall к 2030; Oracle 54% OpenAI; anchor default cascades через backlogs",
+        "Уже −30–57% selloff; если AI-capex pause или hyperscaler in-sourcing (Meta) — весь stack re-rates одновременно"
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~46–58% CAGR (neocloud segment, 2025–2031)",
+      "chartTitle": "Neocloud / GPU-cloud рынок, $ млрд",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 8.0,
+          "label": "~$8 млрд",
+          "source": "оценка (pre-boom base)"
+        },
+        {
+          "year": "2025",
+          "value": 25.0,
+          "label": ">$25 млрд",
+          "source": "Synergy Research"
+        },
+        {
+          "year": "2026",
+          "value": 42.0,
+          "label": "~$42 млрд",
+          "source": "Research and Markets / TBRC"
+        },
+        {
+          "year": "2028",
+          "value": 120.0,
+          "label": "~$120 млрд",
+          "source": "оценка при CAGR ~55%"
+        },
+        {
+          "year": "2031",
+          "value": 400.0,
+          "label": "~$400 млрд",
+          "source": "Synergy Research"
+        }
+      ],
+      "bomShare": {
+        "value": "~30–50%",
+        "note": "GPU compute = крупнейшая статья операционных расходов AI-лабораторий. GPU ~39% стоимости 1GW дата-центра. Neocloud capture thin levered slice от hyperscaler capex"
+      },
+      "volumeVsPrice": "Growth driven by volume (больше GPU, больше GW power) и удержание pricing (H100 rebounded +40% к $2,35/час). Shift от training к inference увеличит volume при lower per-unit price, но Jevons paradox пока доминирует."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "NVIDIA (upstream, GPU)",
+          "gm": "~75%",
+          "note": "Data-center revenue $51,2 млрд/кв (+66% г/г). Captures fattest margin. → раздел AI-чипы"
+        },
+        {
+          "stage": "CoreWeave (neocloud leader)",
+          "gm": "56% adj EBITDA",
+          "note": "Но GAAP net loss −$740 млн: depreciation + interest $536 млн/кв = real costs excluded from EBITDA"
+        },
+        {
+          "stage": "Nebius (neocloud)",
+          "gm": "~40% adj EBITDA target",
+          "note": "Asset-lighter pivot; ARR +674%. Long-term debt $8,4 млрд (с $4,1 млрд)"
+        },
+        {
+          "stage": "Applied Digital (landlord)",
+          "gm": "~17% adj EBITDA",
+          "note": "Lower margin, но lower risk: 15-year take-or-pay leases. Target $1 млрд NOI за 5 лет"
+        },
+        {
+          "stage": "Core Scientific (crypto-to-AI)",
+          "gm": "80–85% cash GM target",
+          "note": "CoreWeave landlord; AI = 39% revenue. Cheapest multiple (~25× sales)"
+        }
+      ],
+      "bottleneckNow": "Электроэнергия и grid connection — binding constraint. Crypto-to-AI pivots владеют pre-secured power: IREN >4,5 GW, 6–18 мес deployment vs 3–5 лет для new builds",
+      "bottleneckNext": "GPU supply (NVIDIA allocation), HBM, CoWoS packaging (NVIDIA reportedly secured ~70% next-year CoWoS-L), transformer lead times. → разделы HBM, Упаковка",
+      "capitalIntensity": "Экстремальная: CoreWeave capex $31–35 млрд (FY26); Nebius $16–20 млрд; IREN >$9,2 млрд. Debt-financed GPU buildout = structural leverage",
+      "takeaway": "NVIDIA captures fattest margin upstream. Neoclouds capture thin, levered slice — high EBITDA маскирует GAAP losses. Durable value — у тех, кто владеет power (crypto pivots) и получает preferential GPU allocation."
+    },
+    "competition": {
+      "concentration": "CoreWeave = лидер ($99,4 млрд backlog); Oracle = hyperscaler-scale ($553 млрд RPO). Nebius, IREN, Crusoe, Lambda — fast followers. Crypto-to-AI pivots (Core Scientific, TeraWulf, Cipher Mining, Hut 8) владеют power. Meta reportedly входит в cloud rental — competitive threat.",
+      "shareTrajectory": [
+        {
+          "player": "CoreWeave",
+          "now": "Лидер, $99,4 млрд backlog",
+          "direction": "↑",
+          "detail": "9 из top-10 AI-labs = клиенты. OpenAI $22,4 млрд, Meta $35 млрд total. Но −57% с пика"
+        },
+        {
+          "player": "Oracle OCI",
+          "now": "$553 млрд RPO, OCI +84%",
+          "direction": "↑",
+          "detail": "Fastest-growing hyperscaler-scale. ~54% RPO от OpenAI — concentration risk"
+        },
+        {
+          "player": "Nebius",
+          "now": "ARR +674%, $7–9 млрд target",
+          "direction": "↑",
+          "detail": "Microsoft ~$19,4 млрд + Meta ~$3 млрд. Asset-lighter pivot. NVIDIA-backed"
+        },
+        {
+          "player": "IREN",
+          "now": "$4 млрд+ ARR target, >4,5 GW power",
+          "direction": "↑",
+          "detail": "Crypto-to-AI: 150K GPU, $3,6 млрд GPU financing + $1,9 млрд Microsoft prepayment"
+        },
+        {
+          "player": "Hyperscalers (Meta)",
+          "now": "Potential entrant в cloud rental",
+          "direction": "↑ (threat)",
+          "detail": "Meta reportedly entering — triggered июльский selloff neoclouds"
+        }
+      ],
+      "players": [
+        {
+          "name": "CoreWeave",
+          "share": "Leader",
+          "edge": "$99,4 млрд backlog; preferential NVIDIA allocation; 9/10 AI-labs; 3,5 GW contracted power; software/orchestration moat"
+        },
+        {
+          "name": "Oracle",
+          "share": "Hyperscaler-scale",
+          "edge": "$553 млрд RPO; ~28× earnings = cheapest; diversified (DB, cloud, apps); cash-generative"
+        },
+        {
+          "name": "IREN",
+          "share": "Power-rich pivot",
+          "edge": ">4,5 GW secured grid power; self-operated cloud; 150K GPU; $3,4 млрд NVIDIA contract + $2,1 млрд investment"
+        },
+        {
+          "name": "Core Scientific",
+          "share": "Landlord model",
+          "edge": "CoreWeave landlord $10,2 млрд; 80–85% cash GM target; winding down Bitcoin; cheapest multiple (~25× sales)"
+        },
+        {
+          "name": "Nebius",
+          "share": "Fast follower",
+          "edge": "ARR +674%; Microsoft $19,4 млрд + Meta $3 млрд; NVIDIA-backed; geo-diversified (Finland, US, Paris)"
+        }
+      ],
+      "switchingCost": "Средний: multi-year contracts lock клиентов, но GPU = commodity hardware. Switching cost растёт с software/orchestration layer (CoreWeave, Nebius Token Factory).",
+      "entryBarrier": "Высокий: capital ($31–35 млрд capex), power/grid connection (binding constraint, 3–5 лет для new builds), NVIDIA allocation (preferential), datacenter capacity. Crypto-miners имеют pre-secured power advantage.",
+      "takeaway": "Рынок быстро консолидируется вокруг CoreWeave (лидер), Oracle (hyperscaler-scale), и power-rich pivots. Meta entry = structural competitive threat. Moats тоньше чем кажутся."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 95,
+          "note": "Capacity sold out. CoreWeave backlog $99,4 млрд (+50% QoQ). GPU rental prices rebounded +40%. Hyperscaler capex ~$600–750 млрд"
+        },
+        {
+          "year": "2027",
+          "pct": 80,
+          "note": "Rubin ramps; inference volumes grow. CoreWeave: 36% backlog expected in 24 months. New capacity coming online"
+        },
+        {
+          "year": "2028",
+          "pct": 60,
+          "note": "Risk window: GPU supply catches up; potential capex digestion. Depreciation debate resolves"
+        }
+      ],
+      "contractStructure": "Take-or-pay, multi-year, investment-grade counterparties. Applied Digital: 15-year take-or-pay leases. CoreWeave: 10 клиентов >$1 млрд каждый. Contract quality улучшается: concentration снижается (CoreWeave 62% Microsoft в 2024 → ни один >35%).",
+      "customerConcentration": "Высокая но снижающаяся: CoreWeave — OpenAI $22,4 млрд, Meta $35 млрд; Oracle — ~54% RPO от OpenAI; Applied Digital зависит от CoreWeave (400MW/$11 млрд). Counterparties creditworthy, но AI-labs (OpenAI) пока не прибыльны.",
+      "backlog": "CoreWeave $99,4 млрд (>$40 млрд добавлено в Q1). Oracle $553 млрд RPO (+325% г/г). Nebius $7–9 млрд ARR target. IREN $4 млрд+ ARR. Applied Digital $36 млрд contracted lease revenue.",
+      "pricing": "H100 ~$2,35/час (апр 2026, rebounded +40% с окт 2025). Cohort median ~$3,15. H200 ~$4,11 median. B200 ~$4,50–7,00. Упали с ~$8 в 2023, но стабилизировались.",
+      "takeaway": "Demand massive и contracted. Pricing power вернулась (H100 +40%). Но concentration в anchor tenants (OpenAI не profitable) и circular financing = structural risks."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "Capacity sold out. Blackwell allocated through mid-2026. Power = binding constraint. Lead times 6–12 недель (с 50+ недель в 2023)"
+        },
+        {
+          "year": "2027",
+          "state": "напряжённо",
+          "color": "#f59e0b",
+          "detail": "CoreWeave 1,7 GW → 8 GW к 2030. Rubin ramps. Новые мощности от crypto pivots выходят. Но demand растёт"
+        },
+        {
+          "year": "2028",
+          "state": "risk window",
+          "color": "#22d3ee",
+          "detail": "GPU supply catches up; potential commoditization. Зависит от training→inference shift и AI-capex trajectory"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "CoreWeave: targeting 1,7 GW active end-2026 (с >1 GW), 8 GW к 2030. Capex $31–35 млрд FY26",
+          "when": "2026–2030",
+          "impact": "Крупнейший neocloud buildout"
+        },
+        {
+          "name": "Nebius: 800MW–1 GW connected; $16–20 млрд capex FY26",
+          "when": "2026–2027",
+          "impact": "Microsoft/Meta deals driving ramp"
+        },
+        {
+          "name": "IREN: >4,5 GW secured grid power; expanding к 150K GPU. $3,6 млрд GPU financing",
+          "when": "2025–2027",
+          "impact": "Power-rich pivot с fastest deployment"
+        },
+        {
+          "name": "Core Scientific: 243 MW live + 347 MW more к early 2027 (CoreWeave contract)",
+          "when": "2026–2027",
+          "impact": "Landlord model — low-risk capacity addition"
+        },
+        {
+          "name": "Stargate: OpenAI-Oracle-NVIDIA ~$400 млрд, 7 GW long-term",
+          "when": "2026–2030+",
+          "impact": "Largest single AI-infra commitment; execution uncertain"
+        }
+      ],
+      "leadTime": "GPU: 6–12 недель H100 direct-purchase (с 50+ недель в 2023). Blackwell в tight allocation. Power/grid = 3–5 лет для new builds; crypto pivots = 6–18 мес (pre-secured).",
+      "utilization": "Высокая: capacity sold out through 2026. CoreWeave: A100 (2020) fully booked; expired-contract H100 rebooked at 95%. At 70% utilization: H100-hour costs ~$1,45, rents $3,99–12,29.",
+      "crowdingOut": "AI-compute demand crowding out traditional cloud/enterprise workloads. Crypto-to-AI pivots перенаправляют power от Bitcoin mining к GPU cloud. NVIDIA allocation preferential = smaller players crowded out.",
+      "takeaway": "Real дефицит в 2026: power = binding constraint, GPU в tight allocation. Massive capacity coming (CoreWeave 8 GW, Stargate 7 GW), но 2028 = risk window для overcapacity."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "H100 ~$2,35/час (spot), cohort median ~$3,15. H200 median ~$4,11. B200 ~$4,50–7,00. GPU cluster capex ~$30–50K+ per GPU all-in (H100 SXM5 ~$28K, H200 ~$38K, B200 ~$40K + ~1,4× server overhead).",
+      "grossMargin": "CoreWeave: 56% adj EBITDA, но GAAP net loss −$740 млн (36% net-loss margin). Nebius ~40% EBITDA target. Core Scientific: 80–85% cash GM target (landlord). NVIDIA upstream: ~75% GM. EBITDA-to-net gap = depreciation + interest.",
+      "costCurve": "At 70% utilization: H100-hour costs ~$1,45, rents $3,99–12,29 = large scarcity premium. On-prem H100 amortizes vs cloud в 6–14 мес при high utilization. GPU-backed debt = SOFR+225bps / 5,9% fixed.",
+      "yields": [
+        {
+          "gen": "A100 (2020)",
+          "pct": "fully booked",
+          "note": "Still in production use; expired contracts rebooked. 'Computing cascade' — GPUs demote к inference"
+        },
+        {
+          "gen": "H100 (2023)",
+          "pct": "~$2,35/час",
+          "note": "Rebounded +40% с окт 2025. Rebooked at 95% original price. Sold out"
+        },
+        {
+          "gen": "H200 / B200",
+          "pct": "~$4–7/час",
+          "note": "Tight allocation. Premium pricing. Blackwell shipping"
+        },
+        {
+          "gen": "GB200 NVL72",
+          "pct": "tight allocation",
+          "note": "Next-gen rack-scale. CoreWeave/IREN contracts. Premium"
+        }
+      ],
+      "takeaway": "Scarcity premium sustains pricing near-term. Но модель = renting depreciating assets на debt: depreciation schedule (4 vs 6 лет) materially swings margin picture. Burry: $176 млрд understatement."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "A100 (Ampere, 2020)",
+          "node": "mainstream",
+          "year": "2020–2024",
+          "note": "Still fully booked; cascading к inference. Legacy но productive"
+        },
+        {
+          "name": "H100/H200 (Hopper)",
+          "node": "shipping",
+          "year": "2023–2026",
+          "note": "Workhorse: ~$2,35/час; rebounded +40%. Sold out. CoreWeave fleet backbone"
+        },
+        {
+          "name": "B200 (Blackwell)",
+          "node": "shipping",
+          "year": "2025–2026",
+          "note": "Ramping; tight allocation. ~$4,50–7/час. CoreWeave/Meta deal includes"
+        },
+        {
+          "name": "GB300 (Blackwell Ultra)",
+          "node": "ramping",
+          "year": "2025–2027",
+          "note": "Rack-scale. IREN 150K GPUs; Nscale 200K Microsoft deal. Next-gen contracts"
+        },
+        {
+          "name": "R200 (Vera Rubin)",
+          "node": "sampling",
+          "year": "H2 2026–2027",
+          "note": "CoreWeave/Meta deal includes Rubin deployments. Annual cadence accelerates"
+        },
+        {
+          "name": "Feynman",
+          "node": "announced",
+          "year": "2028+",
+          "note": "Post-Rubin. Annual GPU cadence forces continuous capex / obsolescence risk"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "GPU commoditization / pricing collapse",
+          "verdict": "Structural risk, но пока contradicted: prices rose в 2026, capacity sold out",
+          "tone": "mixed",
+          "detail": "H100 spot упал с ~$8 (2023) до ~$1,20, затем rebounded к ~$2,35 (+40%). Expired H100 rebooked at 95%. Но supply catching up к 2027–28 может crash prices.",
+          "angle": "Monitor $/GPU-hour monthly. Sustained >20% QoQ decline = de-risk signal."
+        },
+        {
+          "tech": "Hyperscaler in-sourcing (Meta, custom silicon)",
+          "verdict": "Real threat — Meta reportedly entering cloud rental; TPU/Trainium/MTIA reduce merchant GPU demand",
+          "tone": "negative",
+          "detail": "Meta вход в cloud rental triggered июльский selloff. Google reselling TPU через Fluidstack. Custom silicon (Trainium, TPU, MTIA, Maia) снижает merchant-GPU зависимость. CoreWeave: 62% Microsoft → <35% = diversification, но structural threat.",
+          "angle": "Biggest structural risk для neoclouds. Watch Meta cloud rental announcements."
+        },
+        {
+          "tech": "Training→Inference shift",
+          "verdict": "Favors neoclouds positioned для inference; Jevons paradox доминирует",
+          "tone": "positive",
+          "detail": "Inference = more distributed, latency-sensitive. CoreWeave, DigitalOcean, Together AI repositioning. Jevons: cheaper compute → more usage — pricing rose в 2026.",
+          "angle": "Net positive: bigger addressable market. But lower per-unit price = volume game."
+        }
+      ],
+      "takeaway": "Annual GPU cadence (Hopper→Blackwell→Rubin→Feynman) forces continuous capex и creates obsolescence pressure. Но 'computing cascade' (GPUs demote) + pricing power sustain value longer than bears expect."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "GPU (NVIDIA)",
+          "supplier": "NVIDIA (dominant), AMD",
+          "note": "~75% GM upstream; preferential allocation = real moat. → раздел AI-чипы (silicon)"
+        },
+        {
+          "item": "HBM-память",
+          "supplier": "SK Hynix, Samsung, Micron",
+          "note": "GPU performance bound by HBM. → раздел HBM-память"
+        },
+        {
+          "item": "Упаковка (CoWoS)",
+          "supplier": "TSMC",
+          "note": "NVIDIA reportedly ~70% next-year CoWoS-L capacity. → раздел Упаковка чипов"
+        },
+        {
+          "item": "Электроэнергия",
+          "supplier": "Grid utilities, crypto-to-AI pivots",
+          "note": "Binding constraint: 3–5 лет для new builds. → раздел Электроэнергия"
+        },
+        {
+          "item": "Сетевая инфраструктура",
+          "supplier": "Broadcom, Arista, Cisco",
+          "note": "InfiniBand/Ethernet для GPU-кластеров. → раздел Сетевая фабрика"
+        }
+      ],
+      "downstream": "AI-лаборатории (OpenAI, Anthropic, Meta, Mistral, Cohere), enterprises, гиперскейлеры (как арендаторы), суверенные фонды (Humain, G42).",
+      "correlation": "Высочайшая корреляция с hyperscaler capex (~$600–750 млрд, 2026) и AI-model-training demand. Synchronized bet 4 гиперскейлеров = correlated systemic risk: demand stall re-rates весь stack одновременно.",
+      "takeaway": "GPU-cloud = downstream bottleneck assembler: зависит от GPU supply, HBM, CoWoS, power, networking. Upstream NVIDIA captures fattest margin; neoclouds capture thin, levered remainder."
+    },
+    "risks": [
+      {
+        "risk": "AI-capex digestion / 'AI winter'",
+        "prob": "Средняя",
+        "impact": "Критический",
+        "note": "Biggest tail risk. Capex-to-revenue gap widening; markets repricing (−30–57% июнь–июль 2026)."
+      },
+      {
+        "risk": "Circular-financing unwind",
+        "prob": "Низкая-Средняя",
+        "impact": "Критический",
+        "note": "Bain: ~$800 млрд revenue shortfall к 2030. NVIDIA инвестирует в neoclouds → они покупают NVIDIA GPU. OpenAI/Anthropic funding wobble = cascade."
+      },
+      {
+        "risk": "Customer concentration",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Oracle 54% RPO от OpenAI; Applied Digital ~CoreWeave; CoreWeave anchor tenants. Default одного anchor cascades."
+      },
+      {
+        "risk": "Leverage / refinancing",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "CoreWeave ~$15 млрд+ долга, $536 млн/кв interest (rising). Refinancing risk при high rates или AI-sentiment turn."
+      },
+      {
+        "risk": "GPU obsolescence / depreciation",
+        "prob": "Средняя",
+        "impact": "Средний-Высокий",
+        "note": "Burry: $176 млрд understatement 2026–28. 4 vs 6 лет useful life = material swing. Counter: A100 still booked, H100 at 95%."
+      },
+      {
+        "risk": "GPU pricing collapse / commoditization",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Contradicted near-term (prices +40%), но structural risk as supply catches up в 2027–28."
+      },
+      {
+        "risk": "Hyperscaler in-sourcing / Meta entry",
+        "prob": "Средняя",
+        "impact": "Средний-Высокий",
+        "note": "Meta reportedly entering cloud rental — triggered июльский selloff. Custom silicon (TPU, Trainium) reduces merchant GPU demand."
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — hyperscaler-scale и neocloud чемпионы",
+        "tone": "leader",
+        "badge": "SCALE + КОНТРАКТЫ",
+        "note": "Oracle = lowest-risk hyperscaler-scale exposure (~28× earnings). CoreWeave = pure-play лидер с $99,4 млрд backlog. IREN = best power-rich pivot с cloud upside. Nebius = asset-lighter fast follower.",
+        "rows": [
+          {
+            "company": "Oracle",
+            "ticker": "NYSE: ORCL",
+            "mcap": "~$450–500 млрд",
+            "exposure": "RPO $553 млрд (+325% г/г). OCI revenue +84% ($4,9 млрд). AI-infra revenue +243%. Stargate partner (~$400 млрд)",
+            "why": "Lowest-risk AI-cloud exposure: ~28× earnings = cheapest в когорте. Diversified (DB, cloud, apps), cash-generative. OCI = fastest-growing hyperscaler-scale platform. Stargate + OpenAI + Meta + NVIDIA contracts. Neocloud-like growth при hyperscaler stability.",
+            "priced": "~54% RPO от OpenAI (не profitable). Debt-funded capex ($45–50 млрд+). −34% от Sept high. Execution risk на conversion RPO → revenue."
+          },
+          {
+            "company": "CoreWeave",
+            "ticker": "NASDAQ: CRWV",
+            "mcap": "~$39 млрд (с $87 млрд пика)",
+            "exposure": "Pure-play neocloud лидер. Backlog $99,4 млрд. Revenue $2,08 млрд/кв (+112%). FY26 guide $12–13 млрд, $18–19 млрд exit ARR",
+            "why": "Доминирующий neocloud: 9/10 AI-labs, 10 клиентов >$1 млрд, 3,5 GW contracted, preferential NVIDIA allocation. OpenAI $22,4 млрд + Meta $35 млрд. Software/orchestration moat. −57% от пика улучшил entry.",
+            "priced": "~$15 млрд+ долга; GAAP net loss −$740 млн; interest $536 млн/кв. Securities lawsuit. Circular financing (NVIDIA $2 млрд equity + $6,3 млрд backstop). Highest beta, highest leverage."
+          },
+          {
+            "company": "IREN",
+            "ticker": "NASDAQ: IREN",
+            "mcap": "~$12–14 млрд",
+            "exposure": "Crypto-to-AI pivot: >4,5 GW secured power; 150K GPU; $4 млрд+ ARR target; $3,4 млрд NVIDIA contract + $2,1 млрд NVIDIA investment",
+            "why": "Best power-rich pivot: pre-secured power = scarce advantage (6–18 мес vs 3–5 лет). Self-operated cloud (не landlord). Microsoft $9,7 млрд (76K GB300 GPUs). $3,6 млрд GPU financing + $1,9 млрд Microsoft prepayment. −52% от пика.",
+            "priced": "Bitcoin overhang. Execution on 150K GPU deployment. >$9,2 млрд secured debt. Transition risk crypto→AI."
+          },
+          {
+            "company": "Nebius",
+            "ticker": "NASDAQ: NBIS",
+            "mcap": "~$40 млрд",
+            "exposure": "ARR +674% г/г. FY26 guide $3,0–3,4 млрд revenue, $7–9 млрд ARR. Microsoft ~$19,4 млрд + Meta ~$3 млрд. ~40% adj EBITDA target",
+            "why": "Asset-lighter model vs CoreWeave; geo-diversified (Finland, US, Paris). NVIDIA-backed. Token Factory = software upstack. Microsoft/Meta anchors через 2027.",
+            "priced": "~70× trailing P/E. Long-term debt $8,4 млрд (с $4,1 млрд). −43% от пика. ~27% short interest (peak). Smaller scale vs CoreWeave."
+          }
+        ]
+      },
+      {
+        "group": "Emerging и overlooked — crypto pivots, landlords, infrastructure plays",
+        "tone": "emerging",
+        "badge": "POWER + OPTIONALITY",
+        "note": "Core Scientific = cheapest, cleanest crypto-to-AI play. Applied Digital = contracted landlord. TeraWulf и Hut 8 = Google/Anthropic-backed power owners. DigitalOcean = overlooked inference play.",
+        "rows": [
+          {
+            "company": "Core Scientific",
+            "ticker": "NASDAQ: CORZ",
+            "mcap": "~$4–6 млрд",
+            "exposure": "CoreWeave landlord: $10,2 млрд контракт (12 лет); 243 MW live + 347 MW к early 2027. AI = 39% revenue. Winding down Bitcoin к end-2026",
+            "why": "Cheapest multiple (~25× sales). Already collecting rent. 80–85% cash GM target. Cleanest fundamentals из crypto-to-AI pivots. Pre-secured power + land.",
+            "risk": "CoreWeave concentration (single tenant). Possible CoreWeave acquisition (verify independence). Bitcoin overhang в transition period."
+          },
+          {
+            "company": "Applied Digital",
+            "ticker": "NASDAQ: APLD",
+            "mcap": "~$5–7 млрд",
+            "exposure": "Landlord model: $36 млрд contracted lease revenue (1,4 GW). 15-year take-or-pay leases. FY26 revenue $611 млн (+167%)",
+            "why": "Lower-risk landlord model: не владеет GPU, сдаёт space/power. Investment-grade hyperscaler (810MW/$20,2 млрд). Target $1 млрд NOI за 5 лет. Insider buying.",
+            "risk": "CoreWeave-concentrated (400MW/$11 млрд). GAAP net loss −$249 млн. Execution на buildout 1,4 GW."
+          },
+          {
+            "company": "TeraWulf",
+            "ticker": "NASDAQ: WULF",
+            "mcap": "~$3–5 млрд",
+            "exposure": "HPC contracted $12,8 млрд (27% revenue). Google-backed ($3,2 млрд). Fluidstack partner (168MW JV)",
+            "why": "Google backstop = quality anchor. Pre-secured power + land. Crypto infrastructure repurposing для AI. Jefferies Buy.",
+            "risk": "Higher valuation multiple. Bitcoin overhang. Smaller scale vs IREN/Core Scientific."
+          },
+          {
+            "company": "Hut 8",
+            "ticker": "NASDAQ: HUT",
+            "mcap": "~$3–5 млрд",
+            "exposure": "Beacon Point: $9,8 млрд 15-year lease (до $25 млрд+ с escalators, ~1 000 MW). Fluidstack/Anthropic 245MW deal. GPU-as-a-Service (1 000+ H100)",
+            "why": "Largest single lease commitment. Anthropic backstop. GPU-as-a-Service subsidiary. Analyst targets $128–136 (Canaccord/Needham/Arete).",
+            "risk": "~82× sales — highest multiple. Rent = largely future revenue. Execution risk на Beacon Point buildout."
+          },
+          {
+            "company": "DigitalOcean",
+            "ticker": "NYSE: DOCN",
+            "mcap": "~$17 млрд",
+            "exposure": "AI-native inference cloud для SMB/developers. AI customer ARR $170 млн (+221%). Total ARR $1,03 млрд. 41% adj EBITDA margin",
+            "why": "Overlooked inference play: higher-margin, shorter contracts (3–12 мес = pricing flexibility). 2027 revenue growth >50% guided. AI-Native Cloud + Inference Engine.",
+            "risk": "Smaller/slower vs GPU-training giants. SMB exposure = cyclical. ~37× NTM EV/EBITDA."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Лучший risk-adjusted core: Oracle (~28× earnings, diversified, cash-generative). Pure neocloud: CoreWeave (лидер, $99,4 млрд backlog, но leveraged). Power-rich pivot: IREN (>4,5 GW, NVIDIA-backed). Most overlooked value: Core Scientific (~25× sales, already collecting CoreWeave rent, 80–85% cash GM). Ключевое правило: размер позиции как high-conviction / high-risk sleeve; diversify leader + power pivot + optionally private. Expect 40–60% drawdowns.",
+    "monitoring": {
+      "metrics": [
+        "CoreWeave revenue/backlog/active power — investors.coreweave.com, quarterly (next: early Aug 2026)",
+        "Nebius ARR/revenue — group.nebius.com; trajectory к $7–9 млрд ARR",
+        "IREN AI-cloud ARR — iren.com; watch $4 млрд conversion, GPU commissioning",
+        "Oracle OCI RPO / RPO-to-revenue conversion — investor.oracle.com",
+        "GPU rental prices — SemiAnalysis, aimultiple.com/gpu-index, siliconanalysts.com",
+        "NVIDIA data-center revenue + allocation commentary — quarterly",
+        "Hyperscaler capex — CreditSights; quarterly earnings (~$600–750 млрд в 2026)",
+        "Mega-contract announcements / cancellations — SEC 8-K filings"
+      ],
+      "canary": [
+        "Sustained >20% QoQ GPU-rental price decline — commoditization signal",
+        "Neocloud RPO/backlog decline (не slowdown, а decline) у Tier-1 name",
+        "Mega-contract cancellation или renegotiation — circular financing crack",
+        "AI-lab funding wobble (OpenAI/Anthropic round fails или down-round)",
+        "Hyperscaler capex guidance CUT для 2027 — bearish trigger для всего stack",
+        "Meta cloud-rental launch с aggressive pricing — structural competitive threat"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Neoclouds: −30–57% selloff после explosive growth — re-rating или начало bust?",
+      "summary": "Neocloud-выручка >$25 млрд (2025, +3× г/г), backlog CoreWeave $99,4 млрд, Oracle RPO $553 млрд. Но сектор упал 30–57% (CoreWeave −57%, IREN −52%) на fears: Meta входит в cloud rental, AI-capex jitters, circular financing concerns. Re-rating улучшил valuations, но structural risks (leverage, depreciation, concentration) остаются.",
+      "stories": [
+        {
+          "title": "CoreWeave: backlog $99,4 млрд, но −57% от пика",
+          "tone": "mixed",
+          "verdict": "Explosive growth + massive selloff. $87 млрд → $39 млрд market cap за недели",
+          "detail": "Q1 FY26: revenue $2,08 млрд (+112%); backlog +50% QoQ; OpenAI $22,4 млрд + Meta $35 млрд. Но GAAP loss −$740 млн, debt ~$15 млрд+, securities lawsuit."
+        },
+        {
+          "title": "Oracle RPO $553 млрд (+325% г/г)",
+          "tone": "positive",
+          "verdict": "Fastest-growing hyperscaler-scale cloud; cheapest multiple (~28× earnings)",
+          "detail": "OCI +84%; AI-infra +243%. Stargate partner. Но ~54% RPO от OpenAI (concentration) и debt-funded capex."
+        },
+        {
+          "title": "IREN: $4 млрд+ ARR target, NVIDIA $3,4 млрд + $2,1 млрд",
+          "tone": "positive",
+          "verdict": "Best power-rich crypto-to-AI pivot с genuine cloud upside",
+          "detail": "150K GPU; >4,5 GW power; Microsoft $9,7 млрд для 76K GB300. −52% от пика = better entry."
+        },
+        {
+          "title": "Meta reportedly entering cloud rental",
+          "tone": "negative",
+          "verdict": "Triggered июльский selloff neoclouds. Structural competitive threat",
+          "detail": "Гиперскейлер с $115–145 млрд capex входит в cloud = margin/pricing pressure для всех neoclouds."
+        },
+        {
+          "title": "Burry: $176 млрд depreciation understatement 2026–28",
+          "tone": "negative",
+          "verdict": "Unresolved debate: 4 vs 6 лет GPU life materially swings margins",
+          "detail": "ORCL earnings overstated 26,9%, META 20,8% к 2028 по Burry. Counter: A100 still booked, H100 at 95% rebook rate."
+        }
+      ],
+      "bottomLine": "Explosive demand (CoreWeave $99,4 млрд, Oracle $553 млрд) vs. leveraged, circularly-financed модель с −30–57% selloff. Structural question: конвертируется ли backlog в cash до того, как долг придёт к расчёту?"
+    },
+    "news": [
+      {
+        "date": "2026-07-15",
+        "source": "Bloomberg / Meta",
+        "title": "Meta reportedly entering cloud rental market",
+        "blurb": "Гиперскейлер с $115–145 млрд capex входит в cloud rental. Triggered 20–30% selloff neoclouds. Structural competitive threat."
+      },
+      {
+        "date": "2026-07-10",
+        "source": "WSJ / NVIDIA",
+        "title": "NVIDIA reportedly ~$250 млрд OpenAI financing backstop",
+        "blurb": "Крупнейший financing commitment в AI. Circular financing deepens: NVIDIA backstops клиента, который покупает NVIDIA GPU."
+      },
+      {
+        "date": "2026-05-15",
+        "source": "CoreWeave Q1 FY26",
+        "title": "CoreWeave: revenue $2,08 млрд (+112%), backlog $99,4 млрд",
+        "blurb": "FY26 guide $12–13 млрд. GAAP loss −$740 млн. Meta $35 млрд total. 10 клиентов >$1 млрд каждый."
+      },
+      {
+        "date": "2026-03-10",
+        "source": "Oracle Q3 FY26",
+        "title": "Oracle RPO $553 млрд (+325% г/г); OCI +84%",
+        "blurb": "AI-infra revenue +243%. Stargate partner. ~54% RPO от OpenAI. Cheapest AI-cloud multiple (~28×)."
+      },
+      {
+        "date": "2026-01-15",
+        "source": "Synergy Research",
+        "title": "Neocloud revenue exceeded $25 млрд in 2025; $400 млрд к 2031",
+        "blurb": "Q4 2025 alone $9 млрд (+223% г/г). 58% CAGR forecast. Fastest-growing segment в cloud."
+      }
+    ]
   }
 }
