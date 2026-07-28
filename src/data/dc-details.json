@@ -9834,5 +9834,602 @@
         "blurb": "Q4 2025 alone $9 млрд (+223% г/г). 58% CAGR forecast. Fastest-growing segment в cloud."
       }
     ]
+  },
+  "lab": {
+    "asOf": "2026-07-28",
+    "intro": "AI-лаборатории (frontier model developers) — компании, которые обучают и развёртывают крупнейшие модели ИИ. Совокупная выручка лабораторий ~$60–90 млрд (annualized, mid-2026), но это малая доля от >$1,5 трлн ежегодных инфраструктурных расходов (Cahn, июль 2026). OpenAI — ~$25 млрд ARR (февр 2026, 900 млн WAU); Anthropic — по отчётам ~$47 млрд ARR (май 2026, Series H, single-source). Сектор структурно убыточен: OpenAI теряет ~$1,22 на каждый доллар выручки (−122% operating margin). NVIDIA захватывает ~41,5 центов каждого AI-hardware-доллара при ~75% GM — лаборатории получают тонкий, субсидированный остаток. Open-weight модели (DeepSeek, Qwen, Kimi, Llama) закрыли capability gap до ~39 Arena points (2,7%) при ~23× меньшем капитале.",
+    "tldr": [
+      "Совокупная выручка лабораторий ~$60–90 млрд (mid-2026). OpenAI ~$25 млрд ARR, Anthropic ~$47 млрд ARR (single-source), Google DeepMind — внутри Alphabet. Но расходы кратно превышают выручку: OpenAI обязательства по compute ~$1,4 трлн (Altman, ноябрь 2025) vs ~$25 млрд ARR = 56× ratio. Hyperscaler capex >$700 млрд в 2026, >$1,15–1,4 трлн кумулятивно 2025–27 (Goldman Sachs).",
+      "Concentration: Anthropic 40% enterprise LLM spend, OpenAI 27%, Google 21% = 88% у Top-3 (Menlo Ventures, дек 2025). Inference cost упал ~1 000× за 3 года. API gross margins 60–89% (serving layer), но blended margins глубоко отрицательные после training + R&D + talent ($1,5 млрд пакеты). Standalone profitability не доказана ни одной лабораторией.",
+      "Open-weight commoditization: DeepSeek V3 ~$5,6 млн marginal training cost; китайские модели ~45% трафика OpenRouter (с <2% год назад). US–China gap сжался до 39 Arena points. Ключевой вопрос: масштабируется ли выручка лабораторий до ~$1,5 трлн/год инфраструктурных расходов прежде, чем circular hyperscaler/sovereign financing сожмётся?"
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 4,
+        "cyclicality": 5,
+        "valuation": 5
+      },
+      "summary": "Fastest-growing software category в истории (OpenAI 0→$25 млрд ARR за ~30 мес), но структурно убыточный сектор, сидящий на capital-commitment stack ~$1,5 трлн/год. Moats shallow и reshuffling ежемесячно: open-weight commoditization безжалостна (~45% OpenRouter), только distribution (Google, Meta) и enterprise trust (Anthropic) пока держатся. Investability ограничена: преимущественно private, extreme valuations (20–150× ARR). Рекомендация: high-conviction-thematic, low-portfolio-weight allocation через liquid adjacent public equities (Alphabet, Amazon, Oracle, ASML). Direct private exposure (OpenAI/Anthropic secondaries) только при sizing <1% и готовности к repricing.",
+      "horizon": "5–10 лет (thesis resolution), но sharp repricing через 12–36 мес при IPO",
+      "sizing": "Foundation-model direct revenue ~$60–90 млрд (mid-2026). TAM spread 25× ($20 млрд model layer → >$1,2 трлн full stack). Hyperscaler AI-capex >$700 млрд (2026)",
+      "keyQuestion": "Масштабируется ли выручка лабораторий до ~$1,5 трлн/год инфраструктурных расходов прежде, чем circular hyperscaler/sovereign financing сожмётся?",
+      "bull": [
+        "Revenue compounding быстрее любой software-категории в истории: OpenAI 0→$25 млрд за ~30 мес; Anthropic reportedly 47× за 17 мес — если продолжится, capex bill покрывается и текущие valuations дёшевы",
+        "Agentic/reasoning AI расширяет TAM от 'chat' к 'labor replacement' — multi-trillion-dollar pool с premium pricing и compounding frontier leadership",
+        "Distribution + enterprise-trust moats (Google 900 млн MAU, OpenAI 1 млрд+ MAU, Anthropic 40% enterprise) оказываются durable, и winners захватывают SaaS-like economics по мере падения inference costs ~10×/год"
+      ],
+      "bear": [
+        "Gap unbridgeable: Bain ~$800 млрд revenue shortfall к 2030; Cahn ~$3 трлн revenue need vs ~$80 млрд combined Anthropic+OpenAI; Allianz 46% capex-revenue divergence > telecom bust 2001 (32%). Circular NVIDIA→lab→NVIDIA financing маскирует end-demand (echo Lucent/Nortel)",
+        "Open-weight commoditization (DeepSeek, Qwen, Kimi ~45% OpenRouter) обваливает pricing везде кроме shrinking bleeding edge, а hyperscalers vertically integrate (Meta Muse, Google TPU, Amazon Trainium) и перестают субсидировать external labs",
+        "Standalone profitability не доказана — OpenAI −122% operating margin — и если hyperscaler/sovereign capital tightens (rates, safety incident, ROI disappointment: MIT NANDA ~95% enterprise GenAI pilots = zero P&L return), valuations reprice violently"
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~30–42% CAGR (generative AI market, зависит от определения; 13,5% для narrow model layer)",
+      "chartTitle": "Generative AI / Foundation Models рынок, $ млрд",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 20.0,
+          "label": "~$20 млрд",
+          "source": "model layer (Research and Markets)"
+        },
+        {
+          "year": "2025",
+          "value": 37.0,
+          "label": "~$37 млрд",
+          "source": "enterprise LLM spend (Menlo Ventures)"
+        },
+        {
+          "year": "2026",
+          "value": 75.0,
+          "label": "~$60–90 млрд",
+          "source": "combined lab revenue (mid-point estimate)"
+        },
+        {
+          "year": "2028",
+          "value": 200.0,
+          "label": "~$200 млрд",
+          "source": "оценка при ~40% CAGR"
+        },
+        {
+          "year": "2031",
+          "value": 800.0,
+          "label": "~$800 млрд",
+          "source": "Statista / Grand View Research (broad definition)"
+        }
+      ],
+      "bomShare": {
+        "value": "~5–10%",
+        "note": "Lab revenue = thin slice от >$700 млрд hyperscaler capex. NVIDIA захватывает ~41,5 центов каждого AI-hardware $. Labs squeezed между compute suppliers и commoditizing open-weight frontier."
+      },
+      "volumeVsPrice": "Inference cost упал ~1 000× за 3 года, но volume explodes (Jevons paradox). API pricing: frontier models hold premium ($5–25/M tokens), mid-tier commoditized ($0,40/M). Consumer subscriptions ($20–200/мес) — most stable revenue line."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "NVIDIA (GPU supplier)",
+          "gm": "~75%",
+          "note": "Data-center revenue ~$93,7 млрд (FY2026). ~90% AI-accelerator spend. Captures fattest margin. → раздел AI-чипы"
+        },
+        {
+          "stage": "Anthropic (serving layer)",
+          "gm": "83–89% GM (serving)",
+          "note": "API gross margins high в isolation (SemiAnalysis). Но blended deeply negative после training + R&D + talent. ~$47 млрд ARR (single-source)"
+        },
+        {
+          "stage": "OpenAI (blended)",
+          "gm": "−122% op margin",
+          "note": "~$25 млрд ARR, ~$14 млрд projected loss в 2026. Теряет ~$1,22 на каждый $ выручки. 900 млн WAU"
+        },
+        {
+          "stage": "Open-weight self-hosting",
+          "gm": "25–60%",
+          "note": "Bessemer State of AI 2025. vs 80–90% traditional SaaS. Lower margins, но no vendor lock-in"
+        },
+        {
+          "stage": "Google DeepMind (integrated)",
+          "gm": "bundled",
+          "note": "AI folded into $300 млрд+ revenue base. Can absorb losses indefinitely. Monetize via ads/cloud/Search"
+        }
+      ],
+      "bottleneckNow": "Capital + power: только ~5 Western labs могут позволить frontier training runs ($100 млн+ per generation, heading to $1 млрд+). Power = binding constraint (5–7 лет interconnection queues)",
+      "bottleneckNext": "Talent (несколько сотен elite researchers, пакеты до $1,5 млрд) и revenue-to-capex gap closure. Если revenue не масштабируется — circular financing breaks.",
+      "capitalIntensity": "Экстремальная: OpenAI compute commitments ~$1,4 трлн; raised $122 млрд at $852 млрд post-money. Global corporate AI investment $581,7 млрд в 2025 (+130% г/г, Stanford HAI)",
+      "takeaway": "Value accrues disproportionately к compute suppliers (NVIDIA). Labs capture value только с distribution (Google, Meta, OpenAI consumer) или durable enterprise franchise (Anthropic coding). Pure API-for-hire labs = worst squeeze."
+    },
+    "competition": {
+      "concentration": "Top-3 контролируют ~88% enterprise LLM spend: Anthropic 40%, OpenAI 27%, Google 21% (Menlo Ventures, дек 2025). Closed-source = 87% enterprise workloads. Consumer: ChatGPT ~57–67% web-traffic share (declining), Gemini grows via Android/Search defaults.",
+      "shareTrajectory": [
+        {
+          "player": "Anthropic",
+          "now": "40% enterprise, ~$47 млрд ARR",
+          "direction": "↑",
+          "detail": "Enterprise leader; Claude Code ~54% coding market. Confidential S-1 (июнь 2026). Grew enterprise share 12%→24%→40% за 2 года"
+        },
+        {
+          "player": "OpenAI",
+          "now": "27% enterprise, ~$25 млрд ARR",
+          "direction": "→",
+          "detail": "Consumer leader (900 млн WAU, 1 млрд+ MAU). Но потерял половину enterprise share (50%→27%). S-1 filed, targeting ~$1 трлн IPO"
+        },
+        {
+          "player": "Google DeepMind",
+          "now": "21% enterprise, Gemini 900 млн MAU",
+          "direction": "↑",
+          "detail": "Benchmark leader (GPQA Diamond ~94,3%). TPU vertical integration. Distribution via Search/Android"
+        },
+        {
+          "player": "Meta AI",
+          "now": "Open-weight + Muse Spark",
+          "direction": "↑ (threat)",
+          "detail": "Talent-buying spree; Scale AI $14,3 млрд; pivoting к proprietary (Muse Spark). Rationing Gemini access"
+        },
+        {
+          "player": "Chinese frontier (DeepSeek+)",
+          "now": "~45% OpenRouter traffic",
+          "direction": "↑↑",
+          "detail": "Gap collapsed to 39 Arena points (2,7%). DeepSeek V3 ~$5,6 млн cost. Four Dragons combined ~$140 млрд valuations"
+        }
+      ],
+      "players": [
+        {
+          "name": "Anthropic",
+          "share": "40% enterprise",
+          "edge": "Enterprise trust (non-training-on-data policy); Claude Code dominant coding tool; highest win rate (~70% head-to-head vs OpenAI); safety brand"
+        },
+        {
+          "name": "OpenAI",
+          "share": "27% enterprise, consumer leader",
+          "edge": "Consumer scale (1 млрд+ MAU); brand recognition; Stargate ($400 млрд); compute commitments ~$1,4 трлн; custom chips (Broadcom)"
+        },
+        {
+          "name": "Google DeepMind",
+          "share": "21% enterprise",
+          "edge": "TPU vertical integration; Search/Android distribution; benchmark leadership; infinite balance sheet; 85K+ enterprise Gemini builders"
+        },
+        {
+          "name": "Meta AI",
+          "share": "Open-weight leader",
+          "edge": "Largest talent acquisition; open-weight ecosystem dominance; $115–145 млрд capex; 3 млрд+ app users for distribution"
+        },
+        {
+          "name": "DeepSeek",
+          "share": "Open-weight efficiency leader",
+          "edge": "V3 ~$5,6 млн marginal cost; near-zero historical revenue; efficiency icon forcing industry cost reset"
+        }
+      ],
+      "switchingCost": "Низкий и снижающийся: API = commodity interface; open-weight alternatives множатся. Switching cost выше для enterprise с fine-tuned models и regulatory compliance (Anthropic's advantage)",
+      "entryBarrier": "Экстремальный для frontier: capital ($100 млн+ per training run, heading to $1 млрд+), power (5–7 лет queues), talent (несколько сотен researchers, пакеты до $1,5 млрд), GPU allocation. Но DeepSeek showed frontier-adjacent at ~20× lower cost.",
+      "takeaway": "88% concentration у Top-3 маскирует rapid commoditization снизу. Open-weight ~45% OpenRouter, Chinese gap = 2,7%. Moats = distribution + capital access, не capability."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 95,
+          "note": "Enterprise LLM spend tripled to ~$37 млрд (2025). Inference > training как dominant workload. 85K+ enterprises на Gemini, 2 млн+ на OpenAI, ~300K на Anthropic"
+        },
+        {
+          "year": "2027",
+          "pct": 85,
+          "note": "Agentic AI расширяет TAM. IPOs (OpenAI, Anthropic) test public market appetite. Inference volumes continue explosive growth"
+        },
+        {
+          "year": "2028",
+          "pct": 65,
+          "note": "Revenue-to-capex gap must narrow. If not — circular financing pressure. EU AI Act enforcement matures"
+        }
+      ],
+      "contractStructure": "Consumer subscriptions: $20–200/мес (ChatGPT, Claude, Gemini). Enterprise API: usage-based + volume commitments. Government: DoD CDAO $200 млн ceiling × 4 labs ($800 млн total); GSA $1/agency (land-grab loss-leaders).",
+      "customerConcentration": "Средняя: enterprise distributed (2 млн+ OpenAI business clients), но revenue concentrated в hyperscaler subsidies. OpenAI → Microsoft/Amazon/NVIDIA capital. Anthropic → AWS/Google. Circular dependency.",
+      "backlog": "OpenAI compute commitments ~$1,4 трлн (vendor breakdown: Broadcom ~$350 млрд, Oracle ~$300 млрд, Microsoft ~$250 млрд, NVIDIA ~$100 млрд, AMD ~$90 млрд). Anthropic $965 млрд valuation (Series H). Not traditional revenue backlog — capital commitments.",
+      "pricing": "Frontier API: Claude Opus $5/$25, Gemini 3.1 Pro $2/$12, GPT-5.5 ~$2,50/$15 per M tokens. GPT-4-equivalent упал с ~$20/M (2022) до ~$0,40/M (2026). ~1 000× deflation за 3 года.",
+      "takeaway": "Demand explosive и real: enterprise tripled, consumer crossed 1 млрд MAU. Но pricing deflating ~1 000× за 3 года — volume must compensate. Revenue gap vs capex = core thesis risk."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит (frontier)",
+          "color": "#ef4444",
+          "detail": "Только ~5 Western labs afford frontier training. Google уже рационирует Gemini capacity для Meta. Power = binding constraint (5–7 лет queue)"
+        },
+        {
+          "year": "2027",
+          "state": "напряжённо",
+          "color": "#f59e0b",
+          "detail": "More 'good enough' models via open-weight. Custom silicon ramps (OpenAI-Broadcom, Amazon Trainium). Mid-tier supply exploding"
+        },
+        {
+          "year": "2028",
+          "state": "профицит (mid-tier)",
+          "color": "#22c55e",
+          "detail": "Open-weight commoditizes everything below bleeding edge. Frontier supply consolidates (3–5 labs). Power и capital = only remaining barriers"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Open-weight explosion: DeepSeek, Meta Llama, Qwen, Kimi, GLM — mid-tier capability commoditized",
+          "when": "2025–2027",
+          "impact": "~45% OpenRouter traffic. Compresses pricing для closed-source mid-tier"
+        },
+        {
+          "name": "Custom silicon: OpenAI-Broadcom chip (H2 2026), Google TPU, Amazon Trainium, AMD $90 млрд deal",
+          "when": "2026–2028",
+          "impact": "Reduces NVIDIA dependency; adds frontier supply capacity"
+        },
+        {
+          "name": "Hyperscaler vertical integration: Meta Muse Spark, Google rationing, Amazon investing in frontier",
+          "when": "2026–2027",
+          "impact": "Structural threat to external labs — in-sourcing of capability"
+        },
+        {
+          "name": "Stargate: OpenAI-Oracle-NVIDIA ~$400 млрд, 7 GW long-term",
+          "when": "2026–2030+",
+          "impact": "Largest AI-infra commitment; execution uncertain"
+        }
+      ],
+      "leadTime": "Frontier training run: months (data prep + compute allocation + training + post-training). New lab formation: $1 млрд+ minimum to reach frontier. Power: 5–7 лет для interconnection (ERCOT/MISO/PJM).",
+      "utilization": "Inference has overtaken training как dominant workload. GPU utilization high (cloud providers report sold-out). Google already rationing capacity к Meta.",
+      "crowdingOut": "Open-weight models crowd out closed-source pricing на mid-tier. Chinese labs crowd out Western labs на efficiency-per-dollar metrics. Hyperscaler integration crowds out external pure API labs.",
+      "takeaway": "Frontier supply consolidating (3–5 Western labs). Mid-tier supply exploding via open-weight. The squeeze: frontier requires capital nobody has profitably, while mid-tier commoditizes pricing."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "Frontier API: Claude Opus $5/$25, GPT-5.5 ~$2,50/$15, Gemini 3.1 Pro $2/$12 per M input/output tokens. GPT-4-equivalent: $20/M (2022) → $0,40/M (2026) = ~1 000× decline. Consumer: $20–200/мес.",
+      "grossMargin": "Serving layer: 83–89% GM для frontier models (SemiAnalysis). Open-weight self-hosting: 25–60% (Bessemer). Но blended margins катастрофические: OpenAI −122% operating margin at $25 млрд ARR. Никто не profitable standalone.",
+      "costCurve": "Training per generation: GPT-4 ~$100 млн+; next-gen heading to $1 млрд+. DeepSeek V3 marginal ~$5,6 млн. 4 compounding factors: hardware (2–3×/gen), software/batching (2–3×), MoE (3–5×), quantization (2–4×). Talent: пакеты до $1,5 млрд (Meta → Andrew Tulloch).",
+      "yields": [
+        {
+          "gen": "Consumer subscriptions",
+          "pct": "~$17 млрд ARR (OpenAI, ~70% revenue)",
+          "note": "Most stable revenue. ChatGPT Pro $200/мес, Plus $20/мес"
+        },
+        {
+          "gen": "Enterprise API",
+          "pct": "~$37 млрд market (2025, Menlo)",
+          "note": "High serving margins, usage-based. Anthropic wins ~70% head-to-head"
+        },
+        {
+          "gen": "Government/defense",
+          "pct": "$800 млн ceiling (DoD CDAO)",
+          "note": "Land-grab loss-leaders ($1/agency GSA). Long-term potential, near-term minimal"
+        },
+        {
+          "gen": "Ads/distribution (integrated)",
+          "pct": "bundled (Google, Meta)",
+          "note": "Google: AI folded into $300 млрд+ base. Meta: strategic value, not direct model revenue"
+        }
+      ],
+      "takeaway": "High serving margins маскируют catastrophic blended economics. Fundamental question: может ли frontier lab быть standalone profitable, или subsidy от hyperscalers permanent?"
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "GPT-4 / Claude 3 era",
+          "node": "legacy",
+          "year": "2023–2024",
+          "note": "First frontier generation. Training costs ~$100 млн+. Established market"
+        },
+        {
+          "name": "GPT-5/Opus 4/Gemini 2 era",
+          "node": "mainstream",
+          "year": "2025",
+          "note": "Reasoning/CoT models. Agentic capabilities. Multi-modal. Enterprise adoption tripled"
+        },
+        {
+          "name": "GPT-5.5/Opus 4.6-4.8/Gemini 3 era",
+          "node": "shipping",
+          "year": "2026",
+          "note": "Current frontier. SWE-bench ~88–95%. Claude Fable 5. Billion-dollar training runs"
+        },
+        {
+          "name": "Next-gen frontier",
+          "node": "sampling",
+          "year": "2027",
+          "note": "Post-training gains (RL, agentic scaffolding) > raw pretraining scale. Custom silicon ramps"
+        },
+        {
+          "name": "Agentic AI era",
+          "node": "announced",
+          "year": "2027–2028",
+          "note": "Kimi K2.6 orchestrating 300 sub-agents. Labor replacement TAM. Multi-site training (power-bound)"
+        },
+        {
+          "name": "Post-transformer architectures",
+          "node": "research",
+          "year": "2028+",
+          "note": "SSM/hybrid (AI21 Jamba), neuromorphic. No frontier-displacing result yet. Multi-year horizon"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "Open-weight commoditization",
+          "verdict": "Highest-probability near-term disruptor — already underway",
+          "tone": "negative",
+          "detail": "Chinese open weights ~45% OpenRouter traffic (с <2% год назад). DeepSeek V3 = frontier-adjacent at $5,6 млн. Collapses pricing everywhere below bleeding edge.",
+          "angle": "Core threat для closed-source labs. Watch open vs closed benchmark delta monthly."
+        },
+        {
+          "tech": "Efficiency shocks (DeepSeek-style)",
+          "verdict": "Collapses value of expensive training runs — proven disruption vector",
+          "tone": "negative",
+          "detail": "DeepSeek V3 ~$5,6 млн marginal vs $100 млн+ для Western frontier. Frontier-adjacent capability at ~10–20× lower cost. Forces industry cost reset.",
+          "angle": "Can't be ignored: even if DeepSeek specifically is restricted, the efficiency approach proliferates."
+        },
+        {
+          "tech": "Hyperscaler vertical integration",
+          "verdict": "Existential threat для external labs — Meta Muse Spark is landmark signal",
+          "tone": "negative",
+          "detail": "Meta launched proprietary closed model (Muse Spark) after rationing external Gemini. Google TPU, Amazon Trainium. Each hyperscaler building end-to-end capability.",
+          "angle": "If hyperscalers stop subsidizing external labs — existential для API-only players."
+        }
+      ],
+      "takeaway": "Monthly benchmark reshuffling + open-weight ~45% OpenRouter + hyperscaler integration = moats eroding faster than new ones form. Frontier advantage = shrinking to 6–12 мес. Bet on distribution, не capability."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "GPU (NVIDIA)",
+          "supplier": "NVIDIA (~90% AI-accelerator spend)",
+          "note": "Constrained allocation halts frontier training. ~41,5 центов каждого AI-hardware $. → раздел AI-чипы"
+        },
+        {
+          "item": "HBM-память",
+          "supplier": "SK Hynix, Samsung, Micron",
+          "note": "Shortage raises consumer-electronics prices — evidence of extreme tightness. → раздел HBM"
+        },
+        {
+          "item": "Cloud compute",
+          "supplier": "Microsoft, AWS, Google, Oracle, CoreWeave",
+          "note": "OpenAI→Microsoft/Oracle/CoreWeave/Amazon; Anthropic→AWS/Google. Circular dependency. → раздел AI-вычисления"
+        },
+        {
+          "item": "Электроэнергия",
+          "supplier": "Utilities, behind-the-meter (gas, nuclear)",
+          "note": "Binding constraint: 5–7 лет interconnection queues. OpenAI 9,2 GW gas (Stargate). → раздел Электроэнергия"
+        },
+        {
+          "item": "Talent",
+          "supplier": "Несколько сотен elite researchers",
+          "note": "Пакеты до $1,5 млрд. Departures = material events. Meta buying aggressively (Scale AI $14,3 млрд)"
+        }
+      ],
+      "downstream": "Application developers (Cursor ~$2 млрд ARR), enterprise customers (85K+ Gemini, 2 млн+ OpenAI, 300K Anthropic), consumer platforms, API integrators. Downstream apps уже зарабатывают больше некоторых лабораторий.",
+      "correlation": "Высочайшая корреляция с hyperscaler capex (>$700 млрд, 2026) и NVIDIA revenue. Circular financing: hyperscalers invest in labs → labs buy compute from hyperscalers → hyperscalers buy NVIDIA. Demand stall re-rates весь stack.",
+      "takeaway": "Labs = highly dependent upstream (few suppliers, huge commitments) и increasingly disintermediated downstream (open weights let app-builders switch). Structural squeeze."
+    },
+    "risks": [
+      {
+        "risk": "Revenue fails to scale into capex / circular financing collapse",
+        "prob": "Средняя",
+        "impact": "Критический",
+        "note": "Core thesis risk. Bain ~$800 млрд shortfall. Cahn ~$3 трлн revenue need vs ~$80 млрд combined. Allianz 46% divergence > telecom bust 2001."
+      },
+      {
+        "risk": "Open-weight commoditization",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "Already underway: Chinese open weights ~45% OpenRouter. DeepSeek $5,6 млн vs $100 млн+. Collapses pricing below bleeding edge."
+      },
+      {
+        "risk": "Hyperscaler vertical integration / subsidy withdrawal",
+        "prob": "Средняя",
+        "impact": "Критический",
+        "note": "Meta Muse Spark, Google TPU, Amazon Trainium. Existential для external API-only labs."
+      },
+      {
+        "risk": "Regulatory (EU AI Act, fines, recalls)",
+        "prob": "Средняя-Высокая",
+        "impact": "Средний",
+        "note": "EU AI Act GPAI enforcement live August 2, 2026. Fines до 3% global turnover / €15 млн. 6 models classified systemic-risk."
+      },
+      {
+        "risk": "Talent concentration / poaching wars",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "Nine-figure comp normal; up to $1,5 млрд packages. Cost driver, not existential, но concentrates advantage."
+      },
+      {
+        "risk": "Geopolitical US-China decoupling",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "Export controls fragment market. Chinese labs adapt via efficiency. Partly priced in."
+      },
+      {
+        "risk": "Safety incident → regulatory backlash",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Character.AI lawsuits, xAI deepfake suit. Latent trigger для stricter regulation."
+      },
+      {
+        "risk": "Scaling laws plateau",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Partly mitigated by reasoning/agentic/post-training gains. But undermines frontier premium if open weights catch up."
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — adjacent public equities с exposure к AI-лабораториям",
+        "tone": "leader",
+        "badge": "DISTRIBUTION + INFRA",
+        "note": "Прямые инвестиции в лаборатории (OpenAI/Anthropic) = mostly private при 20–150× ARR. Лучший liquid exposure — через public equities, которые владеют distribution, compute, и strategic stakes. Alphabet = DeepMind + TPU vertical integration. Amazon = Anthropic stake + AWS + Trainium. Oracle = $553 млрд RPO + Stargate. ASML = European champion call option.",
+        "rows": [
+          {
+            "company": "Alphabet",
+            "ticker": "NASDAQ: GOOGL",
+            "mcap": "~$2,5 трлн+",
+            "exposure": "Google DeepMind = benchmark leader (GPQA Diamond ~94,3%, ARC-AGI-2 ~77,1%). Gemini 900 млн MAU. TPU vertical integration. 85K+ enterprise builders. £1,33 млрд DeepMind direct revenue (2024)",
+            "why": "DeepMind + TPU vertical integration arguably underpriced vs pure-play multiples. Distribution via Search/Android/YouTube = strongest moat. Can absorb AI losses indefinitely в $300 млрд+ revenue base. Cloud revenue growing >40%.",
+            "priced": "AI spend = capex-heavy near-term (>$75 млрд 2026). EU AI Act exposure. Search disruption risk от AI-native competitors. DeepMind costs rising."
+          },
+          {
+            "company": "Amazon",
+            "ticker": "NASDAQ: AMZN",
+            "mcap": "~$2 трлн+",
+            "exposure": "Anthropic strategic stake ($8 млрд invested). AWS = largest cloud provider. Trainium custom silicon. Bedrock = model hosting platform",
+            "why": "Anthropic stake = optionality без full private-market risk. AWS is infrastructure layer все лаборатории используют. Trainium снижает NVIDIA dependency. Bedrock = model-agnostic hosting (wins regardless of lab winner).",
+            "priced": "Anthropic stake = minority, limited control. AWS margins under AI capex pressure. Regulatory scrutiny на acqui-hires. $100 млрд+ capex 2026."
+          },
+          {
+            "company": "Oracle",
+            "ticker": "NYSE: ORCL",
+            "mcap": "~$450–500 млрд",
+            "exposure": "RPO $553 млрд (+325% г/г). OpenAI compute ~$300 млрд commitment. OCI +84%. Stargate partner (~$400 млрд). AI-infra revenue +243%",
+            "why": "~28× earnings = cheapest AI-cloud exposure. Diversified (DB, cloud, apps), cash-generative. Stargate + OpenAI = massive contracted pipeline. Neocloud-like growth при hyperscaler stability.",
+            "priced": "~54% RPO от OpenAI (concentration). Debt-funded capex ($45–50 млрд+). OpenAI's own profitability unproven = counterparty risk."
+          },
+          {
+            "company": "ASML",
+            "ticker": "EURONEXT: ASML",
+            "mcap": "~$350–400 млрд",
+            "exposure": "Mistral's largest shareholder (~11%). EUV monopoly = все frontier chips (NVIDIA, AMD, Intel) проходят через ASML. Beneficiary regardless of which lab wins",
+            "why": "European AI champion call option (Mistral stake) + picks-and-shovels monopoly. Регулятор-protected. Double exposure: lab optionality + compute hardware monopoly.",
+            "priced": "Cyclical semiconductor capex swings. Export control risk (China revenue declining). Mistral stake = small % of ASML value."
+          }
+        ]
+      },
+      {
+        "group": "Emerging — прямые lab investments и adjacent picks-and-shovels",
+        "tone": "emerging",
+        "badge": "HIGH-RISK + PRIVATE",
+        "note": "Прямые инвестиции в лаборатории = extreme valuations, mostly private, unproven profitability. Tier-2 plays и inference brokers = higher risk/reward. Подходит только для <1% portfolio при готовности к 50–80% drawdown.",
+        "rows": [
+          {
+            "company": "Anthropic",
+            "ticker": "Private ($965 млрд, May 2026)",
+            "mcap": "$965 млрд (Series H)",
+            "exposure": "~$47 млрд ARR (single-source). 40% enterprise LLM spend. Claude Code ~54% coding. Confidential S-1 (июнь 2026). Backers: Altimeter, Dragoneer, Sequoia, NVIDIA $10 млрд, Microsoft $5 млрд",
+            "why": "Enterprise API leader, fastest revenue growth in sector (reportedly 47× за 17 мес). ~70% win rate vs OpenAI. Safety brand = regulatory advantage. Claude Code dominance.",
+            "risk": "ARR figures single-source/contested ($6,5–47 млрд range). Standalone profitability unproven. $965 млрд = extreme valuation. Hyperscaler subsidy dependency (AWS, Google)."
+          },
+          {
+            "company": "OpenAI",
+            "ticker": "Private ($852 млрд, Mar 2026)",
+            "mcap": "$852 млрд (post-money)",
+            "exposure": "~$25 млрд ARR (Feb 2026). 900 млн WAU, 1 млрд+ MAU. Compute commitments ~$1,4 трлн. S-1 filed, targeting ~$1 трлн IPO. Raised $122 млрд (Amazon $50 млрд, NVIDIA $30 млрд, SoftBank $30 млрд)",
+            "why": "Consumer-scale leader; fastest app to 1 млрд. Brand dominance. Stargate partner ($400 млрд). Custom chip (Broadcom, H2 2026). Codex, Sora, ads ($2,5–3 млрд target).",
+            "risk": "−122% operating margin. ~$14 млрд projected 2026 loss. Lost half enterprise share (50→27%). $1 трлн IPO target = 'non-starter' below for Altman. Circular financing."
+          },
+          {
+            "company": "Mistral",
+            "ticker": "Private (€11,7 млрд confirmed, ~$20 млрд reported)",
+            "mcap": "€11,7 млрд (Series C)",
+            "exposure": "~$400 млн ARR, targeting $1 млрд+ 2026. European champion; sovereignty wedge. ASML ~11% shareholder. Backers: a16z, Lightspeed, NVIDIA",
+            "why": "European sovereign positioning = unique regulatory advantage. Open-weight + enterprise + sovereign = diversified model. ASML backing = industrial alignment. Most reasonable valuation of frontier labs.",
+            "risk": "Sub-frontier scale. No clear path to US consumer. ~$1 млрд target ambitious. EU market smaller than US."
+          },
+          {
+            "company": "Databricks",
+            "ticker": "Private (~$62 млрд, Dec 2024)",
+            "mcap": "~$62 млрд",
+            "exposure": "Fine-tuning / MLOps platform. Monetizes open-weight proliferation. Lakehouse = data infrastructure for AI. IPO candidate",
+            "why": "Wins regardless of which lab wins — picks-and-shovels for model deployment. Monetizes open-weight explosion. Revenue >$2,4 млрд (2024), growing >60%. IPO prep.",
+            "risk": "Competition from cloud-native MLOps. High valuation (~25× revenue). Snowflake + cloud providers as competitors."
+          },
+          {
+            "company": "Meta",
+            "ticker": "NASDAQ: META",
+            "mcap": "~$1,4–1,8 трлн",
+            "exposure": "Llama = open-weight ecosystem leader. Muse Spark = proprietary pivot. $115–145 млрд capex. Scale AI acquisition ($14,3 млрд). 3 млрд+ app users",
+            "why": "Largest talent acquisition spree. Distribution через 3 млрд+ users. Can monetize AI via ads/engagement without direct model revenue. Pivoting to proprietary = optionality. Cloud rental entry (see rack).",
+            "risk": "AI spend = massive capex with unclear direct ROI. Regulatory (EU, antitrust). Open-weight strategy cannibalizes potential moat. Muse Spark unproven."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Лучший approach: high-conviction-thematic, low-portfolio-weight (2–5% aggregate) через liquid adjacent public equities. Core positions: Alphabet (DeepMind + TPU + distribution, underpriced vs pure-play multiples), Amazon (Anthropic stake + AWS + Trainium), Oracle (cheapest ~28× earnings, $553 млрд RPO). Direct lab exposure (Anthropic/OpenAI secondaries) только при <1% sizing и tolerance for 50–80% drawdowns. Avoid Tier-2 Chinese names кроме specialist sleeves. Single question: at what revenue multiple am I underwriting, и does entry price survive a scenario где inference = commodity и только distribution owners capture margin?",
+    "monitoring": {
+      "metrics": [
+        "Aggregate lab revenue growth vs compute-commitment drawdown — investors.openai.com, anthropic.com, quarterly (MOST IMPORTANT single monitor)",
+        "Enterprise LLM market share — Menlo Ventures State of GenAI (semiannual, Dec + mid-year)",
+        "API pricing deflation curve — Artificial Analysis, provider pricing pages, monthly",
+        "Open vs closed benchmark delta — LMArena, vals.ai, Artificial Analysis, weekly/monthly",
+        "Consumer MAU/WAU — OpenAI/Google earnings, Sensor Tower, Similarweb, monthly/quarterly",
+        "Talent movements — The Information, WSJ, X, weekly",
+        "IPO filings / S-1 detail — SEC EDGAR, FutureSearch, as filed",
+        "EU AI Act enforcement actions — EU AI Office, from August 2, 2026"
+      ],
+      "canary": [
+        "Top-3 lab revenue growth decelerates below 30% при rising capex commitments — circular financing crack",
+        "Hyperscaler exits external-lab funding relationship (stops investing or reduces commitment) — existential for API-only labs",
+        "EU/US enforcement produces material fine или model recall — regulatory repricing trigger",
+        "Open vs closed benchmark gap collapses to <1% sustained — commoditization accelerating",
+        "OpenAI или Anthropic IPO prices below last private mark — valuation reality check",
+        "Chinese open-weight OpenRouter share exceeds 60% — closed-source pricing collapse"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "AI Labs: fastest revenue growth ever vs structurally unprofitable model и ~$1,5 трлн capex bill",
+      "summary": "OpenAI ~$25 млрд ARR, Anthropic reportedly ~$47 млрд, enterprise tripled to ~$37 млрд. Но OpenAI −122% operating margin, compute commitments ~$1,4 трлн vs $25 млрд revenue (56×). Open-weight ~45% OpenRouter. IPO filings подвергнут private marks public scrutiny. Structural question: revenue scales to justify capex, или circular financing collapses.",
+      "stories": [
+        {
+          "title": "Anthropic: ~$47 млрд ARR, $965 млрд valuation, 40% enterprise",
+          "tone": "mixed",
+          "verdict": "Enterprise leader с explosive growth, но ARR figures single-source/contested и valuation extreme",
+          "detail": "Series H $65 млрд at $965 млрд. Claude Code ~54% coding market. ~70% win rate vs OpenAI. S-1 filed (июнь 2026). Но $47 млрд ARR contested (range $6,5–47 млрд); standalone profitability unproven."
+        },
+        {
+          "title": "OpenAI: 1 млрд+ MAU, −122% operating margin, S-1 filed",
+          "tone": "mixed",
+          "verdict": "Consumer-scale dominant но deeply unprofitable; targeting ~$1 трлн IPO",
+          "detail": "~$25 млрд ARR. 900 млн WAU → 1 млрд MAU (fastest app ever). $122 млрд raised. Но ~$14 млрд projected loss 2026. Compute commitments ~$1,4 трлн. Enterprise share halved (50→27%)."
+        },
+        {
+          "title": "DeepSeek V3: frontier at $5,6 млн marginal cost",
+          "tone": "negative",
+          "verdict": "Efficiency shock forcing industry cost reset; commoditizing closed-source mid-tier",
+          "detail": "~$5,6 млн marginal final-run cost для frontier-adjacent capability. ~45% OpenRouter traffic for Chinese models. US–China gap = 39 Arena points (2,7%). First external raise at ~$45–59 млрд."
+        },
+        {
+          "title": "Meta Muse Spark: hyperscaler goes proprietary",
+          "tone": "negative",
+          "verdict": "Landmark signal — hyperscaler building closed model after rationing external access",
+          "detail": "Meta launched proprietary closed model after rationing Gemini access. $115–145 млрд capex. Scale AI $14,3 млрд acquisition. Structural threat для external API labs."
+        },
+        {
+          "title": "EU AI Act GPAI enforcement: August 2, 2026",
+          "tone": "negative",
+          "verdict": "First major regulatory enforcement; fines до 3% global turnover",
+          "detail": "6 models classified systemic-risk (>10²⁵ FLOPs). $15 млн–3% turnover fines. Compliance costs rising. Favors labs with safety focus (Anthropic)."
+        }
+      ],
+      "bottomLine": "Fastest-growing software category в истории, но structurally unprofitable с ~$1,5 трлн annual capex bill vs ~$80 млрд combined revenue. Invest через liquid adjacent equities (Alphabet, Amazon, Oracle) при 2–5% portfolio weight. Direct lab exposure: <1%, tolerance for repricing."
+    },
+    "news": [
+      {
+        "date": "2026-06-08",
+        "source": "SEC / OpenAI",
+        "title": "OpenAI files confidential S-1; targeting ~$1 трлн IPO",
+        "blurb": "~$25 млрд ARR. $852 млрд post-money. Altman: below $1 трлн = 'non-starter'. FutureSearch models ~$700 млрд fair value."
+      },
+      {
+        "date": "2026-06-01",
+        "source": "SEC / Anthropic",
+        "title": "Anthropic files confidential S-1; ~Oct/Dec 2026 IPO",
+        "blurb": "$965 млрд valuation (Series H). ~$47 млрд ARR reported. Claude Code ~54% coding market. FutureSearch median 90-day post-IPO ~$1,09 трлн."
+      },
+      {
+        "date": "2026-05-28",
+        "source": "CNBC / Anthropic",
+        "title": "Anthropic Series H: $65 млрд at $965 млрд valuation",
+        "blurb": "Backers: Altimeter, Dragoneer, Sequoia, NVIDIA $10 млрд, Microsoft $5 млрд. Reported ~$47 млрд ARR (single-source/contested)."
+      },
+      {
+        "date": "2026-04-13",
+        "source": "Stanford HAI",
+        "title": "2026 AI Index: US–China gap = 39 Arena points (2,7%)",
+        "blurb": "Global AI investment $581,7 млрд (+130% г/г). US $285,9 млрд vs China $12,4 млрд (~23× gap). Chinese labs closed capability gap at fraction of capital."
+      },
+      {
+        "date": "2026-03-31",
+        "source": "OpenAI",
+        "title": "OpenAI raises $122 млрд at $852 млрд: largest funding round ever",
+        "blurb": "Amazon $50 млрд, NVIDIA $30 млрд, SoftBank $30 млрд. Compute commitments total ~$1,4 трлн."
+      }
+    ]
   }
 }

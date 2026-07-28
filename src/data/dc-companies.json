@@ -2517,5 +2517,126 @@
     "ppr": "$30B private; >$500M ARR, >$4B bookings; data platform underpinning CoreWeave + xAI; IPO candidate",
     "geo": "US",
     "note": "Cleanest picks-and-shovels neocloud play; company-sourced financials (verify)"
+  },
+  {
+    "company": "Alphabet",
+    "ticker": "NASDAQ: GOOGL",
+    "sector": "Frontier Lab",
+    "conviction": "high",
+    "riskTier": "low",
+    "horizon": "5–10 лет",
+    "ppr": "DeepMind + TPU vertical integration underpriced vs pure-play; Gemini 900M MAU; $300B+ revenue base absorbs AI losses",
+    "geo": "US",
+    "note": "Capex >$75B 2026; EU AI Act exposure; Search disruption risk"
+  },
+  {
+    "company": "Amazon",
+    "ticker": "NASDAQ: AMZN",
+    "sector": "Frontier Lab",
+    "conviction": "high",
+    "riskTier": "low",
+    "horizon": "5–10 лет",
+    "ppr": "Anthropic $8B stake + AWS + Trainium + Bedrock = model-agnostic infra; wins regardless of lab winner",
+    "geo": "US",
+    "note": "Minority Anthropic stake; $100B+ capex 2026; regulatory scrutiny on acqui-hires"
+  },
+  {
+    "company": "Mistral",
+    "ticker": "Private (€11.7B)",
+    "sector": "Frontier Lab",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "5–10 лет",
+    "ppr": "European champion; sovereignty wedge; ASML ~11% shareholder; ~$400M ARR targeting $1B+ 2026",
+    "geo": "FR",
+    "note": "Sub-frontier scale; EU market smaller; no US consumer path"
+  },
+  {
+    "company": "Cohere",
+    "ticker": "Private ($7B)",
+    "sector": "Frontier Lab",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Enterprise/sovereign only; ~$240M ARR; ~70% GM; acquired Aleph Alpha; IPO prep",
+    "geo": "CA",
+    "note": "Flat valuation; niche positioning; no consumer"
+  },
+  {
+    "company": "DeepSeek",
+    "ticker": "Private (~$45-59B reported)",
+    "sector": "Frontier Lab",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "5–10 лет",
+    "ppr": "Efficiency icon: V3 ~$5.6M marginal cost; ~45% OpenRouter driver; frontier-adjacent at 10-20x lower cost",
+    "geo": "CN",
+    "note": "Near-zero revenue; export-controlled; geopolitical risk; first external raise"
+  },
+  {
+    "company": "Zhipu AI",
+    "ticker": "HKEX (Knowledge Atlas)",
+    "sector": "Frontier Lab",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "Largest Chinese lab revenue ($1B ARR Jul 2026, +15x YoY); HK-listed; state-backed",
+    "geo": "CN",
+    "note": "CNY 4.72B loss; heavy gov-deployment mix; HK listing volatility"
+  },
+  {
+    "company": "Moonshot AI",
+    "ticker": "Private (~$30-50B target)",
+    "sector": "Frontier Lab",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "Kimi K2.6 best open-weight; ~$300M ARR, 70% B2B API; Alibaba ~36% shareholder",
+    "geo": "CN",
+    "note": "~150x P/ARR; froth; Alibaba dependency"
+  },
+  {
+    "company": "MiniMax",
+    "ticker": "HKEX",
+    "sector": "Frontier Lab",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "Only Chinese lab with improving gross margins (12.2%→25.4%); 70%+ overseas revenue; multimodal",
+    "geo": "CN",
+    "note": "Small revenue; consumer-heavy; HK listing; ~$8.7-33B market cap range"
+  },
+  {
+    "company": "Databricks",
+    "ticker": "Private (~$62B)",
+    "sector": "Frontier Lab",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Picks-and-shovels for model deployment; monetizes open-weight proliferation; revenue >$2.4B (+60%); IPO candidate",
+    "geo": "US",
+    "note": "~25x revenue valuation; Snowflake + cloud-native competition"
+  },
+  {
+    "company": "Hugging Face",
+    "ticker": "Private (~$4.5B)",
+    "sector": "Frontier Lab",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Model hosting hub ('GitHub of ML'); benefits from open-weight proliferation; community moat",
+    "geo": "US",
+    "note": "Revenue undisclosed; monetization challenges; competition from cloud providers"
+  },
+  {
+    "company": "Meta",
+    "ticker": "NASDAQ: META",
+    "sector": "Frontier Lab",
+    "conviction": "high",
+    "riskTier": "low",
+    "horizon": "5–10 лет",
+    "ppr": "Llama open-weight leader; Muse Spark proprietary pivot; $115-145B capex; 3B+ users; Scale AI $14.3B",
+    "geo": "US",
+    "note": "AI spend = massive capex with unclear direct ROI; open-weight may cannibalize moat"
   }
 ]
