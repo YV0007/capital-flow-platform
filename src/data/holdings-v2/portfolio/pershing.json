@@ -1,5 +1,6 @@
 {
   "id": "pershing",
+  "layout": "default",
   "asOf": "28.06.2026",
   "summary": "Pershing Square Holdings (PSH, Guernsey, листинг LSE) — closed-end holdco с постоянным капиталом под управлением PSCM (Bill Ackman): концентрированный портфель из ~11 публичных North-American large-cap имён, где пять позиций (Brookfield, Amazon, Uber, Microsoft, Restaurant Brands) держат 78.2% раскрытого US-портфеля ($13.71 млрд на 31.03.2026, 13F-HR). Деньги реально текут в две точки: (1) ротация в AI-megacaps (новая позиция Microsoft, докупка Amazon, почти полный выход из Alphabet) и (2) превращение Howard Hughes во вторую управляющую платформу (покупка страховщика Vantage за $2.1 млрд, $1 млрд preferred к PSH, закрыто 04.06.2026). Отдельный спекулятивный слой — probabilistic-ставки на Fannie/Freddie преимущественно через деривативы. Решение hold/add определяется устойчивостью NAV против постоянного дисконта цены к NAV (расширился до ~34% к лету 2026) и key-person-риском Ackman.",
   "allocation": {
@@ -68,6 +69,47 @@
         "note": "Fannie/Freddie преимущественно через деривативы; ставка на выход GSE из conservatorship. Вес в NAV первичкой не раскрыт"
       }
     ]
+  },
+  "holdings13F": {
+    "positions": 12,
+    "totalValue": "$13.71 млрд",
+    "note": "13F-HR Q1'26 (reporting period 31.03.2026, filed 15.05.2026). Pershing Square Capital Management — концентрированный фонд: 12 строк, ~11 уникальных имён, всего $13.71 млрд раскрытой стоимости.",
+    "rows": [
+      {"t": "BKFOF", "name": "Brookfield Corp — Preferred", "val": 2415.95, "pct": 17.62, "delta": -0.53},
+      {"t": "AMZN", "name": "Amazon.com", "val": 2385.10, "pct": 17.39, "delta": 3.11},
+      {"t": "UBER", "name": "Uber Technologies", "val": 2154.93, "pct": 15.71, "delta": -0.18},
+      {"t": "MSFT", "name": "Microsoft", "val": 2092.97, "pct": 15.26, "delta": 15.26},
+      {"t": "QSR", "name": "Restaurant Brands International", "val": 1673.50, "pct": 12.20, "delta": 2.15},
+      {"t": "META", "name": "Meta Platforms", "val": 1522.36, "pct": 11.10, "delta": -0.27},
+      {"t": "HHH", "name": "Howard Hughes Holdings", "val": 1192.58, "pct": 8.70, "delta": -0.99},
+      {"t": "SEG", "name": "Seaport Entertainment Group", "val": 107.91, "pct": 0.79, "delta": 0.15},
+      {"t": "GOOGL", "name": "Alphabet (Class C)", "val": 89.42, "pct": 0.65, "delta": -11.81},
+      {"t": "HTZ", "name": "Hertz Global Holdings", "val": 70.26, "pct": 0.51, "delta": 0.01},
+      {"t": "GOOGL", "name": "Alphabet (Class A)", "val": 9.31, "pct": 0.07, "delta": -1.30},
+      {"t": "HLT", "name": "Hilton Worldwide Holdings", "val": 0, "pct": 0.00, "delta": 0.00}
+    ],
+    "increases": [
+      {"t": "MSFT", "name": "Microsoft", "val": 2092.97, "pct": 15.26, "delta": 15.26},
+      {"t": "AMZN", "name": "Amazon.com", "val": 2385.10, "pct": 17.39, "delta": 3.11},
+      {"t": "QSR", "name": "Restaurant Brands International", "val": 1673.50, "pct": 12.20, "delta": 2.15},
+      {"t": "SEG", "name": "Seaport Entertainment Group", "val": 107.91, "pct": 0.79, "delta": 0.15}
+    ],
+    "decreases": [
+      {"t": "GOOGL", "name": "Alphabet (Class C)", "val": 89.42, "pct": 0.65, "delta": -11.81},
+      {"t": "GOOGL", "name": "Alphabet (Class A)", "val": 9.31, "pct": 0.07, "delta": -1.30},
+      {"t": "HHH", "name": "Howard Hughes Holdings", "val": 1192.58, "pct": 8.70, "delta": -0.99},
+      {"t": "BKFOF", "name": "Brookfield Corp — Preferred", "val": 2415.95, "pct": 17.62, "delta": -0.53},
+      {"t": "META", "name": "Meta Platforms", "val": 1522.36, "pct": 11.10, "delta": -0.27},
+      {"t": "UBER", "name": "Uber Technologies", "val": 2154.93, "pct": 15.71, "delta": -0.18}
+    ],
+    "filings13DG": {
+      "note": "Крупные доли >5% по формам 13D/A за последний год.",
+      "rows": [
+        {"date": "08.05.2026", "form": "13D/A", "t": "QSR", "name": "Restaurant Brands International", "ownPct": 7.80},
+        {"date": "08.06.2026", "form": "13D/A", "t": "HHH", "name": "Howard Hughes Holdings", "ownPct": 46.70},
+        {"date": "29.04.2026", "form": "13D/A", "t": "H1HH34", "name": "Howard Hughes Holdings — Depositary Receipt", "ownPct": 46.70}
+      ]
+    }
   },
   "platforms": [
     {

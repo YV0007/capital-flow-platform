@@ -76,19 +76,20 @@ function linkifyCell(cell) {
 }
 
 function DataTable({ b }) {
+  const headers = b.headers || b.columns || [];
   const alignFor = (ci) => (b.align && b.align[ci]) || (ci === 0 ? 'left' : 'right');
   return (
     <div>
       <Title note={b.note}>{b.title}</Title>
       <div style={{ overflowX: 'auto', border: `1px solid ${C.line}`, borderRadius: 10 }}>
         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-          <thead><tr>
-            {b.headers.map((h, i) => (
+          {headers.length > 0 && <thead><tr>
+            {headers.map((h, i) => (
               <th key={i} style={{ textAlign: alignFor(i), padding: '9px 14px', fontSize: 10, letterSpacing: '.05em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600, borderBottom: `1px solid ${C.line}`, background: C.cardAlt, whiteSpace: 'nowrap' }}>{h}</th>
             ))}
-          </tr></thead>
+          </tr></thead>}
           <tbody>
-            {b.rows.map((r, ri) => (
+            {(b.rows || []).map((r, ri) => (
               <tr key={ri} style={{ background: ri % 2 ? C.card : 'transparent' }}>
                 {r.map((cell, ci) => (
                   <td key={ci} style={{ textAlign: alignFor(ci), padding: '9px 14px', fontSize: ci === 0 ? 12.5 : 12, fontFamily: ci === 0 ? 'var(--sans)' : 'var(--mono)', color: isNeg(cell) ? C.clay : (ci === 0 ? C.ink : C.inkSoft), lineHeight: 1.45, verticalAlign: 'top' }}>{linkifyCell(cell)}</td>
@@ -135,17 +136,21 @@ function Bets({ b }) {
       <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${b.min || 360}px, 1fr))`, gap: 14 }}>
         {b.items.map((c, i) => {
           const cc = col(c.color);
+          const cardTitle = c.title || c.name || '';
+          const cardBadge = c.badge || c.sector || '';
+          const cardValue = c.value || c.role || '';
+          const cardValueLabel = c.valueLabel || c.fact || '';
           return (
             <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `3px solid ${cc}`, borderRadius: 12, padding: '16px 18px', display: 'flex', flexDirection: 'column' }}>
               {/* header: sector + tag */}
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 12 }}>
-                <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, color: C.ink, flex: 1, lineHeight: 1.2 }}>{c.title}</span>
-                {c.badge && <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: cc + '22', color: cc, border: `1px solid ${cc}55`, fontWeight: 600, letterSpacing: '.06em', flexShrink: 0 }}>{c.badge}</span>}
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, color: C.ink, flex: 1, lineHeight: 1.2 }}>{cardTitle}</span>
+                {cardBadge && <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: cc + '22', color: cc, border: `1px solid ${cc}55`, fontWeight: 600, letterSpacing: '.06em', flexShrink: 0 }}>{cardBadge}</span>}
               </div>
               {/* headline number + what it actually is */}
               <div style={{ marginBottom: 14, paddingBottom: 14, borderBottom: `1px solid ${C.lineSoft}` }}>
-                <div style={{ fontFamily: 'var(--mono)', fontSize: 23, fontWeight: 500, color: cc, lineHeight: 1 }}>{c.value}</div>
-                {c.valueLabel && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 6, lineHeight: 1.45 }}>{c.valueLabel}</div>}
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 23, fontWeight: 500, color: cc, lineHeight: 1 }}>{cardValue}</div>
+                {cardValueLabel && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 6, lineHeight: 1.45 }}>{cardValueLabel}</div>}
               </div>
               {/* vehicles: business model + named companies + scale */}
               {c.vehicles && c.vehicles.length > 0 && (
@@ -164,10 +169,10 @@ function Bets({ b }) {
                 </div>
               )}
               {/* management outlook / projection */}
-              {c.outlook && (
+              {(c.outlook || c.embodies) && (
                 <div style={{ background: cc + '10', border: `1px solid ${cc}33`, borderRadius: 8, padding: '10px 12px', marginBottom: c.quote ? 12 : 0 }}>
-                  <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: cc, fontWeight: 600, marginBottom: 5 }}>Куда идёт — взгляд менеджмента</div>
-                  <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.5 }}>{c.outlook}</div>
+                  <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: cc, fontWeight: 600, marginBottom: 5 }}>{c.outlook ? 'Куда идёт — взгляд менеджмента' : 'Что воплощает'}</div>
+                  <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.5 }}>{c.outlook || c.embodies}</div>
                 </div>
               )}
               {/* quote */}
@@ -954,12 +959,16 @@ function Facts({ b }) {
     <div>
       <Title note={b.note}>{b.title}</Title>
       <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '6px 16px' }}>
-        {b.items.map((f, i) => (
-          <div key={i} style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, 38%) 1fr', gap: 14, padding: '11px 0', borderTop: i ? `1px solid ${C.lineSoft}` : 'none' }}>
-            <div style={{ fontSize: 12.5, fontWeight: 600, color: C.ink, lineHeight: 1.5 }}>{withLinks(f.k, f.links, openCompany)}</div>
-            <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{withLinks(f.v, f.links, openCompany)}</div>
-          </div>
-        ))}
+        {b.items.map((f, i) => {
+          const key = f.k || f.label || '';
+          const val = f.v || [f.value, f.detail].filter(Boolean).join(' — ') || '';
+          return (
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, 38%) 1fr', gap: 14, padding: '11px 0', borderTop: i ? `1px solid ${C.lineSoft}` : 'none' }}>
+              <div style={{ fontSize: 12.5, fontWeight: 600, color: C.ink, lineHeight: 1.5 }}>{withLinks(key, f.links, openCompany)}</div>
+              <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{withLinks(val, f.links, openCompany)}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

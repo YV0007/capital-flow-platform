@@ -52,7 +52,47 @@ function normalize(data) {
     }));
   }
   const keyCompanies = blocks.flatMap((b) => b.groups.flatMap((g) => g.rows)).filter((r) => r.key);
-  return { summary: data.summary, composition, geo, themes, blocks, keyCompanies };
+  return { summary: data.summary, composition, geo, themes, blocks, keyCompanies, layout: data.layout || 'default', allCompanies: data.allCompanies || null };
+}
+
+// ── flat full-portfolio table (Company / Asset Class / Industry / Region) ───
+const ALL_GRID = '1fr 160px 180px 180px';
+
+function AllCompaniesTable({ companies, search }) {
+  const filtered = search
+    ? companies.filter((c) => (c.name + ' ' + c.assetClass + ' ' + c.industry + ' ' + c.region).toLowerCase().includes(search.toLowerCase()))
+    : companies;
+  const [showAll, setShowAll] = useState(false);
+  const shown = showAll ? filtered : filtered.slice(0, 30);
+  const cols = [['Компания', 'left'], ['Класс актива', 'left'], ['Отрасль', 'left'], ['Регион', 'left']];
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>
+          {search ? `${filtered.length} найдено из ${companies.length}` : `${companies.length} компаний`}
+        </span>
+      </div>
+      <div style={{ border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden', background: C.card }}>
+        <div style={{ display: 'grid', gridTemplateColumns: ALL_GRID, gap: 10, padding: '9px 16px', background: C.cardAlt, borderBottom: `1px solid ${C.line}` }}>
+          {cols.map(([t, a], i) => <div key={i} style={{ fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkFaint, textAlign: a }}>{t}</div>)}
+        </div>
+        {shown.map((c, i) => (
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: ALL_GRID, gap: 10, padding: '10px 16px', borderBottom: i < shown.length - 1 ? `1px solid ${C.lineSoft}` : 'none', alignItems: 'baseline' }}>
+            <div style={{ fontSize: 13, fontWeight: 500, color: C.ink }}>{c.name}</div>
+            <div style={{ fontSize: 11.5, color: C.inkSoft }}>{c.assetClass}</div>
+            <div style={{ fontSize: 11.5, color: C.inkSoft }}>{c.industry}</div>
+            <div style={{ fontSize: 11.5, color: C.inkFaint }}>{c.region}</div>
+          </div>
+        ))}
+      </div>
+      {!showAll && filtered.length > 30 && (
+        <button onClick={() => setShowAll(true)} style={{ marginTop: 10, fontSize: 12, padding: '7px 16px', borderRadius: 16, border: `1px solid ${C.line}`, background: 'transparent', color: C.teal, cursor: 'pointer' }}>Показать все {filtered.length}</button>
+      )}
+      {showAll && filtered.length > 30 && (
+        <button onClick={() => setShowAll(false)} style={{ marginTop: 10, fontSize: 12, padding: '7px 16px', borderRadius: 16, border: `1px solid ${C.line}`, background: 'transparent', color: C.teal, cursor: 'pointer' }}>Свернуть</button>
+      )}
+    </div>
+  );
 }
 
 // ── value/size cell — never shows "не раскрыто" ─────────────────────────────
@@ -87,7 +127,7 @@ function CompanyRow({ r, open, onToggle, focused }) {
   }, [focused]);
   return (
     <div ref={ref} style={{ borderTop: `1px solid ${C.lineSoft}`, background: open ? C.cardAlt : 'transparent', boxShadow: focused ? `inset 0 0 0 1px ${C.teal}` : 'none', borderRadius: focused ? 6 : 0 }}>
-      <div onClick={onToggle} style={{ display: 'grid', gridTemplateColumns: ROW_GRID, gap: 12, alignItems: 'start', padding: '11px 14px', cursor: r.detail ? 'pointer' : 'default' }}>
+      <div onClick={onToggle} style={{ display: 'grid', gridTemplateColumns: ROW_GRID, gap: 12, alignItems: 'start', padding: '12px 16px', cursor: r.detail ? 'pointer' : 'default' }}>
         <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 13.5, fontWeight: 500, color: C.ink, display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap' }}>
             {r.name}
@@ -109,7 +149,7 @@ function CompanyRow({ r, open, onToggle, focused }) {
       </div>
 
       {open && r.detail && (
-        <div style={{ padding: '4px 16px 16px 16px' }}>
+        <div style={{ padding: '6px 18px 18px 18px' }}>
           {r.detail.metrics && r.detail.metrics.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
               {r.detail.metrics.map((m, i) => (
@@ -150,7 +190,7 @@ function Subgroup({ g, forceOpen, focus }) {
   const teaser = g.stats && g.stats[0] ? g.stats[0].value : '';
   return (
     <div style={{ borderTop: `1px solid ${C.line}` }}>
-      <button onClick={() => setOpen(!open)} style={{ width: '100%', display: 'grid', gridTemplateColumns: '18px 1fr auto', gap: 10, alignItems: 'center', background: 'none', border: 'none', padding: '12px 16px', cursor: 'pointer', textAlign: 'left' }}>
+      <button onClick={() => setOpen(!open)} style={{ width: '100%', display: 'grid', gridTemplateColumns: '18px 1fr auto', gap: 10, alignItems: 'center', background: 'none', border: 'none', padding: '14px 18px', cursor: 'pointer', textAlign: 'left' }}>
         <span style={{ fontSize: 11, color: C.inkFaint }}>{isOpen ? '▾' : '▸'}</span>
         <span style={{ display: 'flex', alignItems: 'baseline', gap: 9 }}>
           <span style={{ fontSize: 14, fontWeight: 600, color: C.ink }}>{g.name}</span>
@@ -159,9 +199,9 @@ function Subgroup({ g, forceOpen, focus }) {
         {teaser && <span style={{ justifySelf: 'end', fontFamily: 'var(--mono)', fontSize: 12, color: C.teal }}>{teaser}</span>}
       </button>
       {isOpen && (
-        <div style={{ padding: '0 16px 8px' }}>
+        <div style={{ padding: '0 18px 14px' }}>
           {g.stats && g.stats.length > 0 && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '2px 0 12px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '2px 0 14px' }}>
               {g.stats.map((s, i) => (
                 <div key={i} style={{ padding: '9px 14px', background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 8 }}>
                   <div style={{ fontSize: 9.5, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 4 }}>{s.label}</div>
@@ -190,6 +230,34 @@ function filterBlock(b, search, keyOnly) {
   return { ...b, groups, total };
 }
 
+// ── flat layout: all sectors in one continuous list ─────────────────────────
+function FlatSectorBlock({ b, filtering, focus }) {
+  const [openRow, setOpenRow] = useState(null);
+  const total = b.groups.reduce((s, g) => s + g.rows.length, 0);
+  if (filtering && total === 0) return null;
+  const allRows = b.groups.flatMap((g) => g.rows);
+  return (
+    <div style={{ marginBottom: 18 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
+        <h4 style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 600, color: C.ink, margin: 0 }}>{b.name}</h4>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint }}>{total}</span>
+      </div>
+      {b.plain && <p style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5, margin: '0 0 8px', maxWidth: 680 }}>{b.plain}</p>}
+      {b.stat && <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.teal, lineHeight: 1.4, marginBottom: 8 }}>{b.stat}</div>}
+      {b.groups.length > 1
+        ? b.groups.map((g, gi) => <Subgroup key={gi} g={g} forceOpen={filtering || b.groups.length <= 2} focus={focus} />)
+        : (
+          <div style={{ border: `1px solid ${C.line}`, borderRadius: 8, overflow: 'hidden' }}>
+            <RowHeader />
+            {allRows.map((r, ri) => (
+              <CompanyRow key={ri} r={r} open={openRow === ri} focused={focus === r.name} onToggle={() => r.detail && setOpenRow(openRow === ri ? null : ri)} />
+            ))}
+          </div>
+        )}
+    </div>
+  );
+}
+
 // ── left rail: one selectable sector ────────────────────────────────────────
 function RailItem({ b, active, onClick, filtering }) {
   return (
@@ -197,7 +265,7 @@ function RailItem({ b, active, onClick, filtering }) {
       width: '100%', textAlign: 'left', cursor: 'pointer', display: 'block',
       background: active ? C.cardAlt : 'transparent',
       border: 'none', borderLeft: `3px solid ${active ? C.teal : 'transparent'}`,
-      padding: '13px 16px', transition: 'background .12s',
+      padding: '14px 18px', transition: 'background .12s',
     }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
         <span style={{ fontFamily: 'var(--serif)', fontSize: 15.5, fontWeight: 500, color: active ? C.ink : C.inkSoft, lineHeight: 1.25, flex: 1, minWidth: 0 }}>{b.name}</span>
@@ -410,6 +478,7 @@ export default function PortfolioDeep({ data, focus }) {
   const [tab, setTab] = useState('sector');
   const [search, setSearch] = useState('');
   const [keyOnly, setKeyOnly] = useState(false);
+  const [viewAll, setViewAll] = useState(false);
   const [mainTab, setMainTab] = useState('holdings');
   // default to the first sector that actually holds companies (some, e.g. asset
   // management, carry no named positions and would open to an empty pane)
@@ -536,14 +605,20 @@ export default function PortfolioDeep({ data, focus }) {
       {/* ── Filters ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск по компании…" style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, fontFamily: 'var(--sans)', width: 220, outline: 'none' }} />
-        <span style={{ fontSize: 11.5, color: C.inkFaint, marginLeft: 'auto' }}>Сектор слева → компания → клик для деталей</span>
+        {n.allCompanies && (
+          <button onClick={() => setViewAll(!viewAll)} style={{ fontSize: 12, padding: '6px 14px', borderRadius: 16, border: `1px solid ${viewAll ? C.teal : C.line}`, background: viewAll ? C.teal + '18' : 'transparent', color: viewAll ? C.teal : C.inkSoft, cursor: 'pointer' }}>
+            {viewAll ? '◂ По секторам' : `Все компании · ${n.allCompanies.length}`}
+          </button>
+        )}
+        {!viewAll && <span style={{ fontSize: 11.5, color: C.inkFaint, marginLeft: 'auto' }}>Сектор слева → компания → клик для деталей</span>}
       </div>
 
-      {/* ── Sectors: master (left rail) + detail (right pane) ── */}
-      {(() => {
+      {/* ── Portfolio: allCompanies table OR master-detail ── */}
+      {viewAll && n.allCompanies ? (
+        <AllCompaniesTable companies={n.allCompanies} search={search} />
+      ) : (() => {
         const filtering = !!(search || keyOnly);
         const filtered = n.blocks.map((b) => filterBlock(b, search, keyOnly));
-        // when filtering, keep the active sector if it still has hits, else jump to the first that does
         let shown = active;
         if (filtering && filtered[shown] && filtered[shown].total === 0) {
           const first = filtered.findIndex((b) => b.total > 0);
@@ -551,17 +626,15 @@ export default function PortfolioDeep({ data, focus }) {
         }
         const current = filtered[shown];
         return (
-          <div style={{ display: 'flex', gap: 20, alignItems: 'stretch', flexWrap: 'wrap', minHeight: 580 }}>
-            {/* left rail */}
-            <nav style={{ flex: '1 1 260px', maxWidth: 320, minWidth: 240, border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden', background: C.card, alignSelf: 'stretch' }}>
+          <div style={{ display: 'flex', gap: 0, alignItems: 'stretch', flexWrap: 'wrap', minHeight: 580 }}>
+            <nav style={{ flex: '1 1 260px', maxWidth: 320, minWidth: 240, border: `1px solid ${C.line}`, borderRadius: '10px 0 0 10px', overflow: 'hidden', background: C.card, alignSelf: 'stretch' }}>
               {filtered.map((b, i) => (
                 <div key={b.id || i} style={{ borderTop: i ? `1px solid ${C.lineSoft}` : 'none', opacity: filtering && b.total === 0 ? 0.4 : 1 }}>
                   <RailItem b={b} active={i === shown} filtering={filtering} onClick={() => setActive(i)} />
                 </div>
               ))}
             </nav>
-            {/* right pane */}
-            <div style={{ flex: '999 1 520px', minWidth: 300, border: `1px solid ${C.line}`, borderRadius: 10, background: C.card, padding: '20px 24px' }}>
+            <div style={{ flex: '999 1 520px', minWidth: 300, border: `1px solid ${C.line}`, borderLeft: 'none', borderRadius: '0 10px 10px 0', background: C.card, padding: '22px 28px' }}>
               <SectorPane b={current} filtering={filtering} focus={focus} />
             </div>
           </div>
