@@ -10431,5 +10431,607 @@
         "blurb": "Amazon $50 млрд, NVIDIA $30 млрд, SoftBank $30 млрд. Compute commitments total ~$1,4 трлн."
       }
     ]
+  },
+  "transformers": {
+    "asOf": "2026-07-28",
+    "intro": "Силовые трансформаторы — самое узкое физическое место AI-электрификации. Lead times на LPT = 128 недель (~2,5 года), GSU = 144 недели (Wood Mackenzie, Q2 2025); substation transformers вытянулись до >160 недель (2026). США импортируют ~80% крупных силовых трансформаторов. Цены выросли на 77% с 2019 года (WoodMac). GOES (электротехническая сталь) — upstream chokepoint: Китай = 56% мирового производства; в США единственный поставщик — Cleveland-Cliffs. GE Vernova Electrification backlog вырос с $25 млрд до $42,4 млрд за год (+86% organic orders). Siemens Energy Grid Technologies margin 15,8% (FY25) → guided 16–18%. Тема инвестируемая, но уже не дешёвая: debate — durability, не direction.",
+    "tldr": [
+      "Глобальный рынок силовых трансформаторов ~$28–31 млрд (2025) → ~$34–42 млрд к 2030 (6–6,5% CAGR). US DC electrical equipment market $20 млрд → $65 млрд к 2030 (WoodMac). US hyperscale pad-mount demand: 1 573 units (2025) → 9 395 к 2030. Lead times: LPT 128 недель, GSU 144 недели, substation >160 недель. Цены: +77% (power), +78–95% (distribution), +45% (GSU) с 2019. WoodMac ожидает elevated pricing через 2030.",
+      "Top-5 OEM (Hitachi, Siemens, Toshiba, GE Vernova, Schneider) ≈ 50% share. ~80% US LPTs импортируются. GOES = #1 upstream constraint: Китай 56%, US single-sourced (Cleveland-Cliffs, ~20% domestic demand). Buy America / reshoring: Siemens Charlotte NC plant (online 2027), Hitachi $6 млрд investments, GE Vernova ~$600 млн US upgrades. Workforce = hard limiter: multi-year training для winding/testing.",
+      "Best risk-adjusted: diversified grid incumbents (GEV, Siemens Energy, Schneider, Eaton, Hitachi) + GOES chokepoint (Cleveland-Cliffs) + grid EPC (Quanta). Valuations уже не дешёвые (GEV P/E ~100+). Central tension: нормализуются ли lead times и pricing к 2028 при новых мощностях, прежде чем AI-capex cycle замедлится?"
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 8,
+        "cyclicality": 6,
+        "valuation": 6
+      },
+      "summary": "Tightest physical bottleneck в AI-электрификации: lead times 128–160+ недель, цены +77% с 2019, backlogs на рекордах (GEV $42,4 млрд, Siemens €154 млрд). Moats durable: consolidated top tier, high barriers (capital, qualification cycles, specialized labor), security-reinforced (Chinese LPTs excluded из US critical infra). Demand structural и multi-driver: AI datacenters + aging fleet (US LPT avg age ~40 лет) + renewables + reshoring. Но valuations уже price years of flawless execution (GEV P/E ~100+). Рекомендация: moderate-overweight, staged entry, barbell — grid incumbents + GOES/EPC optionality.",
+      "horizon": "3–7 лет (structural super-cycle), но expect volatility around quarterly order prints",
+      "sizing": "Power transformers ~$30 млрд (2025) → ~$42 млрд (2030). Broader transformer market ~$65 млрд. US DC electrical equipment $20 млрд → $65 млрд (2030)",
+      "keyQuestion": "Нормализуют ли новые мощности (Siemens Charlotte 2027, Hitachi US, GOES expansions) lead times и pricing к 2028 — или supply остаётся structurally behind demand через 2030?",
+      "bull": [
+        "Lead times и backlogs prove demand is real и sticky: pricing power persists 2027–28, driving margin expansion (Siemens GT 15,8%→16–18%; GEV Electrification EBITDA doubled). Supply = structurally behind demand",
+        "GOES и skilled-labor constraints держат supply structurally below demand через 2030, protecting incumbent economics даже при ramp новых заводов",
+        "DC + reshoring + renewables + aging fleet (~70% US LPTs старше 25 лет) = decade-long capex super-cycle с >$1,1 трлн US utility spend 2025–2029"
+      ],
+      "bear": [
+        "2027–28 wave новых Western capacity (Siemens Charlotte, Hitachi US, GE Vernova, Cliffs, GOES expansions) normalizes lead times и compresses pricing premium",
+        "AI-capex cycle moderates: в PJM 65–80% capacity withdrew перед interconnection agreement; 'phantom' demand overstates true transformer pull. Реальный backlog < заявленный",
+        "Valuations уже price years of flawless execution: GEV P/E ~100+. Order deceleration или margin mean-reversion = asymmetric downside"
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~6–6,5% CAGR (power transformers, 2025–2030)",
+      "chartTitle": "Рынок силовых трансформаторов, $ млрд",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 22.0,
+          "label": "~$22 млрд",
+          "source": "GM Insights (power transformer, narrow)"
+        },
+        {
+          "year": "2025",
+          "value": 30.0,
+          "label": "~$28–31 млрд",
+          "source": "MarketsandMarkets / Mordor consensus"
+        },
+        {
+          "year": "2027",
+          "value": 35.0,
+          "label": "~$35 млрд",
+          "source": "оценка при 6,5% CAGR"
+        },
+        {
+          "year": "2030",
+          "value": 42.0,
+          "label": "~$34–42 млрд",
+          "source": "MarketsandMarkets / IndustryARC range"
+        },
+        {
+          "year": "2035",
+          "value": 58.0,
+          "label": "~$58 млрд",
+          "source": "оценка (continued structural demand)"
+        }
+      ],
+      "bomShare": {
+        "value": "~3–5%",
+        "note": "Трансформаторы = essential но small % of total DC build cost. US DC electrical equipment $20 млрд → $65 млрд (2030, WoodMac). Data-center transformers ~$10,5 млрд (2025) → $20,7 млрд (2035). Но binding constraint = bottleneck multiplier"
+      },
+      "volumeVsPrice": "Demand +119% (power), +274% (GSU) с 2019. Prices +77% (power), +78–95% (distribution), +45% (GSU). Growth = both volume (DC units 1 573 → 9 395) и repricing. WoodMac: elevated pricing through 2030."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "GOES producer (Cleveland-Cliffs)",
+          "gm": "varies (steel cyclical)",
+          "note": "Sole US GOES source; meets ~20% domestic demand. GOES = 50–55% of transformer production cost (with copper). Weirton plant adds downstream margin capture"
+        },
+        {
+          "stage": "OEM design/assembly (Siemens Energy GT)",
+          "gm": "15,8% → 16–18% guided",
+          "note": "Dramatic expansion from ~10–12%. Pricing power + backlog visibility. Margin highest in decades"
+        },
+        {
+          "stage": "OEM design/assembly (GE Vernova Elec)",
+          "gm": "EBITDA doubled YoY",
+          "note": "$671 млн EBITDA (Q2 2026) vs $314 млн. Hundreds of bps margin expansion. Clearest financial signal"
+        },
+        {
+          "stage": "Tap changers (Reinhausen)",
+          "gm": "не раскрыто (private)",
+          "note": "~38–42% OLTC share. Near-monopoly = structural rent extraction. Best pure component moat"
+        },
+        {
+          "stage": "EPC (Quanta Services)",
+          "gm": "improving",
+          "note": "Backlog ~$48,5 млрд (Q1 2026). Grid buildout beneficiary. Higher-quality fixed-price mix"
+        }
+      ],
+      "bottleneckNow": "Lead times = 128–160+ недель. GOES supply constrained (US ~20% self-sufficient). Specialized workforce (multi-year training). Factory slot scarcity → multi-year reservation agreements",
+      "bottleneckNext": "New capacity ramp (Siemens Charlotte 2027, Hitachi US, GOES expansions). Workforce training = 2–3 year lag. SST development (long-tail complement/threat post-2030)",
+      "capitalIntensity": "Высокая: Hitachi $6 млрд+ investment; Siemens $421 млн Charlotte; GE Vernova ~$600 млн US upgrades; Eaton $340 млн pad-mount. New LPT plant = hundreds of millions + years qualification",
+      "takeaway": "Supply-constrained regime: pricing power shifted к OEMs holding scarce production slots и GOES chokepoint. Utilities = price-takers. Margin expansion = real (Siemens 15,8%, GEV EBITDA 2×)."
+    },
+    "competition": {
+      "concentration": "Top-5 (Hitachi, Siemens, GE Vernova, Toshiba, Schneider) ≈ 50% power transformer market (GM Insights 2024). LPT/UHV = 'highly consolidated' (SkyQuest). GOES: ~20 mills globally can make ultra-low-loss grades. Tap changers: top-5 = ~82% share, Reinhausen ~38–42%.",
+      "shareTrajectory": [
+        {
+          "player": "GE Vernova",
+          "now": "Electrification backlog $42,4 млрд",
+          "direction": "↑↑",
+          "detail": "+86% organic orders. DC orders >$5 млрд H1 2026 (>2× all 2025). Prolec GE acquired. Purest large-cap US grid play"
+        },
+        {
+          "player": "Siemens Energy",
+          "now": "GT revenue >€11 млрд, margin 15,8%",
+          "direction": "↑",
+          "detail": "Group backlog €154 млрд. First US LPT plant (Charlotte, 2027). Gamesa drag fading"
+        },
+        {
+          "player": "Hitachi Energy",
+          "now": "Backlog ~$43 млрд, tripled since 2020",
+          "direction": "↑",
+          "detail": "$6 млрд+ investment. #1/#2 global transformer share. India greenfield Karjan plant"
+        },
+        {
+          "player": "Chinese OEMs (TBEA)",
+          "now": "World's largest by volume",
+          "direction": "→ (Western exclusion)",
+          "detail": "TBEA ~$13,5 млрд revenue. Largely excluded from Western critical infrastructure on security grounds"
+        },
+        {
+          "player": "Indian players (CG Power)",
+          "now": "Scaling с strong domestic book",
+          "direction": "↑",
+          "detail": "Hitachi Energy India order book +53,5% YoY. Export ambitions"
+        }
+      ],
+      "players": [
+        {
+          "name": "GE Vernova",
+          "share": "Top-5",
+          "edge": "US grid leader; Electrification backlog $42,4 млрд; Prolec GE; DC orders >$5 млрд H1 2026; margin expansion"
+        },
+        {
+          "name": "Siemens Energy",
+          "share": "Top-5",
+          "edge": "GT margin 15,8%→16–18%; backlog €154 млрд; first US LPT plant Charlotte; global reach"
+        },
+        {
+          "name": "Hitachi Energy",
+          "share": "#1/#2 global",
+          "edge": "$6 млрд investment; backlog ~$43 млрд; $250 млн in-house components; India greenfield"
+        },
+        {
+          "name": "Schneider Electric",
+          "share": "Top-5",
+          "edge": "Energy Management backlog €21,3 млрд (+21%); diversified electrical + DC exposure; ~10% organic growth"
+        },
+        {
+          "name": "Cleveland-Cliffs",
+          "share": "Sole US GOES",
+          "edge": "Only domestic GOES source; Weirton distribution transformer plant; structural monopoly"
+        }
+      ],
+      "switchingCost": "Высокий: utility qualification cycles = years. Multi-year reservation agreements на factory slots. Custom specifications для LPT/UHV. Security restrictions exclude Chinese alternatives.",
+      "entryBarrier": "Экстремальный: capital (hundreds of millions per plant), specialized labor (multi-year winding/testing training), utility qualification (years), test facilities. Only ~20 mills globally can make ultra-low-loss GOES grades.",
+      "takeaway": "Highly consolidated OEM tier с security-reinforced moats. Chinese exclusion tightens Western supply further. Entry barriers = among highest в industrial sectors."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 98,
+          "note": "Lead times 128–160+ недель. ERCOT large-load requests ~230 GW (2025, 4× vs end-2024; >70% DC). GEV Electrification backlog $42,4 млрд. Transformer = binding physical constraint"
+        },
+        {
+          "year": "2027",
+          "pct": 90,
+          "note": "New capacity starts ramping (Siemens Charlotte). Но demand continues (aging fleet + DC + renewables). Lead times still elevated"
+        },
+        {
+          "year": "2028",
+          "pct": 75,
+          "note": "Supply normalization begins if new plants ramp on schedule. Lead-time relief начинается gradually. Full normalization не before ~2030"
+        }
+      ],
+      "contractStructure": "Multi-year reservation agreements на factory slots. Utilities competing for scarce production capacity. OEMs selecting customers. PJM capacity auction: 6 625 MW short at record $333,44/MW-day.",
+      "customerConcentration": "Distributed: utilities (IOU, municipal, co-op), hyperscalers (Microsoft, Amazon, Google, Meta), neoclouds, renewable developers, EPC firms. No single customer dominates, но hyperscaler demand = fastest-growing.",
+      "backlog": "GEV total ~$176 млрд (Q2 2026); Electrification $42,4 млрд. Siemens Energy €154 млрд. Hitachi Energy ~$43 млрд. Schneider €21,3 млрд Energy Management. Eaton $13,2 млрд Electrical Americas (+31%). All at records.",
+      "pricing": "Power transformer prices +77% с 2019. Distribution +78–95%. GSU +45%. GOES roughly doubled, copper +50–70%. WoodMac: elevated pricing through 2030. Repricing = sticky, not transitory.",
+      "takeaway": "Multi-driver structural demand: AI DC (pad-mount 1 573→9 395), aging fleet (~70% US LPTs 25+ yrs), renewables (GSU +274%), reshoring. All backlogs at records. Pricing power intact."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "LPT 128 wks, GSU 144 wks, substation >160 wks. US ~80% import-dependent. GOES constrained. 30% US power transformer shortfall (WoodMac/POWER Mag)"
+        },
+        {
+          "year": "2027",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "Siemens Charlotte first LPTs (early 2027), но ramp gradual. New capacity not meaningful until post-2027. Workforce training = 2–3 yr lag"
+        },
+        {
+          "year": "2028",
+          "state": "напряжённо",
+          "color": "#f59e0b",
+          "detail": "Western capacity comes online (Hitachi US, GEV, GOES expansions). Lead-time relief begins gradually. Full normalization not before ~2030"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Siemens Energy Charlotte NC: initial $150 млн → $421 млн expansion. First LPTs early 2027, ramp to 57 LPTs/yr at full capacity",
+          "when": "2027–2028",
+          "impact": "First US LPT plant для Siemens — structural reshoring milestone"
+        },
+        {
+          "name": "Hitachi Energy: $6 млрд portfolio incl. $1,5 млрд transformers; $1 млрд US grid manufacturing; India greenfield Karjan",
+          "when": "2025–2028",
+          "impact": "Largest OEM investment program. Multi-site global expansion"
+        },
+        {
+          "name": "GE Vernova: ~$600 млн US factory upgrades; acquired Prolec GE (50%, ~$3 млрд revenue 2026)",
+          "when": "2025–2027",
+          "impact": "Capacity + vertical integration через Prolec GE"
+        },
+        {
+          "name": "Cleveland-Cliffs Weirton WV distribution transformer plant ($150 млн; online H1 2026). POSCO partnership",
+          "when": "2026",
+          "impact": "GOES vertical integration downstream. Adds 30–40% GOES tonnage utilization"
+        },
+        {
+          "name": "GOES global expansion: JFE India JV ~350K TPA (~2027), ArcelorMittal Alabama $1,2 млрд 150K TPA, POSCO Gwangyang",
+          "when": "2026–2028",
+          "impact": "Upstream bottleneck relief. Но ramp takes 2–3 years"
+        }
+      ],
+      "leadTime": "LPT 128 weeks, GSU 144 weeks (WoodMac Q2 2025). Substation >160 weeks. Pre-pandemic baseline: 7–14 months. Specialized units: 3–5 лет. North America/Europe up to 60 months extreme cases vs ~12 months APAC historically.",
+      "utilization": "OEM LPT facility utilization ~70% globally, projected ~80% к 2030. Bottleneck = not factory capacity alone, но skilled labor и GOES supply. Demand since 2019: power +119%, GSU +274%.",
+      "crowdingOut": "AI/DC demand crowding out utility grid-mod и renewables integration. Utilities competing с hyperscalers for scarce factory slots. Behind-the-meter generation partially bypasses grid transformers для some DCs.",
+      "takeaway": "Structurally out of balance (WoodMac). New capacity = largely 2027–28 online с subsequent ramp. Full normalization not before ~2030. GOES и workforce = hard limiters on ramp speed."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "LPT: ~$2–10 млн+ (зависит от MVA/kV rating). Pad-mounted distribution: до ~$300K (CLF CEO). Cost curve logarithmic (scale exponent ~0,4–0,6). Cost mix: GOES + copper 50–55%, labor ~25%, remainder (oil, bushings, tap changers, tank, testing).",
+      "grossMargin": "Siemens Energy GT: 15,8% (FY25) → guided 16–18% (FY26). GE Vernova Electrification EBITDA: $671 млн (Q2 2026) vs $314 млн — doubled. Margin expansion = hundreds of bps. Clearest financial signal: incumbent grid divisions repricing backlog.",
+      "costCurve": "GOES roughly doubled с 2020. Copper +50–70% (до ~$9,51/кг, 2025). Transformer oil stable. Ester fluids (fire-safe, datacenter): +8–15% vs mineral oil. Labor ~45 man-hours per MVA. Materials ≈ 40% manufacturing cost.",
+      "yields": [
+        {
+          "gen": "Power transformer (+77% с 2019)",
+          "pct": "OEM margin 15–18%",
+          "note": "Pricing power intact. Multi-year backlogs protect. WoodMac: elevated через 2030"
+        },
+        {
+          "gen": "Distribution transformer (+78–95%)",
+          "pct": "improving",
+          "note": "Cliffs entering downstream. Most extreme repricing in category"
+        },
+        {
+          "gen": "GSU (+45% с 2019)",
+          "pct": "improving",
+          "note": "+274% demand growth. Renewables-driven. Lead times 144 weeks"
+        },
+        {
+          "gen": "DC pad-mount (1 573→9 395 units)",
+          "pct": "premium pricing",
+          "note": "Fastest-growing. Ester fluid adds 8–15% cost. Hyperscaler willingness to pay"
+        }
+      ],
+      "takeaway": "Supply-constrained regime = OEMs repricing backlog и expanding margins simultaneously. Siemens GT 15,8%, GEV EBITDA doubled. Pricing appears sticky (multi-year backlogs), not transitory."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "Oil-cooled LPT (legacy)",
+          "node": "mainstream",
+          "year": "present",
+          "note": "~77% of LPT revenue. Mature technology. Core of installed base. Avg age ~40 лет в US"
+        },
+        {
+          "name": "Ester-fluid transformers",
+          "node": "shipping",
+          "year": "2024–2026",
+          "note": "Cargill FR3/Envirotemp, MIDEL, BIOTEMP. 330°C flash vs 145°C. +20% emergency loading. +8–15% cost. High DC adoption momentum"
+        },
+        {
+          "name": "Amorphous-core transformers",
+          "node": "shipping",
+          "year": "2024–2026",
+          "note": "Lower no-load losses. US supply single-sourced (Metglas). Niche constraint"
+        },
+        {
+          "name": "Digital twins / IoT monitoring",
+          "node": "ramping",
+          "year": "2025–2027",
+          "note": "Qualitrol/Hitachi, GE MDS, Doble/ESCO. Rising attach rates, especially hyperscalers"
+        },
+        {
+          "name": "HVDC converter transformers",
+          "node": "ramping",
+          "year": "2025–2028",
+          "note": "Long-distance + offshore wind integration. Growing segment"
+        },
+        {
+          "name": "Solid-state transformers (SST)",
+          "node": "early R&D",
+          "year": "2028–2035+",
+          "note": "DC SST market ~$40 млн (2025) → $154 млн (2030). First 800V DC datacenter deployments ~2028. SiC cost declines push TCO parity. Long-tail, not near-term substitute"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "Solid-state transformers (SST)",
+          "verdict": "Long-tail complement/threat, не near-term substitute для grid LPTs",
+          "tone": "mixed",
+          "detail": "US DC SST market ~$40,3 млн (2025) → $154 млн (2030), 30,8% CAGR. Broader SST ~$280 млн (2030) → $1,52 млрд (2035). First 800V DC datacenter deployments as early as 2028. SiC wafer cost −40–50% к 2030.",
+          "angle": "Pre-2030 = low probability impact. Post-2030 = medium-high. Monitor 800V DC datacenter adoption."
+        },
+        {
+          "tech": "Behind-the-meter on-site generation",
+          "verdict": "Partially bypasses grid step-up needs для some DCs, но utility interconnection LPTs still needed",
+          "tone": "mixed",
+          "detail": "Gas turbines, fuel cells, SMRs behind the meter. OpenAI 9,2 GW gas (Stargate). Reduces grid-facing transformer demand для some sites.",
+          "angle": "Reduces pad-mount / step-up demand per DC, но grid interconnection transformers remain."
+        },
+        {
+          "tech": "800V DC datacenter distribution",
+          "verdict": "Reduces rack-level transformer count, но not utility interconnection LPTs",
+          "tone": "mixed",
+          "detail": "Higher-voltage DC distribution inside datacenter. Eliminates some internal step-down transformers. Catalyzing SST development.",
+          "angle": "Affects DC-internal transformers, не grid-facing LPTs. Net impact: reduces some DC-specific demand."
+        }
+      ],
+      "takeaway": "Core technology (oil-cooled LPT) = mature и sticky. SST = real long-tail threat но immaterial pre-2030. Ester fluids = near-term growth story в DC segment. On-site generation = moderate demand reducer для some DCs."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "GOES (электротехническая сталь)",
+          "supplier": "Cleveland-Cliffs (US sole), Nippon Steel, JFE, POSCO, Baowu/Baosteel",
+          "note": "#1 constraint. China 56% global output. US ~20% self-sufficient. Only ~20 mills can make ultra-low-loss grades. → раздел Сырьё"
+        },
+        {
+          "item": "Медь",
+          "supplier": "Global commodity (+50–70% с 2020)",
+          "note": "~15–20% of unit cost. ~$9,51/кг (2025). Together с GOES = 50–55% production cost"
+        },
+        {
+          "item": "Трансформаторное масло / ester fluids",
+          "supplier": "Mineral oil producers; Cargill FR3, M&I/Shell MIDEL, Hitachi BIOTEMP",
+          "note": "Ester fluids replacing mineral oil в DC applications (+8–15% cost, fire safety)"
+        },
+        {
+          "item": "Tap changers (OLTC)",
+          "supplier": "Reinhausen (~38–42%), Hitachi Energy (~18%), Huaming (~12%)",
+          "note": "Near-monopoly. OLTC market ~$1,8 млрд (2025). Top-5 = ~82% share"
+        },
+        {
+          "item": "Bushings / insulation",
+          "supplier": "Hitachi/ABB, Trench/Siemens, GE; Weidmann (insulation), DuPont Nomex",
+          "note": "Hitachi investing $250 млн+ в in-house components для de-risk"
+        }
+      ],
+      "downstream": "Investor-owned/municipal/co-op utilities (largest buyers, ~45,5% LPT orders); hyperscalers (Microsoft, Amazon, Google, Meta); neoclouds; renewable developers; EPC firms (Quanta, MasTec, MYR Group).",
+      "correlation": "Высокая корреляция с utility capex (>$1,1 трлн US 2025–2029), hyperscaler DC buildout, и renewable deployment. Interconnection queue = leading indicator (~2 061 GW US, LBNL 2025). GOES price = cost-side driver.",
+      "takeaway": "Трансформаторы = downstream bottleneck assembler: зависят от GOES (China-dominated), copper, specialized components (Reinhausen near-monopoly). Upstream constraints cap OEM output regardless of demand."
+    },
+    "risks": [
+      {
+        "risk": "GOES supply stays constrained, capping OEM output",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "China 56% output; US ~20% self-sufficient; only ~20 ultra-low-loss mills globally. Hard upstream limit."
+      },
+      {
+        "risk": "Lead times stay elevated (3–5 лет), throttling DC buildout",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "128–160+ недель; new capacity not material until post-2027. Workforce training = multi-year lag."
+      },
+      {
+        "risk": "AI-capex cycle moderates, DC demand disappoints",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Key demand-side swing factor. PJM: 65–80% capacity withdrew. 'Phantom' demand overstates."
+      },
+      {
+        "risk": "Valuations already price perfection (GEV P/E ~100+)",
+        "prob": "Средняя",
+        "impact": "Средний-Высокий",
+        "note": "Order deceleration или margin mean-reversion = asymmetric downside."
+      },
+      {
+        "risk": "New Western capacity normalizes pricing 2028+",
+        "prob": "Средняя",
+        "impact": "Средний-Высокий",
+        "note": "Siemens Charlotte, Hitachi US, GOES expansions. If lead times fall <90 wks → pricing compresses."
+      },
+      {
+        "risk": "On-site generation bypasses grid transformer need",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Behind-the-meter gas, SMR для some DCs. Utility interconnection LPTs still needed."
+      },
+      {
+        "risk": "Chinese import tariffs/bans further tighten supply",
+        "prob": "Средняя-Высокая",
+        "impact": "Средний",
+        "note": "Already largely designed out; raises Western prices but constrains supply."
+      },
+      {
+        "risk": "SST disruption (long-tail)",
+        "prob": "Низкая (pre-2030)",
+        "impact": "Средний-Высокий (post-2030)",
+        "note": "Real но immature. DC SST ~$40 млн (2025). Monitor 800V DC adoption."
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — diversified grid incumbents с transformer exposure",
+        "tone": "leader",
+        "badge": "BACKLOG + PRICING POWER",
+        "note": "GE Vernova = purest large-cap US grid play. Siemens Energy = global grid crown jewel. Eaton/Schneider = diversified electrical + DC. Hitachi = #1/#2 transformer share. Все с record backlogs и margin expansion. Staged entry при valuations.",
+        "rows": [
+          {
+            "company": "GE Vernova",
+            "ticker": "NYSE: GEV",
+            "mcap": "~$185 млрд",
+            "exposure": "Electrification backlog $42,4 млрд (+86% organic orders). Total backlog ~$176 млрд. DC orders >$5 млрд H1 2026 (>2× all 2025). Prolec GE acquired (~$3 млрд revenue). EBITDA doubled (Q2 2026)",
+            "why": "Purest large-cap listed play на US grid electrification. Margin expansion + backlog visibility + Prolec GE vertical integration. DC orders accelerating. ~$600 млн US factory upgrades.",
+            "priced": "P/E ~100+. Years of flawless execution priced in. Order deceleration или margin mean-reversion = asymmetric downside. High absolute valuation."
+          },
+          {
+            "company": "Siemens Energy",
+            "ticker": "XETRA: ENR",
+            "mcap": "~$126 млрд",
+            "exposure": "Grid Technologies FY25: revenue >€11 млрд (+25,4%), margin 15,8% → guided 16–18%. Group backlog €154 млрд. First US LPT plant Charlotte NC (online 2027, 57 LPTs/yr). $421 млн NC expansion",
+            "why": "Grid segment = crown jewel. Margin expansion dramatic (10–12%→15,8%→16–18%). First US LPT plant = reshoring milestone. Gamesa drag fading. Global diversification.",
+            "priced": "Gamesa legacy risk (though fading). Charlotte ramp execution. European industrial discount. Competition с GEV for US grid market."
+          },
+          {
+            "company": "Eaton",
+            "ticker": "NYSE: ETN",
+            "mcap": "~$156 млрд",
+            "exposure": "Electrical Americas backlog $13,2 млрд (+31%). DC revenue +40%, DC orders +~200% YoY (Q4 2025). $340 млн US 3-phase pad investment. Boyd Thermal acquired (cooling)",
+            "why": "Broad electrical + datacenter exposure. DC orders accelerating (+200%). Diversified across electrical distribution, power quality, cooling. Long track record of execution.",
+            "priced": "Less transformer-pure (diversified industrial). Premium valuation. Cyclical exposure beyond DC/grid."
+          },
+          {
+            "company": "Schneider Electric",
+            "ticker": "EPA: SU",
+            "mcap": "~€145–150 млрд",
+            "exposure": "FY25 revenue €40,2 млрд. Energy Management backlog €21,3 млрд (+21%). ~10% organic growth, driven by North America datacenters",
+            "why": "Diversified electrical + DC exposure. Energy Management backlog record. North America DC = growth engine. Most balanced portfolio among grid incumbents.",
+            "priced": "Less transformer-pure vs GEV/Siemens. European conglomerate discount. Cyclical industrial segments."
+          }
+        ]
+      },
+      {
+        "group": "Emerging — chokepoints, EPC, и value plays",
+        "tone": "emerging",
+        "badge": "BOTTLENECK + OPTIONALITY",
+        "note": "Cleveland-Cliffs = purest GOES chokepoint play. Quanta = grid EPC leader. Hitachi = #1/#2 transformer но accessible only via conglomerate. WEG = EM compounder scaling US transformer. Hyundai Electric = Korea HVDC/UHV export.",
+        "rows": [
+          {
+            "company": "Cleveland-Cliffs",
+            "ticker": "NYSE: CLF",
+            "mcap": "~$6–8 млрд",
+            "exposure": "Sole US GOES producer (Butler PA, Zanesville OH). Weirton WV distribution transformer plant ($150 млн, online H1 2026). Meets ~20% US GOES demand. POSCO partnership",
+            "why": "Purest listed play на US GOES chokepoint. Vertical integration downstream (transformers). Domestic monopoly + tariff protection. Weirton captures GOES-plus-assembly margin.",
+            "risk": "Cyclical steelmaker с leverage и steel-price beta. GOES = minority of revenue. Cannot make widest grades для largest LPTs. Commodity steel headwinds."
+          },
+          {
+            "company": "Quanta Services",
+            "ticker": "NYSE: PWR",
+            "mcap": "~$50 млрд",
+            "exposure": "Grid EPC leader. Backlog ~$48,5 млрд (Q1 2026). Electric segment direct beneficiary of utility + DC grid buildout. Higher-quality fixed-price mix improving margins",
+            "why": "Infrastructure picks-and-shovels: benefits regardless of which OEM wins. Largest grid-construction pure play. Utility + DC capex cycle = long visibility.",
+            "risk": "Labor-intensive, project-execution risk. Margin pressure from wage inflation. Not a pure transformer play — grid EPC diversified."
+          },
+          {
+            "company": "Hitachi",
+            "ticker": "TSE: 6501",
+            "mcap": "~$80–90 млрд",
+            "exposure": "#1/#2 global transformer share. Order backlog tripled since 2020 (~$43 млрд). $6 млрд+ capacity investment. $250 млн in-house components. India greenfield Karjan",
+            "why": "Global transformer leader с $6 млрд investment commitment. Vertical integration (bushings, components). India + US expansion. Record backlog.",
+            "risk": "Access only via Hitachi conglomerate (diluted transformer exposure). Japanese conglomerate discount. Yen volatility."
+          },
+          {
+            "company": "WEG",
+            "ticker": "BOVESPA: WEGE3",
+            "mcap": "~$38 млрд",
+            "exposure": "FY25 revenue R$40,8 млрд (~$7,5 млрд). GTD segment ~36% revenue. $77 млн US transformer plant для datacenters. Expanding US T&D capacity",
+            "why": "EM industrial compounder с growing US transformer/DC exposure. Track record of execution. Diversified industrial base. US reshoring beneficiary.",
+            "risk": "Brazil-based (FX risk, EM discount). US transformer = small piece of portfolio. Premium Brazilian valuation."
+          },
+          {
+            "company": "Hyundai Electric",
+            "ticker": "KRX: 267260",
+            "mcap": "~$5–8 млрд",
+            "exposure": "Korea's largest transformer maker. $199 млн 765 kV order для Texas (Sept 2024, delivery 2029). HVDC/UHV focus",
+            "why": "Strong US export book. HVDC/UHV specialization = high-barrier niche. Korean industrial base с competitive cost structure.",
+            "risk": "Single large order = lumpy. Korean conglomerate governance. Limited visibility outside Korea. FX risk."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Moderate-overweight (3–6% aggregate) via barbell: diversified grid incumbents (GEV, Siemens Energy, Schneider, Eaton) для quality + GOES/EPC optionality (Cleveland-Cliffs, Quanta) для chokepoint leverage. Staged entry при valuations (GEV P/E ~100+). Trim benchmark: LPT lead times <90 weeks или OEM book-to-bill <1,0 два квартала подряд. Purest exposure (Reinhausen tap changers, VTC, Cargill fluids) = private, access only через M&A или parent conglomerates.",
+    "monitoring": {
+      "metrics": [
+        "LPT/GSU lead times (weeks) — Wood Mackenzie surveys; NERC, quarterly (MOST IMPORTANT signal)",
+        "GOES spot price и allocation — Fastmarkets; Cleveland-Cliffs earnings calls, monthly/quarterly",
+        "Copper price — LME, daily (~15–20% unit cost)",
+        "OEM order intake и backlog — GEV, Siemens Energy, Hitachi, Eaton, Schneider earnings, quarterly",
+        "Interconnection queue data — LBNL/Berkeley; PJM/ERCOT/MISO, quarterly/annual",
+        "DC construction permits и power requests — ERCOT large-load; utility filings, quarterly",
+        "Utility capex guidance — IOU earnings; EEI, quarterly",
+        "New plant ramp milestones — Siemens Charlotte (2027), Hitachi US, Cliffs Weirton, ad hoc"
+      ],
+      "canary": [
+        "LPT lead times fall below ~90 weeks — supply normalization signal, pricing compression likely",
+        "OEM book-to-bill drops below 1,0 для two consecutive quarters — demand deceleration",
+        "Hyperscaler DC capex guidance cuts — transformer demand reduction",
+        "GOES spot price decline >20% — upstream bottleneck easing, margin pressure",
+        "PJM/ERCOT queue withdrawals accelerate (>80% of new applications) — 'phantom' demand confirmation",
+        "SST commercial deployment at >100 MW scale — long-tail disruption accelerating"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Transformers: tightest physical bottleneck в AI electrification — 128–160+ week lead times, prices +77%",
+      "summary": "Lead times на LPT 128 wks, GSU 144 wks, substation >160 wks — structurally out of balance (WoodMac). Prices +77% с 2019. GEV Electrification backlog $42,4 млрд (+86%), EBITDA doubled. Siemens GT margin 15,8%→16–18%. Hitachi backlog tripled. New capacity (Siemens Charlotte, Hitachi US) = largely 2027–28 с gradual ramp. Full normalization not before ~2030.",
+      "stories": [
+        {
+          "title": "GE Vernova: Electrification backlog $42,4 млрд, EBITDA doubled",
+          "tone": "positive",
+          "verdict": "Purest large-cap US grid play. DC orders >$5 млрд H1 2026 (>2× all 2025). Margin expansion accelerating",
+          "detail": "+86% organic orders. Total backlog ~$176 млрд. Prolec GE acquired. ~$600 млн US factory upgrades. Но P/E ~100+ = priced for perfection."
+        },
+        {
+          "title": "Siemens Energy: Grid Technologies margin 15,8% → 16–18% guided",
+          "tone": "positive",
+          "verdict": "Grid = crown jewel. First US LPT plant Charlotte (online 2027). Gamesa drag fading",
+          "detail": "Group backlog €154 млрд. GT revenue >€11 млрд (+25,4%). $421 млн Charlotte expansion. Margin expansion dramatic (from ~10–12%)."
+        },
+        {
+          "title": "Lead times stretch to 128–160+ weeks; no relief until post-2027",
+          "tone": "mixed",
+          "verdict": "Structurally out of balance — demand outpaces near-term capacity (WoodMac)",
+          "detail": "LPT 128 wks, GSU 144 wks, substation >160 wks. Pre-pandemic baseline: 7–14 months. Workforce training = multi-year lag. Siemens NA president: 'never seen something like this.'"
+        },
+        {
+          "title": "ERCOT large-load requests hit ~230 GW (4× vs end-2024)",
+          "tone": "positive",
+          "verdict": ">70% data centers. 198 GW applied Q1 2026 alone. Transformer = binding physical constraint",
+          "detail": "PJM capacity auction 6 625 MW short at record $333,44/MW-day. US DC capacity 24 GW → 110 GW (2026–2030, WoodMac). Interconnection queue ~2 061 GW."
+        },
+        {
+          "title": "US GOES: Cleveland-Cliffs sole source, meets ~20% demand",
+          "tone": "negative",
+          "verdict": "Single-source vulnerability. China 56% global. Only ~20 ultra-low-loss mills worldwide",
+          "detail": "Weirton distribution transformer plant online H1 2026. POSCO partnership. But cannot make widest grades для largest LPTs. Domestic dependence = national security issue."
+        }
+      ],
+      "bottomLine": "Structural bottleneck с multi-year visibility: 128–160+ week lead times, prices +77%, record backlogs. New capacity 2027–28 но full normalization not before ~2030. Best exposure: grid incumbents (barbell) + GOES chokepoint. Central question: does 2028+ capacity normalize pricing before AI-capex cycle moderates?"
+    },
+    "news": [
+      {
+        "date": "2026-04-15",
+        "source": "Wood Mackenzie / Data Center Knowledge",
+        "title": "US hyperscale pad-mount transformer demand: 1 573 → 9 395 units к 2030",
+        "blurb": "US DC electrical equipment market $20 млрд → $65 млрд к 2030. US DC capacity 24 GW → 110 GW (2026–2030), accounting for 68% total load growth."
+      },
+      {
+        "date": "2026-02-15",
+        "source": "Siemens Energy",
+        "title": "Siemens Energy scales Charlotte NC LPT plant to $421 млн",
+        "blurb": "Initial $150 млн (Feb 2024) → $421 млн expansion. First US LPT plant для Siemens. First LPTs early 2027, ramp to 57 LPTs/yr at full capacity."
+      },
+      {
+        "date": "2026-07-15",
+        "source": "GE Vernova Q2 2026",
+        "title": "GEV Electrification backlog $42,4 млрд; EBITDA doubled to $671 млн",
+        "blurb": "+86% organic orders. DC orders >$5 млрд H1 2026 (>2× all 2025). Total backlog ~$176 млрд. Prolec GE contributing ~$3 млрд."
+      },
+      {
+        "date": "2025-09-15",
+        "source": "Hitachi Energy",
+        "title": "Hitachi Energy: $1 млрд US grid manufacturing investment",
+        "blurb": "Part of $6 млрд portfolio. Alamo TN $106 млн, Bland VA $22,5 млн, Mount Pleasant PA $70 млн. India ₹4 000 cr incl. Karjan greenfield."
+      },
+      {
+        "date": "2025-06-15",
+        "source": "Wood Mackenzie / IndustrialSage",
+        "title": "Power transformer prices +77% since 2019; elevated pricing through 2030",
+        "blurb": "Distribution +78–95%, GSU +45%. GOES doubled, copper +50–70%. Demand: power +119%, GSU +274% since 2019."
+      }
+    ]
   }
 }

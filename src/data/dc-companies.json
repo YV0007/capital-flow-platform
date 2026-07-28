@@ -2638,5 +2638,104 @@
     "ppr": "Llama open-weight leader; Muse Spark proprietary pivot; $115-145B capex; 3B+ users; Scale AI $14.3B",
     "geo": "US",
     "note": "AI spend = massive capex with unclear direct ROI; open-weight may cannibalize moat"
+  },
+  {
+    "company": "Hitachi",
+    "ticker": "TSE: 6501",
+    "sector": "Transformers",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "3–7 лет",
+    "ppr": "#1/#2 global transformer share; backlog ~$43B tripled since 2020; $6B+ investment; vertical integration",
+    "geo": "JP",
+    "note": "Access only via conglomerate; Japanese discount; yen volatility"
+  },
+  {
+    "company": "Hyundai Electric",
+    "ticker": "KRX: 267260",
+    "sector": "Transformers",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Korea's largest; $199M 765kV Texas order; HVDC/UHV specialization; competitive export book",
+    "geo": "KR",
+    "note": "Lumpy orders; Korean governance; limited non-Korea visibility"
+  },
+  {
+    "company": "TBEA",
+    "ticker": "SSE: 600089",
+    "sector": "Transformers",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "3–5 лет",
+    "ppr": "World's largest by volume (~266M kVA); FY24 revenue ~$13.5B; China/EM exposure; UHV leader",
+    "geo": "CN",
+    "note": "Excluded from Western critical infrastructure on security grounds"
+  },
+  {
+    "company": "WEG",
+    "ticker": "BOVESPA: WEGE3",
+    "sector": "Transformers",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–7 лет",
+    "ppr": "EM industrial compounder; FY25 ~$7.5B revenue; $77M US transformer plant for DCs; growing US T&D",
+    "geo": "BR",
+    "note": "Brazil FX risk; US transformer = small % of portfolio; premium EM valuation"
+  },
+  {
+    "company": "CG Power",
+    "ticker": "NSE: CGPOWER",
+    "sector": "Transformers",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "India ascendant transformer maker; strong domestic order book; export ambitions; scaling capacity",
+    "geo": "IN",
+    "note": "India-dependent; smaller scale vs global OEMs"
+  },
+  {
+    "company": "MYR Group",
+    "ticker": "NASDAQ: MYRG",
+    "sector": "Transformers",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Smaller grid-construction pure-play; direct beneficiary of utility + DC grid buildout",
+    "geo": "US",
+    "note": "Smaller scale vs Quanta/MasTec; project-execution risk"
+  },
+  {
+    "company": "Voltamp Transformers",
+    "ticker": "NSE: VOLTAMP",
+    "sector": "Transformers",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "India domestic order-book play; distribution/power transformer focus",
+    "geo": "IN",
+    "note": "India-dependent; limited export presence; smaller scale"
+  },
+  {
+    "company": "BHEL",
+    "ticker": "NSE: BHEL",
+    "sector": "Transformers",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "India's largest power-equipment maker; government-owned; transformer + power-generation capacity",
+    "geo": "IN",
+    "note": "State-owned (governance); cyclical order book; execution inconsistency"
+  },
+  {
+    "company": "POSCO",
+    "ticker": "KRX: 005490",
+    "sector": "Transformers",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "GOES producer; Gwangyang expansion; Cleveland-Cliffs partnership; Korea industrial base",
+    "geo": "KR",
+    "note": "Diversified steelmaker (GOES = small %); steel-cycle beta; FX risk"
   }
 ]
