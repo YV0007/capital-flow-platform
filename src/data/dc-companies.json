@@ -2737,5 +2737,82 @@
     "ppr": "GOES producer; Gwangyang expansion; Cleveland-Cliffs partnership; Korea industrial base",
     "geo": "KR",
     "note": "Diversified steelmaker (GOES = small %); steel-cycle beta; FX risk"
+  },
+  {
+    "company": "Mitsubishi Heavy Industries",
+    "ticker": "TSE: 7011",
+    "sector": "Gas Turbines",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "3–7 лет",
+    "ppr": "#1 global GT share by MW (36%); 56% Advanced Class; JAC >64% efficiency; 100% H2 target 2028",
+    "geo": "JP",
+    "note": "Conglomerate discount; Japanese governance; McCoy data potentially stale"
+  },
+  {
+    "company": "Rolls-Royce",
+    "ticker": "LSE: RR",
+    "sector": "Gas Turbines",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Power Systems/mtu: fast-start gas gensets for DC backup; Mankato expansion +120% production; civil-aero recovery",
+    "geo": "UK",
+    "note": "Power-gen = minor vs aero/defense; civil-aero cyclicality"
+  },
+  {
+    "company": "Caterpillar",
+    "ticker": "NYSE: CAT",
+    "sector": "Gas Turbines",
+    "conviction": "medium",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "Solar Turbines mid-market (Titan/Taurus/Centaur); capacity +2.5x by 2030; Q4 FY2025 +23%; BTM DC exposure",
+    "geo": "US",
+    "note": "GT = small slice of CAT; construction/mining cyclicality"
+  },
+  {
+    "company": "Baker Hughes",
+    "ticker": "NASDAQ: BKR",
+    "sector": "Gas Turbines",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "$1B DC orders Q1 2026 (matching all 2025); NovaLT16 100% H2; Kodiak 1.8GW; modular BTM blocks",
+    "geo": "US",
+    "note": "Oilfield-services cyclicality; GT = smaller piece vs oilfield"
+  },
+  {
+    "company": "NRG Energy",
+    "ticker": "NYSE: NRG",
+    "sector": "Gas Turbines",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "All gas/coal ~25GW fleet; BTM pivot; direct beneficiary of AI power premium",
+    "geo": "US",
+    "note": "Merchant/power-price exposure; commodity-linked"
+  },
+  {
+    "company": "Kawasaki Heavy Industries",
+    "ticker": "TSE: 7012",
+    "sector": "Gas Turbines",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Small-frame H2 leader: L30A already 100% H2 commercial service; niche but proven",
+    "geo": "JP",
+    "note": "Small-frame only; conglomerate (motorcycle/ship/aero); limited scale"
+  },
+  {
+    "company": "INNIO",
+    "ticker": "S-1 filed 2026",
+    "sector": "Gas Turbines",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "BTM gas engines positioned for DC prime/hybrid power; S-1 filed 2026; IPO candidate",
+    "geo": "AT",
+    "note": "Pre-IPO; engines not turbines; niche positioning"
   }
 ]

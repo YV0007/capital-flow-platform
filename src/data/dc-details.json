@@ -11033,5 +11033,607 @@
         "blurb": "Distribution +78–95%, GSU +45%. GOES doubled, copper +50–70%. Demand: power +119%, GSU +274% since 2019."
       }
     ]
+  },
+  "gasturbines": {
+    "asOf": "2026-07-28",
+    "intro": "Газовые турбины — supply-constrained super-cycle: GE Vernova backlog + slot reservations = 116 GW (Q2 2026, с 83 GW на конец 2025), Siemens Energy забронирован до FY2028 с ~4-летними lead times. В 2025 году глобальные заказы = 846 турбин / 100,3 GW — более чем вдвое vs 399 / 58,2 GW в 2024 (Utility Dive). Binding constraint = manufacturing throughput, не demand. Value accrues к Big Three oligopoly (GE Vernova, Siemens Energy, Mitsubishi Power) и к recurring LTSA aftermarket (~$81–85 млрд services backlog GEV) + hidden choke-point duopoly в single-crystal castings (Howmet + PCC/Berkshire). Цены выросли ~195% с 2019 (WoodMac: ~$600/kW turbine-only к end-2027).",
+    "tldr": [
+      "Supply-constrained super-cycle: глобальные заказы 846 турбин / 100,3 GW (2025, >2× vs 2024). GEV backlog 116 GW (53 GW firm + 63 GW reservations), guiding ≥125 GW к YE2026. Siemens Energy Gas Services record €60 млрд backlog, 43% share >10 MW. Wood Mackenzie: ~110 GW ordered vs manufacturing capacity ~60–70 GW/yr. Pricing +195% с 2019. CCGT capital cost ~$2 157/kW (+66% с 2023, BNEF).",
+      "AI/DC demand: ~35 GW behind-the-meter (BTM) DC gas к 2030 (consensus). Stargate/SB Energy 9,2 GW Ohio (~$33 млрд). xAI Colossus ~1 498 MW operating BTM. ~25% заказов Siemens и GEV = datacenter-linked. BTM penetration new-build DC: ~10–20% (2025) → ~50–60% к 2030. RBC: planned US BTM gas ~70 GW turbine + ~18 GW engine.",
+      "LTSA annuity = profit center: services ~$42–45 млрд market (2025), ~9–10% CAGR. GEV services ~45% revenue, ~70% RPO, ~75% Power operating profit (analyst est.). ~$5 млн/turbine/год за 17–21 год. Hot-section casting duopoly (Howmet + PCC) = most concentrated choke point: ~70–80% single-crystal airfoils. Central tension: durable 30-year shift или ~10-year bridge до SMR/storage/hydrogen?"
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 9,
+        "cyclicality": 6,
+        "valuation": 7
+      },
+      "summary": "Genuine supply-constrained super-cycle с ~decade of committed output (116 GW backlog vs ~10 GW/yr heavy-duty capacity) + 20+ year LTSA annuity tail. Big Three oligopoly + Howmet/PCC casting duopoly = durable competitive structure. AI/DC demand (~35 GW BTM к 2030) stacks on coal retirement + electrification + reliability. Pricing power clear (+195% с 2019). Но valuations at cycle-peak multiples (GEV ~46–58× forward EPS) уже embed years of flawless execution. Barclays cut Siemens Energy to Underweight ('peak cycle'). Рекомендация: cyclical-growth overweight, barbell — LTSA compounders (GEV on pullbacks, Howmet) + cheaper Big Three (Siemens Energy, MHI) + superalloy suppliers.",
+      "horizon": "3–7 лет OEMs (backlog conversion + LTSA compounding); 5–10 лет casting/superalloy suppliers",
+      "sizing": "New-equipment ~$11–26 млрд (2025, scope-dependent). Services ~$42–45 млрд (2025), ~9–10% CAGR. Combined equipment+services = ~$55–70 млрд",
+      "keyQuestion": "Durable 30-year structural shift или ~10-year bridge, который SMR/storage/hydrogen disrupt до завершения capex cycle? И сколько лет flawless execution уже priced in при GEV ~46–58× forward EPS?",
+      "bull": [
+        "Backlogs = ~decade committed heavy-duty output + 20-year LTSA annuities: GEV 116 GW, Siemens €60 млрд Gas Services, ~$81–85 млрд services backlog. Visibility rare в capital goods. ~7 000 турбин installed base = recurring revenue engine",
+        "Supply, не demand = constraint: ~110 GW ordered vs ~60–70 GW/yr capacity (WoodMac). Durable OEM pricing power и margin expansion (GEV Power EBITDA 16,3%, +500 bps; pricing +195% с 2019). Hot-section casting duopoly governs output",
+        "Casting duopoly (Howmet/PCC) captures value regardless of which OEM wins: GT parts revenue ~$1 млрд → $2 млрд+ за 3–5 лет (+39% YoY Q1 2026). 33,3% segment EBITDA margin. Sold out capacity"
+      ],
+      "bear": [
+        "This is a cycle — Barclays cut Siemens Energy to Underweight arguing peak orders/FCF/tightness all arrive 2026. GEV ~46–58× forward EPS prices flawless execution. Single-digit % moves на sentiment = asymmetric downside",
+        "AI-power demand может быть overbuilt: Stargate delays/cost overruns visible; grid, не turbines, delivered первый gigawatt datacenter. PJM: 65–80% capacity withdrew pre-2020. Phantom demand overstates",
+        "Substitution stack (nuclear PPAs, storage, fuel cells, engines) + hydrogen slippage / carbon policy could hit back half 2030s just as capacity catches up — classic capital-goods over-build"
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~5–7% CAGR (equipment, mid-range); ~9–10% CAGR (services/aftermarket)",
+      "chartTitle": "Газовые турбины — оборудование + сервис, $ млрд",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 55.0,
+          "label": "~$55 млрд",
+          "source": "equipment ~$23 млрд + services ~$42 млрд (combined estimate)"
+        },
+        {
+          "year": "2025",
+          "value": 68.0,
+          "label": "~$68 млрд",
+          "source": "equipment $23–26 млрд + services $42–45 млрд"
+        },
+        {
+          "year": "2027",
+          "value": 80.0,
+          "label": "~$80 млрд",
+          "source": "оценка при mid-single-digit equipment + ~10% services CAGR"
+        },
+        {
+          "year": "2030",
+          "value": 105.0,
+          "label": "~$105 млрд",
+          "source": "equipment ~$35–43 млрд + services ~$65–70 млрд"
+        },
+        {
+          "year": "2033",
+          "value": 135.0,
+          "label": "~$135 млрд",
+          "source": "equipment ~$43 млрд (FBI) + services ~$92 млрд (GVR)"
+        }
+      ],
+      "bomShare": {
+        "value": "~15–25%",
+        "note": "Gas turbine = largest single equipment item в CCGT plant. Turbine-only ~$600/kW (WoodMac end-2027) vs full CCGT ~$2 157/kW. Services 2–4× equipment revenue — the real profit center"
+      },
+      "volumeVsPrice": "Both: orders doubled (399→846 units, 58→100 GW). Pricing +195% с 2019 (WoodMac). CCGT capital cost +66% за 2 года (BNEF). GEV new bids +10–20% vs Q4 2025. Volume + pricing = rare double tailwind."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "NVIDIA-equivalent: Howmet (single-crystal blades)",
+          "gm": "33,3% segment EBITDA",
+          "note": "GT parts ~$1 млрд → $2 млрд+. ~70–80% duopoly с PCC. Sold out. The choke point governing OEM output"
+        },
+        {
+          "stage": "OEM equipment (GE Vernova Gas Power)",
+          "gm": "16,3% EBITDA (+500 bps)",
+          "note": "116 GW backlog. Pricing +10–20% vs Q4 2025. Equipment margins lower than services"
+        },
+        {
+          "stage": "OEM LTSA/services (GE Vernova)",
+          "gm": "~75% of Power op profit (est.)",
+          "note": "~$81–85 млрд services backlog. ~$5 млн/turbine/год × 17–21 лет. ~70% RPO. The annuity"
+        },
+        {
+          "stage": "Siemens Energy Gas Services",
+          "gm": "improving (FY26 guide 10–12%)",
+          "note": "Record €60 млрд backlog. ~€35 млрд service revenue over ~two decades. 43% share >10 MW"
+        },
+        {
+          "stage": "Superalloy suppliers (Carpenter, ATI)",
+          "gm": "improving",
+          "note": "Energy sales +32% sequentially (CRS). 'Fundamental supply-demand imbalance' в nickel superalloys"
+        }
+      ],
+      "bottleneckNow": "Hot-section castings (Howmet/PCC duopoly): single-crystal blades, reject rates double-digit на hardest alloys. Manufacturing capacity ~60–70 GW/yr vs ~110 GW orders. Skilled labor.",
+      "bottleneckNext": "Gas pipeline infrastructure для BTM sites. Grid interconnection (4–7 лет, PJM). Hydrogen blending infrastructure. Superalloy raw materials.",
+      "capitalIntensity": "Высокая: GEV ~$9 млрд cumulative capex/R&D through 2028. Siemens >$1 млрд US investment. New CCGT plant ~$2 157/kW × 300–600 MW = $650 млн–$1,3 млрд per plant.",
+      "takeaway": "LTSA aftermarket = profit center (services 2–4× equipment revenue). Value accrues к OEM oligopoly (locked-in services) и casting duopoly (physical constraint). EPC = competitive, lower margin."
+    },
+    "competition": {
+      "concentration": "Big Three = ~2/3 of turbines в plants under construction (GEM). Heavy-duty = tight oligopoly. Casting = effective duopoly (Howmet + PCC ~70–80%). MHI #1 by MW (36%, 2023; 56% Advanced Class). GEV #1 installed base (~7 000 turbines, ~800 GW). Siemens 43% share >10 MW.",
+      "shareTrajectory": [
+        {
+          "player": "GE Vernova",
+          "now": "116 GW backlog, ~18,5% orders (2025)",
+          "direction": "↑",
+          "detail": "Largest installed base (~7 000 turbines). Greenville: 37→62→74 units/yr. ~$81–85 млрд services. 9HA ~20 GW under construction"
+        },
+        {
+          "player": "Siemens Energy",
+          "now": "43% share >10 MW, €60 млрд Gas Services",
+          "direction": "↑",
+          "detail": "Booked out to FY2028. Broadest H2-tested portfolio. HL-class. Record €154 млрд total backlog"
+        },
+        {
+          "player": "Mitsubishi Power (MHI)",
+          "now": "#1 by MW (36%, 2023)",
+          "direction": "↑",
+          "detail": "56% Advanced Class. JAC >64% CC efficiency, >120 J-class orders. Most aggressive 100% H2 timeline (2028 large-frame)"
+        },
+        {
+          "player": "Baker Hughes",
+          "now": "$1 млрд DC orders Q1 2026",
+          "direction": "↑",
+          "detail": "NovaLT16 100% H2-ready. Kodiak deal 1,8 GW. Modular 150–300 MW BTM blocks"
+        },
+        {
+          "player": "China Big Three (Harbin/Shanghai/Dongfang)",
+          "now": "First domestic 300 MW F-class (Oct 2024)",
+          "direction": "→",
+          "detail": "~55% efficiency. Roughly a generation behind H/J-class. Not export threat in advanced, но domestic displacement"
+        }
+      ],
+      "players": [
+        {
+          "name": "GE Vernova",
+          "share": "~18,5% (2025 orders)",
+          "edge": "Largest installed base (~7 000); 9HA/LM aero; LTSA annuity ~$81–85 млрд; Stargate 29 aeros"
+        },
+        {
+          "name": "Siemens Energy",
+          "share": "43% (>10 MW)",
+          "edge": "Broadest H2-tested portfolio; HL-class; booked out to FY2028; grid-tech optionality"
+        },
+        {
+          "name": "MHI/Mitsubishi Power",
+          "share": "#1 by MW (36%)",
+          "edge": "JAC >64% efficiency; 56% Advanced Class; most aggressive 100% H2 (large-frame 2028)"
+        },
+        {
+          "name": "Howmet Aerospace",
+          "share": "~35–40% castings",
+          "edge": "Single-crystal blade duopoly с PCC; ~70–80% of high-end airfoils; sold out; 33,3% EBITDA"
+        },
+        {
+          "name": "Baker Hughes",
+          "share": "Mid-tier + BTM",
+          "edge": "NovaLT16 100% H2; modular BTM; LNG turbomachinery; $1 млрд DC orders Q1 2026"
+        }
+      ],
+      "switchingCost": "Экстремальный: proprietary controls (GE/Siemens) lock customers в LTSA. Hot-section parts = OEM-specific. Qualification cycles = years. Single-crystal blade specs = OEM proprietary.",
+      "entryBarrier": "Экстремальный: decades of hot-section metallurgy R&D, single-crystal blade casting, thermal barrier coatings, DLN/DLE combustion, multi-year validation (MHI T-Point 2). Natural oligopoly.",
+      "takeaway": "Tightest oligopoly в energy equipment. Big Three + casting duopoly = structural, не cyclical competitive advantage. LTSA lock-in = 20+ year recurring revenue. Entry barriers = among highest в any industrial sector."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 98,
+          "note": "116 GW backlog (GEV). 846 units / 100,3 GW ordered (2025, >2× 2024). Siemens booked to FY2028. ~4-year lead times. Manufacturing capacity ~60–70 GW/yr vs ~110 GW orders"
+        },
+        {
+          "year": "2027",
+          "pct": 95,
+          "note": "GEV targeting 70–80 heavy-duty/yr, ~20 GW/yr shipments. New capacity ramping. Но demand continues (DC + coal retirement + grid)"
+        },
+        {
+          "year": "2028",
+          "pct": 85,
+          "note": "~10,6 GW CCGT potentially online (EIA, most since 2018). Supply catching up but demand broadening (H2-ready, BTM scaling)"
+        }
+      ],
+      "contractStructure": "LTSA = 17–21 year contracts, ~25% installed fleet covered, ~70% renewal rate. Multi-year slot reservations (GEV 63 GW). Take-or-pay structures. OEMs selecting customers. BTM: direct hyperscaler PPAs.",
+      "customerConcentration": "Distributed: utilities/IPPs (Vistra, Constellation, NRG, Talen, NextEra), hyperscalers (Microsoft, Amazon, Google, Meta, OpenAI/Stargate), sovereign/Middle East. ~25% orders DC-linked.",
+      "backlog": "GEV total ~$176 млрд; Gas Power 116 GW (firm 53 + reservations 63), guiding ≥125 GW YE2026. Siemens Gas Services €60 млрд. MHI Energy Systems bookings +45% YoY. Howmet GT parts sold out.",
+      "pricing": "CCGT capital cost ~$2 157/kW (+66% с 2023, BNEF). Turbine-only ~$600/kW к end-2027 (+195% с 2019, WoodMac). EPRI: ~$2 000→$3 000/kW за 6 мес. GEV bids +10–20% vs Q4 2025. Secondary-market CCGT prices +3× с 2020.",
+      "takeaway": "Rare confluence: AI + electrification + coal retirement + reliability. Orders >2× YoY. Pricing power clear и sustained. Supply = constraint, not demand. Backlogs = ~decade of committed output."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "~110 GW ordered vs ~60–70 GW/yr capacity (WoodMac). ~4-year lead times. Slot reservations growing. Casting duopoly bottleneck"
+        },
+        {
+          "year": "2027",
+          "state": "дефицит",
+          "color": "#ef4444",
+          "detail": "GEV ramping: 62→74 units/yr Greenville. Siemens >$1 млрд US investment. But demand continues growing"
+        },
+        {
+          "year": "2028",
+          "state": "напряжённо",
+          "color": "#f59e0b",
+          "detail": "Capacity catching up (~20 GW/yr GEV target). Supply normalization begins. But ~100+ GW backlog = ~decade committed"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "GE Vernova Greenville: 37 (2025) → 62 (2026) → 74 (2027) heavy-duty units. Target 70–80/yr, ~20 GW/yr by 2027, stretch ~30 GW by 2030",
+          "when": "2025–2030",
+          "impact": "Largest GT manufacturing ramp. ~$300 млн Gas Power + Robotech acquisition"
+        },
+        {
+          "name": "Siemens Energy: >$1 млрд US investment (Feb 2026). NC GT manufacturing + $300 млн MS high-voltage plant",
+          "when": "2026–2028",
+          "impact": "US manufacturing expansion. Still 'supply-constrained rather than demand-constrained'"
+        },
+        {
+          "name": "MHI: Takasago validation + capacity expansion. Energy Systems bookings +45% YoY",
+          "when": "2025–2027",
+          "impact": "Advanced Class leader expanding"
+        },
+        {
+          "name": "Solar Turbines (Caterpillar): capacity +2,5× by 2030. Q4 FY2025 sales +23%",
+          "when": "2025–2030",
+          "impact": "Mid-market BTM capacity expansion"
+        },
+        {
+          "name": "Baker Hughes: $1 млрд DC orders Q1 2026. Kodiak 1,8 GW. Turbine-X/Twenty20 network",
+          "when": "2025–2028",
+          "impact": "Modular BTM blocks for datacenters"
+        }
+      ],
+      "leadTime": "Heavy-duty: ~4 years (Siemens booked to FY2028). Aeroderivative: 12–18 months (S&P Global). Slot reservations growing (GEV 63 GW). Build time +23% (BNEF).",
+      "utilization": "High: manufacturing capacity ~60–70 GW/yr vs ~110 GW orders. GEV Greenville = 1,5 млн sq ft. Howmet casting: sold out, reject rates double-digit. Carpenter: 'fundamental supply-demand imbalance'.",
+      "crowdingOut": "DC/BTM demand crowding out utility grid orders. Hyperscaler willingness to pay premium = slot prioritization. Some customers pushed to alternatives (engines, fuel cells, smaller frames).",
+      "takeaway": "~110 GW ordered vs ~60–70 GW/yr capacity = ~decade committed output. Ramp gradual (casting bottleneck, skilled labor). Full normalization not before late 2020s."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "Heavy-duty: tens to >$100 млн each by class. CCGT plant: ~$2 157/kW installed (2025, BNEF, +66% с 2023). Simple-cycle: $728–1 544/kW (GridLab). Turbine-only: $171/kW (largest ~600 MW) to $1 150/kW (1 MW). WoodMac: ~$600/kW turbine-only к end-2027 (+195%).",
+      "grossMargin": "GEV Power EBITDA 16,3% (Q1 2026, +500 bps). Siemens Gas Services improving (FY26 guide 10–12% group). Howmet Engine Products 33,3% EBITDA. Services margins structurally > equipment margins. LTSAs ~75% of Power operating profit (est.).",
+      "costCurve": "Gas CCGT LCOE: $48–109/MWh (Lazard v18, unsubsidized). Gas peaker: $149–251. Solar: $38–78. Wind: $37–86. Gas = not cheapest new-build, но cheapest firm/dispatchable + existing fleet marginal cost competitive. Henry Hub ~$4→$4,90 (2025→26, EIA STEO).",
+      "yields": [
+        {
+          "gen": "LTSA services (~$5 млн/turbine/yr)",
+          "pct": "~75% Power op profit",
+          "note": "17–21 year contracts. ~70% renewal. ~7 000 turbines serviced (GEV). $81–85 млрд backlog. The annuity"
+        },
+        {
+          "gen": "Heavy-duty equipment",
+          "pct": "16,3% EBITDA (GEV)",
+          "note": "Lower margin than services, но pricing +195%. ~$600/kW turbine-only к end-2027"
+        },
+        {
+          "gen": "Aeroderivative (BTM/fast-start)",
+          "pct": "higher per-unit margin",
+          "note": "Stargate: 29 GEV aeros (~1 GW). Lead times 12–18 мес. BTM premium pricing"
+        },
+        {
+          "gen": "Single-crystal castings (Howmet)",
+          "pct": "33,3% EBITDA margin",
+          "note": "GT parts ~$1 млрд → $2 млрд+. Sold out. Duopoly pricing power"
+        }
+      ],
+      "takeaway": "LTSA = annuity business: ~$5 млн/turbine × 17–21 лет × 7 000 fleet = massive recurring revenue. Equipment margins expanding (+500 bps, +195% pricing). Casting margins structural (duopoly)."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "F-class (~55% CC efficiency)",
+          "node": "legacy",
+          "year": "1990s–present",
+          "note": "Workhorse installed base. China's first domestic 300 MW F-class Oct 2024. Still serviceable fleet"
+        },
+        {
+          "name": "G/H-class (~60–62% CC)",
+          "node": "mainstream",
+          "year": "2010s–present",
+          "note": "GEV HA-class, Siemens HL-class. Mainstream heavy-duty. 50%+ H2 blends today"
+        },
+        {
+          "name": "J-class (>64% CC, JAC)",
+          "node": "shipping",
+          "year": "2020s",
+          "note": "MHI JAC = most efficient. >120 cumulative J-class orders. 2,3 млн+ operating hours. 56% Advanced Class share"
+        },
+        {
+          "name": "Hydrogen-ready (30–50% H2 blend)",
+          "node": "shipping",
+          "year": "2024–2026",
+          "note": "All Big Three offer ≥30% H2 today. GEV 44% demonstrated (NYPA Brentwood). ~47% of turbines under construction can blend 50%"
+        },
+        {
+          "name": "100% hydrogen turbines",
+          "node": "development",
+          "year": "2028–2030",
+          "note": "MHI target 2028 large-frame 100% H2. Kawasaki L30A already 100% H2 (small). GEV/Siemens 100% DLN testing"
+        },
+        {
+          "name": "CCGT + CCS",
+          "node": "early R&D",
+          "year": "2027–2030+",
+          "note": "Baker Hughes/NetPower, Frontier CCS hub. Reduces emissions but adds cost. Adds addressable market"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "SMRs / nuclear",
+          "verdict": "Not near-term substitute (mostly 2030s+); hyperscalers signing nuclear PPAs in parallel, not instead",
+          "tone": "mixed",
+          "detail": "Microsoft/TMI, Meta/Constellation, Amazon/Talen, Oklo/Meta — nuclear PPAs. But mostly 2030s+. Not a substitute for firm power needed 2027–2030. Nuclear = complement short/medium-term.",
+          "angle": "Timeline protects current order book. Long-term (2030s) = real competition for baseload."
+        },
+        {
+          "tech": "Long-duration storage / renewables + storage",
+          "verdict": "Extends but doesn't yet replace firm dispatch. Lazard: standalone storage $80–190+/MWh",
+          "tone": "mixed",
+          "detail": "Solar-plus-storage $50–131/MWh vs gas CCGT $48–109. Standalone 4-hr storage higher still. Solar/wind = cheapest new-build, but firm-power gap persists. Rising firming costs + low gas prices widen gas advantage для 24/7 DC load.",
+          "angle": "Not displacing gas for firm baseload near-term. Monitor cost decline trajectory."
+        },
+        {
+          "tech": "Carbon pricing / ESG",
+          "verdict": "Key political risk to destination-fuel thesis. Low-Med prob (US), Med (EU)",
+          "tone": "negative",
+          "detail": "US policy tailwind offsets near-term. But carbon pricing could make new gas unviable longer-term. Hydrogen slippage → 'H2-ready' turbines run on gas indefinitely = stranded asset / greenwashing risk (GEM).",
+          "angle": "The back-half-of-2030s risk. Monitor EU ETS, US state programs, hydrogen mandates."
+        }
+      ],
+      "takeaway": "H2-readiness is the insurance policy. All Big Three offer ≥30% today; 100% H2 by 2028–2030 on roadmap. CCGT+CCS adds option value. SMRs/storage = 2030s competition, not 2020s substitute. Near-term: gas = the firm-power answer."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "Single-crystal blade castings",
+          "supplier": "Howmet Aerospace + PCC/Berkshire (~70–80% duopoly)",
+          "note": "Most concentrated choke point. Sold out. Reject rates double-digit. Governs OEM output. → раздел picks"
+        },
+        {
+          "item": "Nickel superalloys",
+          "supplier": "Carpenter Technology, ATI Inc, Acerinox (Haynes)",
+          "note": "'Fundamental supply-demand imbalance' (Carpenter). Energy sales +32% sequentially. → раздел Сырьё"
+        },
+        {
+          "item": "Природный газ",
+          "supplier": "Henry Hub ~$4→$4,90 (2025→26)",
+          "note": "Fuel cost. Low gas prices = dispatch advantage vs renewables для 24/7 load. → раздел Газопроводы (pending)"
+        },
+        {
+          "item": "Трансформаторы / grid equipment",
+          "supplier": "GE Vernova, Siemens, Hitachi, Eaton",
+          "note": "Grid interconnection = 4–7 лет. Transformer lead times 128–160+ wks. → раздел Трансформаторы"
+        },
+        {
+          "item": "Controls / DCS",
+          "supplier": "GE, Siemens (proprietary)",
+          "note": "Proprietary controls lock customers в LTSA. Reinforces switching costs и aftermarket revenue"
+        }
+      ],
+      "downstream": "Utilities/IPPs (Vistra, Constellation, NRG, Talen, NextEra), hyperscalers (Microsoft, Amazon, Google, Meta, OpenAI/Stargate), EPC firms (Bechtel, B&V, Fluor, KBR, Kiewit), grid operators.",
+      "correlation": "Высокая корреляция с hyperscaler capex, coal-plant retirements, grid reliability mandates, и gas prices (dispatch economics). LTSA revenue = less cyclical (locked 17–21 yrs). Equipment orders = more cyclical.",
+      "takeaway": "Casting duopoly + superalloy suppliers = the binding upstream constraint, не OEM design capacity. Pipeline/grid = downstream bottleneck для BTM sites. LTSA lock-in insulates revenue from cycle."
+    },
+    "risks": [
+      {
+        "risk": "Cycle-peak valuation de-rating",
+        "prob": "Средняя-Высокая",
+        "impact": "Высокий",
+        "note": "Barclays cut Siemens to Underweight ('peak cycle'). GEV ~46–58× forward EPS. Priced for perfection."
+      },
+      {
+        "risk": "AI-power demand overbuilt / phantom backlog",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Stargate delays visible. PJM: 65–80% capacity withdrew. Not all 116 GW converts to firm orders."
+      },
+      {
+        "risk": "Hot-section supply bottleneck caps revenue",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "Constrains OEM output — governor on revenue, не demand risk. Howmet/PCC sold out."
+      },
+      {
+        "risk": "Carbon pricing / ESG makes new gas unviable",
+        "prob": "Низкая-Средняя (US)",
+        "impact": "Высокий",
+        "note": "US policy tailwind near-term. EU Med probability. Key destination-fuel risk."
+      },
+      {
+        "risk": "SMRs / LDES displace gas faster than expected",
+        "prob": "Низкая (pre-2030)",
+        "impact": "Высокий",
+        "note": "Timeline protects current order book. 2030s = real competition."
+      },
+      {
+        "risk": "Hydrogen timeline slips → stranded H2-ready assets",
+        "prob": "Средняя-Высокая",
+        "impact": "Средний",
+        "note": "GEM flagged greenwashing risk. If 100% H2 slips past 2030, turbines run on gas indefinitely."
+      },
+      {
+        "risk": "BTM gas faces local air-quality opposition",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Community opposition to DC/BTM growing (RBC). Permitting risk."
+      },
+      {
+        "risk": "Natural gas price spikes",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "Henry Hub ~$4→$4,90. Spikes reduce dispatch advantage vs renewables."
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — OEM oligopoly и casting duopoly",
+        "tone": "leader",
+        "badge": "BACKLOG + LTSA ANNUITY",
+        "note": "GE Vernova = purest play (LTSA annuity + 116 GW backlog). Siemens Energy = cheaper Big Three exposure + grid optionality. MHI = Advanced Class leader (#1 by MW). Howmet = highest-conviction picks-and-shovels (casting duopoly). Staged entry при cycle-peak valuations.",
+        "rows": [
+          {
+            "company": "GE Vernova",
+            "ticker": "NYSE: GEV",
+            "mcap": "~$274 млрд",
+            "exposure": "116 GW GT backlog (53 firm + 63 reservations), guiding ≥125 GW YE2026. Total backlog ~$176 млрд. ~7 000 turbines installed. ~$81–85 млрд services backlog. Power EBITDA 16,3% (+500 bps). DC orders $2,4 млрд Q1 2026",
+            "why": "Premier LTSA annuity business: ~$5 млн/turbine/yr × 17–21 лет × ~7 000 fleet. Largest installed base (~800 GW, ~half of all gas-fired electricity). Purest large-cap play на super-cycle. Greenville ramping 37→74 units. Stargate 29 aeros.",
+            "priced": "~46–58× forward EPS. +~88% за 52 weeks. Priced for years of flawless execution. Single-digit % drops на peer downgrades. Scale in на pullbacks, not at highs."
+          },
+          {
+            "company": "Siemens Energy",
+            "ticker": "XETRA: ENR",
+            "mcap": "~$135–160 млрд",
+            "exposure": "Gas Services record €60 млрд backlog. 43% share >10 MW (Q1 FY2026). Booked out to FY2028. ~€35 млрд service revenue over ~two decades. Total backlog €154 млрд. FY26 guidance: rev +14–16%, margin 10–12%",
+            "why": "Cheaper Big Three exposure vs GEV. Grid-technology optionality (Grid Tech margin 15,8%→16–18%). Broadest H2-tested portfolio. >$1 млрд US investment. HL-class.",
+            "priced": "Barclays Underweight ('peak cycle'). +~200% YoY. Gamesa wind turnaround = swing factor. Less pure vs GEV (wind drag)."
+          },
+          {
+            "company": "Mitsubishi Heavy Industries",
+            "ticker": "TSE: 7011",
+            "mcap": "~$85 млрд",
+            "exposure": "#1 global GT share by MW (36%, 2023). 56% Advanced Class. JAC >64% CC efficiency. >120 J-class orders, 2,3 млн+ operating hours. Energy Systems bookings +45% YoY",
+            "why": "Advanced Class leader с most aggressive 100% H2 timeline (large-frame 2028). JAC = most efficient heavy-duty turbine. T-Point 2 validation. Diversified (defense/aero/infra).",
+            "priced": "Conglomerate discount (defense/aerospace/infrastructure dilute GT exposure). +~84% YoY. Japanese governance. McCoy share data potentially stale."
+          },
+          {
+            "company": "Howmet Aerospace",
+            "ticker": "NYSE: HWM",
+            "mcap": "~$115 млрд",
+            "exposure": "GT parts revenue ~$1 млрд (2025) → $2 млрд+ target 3–5 лет (+39% YoY Q1 2026). Engine Products 33,3% segment EBITDA. Single-crystal blade duopoly с PCC (~70–80%). Sold out capacity",
+            "why": "Highest-conviction picks-and-shovels: the choke point governing OEM output. Captures value regardless of which OEM wins. Duopoly economics. Demand = structural (every heavy-duty turbine needs hot-section parts).",
+            "priced": "~32×+ EBITDA. Aerospace-cycle linked (aero demand = larger piece). +~88% YoY. Premium pricing at capacity peak."
+          }
+        ]
+      },
+      {
+        "group": "Emerging — BTM specialists, superalloy suppliers, IPPs",
+        "tone": "emerging",
+        "badge": "BTM + МАТЕРИАЛЫ",
+        "note": "Baker Hughes = modular BTM play ($1 млрд DC orders Q1). Carpenter/ATI = superalloy suppliers с structural imbalance. Caterpillar (Solar) = mid-market BTM capacity +2,5×. Vistra = IPP с gas leverage.",
+        "rows": [
+          {
+            "company": "Baker Hughes",
+            "ticker": "NASDAQ: BKR",
+            "mcap": "~$90–100 млрд",
+            "exposure": "$1 млрд datacenter orders Q1 2026 (matching all 2025). NovaLT16 100% H2-ready. Kodiak deal 1,8 GW. Frontier 270 MW. Revised up $3 млрд 2025–2027 DC target. Turbine-X/Twenty20 packager",
+            "why": "Modular 150–300 MW BTM blocks = ideal for DC. 100% H2-ready (NovaLT16). LNG turbomachinery + CCUS optionality. $1 млрд Q1 = accelerating DC demand.",
+            "risk": "Oilfield-services cyclicality. GT = smaller piece vs oilfield. Heavy-duty = Big Three dominated. Mid-market positioning."
+          },
+          {
+            "company": "Carpenter Technology",
+            "ticker": "NYSE: CRS",
+            "mcap": "~$19,5 млрд",
+            "exposure": "Energy segment sales +32% sequentially on IGT/datacenter demand. Nickel-superalloy pricing power. 'Fundamental supply-demand imbalance.' Record backlog",
+            "why": "Superalloy chokepoint: supply-demand imbalance structural, не cyclical. Pricing power. Aerospace + GT double exposure. +~24% TTM.",
+            "risk": "Specialty metals cyclicality. Smaller market cap = higher volatility. Customer concentration."
+          },
+          {
+            "company": "Caterpillar",
+            "ticker": "NYSE: CAT",
+            "mcap": "~$190–200 млрд",
+            "exposure": "Solar Turbines (mid-market Titan/Taurus/Centaur): capacity +2,5× by 2030. Q4 FY2025 sales +23%. Abilene ~half of ~360 MW filing. Also reciprocating engines for DC backup",
+            "why": "Diversified industrial с real BTM turbine exposure. Solar Turbines capacity +2,5× = aggressive ramp. DC backup/prime power. Caterpillar financial strength.",
+            "risk": "GT = small slice of CAT total. Construction/mining cyclicality. Mid-market turbines (не heavy-duty OEM)."
+          },
+          {
+            "company": "Vistra",
+            "ticker": "NYSE: VST",
+            "mcap": "~$55–60 млрд",
+            "exposure": "Bought Cognetrix (~$4 млрд, 10 gas plants) + Lotus. ~50 GW fleet. Retail hedge. Direct beneficiary of AI power premium. ~13× EV/EBITDA",
+            "why": "Gas fleet = direct beneficiary of rising power prices (AI premium). Secondary-market CCGT acquisition prices +3× с 2020. Retail hedge reduces merchant risk.",
+            "risk": "Merchant/power-price exposure. Gas build-out could compress nuclear scarcity premium. Commodity-linked volatility."
+          },
+          {
+            "company": "ATI Inc",
+            "ticker": "NYSE: ATI",
+            "mcap": "~$25–26 млрд",
+            "exposure": "~10% revenue specialty energy (~60/40 GT/nuclear). Record backlog. Wrought nickel superalloys. +~114% TTM",
+            "why": "Specialty energy exposure (GT + nuclear). Record backlog. Superalloy pricing power. Dual exposure gas + nuclear.",
+            "risk": "Specialty energy = ~10% of revenue (diversified metals). Cyclical. Aerospace dominates exposure."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Cyclical-growth overweight via barbell: core = LTSA compounders (GEV on pullbacks, Howmet) для annuity + chokepoint economics. Cheaper Big Three: Siemens Energy (grid optionality), MHI (Advanced Class leader). Superalloy suppliers: Carpenter (structural imbalance), ATI (dual GT/nuclear). BTM: Baker Hughes (modular DC blocks). Scale in на cycle-fear drawdowns. Avoid chasing at 52-week highs. Trim if GEV orders decelerate или lead times compress <2 years.",
+    "monitoring": {
+      "metrics": [
+        "GEV / Siemens Energy / MHI order intake и backlog (GW + $) — company 8-Ks / earnings, quarterly",
+        "Heavy-duty GT lead times и slot reservations — Utility Dive, S&P Global, company calls, quarterly",
+        "Turbine $/kW pricing — EPRI, GridLab, BNEF, WoodMac, semi-annual",
+        "US CCGT construction starts — EIA Monthly Electric Generator Inventory, monthly",
+        "BTM gas permits/announcements (hyperscaler) — Cleanview, RBC, DCD, ongoing",
+        "Henry Hub forward curve — EIA STEO, monthly (~$4→$4,90)",
+        "Superalloy/casting capacity и backlog — Howmet, Carpenter, ATI earnings, quarterly",
+        "Hydrogen blending validations / mandates — OEM releases, POWER, ongoing"
+      ],
+      "canary": [
+        "GEV или Siemens backlog-growth deceleration (QoQ decline) — demand peaking signal",
+        "OEM book-to-bill drops below 1,0 for two consecutive quarters — cycle turning",
+        "Heavy-duty lead times compress below 2 years — supply catching up, pricing pressure",
+        "Hyperscaler DC BTM capex guidance cuts — AI-power demand disappointment",
+        "Carbon pricing legislation passes in US — destination-fuel thesis risk",
+        "100% H2 commercial deployment delays beyond 2030 — stranded-asset / greenwashing escalation"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "Gas turbines: supply-constrained super-cycle — 116 GW backlog, orders >2× YoY, pricing +195%",
+      "summary": "2025 global orders: 846 units / 100,3 GW (>2× vs 2024). GEV backlog 116 GW, guiding ≥125 GW. Siemens Gas Services €60 млрд record. ~110 GW ordered vs ~60–70 GW/yr capacity. Pricing +195% с 2019. AI/DC: ~35 GW BTM к 2030, Stargate 9,2 GW. Central tension: super-cycle durability vs cycle-peak valuations (GEV ~46–58× forward).",
+      "stories": [
+        {
+          "title": "GE Vernova: 116 GW backlog, Power EBITDA 16,3% (+500 bps)",
+          "tone": "positive",
+          "verdict": "Premier LTSA annuity + purest super-cycle play. ~$81–85 млрд services backlog. DC orders $2,4 млрд Q1 alone",
+          "detail": "Q2 orders +88% organically. Total backlog ~$176 млрд. Greenville ramping 37→74 units. Stargate 29 aeros. Но ~46–58× forward = priced for perfection."
+        },
+        {
+          "title": "Global orders: 846 units / 100,3 GW (>2× vs 2024)",
+          "tone": "positive",
+          "verdict": "More than doubling in one year. US alone: 427 units / 43,1 GW. Manufacturing = binding constraint",
+          "detail": "Wood Mackenzie: ~110 GW ordered vs ~60–70 GW/yr capacity. ~Decade of committed output at current rates."
+        },
+        {
+          "title": "Stargate/SB Energy 9,2 GW Ohio (~$33 млрд BTM gas)",
+          "tone": "positive",
+          "verdict": "Largest BTM announcement. xAI Colossus ~1 498 MW operating. BTM penetration ~10–20% → ~50–60% by 2030",
+          "detail": "RBC: planned US BTM ~70 GW turbine + ~18 GW engine. ~25% Siemens/GEV orders = DC-linked. Labs signed >10 GW BTM leases."
+        },
+        {
+          "title": "Barclays cuts Siemens Energy to Underweight: 'peak cycle'",
+          "tone": "negative",
+          "verdict": "Peak orders/FCF/tightness all arrive 2026 per Barclays. Valuation risk = dominant risk, not demand",
+          "detail": "GEV ~46–58× forward EPS. Siemens +~200% YoY. Single-digit % moves на sentiment. Priced for years of flawless execution."
+        },
+        {
+          "title": "Howmet: GT parts ~$1 млрд → $2 млрд+ (3–5 лет, +39% YoY Q1)",
+          "tone": "positive",
+          "verdict": "Casting duopoly = most concentrated choke point. Sold out. 33,3% EBITDA. Captures value regardless of OEM winner",
+          "detail": "Single-crystal blade duopoly с PCC (~70–80%). Reject rates double-digit on hardest alloys. Capacity sold out."
+        }
+      ],
+      "bottomLine": "Genuine super-cycle: ~decade committed output, 20+ year LTSA annuities, +195% pricing. Но cycle-peak valuations (GEV ~46–58×) = dominant risk. Scale in на pullbacks. Core thesis: supply-constrained OEM oligopoly + casting duopoly = durable value. Duration debate (bridge vs destination) resolves 2030s."
+    },
+    "news": [
+      {
+        "date": "2026-07-22",
+        "source": "GE Vernova Q2 2026 8-K",
+        "title": "GEV: 116 GW GT backlog, Q2 orders +88% organically",
+        "blurb": "Firm 53 GW + reservations 63 GW. Guiding ≥125 GW YE2026. Total backlog $176 млрд. DC orders $2,4 млрд Q1 (>all 2025). Power EBITDA 16,3%."
+      },
+      {
+        "date": "2026-02-17",
+        "source": "Commerce Dept / OpenAI",
+        "title": "Stargate/SB Energy: 9,2 GW, ~$33 млрд BTM gas, Portsmouth Ohio",
+        "blurb": "Distributed turbines, first units within a year. Full deployment by end of decade. $4,2 млрд AEP transmission upgrade."
+      },
+      {
+        "date": "2026-02-15",
+        "source": "Siemens Energy",
+        "title": "Siemens Energy: >$1 млрд US investment; Gas Services €60 млрд record backlog",
+        "blurb": "NC GT manufacturing + $300 млн MS plant. 43% share >10 MW. Booked out to FY2028. Record Q2 orders €17,75 млрд."
+      },
+      {
+        "date": "2026-01-15",
+        "source": "Utility Dive",
+        "title": "2025 global GT orders: 846 units / 100,3 GW — >2× vs 2024",
+        "blurb": "US alone: 427 units / 43,1 GW. More than doubling. Manufacturing throughput = binding constraint."
+      },
+      {
+        "date": "2026-07-01",
+        "source": "Howmet Aerospace Q1 2026",
+        "title": "Howmet: GT parts +39% YoY, targeting $2 млрд+ (3–5 лет)",
+        "blurb": "GT parts revenue ~$1 млрд (2025). Engine Products 33,3% EBITDA. Single-crystal blade duopoly. Sold out."
+      }
+    ]
   }
 }
