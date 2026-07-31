@@ -682,6 +682,1710 @@
      "source": "SBG press 08.10.2025"
     }
    ]
+  },
+  {
+   "id": "svf_ai",
+   "name": "Vision Funds — AI и модели",
+   "plain": "Портфельные компании Vision Fund 1 и 2 в сфере искусственного интеллекта: foundation-модели, AI-инфраструктура, генеративный AI.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Petuum",
+     "what": "Industrial AI and machine-learning platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "AInnovation",
+     "what": "Chinese enterprise AI-solutions provider.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Databricks",
+     "what": "Data-and-AI \"lakehouse\" analytics platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Netradyne",
+     "what": "AI fleet dashcam and driver-safety analytics.",
+     "geography": "Americas/Asia"
+    },
+    {
+     "name": "Perplexity",
+     "what": "AI-powered conversational search engine.",
+     "geography": "Americas"
+    },
+    {
+     "name": "poolside",
+     "what": "AI foundation models for software development.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "Runway",
+     "what": "Generative-AI video-creation models.",
+     "geography": "Americas"
+    },
+    {
+     "name": "SambaNova Systems",
+     "what": "AI chips and full-stack inference systems.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Sierra",
+     "what": "Conversational-AI agents for customer service.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Socra AI",
+     "what": "AI startup (thinly documented).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Soul Machines",
+     "what": "AI-powered digital humans/avatars.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "XMOV",
+     "what": "Chinese AI digital-human/animation technology.",
+     "geography": "Asia"
+    }
+   ]
+  },
+  {
+   "id": "svf_enterprise",
+   "name": "Vision Funds — корпоративный софт",
+   "plain": "Корпоративное ПО, SaaS, кибербезопасность, DevOps, HR-tech, аналитика данных.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Automation Anywhere",
+     "what": "Robotic process automation and AI-agent software for enterprises.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Cohesity",
+     "what": "Data protection, backup and security software; merged with Veritas' data-protection business Dec 2024.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Globality",
+     "what": "AI-driven procurement and sourcing platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "OSIsoft",
+     "what": "Industrial operational-data management (PI System).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Slack",
+     "what": "Workplace messaging and collaboration platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "6sense",
+     "what": "AI-driven B2B revenue and account-based-marketing platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "7shifts",
+     "what": "Restaurant employee scheduling and team-management software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "AccelByte",
+     "what": "Backend infrastructure and live-services tools for game developers.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Adverity",
+     "what": "Marketing data-integration and analytics platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "AlphaSense",
+     "what": "AI-powered market-intelligence and financial-research search.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Andela",
+     "what": "Global marketplace for remote software-engineering talent.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "Apollo Agriculture",
+     "what": "Kenyan platform financing and supplying smallholder farmers.",
+     "geography": "EMEA (Africa)"
+    },
+    {
+     "name": "Arkose Labs",
+     "what": "Bot-detection and fraud-prevention platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Attentive",
+     "what": "SMS and email marketing-automation platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Behavox",
+     "what": "AI compliance and employee-conduct surveillance software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Beisen",
+     "what": "Chinese cloud-based human-capital-management software.",
+     "geography": "Asia"
+    },
+    {
+     "name": "CAST AI",
+     "what": "Kubernetes cloud-cost-optimization and automation platform.",
+     "geography": "EMEA/Americas"
+    },
+    {
+     "name": "Cato Networks",
+     "what": "Cloud-native SASE secure-networking platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Clarity AI",
+     "what": "Sustainability and ESG data-analytics platform.",
+     "geography": "EMEA/Americas"
+    },
+    {
+     "name": "Claroty",
+     "what": "Cybersecurity for industrial and cyber-physical systems.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "Cloudbeds",
+     "what": "Hospitality-management software for hotels.",
+     "geography": "Americas"
+    },
+    {
+     "name": "CoachHub",
+     "what": "Digital coaching and talent-development platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "CommerceIQ",
+     "what": "E-commerce channel-optimization and retail-media software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Contentsquare",
+     "what": "Digital-experience and web-analytics platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Copado",
+     "what": "DevOps platform for Salesforce and low-code apps.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Dianxiaomi",
+     "what": "Chinese cross-border e-commerce ERP software.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Eightfold AI",
+     "what": "AI talent-intelligence and recruiting platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "fabric",
+     "what": "Headless commerce infrastructure platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Firework",
+     "what": "Shoppable video and live-commerce platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Fountain",
+     "what": "High-volume hourly-worker hiring platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Gelato",
+     "what": "Global print-on-demand production network.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Glean",
+     "what": "Enterprise AI search and work assistant.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Huice",
+     "what": "Chinese e-commerce operations/SaaS provider.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Icertis",
+     "what": "AI contract-lifecycle-management software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "InMobi",
+     "what": "Mobile advertising and marketing cloud.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Iyuno",
+     "what": "Media localization, dubbing and subtitling.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Job&Talent",
+     "what": "Temporary-staffing marketplace.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Labelbox",
+     "what": "AI data-labeling and training-data platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "LegalOn Technologies",
+     "what": "AI contract-review software (Japan/US).",
+     "geography": "Asia"
+    },
+    {
+     "name": "LevelBlue",
+     "what": "Managed cybersecurity services (AT&T cybersecurity spin-off).",
+     "geography": "Americas"
+    },
+    {
+     "name": "LTK (rewardStyle)",
+     "what": "Creator-driven shopping and affiliate platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "MapBox",
+     "what": "Developer mapping and location-data APIs.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Mindtickle",
+     "what": "Sales-readiness and enablement platform.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "MinIO",
+     "what": "High-performance object-storage software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Observe.AI",
+     "what": "AI contact-center conversation intelligence.",
+     "geography": "Americas"
+    },
+    {
+     "name": "OfBusiness",
+     "what": "Indian B2B raw-materials commerce and SME lending.",
+     "geography": "Asia"
+    },
+    {
+     "name": "OneTrust",
+     "what": "Privacy, security and data-governance software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Oosto (formerly AnyVision)",
+     "what": "Facial-recognition and vision-AI (assets acquired by Metropolis).",
+     "geography": "EMEA"
+    },
+    {
+     "name": "OpusClip",
+     "what": "AI tool that repurposes long videos into short clips.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Pantheon",
+     "what": "WebOps hosting platform for Drupal/WordPress.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Patsnap",
+     "what": "IP and R&D intelligence analytics.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Pax8",
+     "what": "Cloud-software marketplace for IT resellers/MSPs.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Peak",
+     "what": "Decision-intelligence AI platform for business.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Perk (Perkbox)",
+     "what": "Employee-benefits/rewards platform (thinly documented).",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Permutive",
+     "what": "Privacy-first audience data platform for publishers.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Pixis",
+     "what": "Codeless AI marketing-optimization platform.",
+     "geography": "Americas/Asia"
+    },
+    {
+     "name": "Plume",
+     "what": "Cloud-managed smart-home WiFi and services.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Qualtrics",
+     "what": "Experience-management (survey/XM) software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "RapidAPI",
+     "what": "API marketplace/management (largely shut down 2023).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Redis",
+     "what": "In-memory database and caching software.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "Reibus",
+     "what": "B2B marketplace for industrial materials (metals).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Remote",
+     "what": "Global payroll and employer-of-record platform.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "Sendbird",
+     "what": "In-app chat, voice and messaging APIs.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Sendoso",
+     "what": "Corporate gifting and direct-mail platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Sense",
+     "what": "Recruitment engagement and messaging automation.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Shoplazza",
+     "what": "Merchant e-commerce storefront platform.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "Skedulo",
+     "what": "Deskless-workforce scheduling software.",
+     "geography": "Americas/Asia"
+    },
+    {
+     "name": "Sobot",
+     "what": "AI customer-service/contact-center software.",
+     "geography": "Asia"
+    },
+    {
+     "name": "StreamElements",
+     "what": "Live-streaming production and monetization tools.",
+     "geography": "EMEA/Americas"
+    },
+    {
+     "name": "TigerGraph",
+     "what": "Graph-database and analytics platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Tines",
+     "what": "No-code security/IT workflow automation.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Tractable",
+     "what": "AI visual damage-assessment for insurance.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Trax",
+     "what": "Computer-vision retail shelf analytics.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Treasure Data",
+     "what": "Customer-data platform (CDP).",
+     "geography": "Americas/Asia"
+    },
+    {
+     "name": "Unifonic",
+     "what": "Cloud communications (CPaaS) platform in MENA.",
+     "geography": "EMEA (MENA)"
+    },
+    {
+     "name": "Vendr",
+     "what": "SaaS-purchasing and procurement platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Vianai Systems",
+     "what": "Human-centered enterprise AI platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Whatfix",
+     "what": "Digital-adoption and in-app guidance platform.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "Wiz",
+     "what": "Cloud-security platform.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "WorkBoard",
+     "what": "OKR / strategy-execution software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "ZenBusiness",
+     "what": "Small-business formation and compliance platform.",
+     "geography": "Americas"
+    }
+   ]
+  },
+  {
+   "id": "svf_fintech",
+   "name": "Vision Funds — финтех",
+   "plain": "Платежи, необанки, кредитование, страхование, инвестиционные платформы.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "C2FO",
+     "what": "Working-capital marketplace connecting businesses to early-payment financing.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Cambridge Mobile Telematics",
+     "what": "Telematics and sensor-driven driver-behavior analytics for insurers.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Creditas",
+     "what": "Brazilian secured-lending fintech.",
+     "geography": "Americas (LatAm)"
+    },
+    {
+     "name": "Kabbage",
+     "what": "Small-business lending and cash-flow platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "OakNorth",
+     "what": "UK SME lending bank and credit-analysis platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "OneConnect",
+     "what": "Ping An-affiliated financial-technology services provider.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Paytm (One97)",
+     "what": "Indian digital-payments and financial-services platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Policybazaar (PB Fintech)",
+     "what": "Indian online insurance and lending aggregator.",
+     "geography": "Asia"
+    },
+    {
+     "name": "VNLIFE (VNPAY)",
+     "what": "Vietnamese digital-payments and merchant-services group.",
+     "geography": "Asia"
+    },
+    {
+     "name": "ZhongAn Insurance",
+     "what": "Chinese digital-only insurance company.",
+     "geography": "Asia"
+    },
+    {
+     "name": "bKash",
+     "what": "Bangladesh's leading mobile financial-services provider.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Chime",
+     "what": "US neobank offering fee-free mobile banking via interchange revenue.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Clearco",
+     "what": "Revenue-based financing for e-commerce businesses.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Digits",
+     "what": "AI-powered accounting and financial-analytics software.",
+     "geography": "Americas"
+    },
+    {
+     "name": "DriveWealth",
+     "what": "Brokerage-as-a-service / fractional-share investing API.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Envelop Risk",
+     "what": "AI-driven cyber-reinsurance underwriting.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Esusu",
+     "what": "Rent-reporting and credit-building platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Ethos",
+     "what": "Online life-insurance platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "eToro",
+     "what": "Social-trading and investing platform.",
+     "geography": "EMEA/Americas"
+    },
+    {
+     "name": "Extend",
+     "what": "Digital product-warranty and protection plans.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Funding Societies",
+     "what": "Southeast Asian SME digital lending (Modalku).",
+     "geography": "Asia"
+    },
+    {
+     "name": "Human Interest",
+     "what": "401(k) retirement plans for SMBs.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Juspay",
+     "what": "Indian payments-orchestration infrastructure.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Klarna",
+     "what": "Buy-now-pay-later and payments platform; priced at $40/share, largest US IPO of 2025 at the time.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "M1 Finance",
+     "what": "Automated investing and personal-finance platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "OPay",
+     "what": "Nigerian mobile-payments and financial-services platform.",
+     "geography": "EMEA (Africa)"
+    },
+    {
+     "name": "OurCrowd",
+     "what": "Israeli equity-crowdfunding / VC platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "PrimaryBid",
+     "what": "Retail-investor access to public-company capital raises.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Revolut",
+     "what": "Global digital-banking and financial \"super-app.\"",
+     "geography": "EMEA"
+    },
+    {
+     "name": "TabaPay",
+     "what": "Instant payments/money-movement infrastructure.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Umoja",
+     "what": "Financial/biotech venture (thinly documented).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Vivid (Vivid Money)",
+     "what": "European mobile banking and investing app.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Zeta",
+     "what": "Banking-tech / card-issuing infrastructure.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "Zopa",
+     "what": "UK digital bank and lender.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Advance Intelligence Group",
+     "what": "Singapore-based AI credit, BNPL (Atome) and enterprise SaaS group.",
+     "geography": "Asia"
+    }
+   ]
+  },
+  {
+   "id": "svf_consumer",
+   "name": "Vision Funds — потребительские платформы",
+   "plain": "E-commerce, доставка еды, путешествия, социальные сети, мода, спорт.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Alibaba Local Services (Ele.me/Koubei)",
+     "what": "Chinese on-demand food delivery and local-services platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Auto1",
+     "what": "European online used-car trading platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Clutter",
+     "what": "On-demand storage and moving services.",
+     "geography": "Americas"
+    },
+    {
+     "name": "DoorDash",
+     "what": "US on-demand food and goods delivery marketplace.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Fanatics",
+     "what": "Licensed sports merchandise, trading cards and betting/collectibles.",
+     "geography": "Americas"
+    },
+    {
+     "name": "FirstCry",
+     "what": "Indian retailer of baby and kids' products.",
+     "geography": "Asia"
+    },
+    {
+     "name": "GetYourGuide",
+     "what": "Online marketplace for tours, activities and experiences.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "GoPuff",
+     "what": "Instant delivery of convenience goods from micro-fulfillment centers.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Guazi (Chehaoduo)",
+     "what": "Chinese online used-car trading platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Klook",
+     "what": "Travel-activities and experiences booking platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "OYO",
+     "what": "Budget-hotel and accommodation aggregator; parent rebranded \"Prism.\"",
+     "geography": "Asia"
+    },
+    {
+     "name": "Rappi",
+     "what": "Latin American on-demand delivery super-app.",
+     "geography": "Americas (LatAm)"
+    },
+    {
+     "name": "Zomato (Eternal)",
+     "what": "Indian food-delivery/quick-commerce parent (Zomato, Blinkit); renamed Eternal 2025.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Airtime",
+     "what": "Group social/video chat app.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Cameo",
+     "what": "Marketplace for personalized celebrity video messages.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Carro",
+     "what": "Southeast Asian online used-car marketplace.",
+     "geography": "Asia"
+    },
+    {
+     "name": "CARS24",
+     "what": "Indian online used-car transaction platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Dingdong Maicai",
+     "what": "Chinese fresh-grocery on-demand delivery.",
+     "geography": "Asia"
+    },
+    {
+     "name": "ezCater",
+     "what": "Corporate catering and food-ordering marketplace.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Fetch",
+     "what": "Consumer shopping-rewards app.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Flipkart",
+     "what": "India's largest home-grown e-commerce platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Gousto",
+     "what": "UK meal-kit delivery service.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Hesi",
+     "what": "Chinese consumer platform (thinly documented).",
+     "geography": "Asia"
+    },
+    {
+     "name": "Jellysmack",
+     "what": "Creator-content licensing and cross-platform distribution.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "Keep",
+     "what": "Chinese fitness app and connected-hardware platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Kitopi",
+     "what": "Cloud-kitchen operator in the Middle East.",
+     "geography": "EMEA (MENA)"
+    },
+    {
+     "name": "Lenskart",
+     "what": "Indian omnichannel eyewear retailer.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Manticore Games",
+     "what": "User-generated-game creation platform (Core).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Mathem",
+     "what": "Swedish online grocery retailer.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Meesho",
+     "what": "Indian low-cost social/e-commerce marketplace.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Misfits Market",
+     "what": "Discounted surplus-groceries delivery.",
+     "geography": "Americas"
+    },
+    {
+     "name": "MODIVO (eobuwie)",
+     "what": "Polish online fashion/footwear retailer.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "NAVER Z (Zepeto)",
+     "what": "South Korean avatar/metaverse platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Nextbite",
+     "what": "Virtual-restaurant/ghost-kitchen brands.",
+     "geography": "Americas"
+    },
+    {
+     "name": "PatPat",
+     "what": "Online children's-apparel retailer.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "Perch",
+     "what": "Amazon-FBA brand aggregator.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Picsart",
+     "what": "AI photo-and-video editing platform.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "SODA",
+     "what": "Consumer/commerce venture (thinly documented).",
+     "geography": "Asia"
+    },
+    {
+     "name": "Spotter",
+     "what": "Financing/advances for YouTube creators.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Swiggy",
+     "what": "Indian food-delivery and quick-commerce (Instamart) platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Trendyol",
+     "what": "Turkey's largest e-commerce platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Vestiaire Collective",
+     "what": "Luxury second-hand fashion resale marketplace.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Vuori",
+     "what": "Premium athletic-and-lifestyle apparel brand.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Weee!",
+     "what": "Asian/Hispanic ethnic-grocery e-commerce.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Whoop",
+     "what": "Subscription fitness/health wearable band.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Xiaopangxiong (Little Fat Bear)",
+     "what": "Chinese consumer brand/platform (thinly documented).",
+     "geography": "Asia"
+    },
+    {
+     "name": "Yanolja",
+     "what": "South Korean travel-and-hospitality super-app.",
+     "geography": "Asia"
+    }
+   ]
+  },
+  {
+   "id": "svf_transport",
+   "name": "Vision Funds — транспорт и автономное вождение",
+   "plain": "Райдхейлинг, автономные автомобили, микромобильность, школьный транспорт.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Aurora",
+     "what": "Develops self-driving technology for trucks and ride-hailing.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Cruise",
+     "what": "Self-driving robotaxi developer, absorbed into GM's ADAS efforts.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Getaround",
+     "what": "Peer-to-peer car-sharing marketplace.",
+     "geography": "Americas"
+    },
+    {
+     "name": "GoTo (Gojek Tokopedia)",
+     "what": "Indonesian ride-hailing, payments and (formerly) e-commerce super-app.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Nuro",
+     "what": "Autonomous delivery vehicles; now licenses its AV stack.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Ola",
+     "what": "Indian ride-hailing platform (ANI Technologies).",
+     "geography": "Asia"
+    },
+    {
+     "name": "Uber",
+     "what": "Global ride-hailing, delivery and freight platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Dott",
+     "what": "European e-scooter and e-bike sharing (merged with Tier Mobility).",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Embark Technology",
+     "what": "Autonomous trucking software (peaked ~$5B at 2021 SPAC).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Forterra (formerly Robotic Research)",
+     "what": "Autonomy systems for defense and off-road vehicles.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Ola Electric",
+     "what": "Indian electric two-wheeler maker.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Wayve",
+     "what": "End-to-end AI self-driving software.",
+     "geography": "EMEA"
+    }
+   ]
+  },
+  {
+   "id": "svf_logistics",
+   "name": "Vision Funds — логистика",
+   "plain": "Грузоперевозки, last-mile доставка, складская логистика, freight-платформы.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Delhivery",
+     "what": "Indian logistics/supply-chain firm; acquired Ecom Express (2025).",
+     "geography": "Asia"
+    },
+    {
+     "name": "Flexport",
+     "what": "Digital freight forwarding and supply-chain platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Full Truck Alliance",
+     "what": "Chinese digital freight-matching platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Loggi",
+     "what": "Brazilian last-mile delivery and logistics company.",
+     "geography": "Americas (LatAm)"
+    },
+    {
+     "name": "Cargomatic",
+     "what": "Marketplace connecting shippers with local trucking.",
+     "geography": "Americas"
+    },
+    {
+     "name": "ElasticRun",
+     "what": "Indian rural e-commerce logistics and distribution network.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Flock Freight",
+     "what": "Algorithmic shared-truckload freight pooling.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Forto",
+     "what": "Digital freight forwarding (Europe).",
+     "geography": "EMEA"
+    },
+    {
+     "name": "JD Logistics",
+     "what": "JD.com's supply-chain and delivery arm.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Paack",
+     "what": "European e-commerce last-mile delivery.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Sendcloud",
+     "what": "Shipping-and-fulfillment software for e-commerce.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "ShipBob",
+     "what": "E-commerce fulfillment network for SMBs.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Veho",
+     "what": "Tech-enabled e-commerce last-mile delivery.",
+     "geography": "Americas"
+    }
+   ]
+  },
+  {
+   "id": "svf_health",
+   "name": "Vision Funds — здравоохранение и биотех",
+   "plain": "Биотех, фармацевтика, медицинские устройства, цифровое здравоохранение, диагностика.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "10x Genomics",
+     "what": "Builds instruments and reagents for single-cell and spatial genomic analysis.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Collective Health",
+     "what": "Self-insured employer health-benefits administration platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Ginkgo Bioworks",
+     "what": "Synthetic-biology platform for engineering microbes and cells.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Guardant Health",
+     "what": "Liquid-biopsy blood tests for cancer detection and monitoring.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Ping An Good Doctor",
+     "what": "Chinese online healthcare and telemedicine platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Ping An HealthKonnect",
+     "what": "Cloud-based health-insurance management services.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Relay Therapeutics",
+     "what": "Precision-medicine drug discovery using protein-motion modeling.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Roivant Sciences",
+     "what": "Biopharma holding company that spins out drug-development \"vants.\"",
+     "geography": "Americas"
+    },
+    {
+     "name": "Vir Biotechnology",
+     "what": "Immunology-based infectious-disease and oncology therapeutics.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Wellhub (formerly Gympass)",
+     "what": "Corporate wellness and gym-membership subscription platform.",
+     "geography": "Americas (LatAm)"
+    },
+    {
+     "name": "Abogen Biosciences",
+     "what": "Chinese mRNA therapeutics and vaccine developer.",
+     "geography": "Asia"
+    },
+    {
+     "name": "AI Medical Service",
+     "what": "Japanese AI endoscopy diagnostic-imaging startup.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Aidoc",
+     "what": "AI radiology software flagging acute conditions in medical imaging.",
+     "geography": "EMEA/Americas"
+    },
+    {
+     "name": "ArsenalBio",
+     "what": "Programmable cell therapies for cancer.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Big Health",
+     "what": "Digital therapeutics for sleep and mental health (Sleepio, Daylight).",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "Cerebral",
+     "what": "Online mental-health therapy and medication platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Cityblock Health",
+     "what": "Value-based healthcare for Medicaid and underserved populations.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Clarify Health",
+     "what": "Healthcare analytics and data-insights platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "CMR Surgical",
+     "what": "Versius surgical-robotics system for minimally invasive surgery.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "CopilotIQ",
+     "what": "Remote chronic-care monitoring for seniors.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Deep Genomics",
+     "what": "AI-driven RNA drug discovery.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Devoted Health",
+     "what": "Medicare Advantage insurer and care provider.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Dewpoint Therapeutics",
+     "what": "Biomolecular-condensate drug discovery.",
+     "geography": "Americas/EMEA"
+    },
+    {
+     "name": "EDDA Technology",
+     "what": "Surgical-planning and medical-imaging AI software.",
+     "geography": "Americas/Asia"
+    },
+    {
+     "name": "Elemy",
+     "what": "Pediatric autism/behavioral home-care platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "ElevateBio",
+     "what": "Cell-and-gene-therapy development and manufacturing platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Encoded Therapeutics",
+     "what": "Gene therapies for severe genetic disorders.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Fuze Health",
+     "what": "Digital-health/medical platform (thinly documented).",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Hexagon Bio",
+     "what": "Fungal-genome-mined small-molecule drug discovery.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Insitro",
+     "what": "Machine-learning drug discovery.",
+     "geography": "Americas"
+    },
+    {
+     "name": "InterVenn Biosciences",
+     "what": "Glycoproteomics AI diagnostics.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Karius",
+     "what": "Blood-test infection diagnostics via microbial DNA.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Leah",
+     "what": "Biotech/health startup (thinly documented).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Leyden Labs",
+     "what": "Nasal-spray broad-protection antivirals.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "LUMICKS",
+     "what": "Dynamic single-molecule/cell-analysis instruments.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Metsera",
+     "what": "Obesity/metabolic (GLP-1) drug developer.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Neumora Therapeutics",
+     "what": "Precision-neuroscience drug developer.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Neuron23",
+     "what": "Genetically-guided neurology drug developer.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Opentrons",
+     "what": "Lab-automation and liquid-handling robots.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Papa",
+     "what": "Companion-care platform pairing seniors with helpers.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Plexium",
+     "what": "Targeted-protein-degradation drug discovery.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Proximie",
+     "what": "Remote surgical-collaboration/telepresence platform.",
+     "geography": "EMEA/Americas"
+    },
+    {
+     "name": "Quris (Quris-AI)",
+     "what": "AI \"patient-on-a-chip\" drug-safety prediction.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Recursion",
+     "what": "AI-driven drug-discovery platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Repertoire Immune Medicines",
+     "what": "T-cell immune-synapse drug discovery.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Seer",
+     "what": "Proteomics platform for protein analysis.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Synthego",
+     "what": "CRISPR genome-engineering products and services.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Tessera Therapeutics",
+     "what": "Gene-writing therapeutics platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Variant Bio",
+     "what": "Genetics-of-exceptional-health drug discovery.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Ventus Therapeutics",
+     "what": "Immunology/inflammation small-molecule drugs.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Vividion Therapeutics",
+     "what": "Chemoproteomics precision-medicine drug discovery.",
+     "geography": "Americas"
+    },
+    {
+     "name": "XtalPi",
+     "what": "AI-and-quantum drug-discovery platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Aculys Pharma",
+     "what": "Japanese biopharma licensing neurology/sleep-disorder drugs.",
+     "geography": "Asia"
+    }
+   ]
+  },
+  {
+   "id": "svf_proptech",
+   "name": "Vision Funds — недвижимость",
+   "plain": "Онлайн-платформы покупки/аренды недвижимости, коворкинги, iBuyer-модели.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Compass",
+     "what": "Tech-enabled residential real-estate brokerage.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Opendoor",
+     "what": "Online \"iBuyer\" that buys and resells homes.",
+     "geography": "Americas"
+    },
+    {
+     "name": "REEF",
+     "what": "Neighborhood ghost-kitchen and mobility-hub network.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Ziroom",
+     "what": "Chinese apartment-rental and property-management platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Beike (KE Holdings)",
+     "what": "Chinese housing transactions and services platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Better (Better Home & Finance)",
+     "what": "Digital mortgage-origination platform (Tinman).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Block Renovation",
+     "what": "Home-renovation marketplace and management platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Clikalia",
+     "what": "Spanish iBuyer buying and reselling homes.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Pacaso",
+     "what": "Co-ownership marketplace for second homes.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Roofstock",
+     "what": "Marketplace for single-family rental-home investing.",
+     "geography": "Americas"
+    },
+    {
+     "name": "WeWork",
+     "what": "Flexible/coworking office-space provider.",
+     "geography": "Americas"
+    }
+   ]
+  },
+  {
+   "id": "svf_frontier",
+   "name": "Vision Funds — робототехника, энергия, квант",
+   "plain": "Роботы, складская автоматизация, ядерный синтез, квантовые компьютеры, полупроводники, IoT, 3D-печать.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Brain Corp",
+     "what": "Software platform for autonomous floor-cleaning and delivery robots.",
+     "geography": "Americas"
+    },
+    {
+     "name": "CloudMinds",
+     "what": "Cloud-based robotics and AI services.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Energy Vault",
+     "what": "Gravity- and battery-based energy-storage systems.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Fungible",
+     "what": "Data-processing-unit (DPU) chip startup.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Improbable",
+     "what": "Large-scale virtual-world and simulation technology.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Nauto",
+     "what": "AI-powered fleet driver-safety and collision-avoidance systems.",
+     "geography": "Americas"
+    },
+    {
+     "name": "View",
+     "what": "Smart electrochromic \"dynamic glass\" windows.",
+     "geography": "Americas"
+    },
+    {
+     "name": "AutoStore",
+     "what": "Cube-based automated warehouse storage-and-retrieval robotics.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Classiq",
+     "what": "Quantum-computing software and algorithm-design platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Cornami",
+     "what": "Chips for fully homomorphic encryption and AI.",
+     "geography": "Americas"
+    },
+    {
+     "name": "DayOne (Bridge Data Centres)",
+     "what": "Asia-Pacific hyperscale data-center developer.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Eigencomm",
+     "what": "Chinese chip developer (baseband/communications).",
+     "geography": "Asia"
+    },
+    {
+     "name": "Enpal",
+     "what": "German residential solar-leasing platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Formlabs",
+     "what": "Desktop and industrial 3D printers.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Futurtec",
+     "what": "Technology/sensor startup (thinly documented).",
+     "geography": "Asia"
+    },
+    {
+     "name": "Gaussian Robotics",
+     "what": "Chinese commercial cleaning robotics.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Helion Energy",
+     "what": "Nuclear-fusion power developer.",
+     "geography": "Americas"
+    },
+    {
+     "name": "IonQ",
+     "what": "Trapped-ion quantum-computing hardware.",
+     "geography": "Americas"
+    },
+    {
+     "name": "JAKA Robotics",
+     "what": "Chinese collaborative-robot (cobot) manufacturer.",
+     "geography": "Asia"
+    },
+    {
+     "name": "KEENON Robotics",
+     "what": "Chinese service/delivery robots.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Kigen",
+     "what": "eSIM and IoT connectivity/security (Arm spin-out).",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Nature's Fynd",
+     "what": "Fermentation-based alternative-protein foods.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Platform Science",
+     "what": "Connected-vehicle and fleet-telematics platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Plenty",
+     "what": "Vertical indoor-farming company.",
+     "geography": "Americas"
+    },
+    {
+     "name": "RightHand Robotics",
+     "what": "Robotic piece-picking for warehouses.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Rimac",
+     "what": "Croatian electric-hypercar and EV-component maker.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Standard AI",
+     "what": "Computer-vision autonomous-checkout technology.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Swell Energy",
+     "what": "Residential solar-plus-storage and virtual power plants.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Symbotic",
+     "what": "AI-enabled warehouse-automation robotics.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Tempo (Tempo Automation)",
+     "what": "Software-accelerated PCB manufacturing (de-SPAC failed).",
+     "geography": "Americas"
+    },
+    {
+     "name": "UPSIDE Foods",
+     "what": "Cultivated (lab-grown) meat producer.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Wiliot",
+     "what": "Battery-free Bluetooth sensor \"IoT pixels.\"",
+     "geography": "EMEA"
+    },
+    {
+     "name": "XAG",
+     "what": "Chinese agricultural drones and robotics.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Fourier Intelligence",
+     "what": "Chinese rehabilitation and humanoid robotics.",
+     "geography": "Asia"
+    }
+   ]
+  },
+  {
+   "id": "svf_edtech",
+   "name": "Vision Funds — образование",
+   "plain": "Онлайн-обучение, репетиторство, корпоративные обучающие платформы.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Zuoyebang",
+     "what": "Chinese online tutoring and homework-help platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "360Learning",
+     "what": "Collaborative corporate learning platform.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Atom Learning",
+     "what": "Adaptive online learning platform for school-age children.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Class Technologies",
+     "what": "Virtual-classroom software built on Zoom.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Emeritus",
+     "what": "Online executive-education courses with universities.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "Go1",
+     "what": "Corporate learning-content aggregation platform.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "GoStudent",
+     "what": "European online tutoring marketplace.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "Paper",
+     "what": "Online tutoring for K-12 school districts.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Unacademy",
+     "what": "Indian online-learning and test-prep platform.",
+     "geography": "Asia"
+    },
+    {
+     "name": "VIPThink",
+     "what": "Chinese children's math/logic online education.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Zhangmen",
+     "what": "Chinese online 1-on-1 tutoring.",
+     "geography": "Asia"
+    }
+   ]
+  },
+  {
+   "id": "svf_web3",
+   "name": "Vision Funds — блокчейн и Web3",
+   "plain": "Крипто-инфраструктура, DeFi, NFT-игры, блокчейн-аудит, zero-knowledge протоколы.",
+   "stat": "",
+   "total": "",
+   "companies": [
+    {
+     "name": "Aleo",
+     "what": "Privacy-focused zero-knowledge blockchain platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Animoca Brands",
+     "what": "Blockchain gaming and NFT investor/developer.",
+     "geography": "Asia"
+    },
+    {
+     "name": "Blockdaemon",
+     "what": "Blockchain node infrastructure and staking provider.",
+     "geography": "Americas"
+    },
+    {
+     "name": "bloXroute",
+     "what": "Blockchain network-optimization and trading infrastructure.",
+     "geography": "Americas"
+    },
+    {
+     "name": "CertiK",
+     "what": "Blockchain security auditing and Web3 security.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Consensys",
+     "what": "Ethereum software (MetaMask, Infura).",
+     "geography": "Americas"
+    },
+    {
+     "name": "DCG (Digital Currency Group)",
+     "what": "Crypto holding company (Grayscale, Foundry).",
+     "geography": "Americas"
+    },
+    {
+     "name": "Elliptic",
+     "what": "Blockchain analytics and crypto compliance.",
+     "geography": "EMEA"
+    },
+    {
+     "name": "InfStones",
+     "what": "Blockchain infrastructure and node platform.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Polygon",
+     "what": "Ethereum-scaling blockchain infrastructure.",
+     "geography": "Asia/Americas"
+    },
+    {
+     "name": "Quantstamp",
+     "what": "Smart-contract security audits.",
+     "geography": "Americas"
+    },
+    {
+     "name": "Sorare",
+     "what": "NFT-based fantasy-sports gaming.",
+     "geography": "EMEA"
+    }
+   ]
   }
  ],
  "notDisclosed": "SoftBank НЕ раскрывает поимённо: (1) построчную оценку OpenAI отдельной строкой — только через FV всего SVF2 и упоминания на conference call; (2) LTV-триггеры и механику довнесения залога по margin loan Arm ($20 млрд) и SBKK (¥1,196.5 млрд); (3) детальную структуру off-take Stargate и обязательства SBG vs OpenAI; (4) допущения оценки по модели для частных позиций SVF Level 3 (85% нереализованного FV — частные активы); (5) точную ставку preferred-купона в co-invest MASA USA LLC (Сон получает 17.25% upside SVF2 при MOIC >130%); (6) рыночный дисконт к NAV (~49% — рыночная оценка, не раскрытие компании); (7) построчную оценку ~373 частных инвестиций комбинированных SVF1/SVF2. Обходные источники: рыночная цена 9984.T vs NAV/акция на SOTP-странице; рейтинговые отчёты S&P/JCR; SEC-филинги Arm (20-F), DigitalBridge (8-K/proxy); press-релизы OpenAI/ABB. SoftBank НЕ подаёт информативный 13F: японский холдинг, основные активы — консолидированная Arm (раскрывается через 20-F), частный OpenAI (через SVF2), японская SBKK. Канонические источники: TSE/TDnet, EDINET (код 9984), IR-деки (Accounting + Finance + SVF), earnings call Q&A.",
