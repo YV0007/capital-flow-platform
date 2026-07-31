@@ -2814,5 +2814,115 @@
     "ppr": "BTM gas engines positioned for DC prime/hybrid power; S-1 filed 2026; IPO candidate",
     "geo": "AT",
     "note": "Pre-IPO; engines not turbines; niche positioning"
+  },
+  {
+    "company": "Foxconn",
+    "ticker": "TWSE: 2317",
+    "sector": "Server Systems",
+    "conviction": "high",
+    "riskTier": "mid",
+    "horizon": "12–36 мес",
+    "ppr": "Dominant AI server integrator ~43-60% GB-rack share; co-designed GB200 with NVIDIA; op profit +63% YoY",
+    "geo": "TW",
+    "note": "~6% GM ceiling; NVIDIA L10 insourcing threat; Hon Hai (2317) ≠ Foxconn Technology (2354)"
+  },
+  {
+    "company": "Supermicro",
+    "ticker": "NASDAQ: SMCI",
+    "sector": "Server Systems",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "12–36 мес",
+    "ppr": "DLC leader 70-80% share; fastest time-to-market; $13B+ Blackwell Ultra orders; FY26 ~$39-40B",
+    "geo": "US",
+    "note": "Post-accounting-crisis; new auditor BDO; GM volatile 6.3-10.1%; governance overhang"
+  },
+  {
+    "company": "Dell",
+    "ticker": "NYSE: DELL",
+    "sector": "Server Systems",
+    "conviction": "high",
+    "riskTier": "low",
+    "horizon": "12–36 мес",
+    "ppr": "~20% AI server revenue; $43B backlog; FY27 AI guide $60B; ISG op margin 10.5-14.8%; >5K AI customers",
+    "geo": "US",
+    "note": "Best OEM margin profile; branded premium; financing arm; enterprise breadth"
+  },
+  {
+    "company": "Inventec",
+    "ticker": "TWSE: 2356",
+    "sector": "Server Systems",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "12–36 мес",
+    "ppr": "Google TPU motherboard share rising 10%→30%; #2 server motherboard supplier; ASIC-server leverage",
+    "geo": "TW",
+    "note": "Lower ASP than GPU racks; niche positioning"
+  },
+  {
+    "company": "Amphenol",
+    "ticker": "NYSE: APH",
+    "sector": "Server Systems",
+    "conviction": "high",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "Q1'26 rev $7.62B (+58%); ~17% net margin; ROE ~37%; connectors/interconnect rising with VR200 BOM",
+    "geo": "US",
+    "note": "Best margin capture in AI server stack; diversified across IT/industrial/defense"
+  },
+  {
+    "company": "TE Connectivity",
+    "ticker": "NYSE: TEL",
+    "sector": "Server Systems",
+    "conviction": "medium",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "#1 interconnect by revenue; AI datacenter connector exposure; rising content per rack",
+    "geo": "US/CH",
+    "note": "AI = smaller portion of total revenue vs Amphenol; industrial cyclicality"
+  },
+  {
+    "company": "Penguin Solutions",
+    "ticker": "NASDAQ: PENG",
+    "sector": "Server Systems",
+    "conviction": "medium",
+    "riskTier": "high",
+    "horizon": "12–36 мес",
+    "ppr": "AI 74% of sales (+104%); asset-light 'AI factory' enabler; CXL memory; ClusterWare software",
+    "geo": "US",
+    "note": "Small scale (~$4B mcap); high short interest; valuation risk"
+  },
+  {
+    "company": "Lenovo",
+    "ticker": "HKEX: 0992",
+    "sector": "Server Systems",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "12–36 мес",
+    "ppr": "~11% AI server revenue share; $21B pipeline; ISG $19.2B FY26; China-weighted; xinchuang demand",
+    "geo": "CN/HK",
+    "note": "ISG op profit razor-thin (~$73M / $19.2B = 0.4%); profitless growth risk"
+  },
+  {
+    "company": "Pegatron",
+    "ticker": "TWSE: 4938",
+    "sector": "Server Systems",
+    "conviction": "low",
+    "riskTier": "mid",
+    "horizon": "12–36 мес",
+    "ppr": "Rounding out Taiwan ODM field; smaller AI mix but scaling",
+    "geo": "TW",
+    "note": "Smaller AI server exposure vs Foxconn/Quanta; legacy consumer electronics focus"
+  },
+  {
+    "company": "Lite-On",
+    "ticker": "TWSE: 2301",
+    "sector": "Server Systems",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "PSU maker for AI servers; AI server PSU market ~20.6% CAGR to $7.78B by 2032; power content rising",
+    "geo": "TW",
+    "note": "PSU = smaller BOM component; competition from Chicony, FSP, Acbel"
   }
 ]

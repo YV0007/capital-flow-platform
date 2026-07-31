@@ -11635,5 +11635,607 @@
         "blurb": "GT parts revenue ~$1 млрд (2025). Engine Products 33,3% EBITDA. Single-crystal blade duopoly. Sold out."
       }
     ]
+  },
+  "server": {
+    "asOf": "2026-07-31",
+    "intro": "Сборка AI-серверов — hyper-growth, structurally thin-margin бизнес. AI server market = $245,2 млрд (2025, ABI Research), растёт ~25–30% на ~$725 млрд hyperscaler capex. Но ODM gross margins сжались до 4–7% (Quanta 4,78%, Wistron ~5,2%, Wiwynn 7,2%) — GPU/memory content проходит pass-through с thin markup. NVIDIA = ~51–63% rack BOM. Foxconn = dominant integrator (~43% GB-rack share 2025, guiding 55–60% в 2026). VR200 NVL72 rack = ~$7,8 млн (Morgan Stanley), но ODM value-add лишь ~$149,6K (~1,9% rack GM). NVIDIA reportedly moves to pre-built L10 compute trays (Vera Rubin) — угрожает disintermediate ODMs. Central tension: volume-driven absolute-profit growth vs structural margin compression.",
+    "tldr": [
+      "AI server market $245,2 млрд (2025, ABI Research, +25% г/г) → ~$524 млрд к 2030 (18% CAGR). AI = 74% server market value при лишь ~17% units (TrendForce). Rack ASP: GB200 ~$3 млн, GB300 ~$4 млн, VR200 ~$7,8 млн. Rack shipments: ~29K (2025) → 70–80K (2026, Morgan Stanley). Hyperscaler capex $725 млрд (2026, +77% г/г). Dell AI backlog $43 млрд, guiding $60 млрд FY27.",
+      "ODM margins structurally thin и compressing: Quanta 4,78% GM (Q1'26, с 7,92% год назад), Foxconn 6,18%, Supermicro 6,3–10,1% (volatile). Morgan Stanley: ODM rack GM ~2,7% (GB300) → ~1,9% (VR200). Но absolute dollar value-add растёт +35–40% ($108K→$149,6K). NVIDIA = ~51–63% BOM. Memory rising to 25–30% ($2 млн/rack VR200). Pass-through business, не value-capture.",
+      "Best exposure = barbell: scale integrators с absolute-profit growth (Foxconn ~43–60% share, Quanta, Wiwynn) + picks-and-shovels component names (Amphenol, Delta) capturing rising non-GPU BOM share. Supermicro = high-variance special situation (DLC leader 70–80%, но governance overhang). NVIDIA L10 tray insourcing = key disintermediation risk."
+    ],
+    "verdict": {
+      "subScores": {
+        "growth": 9,
+        "moat": 4,
+        "cyclicality": 7,
+        "valuation": 7
+      },
+      "summary": "Enormous fast-growing market ($245 млрд, +25% г/г) с $725 млрд capex backing и multi-year rack-shipment visibility (70–80K 2026). Но structurally thin-margin pass-through business: ODM rack GM ~1,9–2,7%, blended 4–7%. Value accrues к NVIDIA (~51–63% BOM) и memory, не assemblers. Bull thesis = absolute-dollar profit growth outrunning margin compression (volume bet, не pricing power). Rising complexity (liquid cooling, 800V, optical) raises some technical moat и dollar value-add (+35–40%). NVIDIA L10 tray insourcing + consignment model = progressively disintermediate ODMs. Рекомендация: cyclical event-driven allocation, barbell — scale integrators + component picks-and-shovels. Cap sector exposure given margin structure.",
+      "horizon": "12–36 мес (rides 2026–2027 Blackwell/Rubin ramp; re-evaluate при каждом hyperscaler capex guidance cycle)",
+      "sizing": "AI servers ~$245 млрд (2025) → ~$524 млрд (2030). Rack shipments 29K→70–80K. Broader server market ~$330 млрд+ (AI = 74% value)",
+      "keyQuestion": "Permanently ли NVIDIA L10 tray insourcing и consignment model сожмут ODM revenue base и value-add — или rising rack complexity и absolute-dollar content growth more than offset?",
+      "bull": [
+        "$725 млрд+ hyperscaler capex и 70–80K racks (2026) = multi-year volume visibility с absolute-dollar profit growth даже при falling % margins. Dell AI backlog $43 млрд→$60 млрд guide",
+        "Rising complexity (liquid cooling mandatory, rack validation, 800V HVDC, optical interconnect) raises technical moat и ODM dollar value-add +35–40% (GB300→VR200: $108K→$149,6K per rack)",
+        "Scale leaders (Foxconn 55–60% share, Quanta, Wiwynn) plus non-GPU component names (Amphenol +58% rev, Delta +55%) capture broadening BOM"
+      ],
+      "bear": [
+        "Gross margins structurally thin и compressing: Quanta 4,78% (с 7,92%), ODM rack GM ~1,9% on VR200. Pass-through business, не value-capture. Lenovo ISG: 0,4% op margin на $19,2 млрд",
+        "NVIDIA L10 tray insourcing + consignment model + DGX turnkey progressively disintermediate ODMs и shrink revenue base. NVIDIA reportedly ships pre-built ~90% of server cost",
+        "Synchronized capex = correlated demand risk. Any hyperscaler pullback re-rates entire stack. Taiwan concentration = tail geopolitical risk"
+      ]
+    },
+    "marketSizing": {
+      "cagr": "~18–25% CAGR (AI server market, 2025–2030, зависит от definition)",
+      "chartTitle": "AI-серверы — рынок, $ млрд",
+      "tam": [
+        {
+          "year": "2024",
+          "value": 125.0,
+          "label": "~$125–196 млрд",
+          "source": "Grand View Research / Fortune BI (range)"
+        },
+        {
+          "year": "2025",
+          "value": 245.0,
+          "label": "~$245 млрд",
+          "source": "ABI Research (+25% г/г)"
+        },
+        {
+          "year": "2026",
+          "value": 330.0,
+          "label": "~$330 млрд",
+          "source": "оценка при +30% (TrendForce projection)"
+        },
+        {
+          "year": "2028",
+          "value": 420.0,
+          "label": "~$420 млрд",
+          "source": "оценка при ~18% CAGR"
+        },
+        {
+          "year": "2030",
+          "value": 524.0,
+          "label": "~$524 млрд",
+          "source": "ABI Research (18% CAGR)"
+        }
+      ],
+      "bomShare": {
+        "value": "~2–7% (ODM assembly value-add)",
+        "note": "ODM value-add ~$149,6K of $7,8 млн VR200 rack (~1,9% GM). NVIDIA GPU = 51–63% BOM. Memory = 25–30% ($2 млн/rack VR200). Assembly = thin margin pass-through"
+      },
+      "volumeVsPrice": "ASP exploding: general-purpose $5–15K, AI server $200K–$2 млн+, rack-scale $3–7,8 млн. Single GB200 rack ≈ revenue of 200–600 general servers. Growth = rising ASP × growing unit count (29K→70–80K racks)."
+    },
+    "valueCapture": {
+      "margins": [
+        {
+          "stage": "NVIDIA (GPU silicon)",
+          "gm": "~75%",
+          "note": "~51–63% of rack BOM. The gating factor. All ODM revenue = allocation-determined. → раздел AI-чипы"
+        },
+        {
+          "stage": "Memory (SK Hynix HBM)",
+          "gm": "record profits",
+          "note": "HBM4 + LPDDR5X + NAND = $2 млн/rack (VR200), 25–30% BOM. Sold out 2026. +435% content growth. → раздел HBM"
+        },
+        {
+          "stage": "ODM assembly (Foxconn)",
+          "gm": "6,18% blended",
+          "note": "~43% GB-rack share → 55–60%. Op profit +63% YoY. Value-add ~$149,6K/rack. Scale economics outrun top line"
+        },
+        {
+          "stage": "Branded OEM (Dell ISG)",
+          "gm": "10,5–14,8% op margin",
+          "note": "Branded premium. $43 млрд AI backlog. Financing arm. >5 000 AI customers. Best OEM margin profile"
+        },
+        {
+          "stage": "Components (Amphenol)",
+          "gm": "~17% net margin",
+          "note": "Connectors/interconnect. Q1'26 rev $7,62 млрд (+58%). ROE ~37%. Rising connector content in VR200"
+        }
+      ],
+      "bottleneckNow": "NVIDIA GPU allocation = the gating factor. Memory (HBM sold out 2026). Liquid cooling integration (CDUs, cold plates). High-speed cable assemblies. 110kW power delivery modules.",
+      "bottleneckNext": "NVIDIA L10 tray insourcing (Vera Rubin). Consignment model adoption. 800V HVDC transition. Optical interconnect at rack level. NVL144/NVL576 complexity.",
+      "capitalIntensity": "Moderate: Celestica ~$1 млрд 2026 capex (+700K sqft US + 1M sqft Thailand). Quanta NT$30 млрд ($952 млн). Asset-lighter than upstream (chips, memory), но scale requires significant floor space и test equipment.",
+      "takeaway": "NVIDIA captures ~51–63% of rack value. Memory captures 25–30%. ODMs = thin-margin pass-through (1,9–7% GM). Durable value only в liquid cooling integration, rack validation, services. Components (Amphenol, Delta) = better margin capture."
+    },
+    "competition": {
+      "concentration": "Foxconn dominant: ~43% GB-rack share (2025), guiding 55–60% (2026). Quanta + Wistron + Wiwynn = most of remainder. Taiwan ODMs dominate hyperscaler assembly. Dell leads branded OEMs (~20% AI server revenue). Chinese makers (Inspur, Sugon) confined to domestic by export controls.",
+      "shareTrajectory": [
+        {
+          "player": "Foxconn",
+          "now": "~43% GB-rack share, guiding 55–60%",
+          "direction": "↑↑",
+          "detail": "Co-designed GB200 NVL72 с NVIDIA. April 2026: ~3 700 racks/мес (>44% share). US ramp ~2 000 racks/week. Google/AWS/Microsoft"
+        },
+        {
+          "player": "Dell",
+          "now": "~20% AI server revenue, $43 млрд backlog",
+          "direction": "↑",
+          "detail": "FY27 AI guide $60 млрд. ISG op margin 10,5–14,8%. Branded premium + financing arm. >5 000 AI customers"
+        },
+        {
+          "player": "Quanta",
+          "now": "Q1'26 rev +66,6%, AI >75% server rev",
+          "direction": "↑",
+          "detail": "Google, Meta, AWS. Orders through 2028. ~2 100 racks/мес (April 2026). NT$30 млрд capex"
+        },
+        {
+          "player": "Supermicro",
+          "now": "DLC leader 70–80%, FY26 ~$39–40 млрд",
+          "direction": "→ (volatile)",
+          "detail": "$13 млрд+ Blackwell Ultra orders. Post-accounting-crisis rebuild. New auditor BDO. High-variance"
+        },
+        {
+          "player": "Celestica",
+          "now": "Google's primary TPU-rack builder",
+          "direction": "↑",
+          "detail": "2026 rev guide ~$17 млрд (+37%). Cloud segment target $7 млрд by 2027. +108% trailing. Best non-Taiwan ASIC proxy"
+        }
+      ],
+      "players": [
+        {
+          "name": "Foxconn",
+          "share": "~43–60% GB-racks",
+          "edge": "NVIDIA co-design; scale (US ramp 2K racks/wk); 'AI factory' services; Google/AWS/MSFT"
+        },
+        {
+          "name": "Dell",
+          "share": "~20% AI server rev",
+          "edge": "Branded premium; 10–14,8% ISG margin; $43 млрд backlog; financing arm; enterprise breadth"
+        },
+        {
+          "name": "Quanta",
+          "share": "#2 ODM",
+          "edge": "AI >75% server rev; orders through 2028; Google/Meta/AWS; Taiwan scale"
+        },
+        {
+          "name": "Supermicro",
+          "share": "DLC leader",
+          "edge": "70–80% DLC share; fastest time-to-market; $13 млрд+ orders. But governance risk"
+        },
+        {
+          "name": "Amphenol",
+          "share": "Connector leader",
+          "edge": "17% net margin; +58% rev; ROE 37%; rising non-GPU BOM content (+121% networking chips)"
+        }
+      ],
+      "switchingCost": "Низкий для assembly (commodity service), но rising for integrated solutions (liquid cooling, rack validation, services). NVIDIA co-design (Foxconn) raises switching cost. Qualification cycles для hyperscaler rack programs = months.",
+      "entryBarrier": "Moderate: capital и floor space required, но lower than chip/memory fabrication. Rising с liquid cooling, 800V, optical. The real barrier = NVIDIA qualification и GPU allocation access.",
+      "takeaway": "Foxconn consolidating dominant share. Dell = best branded margin. Taiwan ODMs = commoditized assembly at ~5% GM. Value differentiator = liquid cooling, services, component content (Amphenol, Delta)."
+    },
+    "demand": {
+      "soldOut": [
+        {
+          "year": "2026",
+          "pct": 95,
+          "note": "70–80K racks (Morgan Stanley). $725 млрд hyperscaler capex. Dell $43 млрд backlog. Memory sold out (SK Hynix). NVIDIA allocation = gating factor"
+        },
+        {
+          "year": "2027",
+          "pct": 85,
+          "note": "VR200 ramp (first shipments Q3 2026, volume Q4). NVL144 на roadmap. Hyperscaler capex guidance = key swing factor"
+        },
+        {
+          "year": "2028",
+          "pct": 70,
+          "note": "Re-evaluate at each capex guidance cycle. Platform transition compression. Quanta: orders through 2028. ASIC servers rising (27,8% of shipments)"
+        }
+      ],
+      "contractStructure": "Hyperscaler purchase orders, allocation-gated by NVIDIA GPU availability. Multi-quarter to multi-year visibility для scale players (Dell $43 млрд backlog, Quanta orders through 2028). Lumpy and platform-transition-sensitive.",
+      "customerConcentration": "Extreme: hyperscaler Big Four (MSFT, GOOG, AMZN, META) + Oracle = majority of AI server demand. Wiwynn = primarily Microsoft + Meta. Celestica = Google TPU. Foxconn = Google/AWS/MSFT. Single-customer risk real.",
+      "backlog": "Dell: $43 млрд AI backlog (FY26 exit), Q1 FY27 $51,3 млрд. Lenovo: $21 млрд pipeline. HPE: $16,4 млрд cumulative, $5,9 млрд backlog. Supermicro: $13 млрд+ Blackwell Ultra. Quanta: orders through 2028.",
+      "pricing": "ASP rising dramatically: GB200 ~$3 млн → GB300 ~$4 млн → VR200 ~$7,8 млн per rack. Но ODM margin % compressing (2,7%→1,9%). Memory now primary supply constraint (Dell, Lenovo).",
+      "takeaway": "Multi-year visibility backed by $725 млрд capex. But lumpy, allocation-gated (NVIDIA), и platform-transition-sensitive. ASP rising but margin % compressing. Absolute profit growth = the bull thesis."
+    },
+    "supply": {
+      "balance": [
+        {
+          "year": "2026",
+          "state": "напряжённо",
+          "color": "#f59e0b",
+          "detail": "70–80K racks target. NVIDIA allocation gates output. Memory sold out. Liquid cooling integration bottleneck. Geographic diversification underway (US, Thailand, Vietnam)"
+        },
+        {
+          "year": "2027",
+          "state": "сбалансировано",
+          "color": "#22d3ee",
+          "detail": "VR200 ramp. New manufacturing capacity online (Foxconn US, Celestica Texas/Thailand, Quanta Thailand). Consignment model adoption growing"
+        },
+        {
+          "year": "2028",
+          "state": "риск профицита",
+          "color": "#22c55e",
+          "detail": "If hyperscaler capex moderates + ODM capacity expanded = potential oversupply. Platform transition (NVL144/576) creates new complexity"
+        }
+      ],
+      "capacityAdds": [
+        {
+          "name": "Foxconn: US (Wisconsin, Texas, ~6 500 employees across 40 sites), Vietnam (Hanoi). Ramping ~2 000 racks/week",
+          "when": "2025–2027",
+          "impact": "US geographic diversification. Scale dominant position"
+        },
+        {
+          "name": "Celestica: +700K sqft US (Texas) + 1M sqft Thailand. ~$1 млрд 2026 capex",
+          "when": "2026–2027",
+          "impact": "Non-Taiwan capacity expansion. Google TPU rack production"
+        },
+        {
+          "name": "Quanta: US + Thailand. NT$30 млрд ($952 млн) 2026 capex; $800 млн overseas injection",
+          "when": "2026–2027",
+          "impact": "Geographic diversification. Scale for Google/Meta/AWS"
+        },
+        {
+          "name": "Wistron/Wiwynn: Malaysia SMT lines, Mexico, Czech Republic, US",
+          "when": "2025–2027",
+          "impact": "Multi-geography capacity. Reduces Taiwan concentration"
+        },
+        {
+          "name": "Supermicro: San Jose, Taiwan, Malaysia expansion",
+          "when": "2025–2027",
+          "impact": "DLC integration capacity. Post-crisis capacity expansion"
+        }
+      ],
+      "leadTime": "GPU allocation = primary lead time driver (NVIDIA cadence). Rack assembly itself = weeks once components available. Platform transitions (GB200→GB300→VR200) create temporary supply disruption.",
+      "utilization": "High: Foxconn ~3 700 racks/мес (April 2026). Capacity constraints = liquid cooling integration, rack-level testing, memory availability. Not floor space.",
+      "crowdingOut": "AI servers crowding out general-purpose server production в ODM capacity. AI = 74% of server market value при 17% units. General-purpose refresh cycle competing for attention.",
+      "takeaway": "Supply responsive to demand (assembly = flexible, не fab-like). Real bottlenecks = components (GPU allocation, memory, cooling), не assembly floor space. Geographic diversification accelerating away from Taiwan."
+    },
+    "unitEconomics": {
+      "pricePerUnit": "GB200 NVL72: ~$3 млн/rack. GB300 NVL72: ~$3,99 млн. VR200 NVL72: ~$7,8 млн (Morgan Stanley). General-purpose server: $5–15K. AI server: $200K–$2 млн+. Single GB200 rack ≈ 200–600 general servers по revenue.",
+      "grossMargin": "ODM: Quanta 4,78%, Foxconn 6,18%, Wistron ~5,2%, Wiwynn 7,2%, Supermicro 6,3–10,1% (volatile). Branded: Dell ISG 10,5–14,8% op margin, Lenovo ISG 14,7% GM но 0,4% op margin. Morgan Stanley: rack-level ODM GM ~2,7% (GB300) → ~1,9% (VR200).",
+      "costCurve": "GPU = 51–63% BOM. Memory = 25–30% (VR200: $2 млн HBM4+LPDDR5X+NAND). Thermal ~$72K (+12%). PCB $117K (+233%). ODM value-add ~$150K (assembly + test). Consignment model reduces revenue but improves margin optics.",
+      "yields": [
+        {
+          "gen": "GB200 NVL72 (~$3 млн)",
+          "pct": "ODM ~2,7% rack GM",
+          "note": "GPU 63% BOM. 72 Blackwell GPUs + 36 Grace CPUs. 13,8TB HBM3e. 120kW. Fully liquid cooled"
+        },
+        {
+          "gen": "GB300 NVL72 (~$4 млн)",
+          "pct": "ODM ~2,7% rack GM",
+          "note": "GPU 63%. ODM value-add ~$108K. Memory content growing"
+        },
+        {
+          "gen": "VR200 NVL72 (~$7,8 млн)",
+          "pct": "ODM ~1,9% rack GM",
+          "note": "GPU falls to 51%. Memory $2 млн (25–30%). ODM value-add ~$149,6K (+35–40%). No fans, fully liquid"
+        },
+        {
+          "gen": "Component (Amphenol connectors)",
+          "pct": "~17% net margin",
+          "note": "+121% networking chip content. Rising connector/cable content per rack. Better margin capture than assembly"
+        }
+      ],
+      "takeaway": "Assembly = high-revenue, thin-margin pass-through. $7,8 млн rack, but ODM captures ~$150K at ~1,9% GM. Focus: absolute $ profit growth (Foxconn op profit +63%), не margin %. Component suppliers (Amphenol ~17% net margin) = better value capture."
+    },
+    "roadmap": {
+      "generations": [
+        {
+          "name": "GB200 NVL72 (Blackwell)",
+          "node": "shipping",
+          "year": "2025",
+          "note": "~$3 млн/rack. 72 Blackwell GPUs. ~29K racks shipped 2025. Fully liquid cooled"
+        },
+        {
+          "name": "GB300 NVL72 (Blackwell Ultra)",
+          "node": "shipping",
+          "year": "2026",
+          "note": "~$4 млн/rack. 70–80K racks target 2026. GPU 63% BOM. Primary volume platform"
+        },
+        {
+          "name": "VR200 NVL72 (Vera Rubin)",
+          "node": "ramping",
+          "year": "Q3–Q4 2026",
+          "note": "~$7,8 млн/rack. GPU drops to 51%, memory rises to 25–30%. L10 tray insourcing threat. ODM value-add +35–40%"
+        },
+        {
+          "name": "NVL144 (Vera Rubin, next-gen)",
+          "node": "announced",
+          "year": "2027",
+          "note": "Doubles rack-scale GPU count. Further integration complexity. 800V HVDC power"
+        },
+        {
+          "name": "NVL576 'Kyber'",
+          "node": "roadmap",
+          "year": "2027–2028",
+          "note": "Doubles GPU packages again. Optical interconnect at rack level. Extreme integration complexity"
+        },
+        {
+          "name": "ASIC racks (TPU/Trainium/MTIA)",
+          "node": "shipping",
+          "year": "2025–2026",
+          "note": "27,8% of AI server shipments (2026). Growing 64,2% vs GPU 43,8%. Celestica = Google TPU-rack builder"
+        }
+      ],
+      "disruption": [
+        {
+          "tech": "NVIDIA L10 tray insourcing",
+          "verdict": "Key disintermediation risk — NVIDIA reportedly ships pre-built compute trays (~90% server cost) на Vera Rubin",
+          "tone": "negative",
+          "detail": "J.P. Morgan via Tom's Hardware: NVIDIA ships pre-built L10 compute trays, leaving ODMs only rack-level integration. Reduces ODM value-add scope. Consignment model shrinks revenue base further.",
+          "angle": "Monitor VR200 ODM value-add vs GB300. If value-add falls below $100K/rack despite complexity — bear thesis confirmed."
+        },
+        {
+          "tech": "Hyperscaler in-house rack design",
+          "verdict": "Partial disintermediation — hyperscalers own design, ODMs retain manufacturing",
+          "tone": "mixed",
+          "detail": "Google TPU racks (Celestica/Foxconn/Inventec), Amazon Trainium2 UltraServers, Meta Grand Teton + 'Meta Compute' resale. Design moves in-house, physical assembly stays merchant.",
+          "angle": "ODMs become pure contract manufacturers. Margin pressure but volume intact."
+        },
+        {
+          "tech": "ASIC servers displacing GPU",
+          "verdict": "Rising to 27,8% of AI server shipments (2026). Growing 64,2% vs GPU 43,8%. Structural shift",
+          "tone": "mixed",
+          "detail": "Google TPU (Ironwood/v7), Amazon Trainium, Meta MTIA. Lower ASP than GPU racks = revenue headwind для ODMs. Celestica best positioned (Google primary TPU builder).",
+          "angle": "Diversifies away from NVIDIA dependency but may reduce rack ASP and ODM economics."
+        }
+      ],
+      "takeaway": "Annual GPU cadence drives platform transitions и temporary margin compression. NVIDIA L10 insourcing = key structural threat. ASIC = growing alternative. Rising complexity (NVL144/576, 800V, optical) = potential ODM value-add if not captured by NVIDIA."
+    },
+    "dependencies": {
+      "upstream": [
+        {
+          "item": "GPU (NVIDIA)",
+          "supplier": "NVIDIA (dominant, ~51–63% BOM)",
+          "note": "The gating factor. GPU allocation determines ODM revenue. All demand = NVIDIA-cadence-driven. → раздел AI-чипы"
+        },
+        {
+          "item": "HBM-память",
+          "supplier": "SK Hynix (sold out 2026), Samsung, Micron",
+          "note": "25–30% BOM на VR200 ($2 млн/rack). +435% content growth. Now primary supply constraint. → раздел HBM"
+        },
+        {
+          "item": "Упаковка (CoWoS)",
+          "supplier": "TSMC",
+          "note": "Advanced packaging gates GPU supply. → раздел Упаковка чипов"
+        },
+        {
+          "item": "Охлаждение (liquid cooling)",
+          "supplier": "Vertiv, Boyd, CoolIT",
+          "note": "NVL72 = mandatory liquid cooling. CDUs, cold plates, manifolds. Supermicro 70–80% DLC share. → раздел Охлаждение"
+        },
+        {
+          "item": "Коннекторы / кабели",
+          "supplier": "Amphenol, TE Connectivity, Bizlink, Lotes",
+          "note": "Rising connector content per rack (+121% networking chips). High-speed cable assemblies. → picks"
+        }
+      ],
+      "downstream": "Hyperscalers (MSFT, GOOG, AMZN, META, ORCL), neoclouds (CoreWeave, Lambda, Nebius), enterprise customers, sovereign AI (Saudi DataVolt–Supermicro $20 млрд).",
+      "correlation": "Highest correlation с hyperscaler capex ($725 млрд 2026) и NVIDIA GPU shipment cadence. Synchronized capex = correlated demand risk. Platform transitions (GB→VR) create quarterly volatility.",
+      "takeaway": "Assembly = downstream of everything: GPU, memory, packaging, cooling, connectors. Value accrues upstream. ODMs = throughput-dependent on NVIDIA allocation. Component suppliers = better margin capture."
+    },
+    "risks": [
+      {
+        "risk": "NVIDIA GPU allocation gates ODM revenue",
+        "prob": "Высокая",
+        "impact": "Критический",
+        "note": "All ODM revenue = allocation-determined. Platform transition timing creates quarterly volatility."
+      },
+      {
+        "risk": "Margin compression / commoditization",
+        "prob": "Высокая (materializing)",
+        "impact": "Средний-Высокий",
+        "note": "Quanta GM 4,78% (с 7,92%). Rack GM ~1,9% VR200. Structural, not cyclical compression."
+      },
+      {
+        "risk": "NVIDIA L10 tray insourcing / DGX cannibalization",
+        "prob": "Средняя-Высокая",
+        "impact": "Средний-Высокий",
+        "note": "NVIDIA reportedly ships pre-built ~90% of server cost. Consignment model shrinks revenue base."
+      },
+      {
+        "risk": "Hyperscaler capex moderation / pullback",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Synchronized $725 млрд capex = correlated demand risk. Any guidance cut re-rates entire stack."
+      },
+      {
+        "risk": "Supermicro governance / accounting",
+        "prob": "Средняя",
+        "impact": "Высокий (SMCI-specific)",
+        "note": "Post-accounting-crisis rebuild. New auditor BDO. $7 млрд financing raise. Customer confidence risk."
+      },
+      {
+        "risk": "Taiwan geographic concentration",
+        "prob": "Низкая-Средняя",
+        "impact": "Критический",
+        "note": "Foxconn, Quanta, Wistron, Wiwynn = all Taiwan-HQ'd. Geographic diversification underway но nascent."
+      },
+      {
+        "risk": "Inventory/demand mismatch if capex moderates",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "High ASP inventory ($3–8 млн/rack) creates working-capital risk при demand softening."
+      },
+      {
+        "risk": "ASIC servers reduce GPU-rack ASP",
+        "prob": "Средняя",
+        "impact": "Средний",
+        "note": "27,8% of shipments (2026). Lower ASP than GPU racks. Revenue headwind для GPU-focused ODMs."
+      }
+    ],
+    "picks": [
+      {
+        "group": "Лидеры — scale integrators и branded OEMs",
+        "tone": "leader",
+        "badge": "SCALE + VOLUME",
+        "note": "Foxconn = dominant integrator (55–60% share target). Dell = best branded OEM margin ($43 млрд backlog). Quanta/Wiwynn = Taiwan ODM scale. Thesis = absolute-dollar profit growth outrunning margin compression. Cyclical, не core-compounder.",
+        "rows": [
+          {
+            "company": "Foxconn",
+            "ticker": "TWSE: 2317",
+            "mcap": "~$95–100 млрд+",
+            "exposure": "~43% GB-rack share (2025), guiding 55–60% (2026). Co-designed GB200 NVL72 с NVIDIA. April 2026: ~3 700 racks/мес. US ramp ~2 000 racks/week. Q1'26: rev +29%, op profit +63%. Google/AWS/MSFT",
+            "why": "Dominant scale integrator с NVIDIA co-design moat. 'AI factory' services optionality (>1GW deployed capacity). Op profit growing faster than revenue (+63% vs +29%). US geographic diversification underway.",
+            "priced": "~6% gross-margin ceiling (2020 '10% by 2025' goal missed). NVIDIA L10 tray insourcing threat. Hon Hai (2317.TW) ≠ Foxconn Technology (2354.TW) — entity distinction critical."
+          },
+          {
+            "company": "Dell",
+            "ticker": "NYSE: DELL",
+            "mcap": "~$100–110 млрд",
+            "exposure": "~20% global AI server revenue. FY26 AI shipments $25,2 млрд, $64,1 млрд orders, $43 млрд backlog. FY27 AI guide raised $50→$60 млрд. ISG op margin 10,5–14,8%. >5 000 AI customers",
+            "why": "Best OEM margin profile (branded premium). Financing arm (Dell Financial Services). Enterprise + neocloud + sovereign breadth. $43 млрд backlog = multi-quarter visibility.",
+            "priced": "Branded premium может shrink если hyperscalers shift более к ODM direct. Commodity server business pressured. AI mix raising ASP но compressing traditional margins."
+          },
+          {
+            "company": "Quanta",
+            "ticker": "TWSE: 2382",
+            "mcap": "~$35–40 млрд",
+            "exposure": "Q1'26 rev NT$809,2 млрд (+66,6%). AI >75% of server revenue. Key customers Google, Meta, AWS. Orders through 2028. NT$30 млрд capex",
+            "why": "Scale Taiwan ODM с clear orders through 2028. +66,6% revenue growth. Google/Meta/AWS diversified customer base. TPU rack exposure via Google.",
+            "priced": "GM compressed to 4,78% (с 7,92%). Pass-through economics. Taiwan concentration. Platform transition margin compression risk."
+          },
+          {
+            "company": "Wiwynn",
+            "ticker": "TWSE: 6669",
+            "mcap": "~$20–25 млрд",
+            "exposure": "FY25 rev NT$950,7 млрд (+164%). AI >50% of sales. GM 7,2% (Q4'25). Primarily Microsoft + Meta",
+            "why": "Highest-margin pure cloud ODM (7,2% vs peers 4–6%). Hyperscaler proxy. +164% revenue growth. Microsoft + Meta anchor customers.",
+            "priced": "Extreme customer concentration (two buyers). If Microsoft или Meta shift allocation — revenue cliff. Taiwan risk."
+          }
+        ]
+      },
+      {
+        "group": "Emerging — component picks-and-shovels и special situations",
+        "tone": "emerging",
+        "badge": "BOM SHARE + OPTIONALITY",
+        "note": "Amphenol = best non-GPU BOM capture (+58% rev, 17% net margin). Delta = power + cooling rising content. Supermicro = high-variance (DLC leader но governance). Celestica = best ASIC-rack proxy. Component names = better margin structure than assemblers.",
+        "rows": [
+          {
+            "company": "Amphenol",
+            "ticker": "NYSE: APH",
+            "mcap": "~$115–120 млрд",
+            "exposure": "Q1'26 rev $7,62 млрд (+58%). FY25 >$16,2 млрд. Net margin ~17%, ROE ~37%. Connectors/interconnect. Direct beneficiary of +121% networking-chip и rising connector content in VR200",
+            "why": "Best margin capture в AI server stack (17% net margin vs ODM 4–7%). Rising non-GPU BOM share. Connectors = consumable, recurring. Diversified across IT/industrial/defense.",
+            "risk": "Premium valuation (~35×+ P/E). Connector market competitive (TE Connectivity). AI = portion of diversified revenue. Cyclical demand."
+          },
+          {
+            "company": "Supermicro",
+            "ticker": "NASDAQ: SMCI",
+            "mcap": "~$16,6 млрд",
+            "exposure": "FY26 rev guide $38,9–40,4 млрд. DLC leader 70–80% share. $13 млрд+ Blackwell Ultra orders. GM volatile 6,3–10,1%. $7 млрд financing raise (June 2026)",
+            "why": "Fastest time-to-market на new GPU platforms. Liquid-cooling leadership (70–80% DLC). $13 млрд+ orders. High-variance upside if governance resolved.",
+            "risk": "Post-accounting-crisis. New auditor BDO. Customer confidence fragile. GM volatility (6,3–10,1%). Revenue targets cut from prior 14–17% GM guidance."
+          },
+          {
+            "company": "Celestica",
+            "ticker": "NYSE: CLS",
+            "mcap": "~$35,7 млрд",
+            "exposure": "Google's primary TPU-rack builder. 2026 rev guide ~$17 млрд (+37%). Cloud segment target $7 млрд by 2027. Stock +108% trailing year",
+            "why": "Best non-Taiwan ASIC-rack proxy. Google TPU exposure = differentiated vs GPU-only ODMs. +108% trailing. US/Thailand manufacturing diversification (~$1 млрд capex).",
+            "risk": "Google concentration. Valuation re-rate risk (+108%). ASIC racks = lower ASP than GPU. Single-customer dependency."
+          },
+          {
+            "company": "Delta Electronics",
+            "ticker": "TWSE: 2308",
+            "mcap": "~$60–65 млрд",
+            "exposure": "June'26 rev NT$65,6 млрд (+55,4%). 1H26 +41%. Power + liquid cooling for AI servers. VR200 power content rising (110kW modules, 800V HVDC)",
+            "why": "Power + cooling = rising BOM content per rack. +55% revenue growth. VR200 110kW power modules. Better margin capture than pure assembly.",
+            "risk": "AI server = portion of diversified electronics portfolio. Taiwan-based. Competition в power supplies (Lite-On, Chicony)."
+          },
+          {
+            "company": "TE Connectivity",
+            "ticker": "NYSE: TEL",
+            "mcap": "~$50–55 млрд",
+            "exposure": "#1 interconnect by revenue. AI datacenter connector exposure. Rising content per rack (high-speed cable assemblies, power connectors)",
+            "why": "#1 global interconnect. Rising connector/cable content per rack. Diversified industrial base. AI datacenter = fastest-growing segment.",
+            "risk": "AI = smaller portion of total revenue vs Amphenol's AI mix. Industrial cyclicality. Competition с Amphenol."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": "Cyclical event-driven allocation, не core compounder. Barbell: scale integrators (Foxconn для dominant share, Dell для branded margin) + component picks-and-shovels (Amphenol 17% net margin, Delta +55% rev) = better margin capture чем pure assembly. Supermicro = small high-variance position only (DLC leader но governance). Cap sector exposure given 1,9–7% margin structure. Key question: does NVIDIA L10 insourcing permanently compress ODM value-add или rising complexity offsets?",
+    "monitoring": {
+      "metrics": [
+        "Taiwan ODM monthly revenue — TWSE filings (Foxconn, Quanta, Wistron, Wiwynn), monthly (~5–10th)",
+        "NVIDIA GPU shipments / next-gen ramp — NVIDIA earnings, GTC, quarterly",
+        "GB300→VR200 rack shipment tracking — Morgan Stanley, TrendForce, DIGITIMES, quarterly",
+        "Hyperscaler capex guidance — MSFT/GOOG/AMZN/META/ORCL earnings, quarterly",
+        "Dell/HPE/Lenovo AI backlog и orders — company earnings, quarterly",
+        "Server ASP и liquid-cooling attach rate — TrendForce, quarterly",
+        "Memory (HBM) availability/pricing — SK Hynix/Micron, TrendForce, monthly-quarterly",
+        "Supermicro revenue + governance — SEC filings, earnings, quarterly + ad hoc"
+      ],
+      "canary": [
+        "ODM value-add per rack falls below $100K on VR200 despite rising complexity — NVIDIA L10 disintermediation confirmed",
+        "Hyperscaler capex guidance cut для 2027 — demand pullback re-rates entire stack",
+        "Foxconn GB-rack share drops below 40% — competitive position eroding",
+        "ODM blended GM falls below 4% sustained — pass-through economics unsustainable",
+        "ASIC server shipment share exceeds 35% — GPU-rack ASP compression accelerating",
+        "Supermicro revenue miss + further governance concerns — special-situation thesis broken"
+      ]
+    },
+    "update": {
+      "asOf": "Июль 2026",
+      "headline": "AI servers: $245 млрд market, 70–80K racks target — hyper-growth at structurally thin margins",
+      "summary": "AI server market $245 млрд (+25% г/г). Rack shipments 29K→70–80K. VR200 = $7,8 млн/rack. Hyperscaler capex $725 млрд. Dell $43 млрд backlog. Но ODM margins compressed to 4–7% (Quanta 4,78%). NVIDIA = 51–63% BOM. Foxconn dominant (43→55–60% share). NVIDIA L10 insourcing = key disintermediation risk. Component suppliers (Amphenol 17% net margin) = better value capture.",
+      "stories": [
+        {
+          "title": "Foxconn: ~43% GB-rack share, guiding 55–60% (2026)",
+          "tone": "positive",
+          "verdict": "Dominant integrator с NVIDIA co-design. Op profit +63% YoY outrunning +29% revenue. AI factory services optionality",
+          "detail": "Co-designed GB200 NVL72. April 2026: ~3 700 racks/мес. US ramp ~2 000 racks/week. Google/AWS/MSFT customers."
+        },
+        {
+          "title": "VR200 NVL72: $7,8 млн/rack, GPU drops to 51%, memory rises to 25–30%",
+          "tone": "mixed",
+          "verdict": "Higher ASP but ODM rack GM compresses ~2,7%→~1,9%. Memory ($2 млн/rack) = new dominant BOM factor",
+          "detail": "Morgan Stanley teardown. ODM value-add rises +35–40% ($108K→$149,6K) but margin % falls. GPU share drops, memory content +435%."
+        },
+        {
+          "title": "Dell AI backlog $43 млрд, FY27 guide raised to $60 млрд",
+          "tone": "positive",
+          "verdict": "Best OEM margin profile (10,5–14,8% ISG op margin). Branded premium sustained. >5 000 AI customers",
+          "detail": "FY26 AI shipments $25,2 млрд. $64,1 млрд orders. Financing arm = differentiator. Enterprise + neocloud + sovereign breadth."
+        },
+        {
+          "title": "ODM margins compressing: Quanta 4,78% (с 7,92% год назад)",
+          "tone": "negative",
+          "verdict": "Structural, не cyclical. High-cost GPU/memory content passes through с thin markup. Lenovo ISG: 0,4% op margin на $19,2 млрд",
+          "detail": "Foxconn 6,18%, Wistron ~5,2%. Rack-level ODM GM ~1,9% on VR200 (Morgan Stanley). The central tension: volume vs margin."
+        },
+        {
+          "title": "NVIDIA L10 tray insourcing threat на Vera Rubin",
+          "tone": "negative",
+          "verdict": "NVIDIA reportedly ships pre-built compute trays (~90% of server cost). Key disintermediation risk для ODMs",
+          "detail": "J.P. Morgan via Tom's Hardware. Leaves ODMs only rack-level integration. Consignment model further shrinks revenue base."
+        }
+      ],
+      "bottomLine": "Hyper-growth ($245 млрд, 70–80K racks) at structurally thin margins (4–7% GM, rack-level 1,9%). Bull thesis = absolute $ profit growth (Foxconn +63%). Bear = pass-through margin trap. Barbell: scale integrators + component picks-and-shovels. NVIDIA L10 = the make-or-break structural question."
+    },
+    "news": [
+      {
+        "date": "2026-05-22",
+        "source": "Morgan Stanley (Howard Kao)",
+        "title": "VR200 NVL72 teardown: $7,8 млн/rack, ODM value-add ~$149,6K",
+        "blurb": "GPU drops to 51% BOM. Memory rises to 25–30% ($2 млн/rack, +435%). ODM rack GM ~1,9% (с ~2,7% GB300). Value-add +35–40% в absolute dollars."
+      },
+      {
+        "date": "2026-05-28",
+        "source": "Dell Q1 FY27",
+        "title": "Dell: AI backlog $51,3 млрд, FY27 AI guide raised to $60 млрд",
+        "blurb": "ISG op margin 10,5–14,8%. >5 000 AI customers. Branded premium sustained. Financing arm differentiator."
+      },
+      {
+        "date": "2026-04-15",
+        "source": "TrendForce",
+        "title": "AI servers = 74% of server market value, 17% of units (2026)",
+        "blurb": "AI server revenue growing >30% в 2026. ASIC servers rising to 27,8% of AI shipments (growing 64,2% vs GPU 43,8%)."
+      },
+      {
+        "date": "2026-02-26",
+        "source": "Financial Times",
+        "title": "Hyperscaler capex 2026: $725 млрд combined (+77% г/г)",
+        "blurb": "Amazon ~$200 млрд, Microsoft ~$190 млрд, Alphabet $175–185 млрд, Meta $115–135 млрд. 'The AI economy is healthy... The bear thesis is garbage' — Jefferies."
+      },
+      {
+        "date": "2026-07-28",
+        "source": "Foxconn / institutional estimates",
+        "title": "Foxconn: ~43% GB-rack share, targeting 55–60% (2026)",
+        "blurb": "April 2026: ~3 700 racks/мес (>44% share). US ramp ~2 000 racks/week. Q1'26 op profit +63% YoY. Co-designed GB200 с NVIDIA."
+      }
+    ]
   }
 }
