@@ -175,7 +175,7 @@ const NODE_INTEL = {
 
   wbg: 'Особые силовые чипы (на карбиде кремния и нитриде галлия), которые управляют электричеством эффективнее обычных. Они меньше греются и держат большее напряжение, поэтому из них делают экономичные блоки питания в стойках. Чем прожорливее AI-чипы, тем они нужнее.',
 
-  pkg: 'Финальная сборка чипа: вычислительный кристалл и блоки памяти упаковывают в один корпус так, чтобы они работали как единое целое. Именно здесь, а не в самом транзисторе, долго была главная пробка — без этой упаковки AI-чип и его память не соединить. Сейчас мощности активно расширяют, и узкое место постепенно смещается к памяти и энергии.',
+  pkg: 'Финальная сборка чипа: вычислительный кристалл и блоки памяти упаковывают в один корпус так, чтобы они работали как единое целое. Именно здесь, а не в самом транзисторе, долго была главная пробка — без этой упаковки AI-чип и его память не соединить. Сейчас мощности активно расширяют, и ключевое ограничение постепенно смещается к памяти и энергии.',
 
   pcb: 'Платы и подложки, на которых физически стоит чип и через которые идут тысячи его контактов. Для AI-ускорителей это платы безумной сложности — десятки слоёв с микронной точностью. Их дефицит не раз тормозил выпуск видеокарт.',
 
@@ -276,7 +276,7 @@ const NODE_ROLE = {
 
   gasturbines: 'Это тот узел, где стройка упирается в физику генерации: турбина — самый быстрый способ дать кампусу сотни мегаватт прямо на месте. Спрос так обогнал производство, что очередь на большие турбины расписана на несколько лет вперёд: у GE Vernova бэклог достиг ~100 ГВт ($176 млрд), а цены за три года выросли примерно втрое. Делают их в мире буквально трое — GE Vernova, Siemens Energy и Mitsubishi, — отсюда огромная ценовая власть. Вверх узел держится на жаропрочном титане, вниз питает всю электрическую цепочку.',
 
-  power: 'Это, возможно, самый жёсткий барьер всей темы: сегодня дефицитнее чипов оказалось само электричество. Бэклог заявок на подключение к сети достиг ~2600 ГВт, а средний срок ожидания — около 5 лет (для крупных площадок и дольше), поэтому тот, кто владеет генерацией и доступом к мощности, диктует, где и когда вообще можно построить дата-центр. Само узкое место сместилось в высоковольтные трансформаторы. Это смещает власть от IT-компаний к энергетике. Крупнейший бенефициар по оборудованию и генерации — GE Vernova.',
+  power: 'Это, возможно, самый жёсткий барьер всей темы: сегодня дефицитнее чипов оказалось само электричество. Бэклог заявок на подключение к сети достиг ~2600 ГВт, а средний срок ожидания — около 5 лет (для крупных площадок и дольше), поэтому тот, кто владеет генерацией и доступом к мощности, диктует, где и когда вообще можно построить дата-центр. Само ключевое ограничение сместилось в высоковольтные трансформаторы. Это смещает власть от IT-компаний к энергетике. Крупнейший бенефициар по оборудованию и генерации — GE Vernova.',
 
   switchgear: 'Это звено идёт сразу за трансформаторами и упирается в те же ограничения: спрос обогнал производство, сроки поставки растянулись. Без распределительных щитов площадку не запустить и не защитить от аварий, поэтому это тоже критический путь стройки. Рынок держат несколько крупных электротехнических компаний — Eaton, Schneider, ABB, а также нишевый Powell. Ценовая власть у производителей выросла вслед за дефицитом.',
 
@@ -1262,12 +1262,16 @@ function VerdictHero({ v, c, asOf }) {
           {v.sizing && <MetaCell label="РАЗМЕР РЫНКА" value={v.sizing} />}
         </div>
       )}
-      {v.keyQuestion && (
-        <div style={{ marginTop: 14, padding: '16px 18px', background: `${c}14`, border: `1px solid ${c}3a`, borderRadius: 10 }}>
-          <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 7 }}>ГЛАВНЫЙ ВОПРОС</div>
-          <div style={{ fontSize: 14.5, color: '#fafafa', lineHeight: 1.6, fontStyle: 'italic' }}>{v.keyQuestion}</div>
-        </div>
-      )}
+    </div>
+  );
+}
+
+// ─ Plain-language orientation — "what is this, in two sentences" — shown first ─
+function WhatIsItBlock({ text, c }) {
+  return (
+    <div style={{ background: `${c}0c`, border: `1px solid ${c}33`, borderRadius: 14, padding: '18px 22px', marginBottom: 16 }}>
+      <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 9 }}>ЧТО ЭТО ТАКОЕ · КОРОТКО</div>
+      <div style={{ fontSize: 14.5, color: '#e4e4e7', lineHeight: 1.72 }}><Paragraphs text={text} /></div>
     </div>
   );
 }
@@ -1354,8 +1358,8 @@ function ValueCaptureBlock({ d, c }) {
         </div>
       )}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
-        {d.bottleneckNow && <div style={miniCard}><div style={miniKicker}>УЗКОЕ МЕСТО СЕЙЧАС</div><div style={miniBody}>{d.bottleneckNow}</div></div>}
-        {d.bottleneckNext && <div style={miniCard}><div style={miniKicker}>КУДА УЙДЁТ УЗКОЕ МЕСТО</div><div style={miniBody}>{d.bottleneckNext}</div></div>}
+        {d.bottleneckNow && <div style={miniCard}><div style={miniKicker}>ГЛАВНОЕ ОГРАНИЧЕНИЕ СЕЙЧАС</div><div style={miniBody}>{d.bottleneckNow}</div></div>}
+        {d.bottleneckNext && <div style={miniCard}><div style={miniKicker}>КУДА СМЕСТИТСЯ ОГРАНИЧЕНИЕ</div><div style={miniBody}>{d.bottleneckNext}</div></div>}
         {d.capitalIntensity && <div style={miniCard}><div style={miniKicker}>КАПИТАЛОЁМКОСТЬ</div><div style={miniBody}>{d.capitalIntensity}</div></div>}
       </div>
     </Block>
@@ -1880,7 +1884,7 @@ function ProblemsBlock({ d, c }) {
         {items.map((it, i) => (
           <div key={i} style={{ ...cardBg, padding: '16px 18px', borderLeft: '3px solid #ef4444' }}>
             <div style={{ display: 'flex', gap: 10, alignItems: 'baseline', marginBottom: 12, flexWrap: 'wrap' }}>
-              <span style={{ fontSize: 9.5, color: '#ef4444', fontFamily: 'ui-monospace,monospace', fontWeight: 700, letterSpacing: '0.12em', whiteSpace: 'nowrap' }}>{items.length === 1 ? 'ГЛАВНОЕ УЗКОЕ МЕСТО' : `ПРОБЛЕМА ${String(i + 1).padStart(2, '0')}`}</span>
+              <span style={{ fontSize: 9.5, color: '#ef4444', fontFamily: 'ui-monospace,monospace', fontWeight: 700, letterSpacing: '0.12em', whiteSpace: 'nowrap' }}>{items.length === 1 ? 'ГЛАВНОЕ ОГРАНИЧЕНИЕ ОТРАСЛИ' : `ПРОБЛЕМА ${String(i + 1).padStart(2, '0')}`}</span>
               <span style={{ fontSize: 13.5, color: '#fafafa', fontWeight: 700, lineHeight: 1.45 }}>{it.problem}</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 12 }}>
@@ -2110,6 +2114,7 @@ function NodeDetail({ node, onBack, onJump }) {
         <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23' }} />)}</div>
       </div>
 
+      {detail?.whatIsIt && <WhatIsItBlock text={detail.whatIsIt} c={c} />}
       {detail?.verdict && <VerdictHero v={detail.verdict} c={c} asOf={detail.asOf} />}
       {detail?.tldr?.length > 0 && <Tldr items={detail.tldr} c={c} />}
       {nav.length > 0 && <SectionNav items={nav} c={c} />}
