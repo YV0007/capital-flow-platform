@@ -9240,598 +9240,607 @@
     ]
   },
   "rack": {
-    "asOf": "2026-07-28",
-    "intro": "GPU-облака (neoclouds) и AI-compute инфраструктура — компании, которые покупают GPU (в основном NVIDIA), строят или арендуют дата-центры и сдают вычислительные мощности AI-лабораториям и предприятиям. Neocloud-выручка превысила $25 млрд за 2025 год (+3× г/г), Synergy Research прогнозирует ~$400 млрд к 2031 (58% CAGR). CoreWeave — лидер с backlog $99,4 млрд; Oracle RPO = $553 млрд. Гиперскейлеры направляют ~$600–750 млрд capex в 2026 году (~75% на AI). Модель capital-intensive: высокий adjusted EBITDA (CoreWeave 56%), но глубокий GAAP net loss (−$740 млн) из-за depreciation и interest. Ключевое преимущество — доступ к электроэнергии (binding constraint) и GPU-allocation от NVIDIA. Сектор упал на 30–57% в июне–июле 2026.",
+    "asOf": "2026-07-31",
+    "intro": "Neoclouds — real hypergrowth subsector, но unresolved durability bet. Revenue >$25 млрд (2025, Synergy Research, +223% г/г в Q4 2025), forecasts $65–400 млрд к 2030–2031 (6–7x dispersion). Core question: survive ли GPU-hour rental spreads и 6-year depreciation assumptions при NVIDIA 18–24 month architecture cadence и hyperscaler capacity recapture? CoreWeave (CRWV) = clear leader ($5,1 млрд FY2025, $99,4 млрд backlog, ~600K GPUs) — но ~$35 млрд debt, −$4,7 млрд Q1 FCF, CDS ~50% five-year default odds. Nebius (NBIS) = cleaner balance sheet compounder ($9,3 млрд+ cash, 4-year depreciation). Crypto-miner pivots (APLD, IREN, WULF, CIFR, HUT) = largely landlord plays на 15-year hyperscaler leases. Circular financing (NVIDIA→neocloud→AI lab) raises вопрос real demand vs capital recycling. Рекомендация: high-beta event-driven satellite exposure, не core holding. Prefer picks-and-shovels landlords (DLR/EQIX) и NVIDIA over levered GPU renters.",
     "tldr": [
-      "Neocloud-выручка >$25 млрд (2025, +3× г/г) → ~$400 млрд к 2031 (58% CAGR, Synergy Research). CoreWeave backlog $99,4 млрд; Oracle RPO $553 млрд. Гиперскейлеры capex ~$600–750 млрд в 2026, ~75% на AI. H100 pricing rebounded ~40% до ~$2,35/час (апр 2026). Capacity sold out через 2026.",
-      "Модель levered: CoreWeave adjusted EBITDA 56%, но GAAP net loss −$740 млн (Q1 FY26); net interest $536 млн/кв; долг ~$15 млрд+. Depreciation debate: CoreWeave 6 лет vs Burry '2–3 года реально; $176 млрд understated 2026–28'. Circular financing: NVIDIA инвестирует в neoclouds → они покупают NVIDIA GPU.",
-      "Сектор упал 30–57% (июнь–июль 2026): CoreWeave −57% ($87 млрд → $39 млрд), IREN −52%, Nebius −43%. Re-rating улучшил risk/reward для выживших. Ключевой вопрос: конвертируются ли contracted backlogs в cash до того, как долг и depreciation придут к расчёту — или AI-capex pause сломает модель?"
+      "Neocloud revenue >$25 млрд (2025, Synergy Research). Q4 2025 = $9 млрд (+223% г/г). Forecasts: Synergy ~$400 млрд к 2031 (58% CAGR), Synergy/TechInsights ~$180 млрд к 2030, Gartner ~$53 млрд (20% of $267 млрд AI-cloud), ABI >$65 млрд. 6–7x dispersion = нет аналитического консенсуса по terminal size. CoreWeave ~600K GPUs, 43 ЦОД, >1 GW active / 3,5 GW contracted. NVIDIA FY2026 data-center revenue $194 млрд.",
+      "CoreWeave = category leader: $5,1 млрд FY2025 (+170%), $2,08 млрд Q1 2026 (+112%), $99,4 млрд backlog, adj EBITDA ~56%. Но ~$35 млрд debt, −$4,7 млрд Q1 FCF, interest = ~46% adj EBITDA, CDS ~50% five-year default odds (July 2026). Microsoft 67% FY2025 revenue. Nebius: $399 млн Q1 (+684%), $3,0–3,4 млрд FY2026 guide, >$9,3 млрд cash, GPU depreciation 4 years (vs CoreWeave 6). Preferred pure-play.",
+      "Barbell: overweight picks-and-shovels landlords (DLR/EQIX — lower-beta, dividend, нет GPU-obsolescence risk) и NVIDIA (ultimate value capture). Nebius = preferred pure-play core. CoreWeave = levered call option, size to survive refinancing shock. Crypto-miner pivots = landlord plays, ~$50 млрд funding gap (VanEck), delivery только ~25%. Cap sector exposure ≤2–4% NAV."
     ],
     "verdict": {
       "subScores": {
-        "growth": 9,
+        "growth": 8,
         "moat": 4,
-        "cyclicality": 3,
-        "valuation": 5
+        "cyclicality": 6,
+        "valuation": 8
       },
-      "summary": "Explosive contracted demand (CoreWeave $99,4 млрд, Oracle $553 млрд RPO) vs. levered, obsolescence-exposed, concentrated, circularly-financed модель. Growth = один из самых быстрорастущих секторов публичных рынков (CoreWeave +112%, Nebius ARR +674%). Но moat-ы тонкие: GPU rental commoditizing, гиперскейлеры in-source (Meta входит в cloud rental). Margin quality низкая: высокий EBITDA маскирует GAAP losses (depreciation + interest). Valuations улучшились после −30–57% selloff, но leverage amplifies и upside, и downside. Лучший risk-adjusted play: Oracle (~28× earnings, diversified). Pure neocloud: CoreWeave (лидер, лучший backlog). Power-rich pivots: IREN и Core Scientific (pre-secured power = scarce advantage).",
-      "horizon": "3–5 лет (AI-capex cycle bet с venture-like volatility)",
-      "sizing": "Neoclouds ~$20–42 млрд (2026) → ~$180–400 млрд к 2030–31 (46–58% CAGR). Hyperscaler capex ~$600–750 млрд (2026). GPU-as-a-Service = levered slice этого рынка",
-      "keyQuestion": "Конвертируются ли contracted backlogs neoclouds в cash быстрее, чем накопится долг и depreciation — или AI-capex pause сломает levered модель?",
+      "summary": "Genuine hypergrowth ($25 млрд+, 58–165% CAGR) с extreme forecast dispersion ($65–400 млрд к 2030–2031). Thin moats — NVIDIA allocation + software + contracts — против hyperscaler capacity recapture и 300+ new entrants commoditizing spot tier. Leverage + depreciation + concentration + circularity stack = very high risk. Reserved pricing rising (+40%), но spot H100 −64–75%. The evidence tilts toward 'leaders becoming durable infrastructure platforms — но at valuations и leverage pricing durable outcome as near-certain, leaving asymmetric downside if arbitrage interpretation proves partly right.' Reserved-vs-spot pricing bifurcation = the single most important real-time tell.",
+      "horizon": "3–5 лет (resolve durability question через one full GPU-generation transition Hopper→Blackwell→Rubin и one capital-markets stress test)",
+      "sizing": "Neocloud revenue >$25 млрд (2025). Forecasts $65–400 млрд (2030–2031). Single-digit % of total cloud infra ($25 млрд vs ~$107 млрд/quarter total cloud), но over-indexed to fastest-growing GPU/AI slice",
+      "keyQuestion": "Neoclouds = durable platforms или transitional arbitrageurs of GPU scarcity, squeezed when supply normalizes? И покрывает ли take-or-pay contract book debt amortization even if GPU residual values collapse?",
       "bull": [
-        "Demand contracted и реальный: CoreWeave $99,4 млрд backlog, Oracle $553 млрд RPO, capex ~$600–750 млрд — signed multi-year take-or-pay с investment-grade counterparties",
-        "Power = binding constraint, и crypto-to-AI pivots владеют им: IREN >4,5 GW, Core Scientific, TeraWulf, Hut 8 — 6–18 мес deployment vs 3–5 лет для hyperscalers",
-        "Pricing power intact: H100 rents +40% (окт 2025→апр 2026); capacity sold out; A100 (2020) fully booked; expired-contract H100 rebooked at 95% — подрывает тезис obsolescence"
+        "Demand genuinely insatiable и Jevons-driven: Google token throughput +7x YoY to 3,2 quadrillion/month (I/O 2026), enterprise AI spend 22x за два года ($1,7→$37 млрд), reserved GPU pricing rising +40% — neoclouds capture fastest-growing GPU slice hyperscalers can't build fast enough",
+        "Financing model maturing: GPU-backed debt reached investment grade (DDTL 4.0, A3/A(low), SOFR+2,25%), spreads compressed >175bp за год, long take-or-pay contracts transfer utilization risk к increasingly IG-rated customers",
+        "Backlogs = multi-year visibility: CoreWeave $99,4 млрд (75% within 4 years), Nebius >$46 млрд contracted, TeraWulf >$12,8 млрд, Applied Digital ~$16 млрд signed leases — с diversifying counterparties"
       ],
       "bear": [
-        "Levered model renting depreciating assets: CoreWeave −$740 млн GAAP loss, ~$15 млрд+ долга, $536 млн/кв interest; Burry: $176 млрд depreciation understatement 2026–28",
-        "Circular financing + concentration: Bain ~$800 млрд revenue shortfall к 2030; Oracle 54% OpenAI; anchor default cascades через backlogs",
-        "Уже −30–57% selloff; если AI-capex pause или hyperscaler in-sourcing (Meta) — весь stack re-rates одновременно"
+        "Leveraged arbitrage of temporary scarcity: spot H100 −64–75%, 300+ new entrants fragmenting demand, primary moat (GPU scarcity) eroding exactly в tier where price discovery happens",
+        "Capital structure fragile: CoreWeave ~$35 млрд debt, −$4,7 млрд quarterly FCF, interest ~46% adj EBITDA, CDS ~50% five-year default odds. Model depends on permanent capital-market access against collateral (GPUs) depreciating faster than debt amortizes (Burry: 2–3 year economic life vs 6-year books, ~$176 млрд understated depreciation 2026–2028)",
+        "Circular financing + customer concentration: NVIDIA invests в neoclouds → neoclouds buy NVIDIA GPUs → AI labs (funded by NVIDIA/hyperscalers) rent from neoclouds. 'Meta Compute' cloud unit (July 2026) = customer-turning-competitor. If any link breaks — chain unwinds systemically"
       ]
     },
     "marketSizing": {
-      "cagr": "~46–58% CAGR (neocloud segment, 2025–2031)",
-      "chartTitle": "Neocloud / GPU-cloud рынок, $ млрд",
+      "cagr": "~58% CAGR (Synergy Research, 2025–2031); 6–7x dispersion across forecasts",
+      "chartTitle": "Neoclouds / GPU-as-a-Service — рынок, $ млрд",
       "tam": [
         {
           "year": "2024",
-          "value": 8.0,
-          "label": "~$8 млрд",
-          "source": "оценка (pre-boom base)"
+          "value": 12.0,
+          "label": "~$12 млрд",
+          "source": "оценка на базе Q4'25 run-rate trajectory"
         },
         {
           "year": "2025",
           "value": 25.0,
           "label": ">$25 млрд",
-          "source": "Synergy Research"
+          "source": "Synergy Research (Q4 = $9 млрд, +223% г/г)"
         },
         {
-          "year": "2026",
-          "value": 42.0,
-          "label": "~$42 млрд",
-          "source": "Research and Markets / TBRC"
+          "year": "2027",
+          "value": 65.0,
+          "label": "~$65 млрд",
+          "source": "оценка на базе ~58% CAGR"
         },
         {
-          "year": "2028",
-          "value": 120.0,
-          "label": "~$120 млрд",
-          "source": "оценка при CAGR ~55%"
+          "year": "2030",
+          "value": 180.0,
+          "label": "$53–180 млрд (range)",
+          "source": "Gartner $53B / Synergy-TechInsights $180B"
         },
         {
           "year": "2031",
           "value": 400.0,
-          "label": "~$400 млрд",
-          "source": "Synergy Research"
+          "label": "~$400 млрд (bull)",
+          "source": "Synergy Research (58% CAGR)"
         }
       ],
       "bomShare": {
-        "value": "~30–50%",
-        "note": "GPU compute = крупнейшая статья операционных расходов AI-лабораторий. GPU ~39% стоимости 1GW дата-центра. Neocloud capture thin levered slice от hyperscaler capex"
+        "value": "55–69% gross margin (до depreciation/interest)",
+        "note": "CoreWeave 69,4% GM (TTM), adj EBITDA ~56%. Но GAAP net loss −$740 млн Q1 2026 после depreciation + interest. NVIDIA captures >40% capex. Debt providers earn SOFR+2,25% (IG) to ~15% (early facilities). Value accrues к NVIDIA и debt providers, не equity"
       },
-      "volumeVsPrice": "Growth driven by volume (больше GPU, больше GW power) и удержание pricing (H100 rebounded +40% к $2,35/час). Shift от training к inference увеличит volume при lower per-unit price, но Jevons paradox пока доминирует."
+      "volumeVsPrice": "GPU rental pricing falling in spot (H100 $1,80–3,50/hr, −64–75% от peak >$8/hr), но reserved contracts rising (+40% за 6 мес, SemiAnalysis). B200 ~$6,50/hr, GB200 rack ~$17,85/hr. Hyperscalers charge ~88% more чем dedicated GPU clouds. Break-even ~70% utilization."
     },
     "valueCapture": {
       "margins": [
         {
-          "stage": "NVIDIA (upstream, GPU)",
+          "stage": "NVIDIA (silicon)",
           "gm": "~75%",
-          "note": "Data-center revenue $51,2 млрд/кв (+66% г/г). Captures fattest margin. → раздел AI-чипы"
+          "note": "FY2026 DC revenue $194 млрд. Captures lion's share of rent + equity upside (7% CoreWeave, $2 млрд Nebius) + Lepton marketplace fees. → раздел AI-чипы"
         },
         {
-          "stage": "CoreWeave (neocloud leader)",
-          "gm": "56% adj EBITDA",
-          "note": "Но GAAP net loss −$740 млн: depreciation + interest $536 млн/кв = real costs excluded from EBITDA"
+          "stage": "Debt providers",
+          "gm": "SOFR+2,25% (IG)",
+          "note": "Compressed from ~15% floating (2023 facilities). DDTL 4.0 = first IG-rated GPU financing ($8,5 млрд, A3/A(low)). Spreads −175bp за год"
         },
         {
-          "stage": "Nebius (neocloud)",
-          "gm": "~40% adj EBITDA target",
-          "note": "Asset-lighter pivot; ARR +674%. Long-term debt $8,4 млрд (с $4,1 млрд)"
+          "stage": "CoreWeave (operator)",
+          "gm": "69,4% GM (TTM)",
+          "note": "Adj EBITDA ~56% Q1 2026. Но GAAP net −$740 млн. Interest $536 млн = ~46% adj EBITDA. FCF −$4,7 млрд. The spread between rental revenue и (depreciation + power + interest + opex)"
         },
         {
-          "stage": "Applied Digital (landlord)",
-          "gm": "~17% adj EBITDA",
-          "note": "Lower margin, но lower risk: 15-year take-or-pay leases. Target $1 млрд NOI за 5 лет"
+          "stage": "Nebius (operator)",
+          "gm": "AI-cloud 45% EBITDA",
+          "note": "Revenue $399 млн Q1 (+684%). Cash >$9,3 млрд. Cleaner balance sheet. GPU depreciation 4 years (conservative). Preferred pure-play"
         },
         {
-          "stage": "Core Scientific (crypto-to-AI)",
-          "gm": "80–85% cash GM target",
-          "note": "CoreWeave landlord; AI = 39% revenue. Cheapest multiple (~25× sales)"
+          "stage": "Lambda (operator)",
+          "gm": "~50% GM (~61% ex-HW)",
+          "note": "Private, ~$5,9 млрд post-money. Cost-leader: H100 ~$2,49/hr vs CoreWeave $4,25. IPO target H2 2026"
         }
       ],
-      "bottleneckNow": "Электроэнергия и grid connection — binding constraint. Crypto-to-AI pivots владеют pre-secured power: IREN >4,5 GW, 6–18 мес deployment vs 3–5 лет для new builds",
-      "bottleneckNext": "GPU supply (NVIDIA allocation), HBM, CoWoS packaging (NVIDIA reportedly secured ~70% next-year CoWoS-L), transformer lead times. → разделы HBM, Упаковка",
-      "capitalIntensity": "Экстремальная: CoreWeave capex $31–35 млрд (FY26); Nebius $16–20 млрд; IREN >$9,2 млрд. Debt-financed GPU buildout = structural leverage",
-      "takeaway": "NVIDIA captures fattest margin upstream. Neoclouds capture thin, levered slice — high EBITDA маскирует GAAP losses. Durable value — у тех, кто владеет power (crypto pivots) и получает preferential GPU allocation."
+      "bottleneckNow": "NVIDIA GPU allocation = primary moat и dependency. Power/datacenter capacity = emerging binding constraint (CoreWeave's failed $9 млрд Core Scientific bid = grab for 1,3 GW). Debt/equity capital markets = model requires continuous access. HBM memory (36–52 week lead times).",
+      "bottleneckNext": "Hyperscaler capacity recapture (Meta Compute, Alphabet $205 млрд capex). GPU generation transitions (Rubin R100, H2 2026). Circular financing sustainability. Depreciation reality check (6 vs 2–3 year economic life).",
+      "capitalIntensity": "Extreme: CoreWeave capex $31–35 млрд (2026, ~5x TTM revenue). Nebius $20–25 млрд. ~$28 млрд combined debt+equity raised за 12 мес (CoreWeave alone). Model requires continuous capital-market access.",
+      "takeaway": "NVIDIA captures majority of capex. Debt providers earn secured returns. Neocloud equity holders earn the residual spread — looks strong at adj EBITDA (~56%), collapses at GAAP net после depreciation + interest. Durable margin или temporary arbitrage of GPU scarcity — unresolved."
     },
     "competition": {
-      "concentration": "CoreWeave = лидер ($99,4 млрд backlog); Oracle = hyperscaler-scale ($553 млрд RPO). Nebius, IREN, Crusoe, Lambda — fast followers. Crypto-to-AI pivots (Core Scientific, TeraWulf, Cipher Mining, Hut 8) владеют power. Meta reportedly входит в cloud rental — competitive threat.",
+      "concentration": "CoreWeave = clear leader: Synergy calls it 'by far the largest player.' By H1 2025 revenue: CoreWeave (~$2,1 млрд) ≈ 8–10x Lambda (>$250 млн) и Nebius ($156 млн). Нет clean %-share split. Hyperscalers = 63% total cloud infra (AWS 29%, Azure 20%, GCP 13%). 300+ new GPU cloud providers entered в 2025.",
       "shareTrajectory": [
         {
           "player": "CoreWeave",
-          "now": "Лидер, $99,4 млрд backlog",
-          "direction": "↑",
-          "detail": "9 из top-10 AI-labs = клиенты. OpenAI $22,4 млрд, Meta $35 млрд total. Но −57% с пика"
-        },
-        {
-          "player": "Oracle OCI",
-          "now": "$553 млрд RPO, OCI +84%",
-          "direction": "↑",
-          "detail": "Fastest-growing hyperscaler-scale. ~54% RPO от OpenAI — concentration risk"
+          "now": "Category leader, ~600K GPUs, $99,4 млрд backlog",
+          "direction": "↑↑ (scale)",
+          "detail": "FY2025 $5,1 млрд (+170%). 43 ЦОД, >1 GW / 3,5 GW. Но leverage extreme: ~$35 млрд debt, CDS ~50% default odds"
         },
         {
           "player": "Nebius",
-          "now": "ARR +674%, $7–9 млрд target",
+          "now": "$399 млн Q1 (+684%), ARR target $7–9 млрд",
+          "direction": "↑↑ (fastest growth)",
+          "detail": ">$9,3 млрд cash. 3,5 GW contracted. NVIDIA Exemplar Cloud. >$46 млрд contracted (Meta/Microsoft)"
+        },
+        {
+          "player": "Applied Digital",
+          "now": "~$16 млрд signed leases, landlord model",
           "direction": "↑",
-          "detail": "Microsoft ~$19,4 млрд + Meta ~$3 млрд. Asset-lighter pivot. NVIDIA-backed"
+          "detail": "15-year hyperscaler leases. Stock +175% trailing. Bond-like cash flows. CoreWeave counterparty risk"
         },
         {
           "player": "IREN",
-          "now": "$4 млрд+ ARR target, >4,5 GW power",
-          "direction": "↑",
-          "detail": "Crypto-to-AI: 150K GPU, $3,6 млрд GPU financing + $1,9 млрд Microsoft prepayment"
+          "now": "Own GPU fleet, $9,7 млрд MSFT contract",
+          "direction": "↑ (execution-dependent)",
+          "detail": "Targeting 150K GPUs, >$3,7 млрд ARR by end-2026. NVIDIA Preferred Partner. Valuation tension (4,68x P/S vs 2,59x industry)"
         },
         {
-          "player": "Hyperscalers (Meta)",
-          "now": "Potential entrant в cloud rental",
-          "direction": "↑ (threat)",
-          "detail": "Meta reportedly entering — triggered июльский selloff neoclouds"
+          "player": "Hyperscalers (AWS/Azure/GCP)",
+          "now": "63% total cloud infra",
+          "direction": "→ (capacity recapture)",
+          "detail": "Meta Compute (July 2026). Alphabet $205 млрд capex. Simultaneously customers и long-term threat"
         }
       ],
       "players": [
         {
           "name": "CoreWeave",
-          "share": "Leader",
-          "edge": "$99,4 млрд backlog; preferential NVIDIA allocation; 9/10 AI-labs; 3,5 GW contracted power; software/orchestration moat"
-        },
-        {
-          "name": "Oracle",
-          "share": "Hyperscaler-scale",
-          "edge": "$553 млрд RPO; ~28× earnings = cheapest; diversified (DB, cloud, apps); cash-generative"
-        },
-        {
-          "name": "IREN",
-          "share": "Power-rich pivot",
-          "edge": ">4,5 GW secured grid power; self-operated cloud; 150K GPU; $3,4 млрд NVIDIA contract + $2,1 млрд investment"
-        },
-        {
-          "name": "Core Scientific",
-          "share": "Landlord model",
-          "edge": "CoreWeave landlord $10,2 млрд; 80–85% cash GM target; winding down Bitcoin; cheapest multiple (~25× sales)"
+          "share": "#1 neocloud",
+          "edge": "NVIDIA co-investment (7% stake); first IG-rated GPU financing; ~600K GPUs; $99,4 млрд backlog; OpenAI/Meta/MSFT anchors"
         },
         {
           "name": "Nebius",
-          "share": "Fast follower",
-          "edge": "ARR +674%; Microsoft $19,4 млрд + Meta $3 млрд; NVIDIA-backed; geo-diversified (Finland, US, Paris)"
+          "share": "#2 neocloud",
+          "edge": "Cleanest balance sheet (>$9,3 млрд cash); NVIDIA Exemplar Cloud; 4-yr depreciation (conservative); $46 млрд+ contracted"
+        },
+        {
+          "name": "Applied Digital",
+          "share": "Landlord",
+          "edge": "15-year hyperscaler leases; bond-like contracted cash flows; $16 млрд signed; CoreWeave anchor tenant"
+        },
+        {
+          "name": "IREN",
+          "share": "GPU fleet operator",
+          "edge": "Own AI-cloud fleet (не just landlord); $9,7 млрд MSFT; 4,5 GW power pipeline; NVIDIA Preferred Partner"
+        },
+        {
+          "name": "Equinix/DLR",
+          "share": "DC REITs",
+          "edge": "Picks-and-shovels: нет GPU-obsolescence risk; dividend; 4 of top-5 neoclouds expand с Equinix; 5 GW / 3 GW powered land"
         }
       ],
-      "switchingCost": "Средний: multi-year contracts lock клиентов, но GPU = commodity hardware. Switching cost растёт с software/orchestration layer (CoreWeave, Nebius Token Factory).",
-      "entryBarrier": "Высокий: capital ($31–35 млрд capex), power/grid connection (binding constraint, 3–5 лет для new builds), NVIDIA allocation (preferential), datacenter capacity. Crypto-miners имеют pre-secured power advantage.",
-      "takeaway": "Рынок быстро консолидируется вокруг CoreWeave (лидер), Oracle (hyperscaler-scale), и power-rich pivots. Meta entry = structural competitive threat. Moats тоньше чем кажутся."
+      "switchingCost": "Средний: take-or-pay contracts lock capacity (CoreWeave ~5-year avg), но workloads = portable. NVIDIA allocation creates lock-in к NVIDIA ecosystem. Hyperscaler capacity recapture = ultimate switching risk.",
+      "entryBarrier": "Снижающийся: 300+ new entrants в 2025. GPU procurement (NVIDIA allocation) = key barrier. Capital requirements extreme ($31–35 млрд capex CoreWeave). Power access increasingly scarce. IG-rated financing = barrier for smaller players.",
+      "takeaway": "CoreWeave dominant но most financially stretched. Nebius = cleaner pure-play. 300+ entrants commoditizing spot tier. Hyperscaler capacity recapture = structural threat. NVIDIA allocation = primary differentiator и dependency."
     },
     "demand": {
       "soldOut": [
         {
           "year": "2026",
-          "pct": 95,
-          "note": "Capacity sold out. CoreWeave backlog $99,4 млрд (+50% QoQ). GPU rental prices rebounded +40%. Hyperscaler capex ~$600–750 млрд"
+          "pct": 90,
+          "note": "Reserved/contracted tier tight: 1-yr H100 contract +40% ($1,70→$2,35/hr, SemiAnalysis). Blackwell sold out through 2026. CoreWeave $99,4 млрд backlog. Nebius >$46 млрд contracted"
         },
         {
           "year": "2027",
-          "pct": 80,
-          "note": "Rubin ramps; inference volumes grow. CoreWeave: 36% backlog expected in 24 months. New capacity coming online"
+          "pct": 75,
+          "note": "Rubin R100 ships volume. Hopper fleets cascade to inference. Re-evaluate durability of reserved pricing. VanEck: ~$50 млрд funding gap for miner pivots"
         },
         {
           "year": "2028",
-          "pct": 60,
-          "note": "Risk window: GPU supply catches up; potential capex digestion. Depreciation debate resolves"
+          "pct": 55,
+          "note": "Key inflection: do take-or-pay contracts cover debt amortization if residual values collapse? Hyperscaler capacity recapture accelerating. Meta Compute, Alphabet $205 млрд capex"
         }
       ],
-      "contractStructure": "Take-or-pay, multi-year, investment-grade counterparties. Applied Digital: 15-year take-or-pay leases. CoreWeave: 10 клиентов >$1 млрд каждый. Contract quality улучшается: concentration снижается (CoreWeave 62% Microsoft в 2024 → ни один >35%).",
-      "customerConcentration": "Высокая но снижающаяся: CoreWeave — OpenAI $22,4 млрд, Meta $35 млрд; Oracle — ~54% RPO от OpenAI; Applied Digital зависит от CoreWeave (400MW/$11 млрд). Counterparties creditworthy, но AI-labs (OpenAI) пока не прибыльны.",
-      "backlog": "CoreWeave $99,4 млрд (>$40 млрд добавлено в Q1). Oracle $553 млрд RPO (+325% г/г). Nebius $7–9 млрд ARR target. IREN $4 млрд+ ARR. Applied Digital $36 млрд contracted lease revenue.",
-      "pricing": "H100 ~$2,35/час (апр 2026, rebounded +40% с окт 2025). Cohort median ~$3,15. H200 ~$4,11 median. B200 ~$4,50–7,00. Упали с ~$8 в 2023, но стабилизировались.",
-      "takeaway": "Demand massive и contracted. Pricing power вернулась (H100 +40%). Но concentration в anchor tenants (OpenAI не profitable) и circular financing = structural risks."
+      "contractStructure": "Take-or-pay contracts transferring utilization risk к customers. CoreWeave: weighted-avg ~5 years; 36% recognized within 24 мес, 75% within 4 years; 10 customers ≥$1 млрд. 15-year hyperscaler leases (APLD, WULF, CIFR, HUT). Backlog definition broader than GAAP RPO.",
+      "customerConcentration": "Extreme: Microsoft = 67% CoreWeave FY2025 revenue (62% в 2024). Top customers: OpenAI (~$22,4 млрд), Meta ($21 млрд signed March 2026; ~$35 млрд through 2032), Anthropic, Jane Street ($6 млрд). All riding same AI cycle и increasingly building own capacity (Meta Compute).",
+      "backlog": "CoreWeave: $99,4 млрд (March 2026, ~4x г/г). Nebius: >$46 млрд contracted. TeraWulf: >$12,8 млрд. Applied Digital: ~$16 млрд + $7,5 млрд Delta Forge 1. Cipher: ~$9,3 млрд. Hut 8: ~$7 млрд + $9,8 млрд. Extraordinary на бумаге — но circular financing raises real-demand question.",
+      "pricing": "Spot/on-demand: H100 $1,80–3,50/hr (−64–75% от 2023 peak >$8/hr). Reserved: rising +40% (SemiAnalysis). B200 ~$6,50/hr. GB200 rack ~$17,85/hr. Bifurcation: shortage и glut narratives both true, в different tiers.",
+      "takeaway": "Extraordinary backlogs ($99,4 млрд CoreWeave), но circular financing + customer concentration raise real-demand question. Reserved pricing rising (bullish), spot collapsing (bearish). Bifurcation = the key nuance. Customer-turning-competitor (Meta Compute) = structural risk."
     },
     "supply": {
       "balance": [
         {
           "year": "2026",
-          "state": "дефицит",
-          "color": "#ef4444",
-          "detail": "Capacity sold out. Blackwell allocated through mid-2026. Power = binding constraint. Lead times 6–12 недель (с 50+ недель в 2023)"
+          "state": "бифуркация",
+          "color": "#f59e0b",
+          "detail": "Reserved tier tight (Blackwell sold out, reserved +40%). Spot/on-demand oversupplied (H100 −64–75%, 300+ new entrants). CoreWeave >1 GW active / 3,5 GW contracted. Capex $31–35 млрд"
         },
         {
           "year": "2027",
-          "state": "напряжённо",
-          "color": "#f59e0b",
-          "detail": "CoreWeave 1,7 GW → 8 GW к 2030. Rubin ramps. Новые мощности от crypto pivots выходят. Но demand растёт"
+          "state": "расширение",
+          "color": "#22d3ee",
+          "detail": "Rubin R100 volume. CoreWeave target >1,7 GW → 8 GW by 2030. Nebius >4 GW. Hopper fleet cascade to inference. ~$50 млрд miner funding gap (VanEck)"
         },
         {
           "year": "2028",
-          "state": "risk window",
-          "color": "#22d3ee",
-          "detail": "GPU supply catches up; potential commoditization. Зависит от training→inference shift и AI-capex trajectory"
+          "state": "риск профицита",
+          "color": "#22c55e",
+          "detail": "Hyperscaler capacity recapture + ODM build-out. GPU scarcity (primary moat) easing. If reserved pricing rolls over — bear thesis confirmed"
         }
       ],
       "capacityAdds": [
         {
-          "name": "CoreWeave: targeting 1,7 GW active end-2026 (с >1 GW), 8 GW к 2030. Capex $31–35 млрд FY26",
-          "when": "2026–2030",
-          "impact": "Крупнейший neocloud buildout"
+          "name": "CoreWeave: 43 ЦОД → targeting >8 GW by 2030. Capex $31–35 млрд (2026, ~5x TTM revenue). ~$28 млрд raised за 12 мес",
+          "when": "2025–2030",
+          "impact": "Dominant scale. Но leverage extreme"
         },
         {
-          "name": "Nebius: 800MW–1 GW connected; $16–20 млрд capex FY26",
-          "when": "2026–2027",
-          "impact": "Microsoft/Meta deals driving ramp"
+          "name": "Nebius: 3,5 GW contracted → >4 GW. Capex $20–25 млрд (2026). >$6 млрд raised Q1 2026",
+          "when": "2025–2028",
+          "impact": "Cleaner capitalization. NVIDIA Exemplar Cloud"
         },
         {
-          "name": "IREN: >4,5 GW secured grid power; expanding к 150K GPU. $3,6 млрд GPU financing",
-          "when": "2025–2027",
-          "impact": "Power-rich pivot с fastest deployment"
+          "name": "Miner pivots: TeraWulf 12,8 GW pipeline; Hut 8 8,5 GW; Cipher 1,3 GW; APLD multi-GW",
+          "when": "2025–2030",
+          "impact": "~$50 млрд near-term funding gap. Only ~25% of leased capacity delivered. Delivery = key de-risking"
         },
         {
-          "name": "Core Scientific: 243 MW live + 347 MW more к early 2027 (CoreWeave contract)",
-          "when": "2026–2027",
-          "impact": "Landlord model — low-risk capacity addition"
-        },
-        {
-          "name": "Stargate: OpenAI-Oracle-NVIDIA ~$400 млрд, 7 GW long-term",
-          "when": "2026–2030+",
-          "impact": "Largest single AI-infra commitment; execution uncertain"
+          "name": "Hyperscalers: AWS/Azure/GCP own capacity + custom silicon (TPU, Trainium)",
+          "when": "Ongoing",
+          "impact": "63% cloud infra. Meta Compute. Alphabet $205 млрд capex. The long-term competitive threat"
         }
       ],
-      "leadTime": "GPU: 6–12 недель H100 direct-purchase (с 50+ недель в 2023). Blackwell в tight allocation. Power/grid = 3–5 лет для new builds; crypto pivots = 6–18 мес (pre-secured).",
-      "utilization": "Высокая: capacity sold out through 2026. CoreWeave: A100 (2020) fully booked; expired-contract H100 rebooked at 95%. At 70% utilization: H100-hour costs ~$1,45, rents $3,99–12,29.",
-      "crowdingOut": "AI-compute demand crowding out traditional cloud/enterprise workloads. Crypto-to-AI pivots перенаправляют power от Bitcoin mining к GPU cloud. NVIDIA allocation preferential = smaller players crowded out.",
-      "takeaway": "Real дефицит в 2026: power = binding constraint, GPU в tight allocation. Massive capacity coming (CoreWeave 8 GW, Stargate 7 GW), но 2028 = risk window для overcapacity."
+      "leadTime": "NVIDIA GPU allocation = primary lead time. Blackwell sold out through 2026. Power/datacenter = emerging constraint (CoreWeave failed $9 млрд Core Scientific bid for 1,3 GW). HBM memory 36–52 week lead times.",
+      "utilization": "Break-even ~70% на debt-financed clusters. 55% util = −$330K/мес на 1 024-GPU cluster; 85% = +$340K. 'Almost no margin of safety.' CoreWeave reports 95% re-booking rate on H100 batches.",
+      "crowdingOut": "300+ new GPU cloud providers entered в 2025 (Value Add VC). Fragmenting on-demand/spot tier. Driving H100 price decline. Reserved tier remains differentiated.",
+      "takeaway": "Supply bifurcated: reserved tight (primary moat), spot oversupplied (300+ entrants). Both shortage и glut narratives true. Explosive capacity expansion ($31–35 млрд CoreWeave alone). GPU scarcity = moat, но eroding. Power increasingly the binding constraint."
     },
     "unitEconomics": {
-      "pricePerUnit": "H100 ~$2,35/час (spot), cohort median ~$3,15. H200 median ~$4,11. B200 ~$4,50–7,00. GPU cluster capex ~$30–50K+ per GPU all-in (H100 SXM5 ~$28K, H200 ~$38K, B200 ~$40K + ~1,4× server overhead).",
-      "grossMargin": "CoreWeave: 56% adj EBITDA, но GAAP net loss −$740 млн (36% net-loss margin). Nebius ~40% EBITDA target. Core Scientific: 80–85% cash GM target (landlord). NVIDIA upstream: ~75% GM. EBITDA-to-net gap = depreciation + interest.",
-      "costCurve": "At 70% utilization: H100-hour costs ~$1,45, rents $3,99–12,29 = large scarcity premium. On-prem H100 amortizes vs cloud в 6–14 мес при high utilization. GPU-backed debt = SOFR+225bps / 5,9% fixed.",
+      "pricePerUnit": "H100: $25–30K (PCIe) / $35–40K (SXM5). Full deployed cost incl power/cooling/InfiniBand ~$45–50K. 8-GPU HGX server $250–400K. Rental: H100 $1,80–3,50/hr budget, $8–11/hr hyperscaler. B200 ~$6,50/hr. GB200 rack ~$17,85/hr.",
+      "grossMargin": "CoreWeave: 69,4% GM (TTM), adj EBITDA ~56%, GAAP net −$740 млн Q1 (after depreciation + interest). Nebius AI-cloud 45% adj EBITDA. Lambda ~50% GM (~61% ex-hardware). Operating cost ~$0,41/GPU-hr (power+colo+ops). Break-even ~70% utilization.",
+      "costCurve": "100-H100 cluster (Mercatus): $4,5 млн capex; year-3 residual ~25% ($1,1 млн); operating cost $0,41/GPU-hr. 75% util → 3-year IRR 7–33% (driven entirely by alternative cloud cost). Vs hyperscaler on-demand $3,50/hr = decisively positive; vs reserved $1,80/hr = marginal.",
       "yields": [
         {
-          "gen": "A100 (2020)",
-          "pct": "fully booked",
-          "note": "Still in production use; expired contracts rebooked. 'Computing cascade' — GPUs demote к inference"
+          "gen": "On-demand H100 ($1,80–3,50/hr)",
+          "pct": "7–33% 3-yr IRR",
+          "note": "Down 64–75% от 2023 peak >$8/hr. 300+ new entrants driving spot down. Reserved rising +40%"
         },
         {
-          "gen": "H100 (2023)",
-          "pct": "~$2,35/час",
-          "note": "Rebounded +40% с окт 2025. Rebooked at 95% original price. Sold out"
+          "gen": "B200 Blackwell (~$6,50/hr)",
+          "pct": "Sold out 2026",
+          "note": "Premium pricing. Next-gen demand. Scarcity-driven"
         },
         {
-          "gen": "H200 / B200",
-          "pct": "~$4–7/час",
-          "note": "Tight allocation. Premium pricing. Blackwell shipping"
+          "gen": "GB200 rack (~$17,85/hr)",
+          "pct": "Higher ASP, tight",
+          "note": "Rack-scale deployment. Liquid cooling mandatory"
         },
         {
-          "gen": "GB200 NVL72",
-          "pct": "tight allocation",
-          "note": "Next-gen rack-scale. CoreWeave/IREN contracts. Premium"
+          "gen": "Depreciation: 6-yr CoreWeave vs 4-yr Nebius",
+          "pct": "~$30 млн/yr delta на 10K GPUs",
+          "note": "Burry: 2–3 yr economic life vs 6-yr books = ~$176 млрд understated depreciation 2026–2028. Intrator: 95% re-booking at original pricing"
         }
       ],
-      "takeaway": "Scarcity premium sustains pricing near-term. Но модель = renting depreciating assets на debt: depreciation schedule (4 vs 6 лет) materially swings margin picture. Burry: $176 млрд understatement."
+      "takeaway": "High headline returns (55–69% GM before depreciation), но radical asset-life uncertainty (4–6 yr accounting vs 2–3 yr Burry estimate). Break-even ~70% utilization с почти no margin of safety. IRR critically dependent на residual values и alternative cloud cost. Not comparable to traditional colo (15–20 yr assets, 7–9% cap rates)."
     },
     "roadmap": {
       "generations": [
         {
-          "name": "A100 (Ampere, 2020)",
-          "node": "mainstream",
-          "year": "2020–2024",
-          "note": "Still fully booked; cascading к inference. Legacy но productive"
-        },
-        {
           "name": "H100/H200 (Hopper)",
           "node": "shipping",
-          "year": "2023–2026",
-          "note": "Workhorse: ~$2,35/час; rebounded +40%. Sold out. CoreWeave fleet backbone"
+          "year": "2023–2025",
+          "note": "~$25–40K. The dominant fleet. Spot −64–75%. Reserved +40% (SemiAnalysis). CoreWeave reports 95% re-booking"
         },
         {
-          "name": "B200 (Blackwell)",
+          "name": "B200/B300 (Blackwell)",
           "node": "shipping",
           "year": "2025–2026",
-          "note": "Ramping; tight allocation. ~$4,50–7/час. CoreWeave/Meta deal includes"
+          "note": "~$6,50/hr. Sold out through 2026. Primary volume platform. CoreWeave $13 млрд+ orders"
         },
         {
-          "name": "GB300 (Blackwell Ultra)",
+          "name": "R100 (Rubin)",
           "node": "ramping",
-          "year": "2025–2027",
-          "note": "Rack-scale. IREN 150K GPUs; Nscale 200K Microsoft deal. Next-gen contracts"
+          "year": "H2 2026",
+          "note": "Next-gen. Risk: Hopper fleets cascade to cheaper inference faster than 6-year depreciation assumes"
         },
         {
-          "name": "R200 (Vera Rubin)",
-          "node": "sampling",
-          "year": "H2 2026–2027",
-          "note": "CoreWeave/Meta deal includes Rubin deployments. Annual cadence accelerates"
+          "name": "NVIDIA Lepton marketplace",
+          "node": "shipping",
+          "year": "2026",
+          "note": "GPU-rental aggregator/marketplace. NVIDIA retreated from DGX Cloud — reduces cannibalization risk to neoclouds"
         },
         {
-          "name": "Feynman",
+          "name": "GPU compute futures (ICE/Ornn OCPI)",
           "node": "announced",
-          "year": "2028+",
-          "note": "Post-Rubin. Annual GPU cadence forces continuous capex / obsolescence risk"
+          "year": "2026",
+          "note": "Financialization of GPU compute. May compress spreads further. Benchmark pricing"
+        },
+        {
+          "name": "Custom silicon (TPU, Trainium)",
+          "node": "shipping",
+          "year": "2025–2026",
+          "note": "Google courting neoclouds for TPU adoption. Но 'customers currently only requesting NVIDIA' (CoreWeave March 2026)"
         }
       ],
       "disruption": [
         {
-          "tech": "GPU commoditization / pricing collapse",
-          "verdict": "Structural risk, но пока contradicted: prices rose в 2026, capacity sold out",
-          "tone": "mixed",
-          "detail": "H100 spot упал с ~$8 (2023) до ~$1,20, затем rebounded к ~$2,35 (+40%). Expired H100 rebooked at 95%. Но supply catching up к 2027–28 может crash prices.",
-          "angle": "Monitor $/GPU-hour monthly. Sustained >20% QoQ decline = de-risk signal."
-        },
-        {
-          "tech": "Hyperscaler in-sourcing (Meta, custom silicon)",
-          "verdict": "Real threat — Meta reportedly entering cloud rental; TPU/Trainium/MTIA reduce merchant GPU demand",
+          "tech": "Hyperscaler capacity recapture",
+          "verdict": "Core structural threat — Meta Compute cloud unit (July 2026), Alphabet $205 млрд capex",
           "tone": "negative",
-          "detail": "Meta вход в cloud rental triggered июльский selloff. Google reselling TPU через Fluidstack. Custom silicon (Trainium, TPU, MTIA, Maia) снижает merchant-GPU зависимость. CoreWeave: 62% Microsoft → <35% = diversification, но structural threat.",
-          "angle": "Biggest structural risk для neoclouds. Watch Meta cloud rental announcements."
+          "detail": "Bloomberg: Meta building cloud unit 'Meta Compute' led by Santosh Janardhan. Zuckerberg: 'clearly on the table.' Meta stock +9%, neoclouds fell. AWS/Azure/GCP = 63% total cloud infra. Simultaneously customers и competitors.",
+          "angle": "Monitor hyperscaler third-party-capacity commentary каждый earnings. If Microsoft/Meta materially cut neocloud commitments — bear thesis accelerates."
         },
         {
-          "tech": "Training→Inference shift",
-          "verdict": "Favors neoclouds positioned для inference; Jevons paradox доминирует",
-          "tone": "positive",
-          "detail": "Inference = more distributed, latency-sensitive. CoreWeave, DigitalOcean, Together AI repositioning. Jevons: cheaper compute → more usage — pricing rose в 2026.",
-          "angle": "Net positive: bigger addressable market. But lower per-unit price = volume game."
+          "tech": "Inference efficiency gains (DeepSeek/Kimi)",
+          "verdict": "Consensus = Jevons paradox (efficiency increases aggregate demand). Selloffs reversed",
+          "tone": "mixed",
+          "detail": "DeepSeek (Jan 2025) cut NVIDIA −17%. Kimi K3 (July 2026) triggered worst week for chips in a year. Но both reversed. Google token throughput +7x YoY to 3,2 quadrillion/мес. Enterprise AI spend $1,7 млрд→$37 млрд. H100 reserved pricing rising despite efficiency gains.",
+          "angle": "Watch token consumption growth curve. If reverses — the one scenario that breaks even Jevons consensus."
+        },
+        {
+          "tech": "Circular financing unwind",
+          "verdict": "Systemic risk — NVIDIA→neocloud→AI lab chain. ~$250 млрд OpenAI backstop under discussion",
+          "tone": "negative",
+          "detail": "NVIDIA holds 7% CoreWeave ($2 млрд), invested $2 млрд Nebius, discussing ~$250 млрд OpenAI backstop. Bernstein's Rasgon flags dot-com/telecom vendor-financing parallels. Boston College: 'demand is not as big as it appears — companies buying from each other.'",
+          "angle": "If any link breaks (AI-lab funding freeze, hyperscaler insourcing) — chain unwinds systemically. Monitor NVIDIA AI-company investments and neocloud customer diversification."
         }
       ],
-      "takeaway": "Annual GPU cadence (Hopper→Blackwell→Rubin→Feynman) forces continuous capex и creates obsolescence pressure. Но 'computing cascade' (GPUs demote) + pricing power sustain value longer than bears expect."
+      "takeaway": "NVIDIA 18–24 month GPU cadence vs 4–6 year depreciation = core tension. Rubin (H2 2026) = key fleet-obsolescence test. Hyperscaler capacity recapture и circular financing = structural threats. Custom silicon = substitution risk. GPU futures may financialize и compress spreads."
     },
     "dependencies": {
       "upstream": [
         {
-          "item": "GPU (NVIDIA)",
-          "supplier": "NVIDIA (dominant), AMD",
-          "note": "~75% GM upstream; preferential allocation = real moat. → раздел AI-чипы (silicon)"
+          "item": "GPU (NVIDIA allocation)",
+          "supplier": "NVIDIA (~91% AI research chip citations)",
+          "note": "The #1 dependency и the primary moat. Preferred-partner status + early access. NVIDIA holds equity в CoreWeave/Nebius/Lambda/Crusoe. → раздел AI-чипы"
+        },
+        {
+          "item": "Power / datacenter capacity",
+          "supplier": "Utilities, landowners, DLR/EQIX",
+          "note": "Emerging binding constraint. CoreWeave failed $9 млрд Core Scientific bid for 1,3 GW. → раздел Дата-центры"
+        },
+        {
+          "item": "Debt/equity capital markets",
+          "supplier": "Blackstone, MUFG, Morgan Stanley, Goldman",
+          "note": "Model requires continuous access. Any freeze = existential. CoreWeave ~$28 млрд raised за 12 мес"
         },
         {
           "item": "HBM-память",
           "supplier": "SK Hynix, Samsung, Micron",
-          "note": "GPU performance bound by HBM. → раздел HBM-память"
+          "note": "Now tighter bottleneck than GPUs. 36–52 week lead times. → раздел HBM"
         },
         {
-          "item": "Упаковка (CoWoS)",
-          "supplier": "TSMC",
-          "note": "NVIDIA reportedly ~70% next-year CoWoS-L capacity. → раздел Упаковка чипов"
-        },
-        {
-          "item": "Электроэнергия",
-          "supplier": "Grid utilities, crypto-to-AI pivots",
-          "note": "Binding constraint: 3–5 лет для new builds. → раздел Электроэнергия"
-        },
-        {
-          "item": "Сетевая инфраструктура",
-          "supplier": "Broadcom, Arista, Cisco",
-          "note": "InfiniBand/Ethernet для GPU-кластеров. → раздел Сетевая фабрика"
+          "item": "Networking (InfiniBand/Ethernet)",
+          "supplier": "NVIDIA (Spectrum-X), Arista, Broadcom",
+          "note": "High-speed interconnect для GPU clusters. → раздел Сетевое оборудование"
         }
       ],
-      "downstream": "AI-лаборатории (OpenAI, Anthropic, Meta, Mistral, Cohere), enterprises, гиперскейлеры (как арендаторы), суверенные фонды (Humain, G42).",
-      "correlation": "Высочайшая корреляция с hyperscaler capex (~$600–750 млрд, 2026) и AI-model-training demand. Synchronized bet 4 гиперскейлеров = correlated systemic risk: demand stall re-rates весь stack одновременно.",
-      "takeaway": "GPU-cloud = downstream bottleneck assembler: зависит от GPU supply, HBM, CoWoS, power, networking. Upstream NVIDIA captures fattest margin; neoclouds capture thin, levered remainder."
+      "downstream": "AI labs (OpenAI ~$22,4 млрд CoreWeave backlog, Anthropic, Meta $21 млрд, xAI, Mistral, Cohere), enterprise GenAI adopters ($37 млрд spend 2025), inference platforms (Together AI, Fireworks, Baseten), sovereign AI (UAE, Saudi Arabia, Japan).",
+      "correlation": "Extreme correlation с NVIDIA GPU shipment cadence и hyperscaler capex cycle. Circular financing amplifies: NVIDIA→neocloud→AI lab. Capital-market conditions = existential dependency. Synchronized AI cycle = correlated demand risk.",
+      "takeaway": "Triple dependency: NVIDIA allocation (moat + constraint), capital markets (existential), power/DC capacity (binding). Downstream = AI labs и enterprise, но customer concentration extreme. Circular financing means supply chain = also demand chain."
     },
     "risks": [
       {
-        "risk": "AI-capex digestion / 'AI winter'",
-        "prob": "Средняя",
-        "impact": "Критический",
-        "note": "Biggest tail risk. Capex-to-revenue gap widening; markets repricing (−30–57% июнь–июль 2026)."
+        "risk": "GPU scarcity eases → spread/utilization compression",
+        "prob": "Высокая",
+        "impact": "Высокий",
+        "note": "Already underway в spot tier (H100 −64–75%). 300+ new entrants. Reserved tier still tight — но for how long?"
       },
       {
-        "risk": "Circular-financing unwind",
+        "risk": "Hyperscaler capacity recapture commoditizes access",
+        "prob": "Средняя-Высокая",
+        "impact": "Высокий",
+        "note": "Meta Compute cloud unit (July 2026). Alphabet $205 млрд capex. Core structural threat."
+      },
+      {
+        "risk": "Capital-structure / leverage risk",
+        "prob": "Средняя-Высокая",
+        "impact": "Критический",
+        "note": "CoreWeave ~$35 млрд debt, −$4,7 млрд Q1 FCF, CDS ~50% five-year default odds. Model requires permanent capital-market access."
+      },
+      {
+        "risk": "Circular financing unwind",
+        "prob": "Средняя",
+        "impact": "Критический",
+        "note": "NVIDIA→neocloud→AI lab chain. ~$250 млрд OpenAI backstop under discussion. Systemic если any link breaks."
+      },
+      {
+        "risk": "Customer concentration (Microsoft 67% CoreWeave)",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Microsoft declined ~$12 млрд option (March 2025). All top customers riding same AI cycle."
+      },
+      {
+        "risk": "GPU fleet obsolescence (6-yr depreciation vs 18–24mo cadence)",
+        "prob": "Средняя",
+        "impact": "Высокий",
+        "note": "Burry: 2–3 yr economic life vs 6-yr books = ~$176 млрд understated depreciation 2026–2028."
+      },
+      {
+        "risk": "Inference efficiency gains outrun demand elasticity",
         "prob": "Низкая-Средняя",
-        "impact": "Критический",
-        "note": "Bain: ~$800 млрд revenue shortfall к 2030. NVIDIA инвестирует в neoclouds → они покупают NVIDIA GPU. OpenAI/Anthropic funding wobble = cascade."
+        "impact": "Средний",
+        "note": "Jevons consensus argues opposite. Selloffs (DeepSeek, Kimi) reversed. Token consumption +7x YoY."
       },
       {
-        "risk": "Customer concentration",
-        "prob": "Средняя",
-        "impact": "Высокий",
-        "note": "Oracle 54% RPO от OpenAI; Applied Digital ~CoreWeave; CoreWeave anchor tenants. Default одного anchor cascades."
+        "risk": "Power/datacenter capacity constraints limit scaling",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "Binding constraint — но also a moat for those who hold power (CoreWeave 3,5 GW, Nebius 3,5 GW)."
       },
       {
-        "risk": "Leverage / refinancing",
-        "prob": "Средняя",
-        "impact": "Высокий",
-        "note": "CoreWeave ~$15 млрд+ долга, $536 млн/кв interest (rising). Refinancing risk при high rates или AI-sentiment turn."
-      },
-      {
-        "risk": "GPU obsolescence / depreciation",
-        "prob": "Средняя",
-        "impact": "Средний-Высокий",
-        "note": "Burry: $176 млрд understatement 2026–28. 4 vs 6 лет useful life = material swing. Counter: A100 still booked, H100 at 95%."
-      },
-      {
-        "risk": "GPU pricing collapse / commoditization",
-        "prob": "Средняя",
-        "impact": "Высокий",
-        "note": "Contradicted near-term (prices +40%), но structural risk as supply catches up в 2027–28."
-      },
-      {
-        "risk": "Hyperscaler in-sourcing / Meta entry",
-        "prob": "Средняя",
-        "impact": "Средний-Высокий",
-        "note": "Meta reportedly entering cloud rental — triggered июльский selloff. Custom silicon (TPU, Trainium) reduces merchant GPU demand."
+        "risk": "Crypto-miner delivery gap (~$50 млрд funding shortfall)",
+        "prob": "Высокая",
+        "impact": "Средний",
+        "note": "VanEck: only ~25% of leased capacity delivered. ~$221 млрд long-term gap. Delivery re-rating risk acute."
       }
     ],
     "picks": [
       {
-        "group": "Лидеры — hyperscaler-scale и neocloud чемпионы",
+        "group": "Лидеры — scale operators и contracted landlords",
         "tone": "leader",
-        "badge": "SCALE + КОНТРАКТЫ",
-        "note": "Oracle = lowest-risk hyperscaler-scale exposure (~28× earnings). CoreWeave = pure-play лидер с $99,4 млрд backlog. IREN = best power-rich pivot с cloud upside. Nebius = asset-lighter fast follower.",
+        "badge": "SCALE + BACKLOG",
+        "note": "CoreWeave = category leader but most financially stressed (CDS ~50% default). Nebius = preferred pure-play (cleanest balance sheet, conservative depreciation). Applied Digital = best landlord model (15-year contracted). IREN = aggressive GPU fleet operator. Thesis = multi-year backlog visibility + NVIDIA allocation moat. High-beta satellite, не core holding.",
         "rows": [
-          {
-            "company": "Oracle",
-            "ticker": "NYSE: ORCL",
-            "mcap": "~$450–500 млрд",
-            "exposure": "RPO $553 млрд (+325% г/г). OCI revenue +84% ($4,9 млрд). AI-infra revenue +243%. Stargate partner (~$400 млрд)",
-            "why": "Lowest-risk AI-cloud exposure: ~28× earnings = cheapest в когорте. Diversified (DB, cloud, apps), cash-generative. OCI = fastest-growing hyperscaler-scale platform. Stargate + OpenAI + Meta + NVIDIA contracts. Neocloud-like growth при hyperscaler stability.",
-            "priced": "~54% RPO от OpenAI (не profitable). Debt-funded capex ($45–50 млрд+). −34% от Sept high. Execution risk на conversion RPO → revenue."
-          },
           {
             "company": "CoreWeave",
             "ticker": "NASDAQ: CRWV",
-            "mcap": "~$39 млрд (с $87 млрд пика)",
-            "exposure": "Pure-play neocloud лидер. Backlog $99,4 млрд. Revenue $2,08 млрд/кв (+112%). FY26 guide $12–13 млрд, $18–19 млрд exit ARR",
-            "why": "Доминирующий neocloud: 9/10 AI-labs, 10 клиентов >$1 млрд, 3,5 GW contracted, preferential NVIDIA allocation. OpenAI $22,4 млрд + Meta $35 млрд. Software/orchestration moat. −57% от пика улучшил entry.",
-            "priced": "~$15 млрд+ долга; GAAP net loss −$740 млн; interest $536 млн/кв. Securities lawsuit. Circular financing (NVIDIA $2 млрд equity + $6,3 млрд backstop). Highest beta, highest leverage."
-          },
-          {
-            "company": "IREN",
-            "ticker": "NASDAQ: IREN",
-            "mcap": "~$12–14 млрд",
-            "exposure": "Crypto-to-AI pivot: >4,5 GW secured power; 150K GPU; $4 млрд+ ARR target; $3,4 млрд NVIDIA contract + $2,1 млрд NVIDIA investment",
-            "why": "Best power-rich pivot: pre-secured power = scarce advantage (6–18 мес vs 3–5 лет). Self-operated cloud (не landlord). Microsoft $9,7 млрд (76K GB300 GPUs). $3,6 млрд GPU financing + $1,9 млрд Microsoft prepayment. −52% от пика.",
-            "priced": "Bitcoin overhang. Execution on 150K GPU deployment. >$9,2 млрд secured debt. Transition risk crypto→AI."
+            "mcap": "~$33–49 млрд (July 2026, volatile)",
+            "exposure": "FY2025 $5,1 млрд (+170%). Q1 2026 $2,08 млрд (+112%). $99,4 млрд backlog (10 customers ≥$1 млрд). ~600K GPUs, 43 ЦОД, >1 GW active / 3,5 GW. Adj EBITDA ~56%. First IG-rated GPU financing (A3/A(low))",
+            "why": "Category-defining leader с unmatched scale, NVIDIA co-investment (7% stake), и first IG-rated GPU financing. $99,4 млрд backlog = extraordinary visibility.",
+            "priced": "~$35 млрд debt, −$4,7 млрд Q1 FCF, interest ~46% adj EBITDA, CDS ~50% five-year default odds (July 2026). Microsoft 67% revenue. Levered call option — size to survive refinancing shock."
           },
           {
             "company": "Nebius",
             "ticker": "NASDAQ: NBIS",
-            "mcap": "~$40 млрд",
-            "exposure": "ARR +674% г/г. FY26 guide $3,0–3,4 млрд revenue, $7–9 млрд ARR. Microsoft ~$19,4 млрд + Meta ~$3 млрд. ~40% adj EBITDA target",
-            "why": "Asset-lighter model vs CoreWeave; geo-diversified (Finland, US, Paris). NVIDIA-backed. Token Factory = software upstack. Microsoft/Meta anchors через 2027.",
-            "priced": "~70× trailing P/E. Long-term debt $8,4 млрд (с $4,1 млрд). −43% от пика. ~27% short interest (peak). Smaller scale vs CoreWeave."
-          }
-        ]
-      },
-      {
-        "group": "Emerging и overlooked — crypto pivots, landlords, infrastructure plays",
-        "tone": "emerging",
-        "badge": "POWER + OPTIONALITY",
-        "note": "Core Scientific = cheapest, cleanest crypto-to-AI play. Applied Digital = contracted landlord. TeraWulf и Hut 8 = Google/Anthropic-backed power owners. DigitalOcean = overlooked inference play.",
-        "rows": [
-          {
-            "company": "Core Scientific",
-            "ticker": "NASDAQ: CORZ",
-            "mcap": "~$4–6 млрд",
-            "exposure": "CoreWeave landlord: $10,2 млрд контракт (12 лет); 243 MW live + 347 MW к early 2027. AI = 39% revenue. Winding down Bitcoin к end-2026",
-            "why": "Cheapest multiple (~25× sales). Already collecting rent. 80–85% cash GM target. Cleanest fundamentals из crypto-to-AI pivots. Pre-secured power + land.",
-            "risk": "CoreWeave concentration (single tenant). Possible CoreWeave acquisition (verify independence). Bitcoin overhang в transition period."
+            "mcap": "~$25–30 млрд",
+            "exposure": "Q1 2026 $399 млн (+684%). ARR target $7–9 млрд by end-2026. FY2026 guide $3,0–3,4 млрд. >$46 млрд contracted (Meta/Microsoft). >$9,3 млрд cash. NVIDIA Exemplar Cloud",
+            "why": "Cleanest balance sheet, best-capitalized pure-play. Conservative 4-year GPU depreciation (vs CoreWeave 6). NVIDIA backing. Less levered. Preferred pure-play для risk-adjusted exposure.",
+            "priced": "Execution risk: $399 млн Q1 → $7–9 млрд ARR target ambitious. Growth requires sustained capital deployment. Valuation premium for 'clean' story."
           },
           {
             "company": "Applied Digital",
             "ticker": "NASDAQ: APLD",
-            "mcap": "~$5–7 млрд",
-            "exposure": "Landlord model: $36 млрд contracted lease revenue (1,4 GW). 15-year take-or-pay leases. FY26 revenue $611 млн (+167%)",
-            "why": "Lower-risk landlord model: не владеет GPU, сдаёт space/power. Investment-grade hyperscaler (810MW/$20,2 млрд). Target $1 млрд NOI за 5 лет. Insider buying.",
-            "risk": "CoreWeave-concentrated (400MW/$11 млрд). GAAP net loss −$249 млн. Execution на buildout 1,4 GW."
+            "mcap": "~$6–8 млрд",
+            "exposure": "~$16 млрд aggregate signed lease revenue. 15-year hyperscaler leases incl. ~$11 млрд CoreWeave. Q2-FY rev +139%. Stock +175% trailing. $1,73 млрд cash. $2,15 млрд notes at 6,75%",
+            "why": "Landlord model: contracted, bond-like cash flows underwriting buildout. 'Growth backed by signed leases beats growth backed by GPU spot pricing.' Lower operational risk than GPU fleet operators.",
+            "priced": "CoreWeave counterparty concentration (~$11 млрд). If CoreWeave faces refinancing shock → APLD exposure. Landlord upside capped vs fleet operator."
+          },
+          {
+            "company": "IREN",
+            "ticker": "NASDAQ: IREN",
+            "mcap": "~$6–8 млрд",
+            "exposure": "Own AI-cloud GPU fleet (не just landlord). Targeting 150K GPUs, >$3,7 млрд ARR by end-2026. $9,7 млрд Microsoft AI-cloud contract. 4,5 GW power pipeline. NVIDIA Preferred Partner. Q1 net income $384,6 млн",
+            "why": "Aggressive scaling с operational upside. Own GPU fleet = higher margin potential than landlord. Microsoft anchor + NVIDIA partner. 5-year depreciation, zero salvage (conservative).",
+            "priced": "Execution risk: 150K GPUs = ambitious target. Valuation tension (4,68x P/S vs 2,59x industry). Higher operational risk than APLD landlord model. Delivery track record still building."
+          }
+        ]
+      },
+      {
+        "group": "Emerging — miner pivots и picks-and-shovels landlords",
+        "tone": "emerging",
+        "badge": "LEASES + PICKS&SHOVELS",
+        "note": "Crypto-miner pivots = landlord plays на 15-year hyperscaler leases. ~$50 млрд near-term funding gap (VanEck), only ~25% delivered — delivery = key de-risking event. DC REITs (Equinix/DLR) = most defensible way to play theme: нет GPU-obsolescence risk, dividends, lower beta. Barbell approach.",
+        "rows": [
+          {
+            "company": "Equinix",
+            "ticker": "NASDAQ: EQIX",
+            "mcap": "~$95–100 млрд",
+            "exposure": "4 of top-5 neoclouds и 8 of top-10 AI model providers expand с Equinix (110+ nodes). 3 GW powered land banked. 2026 AFFO guide $4,20–4,28 млрд (+9–11%). Dividend-paying REIT",
+            "why": "Most defensible way to play neocloud theme: landlord exposure без GPU-obsolescence risk. Lower-beta, dividend-paying, secular AI tailwind. 'Sell the picks' strategy.",
+            "risk": "Moderate premium valuation. Growth slower чем pure-play neoclouds. REIT structure caps capital deployment flexibility."
+          },
+          {
+            "company": "Digital Realty",
+            "ticker": "NYSE: DLR",
+            "mcap": "~$55–60 млрд",
+            "exposure": "5 GW powered land banked. DC REIT с direct neocloud tenancy exposure. Hyperscale campus developer. Dividend-paying",
+            "why": "Picks-and-shovels landlord: neocloud tenancy без GPU risk. 5 GW powered land = long-runway capacity. Lower-beta complement to pure-play neoclouds.",
+            "risk": "Нет direct GPU/AI revenue upside. Tenant credit risk если neocloud defaults. Slower growth than pure plays."
           },
           {
             "company": "TeraWulf",
             "ticker": "NASDAQ: WULF",
-            "mcap": "~$3–5 млрд",
-            "exposure": "HPC contracted $12,8 млрд (27% revenue). Google-backed ($3,2 млрд). Fluidstack partner (168MW JV)",
-            "why": "Google backstop = quality anchor. Pre-secured power + land. Crypto infrastructure repurposing для AI. Jefferies Buy.",
-            "risk": "Higher valuation multiple. Bitcoin overhang. Smaller scale vs IREN/Core Scientific."
+            "mcap": "~$5–6 млрд",
+            "exposure": ">$12,8 млрд contracts (Fluidstack/Core42). Google 8% equity + $1,8 млрд backstop. +73,6% YTD. 12,8 GW power pipeline",
+            "why": "Google backing (8% equity) differentiates vs other miner pivots. Large contract book. Strong YTD performance.",
+            "risk": "~$50 млрд group funding gap (VanEck). Only ~25% of leased capacity delivered. Delivery re-rating risk acute. Miner-to-DC pivot execution uncertainty."
           },
           {
             "company": "Hut 8",
-            "ticker": "NASDAQ: HUT",
-            "mcap": "~$3–5 млрд",
-            "exposure": "Beacon Point: $9,8 млрд 15-year lease (до $25 млрд+ с escalators, ~1 000 MW). Fluidstack/Anthropic 245MW deal. GPU-as-a-Service (1 000+ H100)",
-            "why": "Largest single lease commitment. Anthropic backstop. GPU-as-a-Service subsidiary. Analyst targets $128–136 (Canaccord/Needham/Arete).",
-            "risk": "~82× sales — highest multiple. Rent = largely future revenue. Execution risk на Beacon Point buildout."
+            "ticker": "NYSE: HUT",
+            "mcap": "~$4–5 млрд",
+            "exposure": "~$7 млрд Louisiana + $9,8 млрд Texas leases. 8,5 GW power pipeline. Crypto-miner pivot to hyperscaler leases",
+            "why": "Large lease portfolio ($16,8 млрд aggregate). Massive power pipeline (8,5 GW). 15-year contracted cash flows.",
+            "risk": "Delivery gap (VanEck ~25% delivered). Funding shortfall. Construction и operational execution risk. Counterparty concentration."
           },
           {
-            "company": "DigitalOcean",
-            "ticker": "NYSE: DOCN",
-            "mcap": "~$17 млрд",
-            "exposure": "AI-native inference cloud для SMB/developers. AI customer ARR $170 млн (+221%). Total ARR $1,03 млрд. 41% adj EBITDA margin",
-            "why": "Overlooked inference play: higher-margin, shorter contracts (3–12 мес = pricing flexibility). 2027 revenue growth >50% guided. AI-Native Cloud + Inference Engine.",
-            "risk": "Smaller/slower vs GPU-training giants. SMB exposure = cyclical. ~37× NTM EV/EBITDA."
+            "company": "Cipher Mining",
+            "ticker": "NASDAQ: CIFR",
+            "mcap": "~$4–5 млрд",
+            "exposure": "~$9,3 млрд backlog incl ~$5,5 млрд 15-year AWS lease. 1,3 GW power pipeline. Crypto-miner pivot",
+            "why": "AWS anchor lease ($5,5 млрд, 15 years) = high-quality counterparty. Differentiates from CoreWeave-dependent peers.",
+            "risk": "Delivery execution. Funding gap. AWS concentration. Construction ramp risk. Smaller scale than WULF/HUT."
           }
         ]
       }
     ],
-    "picksTakeaway": "Лучший risk-adjusted core: Oracle (~28× earnings, diversified, cash-generative). Pure neocloud: CoreWeave (лидер, $99,4 млрд backlog, но leveraged). Power-rich pivot: IREN (>4,5 GW, NVIDIA-backed). Most overlooked value: Core Scientific (~25× sales, already collecting CoreWeave rent, 80–85% cash GM). Ключевое правило: размер позиции как high-conviction / high-risk sleeve; diversify leader + power pivot + optionally private. Expect 40–60% drawdowns.",
+    "picksTakeaway": "High-beta satellite allocation, не core holding. Cap sector exposure ≤2–4% NAV. Barbell: overweight picks-and-shovels landlords (Equinix/DLR — lower-beta, dividends, нет GPU-obsolescence risk) и NVIDIA; Nebius = preferred pure-play core (cleanest balance sheet, 4-yr depreciation); CoreWeave = levered call option, size to survive refinancing shock (CDS ~50% default). Miner pivots = delivery-gated (~$50 млрд funding gap, only ~25% delivered). Key question: real economic GPU useful life и do take-or-pay contracts cover debt amortization if residual values collapse?",
     "monitoring": {
       "metrics": [
-        "CoreWeave revenue/backlog/active power — investors.coreweave.com, quarterly (next: early Aug 2026)",
-        "Nebius ARR/revenue — group.nebius.com; trajectory к $7–9 млрд ARR",
-        "IREN AI-cloud ARR — iren.com; watch $4 млрд conversion, GPU commissioning",
-        "Oracle OCI RPO / RPO-to-revenue conversion — investor.oracle.com",
-        "GPU rental prices — SemiAnalysis, aimultiple.com/gpu-index, siliconanalysts.com",
-        "NVIDIA data-center revenue + allocation commentary — quarterly",
-        "Hyperscaler capex — CreditSights; quarterly earnings (~$600–750 млрд в 2026)",
-        "Mega-contract announcements / cancellations — SEC 8-K filings"
+        "CoreWeave/Nebius revenue, RPO/backlog, EBITDA→net bridge — SEC 8-K/10-Q, quarterly",
+        "CoreWeave CDS spread и bond yields — ICE Data Services / Bloomberg, daily/weekly",
+        "H100/B200 reserved contract pricing — SemiAnalysis H100 Index, Ornn OCPI (Bloomberg), weekly/monthly",
+        "Spot/on-demand GPU pricing — GetDeploying, Vast.ai/RunPod, weekly",
+        "Neocloud utilization rates — American Compute, operator commentary, quarterly",
+        "NVIDIA data-center revenue и allocation commentary — NVDA earnings, quarterly",
+        "Hyperscaler capex и 'third-party capacity' commentary — MSFT/GOOG/META/AMZN earnings, quarterly",
+        "New capacity/lease announcements vs delivery milestones — DCD, company PRs, VanEck miner tracker, ongoing",
+        "Debt-facility terms/spreads и covenant compliance — 8-K filings, per issuance",
+        "Circular-financing flows (NVIDIA equity/backstops) — Bloomberg, filings, ongoing"
       ],
       "canary": [
-        "Sustained >20% QoQ GPU-rental price decline — commoditization signal",
-        "Neocloud RPO/backlog decline (не slowdown, а decline) у Tier-1 name",
-        "Mega-contract cancellation или renegotiation — circular financing crack",
-        "AI-lab funding wobble (OpenAI/Anthropic round fails или down-round)",
-        "Hyperscaler capex guidance CUT для 2027 — bearish trigger для всего stack",
-        "Meta cloud-rental launch с aggressive pricing — structural competitive threat"
+        "Reserved H100/B200 contract pricing rolls over (SemiAnalysis index declining 2+ consecutive months) — GPU scarcity moat eroding",
+        "CoreWeave CDS normalizes below distressed levels — bull case strengthening; stays elevated or widens — refinancing risk acute",
+        "Major customer (Microsoft/Meta) materially cuts commitments или resells capacity at scale — customer-turning-competitor thesis confirmed",
+        "Neocloud debt covenant breach или failed refinancing — existential capital-structure risk materializing",
+        "Token consumption growth curve reverses (Google, enterprise) — genuine efficiency-driven demand destruction (breaks Jevons consensus)",
+        "Miner pivot delivery rate exceeds 50% of leased capacity — de-risking; stays at ~25% — funding gap becomes acute"
       ]
     },
     "update": {
       "asOf": "Июль 2026",
-      "headline": "Neoclouds: −30–57% selloff после explosive growth — re-rating или начало bust?",
-      "summary": "Neocloud-выручка >$25 млрд (2025, +3× г/г), backlog CoreWeave $99,4 млрд, Oracle RPO $553 млрд. Но сектор упал 30–57% (CoreWeave −57%, IREN −52%) на fears: Meta входит в cloud rental, AI-capex jitters, circular financing concerns. Re-rating улучшил valuations, но structural risks (leverage, depreciation, concentration) остаются.",
+      "headline": "Neoclouds: $25 млрд+ hypergrowth — durability bet unresolved, CDS vs equity divergence extreme",
+      "summary": "Neocloud revenue >$25 млрд (2025, +223% г/г Q4). CoreWeave $99,4 млрд backlog, ~600K GPUs — но ~$35 млрд debt, CDS ~50% default. Nebius = cleaner pure-play ($9,3 млрд cash, 4-yr depreciation). Reserved GPU pricing rising +40%, spot −64–75%. Meta Compute cloud unit (July 2026) = customer-turning-competitor. Circular financing: NVIDIA→neocloud→lab chain raises real-demand question. Recommendation: high-beta satellite, cap ≤2–4% NAV. Prefer picks-and-shovels (DLR/EQIX) + Nebius over levered CRWV.",
       "stories": [
         {
-          "title": "CoreWeave: backlog $99,4 млрд, но −57% от пика",
+          "title": "CoreWeave: $99,4 млрд backlog, CDS ~50% five-year default odds",
           "tone": "mixed",
-          "verdict": "Explosive growth + massive selloff. $87 млрд → $39 млрд market cap за недели",
-          "detail": "Q1 FY26: revenue $2,08 млрд (+112%); backlog +50% QoQ; OpenAI $22,4 млрд + Meta $35 млрд. Но GAAP loss −$740 млн, debt ~$15 млрд+, securities lawsuit."
+          "verdict": "Category leader с unmatched scale, но most financially stressed name. Credit и equity markets diverge: CDS ~distressed, analyst target ~$142 Buy vs $60–77 spot",
+          "detail": "FY2025 $5,1 млрд (+170%). ~$35 млрд debt. −$4,7 млрд Q1 FCF. Interest ~46% adj EBITDA. Microsoft 67% revenue. IG-rated GPU financing (A3/A(low)) = structural achievement. Levered call option."
         },
         {
-          "title": "Oracle RPO $553 млрд (+325% г/г)",
+          "title": "Nebius: +684% г/г, >$9,3 млрд cash, preferred pure-play",
           "tone": "positive",
-          "verdict": "Fastest-growing hyperscaler-scale cloud; cheapest multiple (~28× earnings)",
-          "detail": "OCI +84%; AI-infra +243%. Stargate partner. Но ~54% RPO от OpenAI (concentration) и debt-funded capex."
+          "verdict": "Cleanest balance sheet в neocloud space. Conservative 4-yr GPU depreciation. NVIDIA Exemplar Cloud status. $46 млрд+ contracted",
+          "detail": "Q1 2026 $399 млн. ARR target $7–9 млрд by end-2026. Raised >$6 млрд Q1 ($4,3 млрд converts + $2 млрд NVIDIA). 3,5 GW contracted. Less levered than CoreWeave."
         },
         {
-          "title": "IREN: $4 млрд+ ARR target, NVIDIA $3,4 млрд + $2,1 млрд",
-          "tone": "positive",
-          "verdict": "Best power-rich crypto-to-AI pivot с genuine cloud upside",
-          "detail": "150K GPU; >4,5 GW power; Microsoft $9,7 млрд для 76K GB300. −52% от пика = better entry."
-        },
-        {
-          "title": "Meta reportedly entering cloud rental",
+          "title": "Meta Compute cloud unit announced — customer-turning-competitor",
           "tone": "negative",
-          "verdict": "Triggered июльский selloff neoclouds. Structural competitive threat",
-          "detail": "Гиперскейлер с $115–145 млрд capex входит в cloud = margin/pricing pressure для всех neoclouds."
+          "verdict": "Bloomberg July 1, 2026: Meta building cloud unit to sell excess AI compute. Meta stock +9%, neoclouds fell. Structural threat",
+          "detail": "Led by infra chief Santosh Janardhan + Daniel Gross + Dina Powell McCormick. Zuckerberg: 'clearly on the table.' Primary driver of late-July neocloud selloff."
         },
         {
-          "title": "Burry: $176 млрд depreciation understatement 2026–28",
+          "title": "GPU pricing bifurcation: reserved +40%, spot −64–75%",
+          "tone": "mixed",
+          "verdict": "Both shortage и glut narratives true в different tiers. Reserved = moat; spot = commoditized. The bifurcation is the single most important real-time tell",
+          "detail": "SemiAnalysis: 1-yr H100 reserved rose $1,70→$2,35/hr (+40%, Oct 2025–Mar 2026). Spot H100 $1,80–3,50/hr (от >$8/hr peak). 300+ new entrants fragmenting spot."
+        },
+        {
+          "title": "Burry vs Intrator: GPU depreciation — $176 млрд understated?",
           "tone": "negative",
-          "verdict": "Unresolved debate: 4 vs 6 лет GPU life materially swings margins",
-          "detail": "ORCL earnings overstated 26,9%, META 20,8% к 2028 по Burry. Counter: A100 still booked, H100 at 95% rebook rate."
+          "verdict": "6-year accounting life vs 2–3 year economic life (Burry). CoreWeave CEO: 95% re-booking. Central unresolved question",
+          "detail": "Burry: hyperscalers understate depreciation $176 млрд (2026–2028). On $300K server: 6-yr = $50K/yr vs 4-yr = $75K/yr = ~$30M/yr difference на 10K GPUs."
         }
       ],
-      "bottomLine": "Explosive demand (CoreWeave $99,4 млрд, Oracle $553 млрд) vs. leveraged, circularly-financed модель с −30–57% selloff. Structural question: конвертируется ли backlog в cash до того, как долг придёт к расчёту?"
+      "bottomLine": "Genuine hypergrowth ($25 млрд+, 58–165% CAGR) с extreme risk stack (leverage + depreciation + concentration + circularity). Evidence tilts toward leaders becoming durable platforms — но at valuations pricing durable outcome as near-certain. High-beta satellite: Nebius = preferred pure-play, Equinix/DLR = most defensible, CoreWeave = levered call option. The one question: does take-or-pay book cover debt amortization if GPU residual values collapse?"
     },
     "news": [
       {
-        "date": "2026-07-15",
-        "source": "Bloomberg / Meta",
-        "title": "Meta reportedly entering cloud rental market",
-        "blurb": "Гиперскейлер с $115–145 млрд capex входит в cloud rental. Triggered 20–30% selloff neoclouds. Structural competitive threat."
+        "date": "2026-07-27",
+        "source": "WSJ / Axios",
+        "title": "NVIDIA discussing ~$250 млрд backstop for OpenAI Ohio campus",
+        "blurb": "Circular financing at extreme scale. NVIDIA holds equity в CoreWeave (7%), Nebius ($2 млрд), и now discussing massive AI-lab backstop. Systemic chain risk."
       },
       {
-        "date": "2026-07-10",
-        "source": "WSJ / NVIDIA",
-        "title": "NVIDIA reportedly ~$250 млрд OpenAI financing backstop",
-        "blurb": "Крупнейший financing commitment в AI. Circular financing deepens: NVIDIA backstops клиента, который покупает NVIDIA GPU."
+        "date": "2026-07-01",
+        "source": "Bloomberg",
+        "title": "Meta building cloud unit 'Meta Compute' to sell excess AI compute",
+        "blurb": "Led by Santosh Janardhan + Daniel Gross + Dina Powell McCormick. Meta stock +9%, neoclouds fell. Zuckerberg: 'clearly on the table.' Customer-turning-competitor."
       },
       {
-        "date": "2026-05-15",
-        "source": "CoreWeave Q1 FY26",
-        "title": "CoreWeave: revenue $2,08 млрд (+112%), backlog $99,4 млрд",
-        "blurb": "FY26 guide $12–13 млрд. GAAP loss −$740 млн. Meta $35 млрд total. 10 клиентов >$1 млрд каждый."
+        "date": "2026-07-16",
+        "source": "Multiple",
+        "title": "Kimi K3 selloff: worst week for US chip stocks in over a year",
+        "blurb": "Inference efficiency scare. Both DeepSeek (Jan 2025) и Kimi K3 (July 2026) selloffs largely reversed — sentiment events, не confirmed demand destruction."
       },
       {
-        "date": "2026-03-10",
-        "source": "Oracle Q3 FY26",
-        "title": "Oracle RPO $553 млрд (+325% г/г); OCI +84%",
-        "blurb": "AI-infra revenue +243%. Stargate partner. ~54% RPO от OpenAI. Cheapest AI-cloud multiple (~28×)."
+        "date": "2026-04-02",
+        "source": "Synergy Research Group",
+        "title": "Neocloud revenue >$25 млрд (2025); forecast ~$400 млрд by 2031",
+        "blurb": "Q4 2025 = $9 млрд (+223% г/г). '58% CAGR.' CoreWeave = 'by far the largest player.' GPUaaS growing ~165% per year."
       },
       {
-        "date": "2026-01-15",
-        "source": "Synergy Research",
-        "title": "Neocloud revenue exceeded $25 млрд in 2025; $400 млрд к 2031",
-        "blurb": "Q4 2025 alone $9 млрд (+223% г/г). 58% CAGR forecast. Fastest-growing segment в cloud."
+        "date": "2026-03-26",
+        "source": "CoreWeave SEC filing",
+        "title": "CoreWeave DDTL 4.0: first IG-rated GPU-collateralized financing",
+        "blurb": "$8,5 млрд facility rated A3/A(low), SOFR+2,25%. Spreads compressed >175bp vs 2025 facility. Structural achievement для GPU-backed lending."
       }
     ]
   },

@@ -2924,5 +2924,38 @@
     "ppr": "PSU maker for AI servers; AI server PSU market ~20.6% CAGR to $7.78B by 2032; power content rising",
     "geo": "TW",
     "note": "PSU = smaller BOM component; competition from Chicony, FSP, Acbel"
+  },
+  {
+    "company": "Equinix",
+    "ticker": "NASDAQ: EQIX",
+    "sector": "AI Compute Infra",
+    "conviction": "high",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "DC REIT; 4 of top-5 neoclouds expand with Equinix (110+ nodes); 3 GW powered land; AFFO $4.20-4.28B (+9-11%)",
+    "geo": "US",
+    "note": "Most defensible neocloud play: no GPU-obsolescence risk; dividend-paying; lower-beta picks-and-shovels"
+  },
+  {
+    "company": "Digital Realty",
+    "ticker": "NYSE: DLR",
+    "sector": "AI Compute Infra",
+    "conviction": "high",
+    "riskTier": "low",
+    "horizon": "3–5 лет",
+    "ppr": "DC REIT; 5 GW powered land banked; hyperscale campus developer; direct neocloud tenancy exposure",
+    "geo": "US",
+    "note": "Picks-and-shovels landlord: neocloud tenancy without GPU risk; dividend-paying"
+  },
+  {
+    "company": "DigitalBridge",
+    "ticker": "NYSE: DBRG",
+    "sector": "AI Compute Infra",
+    "conviction": "medium",
+    "riskTier": "mid",
+    "horizon": "3–5 лет",
+    "ppr": "Digital infrastructure investment manager; owns Switch/QTS-adjacent assets; public route to wholesale hyperscale DC",
+    "geo": "US",
+    "note": "Infrastructure asset manager model; indirect AI-compute exposure through DC portfolio"
   }
 ]
