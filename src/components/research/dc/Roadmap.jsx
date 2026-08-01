@@ -312,7 +312,7 @@ const NODE_ROLE = {
 
   netsilicon: 'Это кремний под всей сетью дата-центра — и структурно один из самых недооценённых бенефициаров. Рынок держит Broadcom: его коммутатор Tomahawk 6 (102 Тбит/с) стоит в основе почти любой крупной AI-сети, и даже уходя от Nvidia на самих ускорителях, гиперскейлер всё равно платит Broadcom за сеть — победитель при любом сценарии. Рядом Marvell (паритет по коммутаторам плюс электрооптика). В нишах — две интересные, но рискованные ставки: Astera Labs (ретаймеры PCIe и фабрика связности, выручка +100%+) и Credo (активные электрические кабели, выручка утроилась на Microsoft и Amazon). У обоих сильная позиция, но опасная концентрация — почти вся выручка на паре гиперскейлеров, и потеря одного клиента бьёт напрямую.',
 
-  fabric: 'Это самый стратегически спорный слой 2026 года и главный ров Nvidia. NVLink проприетарен, и именно он делает из 72 отдельных чипов единую машину — повторить это конкуренты пока не могут, поэтому стойку NVL72 не воспроизвести. Индустрия отвечает открытым стандартом UALink (за ним AMD, Google, Microsoft, Amazon — почти все, кроме Nvidia), но на середину 2026 под него ещё нет работающих коммутаторных чипов: реальная угроза существует на бумаге, но не в железе до второй половины 2026. Параллельно во внешней сети идёт война InfiniBand (Nvidia, доминирует в обучении) против Ethernet (лагерь Ultra Ethernet + Arista, отвоёвывает инференс). Кто задаёт фабрику, тот удерживает клиента внутри своей экосистемы.',
+  fabric: 'Это самый стратегически спорный слой 2026 года и главное конкурентное преимущество Nvidia. NVLink проприетарен, и именно он делает из 72 отдельных чипов единую машину — повторить это конкуренты пока не могут, поэтому стойку NVL72 не воспроизвести. Индустрия отвечает открытым стандартом UALink (за ним AMD, Google, Microsoft, Amazon — почти все, кроме Nvidia), но на середину 2026 под него ещё нет работающих коммутаторных чипов: реальная угроза существует на бумаге, но не в железе до второй половины 2026. Параллельно во внешней сети идёт война InfiniBand (Nvidia, доминирует в обучении) против Ethernet (лагерь Ultra Ethernet + Arista, отвоёвывает инференс). Кто задаёт фабрику, тот удерживает клиента внутри своей экосистемы.',
 
   transceivers: 'Это один из самых чистых способов сыграть на буме AI-сетей: на каждый ускоритель приходится всё больше оптических линий, и за 2026 объёмы 800G+ выросли в разы. Но настоящее «горлышко» — не сборка модулей, а лазеры EML вверху цепочки: их серийно на 200 Гбит/канал (нужны для 1,6T) делает почти только Lumentum, и они в дефиците до 2027 — Nvidia уже скупает мощности вперёд. Сборку крупнейшей доли модулей держит Fabrinet (Таиланд) — контрактный завод для Nvidia, Cisco, Coherent, строит новый корпус на ~2 млн кв. футов. По объёму же лидируют китайские Innolight и Eoptolink — сильнейшие имена, но их листинг в Китае труднодоступен западному портфелю. Альфа: держать компонентное «горлышко» (Lumentum EML) ценнее, чем массовую сборку.',
 
@@ -1259,7 +1259,7 @@ function VerdictHero({ v, c, asOf }) {
       {(v.horizon || v.sizing) && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 12, marginTop: 16 }}>
           {v.horizon && <MetaCell label="ГОРИЗОНТ" value={v.horizon} />}
-          {v.sizing && <MetaCell label="РАЗМЕР ПОЗИЦИИ" value={v.sizing} />}
+          {v.sizing && <MetaCell label="РАЗМЕР РЫНКА" value={v.sizing} />}
         </div>
       )}
       {v.keyQuestion && (
@@ -1327,6 +1327,7 @@ function MarketSizingBlock({ d, c }) {
       )}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))', gap: 12 }}>
         {d.bomShare && <StatCard label="ДОЛЯ В СТОИМОСТИ AI-ЧИПА" value={d.bomShare.value} note={d.bomShare.note} accent={c} src={d.bomShare.source} />}
+        {typeof d.volumeVsPrice === 'string' && <div style={miniCard}><div style={miniKicker}>ЧТО ДВИЖЕТ РОСТ · ОБЪЁМ ИЛИ ЦЕНА</div><div style={miniBody}>{d.volumeVsPrice}</div></div>}
         {d.volumeVsPrice?.volume && <div style={miniCard}><div style={miniKicker}>ОБЪЁМ</div><div style={miniBody}>{d.volumeVsPrice.volume}</div></div>}
         {d.volumeVsPrice?.price && <div style={miniCard}><div style={miniKicker}>ЦЕНА</div><div style={miniBody}>{d.volumeVsPrice.price}</div></div>}
         {d.volumeVsPrice?.mix && <div style={miniCard}><div style={miniKicker}>СДВИГ МИКСА</div><div style={miniBody}>{d.volumeVsPrice.mix}</div></div>}
@@ -1363,23 +1364,39 @@ function ValueCaptureBlock({ d, c }) {
 
 // ─ Block 3 — Competition ───────────────────────────────────────────────────
 function CompetitionBlock({ d, c }) {
-  const cols = d.shareTrajectory?.length ? Object.keys(d.shareTrajectory[0]).filter(k => k !== 'period' && k !== 'source') : [];
+  const traj = d.shareTrajectory || [];
+  const isPlayerFmt = traj.length > 0 && ('player' in traj[0]);
+  const cols = (traj.length > 0 && !isPlayerFmt) ? Object.keys(traj[0]).filter(k => k !== 'period' && k !== 'source') : [];
+  const dirCol = s => /↑|раст[её]т|рост|усил/i.test(s || '') ? '#10b981' : /↓|паден|сниж|слабе/i.test(s || '') ? '#ef4444' : '#a1a1aa';
   return (
     <Block id="competition" takeaway={d.takeaway} accent={c} kicker="03 · КОНКУРЕНТНАЯ СТРУКТУРА" lead={d.concentration}>
-      {d.shareTrajectory?.length > 0 && (
+      {traj.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
-          <div style={{ ...miniKicker, marginBottom: 8 }}>ДОЛЯ РЫНКА · ТРАЕКТОРИЯ</div>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 420 }}>
-            <thead><tr style={thRow}><th style={thCell}>ПЕРИОД</th>{cols.map(k => <th key={k} style={thCell}>{k}</th>)}</tr></thead>
-            <tbody>{d.shareTrajectory.map((row, i) => {
-              const last = i === d.shareTrajectory.length - 1;
-              return (
+          <div style={{ ...miniKicker, marginBottom: 8 }}>ДОЛЯ РЫНКА · КТО НАБИРАЕТ, КТО ТЕРЯЕТ</div>
+          {isPlayerFmt ? (
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 460 }}>
+              <thead><tr style={thRow}><th style={thCell}>ИГРОК</th><th style={thCell}>ДОЛЯ</th><th style={thCell}>ТРЕНД</th><th style={thCell}>КУДА ДВИЖЕТСЯ</th></tr></thead>
+              <tbody>{traj.map((row, i) => (
                 <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                  <td style={{ ...tdCell, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{row.period}</td>
-                  {cols.map(k => <td key={k} style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: last ? '#fafafa' : '#c4c4cc', fontWeight: last ? 700 : 400 }}>{row[k]}</td>)}
-                </tr>);
-            })}</tbody>
-          </table>
+                  <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600, whiteSpace: 'nowrap' }}>{row.player}</td>
+                  <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7', whiteSpace: 'nowrap' }}>{row.now}</td>
+                  <td style={{ ...tdCell, color: dirCol(row.direction), fontSize: 14, fontWeight: 700 }}>{row.direction}</td>
+                  <td style={{ ...tdCell, color: '#c4c4cc' }}>{row.detail}</td>
+                </tr>))}</tbody>
+            </table>
+          ) : (
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 420 }}>
+              <thead><tr style={thRow}><th style={thCell}>ПЕРИОД</th>{cols.map(k => <th key={k} style={thCell}>{k}</th>)}</tr></thead>
+              <tbody>{traj.map((row, i) => {
+                const last = i === traj.length - 1;
+                return (
+                  <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
+                    <td style={{ ...tdCell, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{row.period}</td>
+                    {cols.map(k => <td key={k} style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: last ? '#fafafa' : '#c4c4cc', fontWeight: last ? 700 : 400 }}>{row[k]}</td>)}
+                  </tr>);
+              })}</tbody>
+            </table>
+          )}
         </div>
       )}
       {d.players?.length > 0 && (
@@ -1399,9 +1416,13 @@ function CompetitionBlock({ d, c }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.entryBarrier && (
           <div style={miniCard}>
-            <div style={miniKicker}>БАРЬЕР ВХОДА</div>
-            <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6, color: /нет|маловероят/i.test(d.entryBarrier.verdict || '') ? '#10b981' : '#f59e0b' }}>Новый игрок за 3 года: {d.entryBarrier.verdict}</div>
-            <div style={miniBody}>{d.entryBarrier.why}</div>
+            <div style={miniKicker}>БАРЬЕР ВХОДА · МОЖЕТ ЛИ ВОЙТИ НОВЫЙ ИГРОК</div>
+            {typeof d.entryBarrier === 'string'
+              ? <div style={miniBody}>{d.entryBarrier}</div>
+              : <>
+                  {d.entryBarrier.verdict && <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6, color: /нет|маловероят/i.test(d.entryBarrier.verdict) ? '#10b981' : '#f59e0b' }}>Новый игрок за 3 года: {d.entryBarrier.verdict}</div>}
+                  {d.entryBarrier.why && <div style={miniBody}>{d.entryBarrier.why}</div>}
+                </>}
           </div>
         )}
         {d.switchingCost && <div style={miniCard}><div style={miniKicker}>ПОЧЕМУ КЛИЕНТ НЕ МОЖЕТ БЫСТРО УЙТИ</div><div style={miniBody}>{d.switchingCost}</div></div>}
@@ -1413,7 +1434,7 @@ function CompetitionBlock({ d, c }) {
 // ─ Block 4 — Demand ────────────────────────────────────────────────────────
 function DemandBlock({ d, c }) {
   return (
-    <Block id="demand" takeaway={d.takeaway} accent={c} kicker="04 · СПРОС · НАСКОЛЬКО ЗАКОНТРАКТОВАН">
+    <Block id="demand" takeaway={d.takeaway} accent={c} kicker="05 · СПРОС · НАСКОЛЬКО ЗАКОНТРАКТОВАН">
       {d.soldOut?.length > 0 && (
         <div style={{ ...cardBg, padding: '16px 18px', marginBottom: 14 }}>
           <div style={{ ...miniKicker, marginBottom: 10 }}>РАСПРОДАНО / ЗАКОНТРАКТОВАНО ПО ГОДАМ</div>
@@ -1441,9 +1462,12 @@ function DemandBlock({ d, c }) {
 // ─ Block 5 — Supply / balance (the key cyclical output) ────────────────────
 function SupplyBlock({ d, c }) {
   const sm = { deficit: { t: 'Дефицит', col: '#10b981' }, tight: { t: 'Напряжённо', col: '#22d3ee' }, balanced: { t: 'Баланс', col: '#a1a1aa' }, surplus: { t: 'Профицит', col: '#ef4444' }, unknown: { t: 'Неясно', col: '#52525b' } };
+  const hasBalance = d.balance?.length > 0 && !d.balance.every(b => b.state === 'unknown');
+  const hasAnything = hasBalance || d.leadTime || d.utilization || d.crowdingOut || d.capacityAdds?.length > 0;
+  if (!hasAnything && !d.takeaway) return null;
   return (
-    <Block id="supply" takeaway={d.takeaway} accent={c} kicker="05 · ПРЕДЛОЖЕНИЕ · ДЕФИЦИТ ИЛИ ПЕРЕИЗБЫТОК" lead="главный вопрос для цикла">
-      {d.balance?.length > 0 && (
+    <Block id="supply" takeaway={d.takeaway} accent={c} kicker="06 · ПРЕДЛОЖЕНИЕ · ДЕФИЦИТ ИЛИ ПЕРЕИЗБЫТОК" lead="главный вопрос для цикла">
+      {hasBalance && (
         <div style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {d.balance.map((b, i) => { const st = sm[b.state] || sm.unknown; return (
@@ -1476,7 +1500,7 @@ function SupplyBlock({ d, c }) {
 // ─ Block 6 — Unit economics ────────────────────────────────────────────────
 function UnitEconBlock({ d, c }) {
   return (
-    <Block id="unit" takeaway={d.takeaway} accent={c} kicker="06 · ЦЕНА · МАРЖА · БРАК">
+    <Block id="unit" takeaway={d.takeaway} accent={c} kicker="07 · ЦЕНА · МАРЖА · БРАК">
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.pricePerUnit && <div style={miniCard}><div style={miniKicker}>ЦЕНА ЗА ЕДИНИЦУ</div><div style={miniBody}>{d.pricePerUnit}</div></div>}
         {d.grossMargin && <div style={miniCard}><div style={miniKicker}>ВАЛОВАЯ МАРЖА</div><div style={miniBody}>{d.grossMargin}</div></div>}
@@ -1497,7 +1521,7 @@ function UnitEconBlock({ d, c }) {
 // ─ Block 7 — Roadmap + disruption ──────────────────────────────────────────
 function RoadmapBlock({ d, c }) {
   return (
-    <Block id="roadmap" takeaway={d.takeaway} accent={c} kicker="07 · ПОКОЛЕНИЯ ТЕХНОЛОГИИ И УГРОЗЫ">
+    <Block id="roadmap" takeaway={d.takeaway} accent={c} kicker="08 · ПОКОЛЕНИЯ ТЕХНОЛОГИИ И УГРОЗЫ">
       {d.generations?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: d.disruption?.length ? 16 : 0 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 520 }}>
@@ -1513,7 +1537,7 @@ function RoadmapBlock({ d, c }) {
       )}
       {d.disruption?.length > 0 && (
         <div>
-          <div style={miniKicker}>МОЖЕТ ЛИ ЧТО-ТО ЗАМЕНИТЬ HBM</div>
+          <div style={miniKicker}>ЧТО МОЖЕТ ИЗМЕНИТЬ РАСКЛАД</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8 }}>
             {d.disruption.map((x, i) => (
               <div key={i} style={{ ...miniCard, padding: '14px 16px' }}>
@@ -1539,7 +1563,7 @@ function RoadmapBlock({ d, c }) {
 // ─ Block 8 — Dependencies ──────────────────────────────────────────────────
 function DependenciesBlock({ d, c }) {
   return (
-    <Block id="deps" takeaway={d.takeaway} accent={c} kicker="08 · ОТ КОГО ЗАВИСИТ И КТО ПОКУПАЕТ">
+    <Block id="deps" takeaway={d.takeaway} accent={c} kicker="09 · ОТ КОГО ЗАВИСИТ И КТО ПОКУПАЕТ">
       {d.upstream?.length > 0 && (
         <div style={{ marginBottom: 14 }}>
           <div style={miniKicker}>ЧТО НУЖНО ДЛЯ ПРОИЗВОДСТВА — И КТО ЭТО ПОСТАВЛЯЕТ</div>
@@ -1568,7 +1592,7 @@ function DependenciesBlock({ d, c }) {
 function RiskMatrixBlock({ rows, c }) {
   const lvl = x => { const s = (x || '').toLowerCase(); return s.includes('выс') ? '#ef4444' : s.includes('сред') ? '#f59e0b' : s.includes('низ') ? '#10b981' : '#a1a1aa'; };
   return (
-    <Block id="risks" accent={c} kicker="09 · РИСКИ · ВЕРОЯТНОСТЬ × ПОСЛЕДСТВИЯ">
+    <Block id="risks" accent={c} kicker="10 · РИСКИ · ВЕРОЯТНОСТЬ × ПОСЛЕДСТВИЯ">
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 560 }}>
           <thead><tr style={thRow}><th style={thCell}>РИСК</th><th style={thCell}>ВЕРОЯТ.</th><th style={thCell}>ПОСЛЕДСТВИЯ</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
@@ -1588,7 +1612,7 @@ function RiskMatrixBlock({ rows, c }) {
 // ─ Block 10 — Investable universe ──────────────────────────────────────────
 function UniverseBlock({ rows, c }) {
   return (
-    <Block id="universe" accent={c} kicker="10 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ">
+    <Block id="universe" accent={c} kicker="11 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ">
       <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 12 }}>
         «Чистота ставки» (1–10) — насколько выручка компании зависит именно от этого звена: 10 = почти вся, 1 = крошечная доля большого бизнеса.
       </div>
@@ -1615,7 +1639,7 @@ function UniverseBlock({ rows, c }) {
 // priced in (leaders) or the explicit risk (emerging).
 function PicksBlock({ groups, c, takeaway }) {
   return (
-    <Block id="universe" accent={c} kicker="10 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ" takeaway={takeaway}>
+    <Block id="universe" accent={c} kicker="11 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ" takeaway={takeaway}>
       {groups.map((g, gi) => {
         const gc = g.tone === 'emerging' ? '#22d3ee' : c;
         return (
@@ -1660,17 +1684,36 @@ function PicksBlock({ groups, c, takeaway }) {
 
 // ─ Block 11 — Monitoring + canary ──────────────────────────────────────────
 function MonitoringBlock({ d, c }) {
+  const ladder = d.ladder;
+  const ladderCols = ladder ? [
+    { key: 'intact', title: 'ТЕЗИС В СИЛЕ', col: '#10b981' },
+    { key: 'watch', title: 'СМОТРЕТЬ ВНИМАТЕЛЬНО', col: '#f59e0b' },
+    { key: 'broken', title: 'ТЕЗИС СЛОМАН — ВЫХОД', col: '#ef4444' },
+  ].filter(x => ladder[x.key]?.length) : [];
   return (
-    <Block id="monitor" accent={c} kicker="11 · ЧТО ОТСЛЕЖИВАТЬ">
+    <Block id="monitor" accent={c} kicker="14 · ЧТО ОТСЛЕЖИВАТЬ · КОГДА ВЫХОДИТЬ">
       {d.metrics?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
-            <thead><tr style={thRow}><th style={thCell}>МЕТРИКА</th><th style={thCell}>ИСТОЧНИК / ЧАСТОТА</th></tr></thead>
-            <tbody>{d.metrics.map((m, i) => <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}><td style={{ ...tdCell, color: '#e4e4e7' }}>{m.metric}</td><td style={{ ...tdCell, color: '#a1a1aa' }}>{m.source}</td></tr>)}</tbody>
-          </table>
+          {typeof d.metrics[0] === 'string' ? (
+            <ul style={{ margin: 0, paddingLeft: 16, color: '#d4d4d8', fontSize: 12.5, lineHeight: 1.7 }}>{d.metrics.map((m, i) => <li key={i} style={{ marginBottom: 4 }}>{m}</li>)}</ul>
+          ) : (
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+              <thead><tr style={thRow}><th style={thCell}>МЕТРИКА</th><th style={thCell}>ИСТОЧНИК / ЧАСТОТА</th></tr></thead>
+              <tbody>{d.metrics.map((m, i) => <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}><td style={{ ...tdCell, color: '#e4e4e7' }}>{m.metric}</td><td style={{ ...tdCell, color: '#a1a1aa' }}>{m.source}</td></tr>)}</tbody>
+            </table>
+          )}
         </div>
       )}
-      {d.canary?.length > 0 && (
+      {ladderCols.length > 0 ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 10 }}>
+          {ladderCols.map(col => (
+            <div key={col.key} style={{ background: `${col.col}0c`, border: `1px solid ${col.col}30`, borderRadius: 10, padding: '13px 15px' }}>
+              <div style={{ fontSize: 9, color: col.col, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.12em', fontWeight: 700, marginBottom: 9 }}>{col.title}</div>
+              <ul style={{ margin: 0, paddingLeft: 15, color: '#d4d4d8', fontSize: 11.5, lineHeight: 1.6 }}>{ladder[col.key].map((x, i) => <li key={i} style={{ marginBottom: 5 }}>{x}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      ) : d.canary?.length > 0 && (
         <div style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 10, padding: '14px 16px' }}>
           <div style={{ fontSize: 9, color: '#ef4444', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 8 }}>ПЕРВЫЕ СИГНАЛЫ, ЧТО ТЕЗИС ЛОМАЕТСЯ — ПОРА ВЫХОДИТЬ</div>
           <ul style={{ margin: 0, paddingLeft: 16, color: '#d4d4d8', fontSize: 12.5, lineHeight: 1.7 }}>{d.canary.map((x, i) => <li key={i} style={{ marginBottom: 4 }}>{x}</li>)}</ul>
@@ -1711,10 +1754,10 @@ function BullBear({ v, c }) {
 
 // ─ NodeDetail — assembles the memo ─────────────────────────────────────────
 // Dated "recent developments" block — current debate / news, verdict per story.
-function UpdateBlock({ d, c }) {
-  const toneCol = t => t === 'calm' ? '#10b981' : t === 'watch' ? '#f59e0b' : '#a1a1aa';
+function UpdateBlock({ d, c, news }) {
+  const toneCol = t => ({ calm: '#10b981', positive: '#10b981', watch: '#f59e0b', mixed: '#f59e0b', negative: '#ef4444' }[t] || '#a1a1aa');
   return (
-    <Block id="update" accent={c} kicker="СВЕЖИЙ РАЗБОР · ЧТО ПРОИСХОДИТ СЕЙЧАС" lead={d.asOf}>
+    <Block id="update" accent={c} kicker="СВЕЖИЙ РАЗБОР · ЧТО ПРОИСХОДИТ И НОВОСТИ" lead={d.asOf}>
       {d.headline && <div style={{ fontSize: 15.5, color: '#fafafa', fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>{d.headline}</div>}
       {d.summary && <div style={{ fontSize: 13, color: '#c4c4cc', lineHeight: 1.7, marginBottom: 14 }}>{d.summary}</div>}
       {d.stories?.length > 0 && (
@@ -1722,13 +1765,33 @@ function UpdateBlock({ d, c }) {
           {d.stories.map((s, i) => (
             <div key={i} style={{ ...miniCard, padding: '14px 16px' }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
-                <span style={{ fontSize: 9.5, color: '#52525b', fontFamily: 'ui-monospace,monospace', fontWeight: 700 }}>{String(i + 1).padStart(2, '0')}</span>
+                <span style={{ fontSize: 9.5, color: s.date ? '#71717a' : '#52525b', fontFamily: 'ui-monospace,monospace', fontWeight: 700 }}>{s.date || String(i + 1).padStart(2, '0')}</span>
+                {s.source && <span style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', fontWeight: 700 }}>{s.source}</span>}
                 <span style={{ color: '#fafafa', fontWeight: 700, fontSize: 13 }}>{s.title}</span>
                 {s.verdict && <Badge text={s.verdict} col={toneCol(s.tone)} />}
               </div>
               <div style={{ fontSize: 12.5, color: '#c4c4cc', lineHeight: 1.65 }}>{s.detail}</div>
             </div>
           ))}
+        </div>
+      )}
+      {news?.length > 0 && !(d.stories?.length > 0) && (
+        <div style={{ marginTop: 16, paddingTop: 14, borderTop: '1px solid #1f1f23' }}>
+          <div style={{ ...miniKicker, marginBottom: 4 }}>ЛЕНТА · ДАТЫ И ИСТОЧНИКИ</div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {news.map((n, i) => (
+              <div key={i} style={{ padding: '12px 0', borderTop: i ? '1px solid #1f1f23' : 'none', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                <div style={{ minWidth: 92 }}>
+                  <div style={{ fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>{n.date}</div>
+                  {n.source && <div style={{ fontSize: 9.5, color: c, marginTop: 4, fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{n.source}</div>}
+                </div>
+                <div style={{ flex: 1, minWidth: 240 }}>
+                  <div style={{ fontSize: 13, color: '#fafafa', fontWeight: 600, lineHeight: 1.4, marginBottom: n.blurb ? 4 : 0 }}>{n.title}</div>
+                  {n.blurb && <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55 }}>{n.blurb}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {d.bottomLine && (
@@ -1763,6 +1826,237 @@ function NewsBlock({ items, c }) {
   );
 }
 
+// ─ Mental model — the one causal chain + earnings driver the reader remembers ─
+function MentalModelBlock({ d, c }) {
+  const chain = d.chain || [];
+  return (
+    <Block id="model" accent={c} kicker="МОДЕЛЬ ЗВЕНА · КАК ЗДЕСЬ ЗАРАБАТЫВАЮТ">
+      {chain.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: d.framework || d.revenueFormula ? 16 : 0 }}>
+          {chain.map((s, i) => (
+            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 12.5, fontWeight: 700, color: '#e4e4e7', background: `${c}12`, border: `1px solid ${c}3a`, borderRadius: 8, padding: '8px 12px', lineHeight: 1.35 }}>{s}</span>
+              {i < chain.length - 1 && <span style={{ color: c, fontSize: 16, fontWeight: 700 }}>→</span>}
+            </span>
+          ))}
+        </div>
+      )}
+      {d.framework && (
+        <div style={{ padding: '13px 16px', background: `${c}10`, borderLeft: `3px solid ${c}`, borderRadius: '0 9px 9px 0', marginBottom: d.revenueFormula || d.drivers?.length ? 14 : 0 }}>
+          <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 }}>ЧТО ЗАПОМНИТЬ</div>
+          <div style={{ fontSize: 13.5, color: '#fafafa', lineHeight: 1.65, fontWeight: 600 }}>{d.framework}</div>
+        </div>
+      )}
+      {d.revenueFormula && (
+        <div style={{ ...cardBg, padding: '14px 18px', marginBottom: d.drivers?.length ? 12 : 0 }}>
+          <div style={{ ...miniKicker, marginBottom: 7 }}>ИЗ ЧЕГО СКЛАДЫВАЕТСЯ ВЫРУЧКА</div>
+          <div style={{ fontSize: 13.5, color: '#e4e4e7', fontFamily: 'ui-monospace,monospace', lineHeight: 1.6 }}>{d.revenueFormula}</div>
+        </div>
+      )}
+      {d.drivers?.length > 0 && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 10 }}>
+          {d.drivers.map((v, i) => (
+            <div key={i} style={miniCard}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'baseline', flexWrap: 'wrap', marginBottom: 5 }}>
+                <span style={{ fontSize: 12.5, color: '#fafafa', fontWeight: 700 }}>{v.var}</span>
+                {v.weight && <Badge text={v.weight} col={/главн|ключ/i.test(v.weight) ? '#10b981' : '#a1a1aa'} />}
+              </div>
+              <div style={miniBody}>{v.note}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </Block>
+  );
+}
+
+// ─ Industry problems — the real bottlenecks, how they're solved, who wins ────
+function ProblemsBlock({ d, c }) {
+  const items = d.items || [];
+  return (
+    <Block id="problems" takeaway={d.takeaway} accent={c} kicker="ГЛАВНАЯ ПРОБЛЕМА ОТРАСЛИ · КТО ЛУЧШЕ ВСЕХ ЕЁ РЕШАЕТ">
+      {d.intro && <div style={{ fontSize: 13, color: '#c4c4cc', lineHeight: 1.7, marginBottom: 14 }}>{d.intro}</div>}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {items.map((it, i) => (
+          <div key={i} style={{ ...cardBg, padding: '16px 18px', borderLeft: '3px solid #ef4444' }}>
+            <div style={{ display: 'flex', gap: 10, alignItems: 'baseline', marginBottom: 12, flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 9.5, color: '#ef4444', fontFamily: 'ui-monospace,monospace', fontWeight: 700, letterSpacing: '0.12em', whiteSpace: 'nowrap' }}>{items.length === 1 ? 'ГЛАВНОЕ УЗКОЕ МЕСТО' : `ПРОБЛЕМА ${String(i + 1).padStart(2, '0')}`}</span>
+              <span style={{ fontSize: 13.5, color: '#fafafa', fontWeight: 700, lineHeight: 1.45 }}>{it.problem}</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 12 }}>
+              {it.solution && <div><div style={{ ...miniKicker, color: '#22d3ee', marginBottom: 5 }}>КАК ПЛАНИРУЮТ РЕШАТЬ</div><div style={miniBody}>{it.solution}</div></div>}
+              {it.winners && <div><div style={{ ...miniKicker, color: '#10b981', marginBottom: 5 }}>КТО ВПЕРЕДИ · КТО ВЫИГРЫВАЕТ</div><div style={miniBody}>{it.winners}</div></div>}
+              {it.gap && <div><div style={{ ...miniKicker, color: '#f59e0b', marginBottom: 5 }}>ПОЧЕМУ КОНКУРЕНТЫ ОТСТАЮТ</div><div style={miniBody}>{it.gap}</div></div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Block>
+  );
+}
+
+// ─ Moat breakdown — decompose the moat into scored, trending components ──────
+function MoatBreakdownBlock({ d, c }) {
+  const comps = d.components || [];
+  const trendWord = t => t === 'up' ? 'крепнет' : t === 'down' ? 'слабеет' : 'стабильно';
+  return (
+    <Block id="moat" takeaway={d.takeaway} accent={c} kicker="04 · ИЗ ЧЕГО СОСТОИТ ЗАЩИТА">
+      <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 14 }}>
+        Один балл «рва» ничего не говорит. Разбираем защиту по составляющим: где 9–10 — почти неприступно, где ниже — уязвимо. Стрелка — крепнет источник преимущества или слабеет.
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {comps.map((m, i) => {
+          const n = Number(m.score) || 0;
+          const col = n >= 8 ? '#10b981' : n >= 6 ? '#22d3ee' : n >= 4 ? '#f59e0b' : '#ef4444';
+          const g = trendGlyph(m.trend);
+          return (
+            <div key={i} style={{ ...miniCard, padding: '13px 16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 10, marginBottom: 7, flexWrap: 'wrap' }}>
+                <span style={{ fontSize: 13, color: '#fafafa', fontWeight: 700 }}>{m.factor}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, whiteSpace: 'nowrap' }}>
+                  <span style={{ color: g.c, fontSize: 11, fontFamily: 'ui-monospace,monospace' }}>{g.s} {trendWord(m.trend)}</span>
+                  <span style={{ fontSize: 14, color: '#fafafa', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{m.score}<span style={{ color: '#52525b', fontSize: 11 }}>/10</span></span>
+                </span>
+              </div>
+              <div style={{ height: 6, borderRadius: 3, background: '#1f1f23', overflow: 'hidden', marginBottom: 8 }}>
+                <div style={{ width: (Math.max(0, Math.min(10, n)) * 10) + '%', height: '100%', background: col, borderRadius: 3 }} />
+              </div>
+              {m.note && <div style={miniBody}>{m.note}</div>}
+            </div>
+          );
+        })}
+      </div>
+    </Block>
+  );
+}
+
+// ─ What's priced in — variant perception: market's belief vs. ours ──────────
+function ExpectationsBlock({ d, c }) {
+  const vk = (d.verdict || '').toLowerCase();
+  const vCol = /дёшев|дешев|недооц/.test(vk) ? '#10b981' : /дорог|переоц/.test(vk) ? '#ef4444' : '#f59e0b';
+  return (
+    <Block id="priced" takeaway={d.takeaway} accent={c} kicker="12 · ЧТО УЖЕ В ЦЕНЕ · ОЖИДАНИЯ ПРОТИВ РЕАЛЬНОСТИ">
+      {d.impliedGrowth && (
+        <div style={{ ...cardBg, padding: '14px 18px', marginBottom: 14 }}>
+          <div style={{ ...miniKicker, marginBottom: 6 }}>КАКОЙ РОСТ УЖЕ ЗАЛОЖЕН В ЦЕНУ</div>
+          <div style={{ fontSize: 13.5, color: '#e4e4e7', lineHeight: 1.65 }}>{d.impliedGrowth}</div>
+        </div>
+      )}
+      {(d.marketBelieves || d.weThink) && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 12, marginBottom: 14 }}>
+          {d.marketBelieves && (
+            <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #27272a', borderRadius: 10, padding: '14px 16px' }}>
+              <div style={{ ...miniKicker, marginBottom: 7 }}>РЫНОК СЧИТАЕТ</div>
+              <div style={{ fontSize: 12.5, color: '#c4c4cc', lineHeight: 1.65 }}>{d.marketBelieves}</div>
+            </div>
+          )}
+          {d.weThink && (
+            <div style={{ background: `${c}0c`, border: `1px solid ${c}3a`, borderRadius: 10, padding: '14px 16px' }}>
+              <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 7 }}>НАШ ВЗГЛЯД · В ЧЁМ РАСХОЖДЕНИЕ</div>
+              <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.65 }}>{d.weThink}</div>
+            </div>
+          )}
+        </div>
+      )}
+      {d.metrics?.length > 0 && (
+        <div style={{ overflowX: 'auto', marginBottom: d.verdict ? 14 : 0 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 420 }}>
+            <thead><tr style={thRow}><th style={thCell}>МЕТРИКА</th><th style={thCell}>СЕЙЧАС</th><th style={thCell}>ИСТОРИЯ / НОРМА</th><th style={thCell}>ЧТО ЭТО ЗНАЧИТ</th></tr></thead>
+            <tbody>{d.metrics.map((m, i) => (
+              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
+                <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600 }}>{m.label}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7' }}>{m.now}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#a1a1aa' }}>{m.history}</td>
+                <td style={{ ...tdCell, color: '#c4c4cc' }}>{m.note}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+      )}
+      {d.verdict && (
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: `${vCol}12`, border: `1px solid ${vCol}44`, borderRadius: 10, padding: '10px 16px' }}>
+          <span style={{ fontSize: 9, color: vCol, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>ВЕРДИКТ ПО ЦЕНЕ</span>
+          <span style={{ fontSize: 14, color: '#fafafa', fontWeight: 700 }}>{d.verdict}</span>
+        </div>
+      )}
+    </Block>
+  );
+}
+
+// ─ Quantified scenarios — bear/base/bull with return math + qual drivers ────
+function ScenariosBlock({ scenarios, bull, bear, c }) {
+  const cases = scenarios?.cases || [];
+  const rows = [
+    { key: 'prob', label: 'Вероятность' },
+    { key: 'revenue', label: 'Рост выручки' },
+    { key: 'margin', label: 'Маржа' },
+    { key: 'multiple', label: 'Мультипликатор' },
+    { key: 'ret', label: 'Доходность/год' },
+  ];
+  const Col = ({ title, items, color }) => (
+    <div style={{ background: `${color}0c`, border: `1px solid ${color}30`, borderRadius: 10, padding: '16px 18px' }}>
+      <div style={{ fontSize: 9.5, color, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 12 }}>{title}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {items.map((it, i) => {
+          const point = typeof it === 'string' ? it : it.point;
+          const confirm = typeof it === 'string' ? null : it.confirm;
+          return (
+            <div key={i}>
+              <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.55, fontWeight: 600 }}>{point}</div>
+              {confirm && <div style={{ fontSize: 11, color: '#a1a1aa', lineHeight: 1.5, marginTop: 4 }}><span style={{ color, fontWeight: 700 }}>Подтвердить: </span>{confirm}</div>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+  return (
+    <Block id="cases" accent={c} kicker="13 · СЦЕНАРИИ · ДОХОДНОСТЬ ПО КЕЙСАМ" takeaway={scenarios?.takeaway}>
+      {cases.length > 0 && (
+        <div style={{ overflowX: 'auto', marginBottom: (bull || bear) ? 18 : 0 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 520 }}>
+            <thead>
+              <tr style={thRow}>
+                <th style={thCell}></th>
+                {cases.map((cs, i) => (
+                  <th key={i} style={{ ...thCell, color: cs.color || '#a1a1aa', fontSize: 12, textTransform: 'none', letterSpacing: 0 }}>
+                    {cs.name}{cs.prob ? <span style={{ color: '#52525b', fontWeight: 400 }}> · {cs.prob}</span> : null}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.filter(r => r.key !== 'prob').map(r => (
+                <tr key={r.key} style={{ borderTop: '1px solid #1f1f23' }}>
+                  <td style={{ ...tdCell, color: '#71717a', fontFamily: 'ui-monospace,monospace', fontSize: 10.5, whiteSpace: 'nowrap' }}>{r.label}</td>
+                  {cases.map((cs, i) => (
+                    <td key={i} style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: r.key === 'ret' ? (cs.color || '#e4e4e7') : '#d4d4d8', fontWeight: r.key === 'ret' ? 700 : 400 }}>{cs[r.key] || '—'}</td>
+                  ))}
+                </tr>
+              ))}
+              <tr style={{ borderTop: '1px solid #1f1f23' }}>
+                <td style={{ ...tdCell, color: '#71717a', fontFamily: 'ui-monospace,monospace', fontSize: 10.5 }}>Драйвер</td>
+                {cases.map((cs, i) => <td key={i} style={{ ...tdCell, color: '#a1a1aa', fontSize: 11 }}>{cs.note || '—'}</td>)}
+              </tr>
+            </tbody>
+          </table>
+          {scenarios?.expectedReturn && (
+            <div style={{ marginTop: 12, display: 'inline-flex', alignItems: 'center', gap: 10, background: `${c}12`, border: `1px solid ${c}44`, borderRadius: 10, padding: '10px 16px' }}>
+              <span style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>ВЗВЕШЕННАЯ ДОХОДНОСТЬ</span>
+              <span style={{ fontSize: 14, color: '#fafafa', fontWeight: 700 }}>{scenarios.expectedReturn}</span>
+            </div>
+          )}
+        </div>
+      )}
+      {(bull || bear) && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 14 }}>
+          {bull && <Col title="ЗА ЧТО ИГРАЕТ БЫЧИЙ СЦЕНАРИЙ" items={bull} color="#10b981" />}
+          {bear && <Col title="ЧТО ЛОМАЕТ МЕДВЕЖИЙ СЦЕНАРИЙ" items={bear} color="#ef4444" />}
+        </div>
+      )}
+    </Block>
+  );
+}
+
 function NodeDetail({ node, onBack, onJump }) {
   const bucket = DC_BUCKETS[node.bucket];
   const c = bucket?.color || '#a1a1aa';
@@ -1779,11 +2073,13 @@ function NodeDetail({ node, onBack, onJump }) {
     .sort((a, b) => (order[a.conviction] ?? 9) - (order[b.conviction] ?? 9));
 
   const nav = [];
-  if (detail?.update) nav.push({ id: 'update', label: 'Сейчас' });
-  if (detail?.news?.length) nav.push({ id: 'news', label: 'Новости' });
+  if (detail?.mentalModel) nav.push({ id: 'model', label: 'Модель' });
+  if (detail?.problems) nav.push({ id: 'problems', label: 'Проблемы' });
+  if (detail?.update || detail?.news?.length) nav.push({ id: 'update', label: 'Сейчас' });
   if (detail?.marketSizing) nav.push({ id: 'market', label: 'Рынок' });
   if (detail?.valueCapture) nav.push({ id: 'value', label: 'Стоимость' });
   if (detail?.competition) nav.push({ id: 'competition', label: 'Конкуренция' });
+  if (detail?.moatBreakdown) nav.push({ id: 'moat', label: 'Защита' });
   if (detail?.demand) nav.push({ id: 'demand', label: 'Спрос' });
   if (detail?.supply) nav.push({ id: 'supply', label: 'Предложение' });
   if (detail?.unitEconomics) nav.push({ id: 'unit', label: 'Экономика' });
@@ -1791,10 +2087,11 @@ function NodeDetail({ node, onBack, onJump }) {
   if (detail?.dependencies) nav.push({ id: 'deps', label: 'Зависимости' });
   if (detail?.risks?.length) nav.push({ id: 'risks', label: 'Риски' });
   if (detail?.universe?.length || detail?.picks?.length) nav.push({ id: 'universe', label: 'Игроки' });
+  if (detail?.expectations) nav.push({ id: 'priced', label: 'Что в цене' });
+  if (detail?.scenarios || detail?.verdict?.bull || detail?.verdict?.bear) nav.push({ id: 'cases', label: 'Сценарии' });
   if (detail?.monitoring) nav.push({ id: 'monitor', label: 'Мониторинг' });
-  if (detail?.verdict?.bull || detail?.verdict?.bear) nav.push({ id: 'cases', label: 'Сценарии' });
 
-  const hasDeep = !!(detail && (detail.update || detail.news?.length || detail.picks?.length || detail.verdict || detail.tldr || detail.marketSizing || detail.valueCapture || detail.competition || detail.demand || detail.supply || detail.unitEconomics || detail.roadmap || detail.dependencies || detail.risks?.length || detail.universe?.length || detail.monitoring));
+  const hasDeep = !!(detail && (detail.update || detail.news?.length || detail.picks?.length || detail.verdict || detail.tldr || detail.mentalModel || detail.marketSizing || detail.valueCapture || detail.competition || detail.moatBreakdown || detail.demand || detail.supply || detail.unitEconomics || detail.roadmap || detail.dependencies || detail.risks?.length || detail.universe?.length || detail.expectations || detail.scenarios || detail.monitoring));
 
   return (
     <div style={{ maxWidth: 940, margin: '0 auto', padding: '8px 20px 90px', animation: 'detail-fade 220ms ease' }}>
@@ -1835,11 +2132,13 @@ function NodeDetail({ node, onBack, onJump }) {
         </Block>
       )}
 
-      {detail?.update && <UpdateBlock d={detail.update} c={c} />}
-      {detail?.news?.length > 0 && <NewsBlock items={detail.news} c={c} />}
+      {detail?.mentalModel && <MentalModelBlock d={detail.mentalModel} c={c} />}
+      {detail?.problems && <ProblemsBlock d={detail.problems} c={c} />}
+      {(detail?.update || detail?.news?.length > 0) && <UpdateBlock d={detail.update || {}} c={c} news={detail.news} />}
       {detail?.marketSizing && <MarketSizingBlock d={detail.marketSizing} c={c} />}
       {detail?.valueCapture && <ValueCaptureBlock d={detail.valueCapture} c={c} />}
       {detail?.competition && <CompetitionBlock d={detail.competition} c={c} />}
+      {detail?.moatBreakdown && <MoatBreakdownBlock d={detail.moatBreakdown} c={c} />}
       {detail?.demand && <DemandBlock d={detail.demand} c={c} />}
       {detail?.supply && <SupplyBlock d={detail.supply} c={c} />}
       {detail?.unitEconomics && <UnitEconBlock d={detail.unitEconomics} c={c} />}
@@ -1849,8 +2148,9 @@ function NodeDetail({ node, onBack, onJump }) {
       {detail?.picks?.length > 0
         ? <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} />
         : detail?.universe?.length > 0 && <UniverseBlock rows={detail.universe} c={c} />}
+      {detail?.expectations && <ExpectationsBlock d={detail.expectations} c={c} />}
+      {(detail?.scenarios || detail?.verdict?.bull || detail?.verdict?.bear) && <ScenariosBlock scenarios={detail.scenarios} bull={detail.verdict?.bull} bear={detail.verdict?.bear} c={c} />}
       {detail?.monitoring && <MonitoringBlock d={detail.monitoring} c={c} />}
-      {(detail?.verdict?.bull || detail?.verdict?.bear) && <BullBear v={detail.verdict} c={c} />}
 
       {/* Chain position */}
       {(upstream.length > 0 || downstream.length > 0) && (
