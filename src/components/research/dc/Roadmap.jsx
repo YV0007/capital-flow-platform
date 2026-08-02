@@ -2148,7 +2148,7 @@ function NarrativeEl({ el, c, onJump }) {
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5, minWidth: 420 }}>
         <thead><tr style={thRow}>{el.head.map((h, i) => <th key={i} style={thCell}>{h}</th>)}</tr></thead>
         <tbody>{el.rows.map((r, i) => (
-          <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>{r.map((cell, j) => <td key={j} style={{ ...tdCell, color: j === 0 ? '#fafafa' : '#c4c4cc', fontWeight: j === 0 ? 600 : 400 }}>{cell}</td>)}</tr>))}</tbody>
+          <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>{r.map((cell, j) => <td key={j} style={{ ...tdCell, color: j === 0 ? '#fafafa' : '#c4c4cc', fontWeight: j === 0 ? 600 : 400 }}><RichText text={cell} c={c} onJump={onJump} /></td>)}</tr>))}</tbody>
       </table>
       {el.note && <div style={{ fontSize: 10.5, color: '#52525b', marginTop: 6 }}>{el.note}</div>}
     </div>);
