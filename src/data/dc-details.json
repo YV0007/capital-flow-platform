@@ -10245,103 +10245,79 @@
     ],
     "picks": [
       {
-        "group": "Proven leaders — ядро позиции",
+        "group": "Ядро — durable профиль",
         "tone": "leader",
-        "badge": "merchant silicon, integrated scale-up, pure Ethernet",
-        "note": "Broadcom — highest-conviction core (widest moat, best blend). NVIDIA — integrated scale-up franchise. Arista — purest Ethernet systems play. Marvell — cheapest Tier-1 multiple.",
+        "badge": "выигрывает при любом исходе",
+        "note": "Дуополия держит >80% прибыли; барьер — 200G SerDes. Ядро — те, кто зарабатывает независимо от исхода войны сетей.",
         "rows": [
           {
             "company": "Broadcom",
             "ticker": "NASDAQ: AVGO",
-            "mcap": "~$1,76–1,85 трлн",
-            "exposure": "~70%+ merchant switch + custom XPU + 200G SerDes + CPO; ~40% AI rev = networking",
-            "why": "Widest moat: Tomahawk bandwidth lead + SerDes + custom XPU + CPO. AI-semi $10,8B/кв (+143%), FY26 $56B, FY27 >$100B. Backlog ~$73B. OPM record 67%. Выигрывает при любом сценарии (Ethernet, UALink, custom, CPO). 7-я компания мира по капитализации.",
-            "priced": "Re-rated; earnings catching up. Sold off на OpenAI commentary / Google multi-sourcing. Top-3 клиенты ~70% AI revenue — concentration risk."
+            "mcap": "~$1,8 трлн",
+            "exposure": "~70%+ merchant switch; Tomahawk + 200G SerDes + кастом + оптика в корпусе",
+            "why": "Единственное имя, выигрывающее при любом исходе (Ethernet, UALink, кастом, CPO). Рекордная операционная маржа 67%, портфель $73 млрд, гайд FY27 >$100 млрд AI-полупроводников.",
+            "priced": "Оценка высокая, но прибыль догоняет мультипликатор — самый защищённый core в секторе."
           },
           {
             "company": "NVIDIA",
             "ticker": "NASDAQ: NVDA",
-            "mcap": "~$5,0 трлн",
-            "exposure": "scale-up (NVLink/NVSwitch) + InfiniBand + Spectrum-X + ConnectX/BlueField; networking >$31B FY26",
-            "why": "Integrated scale-up franchise: NVLink 5 = 1,8 ТБ/с, NVLink 6 = 3,6 ТБ/с. $14,8B/кв networking (+199%). №1 в datacenter Ethernet (21,5%). NCCL/CUDA software lock-in. NVLink Fusion co-opts ecosystem.",
-            "priced": "Networking = slice of the $5T story. UALink erosion — real но early. Supply-constrained supports pricing. Best whole-company AI bet, но networking-specific exposure limited."
+            "mcap": "~$5 трлн",
+            "exposure": "scale-up (NVLink/NVSwitch) + №1 Ethernet",
+            "why": "Владеет закрытым, самым маржинальным призом — scale-up. Сеть в комплекте с GPU + софт NCCL/CUDA закрепляют зависимость.",
+            "priced": "Основная ставка — на GPU; сеть — бонус к марже. Эрозия NVLink реальна, но ранняя (2027+)."
           },
           {
             "company": "Arista Networks",
             "ticker": "NYSE: ANET",
-            "mcap": "~$218–222 млрд",
-            "exposure": "purest Ethernet-systems AI play; №1 in >10GbE; AI fabric $3,5B target (>2× г/г)",
-            "why": "FY26 ~$11,5B (+28%); billings +54% г/г; purchase commitments $8,9B. 4th customer InfiniBand→Ethernet. CEO: 'best demand environment I've ever seen.' >100 cumulative 800G customers. Supply-constrained.",
-            "priced": "Premium valuation. Cloud-titan concentration. Systems margins (62–64%) ниже чем silicon peers. Наиболее чувствительна к оценке."
+            "mcap": "~$220 млрд",
+            "exposure": "№1 сетевые системы на Ethernet; софт EOS",
+            "why": "Чистейшая ставка на победу Ethernet в scale-out; софт EOS и доверие облачных гигантов; маржа 62–64%, обязательства $8,9 млрд.",
+            "priced": "Оценён на продолжение роста; риск — концентрация на облачных титанах и переход к оптике в корпусе."
           },
           {
             "company": "Marvell Technology",
             "ticker": "NASDAQ: MRVL",
-            "mcap": "~$170–189 млрд",
-            "exposure": "~10–17% merchant switch + custom silicon + interconnect; NVIDIA $2B investment + NVLink Fusion",
-            "why": "Scale-out switch >$600M FY27 (2×, path >$1B FY28). Custom >2×, targeting >$10B FY29. FY28 raised to $16,5B. Cheapest Tier-1 multiple. Interconnect +70% FY27.",
-            "priced": "Execution/customer-concentration risk. Smaller merchant share vs Broadcom. Sold off mid-July 2026."
+            "mcap": "~$180 млрд",
+            "exposure": "кастом + межсоединения + scale-out switch; NVLink Fusion",
+            "why": "Самый дешёвый из первого эшелона; кастом и межсоединения; портфель к FY28 поднят до $16,5 млрд.",
+            "priced": "Маржа ниже Broadcom (~59%); доля в кастоме под давлением — но и мультипликатор скромнее."
           }
         ]
       },
       {
-        "group": "Emerging и overlooked — scale-up fabric, SerDes IP, re-raters",
+        "group": "Эмерджентные и опционы — дорого / риск",
         "tone": "emerging",
-        "badge": "scale-up optionality, SerDes IP, overlooked value",
-        "note": "Astera Labs — best asymmetric emerging bet (но extreme valuation). Cisco — most compelling overlooked value (re-rating на ~$9B AI orders). SerDes IP (Synopsys/Cadence) — purest picks-and-shovels.",
+        "badge": "оценены как совершенство",
+        "note": "Слой связи для scale-up — наибольшая награда и наибольший риск. Оценены как гарантированные победители нерешённой войны.",
         "rows": [
           {
             "company": "Astera Labs",
             "ticker": "NASDAQ: ALAB",
-            "mcap": "~$40–70 млрд+",
-            "exposure": "Scorpio scale-up fabric + PCIe Gen 6 >⅓ rev + planned UALink switch; 76,4% GM",
-            "why": "Highest-margin connectivity silicon (76% GM). Scorpio = largest product line к концу 2026. >$1 000 content/XPU. UALink board member + NVLink Fusion partner. Rev $308M/кв (+93%).",
-            "risk": "Extreme valuation: ~44% выше среднего PT аналитиков (~$272 vs ~$483). Single-product concentration. Warrant-driven margin noise."
-          },
-          {
-            "company": "Cisco",
-            "ticker": "NASDAQ: CSCO",
-            "mcap": "крупная",
-            "exposure": "Silicon One + AI infra orders; FY26 AI orders ~$9B (raised от $5B); Acacia optics >$1B",
-            "why": "Most compelling overlooked value. $5,3B YTD Q3 AI orders. Silicon One P200 (scale-across) design wins. 1-millionth Silicon One shipped. Lower multiple чем pure-plays. UEC founding member.",
-            "risk": "Legacy enterprise dilutes AI pure-play narrative. Slower growth чем Broadcom/Arista."
+            "mcap": "~$40–70 млрд",
+            "exposure": "фабрика scale-up (Scorpio) + PCIe Gen 6 + коммутатор UALink",
+            "why": "Высшая маржа сектора (76,4%), цель >$1000 кремния на XPU, прямой рычаг на открытие scale-up через UALink.",
+            "risk": "~44% выше средней цели аналитиков — закладывает и безупречный рамп, и победу UALink; фатальный хвост при закрытом NVLink."
           },
           {
             "company": "Credo Technology",
             "ticker": "NASDAQ: CRDO",
             "mcap": "~$22–50 млрд",
-            "exposure": "AEC (active electrical cables) + SerDes + retimers + optical DSP (DustPhotonics)",
-            "why": "AEC pull-through в copper scale-up; hyperscaler adoption. FY26 ~$1,34B (+206%). Copper-to-optical 'heterogeneous' bet.",
-            "risk": "Customer concentration, extreme valuation (+~390% mcap г/г). Optical пока нематериальна."
+            "exposure": "активные медные кабели + SerDes-соединения",
+            "why": "Взрывной рост на дефиците соединений; +390% капитализации за год.",
+            "risk": "Уже показал, как быстро падает при шоке; переполненная ставка на конкретную технологию соединения."
           },
           {
-            "company": "Synopsys",
-            "ticker": "NASDAQ: SNPS",
+            "company": "Cisco",
+            "ticker": "NASDAQ: CSCO",
             "mcap": "крупная",
-            "exposure": "SerDes IP + UALink/UCIe IP; every custom accelerator licenses this; NVLink Fusion partner",
-            "why": "Purest picks-and-shovels: reusable SerDes IP = crown jewel. Поставляет IP для Broadcom, NVIDIA, hyperscaler custom chips. UALink member. AI networking = small % выручки, но highest-quality exposure.",
-            "risk": "AI networking = small % total revenue. EDA valuation already elevated."
-          },
-          {
-            "company": "Qualcomm",
-            "ticker": "NASDAQ: QCOM",
-            "mcap": "крупная",
-            "exposure": "Alphawave (acquired Dec 2025, ~$2,3B) = SerDes/connectivity IP; NVLink Fusion partner",
-            "why": "SerDes-IP owner через Alphawave. Tony Pialis leads DC business. Data-center push + IP licensing. Дешевле чем pure-play connectivity names.",
-            "risk": "DC = small часть бизнеса (mobile dominant). Execution risk в новом DC-сегменте."
-          },
-          {
-            "company": "HPE",
-            "ticker": "NYSE: HPE",
-            "mcap": "крупная",
-            "exposure": "Slingshot 'Ethernet-with-a-twist' в top supercomputers; post-Juniper; UEC founding member",
-            "why": "Overlooked AI-networking systems angle. Slingshot deployed в крупнейших суперкомпьютерах. Post-Juniper integration расширяет networking portfolio.",
-            "risk": "Enterprise diversification dilutes AI story. Integration risk post-Juniper."
+            "exposure": "сетевые системы; AI-заказы растут",
+            "why": "Дешёвый ре-рейтер: AI-заказы $5,3 млрд с начала года, гайд ~$9 млрд FY2026; опцион на возвращение в AI-сети.",
+            "risk": "Догоняющий, а не лидер; основной бизнес — вне AI, разводняет экспозицию."
           }
         ]
       }
     ],
-    "picksTakeaway": "Broadcom — highest-conviction core (widest moat, каждый тренд в плюс, OPM 67%). NVIDIA — integrated scale-up franchise ($14,8B/кв). Arista — purest Ethernet play (но premium valuation). Astera Labs — best emerging bet (76% GM, >$1K/XPU, но ~44% выше PT). Cisco — most overlooked value (~$9B AI orders, discount multiple). SerDes IP (Synopsys/Cadence, Qualcomm/Alphawave) — purest picks-and-shovels. Входить на drawdowns типа DeepSeek (−40%): оценки не прощают замедления.",
+    "picksTakeaway": "Broadcom — долговечное ядро, выигрывающее при любом исходе войны сетей, и его цену догоняет прибыль. Nvidia владеет закрытым призом scale-up, Arista — ставка на софт и Ethernet. Эмерджентные (Astera, Credo) — маленькие высокорисковые опционы, оценённые как совершенство. Самая чистая пошлина — SerDes-IP у Synopsys/Cadence (см. [[eda|Софт для чипов]]).",
     "monitoring": {
       "metrics": [
         "NVIDIA networking revenue (quarterly 8-K; Q2 FY2027 guided $91B total, ~август 2026)",
@@ -10587,7 +10563,250 @@
       ],
       "takeaway": "Расшивка дефицита SerDes укрепляет действующих лидеров: и Broadcom с Marvell, и владельцы интеллектуальной собственности (Synopsys, Cadence, Alphawave) зарабатывают на дефиците, а не страдают от него. Новый игрок здесь не появляется — барьер (единицы разработчиков + $500 млн за комплект фотошаблонов) слишком высок."
     },
-    "whatIsIt": "Это микросхема внутри сетевого коммутатора — устройства, которое соединяет серверы между собой. Она принимает данные, приходящие сразу с десятков проводов, читает, кому каждая порция адресована, и мгновенно отправляет её на нужный провод. Без таких микросхем серверы в AI-кластере не могут обмениваться данными: любой обмен между ними проходит через них, и чем быстрее чип, тем больше вычислительных чипов удаётся соединить в один кластер."
+    "whatIsIt": "Это микросхема внутри сетевого коммутатора — устройства, которое соединяет серверы между собой. Она принимает данные, приходящие сразу с десятков проводов, читает, кому каждая порция адресована, и мгновенно отправляет её на нужный провод. Без таких микросхем серверы в AI-кластере не могут обмениваться данными: любой обмен между ними проходит через них, и чем быстрее чип, тем больше вычислительных чипов удаётся соединить в один кластер.",
+    "thesis": {
+      "bigIdea": "Когда кластеры дорастают до 100 тыс. GPU, узким местом становится не вычисление, а сеть: простаивающий GPU — это GPU, ждущий данные. Ценность утекает из чипа в межчиповую связь, а profit pool держит дуополия Nvidia (scale-up) + Broadcom (merchant switch), закрытая на 200G SerDes, которые умеют делать единицы компаний. Broadcom выигрывает при любом исходе войны сетей — и его цена оправдана прибылью; а вот эмерджентные имена (Astera, Credo) рынок оценил как гарантированных победителей, хотя это опционы с фатальным хвостом.",
+      "stream": [
+        {
+          "k": "h",
+          "t": "Сеть стала узким местом"
+        },
+        {
+          "k": "p",
+          "lead": true,
+          "t": "Кластер из 100 тыс. GPU работает со скоростью своего самого медленного соединения. Простаивающий GPU — это [[asic|дорогой ускоритель]], который просто ждёт данные. По мере роста [[rack|кластеров]] сеть перестаёт быть «трубами» и становится тем, что решает, используется ли вообще вся эта вычислительная мощь. Ценность утекает из самого чипа в межчиповую связь."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "10–20%",
+              "l": "капзатрат кластера — сеть",
+              "n": "~$20 млрд на каждый ГВт (BofA); доля растёт быстрее размера кластера"
+            },
+            {
+              "v": "$22 → >$100 млрд",
+              "l": "рынок AI-сетей, 2025 → 2030",
+              "n": "рост ~30–40% в год"
+            },
+            {
+              "v": "100 тыс.+",
+              "l": "GPU в одном кластере",
+              "n": "чем больше кластер, тем важнее сеть"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Что такое сетевой чип и почему всё держится на SerDes"
+        },
+        {
+          "k": "p",
+          "t": "Сетевой чип (switch-ASIC) принимает данные с десятков портов и направляет каждый пакет на нужный порт. Важны две характеристики: суммарная пропускная способность (сегодня до 102,4 Тбит/с на один чип) и радикс — число портов: чем он выше, тем больше GPU можно соединить напрямую, без лишних задержек. А ключевая технология, на которой всё держится, — SerDes: блок, который гонит данные по одному проводнику на предельной скорости. Передовой рубеж — 200 Гбит/с на линию, и делать это умеют единицы компаний в мире; срок поставки — больше 40 недель."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "102,4 Тбит/с",
+              "l": "пропускная одного чипа (Tomahawk 6)",
+              "n": "вдвое больше прошлого поколения — премиальная цена"
+            },
+            {
+              "v": "200 Гбит/с/линию",
+              "l": "передовой SerDes",
+              "n": "умеют единицы компаний — это и есть барьер"
+            },
+            {
+              "v": ">40 недель",
+              "l": "срок поставки SerDes на пике",
+              "n": "дефицит держит ценовую власть"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Scale-up против scale-out — где идёт настоящая война"
+        },
+        {
+          "k": "p",
+          "t": "Внутри кластера две сети. Scale-up — тесная сверхбыстрая связь между GPU внутри стойки; сегодня это проприетарная шина Nvidia NVLink, продаётся в комплекте с GPU и приносит самую высокую маржу. Scale-out — широкая сеть по всему кластеру; здесь побеждает открытый Ethernet (уже больше 2/3 рынка AI-сетей). Вся война идёт за одно: останется ли scale-up закрытой монополией Nvidia (NVLink) — или его вскроет открытый стандарт (UALink). Ответ решает многомиллиардный рынок."
+        },
+        {
+          "k": "h",
+          "t": "Кто держит profit pool"
+        },
+        {
+          "k": "p",
+          "t": "Profit pool — это дуополия. Nvidia владеет scale-up (NVLink/NVSwitch — в комплекте с GPU, маржа ~75%). Broadcom владеет merchant switch — свободным рынком коммутаторов (~70%+ доля: флагман Tomahawk + собственные 200G SerDes + кастомные чипы + оптика в корпусе). Вместе — больше 80% всей прибыли. Вокруг них — Arista (сетевые системы №1 на софте EOS), Marvell (№2 по кастому и межсоединениям) и эмерджентные имена (Astera, Credo)."
+        },
+        {
+          "k": "bars",
+          "t": "Доли в сетевом кремнии AI",
+          "items": [
+            {
+              "label": "Broadcom — merchant switch",
+              "value": 72,
+              "display": "~70%+",
+              "note": "Tomahawk + SerDes + кастом + оптика — самый широкий ров"
+            },
+            {
+              "label": "Nvidia — scale-up (NVLink) + №1 Ethernet",
+              "value": 60,
+              "display": "scale-up монополия",
+              "note": "самая прибыльная часть, в комплекте с GPU"
+            },
+            {
+              "label": "Marvell — кастом + межсоединения",
+              "value": 14,
+              "display": "~10–17%",
+              "note": "дешевле остальных из первого эшелона"
+            }
+          ]
+        },
+        {
+          "k": "p",
+          "t": "Маржа здесь — самая высокая во всей цепочке AI: Astera 76%, Nvidia 75%, Broadcom за 60% (рекордная операционная 67%) — потому что это насыщенный IP кремний, а не сборка. А сам SerDes-IP — чистейшие «кирки и лопаты»: его лицензируют у [[eda|Synopsys и Cadence]], которые собирают пошлину с каждого дизайна."
+        },
+        {
+          "k": "h",
+          "t": "Кто покупает — и как это законтрактовано"
+        },
+        {
+          "k": "p",
+          "t": "Концентрация экстремальная: три крупнейших клиента Broadcom (Google, Anthropic, Meta) дают ~70% его AI-выручки, а ~75% из ~$600 млрд капзатрат гиперскейлеров идёт на AI. Портфели заказов подтверждают видимость на годы: Broadcom ~$73 млрд, Arista $8,9 млрд обязательств, Marvell $16,5 млрд к FY2028. И всё распродано — заказы Broadcom втрое превышают отгрузки."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "~70%",
+              "l": "AI-выручки Broadcom — три клиента",
+              "n": "Google, Anthropic, Meta — высшая концентрация в цепочке"
+            },
+            {
+              "v": "~$73 млрд",
+              "l": "портфель заказов Broadcom",
+              "n": "заказы втрое больше отгрузок — дефицит"
+            },
+            {
+              "v": "95%",
+              "l": "распродано на 2026",
+              "n": "дефицит по всей цепочке 1–2 года"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Где рынок прав, а где перестарался"
+        },
+        {
+          "k": "p",
+          "lead": true,
+          "t": "Рынок прав насчёт спроса и прав насчёт Broadcom. Broadcom — единственное имя, которое выигрывает при ЛЮБОМ исходе: Ethernet или NVLink, UALink или нет, кастом или merchant, медь или оптика в корпусе. Это самый широкий и долговечный ров в секторе, и его высокая оценка оправдана — прибыль догоняет цену (рекордная операционная маржа 67%, портфель $73 млрд, гайд FY27 >$100 млрд)."
+        },
+        {
+          "k": "p",
+          "lead": true,
+          "t": "Перестарался рынок с эмерджентными именами. Astera и Credo оценены как гарантированные победители войны scale-up, которая ещё не решена. Это не позиции, а опционы с фатальным хвостом: шок спроса типа DeepSeek уже показал просадку −40%, а если NVLink удержит scale-up закрытым, merchant-фабрика теряет свой главный приз. Купить Astera на 44% выше целевой цены — значит заплатить за совершенство."
+        },
+        {
+          "k": "quote",
+          "t": "Broadcom выигрывает при любом исходе — и это в цене оправдано. Astera и Credo — опционы с фатальным хвостом, оценённые как гарантированные победители."
+        },
+        {
+          "k": "h",
+          "t": "Что уже в цене"
+        },
+        {
+          "k": "p",
+          "t": "Broadcom при ~$1,8 трлн кажется дорогим, пока не увидишь, как прибыль догоняет мультипликатор: рекордная маржа, портфель $73 млрд, гайд >$100 млрд. Astera с маржой 76% — прекрасный бизнес, но на ~44% выше средней цели аналитиков он закладывает и безупречный рамп, и победу UALink. Credo (+390% капитализации за год) закладывает вечность в имя, которое уже показало, как быстро оно падает."
+        },
+        {
+          "k": "p",
+          "t": "Наш вывод: Broadcom — справедливое, долговечное ядро; Astera и Credo — переполненные опционы, оценённые как гарантированные победители."
+        },
+        {
+          "k": "h",
+          "t": "Куда движется технология — и куда идут деньги"
+        },
+        {
+          "k": "p",
+          "t": "Технически всё идёт по двум осям. Скорость портов растёт 800G → 1.6T → 3.2T, а радикс — чтобы соединять всё большие кластеры. Главный переход — оптика прямо в корпусе чипа (CPO): на таких скоростях медь и отдельные оптические модули жгут слишком много энергии, поэтому оптику встраивают в сам коммутатор (Broadcom Davisson уже отгружается, Nvidia Spectrum-X тоже). А дальше поле битвы — сам scale-up: NVLink Fusion (Nvidia пускает чужие чипы в свою шину) против открытого UALink."
+        },
+        {
+          "k": "p",
+          "t": "Куда идут деньги: гиперскейлеры направляют ~$20 млрд на каждый ГВт в сеть; Nvidia продаёт сеть в комплекте с GPU, чтобы удержать самую жирную маржу scale-up; лагерь открытого стандарта (консорциум UALink — AMD, Broadcom, Google, Microsoft, Meta) финансирует альтернативу, чтобы вскрыть NVLink; а слой SerDes-IP ([[eda|Synopsys/Cadence]]) собирает пошлину с каждого дизайна. Портфели заказов (Broadcom $73 млрд, Marvell $16,5 млрд к FY28) показывают: капитал законтрактован на годы вперёд."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "~$20 млрд/ГВт",
+              "l": "на сеть в каждом гигаватте кластера",
+              "n": "доля сети растёт быстрее размера кластера"
+            },
+            {
+              "v": "800G → 3.2T",
+              "l": "дорожная карта скоростей портов",
+              "n": "каждый шаг — премиальная цена"
+            },
+            {
+              "v": "UALink 2027",
+              "l": "первые продукты открытого стандарта",
+              "n": "попытка вскрыть монополию NVLink на scale-up"
+            }
+          ]
+        },
+        {
+          "k": "p",
+          "t": "На что ставят игроки: Nvidia — держать scale-up закрытым (NVLink) как самый маржинальный ров, уступив scale-out открытому Ethernet. Broadcom — выигрывать по каждой открытой оси (Ethernet, UALink, кастом, оптика в корпусе), намеренно оставаясь нейтральной к платформам. Arista — на софт (EOS) и доверие облачных гигантов. Эмерджентные имена — стать слоем связи для scale-up: место с наибольшей наградой и наибольшим риском. Следующее поле битвы — оптика в корпусе и то, вскроется ли scale-up."
+        },
+        {
+          "k": "h",
+          "t": "Что сломает — или подтвердит тезис"
+        },
+        {
+          "k": "table",
+          "head": [
+            "Сигнал",
+            "Что он будет значить"
+          ],
+          "rows": [
+            [
+              "Замедление капзатрат / шок спроса типа DeepSeek",
+              "Медвежий случай — эмерджентные имена падают сильнее всех"
+            ],
+            [
+              "NVLink удерживает scale-up полностью закрытым",
+              "Merchant-фабрика теряет главный приз — плохо для Astera и лагеря UALink"
+            ],
+            [
+              "UALink масштабируется и вскрывает scale-up",
+              "Новый многомиллиардный рынок — бычий для merchant и эмерджентных"
+            ],
+            [
+              "У 200G SerDes появляется реальный второй источник",
+              "Главный барьер Broadcom сужается"
+            ]
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Итог — если запомнить одно"
+        },
+        {
+          "k": "p",
+          "lead": true,
+          "t": "По мере роста кластеров именно сеть становится узким местом AI-кластера, а ценность утекает из вычисления в межчиповую связь. Profit pool — дуополия Nvidia (scale-up) + Broadcom (merchant), закрытая на 200G SerDes, которые умеют делать единицы."
+        },
+        {
+          "k": "p",
+          "lead": true,
+          "t": "Вывод: Broadcom — долговечное ядро, которое выигрывает при любом сценарии и чью цену прибыль догоняет; Nvidia владеет закрытым призом scale-up; Arista — ставка на софт. А эмерджентные имена (Astera, Credo) — маленькие высокорисковые опционы, оценённые как совершенство, а не ядро позиции. Самая чистая пошлина всей темы — SerDes-IP у [[eda|Synopsys/Cadence]]."
+        }
+      ]
+    }
   },
   "fabric": {
     "asOf": "2026-07-27",
