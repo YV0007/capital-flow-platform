@@ -2071,19 +2071,36 @@ function ThesisHero({ bigIdea, c }) {
   );
 }
 
-function NarrativeEl({ el, c }) {
+// Inline rich text: parses [[nodeId|label]] into clickable cross-links to other nodes.
+function RichText({ text, c, onJump }) {
+  const parts = String(text).split(/(\[\[[^\]]+\]\])/g);
+  return parts.map((seg, i) => {
+    const m = /^\[\[([^|\]]+)(?:\|([^\]]*))?\]\]$/.exec(seg);
+    if (m) {
+      const id = m[1].trim(), label = (m[2] || m[1]).trim();
+      if (onJump && NODES[id]) return (
+        <span key={i} onClick={() => onJump(id)} style={{ color: c, cursor: 'pointer', fontWeight: 600, borderBottom: `1px dotted ${c}88` }}
+          onMouseEnter={e => e.currentTarget.style.borderBottomStyle = 'solid'}
+          onMouseLeave={e => e.currentTarget.style.borderBottomStyle = 'dotted'}>{label}</span>);
+      return <span key={i}>{label}</span>;
+    }
+    return seg ? <span key={i}>{seg}</span> : null;
+  });
+}
+
+function NarrativeEl({ el, c, onJump }) {
   const k = el.k;
   if (k === 'h') return <h3 style={{ fontSize: 20, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.3, margin: '36px 0 14px' }}>{el.t}</h3>;
-  if (k === 'p') return <div style={{ fontSize: el.lead ? 15.5 : 14.5, color: el.lead ? '#fafafa' : '#d4d4d8', lineHeight: 1.85, margin: '0 0 17px', fontWeight: el.lead ? 600 : 400 }}><Paragraphs text={el.t} /></div>;
+  if (k === 'p') return <div style={{ fontSize: el.lead ? 15.5 : 14.5, color: el.lead ? '#fafafa' : '#d4d4d8', lineHeight: 1.85, margin: '0 0 17px', fontWeight: el.lead ? 600 : 400 }}><RichText text={el.t} c={c} onJump={onJump} /></div>;
   if (k === 'quote') return (
     <div style={{ borderLeft: `3px solid ${c}`, background: `${c}0e`, borderRadius: '0 10px 10px 0', padding: '16px 20px', margin: '8px 0 22px' }}>
-      <div style={{ fontSize: 16, color: '#fafafa', lineHeight: 1.6, fontWeight: 600, fontStyle: 'italic' }}>{el.t}</div>
+      <div style={{ fontSize: 16, color: '#fafafa', lineHeight: 1.6, fontWeight: 600, fontStyle: 'italic' }}><RichText text={el.t} c={c} onJump={onJump} /></div>
       {el.by && <div style={{ fontSize: 11, color: c, fontFamily: 'ui-monospace,monospace', marginTop: 8 }}>{el.by}</div>}
     </div>);
   if (k === 'note') return (
     <div style={{ ...miniCard, padding: '13px 16px', margin: '0 0 20px' }}>
       {el.label && <div style={{ ...miniKicker, marginBottom: 5 }}>{el.label}</div>}
-      <div style={{ fontSize: 12.5, color: '#a1a1aa', lineHeight: 1.65 }}>{el.t}</div>
+      <div style={{ fontSize: 12.5, color: '#a1a1aa', lineHeight: 1.65 }}><RichText text={el.t} c={c} onJump={onJump} /></div>
     </div>);
   if (k === 'stat') return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(155px,1fr))', gap: 12, margin: '6px 0 24px' }}>
@@ -2127,8 +2144,8 @@ function NarrativeEl({ el, c }) {
   return null;
 }
 
-function NarrativeView({ stream, c }) {
-  return <div style={{ maxWidth: 720, margin: '0 auto' }}>{(stream || []).map((el, i) => <NarrativeEl key={i} el={el} c={c} />)}</div>;
+function NarrativeView({ stream, c, onJump }) {
+  return <div style={{ maxWidth: 720, margin: '0 auto' }}>{(stream || []).map((el, i) => <NarrativeEl key={i} el={el} c={c} onJump={onJump} />)}</div>;
 }
 
 function NodeDetail({ node, onBack, onJump }) {
@@ -2162,7 +2179,7 @@ function NodeDetail({ node, onBack, onJump }) {
           <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23' }} />)}</div>
         </div>
         <ThesisHero bigIdea={detail.thesis.bigIdea} c={c} />
-        <NarrativeView stream={detail.thesis.stream} c={c} />
+        <NarrativeView stream={detail.thesis.stream} c={c} onJump={onJump} />
         {detail?.picks?.length > 0 && <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} />}
         {(upstream.length > 0 || downstream.length > 0) && (
           <Block id="chain" accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
