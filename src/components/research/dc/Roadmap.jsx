@@ -2061,6 +2061,76 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
   );
 }
 
+// ─ Thesis / narrative mode — one flowing, data-proven argument per sector ────
+function ThesisHero({ bigIdea, c }) {
+  return (
+    <div style={{ background: `linear-gradient(180deg, ${c}1e 0%, #0d0d0e 72%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 30px', marginBottom: 8 }}>
+      <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС</div>
+      <div style={{ fontSize: 19, color: '#fafafa', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
+    </div>
+  );
+}
+
+function NarrativeEl({ el, c }) {
+  const k = el.k;
+  if (k === 'h') return <h3 style={{ fontSize: 20, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.3, margin: '36px 0 14px' }}>{el.t}</h3>;
+  if (k === 'p') return <div style={{ fontSize: el.lead ? 15.5 : 14.5, color: el.lead ? '#fafafa' : '#d4d4d8', lineHeight: 1.85, margin: '0 0 17px', fontWeight: el.lead ? 600 : 400 }}><Paragraphs text={el.t} /></div>;
+  if (k === 'quote') return (
+    <div style={{ borderLeft: `3px solid ${c}`, background: `${c}0e`, borderRadius: '0 10px 10px 0', padding: '16px 20px', margin: '8px 0 22px' }}>
+      <div style={{ fontSize: 16, color: '#fafafa', lineHeight: 1.6, fontWeight: 600, fontStyle: 'italic' }}>{el.t}</div>
+      {el.by && <div style={{ fontSize: 11, color: c, fontFamily: 'ui-monospace,monospace', marginTop: 8 }}>{el.by}</div>}
+    </div>);
+  if (k === 'note') return (
+    <div style={{ ...miniCard, padding: '13px 16px', margin: '0 0 20px' }}>
+      {el.label && <div style={{ ...miniKicker, marginBottom: 5 }}>{el.label}</div>}
+      <div style={{ fontSize: 12.5, color: '#a1a1aa', lineHeight: 1.65 }}>{el.t}</div>
+    </div>);
+  if (k === 'stat') return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(155px,1fr))', gap: 12, margin: '6px 0 24px' }}>
+      {el.items.map((s, i) => (
+        <div key={i} style={{ ...cardBg, padding: '14px 16px' }}>
+          <div style={{ fontSize: 22, fontWeight: 800, color: c, letterSpacing: '-0.02em', lineHeight: 1.1 }}>{s.v}</div>
+          <div style={{ fontSize: 11.5, color: '#e4e4e7', fontWeight: 600, marginTop: 5 }}>{s.l}</div>
+          {s.n && <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 4, lineHeight: 1.5 }}>{s.n}</div>}
+        </div>))}
+    </div>);
+  if (k === 'chart') return (
+    <div style={{ ...cardBg, padding: '16px 18px', margin: '6px 0 24px' }}>
+      {el.t && <div style={{ ...miniKicker, marginBottom: 2 }}>{el.t}</div>}
+      <TamChart rows={el.bars} c={c} />
+    </div>);
+  if (k === 'bars') return (
+    <div style={{ ...cardBg, padding: '16px 18px', margin: '6px 0 24px' }}>
+      {el.t && <div style={{ ...miniKicker, marginBottom: 12 }}>{el.t}</div>}
+      {el.items.map((b, i) => {
+        const pct = Math.max(0, Math.min(100, Number(b.value) || 0));
+        return (
+          <div key={i} style={{ marginBottom: 11 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4, gap: 10 }}>
+              <span style={{ color: '#e4e4e7', fontWeight: 600 }}>{b.label}</span>
+              <span style={{ color: '#fafafa', fontFamily: 'ui-monospace,monospace', fontWeight: 700, whiteSpace: 'nowrap' }}>{b.display || (pct + '%')}</span>
+            </div>
+            <div style={{ height: 7, borderRadius: 4, background: '#1f1f23', overflow: 'hidden' }}><div style={{ width: pct + '%', height: '100%', background: c, borderRadius: 4 }} /></div>
+            {b.note && <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 4, lineHeight: 1.45 }}>{b.note}</div>}
+          </div>);
+      })}
+    </div>);
+  if (k === 'table') return (
+    <div style={{ overflowX: 'auto', margin: '6px 0 24px' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5, minWidth: 420 }}>
+        <thead><tr style={thRow}>{el.head.map((h, i) => <th key={i} style={thCell}>{h}</th>)}</tr></thead>
+        <tbody>{el.rows.map((r, i) => (
+          <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>{r.map((cell, j) => <td key={j} style={{ ...tdCell, color: j === 0 ? '#fafafa' : '#c4c4cc', fontWeight: j === 0 ? 600 : 400 }}>{cell}</td>)}</tr>))}</tbody>
+      </table>
+      {el.note && <div style={{ fontSize: 10.5, color: '#52525b', marginTop: 6 }}>{el.note}</div>}
+    </div>);
+  return null;
+}
+
+function NarrativeView({ stream, c }) {
+  return <div style={{ maxWidth: 720, margin: '0 auto' }}>{(stream || []).map((el, i) => <NarrativeEl key={i} el={el} c={c} />)}</div>;
+}
+
 function NodeDetail({ node, onBack, onJump }) {
   const bucket = DC_BUCKETS[node.bucket];
   const c = bucket?.color || '#a1a1aa';
@@ -2075,6 +2145,34 @@ function NodeDetail({ node, onBack, onJump }) {
   const baseCompanies = DC_COMPANIES
     .filter(co => co.sector === node.sector || (node.secondarySector && co.sector === node.secondarySector))
     .sort((a, b) => (order[a.conviction] ?? 9) - (order[b.conviction] ?? 9));
+
+  // Thesis mode — a single flowing, data-proven argument (replaces the block memo)
+  if (detail?.thesis) {
+    return (
+      <div style={{ maxWidth: 940, margin: '0 auto', padding: '8px 20px 90px', animation: 'detail-fade 220ms ease' }}>
+        <style>{`@keyframes detail-fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }`}</style>
+        <button onClick={onBack}
+          style={{ marginTop: 8, marginBottom: 20, background: 'transparent', border: 'none', cursor: 'pointer', color: '#a1a1aa', font: 'inherit', fontSize: 12.5, padding: 0, display: 'inline-flex', alignItems: 'center', gap: 7 }}
+          onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
+          onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}>← Вернуться к цепочке</button>
+        <div style={{ background: `linear-gradient(180deg, ${c}18 0%, transparent 100%)`, border: `1px solid ${c}30`, borderRadius: 14, padding: '26px 28px 24px', marginBottom: 18 }}>
+          <div style={{ fontSize: 10, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.18em', fontWeight: 700, marginBottom: 10 }}>ЭТАП {String(layerIdx + 1).padStart(2, '0')} / {String(totalLayers).padStart(2, '0')} · {layer.label}</div>
+          <div style={{ fontSize: 30, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8 }}>{node.label}</div>
+          <div style={{ fontSize: 12, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket}</div>
+          <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23' }} />)}</div>
+        </div>
+        <ThesisHero bigIdea={detail.thesis.bigIdea} c={c} />
+        <NarrativeView stream={detail.thesis.stream} c={c} />
+        {detail?.picks?.length > 0 && <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} />}
+        {(upstream.length > 0 || downstream.length > 0) && (
+          <Block id="chain" accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
+            {upstream.length > 0 && <div style={{ marginBottom: downstream.length > 0 ? 16 : 0 }}><div style={{ ...miniKicker, marginBottom: 9 }}>↑ ОТКУДА ПРИХОДИТ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{upstream.map(u => <ChainPill key={u.id} node={u} onClick={() => onJump(u.id)} />)}</div></div>}
+            {downstream.length > 0 && <div><div style={{ ...miniKicker, marginBottom: 9 }}>↓ КУДА ИДЁТ ДАЛЬШЕ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{downstream.map(dn => <ChainPill key={dn.id} node={dn} onClick={() => onJump(dn.id)} />)}</div></div>}
+          </Block>
+        )}
+      </div>
+    );
+  }
 
   const nav = [];
   if (detail?.mentalModel) nav.push({ id: 'model', label: 'Модель' });
