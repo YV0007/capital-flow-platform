@@ -2111,6 +2111,17 @@ function NarrativeEl({ el, c, onJump }) {
           {s.n && <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 4, lineHeight: 1.5 }}>{s.n}</div>}
         </div>))}
     </div>);
+  if (k === 'image') return (
+    <figure style={{ margin: '10px 0 24px' }}>
+      <div style={{ ...cardBg, overflow: 'hidden', borderRadius: 12 }}>
+        <img src={el.src} alt={el.caption || ''} loading="lazy" style={{ width: '100%', maxHeight: 440, objectFit: 'cover', display: 'block' }} />
+      </div>
+      {(el.caption || el.credit) && (
+        <figcaption style={{ fontSize: 11, color: '#71717a', marginTop: 7, lineHeight: 1.55 }}>
+          {el.caption}{el.credit && <span style={{ color: '#52525b' }}> · {el.credit}</span>}
+        </figcaption>
+      )}
+    </figure>);
   if (k === 'chart') return (
     <div style={{ ...cardBg, padding: '16px 18px', margin: '6px 0 24px' }}>
       {el.t && <div style={{ ...miniKicker, marginBottom: 2 }}>{el.t}</div>}
