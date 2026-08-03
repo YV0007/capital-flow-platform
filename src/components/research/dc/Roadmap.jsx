@@ -5,7 +5,7 @@
 // what feeds what. Click a node → right-side inspector panel with the
 // chain neighbours, thesis copy, and companies in coverage.
 // ══════════════════════════════════════════════════════════════════════════
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import dcCompaniesData from '../../../data/dc-companies.json';
 import dcBucketsData from '../../../data/dc-buckets.json';
 import dcDetailsData from '../../../data/dc-details.json';
@@ -439,11 +439,85 @@ const NEIGHBOURS = (() => {
 })();
 
 // ──────────────────────────────────────────────────────────────────────────
+// ── Smart topic search ──────────────────────────────────────────────────────
+// Indexes ONLY the pivotal surfaces of each thesis node (big idea, section headings,
+// lead paragraphs, key stats) — never plain body text — so a query returns the sectors
+// that *meaningfully* discuss the term, each with a jump to its sharpest paragraph.
+function searchDC(query) {
+  const s = String(query || '').trim().toLowerCase();
+  if (s.length < 2) return [];
+  const results = [];
+  for (const [id, det] of Object.entries(DC_DETAILS)) {
+    if (id.startsWith('_') || !det || !det.thesis) continue;
+    const node = NODES[id];
+    if (!node) continue;
+    const bigIdea = det.thesis.bigIdea || '';
+    const stream = det.thesis.stream || [];
+    let score = 0, best = null;
+    const consider = (pr, snippet, target) => { if (!best || pr > best.pr) best = { pr, snippet, target }; };
+    if ((node.label || '').toLowerCase().includes(s) || id.toLowerCase().includes(s)) { score += 6; consider(2, bigIdea, '__hero__'); }
+    if (bigIdea.toLowerCase().includes(s)) { score += 5; consider(2, bigIdea, '__hero__'); }
+    for (const el of stream) {
+      if (el.k === 'h' && (el.t || '').toLowerCase().includes(s)) { score += 4; consider(3, el.t, el.t); }
+      else if (el.k === 'p' && el.lead && (el.t || '').toLowerCase().includes(s)) { score += 3; consider(1, el.t, el.t.slice(0, 42)); }
+      else if (el.k === 'stat') for (const it of (el.items || [])) {
+        if (`${it.l || ''} ${it.v || ''} ${it.n || ''}`.toLowerCase().includes(s)) { score += 2; consider(0, `${it.v ? it.v + ' — ' : ''}${it.l || ''}`, '__hero__'); }
+      }
+    }
+    if (score > 0 && best) results.push({ id, label: node.label, color: DC_BUCKETS[node.bucket]?.color || '#a1a1aa', score, snippet: best.snippet, target: best.target });
+  }
+  results.sort((a, b) => b.score - a.score);
+  return results.slice(0, 8);
+}
+
+// Strip [[node|label|target]] markup to its label, then bold the matched query term.
+function highlightTerm(text, query) {
+  const plain = String(text).replace(/\[\[([^\]]+)\]\]/g, (m, g) => { const b = g.split('|'); return (b[1] || b[0]).trim(); });
+  const s = String(query || '').trim();
+  if (!s) return plain;
+  const parts = plain.split(new RegExp('(' + s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig'));
+  return parts.map((p, i) => p.toLowerCase() === s.toLowerCase() ? <b key={i} style={{ color: '#fafafa' }}>{p}</b> : <span key={i}>{p}</span>);
+}
+
+function SearchBar({ query, setQuery, results, onPick }) {
+  return (
+    <div style={{ maxWidth: 430, margin: '18px auto 0', padding: '0 24px', position: 'relative', textAlign: 'left' }}>
+      <input value={query} onChange={e => setQuery(e.target.value)}
+        placeholder="Поиск по разделу — например, HBM или охлаждение"
+        style={{ width: '100%', boxSizing: 'border-box', background: '#121214', border: '1px solid #2a2a30', borderRadius: 13, color: '#fafafa', font: 'inherit', fontSize: 12.5, padding: '8px 15px', outline: 'none' }}
+        onFocus={e => e.currentTarget.style.borderColor = '#52525b'} onBlur={e => e.currentTarget.style.borderColor = '#2a2a30'} />
+      {query.trim().length >= 2 && (
+        <div style={{ position: 'absolute', left: 24, right: 24, marginTop: 7, background: '#0f0f11', border: '1px solid #26262c', borderRadius: 13, overflow: 'hidden', zIndex: 40, boxShadow: '0 12px 40px rgba(0,0,0,.6)' }}>
+          {results.length === 0 ? (
+            <div style={{ padding: '12px 15px', color: '#71717a', fontSize: 12.5 }}>Ничего не найдено в разделе.</div>
+          ) : results.map(r => (
+            <div key={r.id} onClick={() => onPick(r.id, r.target)}
+              style={{ padding: '10px 14px', cursor: 'pointer', borderTop: '1px solid #1a1a1e', display: 'flex', gap: 10, alignItems: 'flex-start' }}
+              onMouseEnter={e => e.currentTarget.style.background = '#17171b'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+              <span style={{ marginTop: 4, width: 7, height: 7, borderRadius: 2, background: r.color, flex: 'none' }} />
+              <div style={{ minWidth: 0, flex: 1 }}>
+                <div style={{ fontSize: 12.5, color: '#fafafa', fontWeight: 700 }}>{r.label}</div>
+                <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.5, marginTop: 2, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{highlightTerm(r.snippet, query)}</div>
+              </div>
+              <span style={{ color: r.color, fontSize: 14, flex: 'none' }}>→</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Roadmap() {
   const [selected, setSelected] = useState(null);
   const [hovered,  setHovered]  = useState(null);
   const [bucketFilter, setBucketFilter] = useState(null);
   const [detailNode, setDetailNode] = useState(null);
+  const [navStack, setNavStack] = useState([]);       // cross-link origins: [{id, target, scrollY}]
+  const [jumpTarget, setJumpTarget] = useState(null); // keyword to scroll+flash within the current node
+  const [scrollRestore, setScrollRestore] = useState(null); // y to restore when returning to an origin
+  const [query, setQuery] = useState('');
+  const searchResults = useMemo(() => searchDC(query), [query]);
 
   // Active set decides which nodes/edges are "lit" vs dimmed. Priority:
   // selected node > hovered node > bucket filter > none.
@@ -470,11 +544,24 @@ export default function Roadmap() {
 
   // Full-page deep-dive takeover (no routes — same in-place pattern as the rest of the app).
   if (detailNode && NODES[detailNode]) {
+    const origin = navStack[navStack.length - 1];
     return (
       <NodeDetail
         node={NODES[detailNode]}
-        onBack={() => setDetailNode(null)}
-        onJump={(id) => setDetailNode(id)}
+        jumpTarget={jumpTarget}
+        scrollRestore={scrollRestore}
+        originLabel={origin ? NODES[origin.id]?.label : null}
+        onBack={() => { setDetailNode(null); setNavStack([]); setJumpTarget(null); setScrollRestore(null); }}
+        onJump={(id, target) => {
+          setNavStack(s => [...s, { id: detailNode, target: jumpTarget, scrollY: window.scrollY }]);
+          setScrollRestore(null); setJumpTarget(target || '__hero__'); setDetailNode(id);
+        }}
+        onBackOrigin={() => {
+          const o = navStack[navStack.length - 1];
+          if (!o) return;
+          setNavStack(s => s.slice(0, -1));
+          setJumpTarget(null); setScrollRestore(o.scrollY ?? 0); setDetailNode(o.id);
+        }}
       />
     );
   }
@@ -512,6 +599,8 @@ export default function Roadmap() {
           {EDGES_RAW.length} {plural(EDGES_RAW.length, 'связь', 'связи', 'связей')} ·{' '}
           {totalCompanies} {plural(totalCompanies, 'компания', 'компании', 'компаний')} · нажмите на узел, чтобы открыть карточку.
         </div>
+        <SearchBar query={query} setQuery={setQuery} results={searchResults}
+          onPick={(id, target) => { setNavStack([]); setScrollRestore(null); setJumpTarget(target); setDetailNode(id); setQuery(''); }} />
       </div>
 
       {/* ── Canvas ─────────────────────────────────────────────────────── */}
@@ -728,7 +817,7 @@ export default function Roadmap() {
             downstream={NEIGHBOURS[selectedNode.id].out.map(id => NODES[id])}
             onClose={() => setSelected(null)}
             onJump={(id) => setSelected(id)}
-            onOpenDetail={(id) => setDetailNode(id)}
+            onOpenDetail={(id) => { setNavStack([]); setJumpTarget(null); setScrollRestore(null); setDetailNode(id); }}
           />
         )}
 
@@ -2062,12 +2151,14 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
 }
 
 // ─ Thesis / narrative mode — one flowing, data-proven argument per sector ────
-function ThesisHero({ bigIdea, c }) {
+function ThesisHero({ bigIdea, c, highlight, originLabel, onBackOrigin }) {
   return (
-    <div style={{ background: `linear-gradient(180deg, ${c}1e 0%, #0d0d0e 72%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 30px', marginBottom: 8 }}>
-      <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС</div>
-      <div style={{ fontSize: 19, color: '#fafafa', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
-    </div>
+    <HighlightWrap on={!!highlight} c={c} originLabel={originLabel} onBackOrigin={onBackOrigin} style={{ marginBottom: 8, borderRadius: 16 }}>
+      <div style={{ background: `linear-gradient(180deg, ${c}1e 0%, #0d0d0e 72%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 30px' }}>
+        <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС</div>
+        <div style={{ fontSize: 19, color: '#fafafa', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
+      </div>
+    </HighlightWrap>
   );
 }
 
@@ -2075,11 +2166,14 @@ function ThesisHero({ bigIdea, c }) {
 function RichText({ text, c, onJump }) {
   const parts = String(text).split(/(\[\[[^\]]+\]\])/g);
   return parts.map((seg, i) => {
-    const m = /^\[\[([^|\]]+)(?:\|([^\]]*))?\]\]$/.exec(seg);
+    const m = /^\[\[([^\]]+)\]\]$/.exec(seg);
     if (m) {
-      const id = m[1].trim(), label = (m[2] || m[1]).trim();
+      const bits = m[1].split('|');
+      const id = bits[0].trim();
+      const label = (bits[1] || bits[0]).trim();
+      const target = bits[2] ? bits[2].trim() : null; // optional: paragraph to land on in the destination
       if (onJump && NODES[id]) return (
-        <span key={i} onClick={() => onJump(id)} style={{ color: c, cursor: 'pointer', fontWeight: 600, borderBottom: `1px dotted ${c}88` }}
+        <span key={i} onClick={() => onJump(id, target)} style={{ color: c, cursor: 'pointer', fontWeight: 600, borderBottom: `1px dotted ${c}88` }}
           onMouseEnter={e => e.currentTarget.style.borderBottomStyle = 'solid'}
           onMouseLeave={e => e.currentTarget.style.borderBottomStyle = 'dotted'}>{label}</span>);
       return <span key={i}>{label}</span>;
@@ -2155,17 +2249,74 @@ function NarrativeEl({ el, c, onJump }) {
   return null;
 }
 
-function NarrativeView({ stream, c, onJump }) {
-  return <div style={{ maxWidth: 720, margin: '0 auto' }}>{(stream || []).map((el, i) => <NarrativeEl key={i} el={el} c={c} onJump={onJump} />)}</div>;
+// Highlighter-pen mark: sweeps in from the left over the text line, settles to a persistent
+// low-opacity marker (doesn't disappear), and reveals a "back to origin" button on hover.
+function HighlightWrap({ on, c, originLabel, onBackOrigin, style, innerRef, children }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div ref={innerRef}
+      onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+      style={{ position: 'relative', ...style }}>
+      {on && <div style={{
+        position: 'absolute', left: 0, right: 0, top: -2, bottom: -2, borderRadius: 5, background: c, opacity: 0.42,
+        transformOrigin: 'left center', pointerEvents: 'none', zIndex: 0,
+        animation: 'hl-sweep 600ms cubic-bezier(.45,0,.2,1) forwards, hl-settle 750ms ease 2500ms forwards',
+      }} />}
+      {on && originLabel && hover && (
+        <button onClick={onBackOrigin}
+          style={{ position: 'absolute', top: -13, right: 4, zIndex: 3, background: '#18181b', border: `1px solid ${c}88`, borderRadius: 7, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 11, padding: '3px 9px', display: 'inline-flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap', boxShadow: '0 2px 12px rgba(0,0,0,.55)' }}>
+          ↩ Назад к «{originLabel}»</button>
+      )}
+      <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
+    </div>
+  );
 }
 
-function NodeDetail({ node, onBack, onJump }) {
+function NarrativeView({ stream, c, onJump, highlightIdx, setElRef, originLabel, onBackOrigin }) {
+  return <div style={{ maxWidth: 720, margin: '0 auto' }}>
+    {(stream || []).map((el, i) => (
+      // No vertical padding → child margins collapse out, so the band hugs the text line-height.
+      <HighlightWrap key={i} on={i === highlightIdx} c={c} originLabel={originLabel} onBackOrigin={onBackOrigin}
+        innerRef={setElRef ? (n => setElRef(i, n)) : undefined}
+        style={{ padding: '0 10px', margin: '0 -10px', scrollMarginTop: 90 }}>
+        <NarrativeEl el={el} c={c} onJump={onJump} />
+      </HighlightWrap>
+    ))}
+  </div>;
+}
+
+function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLabel, onBackOrigin }) {
   const bucket = DC_BUCKETS[node.bucket];
   const c = bucket?.color || '#a1a1aa';
   const layer = LAYERS[node.layer];
   const layerIdx = node.layer;
   const totalLayers = LAYERS.length;
   const detail = (DC_DETAILS[node.id] && !node.id.startsWith('_')) ? DC_DETAILS[node.id] : null;
+
+  // Deep-link landing: scroll to (and flash-highlight) the paragraph a cross-link/search points at;
+  // or restore the origin's scroll position when the reader clicks "back".
+  const elRefs = useRef({});
+  const [highlightKey, setHighlightKey] = useState(null); // 'hero' | number | null — persists until you leave the node
+  useEffect(() => {
+    if (scrollRestore != null) {
+      setHighlightKey(null);
+      const y = scrollRestore;
+      const t = setTimeout(() => window.scrollTo({ top: y, behavior: 'smooth' }), 60);
+      return () => clearTimeout(t);
+    }
+    const stream = detail?.thesis?.stream;
+    if (!jumpTarget || !stream) { setHighlightKey(null); window.scrollTo({ top: 0 }); return; }
+    if (jumpTarget === '__hero__') { setHighlightKey('hero'); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    const needle = String(jumpTarget).toLowerCase();
+    const idx = stream.findIndex(el => JSON.stringify(el).toLowerCase().includes(needle));
+    if (idx < 0) { setHighlightKey(null); window.scrollTo({ top: 0 }); return; }
+    setHighlightKey(idx);
+    const run = setTimeout(() => {
+      const n = elRefs.current[idx];
+      if (n && n.scrollIntoView) n.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 90);
+    return () => clearTimeout(run);
+  }, [node.id, jumpTarget, scrollRestore]);
 
   const upstream = NEIGHBOURS[node.id].in.map(id => NODES[id]);
   const downstream = NEIGHBOURS[node.id].out.map(id => NODES[id]);
@@ -2178,19 +2329,29 @@ function NodeDetail({ node, onBack, onJump }) {
   if (detail?.thesis) {
     return (
       <div style={{ maxWidth: 940, margin: '0 auto', padding: '8px 20px 90px', animation: 'detail-fade 220ms ease' }}>
-        <style>{`@keyframes detail-fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }`}</style>
+        <style>{`
+          @keyframes detail-fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }
+          @keyframes hl-sweep { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+          @keyframes hl-settle { from { opacity: .42; } to { opacity: .16; } }
+        `}</style>
         <button onClick={onBack}
           style={{ marginTop: 8, marginBottom: 20, background: 'transparent', border: 'none', cursor: 'pointer', color: '#a1a1aa', font: 'inherit', fontSize: 12.5, padding: 0, display: 'inline-flex', alignItems: 'center', gap: 7 }}
           onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
           onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}>← Вернуться к цепочке</button>
+        {originLabel && (
+          <button onClick={onBackOrigin}
+            style={{ marginLeft: 14, marginBottom: 20, background: `${c}1f`, border: `1px solid ${c}66`, borderRadius: 8, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 12.5, padding: '5px 12px', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+            onMouseEnter={e => e.currentTarget.style.background = `${c}33`}
+            onMouseLeave={e => e.currentTarget.style.background = `${c}1f`}>↩ Назад к «{originLabel}»</button>
+        )}
         <div style={{ background: `linear-gradient(180deg, ${c}18 0%, transparent 100%)`, border: `1px solid ${c}30`, borderRadius: 14, padding: '26px 28px 24px', marginBottom: 18 }}>
           <div style={{ fontSize: 10, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.18em', fontWeight: 700, marginBottom: 10 }}>ЭТАП {String(layerIdx + 1).padStart(2, '0')} / {String(totalLayers).padStart(2, '0')} · {layer.label}</div>
           <div style={{ fontSize: 30, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8 }}>{node.label}</div>
           <div style={{ fontSize: 12, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket}</div>
           <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23' }} />)}</div>
         </div>
-        <ThesisHero bigIdea={detail.thesis.bigIdea} c={c} />
-        <NarrativeView stream={detail.thesis.stream} c={c} onJump={onJump} />
+        <ThesisHero bigIdea={detail.thesis.bigIdea} c={c} highlight={highlightKey === 'hero'} originLabel={originLabel} onBackOrigin={onBackOrigin} />
+        <NarrativeView stream={detail.thesis.stream} c={c} onJump={onJump} highlightIdx={typeof highlightKey === 'number' ? highlightKey : -1} setElRef={(i, n) => { elRefs.current[i] = n; }} originLabel={originLabel} onBackOrigin={onBackOrigin} />
         {detail?.picks?.length > 0 && <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} />}
         {(upstream.length > 0 || downstream.length > 0) && (
           <Block id="chain" accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
