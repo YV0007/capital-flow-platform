@@ -2957,5 +2957,16 @@
     "ppr": "Digital infrastructure investment manager; owns Switch/QTS-adjacent assets; public route to wholesale hyperscale DC",
     "geo": "US",
     "note": "Infrastructure asset manager model; indirect AI-compute exposure through DC portfolio"
+  },
+  {
+    "company": "Rambus",
+    "ticker": "NASDAQ: RMBS",
+    "sector": "IP/Bonding",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Память-интерфейсная IP + физические чипы между процессором и высокоскоростной памятью; прямая ставка на дефицит пропускной способности."
   }
 ]
