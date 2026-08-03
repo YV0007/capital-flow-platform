@@ -9,8 +9,10 @@ import React, { useMemo, useState, useEffect, useRef } from 'react';
 import dcCompaniesData from '../../../data/dc-companies.json';
 import dcBucketsData from '../../../data/dc-buckets.json';
 import dcDetailsData from '../../../data/dc-details.json';
+import dcCompanyProfilesData from '../../../data/dc-company-profiles.json';
 
 const DC_COMPANIES = dcCompaniesData;
+const DC_PROFILES = dcCompanyProfilesData; // rich company overviews keyed by ticker (for the 'Подробнее' modal)
 const { DC_BUCKETS } = dcBucketsData;
 // Deep-dive content keyed by node id (keys starting with "_" are ignored). Empty
 // for most nodes today — the detail page falls back to a placeholder + base copy.
@@ -1730,7 +1732,76 @@ function UniverseBlock({ rows, c }) {
 // ─ Block 10 (alt) — Curated picks in tiers: established leaders vs. quieter
 // emerging bets. Each row carries its own "why" plus either what is already
 // priced in (leaders) or the explicit risk (emerging).
-function PicksBlock({ groups, c, takeaway }) {
+function ProfileBlock({ title, color, children }) {
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div style={{ fontSize: 9.5, color, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>{title}</div>
+      <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.75, marginTop: 6 }}>{children}</div>
+    </div>
+  );
+}
+
+// Rich company overview shown over the picks (DC_PROFILES keyed by ticker).
+function CompanyProfileModal({ profile, c, onClose, onJump }) {
+  if (!profile) return null;
+  const fin = profile.financials || [];
+  const jump = id => { onClose(); if (onJump) onJump(id); };
+  return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(0,0,0,.62)', backdropFilter: 'blur(2px)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '40px 18px', overflowY: 'auto' }}>
+      <div onClick={e => e.stopPropagation()} style={{ maxWidth: 640, width: '100%', background: '#0f0f11', border: `1px solid ${c}44`, borderRadius: 16, padding: '24px 26px 28px', boxShadow: '0 24px 80px rgba(0,0,0,.72)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+          <div>
+            <div style={{ fontSize: 20, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.2 }}>{profile.company}</div>
+            <div style={{ fontSize: 11.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>{profile.ticker}</div>
+          </div>
+          <button onClick={onClose} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#a1a1aa', fontSize: 24, lineHeight: 1, padding: 0 }} aria-label="Закрыть">×</button>
+        </div>
+        {profile.website && (
+          <a href={profile.website} target="_blank" rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 13, fontSize: 12, color: c, textDecoration: 'none', border: `1px solid ${c}55`, borderRadius: 8, padding: '6px 12px', fontWeight: 600 }}>↗ Открыть сайт компании</a>
+        )}
+        {profile.tagline && <div style={{ fontSize: 14, color: '#fafafa', fontWeight: 600, lineHeight: 1.55, marginTop: 16 }}>{profile.tagline}</div>}
+        {profile.overview && <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.8, marginTop: 12 }}><RichText text={profile.overview} c={c} onJump={jump} /></div>}
+        {fin.length > 0 && (
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(fin.length, 3)},1fr)`, gap: 8, marginTop: 16 }}>
+            {fin.map((f, i) => (
+              <div key={i} style={{ background: '#151517', border: '1px solid #26262c', borderRadius: 10, padding: '10px 12px' }}>
+                <div style={{ fontSize: 15, color: '#fafafa', fontWeight: 700 }}>{f.v}</div>
+                <div style={{ fontSize: 10, color: '#a1a1aa', marginTop: 3, lineHeight: 1.3 }}>{f.l}</div>
+              </div>
+            ))}
+          </div>
+        )}
+        {profile.target && <ProfileBlock title="ЦЕЛЬ" color={c}>{profile.target}</ProfileBlock>}
+        {profile.whyMargins && <ProfileBlock title="ПОЧЕМУ ТАКАЯ МАРЖА" color={c}>{profile.whyMargins}</ProfileBlock>}
+        {profile.moat?.length > 0 && (
+          <div style={{ marginTop: 16 }}>
+            <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>БАРЬЕР</div>
+            <ul style={{ margin: '8px 0 0', paddingLeft: 18, color: '#d4d4d8', fontSize: 12.5, lineHeight: 1.7 }}>{profile.moat.map((m, i) => <li key={i} style={{ marginBottom: 3 }}>{m}</li>)}</ul>
+          </div>
+        )}
+        {profile.risk && <ProfileBlock title="ГЛАВНЫЙ РИСК" color="#ef4444">{profile.risk}</ProfileBlock>}
+        {profile.verdict && (
+          <div style={{ marginTop: 18, padding: '14px 16px', background: `${c}12`, border: `1px solid ${c}33`, borderRadius: 12 }}>
+            <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>ВЕРДИКТ</div>
+            <div style={{ fontSize: 13, color: '#fafafa', lineHeight: 1.65, marginTop: 6 }}>{profile.verdict}</div>
+          </div>
+        )}
+        {(profile.related || []).some(id => NODES[id]) && (
+          <div style={{ marginTop: 16, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {profile.related.map(id => NODES[id] && (
+              <span key={id} onClick={() => jump(id)}
+                style={{ fontSize: 11.5, color: c, cursor: 'pointer', border: `1px solid ${c}44`, borderRadius: 7, padding: '4px 9px' }}>→ {NODES[id].label}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function PicksBlock({ groups, c, takeaway, onJump }) {
+  const [openTicker, setOpenTicker] = useState(null);
   return (
     <Block id="universe" accent={c} kicker="11 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ" takeaway={takeaway}>
       {groups.map((g, gi) => {
@@ -1743,7 +1814,9 @@ function PicksBlock({ groups, c, takeaway }) {
             </div>
             {g.note && <div style={{ fontSize: 11.5, color: '#71717a', lineHeight: 1.6, marginBottom: 12 }}>{g.note}</div>}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(290px,1fr))', gap: 10 }}>
-              {g.rows.map((r, i) => (
+              {g.rows.map((r, i) => {
+                const prof = DC_PROFILES[r.ticker];
+                return (
                 <div key={i} style={{ ...miniCard, padding: '14px 16px', borderLeft: `3px solid ${gc}` }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'baseline', flexWrap: 'wrap' }}>
                     <span style={{ fontSize: 13, color: '#fafafa', fontWeight: 700 }}>{r.company}</span>
@@ -1765,12 +1838,25 @@ function PicksBlock({ groups, c, takeaway }) {
                       <span style={{ color: '#ef4444', fontWeight: 700 }}>Риск: </span>{r.risk}
                     </div>
                   )}
+                  {prof && (
+                    <div style={{ display: 'flex', gap: 8, marginTop: 11, paddingTop: 11, borderTop: '1px solid #1f1f23', flexWrap: 'wrap' }}>
+                      <button onClick={() => setOpenTicker(r.ticker)}
+                        style={{ background: `${gc}1a`, border: `1px solid ${gc}55`, borderRadius: 7, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 11, fontWeight: 600, padding: '4px 10px' }}
+                        onMouseEnter={e => e.currentTarget.style.background = `${gc}33`} onMouseLeave={e => e.currentTarget.style.background = `${gc}1a`}>Подробнее о компании →</button>
+                      {prof.website && (
+                        <a href={prof.website} target="_blank" rel="noopener noreferrer"
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11, color: '#a1a1aa', textDecoration: 'none', border: '1px solid #2a2a30', borderRadius: 7, padding: '4px 9px' }}>↗ Сайт</a>
+                      )}
+                    </div>
+                  )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         );
       })}
+      <CompanyProfileModal profile={openTicker ? DC_PROFILES[openTicker] : null} c={c} onClose={() => setOpenTicker(null)} onJump={onJump} />
     </Block>
   );
 }
@@ -2152,13 +2238,22 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
 
 // ─ Thesis / narrative mode — one flowing, data-proven argument per sector ────
 function ThesisHero({ bigIdea, c, highlight, originLabel, onBackOrigin }) {
+  const [hover, setHover] = useState(false);
+  const cid = String(c).replace(/[^a-z0-9]/gi, '');
+  // The big idea is a large rounded box — a scaleX sweep over it looks janky and overflows the
+  // corners. Use a self-contained glow ring that follows its shape and fades out.
   return (
-    <HighlightWrap on={!!highlight} c={c} originLabel={originLabel} onBackOrigin={onBackOrigin} style={{ marginBottom: 8, borderRadius: 16 }}>
-      <div style={{ background: `linear-gradient(180deg, ${c}1e 0%, #0d0d0e 72%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 30px' }}>
+    <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: 'relative', marginBottom: 8 }}>
+      {highlight && <style>{`@keyframes hero-glow-${cid} { 0%{box-shadow:0 0 0 0 transparent} 14%{box-shadow:0 0 0 2px ${c}, 0 0 26px ${c}55} 100%{box-shadow:0 0 0 0 transparent} }`}</style>}
+      {highlight && originLabel && hover && (
+        <button onClick={onBackOrigin}
+          style={{ position: 'absolute', top: -13, right: 6, zIndex: 3, background: '#18181b', border: `1px solid ${c}88`, borderRadius: 7, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 11, padding: '3px 9px', display: 'inline-flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap', boxShadow: '0 2px 12px rgba(0,0,0,.55)' }}>↩ Назад к «{originLabel}»</button>
+      )}
+      <div style={{ background: `linear-gradient(180deg, ${c}1e 0%, #0d0d0e 72%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 30px', animation: highlight ? `hero-glow-${cid} 2400ms ease forwards` : undefined }}>
         <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС</div>
         <div style={{ fontSize: 19, color: '#fafafa', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
       </div>
-    </HighlightWrap>
+    </div>
   );
 }
 
@@ -2352,7 +2447,7 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
         </div>
         <ThesisHero bigIdea={detail.thesis.bigIdea} c={c} highlight={highlightKey === 'hero'} originLabel={originLabel} onBackOrigin={onBackOrigin} />
         <NarrativeView stream={detail.thesis.stream} c={c} onJump={onJump} highlightIdx={typeof highlightKey === 'number' ? highlightKey : -1} setElRef={(i, n) => { elRefs.current[i] = n; }} originLabel={originLabel} onBackOrigin={onBackOrigin} />
-        {detail?.picks?.length > 0 && <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} />}
+        {detail?.picks?.length > 0 && <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} onJump={onJump} />}
         {(upstream.length > 0 || downstream.length > 0) && (
           <Block id="chain" accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
             {upstream.length > 0 && <div style={{ marginBottom: downstream.length > 0 ? 16 : 0 }}><div style={{ ...miniKicker, marginBottom: 9 }}>↑ ОТКУДА ПРИХОДИТ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{upstream.map(u => <ChainPill key={u.id} node={u} onClick={() => onJump(u.id)} />)}</div></div>}
@@ -2438,7 +2533,7 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
       {detail?.dependencies && <DependenciesBlock d={detail.dependencies} c={c} />}
       {detail?.risks?.length > 0 && <RiskMatrixBlock rows={detail.risks} c={c} />}
       {detail?.picks?.length > 0
-        ? <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} />
+        ? <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} onJump={onJump} />
         : detail?.universe?.length > 0 && <UniverseBlock rows={detail.universe} c={c} />}
       {detail?.expectations && <ExpectationsBlock d={detail.expectations} c={c} />}
       {(detail?.scenarios || detail?.verdict?.bull || detail?.verdict?.bear) && <ScenariosBlock scenarios={detail.scenarios} bull={detail.verdict?.bull} bear={detail.verdict?.bear} c={c} />}
