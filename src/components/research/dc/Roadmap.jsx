@@ -2240,18 +2240,24 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
 function ThesisHero({ bigIdea, c, highlight, originLabel, onBackOrigin }) {
   const [hover, setHover] = useState(false);
   const cid = String(c).replace(/[^a-z0-9]/gi, '');
-  // The big idea is a large rounded box — a scaleX sweep over it looks janky and overflows the
-  // corners. Use a self-contained glow ring that follows its shape and fades out.
+  // Large rounded box → a scaleX sweep looks janky and overflows the corners. Instead: a glow ring
+  // that follows its shape + a soft full-box tint, both held a while then faded out.
   return (
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: 'relative', marginBottom: 8 }}>
-      {highlight && <style>{`@keyframes hero-glow-${cid} { 0%{box-shadow:0 0 0 0 transparent} 14%{box-shadow:0 0 0 2px ${c}, 0 0 26px ${c}55} 100%{box-shadow:0 0 0 0 transparent} }`}</style>}
+      {highlight && <style>{`
+        @keyframes hero-glow-${cid} { 0%{box-shadow:0 0 0 0 transparent} 7%{box-shadow:0 0 0 2px ${c},0 0 28px ${c}55} 72%{box-shadow:0 0 0 2px ${c},0 0 28px ${c}55} 100%{box-shadow:0 0 0 0 transparent} }
+        @keyframes hero-tint { 0%{opacity:0} 7%{opacity:.13} 72%{opacity:.13} 100%{opacity:0} }
+      `}</style>}
       {highlight && originLabel && hover && (
         <button onClick={onBackOrigin}
           style={{ position: 'absolute', top: -13, right: 6, zIndex: 3, background: '#18181b', border: `1px solid ${c}88`, borderRadius: 7, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 11, padding: '3px 9px', display: 'inline-flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap', boxShadow: '0 2px 12px rgba(0,0,0,.55)' }}>↩ Назад к «{originLabel}»</button>
       )}
-      <div style={{ background: `linear-gradient(180deg, ${c}1e 0%, #0d0d0e 72%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 30px', animation: highlight ? `hero-glow-${cid} 2400ms ease forwards` : undefined }}>
-        <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС</div>
-        <div style={{ fontSize: 19, color: '#fafafa', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
+      <div style={{ position: 'relative', overflow: 'hidden', background: `linear-gradient(180deg, ${c}1e 0%, #0d0d0e 72%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 30px', animation: highlight ? `hero-glow-${cid} 5200ms ease forwards` : undefined }}>
+        {highlight && <div style={{ position: 'absolute', inset: 0, background: c, borderRadius: 16, pointerEvents: 'none', zIndex: 0, animation: 'hero-tint 5200ms ease forwards' }} />}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС</div>
+          <div style={{ fontSize: 19, color: '#fafafa', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
+        </div>
       </div>
     </div>
   );
