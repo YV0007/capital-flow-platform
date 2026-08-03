@@ -32,15 +32,15 @@ const BIG_NODE_H     = 64;
 
 // ─ Bucket short-codes — shown on every node for instant group recognition.
 const BUCKET_TAGS = {
-  'Power & Grid':             'PWR',
-  'Compute & Silicon':        'CMP',
-  'Materials & Chemicals':    'MAT',
-  'Connectivity & Photonics': 'NET',
-  'Construction & Labor':     'BLD',
-  'Cooling & Thermal':        'CLD',
-  'Fab & Test Equipment':     'FAB',
-  'Software & Apps':          'APP',
-  'Memory & Storage':         'MEM',
+  'Power & Grid':             'ЭНЕРГО',
+  'Compute & Silicon':        'ЧИПЫ',
+  'Materials & Chemicals':    'СЫРЬЁ',
+  'Connectivity & Photonics': 'СЕТЬ',
+  'Construction & Labor':     'СТРОЙ',
+  'Cooling & Thermal':        'ХОЛОД',
+  'Fab & Test Equipment':     'СТАНКИ',
+  'Software & Apps':          'СОФТ',
+  'Memory & Storage':         'ПАМЯТЬ',
 };
 
 // ─ Russian display names for buckets (keys stay English for data joins).
@@ -777,16 +777,16 @@ export default function Roadmap() {
 
                 {/* Bucket monogram — small chip on the right */}
                 <div style={{
-                  fontSize: 8.5, fontWeight: 800,
-                  fontFamily: 'ui-monospace,monospace',
-                  letterSpacing: '0.08em',
+                  fontSize: 7.5, fontWeight: 800,
+                  letterSpacing: '0.02em',
                   color: c,
                   background: `${c}22`,
                   border: `1px solid ${c}55`,
-                  padding: '2px 5px',
+                  padding: '2px 4px',
                   borderRadius: 3,
                   lineHeight: 1,
                   flexShrink: 0,
+                  whiteSpace: 'nowrap',
                 }}>
                   {tag}
                 </div>
