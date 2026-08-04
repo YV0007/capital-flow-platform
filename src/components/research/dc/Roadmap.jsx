@@ -2273,6 +2273,10 @@ function RichText({ text, c, onJump }) {
       const id = bits[0].trim();
       const label = (bits[1] || bits[0]).trim();
       const target = bits[2] ? bits[2].trim() : null; // optional: paragraph to land on in the destination
+      if (/^https?:\/\//i.test(id)) return (
+        <a key={i} href={id} target="_blank" rel="noopener noreferrer" style={{ color: c, textDecoration: 'none', fontWeight: 600, borderBottom: `1px dotted ${c}88` }}
+          onMouseEnter={e => e.currentTarget.style.borderBottomStyle = 'solid'}
+          onMouseLeave={e => e.currentTarget.style.borderBottomStyle = 'dotted'}>{label} ↗</a>);
       if (onJump && NODES[id]) return (
         <span key={i} onClick={() => onJump(id, target)} style={{ color: c, cursor: 'pointer', fontWeight: 600, borderBottom: `1px dotted ${c}88` }}
           onMouseEnter={e => e.currentTarget.style.borderBottomStyle = 'solid'}
