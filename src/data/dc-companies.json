@@ -3034,5 +3034,38 @@
     "ppr": "Pub",
     "geo": "DK",
     "note": "Крупнейший производитель ветряков; экономика ветра слабее солнца."
+  },
+  {
+    "company": "Centrus Energy",
+    "ticker": "NYSE: LEU",
+    "sector": "Nuclear Fuel",
+    "conviction": "Medium",
+    "riskTier": "Aggressive",
+    "horizon": "3–7y",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Американское обогащение урана и HALEU; контракт Минэнерго на $900 млн. Стратегическое топливное горлышко, но оценка высокая."
+  },
+  {
+    "company": "X-energy",
+    "ticker": "Pvt",
+    "sector": "SMR",
+    "conviction": "Low-Med",
+    "riskTier": "Aggressive",
+    "horizon": "5–10y",
+    "ppr": "Pvt",
+    "geo": "US",
+    "note": "Малый реактор Xe-100 и TRISO-топливо; поддержан Amazon (до 960 MW). Ставка на 2030+."
+  },
+  {
+    "company": "Kairos Power",
+    "ticker": "Pvt",
+    "sector": "SMR",
+    "conviction": "Low-Med",
+    "riskTier": "Aggressive",
+    "horizon": "5–10y",
+    "ppr": "Pvt",
+    "geo": "US",
+    "note": "Advanced-реакторы; первый корпоративный контракт на серию блоков с Google. Ставка на 2030+."
   }
 ]
