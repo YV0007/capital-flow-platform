@@ -59,7 +59,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "2026 — переход AI-агентов из прототипов в production у enterprise (тезис Sequoia 'This is AGI'), reliability стал блокером масштабирования."
+      "why_now": "2026 — переход AI-агентов из прототипов в production у enterprise (тезис Sequoia 'This is AGI'), reliability стал блокером масштабирования.",
+      "sector_ru": "Наблюдаемость и надёжность AI-агентов"
     },
     "competition": {
       "direct_competitors": [
@@ -155,7 +156,9 @@
     "launch": {
       "title": "BentoLabs AI: Monitoring and Learning layer for long-running agents",
       "tldr": "BentoLabs AI is the monitoring and learning layer for long-running agents. We detect when agents silently fail or drift from the user's goal, system prompt, or tool contracts, show affected users and root cause, and suggest the prompt, skill, or harness fix. Run 101 is measurably better than run 1.",
-      "url": "https://www.ycombinator.com/launches/Qcw-bentolabs-ai-monitoring-and-learning-layer-for-long-running-agents"
+      "url": "https://www.ycombinator.com/launches/Qcw-bentolabs-ai-monitoring-and-learning-layer-for-long-running-agents",
+      "title_ru": "BentoLabs AI: слой мониторинга и обучения для долгоживущих агентов",
+      "tldr_ru": "BentoLabs AI — это слой мониторинга и обучения для долгоживущих агентов. Мы замечаем, когда агент тихо ломается или отходит от задачи пользователя, системного промпта или контракта инструментов, показываем, кого это задело и в чём причина, и подсказываем, что поправить — промпт, навык или обвязку. Запуск №101 ощутимо лучше запуска №1."
     },
     "yc_description_ru": "BentoLabs — это слой мониторинга и обучения для AI-агентов, которые работают подолгу. Мы замечаем, когда агент тихо ломается или отходит от задачи пользователя, системного промпта или контракта инструментов, показываем, кого это задело и в чём причина, и подсказываем, что поправить — промпт, навык или обвязку.\n\nЧем больше команд запускают агентов, тем важнее держать их надёжными в проде. Bento встроен прямо в рабочий цикл и позволяет командам масштабировать агентов, не наращивая при этом ручное «тушение пожаров». В итоге непрозрачные агенты становятся такими, за которыми можно следить, которых можно отлаживать и постоянно улучшать.\n\nОснователи столкнулись с этой проблемой в Emergent (YC S24), где делали и вели production-агентов для написания кода с аудиторией 5M+ пользователей. Abhinav был сотрудником №1 и помог Emergent занять первое место на SWE-Bench и вырасти с нуля до $100M ARR за 8 месяцев. Kaushik был сотрудником №2, отвечал за full-stack и во многом построил инфраструктуру, которая сделала production-агентов надёжными и наблюдаемыми. Собственный движок самообучения Bento поднял внутренние показатели ARC-AGI-3 в 2.6 раза, а Terminal-Bench 2.0 — с 42.2% до 52.4% pass@1 на той же модели, инструментах и бюджете."
   },
@@ -219,7 +222,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Дефицит квалифицированных техников + LLM, способные парсить десятки тысяч страниц технической документации, делают voice-first интерфейс реалистичным впервые."
+      "why_now": "Дефицит квалифицированных техников + LLM, способные парсить десятки тысяч страниц технической документации, делают voice-first интерфейс реалистичным впервые.",
+      "sector_ru": "Обслуживание и ремонт оборудования"
     },
     "competition": {
       "direct_competitors": [
@@ -316,7 +320,9 @@
     "launch": {
       "title": "Pairio – Fix broken equipment in factories faster",
       "tldr": "Machine downtime in manufacturing is expensive. Pairio helps technicians and operators resolve faults faster with voice AI. 4 plants in Germany are already using Pairio to reduce equipment downtime.",
-      "url": "https://www.ycombinator.com/launches/Q18-pairio-fix-broken-equipment-in-factories-faster"
+      "url": "https://www.ycombinator.com/launches/Q18-pairio-fix-broken-equipment-in-factories-faster",
+      "title_ru": "Pairio — быстрее чинить оборудование на заводах",
+      "tldr_ru": "Простои оборудования в производстве обходятся дорого. Pairio помогает техникам и операторам быстрее устранять неисправности с помощью голосового AI. 4 завода в Германии уже используют Pairio, чтобы сокращать простои."
     },
     "yc_description_ru": "Pairio — мобильное приложение с AI, которое помогает техникам чинить оборудование на заводах. Достаточно сфотографировать сломанный станок — приложение находит нужное решение, просматривая тысячи страниц инструкций."
   },
@@ -388,7 +394,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "CRISPR-инструментарий + накопленная база human genetics позволяют превращать известные disease-driving последовательности в лекарства; платформенный подход впервые масштабируется экономически."
+      "why_now": "CRISPR-инструментарий + накопленная база human genetics позволяют превращать известные disease-driving последовательности в лекарства; платформенный подход впервые масштабируется экономически.",
+      "sector_ru": "Онкология · программируемые препараты"
     },
     "competition": {
       "direct_competitors": [
@@ -484,7 +491,9 @@
     "launch": {
       "title": "FinalDose: The first programmable drug to cure all cancers",
       "tldr": "For 60 years, drug discovery has chased proteins. But ~85% of disease drivers don't have a druggable protein, making them unreachable for modern medicine. The deeper issue: most disease doesn't start at the protein, it starts in the DNA that codes for it. We built a programmable drug that reads DNA inside the cell, decides if it's diseased, and destroys the cell if it is. One platform, reprogrammed to any disease distinguishable on a DNA level.",
-      "url": "https://www.ycombinator.com/launches/QKj-finaldose-the-first-programmable-drug-to-cure-all-cancers"
+      "url": "https://www.ycombinator.com/launches/QKj-finaldose-the-first-programmable-drug-to-cure-all-cancers",
+      "title_ru": "FinalDose: первое программируемое лекарство против всех видов рака",
+      "tldr_ru": "60 лет разработка лекарств гонялась за белками. Но примерно у 85% причин болезней нет «пригодного» белка — для современной медицины они недостижимы. Проблема глубже: болезнь чаще начинается не в белке, а в ДНК, которая его кодирует. Мы сделали программируемое лекарство, которое читает ДНК внутри клетки, решает, больная ли она, и уничтожает её, если да. Одна платформа, перенастраиваемая под любую болезнь, различимую на уровне ДНК."
     },
     "yc_description_ru": "FinalDose создаёт первое программируемое лекарство — одну «умную» молекулу, в которую можно заложить генетический код любой болезни; она находит и уничтожает клетки, распознав их по ДНК. Это открывает доступ к 80% мишеней, для которых сегодня нет лекарств. Начинают с онкологии — со всех видов рака."
   },
@@ -548,7 +557,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "AI-датацентры строятся в жарких регионах (Техас, Аризона, Невада) рекордными темпами; до 40% мощности уходит на охлаждение; каждый процент эффективности = $2.6M GPU-выручки на 100 МВт; grid-permits становятся бутылочным горлом."
+      "why_now": "AI-датацентры строятся в жарких регионах (Техас, Аризона, Невада) рекордными темпами; до 40% мощности уходит на охлаждение; каждый процент эффективности = $2.6M GPU-выручки на 100 МВт; grid-permits становятся бутылочным горлом.",
+      "sector_ru": "Охлаждение дата-центров"
     },
     "competition": {
       "direct_competitors": [
@@ -640,7 +650,9 @@
     "launch": {
       "title": "Madrone - chiller-less cooling for desert data centers",
       "tldr": "Giant data centers are being built in the desert and need better cooling. Madrone builds modular cooling systems that chill water to the dew point, slashing power usage and deploying fast.",
-      "url": "https://www.ycombinator.com/launches/QL1-madrone-chiller-less-cooling-for-desert-data-centers"
+      "url": "https://www.ycombinator.com/launches/QL1-madrone-chiller-less-cooling-for-desert-data-centers",
+      "title_ru": "Madrone — охлаждение без чиллеров для дата-центров в пустыне",
+      "tldr_ru": "Гигантские дата-центры строят в пустыне, и им нужно охлаждение получше. Madrone делает модульные системы, которые охлаждают воду до точки росы — это резко снижает энергопотребление и быстро разворачивается."
     },
     "yc_description_ru": "Madrone делает системы охлаждения для дата-центров. В Техасе, где строится большинство новых площадок, Madrone охлаждает, расходуя на 30% меньше энергии и воды, — за счёт новой технологии охлаждения по точке росы."
   },
@@ -711,7 +723,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "LLM достаточно зрелы, чтобы парсить earnings calls / SEC filings и выделять не-очевидные паттерны; фонды в дикой гонке за edge на фоне AI-driven компрессии маржи в активном менеджменте."
+      "why_now": "LLM достаточно зрелы, чтобы парсить earnings calls / SEC filings и выделять не-очевидные паттерны; фонды в дикой гонке за edge на фоне AI-driven компрессии маржи в активном менеджменте.",
+      "sector_ru": "Аналитика для инвесторов"
     },
     "competition": {
       "direct_competitors": [
@@ -804,7 +817,9 @@
     "launch": {
       "title": "Cohesion: Your public equities agentic teammate",
       "tldr": "Cohesion agents track earnings, news, and non-traditional datasets like podcasts and X/Twitter for equity investors seeking automated idea generation without manual setup.",
-      "url": "https://www.ycombinator.com/launches/Pxy-cohesion-your-public-equities-agentic-teammate"
+      "url": "https://www.ycombinator.com/launches/Pxy-cohesion-your-public-equities-agentic-teammate",
+      "title_ru": "Cohesion: ваш AI-напарник по публичным акциям",
+      "tldr_ru": "Агенты Cohesion отслеживают отчётности, новости и нестандартные источники — подкасты, X/Twitter — для инвесторов в акции, которым нужна автоматическая генерация идей без ручной настройки."
     },
     "yc_description_ru": "Cohesion делает AI-агентов для хедж-фондов. Агенты отслеживают отчётности и нестандартные источники данных — подкасты, X/Twitter. Аналитики тратят на это часы каждую неделю вручную и всё равно упускают важные для инвестиций сигналы. Теперь агенты делают это за них — сами."
   },
@@ -868,7 +883,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "LLM-персоны достаточно реалистичны, чтобы заменять часть низкоставочного потребительского ресёрча; реальные surveys стали дорогими и медленными."
+      "why_now": "LLM-персоны достаточно реалистичны, чтобы заменять часть низкоставочного потребительского ресёрча; реальные surveys стали дорогими и медленными.",
+      "sector_ru": "Синтетические опросы потребителей"
     },
     "competition": {
       "direct_competitors": [
@@ -946,7 +962,9 @@
     "launch": {
       "title": "Foresight - Understand your consumers better than ever",
       "tldr": "Clients make decisions with 25x more consumer evidence on average without increasing costs. In a blind benchmark spanning 100+ paired estimates: 95% accuracy against fieldwork; 0.88 Lin's CCC.",
-      "url": "https://www.ycombinator.com/launches/QHw-foresight-understand-your-consumers-better-than-ever"
+      "url": "https://www.ycombinator.com/launches/QHw-foresight-understand-your-consumers-better-than-ever",
+      "title_ru": "Foresight — понимать своих потребителей как никогда точно",
+      "tldr_ru": "Клиенты принимают решения, опираясь в среднем на в 25 раз больше данных о потребителях — и без роста затрат. В слепом тесте на 100+ парных оценках: 95% точности против полевых исследований (Lin’s CCC = 0.88)."
     },
     "yc_description_ru": "Foresight строит AI-симуляции поведения людей, чтобы компании понимали, как человек подумает, отреагирует и что выберет, ещё до реальных решений. Организация может заранее прогнать множество вариантов, увидеть, чем каждый обернётся, и выбрать самый сильный путь."
   },
@@ -1010,7 +1028,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Стоимость запуска снизилась благодаря SpaceX/Rocket Lab; in-space manufacturing (фарма, полупроводники, оптика) выходит из теории — нужна логистика возврата готовой продукции."
+      "why_now": "Стоимость запуска снизилась благодаря SpaceX/Rocket Lab; in-space manufacturing (фарма, полупроводники, оптика) выходит из теории — нужна логистика возврата готовой продукции.",
+      "sector_ru": "Возврат с орбиты · производство в космосе"
     },
     "competition": {
       "direct_competitors": [
@@ -1091,7 +1110,9 @@
     "launch": {
       "title": "Dispatch | Satellites for Manufacturing In Space",
       "tldr": "Gravity is an Invisible Constraint on Manufacturing. Some of the most valuable materials we can make from perfect semiconductors, to novel pharmaceuticals, to 3D printed organs can only be manufactured in microgravity.",
-      "url": "https://www.ycombinator.com/launches/Pnf-dispatch-satellites-for-manufacturing-in-space"
+      "url": "https://www.ycombinator.com/launches/Pnf-dispatch-satellites-for-manufacturing-in-space",
+      "title_ru": "Dispatch — спутники для производства в космосе",
+      "tldr_ru": "Гравитация — невидимое ограничение для производства. Часть самых ценных материалов — от идеальных полупроводников до новых лекарств и напечатанных органов — можно сделать только в невесомости."
     },
     "yc_description_ru": "Dispatch делает многоразовые возвращаемые аппараты, которые выводят на орбиту и возвращают на Землю грузы компаний, производящих сверхдорогие материалы (полупроводники, биотех, фарму) — то, что можно сделать только в космосе. Сейчас у таких компаний нет практичного способа произвести продукт и вернуть его на Землю. Мы снимаем это ограничение.\n\nМы только что вернулись из пустыни Мохаве, где испытывали первый полноразмерный теплозащитный экран — он должен защитить аппарат при входе в атмосферу на скорости выше 20 Махов. Мы собрали его в квартире, в 100 раз дешевле конкурентов, и для теста держали за работающим ракетным двигателем, имитируя нагрузки при входе в атмосферу. Сработало.\n\nЧтобы масштабироваться, мы закрепляем постоянную инфраструктуру на орбите — строим мощные автономные космические станции, изначально рассчитанные на производство без людей, которые обслуживают возвращаемые аппараты."
   },
@@ -1155,7 +1176,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Дефицит водителей + растущие топливные/wage издержки заставляют операторов оптимизировать; LLM умеют интегрировать unstructured данные (дорожные условия, контракты) лучше чем традиционные VRP-решатели."
+      "why_now": "Дефицит водителей + растущие топливные/wage издержки заставляют операторов оптимизировать; LLM умеют интегрировать unstructured данные (дорожные условия, контракты) лучше чем традиционные VRP-решатели.",
+      "sector_ru": "AI-планирование маршрутов в логистике"
     },
     "competition": {
       "direct_competitors": [
@@ -1232,7 +1254,8 @@
     "launch": {
       "title": "Dayjob: AI Agents for Industrial Logistics",
       "tldr": null,
-      "url": "https://www.ycombinator.com/launches/Q32-dayjob-ai-agents-for-industrial-logistics"
+      "url": "https://www.ycombinator.com/launches/Q32-dayjob-ai-agents-for-industrial-logistics",
+      "title_ru": "Dayjob: AI-агенты для промышленной логистики"
     },
     "yc_description_ru": "Dayjob занимается AI-планированием маршрутов для грузоперевозок на короткие расстояния. Наш агент подключается к существующим ERP и постоянно пересобирает маршруты в реальном времени — сам обрабатывает новые заказы, замены водителей и нештатные ситуации. Клиенты в сфере вывоза отходов получают прибавку к эффективности от 8% с первого дня."
   },
@@ -1296,7 +1319,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Frontier-лаборатории испытывают bottleneck в качественных RL-data для reasoning моделей; синтетические + verifier-checked данные становятся новой моделью."
+      "why_now": "Frontier-лаборатории испытывают bottleneck в качественных RL-data для reasoning моделей; синтетические + verifier-checked данные становятся новой моделью.",
+      "sector_ru": "Данные для обучения AI-моделей"
     },
     "competition": {
       "direct_competitors": [
@@ -1369,7 +1393,9 @@
     "launch": {
       "title": "PerfectBit: AI Training data, correct by construction",
       "tldr": "PerfectBit creates high-quality training data that's correct by construction. We verify against physics simulators, scientific databases, formal proof systems. It's what models need to cure hallucination, close common-sense gaps, and reach superintelligence. Reinforcement Learning from Verified Rewards (RLVR) was an early step in this direction. We go further. LLMs, robotics, AI for Science, and more.",
-      "url": "https://www.ycombinator.com/launches/QMv-perfectbit-ai-training-data-correct-by-construction"
+      "url": "https://www.ycombinator.com/launches/QMv-perfectbit-ai-training-data-correct-by-construction",
+      "title_ru": "PerfectBit: данные для обучения AI, верные по построению",
+      "tldr_ru": "PerfectBit готовит качественные данные для обучения, верные по построению. Мы проверяем их через физические симуляторы, научные базы и системы формальных доказательств. Это то, что нужно моделям, чтобы перестать выдумывать, закрыть пробелы в здравом смысле и дойти до суперинтеллекта. Для LLM, робототехники, AI для науки и не только."
     },
     "yc_description_ru": "Мы создаём данные нового типа для обучения AI-моделей. Большинство LLM обучают на шумных текстах из интернета — из-за этого они выдумывают и ошибаются даже там, где человеку легко. PerfectBit готовит качественные данные, которые верны по построению: мы проверяем их через физические симуляторы, научные базы и системы формальных доказательств. Для LLM, робототехники, AI для науки и не только."
   },
@@ -1433,7 +1459,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "E&S сегмент рос двузначными темпами последние годы (повышенный риск-аппетит к нестандартным рискам); AI впервые позволяет автоматизировать complex underwriting workflows."
+      "why_now": "E&S сегмент рос двузначными темпами последние годы (повышенный риск-аппетит к нестандартным рискам); AI впервые позволяет автоматизировать complex underwriting workflows.",
+      "sector_ru": "Специализированное страхование"
     },
     "competition": {
       "direct_competitors": [
@@ -1511,7 +1538,9 @@
     "launch": {
       "title": "Hedge: AI-native specialty insurance company",
       "tldr": "We help insurance brokerages get quotes faster and cheaper. We started as brokers, realized insurance is broken end to end, and are now building the plumbing to fix it.",
-      "url": "https://www.ycombinator.com/launches/QGU-hedge-ai-native-specialty-insurance-company"
+      "url": "https://www.ycombinator.com/launches/QGU-hedge-ai-native-specialty-insurance-company",
+      "title_ru": "Hedge: страховая компания, построенная вокруг AI",
+      "tldr_ru": "Мы помогаем страховым брокерам получать котировки быстрее и дешевле. Мы сами начинали как брокеры, увидели, что страхование сломано от и до, и теперь строим инфраструктуру, чтобы это починить."
     },
     "yc_description_ru": "Hedge — страховая компания, построенная вокруг AI. Мы помогаем страховым брокерам быстрее и дешевле находить лучшее покрытие для клиентов, в том числе для сложного бизнеса.\n\nНачинаем с оптового слоя — первого узкого места для брокеров. Наши конкуренты — компании на миллиарды долларов, но работа у них до сих пор почти полностью ручная: один из крупнейших оптовиков, Ryan Specialty, тратит около 60% выручки на зарплаты.\n\nМы считаем, что правильнее с самого начала перестроить весь процесс вокруг AI. Hedge связывает AI-агентов с андеррайтингом, чтобы брокеры получали котировки быстрее, и постепенно объединяет оптовую дистрибуцию и андеррайтинг в одну AI-страховую компанию."
   },
@@ -1581,7 +1610,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Carriers (FedEx, UPS, DHL) внедрили dimensional pricing — точные габариты прямо влияют на тариф; CV-модели только в 2024–2025 стали достаточно точными для production-измерений."
+      "why_now": "Carriers (FedEx, UPS, DHL) внедрили dimensional pricing — точные габариты прямо влияют на тариф; CV-модели только в 2024–2025 стали достаточно точными для production-измерений.",
+      "sector_ru": "Замер грузов по камерам (компьютерное зрение)"
     },
     "competition": {
       "direct_competitors": [
@@ -1654,7 +1684,9 @@
     "launch": {
       "title": "transload – we measure freight with security cameras",
       "tldr": "Trucking companies lose billions because they don't know the actual size of items on trucks. Measurement occurs via existing warehouse security cameras using computer vision—no new equipment required.",
-      "url": "https://www.ycombinator.com/launches/QP2-transload-we-measure-freight-with-security-cameras"
+      "url": "https://www.ycombinator.com/launches/QP2-transload-we-measure-freight-with-security-cameras",
+      "title_ru": "transload — замеряем грузы обычными камерами наблюдения",
+      "tldr_ru": "Транспортные компании теряют миллиарды, потому что не знают реальных габаритов груза в машинах. Замер идёт через уже установленные складские камеры с помощью компьютерного зрения — без нового оборудования."
     },
     "yc_description_ru": "transload помогает логистическим компаниям замерять грузы с помощью камер видеонаблюдения, которые у них уже есть. Паллета, диван, шина — мы фиксируем реальные габариты, пока груз едет по складу. У наших клиентов 15% отправлений оказываются больше, чем заявил отправитель, а выявление таких расхождений приносит порядка $50k на площадку в месяц за счёт перерасчётов и более плотной загрузки трейлеров."
   },
@@ -1717,7 +1749,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "GPU compute дефицитен и дорог; эффективная утилизация существующих кластеров — главная неэффективность отрасли (часто <40% utilization)."
+      "why_now": "GPU compute дефицитен и дорог; эффективная утилизация существующих кластеров — главная неэффективность отрасли (часто <40% utilization).",
+      "sector_ru": "Оркестрация GPU-кластеров"
     },
     "competition": {
       "direct_competitors": [
@@ -1794,7 +1827,8 @@
     "launch": {
       "title": "Zibra Labs: HPC for Quant Trading Firms Running Backtesting at Scale",
       "tldr": null,
-      "url": "https://www.ycombinator.com/launches/QPY-zibra-labs-hpc-for-quant-trading-firms-running-backtesting-at-scale"
+      "url": "https://www.ycombinator.com/launches/QPY-zibra-labs-hpc-for-quant-trading-firms-running-backtesting-at-scale",
+      "title_ru": "Zibra Labs: HPC для количественных трейдеров и бэктестинга"
     },
     "yc_description_ru": "Мы строим распределённые вычислительные кластеры из самых дешёвых CPU и GPU у гиперскейлеров и neocloud-провайдеров для AI. Наша цель — сделать инфраструктуру фронтир-уровня доступной каждому. Начинаем с больших HPC-кластеров для количественных трейдинговых фирм под параллельные расчёты вроде бэктестинга. Технология переносится и на ключевые AI-задачи: post-training с обучением с подкреплением, дообучение, долгоживущих агентов с активным использованием инструментов и пакетный инференс."
   },
@@ -1864,7 +1898,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "LLM позволяют дёшево генерировать персонализированные emails; email deliverability rules заставляют компании отказываться от mass-blast в пользу 1:1 outreach."
+      "why_now": "LLM позволяют дёшево генерировать персонализированные emails; email deliverability rules заставляют компании отказываться от mass-blast в пользу 1:1 outreach.",
+      "sector_ru": "Автоматизация исходящих продаж"
     },
     "competition": {
       "direct_competitors": [
@@ -1939,7 +1974,9 @@
     "launch": {
       "title": "GojiberryAI - AI GTM brain that detects buying intent, runs conversations, and books qualified demos automatically",
       "tldr": "GojiberryAI identifies high intent leads, detects real buying signals, and automatically launches personalized conversations on LinkedIn from one single platform.",
-      "url": "https://www.ycombinator.com/launches/Pm3-gojiberryai-ai-gtm-brain-that-detects-buying-intent-runs-conversations-and-books-qualified-demos-automatically"
+      "url": "https://www.ycombinator.com/launches/Pm3-gojiberryai-ai-gtm-brain-that-detects-buying-intent-runs-conversations-and-books-qualified-demos-automatically",
+      "title_ru": "GojiberryAI — AI-мозг для продаж: находит интерес, ведёт диалог и назначает демо",
+      "tldr_ru": "GojiberryAI находит заинтересованных лидов, распознаёт реальные сигналы к покупке и сам запускает персональные диалоги в LinkedIn — всё из одной платформы."
     },
     "yc_description_ru": "Gojiberry строит AI-команду для вывода B2B-продуктов на рынок. Начинаем с исходящих продаж: система находит покупателей с признаками интереса, обогащает данные, пишет им, ведёт переписку и назначает целевые встречи. Компании используют Gojiberry вместо старого подхода — покупки инструментов, найма SDR и агентств, ручного подбора списков и догадок о том, что сработает. Каждая кампания делает систему умнее: она учится, какие покупатели конвертируются и какие сообщения получают ответы. За 10 месяцев команда выросла с нуля до $2.5M ARR, растёт на 30% в месяц, прибыльна, и ей пользуются более 2000 клиентов."
   },
@@ -2003,7 +2040,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "LLM достаточно реалистичны, чтобы вести multi-turn shopping conversations; e-com бренды борются за conversion rate на фоне роста CAC."
+      "why_now": "LLM достаточно реалистичны, чтобы вести multi-turn shopping conversations; e-com бренды борются за conversion rate на фоне роста CAC.",
+      "sector_ru": "AI-продавцы для интернет-магазинов"
     },
     "competition": {
       "direct_competitors": [
@@ -2076,7 +2114,9 @@
     "launch": {
       "title": "Kinect: Personalized storefronts that sell, not just show",
       "tldr": "Kinect builds storefronts that sell, not just show. Our AI agents know each ecommerce brand's catalog, voice, and customer taste — they sell to every visitor on the site, and represent the brand to every external agent (ChatGPT, Gemini, Perplexity) asking about it from outside.",
-      "url": "https://www.ycombinator.com/launches/Q1Q-kinect-personalized-storefronts-that-sell-not-just-show"
+      "url": "https://www.ycombinator.com/launches/Q1Q-kinect-personalized-storefronts-that-sell-not-just-show",
+      "title_ru": "Kinect: витрины, которые продают, а не просто показывают",
+      "tldr_ru": "Kinect делает витрины, которые продают, а не просто показывают. Наши AI-агенты знают каталог бренда, его тон и вкусы покупателей — они продают каждому посетителю сайта и представляют бренд любому внешнему агенту (ChatGPT, Gemini, Perplexity), который о нём спрашивает."
     },
     "yc_description_ru": "Kinect создаёт AI-агентов, которые знают ваш бренд, каталог и покупателей. На сайте они продают каждому посетителю: ведут диалог, на лету подстраивают страницы товаров под сегмент и подбирают нужную рекомендацию под конкретный вопрос. Агент считывает, чего на самом деле хочет покупатель — по тому, как он спрашивает, где сомневается, что сравнивает и что заставляет уйти. Мы превращаем данные бренда в структурированный каталог с тоном голоса, нюансами по размеру и причинами возвратов, чтобы агент говорил о бренде именно так, как хотели бы вы, а не по случайному описанию из интернета. Эти же данные мы отдаём в виде «витрин для агентов», чтобы и любой другой AI рассказывал о вашем бренде правильно. Мы строим и для живых покупателей сегодня, и для AI-агентов, которые будут покупать за них."
   },
@@ -2140,7 +2180,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Clinical trial costs растут двузначными темпами; FDA одобряет AI-валидированные endpoints; sponsors давят на CRO ускорить timeline."
+      "why_now": "Clinical trial costs растут двузначными темпами; FDA одобряет AI-валидированные endpoints; sponsors давят на CRO ускорить timeline.",
+      "sector_ru": "AI для клинических исследований"
     },
     "competition": {
       "direct_competitors": [
@@ -2213,7 +2254,9 @@
     "launch": {
       "title": "Astraea - Agents Accelerating clinical trials",
       "tldr": "Clinical trial analysis is still shockingly manual. After a study collects data, teams spend months converting raw clinical data into SDTM, ADaM, TFLs, and submission-ready packages. This work is slow, expensive, and error-prone. Astraea is a platform that completely automates the end-to-end biometrics pipeline from just a protocol and the raw data to a submission ready output.",
-      "url": "https://www.ycombinator.com/launches/QLz-astraea-agents-accelerating-clinical-trials"
+      "url": "https://www.ycombinator.com/launches/QLz-astraea-agents-accelerating-clinical-trials",
+      "title_ru": "Astraea — агенты ускоряют клинические исследования",
+      "tldr_ru": "Анализ клинических исследований до сих пор поразительно ручной. После сбора данных команды месяцами переводят их в SDTM, ADaM, TFL и материалы к подаче — медленно, дорого и с ошибками. Astraea полностью автоматизирует весь путь: от протокола и сырых данных до готового к подаче результата."
     },
     "yc_description_ru": "Astraea автоматизирует биометрику клинических исследований — от сырых данных до материалов, готовых к подаче в FDA. Платформа берёт на себя нормализацию данных, маппинг CDISC, SDTM, ADaM, TFL, контроль качества и правки в одной прослеживаемой системе, помогая спонсорам исследований фазы II/III заменить месяцы ручного программирования на автоматическое и проверяемое выполнение. Начинают с онкологии и редких заболеваний, где сложность анализа высока, а каждый сэкономленный месяц на счету."
   },
@@ -2277,7 +2320,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Mental health practitioners — самая быстрорастущая категория health practitioners в US; LLM-нотации достаточно качественные для clinical documentation; HIPAA-compliant LLM-stack стал доступен в 2024–2025."
+      "why_now": "Mental health practitioners — самая быстрорастущая категория health practitioners в US; LLM-нотации достаточно качественные для clinical documentation; HIPAA-compliant LLM-stack стал доступен в 2024–2025.",
+      "sector_ru": "Софт и AI-ассистент для психотерапевтов"
     },
     "competition": {
       "direct_competitors": [
@@ -2352,7 +2396,9 @@
     "launch": {
       "title": "Klarify 🌱 AI Agent for Therapists",
       "tldr": "Therapists work alone. Klarify is the AI agent that handles every job a therapist does other than the therapy itself: clinical notes, treatment plans, insurance claims, between-session resources, and finding new clients. Nearly 6,000 therapists use Klarify today, and we're growing fast.",
-      "url": "https://www.ycombinator.com/launches/QKh-klarify-ai-agent-for-therapists"
+      "url": "https://www.ycombinator.com/launches/QKh-klarify-ai-agent-for-therapists",
+      "title_ru": "Klarify 🌱 — AI-ассистент для психотерапевтов",
+      "tldr_ru": "Терапевты работают в одиночку. Klarify — это AI-ассистент, который берёт на себя всю работу терапевта, кроме самой терапии: заметки по сессиям, планы лечения, страховые заявки, материалы между сессиями и поиск новых клиентов. Сегодня Klarify пользуются почти 6000 терапевтов, и мы быстро растём."
     },
     "yc_description_ru": "Klarify берёт на себя всю работу психотерапевта, кроме самой терапии: от заметок по сессиям и планов лечения до страховых заявок и поиска новых клиентов. Терапевты держат мир на себе — и при этом ведут бизнес, оформляют страховые заявки, пишут письма, заполняют формы, курируют новичков и каждый вечер тратят часы на бумаги. Софт для управления практикой существует десятилетиями, но он лишь фиксирует то, что делает терапевт, а сделать за него не может.\n\nKlara — это AI в сердце Klarify. Она ведёт заметки, планы лечения, клинические письма, страховые заявки, материалы между сессиями, подготовку к супервизии и поиск новых клиентов. Сегодня Klarify пользуются почти 8300 терапевтов. Наша задача — не заменить терапевта, а освободить его для того единственного, что может только человек: быть рядом со своим клиентом."
   },
@@ -2422,7 +2468,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "LLM достаточно зрелы, чтобы генерировать рабочий код по prompt; PMs/designers всё чаще хотят shippать самостоятельно, минуя инженерные циклы."
+      "why_now": "LLM достаточно зрелы, чтобы генерировать рабочий код по prompt; PMs/designers всё чаще хотят shippать самостоятельно, минуя инженерные циклы.",
+      "sector_ru": "Генерация кода для не-инженеров"
     },
     "competition": {
       "direct_competitors": [
@@ -2496,7 +2543,9 @@
     "launch": {
       "title": "Lightsprint - The Collaborative Product Development Platform",
       "tldr": "We are building a collaborative platform for software teams to plan visually, preview live and ship with an army of cloud agents. Your whole team, including non-engineers, can now ship end to end reliably.",
-      "url": "https://www.ycombinator.com/launches/QSs-lightsprint-the-collaborative-product-development-platform"
+      "url": "https://www.ycombinator.com/launches/QSs-lightsprint-the-collaborative-product-development-platform",
+      "title_ru": "Lightsprint — платформа для совместной разработки продукта",
+      "tldr_ru": "Мы строим платформу для совместной работы команд над софтом: планировать визуально, сразу видеть живой предпросмотр и выпускать продукт силами множества облачных агентов. Вся команда, включая не-инженеров, теперь может надёжно доводить работу до конца."
     },
     "yc_description_ru": "Lightsprint — платформа для командной работы над софтом: планировать визуально, сразу видеть живой предпросмотр и выпускать продукт силами множества облачных агентов. Вся команда, включая не-инженеров, теперь может надёжно доводить работу до конца. Компанию основали Ben Ong — инвестор в AI, ранее развивавший AI-продукты в SEA Group (NYSE: SE) и Temasek (фонд на $300B); Benedict Chan — бывший VP Engineering в Chainlink и CTO в BitGo; и Heng Hong Lee, который в 2013 году построил Facebook Messenger и был директором по инженерии в Fazz (YC S17)."
   },
@@ -2559,7 +2608,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Document-AI пространство (OCR, extraction) растёт на фоне 'digitize everything' трендов; production engineering teams нужны deterministic outputs для compliance."
+      "why_now": "Document-AI пространство (OCR, extraction) растёт на фоне 'digitize everything' трендов; production engineering teams нужны deterministic outputs для compliance.",
+      "sector_ru": "OCR и разбор документов (API)"
     },
     "competition": {
       "direct_competitors": [
@@ -2634,7 +2684,9 @@
     "launch": {
       "title": "Interfaze - Deterministic AI for developer tasks: OCR, Object detection, Web scraping, STT, Classification and more",
       "tldr": "LLMs are built for human-in-the-loop tasks which are highly non-deterministic in nature. We built an AI model for tasks that require high accuracy and verifiable data you can build workflows around.",
-      "url": "https://www.ycombinator.com/launches/Pyw-interfaze-deterministic-ai-for-developer-tasks-ocr-object-detection-web-scraping-stt-classification-and-more"
+      "url": "https://www.ycombinator.com/launches/Pyw-interfaze-deterministic-ai-for-developer-tasks-ocr-object-detection-web-scraping-stt-classification-and-more",
+      "title_ru": "Interfaze — предсказуемый AI для задач разработки: OCR, распознавание, скрейпинг, речь-в-текст",
+      "tldr_ru": "LLM создавались для задач с человеком в цикле — а там результат сильно непредсказуемый. Мы сделали AI-модель для задач, где нужна высокая точность и проверяемые данные, вокруг которых можно строить рабочие процессы."
     },
     "yc_description_ru": "Interfaze — AI-модель на новой архитектуре, где специализированные DNN/CNN-модели соединены с трансформерами для задач, требующих точного и стабильного результата: разбор документов, детекция объектов, классификация, понимание аудио и не только. По открытым бенчмаркам Interfaze обходит крупные модели вроде Gemini Flash, Claude Sonnet и серии GPT-5.4 mini."
   },
@@ -2705,7 +2757,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Стремительный рост Amazon-/Shopify-брендов и cross-border e-commerce делает compliance bottleneck'ом; AI-парсинг регуляторных документов делает категорию автоматизируемой впервые."
+      "why_now": "Стремительный рост Amazon-/Shopify-брендов и cross-border e-commerce делает compliance bottleneck'ом; AI-парсинг регуляторных документов делает категорию автоматизируемой впервые.",
+      "sector_ru": "Автоматизация соответствия для товаров"
     },
     "competition": {
       "direct_competitors": [
@@ -2787,7 +2840,8 @@
     "launch": {
       "title": "Complir - Helping large retailers remove compliance as a bottleneck to launching products globally.",
       "tldr": null,
-      "url": "https://www.ycombinator.com/launches/Ppt-complir-helping-large-retailers-remove-compliance-as-a-bottleneck-to-launching-products-globally"
+      "url": "https://www.ycombinator.com/launches/Ppt-complir-helping-large-retailers-remove-compliance-as-a-bottleneck-to-launching-products-globally",
+      "title_ru": "Complir — снимаем соответствие нормам как барьер к запуску товаров по миру"
     },
     "yc_description_ru": "Complir — платформа на AI для соответствия требованиям к товарам: она помогает ритейлерам запускать и масштабировать продукты в разных странах, не утопая в регуляторной работе. AI-агенты Complir берут на себя нормы и документацию для каждого рынка, где вы продаёте, и держат весь каталог готовым к проверке."
   },
@@ -2850,7 +2904,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Видео-генерация модели (Veo, Sora, Runway) достигли качества, достаточного для photorealism; latency-оптимизация ещё в работе, окно для нового игрока открыто."
+      "why_now": "Видео-генерация модели (Veo, Sora, Runway) достигли качества, достаточного для photorealism; latency-оптимизация ещё в работе, окно для нового игрока открыто.",
+      "sector_ru": "AI-видео в реальном времени"
     },
     "competition": {
       "direct_competitors": [
@@ -2925,7 +2980,9 @@
     "launch": {
       "title": "Keyframe Labs - turn AI into lifelike video calls",
       "tldr": "our real-time, generative models turn AI into lifelike video calls. Deploy in minutes with a few lines of embed code. Photorealism, emotion, and scale for just $0.06 per minute.",
-      "url": "https://www.ycombinator.com/launches/Pwg-keyframe-labs-turn-ai-into-lifelike-video-calls"
+      "url": "https://www.ycombinator.com/launches/Pwg-keyframe-labs-turn-ai-into-lifelike-video-calls",
+      "title_ru": "Keyframe Labs — превращаем AI в живой видеозвонок",
+      "tldr_ru": "Наши генеративные модели реального времени превращают AI в живой видеозвонок. Запуск за минуты — несколько строк кода для встраивания. Фотореализм, эмоции и масштаб всего за $0.06 за минуту."
     },
     "yc_description_ru": "Наши real-time-модели превращают AI в живой видеозвонок. Добавьте лучших в мире AI-аватаров к своим агентам и приложениям за минуты — несколькими строчками кода для встраивания. Фотореализм, эмоции и масштаб — от $0.06 за минуту."
   },
@@ -2989,7 +3046,8 @@
       "tam_usd": null,
       "tam_source": "",
       "market_growth_rate": null,
-      "why_now": "Low-field МРТ-технологии (Hyperfine, Promaxo) демократизировали доступ к МРТ; AI-reconstruction делает low-field изображения клинически приемлемыми; стоимость скрининга рака — главный барьер раннего обнаружения."
+      "why_now": "Low-field МРТ-технологии (Hyperfine, Promaxo) демократизировали доступ к МРТ; AI-reconstruction делает low-field изображения клинически приемлемыми; стоимость скрининга рака — главный барьер раннего обнаружения.",
+      "sector_ru": "Портативный МРТ"
     },
     "competition": {
       "direct_competitors": [
@@ -3078,7 +3136,9 @@
     "launch": {
       "title": "Adialante: We're going to screen the world for cancer!",
       "tldr": "Adialante builds compact and mobile whole-body MRIs. We already have $12.75M in LOIs, $30k in deposits, and our first system will be scanning by demo day.",
-      "url": "https://www.ycombinator.com/launches/QLh-adialante-we-re-going-to-screen-the-world-for-cancer"
+      "url": "https://www.ycombinator.com/launches/QLh-adialante-we-re-going-to-screen-the-world-for-cancer",
+      "title_ru": "Adialante: мы просканируем весь мир на рак!",
+      "tldr_ru": "Adialante делает компактные мобильные МРТ всего тела. У нас уже $12.75M предварительных заказов (письма о намерениях), $30k депозитов, а первая система начнёт сканировать к Demo Day."
     },
     "yc_description_ru": "Мы знаем, как улучшить исходы при раке в 8–10 раз: поймать его рано. МРТ — самый мощный инструмент выявления рака, но такие аппараты стоят миллионы, устанавливаются месяцами и требуют высокой квалификации оператора. Мы пересобрали МРТ с нуля — новая физика, алгоритмы и железо, — чтобы сделать скрининг доступным всему миру. Наш мобильный МРТ — это клиника визуализации на колёсах: ничего не нужно покупать и не нужна инфраструктура. За фиксированную плату за скан любая медицинская площадка может предложить МРТ-скрининг рака. Начинают с рака простаты. Дальше — всё остальное."
   }

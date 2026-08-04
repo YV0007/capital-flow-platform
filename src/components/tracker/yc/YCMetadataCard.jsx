@@ -22,7 +22,7 @@ export default function YCMetadataCard({ company, research }) {
   const invest  = investmentData.companies?.[company.id] || null;
 
   const headcount = team?.headcount_current ?? company.team_size;
-  const sector    = market?.sub_sector || market?.sector;
+  const sector    = market?.sector_ru || market?.sub_sector || market?.sector;
 
   // YC-style info rows.
   const rows = [

@@ -455,6 +455,8 @@ function IconLink({ href, icon: Icon }) {
 // LAUNCH — the YC "Company Launch" post.
 // ─────────────────────────────────────────────────────────────────────────
 function LaunchSection({ launch }) {
+  const title = launch.title_ru || launch.title;
+  const tldr = launch.tldr_ru || launch.tldr;
   return (
     <section style={{
       background: 'linear-gradient(180deg, rgba(255,102,0,0.05), #0d0d0e 100px)',
@@ -475,15 +477,15 @@ function LaunchSection({ launch }) {
           textTransform: 'uppercase', letterSpacing: '0.14em', fontFamily: 'ui-monospace,monospace',
         }}>Company Launch</h3>
       </header>
-      {!isBlank(launch.title) && (
+      {!isBlank(title) && (
         <div style={{ fontSize: 15, color: '#fafafa', fontWeight: 700, lineHeight: 1.35 }}>
-          {launch.title}
+          {title}
         </div>
       )}
-      {!isBlank(launch.tldr) && (
+      {!isBlank(tldr) && (
         <p style={{ margin: 0, fontSize: 13, color: '#d4d4d8', lineHeight: 1.7 }}>
-          <span style={{ color: '#FF6600', fontWeight: 700, fontFamily: 'ui-monospace,monospace', fontSize: 11 }}>TL;DR&nbsp;</span>
-          {launch.tldr}
+          <span style={{ color: '#FF6600', fontWeight: 700, fontFamily: 'ui-monospace,monospace', fontSize: 11 }}>Кратко&nbsp;</span>
+          {tldr}
         </p>
       )}
       {!isBlank(launch.url) && (
