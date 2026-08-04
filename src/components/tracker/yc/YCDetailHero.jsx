@@ -5,9 +5,15 @@ import { Logo, domainFromUrl } from './YCCompanyCard.jsx';
 import { iconForSector } from './yc-sector-colors.js';
 
 const STATUS_LABELS = {
-  Active:   'Активна',
-  Inactive: 'Неактивна',
+  Active:   'Работает',
+  Inactive: 'Закрылась',
   Acquired: 'Куплена',
+};
+
+const STATUS_HINTS = {
+  Active:   'Компания работает — не закрылась и не куплена',
+  Inactive: 'Компания прекратила работу',
+  Acquired: 'Компанию купили',
 };
 
 const STATUS_STYLES = {
@@ -57,6 +63,7 @@ export default function YCDetailHero({ company }) {
               bg={ss.bg}
               border={ss.border}
               text={statusLabel}
+              title={STATUS_HINTS[company.status]}
             />
           )}
           {company.location && (
@@ -88,9 +95,10 @@ export default function YCDetailHero({ company }) {
   );
 }
 
-function Pill({ color, bg, border, text, icon: Icon, mono, tiny }) {
+function Pill({ color, bg, border, text, icon: Icon, mono, tiny, title }) {
   return (
-    <span style={{
+    <span title={title || undefined} style={{
+      cursor: title ? 'help' : 'default',
       fontSize: tiny ? 10.5 : 11.5,
       color, background: bg,
       border: `1px solid ${border}`,

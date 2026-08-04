@@ -503,7 +503,17 @@ export default function App() {
               <ChevronLeft size={13} />
               Трекеры
             </button>
-            <CompanyLogo brand={company.name} size={28} />
+            {company.isDirectory ? (
+              <div style={{
+                width: 28, height: 28, borderRadius: 7,
+                background: '#FF6600', color: '#fff',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontWeight: 800, fontSize: 15, flexShrink: 0,
+                fontFamily: 'Georgia, "Times New Roman", serif',
+              }}>Y</div>
+            ) : (
+              <CompanyLogo brand={company.name} size={28} />
+            )}
             <div className="relative">
               <select
                 value={companyId}
@@ -519,8 +529,10 @@ export default function App() {
             </div>
           </div>
 
-          {/* Center: DATA freshness chip (monolith bento branch, line 17609) */}
-          {(() => {
+          {/* Center: DATA freshness chip. Hidden for the directory (YC) —
+              a memo "as-of" date is meaningless for a portfolio directory,
+              so the freshness note lives inside the YC view instead. */}
+          {!company.isDirectory && (() => {
             const isPublicTab = tab === 'signals';
             const memoDate = memoBaseline?.meta?.received || '—';
             let dateText, isLive;

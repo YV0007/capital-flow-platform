@@ -1,21 +1,22 @@
 // Research sections rendered below the detail hero/body.
-// Framed as a TRACKING view — we've already invested, we want to see how
-// the company is doing. Empty fields are hidden everywhere (no "—"
-// placeholders), and a section is only rendered if it has at least one
-// meaningful value. Section titles are deliberately conversational so the
-// reader can scan and immediately know what they're looking at.
+// Reframed as a TRACKING + INVESTMENT view — we've already invested and want
+// to see who else is on the cap table and how the company is doing. The page
+// deliberately mirrors the shape of a Y Combinator company page: an
+// investment block, the founders (with real YC bios), the YC launch post,
+// a lightweight activity timeline, and sources. The old analytical cards
+// (traction / moat / market / competition) were removed on purpose.
 import React from 'react';
 import {
-  CircleDollarSign, Activity, ShieldCheck, Globe2, Swords, AlertTriangle,
-  Clock, ExternalLink, Users, ArrowUpRight,
+  HandCoins, Clock, ExternalLink, ArrowUpRight, Linkedin, Twitter,
+  Rocket, Award, AlertCircle, Link2,
 } from 'lucide-react';
+import investmentData from '../../../data/yc-investment.json';
 
-// ─ Empty helpers — used everywhere to drop the row/section ─────────────
+// ─ Empty helpers ──────────────────────────────────────────────────────────
 const isNil   = (v) => v === null || v === undefined;
 const isBlank = (v) => isNil(v) || (typeof v === 'string' && v.trim() === '');
 const hasItems = (v) => Array.isArray(v) && v.length > 0;
 
-// ─ Formatters ────────────────────────────────────────────────────────────
 const fmtUsdCompact = (n) => {
   if (isNil(n)) return null;
   const num = Number(n);
@@ -24,8 +25,7 @@ const fmtUsdCompact = (n) => {
   if (num >= 1_000)         return `$${(num / 1_000).toFixed(num >= 10_000 ? 0 : 1)}K`;
   return `$${num.toLocaleString('en-US')}`;
 };
-const fmtUsdExact = (n) => isNil(n) ? null : `$${Number(n).toLocaleString('en-US')}`;
-const fmtPct = (n) => isNil(n) ? null : `${n}%`;
+
 const fmtDate = (s) => {
   if (isBlank(s)) return null;
   try {
@@ -33,43 +33,28 @@ const fmtDate = (s) => {
   } catch { return s; }
 };
 
-const POSITION_LABELS = {
-  leader:     'лидер',
-  contender:  'претендент',
-  challenger: 'челленджер',
-  follower:   'последователь',
-  niche:      'ниша',
+const INVESTOR_TYPE = {
+  fund:        { label: 'фонд',     color: '#34d399', bg: 'rgba(52,211,153,0.10)',  border: 'rgba(52,211,153,0.35)' },
+  vc:          { label: 'фонд',     color: '#34d399', bg: 'rgba(52,211,153,0.10)',  border: 'rgba(52,211,153,0.35)' },
+  angel:       { label: 'ангел',    color: '#f59e0b', bg: 'rgba(245,158,11,0.10)',  border: 'rgba(245,158,11,0.35)' },
+  accelerator: { label: 'акселератор', color: '#a78bfa', bg: 'rgba(167,139,250,0.10)', border: 'rgba(167,139,250,0.35)' },
 };
 
-const SEVERITY_STYLES = {
-  high:   { color: '#ef4444', bg: 'rgba(239,68,68,0.12)',  border: 'rgba(239,68,68,0.40)',  label: 'высокий' },
-  medium: { color: '#f59e0b', bg: 'rgba(245,158,11,0.12)', border: 'rgba(245,158,11,0.40)', label: 'средний' },
-  low:    { color: '#10b981', bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.40)', label: 'низкий'  },
+const MOMENTUM_TYPE = {
+  product:     { label: 'продукт',    color: '#22D3EE' },
+  funding:     { label: 'раунд',      color: '#10b981' },
+  hiring:      { label: 'найм',       color: '#ec4899' },
+  customer:    { label: 'клиент',     color: '#0ea5e9' },
+  partnership: { label: 'партнёрство', color: '#a78bfa' },
+  press:       { label: 'пресса',     color: '#f59e0b' },
+  milestone:   { label: 'веха',       color: '#60a5fa' },
 };
-
-const RISK_CATEGORY_LABELS = {
-  market:     'рынок',
-  technical:  'технологии',
-  team:       'команда',
-  financial:  'финансы',
-  regulatory: 'регуляторика',
-  execution:  'execution',
-};
-
-const MOMENTUM_TYPE_LABELS = {
-  product:     'продукт',
-  funding:     'раунд',
-  hiring:      'найм',
-  customer:    'клиент',
-  partnership: 'партнёрство',
-  press:       'пресса',
-  milestone:   'веха',
-};
-
 
 // ─────────────────────────────────────────────────────────────────────────
-export default function YCResearchSections({ research }) {
-  if (!research) {
+export default function YCResearchSections({ research, company }) {
+  const invest = company ? investmentData.companies?.[company.id] : null;
+
+  if (!research && !invest) {
     return (
       <div style={{
         marginTop: 36, padding: 24,
@@ -82,69 +67,59 @@ export default function YCResearchSections({ research }) {
     );
   }
 
-  // Cards grouped into named chapters so the page reads as sections
-  // instead of a single 9-card grid. Each Group is separated by a wide
-  // 64px gap and its own header rule. Empty group renders nothing.
+  const founders = research?.team?.founders || [];
+  const launch = research?.launch;
+  const momentum = research?.momentum || [];
+  const sources = research?.sources || [];
+
   return (
-    <div style={{ marginTop: 56, display: 'flex', flexDirection: 'column', gap: 64 }}>
-      <Group title="Сделка">
-        <FundingSection data={research.funding} />
-      </Group>
+    <div style={{ marginTop: 56, display: 'flex', flexDirection: 'column', gap: 60 }}>
+      {invest && (
+        <Group title="Инвестиция">
+          <FullWidth><InvestmentSection invest={invest} meta={investmentData._meta} /></FullWidth>
+        </Group>
+      )}
 
-      <Group title="Что есть у компании">
-        <TractionSection data={research.traction} />
-        <MoatSection data={research.moat} />
-        <MarketSection data={research.market} />
-        <CompetitionSection data={research.competition} />
-      </Group>
+      {founders.length > 0 && (
+        <Group title="Основатели">
+          <FullWidth><FoundersBlock founders={founders} /></FullWidth>
+        </Group>
+      )}
 
-      <Group title="Команда">
-        <TeamSection data={research.team} />
-        {research.team?.founders?.length > 0 && (
-          <FullWidth>
-            <FoundersBlock founders={research.team.founders} />
-          </FullWidth>
-        )}
-      </Group>
+      {launch && (
+        <Group title="Запуск на YC">
+          <FullWidth><LaunchSection launch={launch} /></FullWidth>
+        </Group>
+      )}
 
-      <Group title="Активность">
-        {research.momentum?.length > 0 && (
-          <FullWidth>
-            <MomentumSection events={research.momentum} />
-          </FullWidth>
-        )}
-      </Group>
+      {momentum.length > 0 && (
+        <Group title="Активность">
+          <FullWidth><MomentumSection events={momentum} /></FullWidth>
+        </Group>
+      )}
 
-      <Group title="Источники">
-        {research.sources?.length > 0 && (
-          <FullWidth>
-            <SourcesSection sources={research.sources} />
-          </FullWidth>
-        )}
-      </Group>
+      {sources.length > 0 && (
+        <Group title="Источники">
+          <FullWidth><SourcesSection sources={sources} /></FullWidth>
+        </Group>
+      )}
     </div>
   );
 }
 
-// Section group with header rule + auto-fit grid of cards inside. Drops
-// out entirely when every child resolved to null (so e.g. "Активность"
-// disappears for a company with no momentum events).
+// Section group with header rule. Drops out when empty.
 function Group({ title, children }) {
   const items = React.Children.toArray(children).filter(Boolean);
   if (items.length === 0) return null;
   return (
     <section>
       <header style={{
-        display: 'flex', alignItems: 'baseline', gap: 18,
-        marginBottom: 22,
+        display: 'flex', alignItems: 'baseline', gap: 18, marginBottom: 22,
       }}>
         <span style={{
-          fontSize: 18, color: '#fafafa',
-          fontWeight: 700, letterSpacing: '-0.01em',
-          whiteSpace: 'nowrap',
-        }}>
-          {title}
-        </span>
+          fontSize: 18, color: '#fafafa', fontWeight: 700,
+          letterSpacing: '-0.01em', whiteSpace: 'nowrap',
+        }}>{title}</span>
         <span style={{ flex: 1, height: 1, background: '#18181b' }} />
       </header>
       <div style={{
@@ -158,558 +133,462 @@ function Group({ title, children }) {
   );
 }
 
-// Wrapper that forces its child to span every column of the parent grid —
-// used for the founders pedigree block, momentum timeline, and sources
-// list which want to read full-width inside their group.
 function FullWidth({ children }) {
-  return (
-    <div style={{ gridColumn: '1 / -1' }}>
-      {children}
-    </div>
-  );
+  return <div style={{ gridColumn: '1 / -1' }}>{children}</div>;
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-// Layout primitives
+// INVESTMENT — the focus of the page. Who's on the cap table, how much,
+// and how confident we are in it.
 // ─────────────────────────────────────────────────────────────────────────
-function Card({ icon: Icon, title, children, accent = '#a1a1aa' }) {
+function InvestmentSection({ invest, meta }) {
+  const external = invest.external_investors || [];
+  const nonEquity = invest.non_equity || [];
+  const flags = invest.flags || [];
+  const sources = invest.sources || [];
+  const hasExternal = invest.tier === 'external' && external.length > 0;
+
+  const tierBadge = hasExternal
+    ? { text: 'Есть внешние инвесторы', color: '#34d399', bg: 'rgba(52,211,153,0.12)', border: 'rgba(52,211,153,0.40)' }
+    : { text: 'Только сделка YC', color: '#a1a1aa', bg: 'rgba(161,161,170,0.10)', border: 'rgba(161,161,170,0.30)' };
+
+  const capIsSet = !isBlank(invest.cap) && invest.cap !== 'не зафиксирована';
+
   return (
     <section style={{
-      background: '#0d0d0e',
-      border: '1px solid #18181b',
-      borderRadius: 12,
-      padding: '18px 20px 20px',
-      display: 'flex', flexDirection: 'column', gap: 14,
+      background: '#0c0c0e',
+      border: '1px solid #1c1c20',
+      borderRadius: 14,
+      padding: 0, overflow: 'hidden',
+      display: 'flex', flexDirection: 'column',
     }}>
-      <header style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        {Icon && (
+      {/* Header band */}
+      <header style={{
+        display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap',
+        padding: '16px 22px',
+        borderBottom: '1px solid #18181b',
+        background: 'linear-gradient(90deg, rgba(52,211,153,0.06), transparent 60%)',
+      }}>
+        <div style={{
+          width: 34, height: 34, borderRadius: 10,
+          background: 'radial-gradient(circle at 30% 30%, rgba(52,211,153,0.22), rgba(52,211,153,0.04))',
+          border: '1px solid rgba(52,211,153,0.35)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        }}>
+          <HandCoins size={17} style={{ color: '#34d399' }} />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <span style={{ fontSize: 15, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.01em' }}>
+            Кто вложился
+          </span>
+          <span style={{ fontSize: 11.5, color: '#71717a' }}>деньги на счету компании</span>
+        </div>
+        <span style={{ flex: 1 }} />
+        <span style={{
+          fontSize: 11, fontWeight: 700, color: tierBadge.color,
+          background: tierBadge.bg, border: `1px solid ${tierBadge.border}`,
+          borderRadius: 20, padding: '5px 12px', whiteSpace: 'nowrap',
+        }}>{tierBadge.text}</span>
+      </header>
+
+      <div style={{ padding: '18px 22px 22px', display: 'flex', flexDirection: 'column', gap: 18 }}>
+        {/* Plain-language money summary — no confusing single "raised" number */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <FactRow
+            label="Базовая сделка"
+            value={<span>$500K · <span style={{ color: '#a1a1aa' }}>Y Combinator + синдикат Toloka.VC</span></span>}
+          />
+          <FactRow
+            label="Сверх базы"
+            value={<span style={{ color: hasExternal ? '#e4e4e7' : '#a1a1aa' }}>{invest.raised_note}</span>}
+          />
+          <FactRow
+            label="Потолок оценки"
+            hint="Максимальная оценка, зашитая в сделку (SAFE): по ней деньги инвесторов превратятся в долю в следующем раунде. Это не текущая стоимость компании — её на этой стадии не раскрывают."
+            value={capIsSet
+              ? <span style={{ color: '#34d399', fontWeight: 700 }}>{invest.cap}</span>
+              : <span style={{ color: '#a1a1aa' }}>ещё не зафиксирована — определится в следующем раунде</span>}
+          />
+        </div>
+
+        {/* External investors — with website + source links */}
+        {hasExternal && (
+          <SubBlock label="Внешние инвесторы (сверх YC)">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {external.map((inv, i) => {
+                const t = INVESTOR_TYPE[inv.type] || INVESTOR_TYPE.fund;
+                return (
+                  <div key={i} style={{
+                    display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap',
+                    padding: '10px 12px', background: '#161619',
+                    border: '1px solid #26262b', borderRadius: 10,
+                  }}>
+                    {!isBlank(inv.website) ? (
+                      <a href={inv.website} target="_blank" rel="noopener noreferrer"
+                        style={{
+                          fontSize: 13.5, color: '#fafafa', fontWeight: 700, textDecoration: 'none',
+                          display: 'inline-flex', alignItems: 'center', gap: 5,
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#34d399'}
+                        onMouseLeave={e => e.currentTarget.style.color = '#fafafa'}>
+                        {inv.name}<ArrowUpRight size={13} style={{ color: '#52525b' }} />
+                      </a>
+                    ) : (
+                      <span style={{ fontSize: 13.5, color: '#fafafa', fontWeight: 700 }}>{inv.name}</span>
+                    )}
+                    <span style={{
+                      fontSize: 9.5, fontWeight: 700, color: t.color, background: t.bg,
+                      border: `1px solid ${t.border}`, borderRadius: 4, padding: '2px 7px',
+                      textTransform: 'uppercase', letterSpacing: '0.06em',
+                    }}>{t.label}</span>
+                    {!isBlank(inv.note) && (
+                      <span style={{ fontSize: 11.5, color: '#71717a' }}>{inv.note}</span>
+                    )}
+                    {!isBlank(inv.source_url) && (
+                      <>
+                        <span style={{ flex: 1 }} />
+                        <SourceLink url={inv.source_url} label={inv.source_label} />
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </SubBlock>
+        )}
+
+        {/* Grants / accelerators — no equity given up */}
+        {nonEquity.length > 0 && (
+          <SubBlock label="Гранты и поддержка (без доли в компании)">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {nonEquity.map((n, i) => (
+                <span key={i} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  fontSize: 11.5, color: '#d4d4d8',
+                  padding: '6px 11px', borderRadius: 8,
+                  background: 'rgba(167,139,250,0.06)', border: '1px solid rgba(167,139,250,0.22)',
+                }}>
+                  <Award size={12} style={{ color: '#a78bfa', flexShrink: 0 }} />
+                  <span style={{ fontWeight: 600 }}>{n.name}</span>
+                  {!isBlank(n.note) && <span style={{ color: '#71717a' }}>· {n.note}</span>}
+                </span>
+              ))}
+            </div>
+          </SubBlock>
+        )}
+
+        {/* Progress (was "traction") */}
+        {!isBlank(invest.traction_note) && (
+          <SubBlock label="Как идут дела">
+            <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.65 }}>{invest.traction_note}</div>
+          </SubBlock>
+        )}
+
+        {/* Confidence note */}
+        {!isBlank(invest.confidence) && (
           <div style={{
-            width: 28, height: 28, borderRadius: 8,
-            background: `${accent}14`,
-            border: `1px solid ${accent}33`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
+            fontSize: 11.5, color: '#8a8a92', lineHeight: 1.6,
+            paddingTop: 12, borderTop: '1px dashed #26262b',
           }}>
-            <Icon size={14} style={{ color: accent }} />
+            {invest.confidence}
           </div>
         )}
-        <h3 style={{
-          margin: 0, fontSize: 11.5, color: '#a1a1aa', fontWeight: 700,
-          textTransform: 'uppercase', letterSpacing: '0.14em',
-          fontFamily: 'ui-monospace,monospace',
-        }}>
-          {title}
-        </h3>
-      </header>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {children}
+
+        {/* Unconfirmed / rumor flags — with source links when available */}
+        {flags.length > 0 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {flags.map((f, i) => (
+              <div key={i} style={{
+                display: 'flex', gap: 9, alignItems: 'flex-start',
+                padding: '10px 12px', borderRadius: 8,
+                background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.22)',
+              }}>
+                <AlertCircle size={13} style={{ color: '#f59e0b', flexShrink: 0, marginTop: 2 }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+                  <span style={{ fontSize: 11.5, color: '#e4e4e7', lineHeight: 1.55 }}>{f.text || f}</span>
+                  {!isBlank(f.source_url) && <SourceLink url={f.source_url} label={f.source_label} />}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Sources footer */}
+        {sources.length > 0 && (
+          <div style={{
+            display: 'flex', flexWrap: 'wrap', gap: '6px 18px', alignItems: 'center',
+            paddingTop: 12, borderTop: '1px solid #18181b',
+          }}>
+            <span style={{
+              fontSize: 9.5, color: '#52525b', fontFamily: 'ui-monospace,monospace',
+              letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase',
+            }}>Источники</span>
+            {sources.map((s, i) => <SourceLink key={i} url={s.url} label={s.label} />)}
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-// Big headline number — used for the one stat each section is "about".
-function Headline({ label, value, accent = '#fafafa' }) {
-  if (isBlank(value)) return null;
+// One "label — value" fact row for the money summary. Optional `hint`
+// renders a small "?" that explains a term on hover.
+function FactRow({ label, value, hint }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+    <div style={{ display: 'flex', gap: 14, alignItems: 'baseline', flexWrap: 'wrap' }}>
       <span style={{
-        fontSize: 26, fontWeight: 700, color: accent,
-        fontFamily: 'ui-monospace,monospace',
-        letterSpacing: '-0.02em', lineHeight: 1,
-      }}>
-        {value}
-      </span>
-      <span style={{
-        fontSize: 10.5, color: '#71717a',
-        fontFamily: 'ui-monospace,monospace',
-        letterSpacing: '0.08em', textTransform: 'uppercase',
+        fontSize: 11, color: '#71717a', minWidth: 118,
+        fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em',
+        textTransform: 'uppercase', fontWeight: 600,
+        display: 'inline-flex', alignItems: 'center', gap: 5,
       }}>
         {label}
+        {!isBlank(hint) && (
+          <span
+            title={hint}
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: 13, height: 13, borderRadius: '50%',
+              border: '1px solid #3f3f46', color: '#71717a',
+              fontSize: 9, fontWeight: 700, cursor: 'help', flexShrink: 0,
+            }}
+          >?</span>
+        )}
       </span>
+      <span style={{ fontSize: 13, color: '#e4e4e7', lineHeight: 1.55, flex: 1, minWidth: 200 }}>{value}</span>
     </div>
   );
 }
 
-// Secondary stat row — renders nothing when value is missing.
-function Stat({ label, value, mono = false, accent = '#e4e4e7' }) {
-  if (isBlank(value)) return null;
+// Small "source ↗" pill link.
+function SourceLink({ url, label }) {
+  if (isBlank(url)) return null;
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'baseline' }}>
-      <span style={{ fontSize: 11.5, color: '#71717a', whiteSpace: 'nowrap' }}>{label}</span>
-      <span style={{
-        fontSize: 12.5, color: accent, textAlign: 'right',
-        fontFamily: mono ? 'ui-monospace,monospace' : 'inherit',
-        fontWeight: mono ? 600 : 500,
-      }}>{value}</span>
-    </div>
+    <a href={url} target="_blank" rel="noopener noreferrer"
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        fontSize: 11, color: '#60a5fa', textDecoration: 'none',
+        whiteSpace: 'nowrap',
+      }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
+      <Link2 size={11} style={{ flexShrink: 0, color: '#3f6fb0' }} />
+      {label || 'источник'}
+    </a>
   );
 }
 
-function Tag({ text, color = '#a1a1aa', bg = '#18181b', border = '#27272a', small = false }) {
-  return (
-    <span style={{
-      fontSize: small ? 10 : 10.5,
-      color, background: bg,
-      border: `1px solid ${border}`,
-      borderRadius: 4,
-      padding: '3px 8px',
-      fontFamily: 'ui-monospace,monospace',
-      fontWeight: 600,
-      letterSpacing: '0.04em',
-      whiteSpace: 'nowrap',
-    }}>{text}</span>
-  );
-}
-
-function Para({ children, dim = false }) {
-  return (
-    <p style={{
-      margin: 0,
-      fontSize: dim ? 11.5 : 12.5,
-      color: dim ? '#a1a1aa' : '#d4d4d8',
-      lineHeight: 1.65,
-    }}>
-      {children}
-    </p>
-  );
-}
-
-function TagRow({ label, items }) {
-  if (!hasItems(items)) return null;
-  return (
-    <div>
-      <div style={{ fontSize: 11.5, color: '#71717a', marginBottom: 6 }}>{label}</div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-        {items.map((it, i) => <Tag key={i} text={typeof it === 'string' ? it : it.name || ''} small />)}
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────
-// Sections
-// ─────────────────────────────────────────────────────────────────────────
-function FundingSection({ data }) {
-  if (!data) return null;
-  const cap = fmtUsdCompact(data.last_round_post_money_valuation_usd);
-  const raised = fmtUsdExact(data.total_raised_usd);
-  const stage = data.last_round_stage;
-  const lead = data.last_round_lead_investor;
-  const date = fmtDate(data.last_round_date);
-  const investors = data.all_investors || [];
-  const anything = cap || raised || stage || lead || date || investors.length > 0 || !isBlank(data.notes);
-  if (!anything) return null;
-
-  return (
-    <Card icon={CircleDollarSign} title="Раунд и оценка" accent="#10b981">
-      {cap && <Headline label="cap (post-money)" value={cap} accent="#10b981" />}
-      <Stat label="Этап раунда" value={stage} />
-      <Stat label="Размер раунда" value={fmtUsdExact(data.last_round_amount_usd)} mono />
-      <Stat label="Всего поднято" value={raised} mono />
-      <Stat label="Дата" value={date} mono />
-      <Stat label="Lead" value={lead} />
-      <TagRow label="Инвесторы" items={investors} />
-      {!isBlank(data.notes) && <Para dim>{data.notes}</Para>}
-    </Card>
-  );
-}
-
-// Treat as a "clean" metric (gets the big Headline treatment) only when
-// it looks like a number/figure — starts with a digit or $, short, no
-// Russian/English prose. Anything else falls through to a labeled
-// sub-block so we never render a 60-character hedge sentence as a giant
-// monospace headline.
-function isCleanMetric(value) {
-  if (isBlank(value)) return false;
-  const v = String(value).trim();
-  if (v.length > 24) return false;
-  return /^[\$\d]/.test(v) && !/\s.*\s.*\s/.test(v);
-}
-
-function TractionSection({ data }) {
-  if (!data) return null;
-  const metricVal = data.primary_metric_value;
-  const metricLabel = data.primary_metric_type || 'Метрика';
-  const cleanMetric = isCleanMetric(metricVal);
-
-  const anything = !isBlank(metricVal)
-    || !isBlank(data.growth_rate)
-    || hasItems(data.notable_customers)
-    || !isBlank(data.milestones);
-  if (!anything) return null;
-
-  return (
-    <Card icon={Activity} title="Прогресс" accent="#22D3EE">
-      {cleanMetric && (
-        <Headline label={metricLabel} value={metricVal} accent="#22D3EE" />
-      )}
-
-      {!cleanMetric && !isBlank(metricVal) && (
-        <SubBlock label={metricLabel}>
-          <Para>{metricVal}</Para>
-        </SubBlock>
-      )}
-
-      {!isBlank(data.growth_rate) && (
-        <SubBlock label="Рост">
-          <span style={{
-            fontSize: 14, color: '#22D3EE', fontWeight: 700,
-            fontFamily: 'ui-monospace,monospace',
-          }}>
-            {data.growth_rate}
-          </span>
-        </SubBlock>
-      )}
-
-      {hasItems(data.notable_customers) && (
-        <SubBlock label="Клиенты">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            {data.notable_customers.map((c, i) => <Tag key={i} text={c} small />)}
-          </div>
-        </SubBlock>
-      )}
-
-      {!isBlank(data.milestones) && (
-        <SubBlock label="Вехи">
-          <Para>{data.milestones}</Para>
-        </SubBlock>
-      )}
-
-      {!isBlank(data.notes) && (
-        <div style={{
-          fontSize: 11, color: '#71717a', fontStyle: 'italic',
-          lineHeight: 1.6, paddingTop: 8,
-          borderTop: '1px dashed #18181b',
-        }}>
-          NB · {data.notes}
-        </div>
-      )}
-    </Card>
-  );
-}
-
-// Labeled sub-section inside a card — small uppercase mono label above
-// the content. Used to give each fact its own clear container.
 function SubBlock({ label, children }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <div style={{
-        fontSize: 9.5, color: '#71717a',
-        fontFamily: 'ui-monospace,monospace',
-        letterSpacing: '0.14em', fontWeight: 700,
-        textTransform: 'uppercase',
-      }}>
-        {label}
-      </div>
+        fontSize: 9.5, color: '#71717a', fontFamily: 'ui-monospace,monospace',
+        letterSpacing: '0.14em', fontWeight: 700, textTransform: 'uppercase',
+      }}>{label}</div>
       {children}
     </div>
   );
 }
 
-function MoatSection({ data }) {
-  if (!data) return null;
-  const anything = !isBlank(data.summary) || hasItems(data.moat_type) || !isBlank(data.differentiation);
-  if (!anything) return null;
-
-  return (
-    <Card icon={ShieldCheck} title="Что их отличает" accent="#a78bfa">
-      {!isBlank(data.summary) && (
-        <div style={{ fontSize: 13, color: '#e4e4e7', lineHeight: 1.7, fontWeight: 500 }}>
-          {data.summary}
-        </div>
-      )}
-      {hasItems(data.moat_type) && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-          {data.moat_type.map((m, i) => (
-            <Tag key={i} text={m}
-              color="#a78bfa"
-              bg="rgba(167,139,250,0.10)"
-              border="rgba(167,139,250,0.35)" />
-          ))}
-        </div>
-      )}
-      {!isBlank(data.differentiation) && (
-        <div style={{ fontSize: 12, color: '#a1a1aa', lineHeight: 1.65, paddingTop: 6, borderTop: '1px dashed #18181b' }}>
-          {data.differentiation}
-        </div>
-      )}
-    </Card>
-  );
-}
-
-function MarketSection({ data }) {
-  if (!data) return null;
-  const tam = fmtUsdCompact(data.tam_usd);
-  const anything = tam || !isBlank(data.sector) || !isBlank(data.sub_sector)
-    || !isBlank(data.market_growth_rate) || !isBlank(data.why_now);
-  if (!anything) return null;
-
-  return (
-    <Card icon={Globe2} title="Почему сейчас" accent="#0ea5e9">
-      {tam && <Headline label="TAM" value={tam} accent="#0ea5e9" />}
-      <Stat label="Сектор" value={data.sector} />
-      <Stat label="Под-сектор" value={data.sub_sector} />
-      <Stat label="Рост рынка" value={data.market_growth_rate} mono />
-      {!isBlank(data.tam_source) && <Stat label="Источник TAM" value={data.tam_source} />}
-      {!isBlank(data.why_now) && (
-        <div style={{ paddingTop: 4, borderTop: !isBlank(data.sector) ? '1px dashed #18181b' : 'none' }}>
-          <Para>{data.why_now}</Para>
-        </div>
-      )}
-    </Card>
-  );
-}
-
-function CompetitionSection({ data }) {
-  if (!data) return null;
-  const anything = !isBlank(data.competitive_position)
-    || hasItems(data.direct_competitors)
-    || !isBlank(data.competitive_notes);
-  if (!anything) return null;
-
-  const positionLabel = POSITION_LABELS[data.competitive_position] || data.competitive_position;
-
-  return (
-    <Card icon={Swords} title="Конкуренты" accent="#f59e0b">
-      {!isBlank(positionLabel) && (
-        <div style={{ display: 'inline-flex', alignSelf: 'flex-start' }}>
-          <Tag text={`позиция: ${positionLabel}`}
-            color="#f59e0b"
-            bg="rgba(245,158,11,0.10)"
-            border="rgba(245,158,11,0.35)" />
-        </div>
-      )}
-      <TagRow label="Прямые конкуренты" items={data.direct_competitors} />
-      {!isBlank(data.competitive_notes) && <Para>{data.competitive_notes}</Para>}
-    </Card>
-  );
-}
-
-function TeamSection({ data }) {
-  if (!data) return null;
-  const anything = !isNil(data.headcount_current) || !isNil(data.headcount_6mo_ago)
-    || hasItems(data.key_hires);
-  if (!anything) return null;
-
-  const headcount = data.headcount_current;
-  const headcount6 = data.headcount_6mo_ago;
-  const delta = (!isNil(headcount) && !isNil(headcount6))
-    ? `${headcount - headcount6 >= 0 ? '+' : ''}${headcount - headcount6} за 6 мес`
-    : null;
-
-  return (
-    <Card icon={Users} title="Команда" accent="#ec4899">
-      {!isNil(headcount) && (
-        <Headline label={delta || 'человек в команде'} value={String(headcount)} accent="#ec4899" />
-      )}
-      <TagRow label="Ключевые наймы" items={data.key_hires} />
-    </Card>
-  );
-}
-
+// ─────────────────────────────────────────────────────────────────────────
+// FOUNDERS — YC "Active Founders" style: name + role + prose bio + links.
+// ─────────────────────────────────────────────────────────────────────────
 function FoundersBlock({ founders }) {
   return (
-    <section style={{
-      background: '#0d0d0e', border: '1px solid #18181b',
-      borderRadius: 12, padding: '20px 22px',
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+      gap: 14,
     }}>
-      <div style={{
-        fontSize: 11.5, color: '#a1a1aa', fontWeight: 700,
-        textTransform: 'uppercase', letterSpacing: '0.14em',
-        fontFamily: 'ui-monospace,monospace',
-        marginBottom: 14,
-      }}>
-        Основатели
-      </div>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-        gap: 12,
-      }}>
-        {founders.map((f, i) => (
-          <article key={i} style={{
-            background: '#18181b', border: '1px solid #27272a',
-            borderRadius: 8, padding: '14px 14px 12px',
-            display: 'flex', flexDirection: 'column', gap: 8,
-          }}>
-            <header>
-              {f.linkedin ? (
-                <a
-                  href={f.linkedin} target="_blank" rel="noopener noreferrer"
-                  style={{
-                    color: '#fafafa', fontSize: 14, fontWeight: 700,
-                    textDecoration: 'none',
-                    display: 'inline-flex', alignItems: 'center', gap: 6,
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.color = '#a1a1aa'}
-                  onMouseLeave={e => e.currentTarget.style.color = '#fafafa'}
-                >
-                  {f.name}
-                  <ArrowUpRight size={12} style={{ flexShrink: 0 }} />
-                </a>
-              ) : (
-                <span style={{ color: '#fafafa', fontSize: 14, fontWeight: 700 }}>{f.name}</span>
-              )}
+      {founders.map((f, i) => (
+        <article key={i} style={{
+          background: '#0d0d0e', border: '1px solid #18181b',
+          borderRadius: 12, padding: '18px 20px',
+          display: 'flex', flexDirection: 'column', gap: 12,
+        }}>
+          <header style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <span style={{ color: '#fafafa', fontSize: 15, fontWeight: 700 }}>{f.name}</span>
+              </div>
               {f.role && (
                 <div style={{
-                  fontSize: 10.5, color: '#71717a',
-                  fontFamily: 'ui-monospace,monospace',
-                  letterSpacing: '0.06em', textTransform: 'uppercase',
-                  marginTop: 2, fontWeight: 600,
+                  fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace',
+                  letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 3, fontWeight: 600,
                 }}>{f.role}</div>
               )}
-            </header>
-            {hasItems(f.pedigree_tags) && (
-              <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 4 }}>
-                {f.pedigree_tags.map((t, j) => (
-                  <li key={j} style={{
-                    fontSize: 11.5, color: '#d4d4d8', lineHeight: 1.55,
-                    paddingLeft: 12, position: 'relative',
-                  }}>
-                    <span style={{ position: 'absolute', left: 0, color: '#52525b' }}>·</span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {!isBlank(f.prior_exits) && (
-              <div style={{ fontSize: 11, color: '#71717a', fontStyle: 'italic', marginTop: 2 }}>
-                Прошлые экзиты: {f.prior_exits}
-              </div>
-            )}
-          </article>
-        ))}
-      </div>
+            </div>
+            <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
+              {!isBlank(f.linkedin) && <IconLink href={f.linkedin} icon={Linkedin} />}
+              {!isBlank(f.twitter) && <IconLink href={f.twitter} icon={Twitter} />}
+            </div>
+          </header>
+          {!isBlank(f.bio) && (
+            <p style={{ margin: 0, fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.65 }}>{f.bio}</p>
+          )}
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function IconLink({ href, icon: Icon }) {
+  return (
+    <a
+      href={href} target="_blank" rel="noopener noreferrer"
+      onClick={e => e.stopPropagation()}
+      style={{
+        width: 28, height: 28, borderRadius: 6,
+        background: '#18181b', border: '1px solid #27272a',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        color: '#a1a1aa', textDecoration: 'none', transition: 'all 140ms',
+      }}
+      onMouseEnter={e => { e.currentTarget.style.color = '#fafafa'; e.currentTarget.style.borderColor = '#52525b'; }}
+      onMouseLeave={e => { e.currentTarget.style.color = '#a1a1aa'; e.currentTarget.style.borderColor = '#27272a'; }}
+    >
+      <Icon size={13} />
+    </a>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// LAUNCH — the YC "Company Launch" post.
+// ─────────────────────────────────────────────────────────────────────────
+function LaunchSection({ launch }) {
+  return (
+    <section style={{
+      background: 'linear-gradient(180deg, rgba(255,102,0,0.05), #0d0d0e 100px)',
+      border: '1px solid rgba(255,102,0,0.20)',
+      borderRadius: 12, padding: '20px 22px',
+      display: 'flex', flexDirection: 'column', gap: 12,
+    }}>
+      <header style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{
+          width: 28, height: 28, borderRadius: 8,
+          background: 'rgba(255,102,0,0.12)', border: '1px solid rgba(255,102,0,0.30)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <Rocket size={14} style={{ color: '#FF6600' }} />
+        </div>
+        <h3 style={{
+          margin: 0, fontSize: 11.5, color: '#a1a1aa', fontWeight: 700,
+          textTransform: 'uppercase', letterSpacing: '0.14em', fontFamily: 'ui-monospace,monospace',
+        }}>Company Launch</h3>
+      </header>
+      {!isBlank(launch.title) && (
+        <div style={{ fontSize: 15, color: '#fafafa', fontWeight: 700, lineHeight: 1.35 }}>
+          {launch.title}
+        </div>
+      )}
+      {!isBlank(launch.tldr) && (
+        <p style={{ margin: 0, fontSize: 13, color: '#d4d4d8', lineHeight: 1.7 }}>
+          <span style={{ color: '#FF6600', fontWeight: 700, fontFamily: 'ui-monospace,monospace', fontSize: 11 }}>TL;DR&nbsp;</span>
+          {launch.tldr}
+        </p>
+      )}
+      {!isBlank(launch.url) && (
+        <a
+          href={launch.url} target="_blank" rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 5, alignSelf: 'flex-start',
+            fontSize: 12, color: '#FF6600', textDecoration: 'none', fontWeight: 600,
+            marginTop: 2,
+          }}
+          onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+          onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+        >
+          Смотреть лонч <ArrowUpRight size={13} />
+        </a>
+      )}
     </section>
   );
 }
 
-function RisksSection({ risks }) {
-  return (
-    <Card icon={AlertTriangle} title="Что может пойти не так" accent="#ef4444">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {risks.map((r, i) => {
-          const s = SEVERITY_STYLES[r.severity] || SEVERITY_STYLES.medium;
-          const catLabel = RISK_CATEGORY_LABELS[r.category] || r.category;
-          return (
-            <div key={i} style={{
-              display: 'flex', gap: 12,
-              padding: '12px 14px',
-              background: '#18181b', border: '1px solid #27272a',
-              borderLeft: `3px solid ${s.color}`,
-              borderRadius: 6,
-            }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flexShrink: 0, minWidth: 88 }}>
-                <span style={{
-                  fontSize: 9.5, color: s.color, background: s.bg,
-                  border: `1px solid ${s.border}`,
-                  borderRadius: 3, padding: '2px 6px',
-                  fontFamily: 'ui-monospace,monospace',
-                  fontWeight: 700, letterSpacing: '0.08em',
-                  textTransform: 'uppercase', whiteSpace: 'nowrap',
-                  textAlign: 'center',
-                }}>{s.label}</span>
-                {catLabel && (
-                  <span style={{ fontSize: 10, color: '#71717a',
-                    fontFamily: 'ui-monospace,monospace',
-                    letterSpacing: '0.06em', textAlign: 'center',
-                  }}>{catLabel}</span>
-                )}
-              </div>
-              <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.6 }}>{r.risk}</div>
-            </div>
-          );
-        })}
-      </div>
-    </Card>
-  );
-}
-
+// ─────────────────────────────────────────────────────────────────────────
+// ACTIVITY — redesigned as a compact card feed (was a bare dotted list).
+// ─────────────────────────────────────────────────────────────────────────
 function MomentumSection({ events }) {
-  const sorted = [...events].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+  const sorted = [...events].sort((a, b) => (b.date || '').localeCompare(a.date || '')); // newest first
   return (
-    <Card icon={Clock} title="Хронология" accent="#22D3EE">
-      <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 0 }}>
-        {sorted.map((e, i) => {
-          const last = i === sorted.length - 1;
-          return (
-            <li key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', paddingBottom: last ? 0 : 14 }}>
-              <div style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center',
-                flexShrink: 0, minWidth: 14,
-              }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {sorted.map((e, i) => {
+        const t = MOMENTUM_TYPE[e.type] || { label: e.type, color: '#a1a1aa' };
+        return (
+          <div key={i} style={{
+            display: 'flex', gap: 14, alignItems: 'stretch',
+            background: '#0d0d0e', border: '1px solid #18181b',
+            borderLeft: `3px solid ${t.color}`,
+            borderRadius: 10, padding: '14px 16px',
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0, minWidth: 92 }}>
+              <span style={{
+                fontSize: 11, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace',
+                letterSpacing: '0.02em', whiteSpace: 'nowrap',
+              }}>{fmtDate(e.date) || e.date}</span>
+              {e.type && (
                 <span style={{
-                  width: 10, height: 10, borderRadius: '50%',
-                  background: '#22D3EE',
-                  boxShadow: '0 0 6px rgba(34,211,238,0.55)',
-                  marginTop: 4,
-                }} />
-                {!last && <span style={{ flex: 1, width: 2, background: '#27272a', marginTop: 4 }} />}
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{
-                  fontSize: 11, color: '#71717a',
-                  fontFamily: 'ui-monospace,monospace',
-                  letterSpacing: '0.06em', marginBottom: 4,
-                  display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap',
-                }}>
-                  <span>{fmtDate(e.date) || e.date}</span>
-                  {e.type && (
-                    <span style={{ color: '#a78bfa', textTransform: 'uppercase', fontWeight: 700 }}>
-                      · {MOMENTUM_TYPE_LABELS[e.type] || e.type}
-                    </span>
-                  )}
-                </div>
-                <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.6 }}>
-                  {e.event}
-                  {!isBlank(e.source_url) && (
-                    <a
-                      href={e.source_url} target="_blank" rel="noopener noreferrer"
-                      style={{
-                        color: '#71717a', marginLeft: 8,
-                        textDecoration: 'none',
-                        display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle',
-                      }}
-                      title={e.source_url}
-                      onMouseEnter={ev => ev.currentTarget.style.color = '#fafafa'}
-                      onMouseLeave={ev => ev.currentTarget.style.color = '#71717a'}
-                    >
-                      <ExternalLink size={11} />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-    </Card>
+                  alignSelf: 'flex-start',
+                  fontSize: 9.5, fontWeight: 700, color: t.color,
+                  background: `${t.color}18`, border: `1px solid ${t.color}44`,
+                  borderRadius: 4, padding: '2px 7px',
+                  fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase',
+                  letterSpacing: '0.06em', whiteSpace: 'nowrap',
+                }}>{t.label}</span>
+              )}
+            </div>
+            <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center' }}>
+              <span style={{ fontSize: 13, color: '#e4e4e7', lineHeight: 1.6 }}>
+                {e.event}
+                {!isBlank(e.source_url) && (
+                  <a
+                    href={e.source_url} target="_blank" rel="noopener noreferrer"
+                    title={e.source_url}
+                    style={{
+                      color: '#71717a', marginLeft: 8, textDecoration: 'none',
+                      display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle',
+                    }}
+                    onMouseEnter={ev => ev.currentTarget.style.color = '#fafafa'}
+                    onMouseLeave={ev => ev.currentTarget.style.color = '#71717a'}
+                  >
+                    <ExternalLink size={11} />
+                  </a>
+                )}
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// SOURCES
+// ─────────────────────────────────────────────────────────────────────────
 function SourcesSection({ sources }) {
   return (
-    <Card icon={ExternalLink} title="Источники" accent="#60a5fa">
-      <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 6 }}>
+    <div style={{
+      background: '#0d0d0e', border: '1px solid #18181b',
+      borderRadius: 12, padding: '18px 20px',
+    }}>
+      <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: '10px 24px' }}>
         {sources.map((s, i) => (
           <li key={i}>
             <a
               href={s.url} target="_blank" rel="noopener noreferrer"
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                fontSize: 12, color: '#60a5fa', textDecoration: 'none',
-                wordBreak: 'break-all',
+                display: 'inline-flex', alignItems: 'center', gap: 7,
+                fontSize: 12.5, color: '#60a5fa', textDecoration: 'none',
               }}
               onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
               onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
             >
-              <ExternalLink size={11} style={{ flexShrink: 0, color: '#3f3f46' }} />
+              <ExternalLink size={12} style={{ flexShrink: 0, color: '#3f3f46' }} />
               {s.label || s.url}
             </a>
           </li>
         ))}
       </ul>
-    </Card>
+    </div>
   );
 }

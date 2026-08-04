@@ -1,0 +1,543 @@
+{
+  "_meta": {
+    "note": "Инвестиционный слой поверх YC-портфеля. У всех одна базовая сделка: YC вкладывает $500K и небольшой чек синдиката Toloka.VC. 'external' — есть названный внешний инвестор сверх YC/Toloka; 'yc_only' — раскрыта только базовая сделка YC.",
+    "standard_deal_note": "База у всех: $500K от YC + синдикат Toloka.VC",
+    "yc_check_usd": 500000,
+    "toloka_total_usd": 1400000,
+    "batch_company_count": 21
+  },
+  "companies": {
+    "bentolabs": {
+      "tier": "external",
+      "cap": "$35M",
+      "external_investors": [
+        {
+          "name": "We Founder Circle",
+          "type": "fund",
+          "note": "первый институциональный чек — $95.2K (апрель 2026)",
+          "website": "https://wefoundercircle.com/",
+          "source_url": "https://tracxn.com/d/companies/bentolabs-ai/__ybyeHL1s2GyEWbH7a3nv5w2INCJCyhB1v_yqNaQZLQU/funding-and-investors",
+          "source_label": "Tracxn"
+        }
+      ],
+      "outside_raised_usd": 95000,
+      "raised_note": "Сверх базовой сделки YC — около $95K от We Founder Circle.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Внешний инвестор подтверждён. Оценка компании не раскрыта.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Tracxn — финансирование BentoLabs",
+          "url": "https://tracxn.com/d/companies/bentolabs-ai/__ybyeHL1s2GyEWbH7a3nv5w2INCJCyhB1v_yqNaQZLQU/funding-and-investors"
+        }
+      ]
+    },
+    "pairio": {
+      "tier": "yc_only",
+      "cap": "$25M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Кроме YC и Toloka внешних инвесторов не нашли.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "finaldose": {
+      "tier": "yc_only",
+      "cap": "$60M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [],
+      "traction_note": "Самый высокий потолок оценки в батче — $60M.",
+      "confidence": "Внешние инвесторы не раскрыты.",
+      "flags": [
+        {
+          "text": "Ходят слухи о раунде под лид Paul Graham — публичного подтверждения нет.",
+          "source_url": null,
+          "source_label": null
+        },
+        {
+          "text": "Сумму $15M иногда приписывают FinalDose по ошибке: это про прошлую компанию основателя (Vivid Dx).",
+          "source_url": null,
+          "source_label": null
+        }
+      ],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "madrone": {
+      "tier": "yc_only",
+      "cap": "$50M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [
+        {
+          "name": "NVIDIA Inception",
+          "note": "программа NVIDIA для стартапов (кредиты и поддержка) — без доли в компании"
+        }
+      ],
+      "traction_note": "",
+      "confidence": "NVIDIA Inception — это поддержка, а не вложение за долю. Инвесторов-фондов не раскрыто.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "cohesion": {
+      "tier": "yc_only",
+      "cap": "$30M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [],
+      "traction_note": "Работают с 10+ фондами (совокупно более $10B под управлением) — по словам компании.",
+      "confidence": "Внешних инвесторов не раскрыто.",
+      "flags": [
+        {
+          "text": "Однофамильцы: компания Cohesion с $21.75M и Ken Griffin — это другой бизнес (умные здания), не эта.",
+          "source_url": null,
+          "source_label": null
+        }
+      ],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "foresight": {
+      "tier": "yc_only",
+      "cap": "$30M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Внешних инвесторов не раскрыто. Название частое — легко перепутать с другими компаниями.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "dispatch": {
+      "tier": "yc_only",
+      "cap": "$50M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC подтверждённых внешних денег нет.",
+      "non_equity": [],
+      "traction_note": "TechCrunch назвал компанию одним из заметных стартапов батча на Demo Day.",
+      "confidence": "Ранее упоминался фонд Team Ignite Ventures, но по более полному исследованию батча это не подтвердилось (высокий риск путаницы одноимённых компаний). Внешних инвесторов не подтверждено.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "dayjob": {
+      "tier": "external",
+      "cap": "$40M",
+      "external_investors": [
+        {
+          "name": "Paul Graham",
+          "type": "angel",
+          "note": "ангел, основатель Y Combinator",
+          "website": "https://www.paulgraham.com/",
+          "source_url": "https://www.ycombinator.com/companies/dayjob/jobs",
+          "source_label": "Вакансии Dayjob на YC"
+        },
+        {
+          "name": "Harry Stebbings",
+          "type": "angel",
+          "note": "ангел, основатель 20VC",
+          "website": "https://20vc.fund/",
+          "source_url": "https://www.ycombinator.com/companies/dayjob/jobs",
+          "source_label": "Вакансии Dayjob на YC"
+        }
+      ],
+      "outside_raised_usd": null,
+      "raised_note": "Есть вложения ангелов сверх базовой сделки YC; суммы не раскрыты.",
+      "non_equity": [],
+      "traction_note": "Выручка (ARR) около $653K, растёт примерно на 20% в месяц; рынок перевозок на короткие расстояния — около $45B.",
+      "confidence": "Ангелы (Paul Graham, Harry Stebbings) подтверждены. Выручка — по словам компании. Оценка не раскрыта.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Вакансии Dayjob на YC (называют инвесторов)",
+          "url": "https://www.ycombinator.com/companies/dayjob/jobs"
+        }
+      ]
+    },
+    "perfectbit": {
+      "tier": "yc_only",
+      "cap": "$35M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC подтверждённых внешних денег нет.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Ранее упоминался фонд Team Ignite Ventures, но по более полному исследованию батча это не подтвердилось (высокий риск путаницы одноимённых компаний). Внешних инвесторов не подтверждено.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "hedge": {
+      "tier": "yc_only",
+      "cap": "$30M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Внешних инвесторов не раскрыто (юридическое название — Hedge Specialty).",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "transload": {
+      "tier": "yc_only",
+      "cap": "$35M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "$500K — это базовая сделка YC, а не отдельные внешние деньги.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Внешних инвесторов нет; $500K — базовая сделка YC.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "zibra": {
+      "tier": "yc_only",
+      "cap": "$30M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC подтверждённых внешних денег нет.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Ранее упоминался фонд Team Ignite Ventures, но по более полному исследованию батча это не подтвердилось (высокий риск путаницы одноимённых компаний). Внешних инвесторов не подтверждено.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "gojiberry": {
+      "tier": "yc_only",
+      "cap": "$40M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [],
+      "traction_note": "Выручка (ARR) около $2.5M за 10 месяцев (по словам компании); основатели уже продавали свои прошлые компании — CoCo AI и Edusign.",
+      "confidence": "Отдельных внешних инвесторов не раскрыто. Выручка — по словам компании.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "kinect": {
+      "tier": "yc_only",
+      "cap": "$30M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [],
+      "traction_note": "Рост конверсии около 20% на 9–11 брендах (по словам компании).",
+      "confidence": "Внешних инвесторов не раскрыто (легко перепутать с Microsoft Kinect).",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "astraea": {
+      "tier": "yc_only",
+      "cap": "$30M",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC внешних денег не раскрыто.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Внешних инвесторов не раскрыто.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "klarify": {
+      "tier": "yc_only",
+      "cap": "не зафиксирована",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC подтверждённых внешних денег нет.",
+      "non_equity": [],
+      "traction_note": "Около 8300 терапевтов в 5 странах; публичный запуск — июнь 2026.",
+      "confidence": "Ранее упоминался фонд Team Ignite Ventures, но по более полному исследованию батча это не подтвердилось (высокий риск путаницы одноимённых компаний). Внешних инвесторов не подтверждено.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "lightsprint": {
+      "tier": "external",
+      "cap": "$40M",
+      "external_investors": [
+        {
+          "name": "Batch Ventures",
+          "type": "fund",
+          "note": "",
+          "website": "https://www.batch.ventures/",
+          "source_url": "https://pitchbook.com/profiles/company/1357460-47",
+          "source_label": "PitchBook"
+        },
+        {
+          "name": "Rebel Fund",
+          "type": "fund",
+          "note": "",
+          "website": "https://www.rebelfund.vc/",
+          "source_url": "https://pitchbook.com/profiles/company/1357460-47",
+          "source_label": "PitchBook"
+        },
+        {
+          "name": "Sterling Road",
+          "type": "fund",
+          "note": "",
+          "website": "https://www.sterlingroad.com/",
+          "source_url": "https://pitchbook.com/profiles/company/1357460-47",
+          "source_label": "PitchBook"
+        },
+        {
+          "name": "Transpose Platform Management",
+          "type": "fund",
+          "note": "",
+          "website": "https://www.transposeplatform.vc/",
+          "source_url": "https://pitchbook.com/profiles/company/1357460-47",
+          "source_label": "PitchBook"
+        }
+      ],
+      "outside_raised_usd": null,
+      "raised_note": "В сделке участвуют четыре названных фонда и YC; отдельные суммы не раскрыты.",
+      "non_equity": [],
+      "traction_note": "TechCrunch назвал компанию одним из заметных стартапов батча.",
+      "confidence": "Внешние инвесторы подтверждены (PitchBook). Оценка не раскрыта.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "PitchBook — профиль Lightsprint",
+          "url": "https://pitchbook.com/profiles/company/1357460-47"
+        }
+      ]
+    },
+    "interfaze": {
+      "tier": "external",
+      "cap": "$40M",
+      "external_investors": [
+        {
+          "name": "Antler",
+          "type": "fund",
+          "note": "лид pre-seed (~$500K), ещё до YC",
+          "website": "https://www.antler.co/",
+          "source_url": "https://x.com/adaventures/status/1899358373776155131",
+          "source_label": "Ada Ventures"
+        },
+        {
+          "name": "Ada Ventures",
+          "type": "fund",
+          "note": "лид раунда $1M",
+          "website": "https://www.adaventures.com/",
+          "source_url": "https://x.com/adaventures/status/1899358373776155131",
+          "source_label": "Ada Ventures"
+        }
+      ],
+      "outside_raised_usd": 1500000,
+      "raised_note": "~$1.5M ещё до YC: ~$500K pre-seed под лид Antler и $1M под лид Ada Ventures.",
+      "non_equity": [],
+      "traction_note": "",
+      "confidence": "Внешние инвесторы подтверждены; раунды прошли ещё до участия в YC.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Ada Ventures — раунд Interfaze",
+          "url": "https://x.com/adaventures/status/1899358373776155131"
+        }
+      ]
+    },
+    "complir": {
+      "tier": "external",
+      "cap": "$50M",
+      "external_investors": [
+        {
+          "name": "Vendep Capital",
+          "type": "fund",
+          "note": "лид pre-seed €1.7M",
+          "website": "https://www.vendep.com/",
+          "source_url": "https://tech.eu/2025/12/01/complir-raises-eur17m-to-help-retailers-manage-global-compliance-with-ai-infrastructure/",
+          "source_label": "Tech.eu"
+        },
+        {
+          "name": "Plug and Play",
+          "type": "fund",
+          "note": "",
+          "website": "https://www.plugandplaytechcenter.com/",
+          "source_url": "https://tech.eu/2025/12/01/complir-raises-eur17m-to-help-retailers-manage-global-compliance-with-ai-infrastructure/",
+          "source_label": "Tech.eu"
+        },
+        {
+          "name": "Likeminded",
+          "type": "fund",
+          "note": "",
+          "website": null,
+          "source_url": "https://tech.eu/2025/12/01/complir-raises-eur17m-to-help-retailers-manage-global-compliance-with-ai-infrastructure/",
+          "source_label": "Tech.eu"
+        },
+        {
+          "name": "Xpress",
+          "type": "fund",
+          "note": "",
+          "website": null,
+          "source_url": "https://tech.eu/2025/12/01/complir-raises-eur17m-to-help-retailers-manage-global-compliance-with-ai-infrastructure/",
+          "source_label": "Tech.eu"
+        }
+      ],
+      "outside_raised_usd": 1850000,
+      "raised_note": "€1.7M pre-seed под лид Vendep Capital (плюс Plug and Play, Likeminded, Xpress и ангелы).",
+      "non_equity": [],
+      "traction_note": "TechCrunch назвал компанию одним из заметных стартапов; команда 13 человек (Копенгаген).",
+      "confidence": "Внешние инвесторы подтверждены.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Tech.eu — раунд Complir",
+          "url": "https://tech.eu/2025/12/01/complir-raises-eur17m-to-help-retailers-manage-global-compliance-with-ai-infrastructure/"
+        }
+      ]
+    },
+    "keyframe": {
+      "tier": "yc_only",
+      "cap": "не зафиксирована",
+      "external_investors": [],
+      "outside_raised_usd": 0,
+      "raised_note": "Сверх базовой сделки YC подтверждённых внешних денег нет.",
+      "non_equity": [],
+      "traction_note": "Видео в реальном времени — от $0.06 за минуту.",
+      "confidence": "Ранее упоминался фонд Team Ignite Ventures, но по более полному исследованию батча это не подтвердилось (высокий риск путаницы одноимённых компаний). Внешних инвесторов не подтверждено.",
+      "flags": [],
+      "sources": [
+        {
+          "label": "Extruct — данные по батчу P26",
+          "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+        }
+      ]
+    },
+    "adialante": {
+      "tier": "external",
+      "cap": "не зафиксирована",
+      "external_investors": [
+        {
+          "name": "Pioneer Fund",
+          "type": "fund",
+          "note": "инвестор за долю (плюс YC и другие)",
+          "website": "https://www.pioneerfund.vc/",
+          "source_url": "https://svpost.com/articles/adialante-yc-launch-mobile-mri/",
+          "source_label": "The Silicon Valley Post"
+        },
+        {
+          "name": "Fogarty Innovation",
+          "type": "fund",
+          "note": "участник seed-раунда",
+          "website": "https://www.fogartyinnovation.org/",
+          "source_url": null,
+          "source_label": null
+        },
+        {
+          "name": "Brown Venture Group",
+          "type": "fund",
+          "note": "участник seed-раунда",
+          "website": "https://brownventuregroup.com/",
+          "source_url": null,
+          "source_label": null
+        },
+        {
+          "name": "Walleye Tank",
+          "type": "fund",
+          "note": "участник seed-раунда",
+          "website": "https://www.walleyetank.com/",
+          "source_url": null,
+          "source_label": null
+        }
+      ],
+      "outside_raised_usd": 2930000,
+      "raised_note": "~$2.9M всего: seed ~$1.5M (Pioneer Fund, Fogarty Innovation, Brown Venture Group, Walleye Tank + YC) и грант NSF $1.18M.",
+      "non_equity": [
+        {
+          "name": "NSF SBIR Phase II",
+          "note": "грант $1.18M — без доли в компании"
+        }
+      ],
+      "traction_note": "Предварительные заказы (письма о намерениях) на $19.75M и $30K депозитов; первая система уже сканирует. Это подтверждает спрос, но это не привлечённые деньги.",
+      "confidence": "Pioneer Fund и гранты подтверждены. Оценка ещё не зафиксирована — определится в следующем раунде.",
+      "flags": [
+        {
+          "text": "Twin Cities Business: компания закрывает seed-раунд с целью $15–20M. Кто ведёт раунд — публично не называют (слухи про General Catalyst / Sequoia и Paul Graham не подтверждены).",
+          "source_url": "https://tcbmag.com/adialante-turns-to-silicon-valley-to-scale-its-mri-innovation/",
+          "source_label": "Twin Cities Business"
+        }
+      ],
+      "sources": [
+        {
+          "label": "The Silicon Valley Post — запуск Adialante",
+          "url": "https://svpost.com/articles/adialante-yc-launch-mobile-mri/"
+        }
+      ]
+    }
+  }
+}

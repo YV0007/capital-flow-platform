@@ -10,7 +10,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 35000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "Указанное значение $35M — это valuation cap по SAFE, не фактическая post-money оценка. Других объявленных раундов сверх стандартной YC-инвестиции не найдено."
     },
     "traction": {
@@ -27,25 +29,28 @@
       "hiring_velocity": "steady",
       "founders": [
         {
-          "name": "Abhinav Soni",
-          "role": "Co-Founder",
-          "pedigree_tags": ["ex-Emergent (YC S24) hire #1", "SWE-Bench #1 дважды", "помог Emergent масштабироваться 0→$100M ARR за 8 месяцев"],
-          "prior_exits": "",
-          "linkedin": "https://www.linkedin.com/in/soni-abhinav"
+          "name": "Kaushik ASP",
+          "role": "Founder",
+          "bio": "Kaushik was hire #2 at Emergent (YC S24), where he led full-stack engineering, built the initial infrastructure for long-running agents, and shipped the mobile-dev agent that converted ~50% better than any other. Previously Decathlon, Pazcare, and Synup.",
+          "linkedin": "https://linkedin.com/in/kaushik-asp-b0b422bb",
+          "twitter": "https://x.com/kacppian"
         },
         {
-          "name": "Kaushik ASP",
-          "role": "Co-Founder, CTO",
-          "pedigree_tags": ["ex-Emergent (YC S24) hire #2", "Full-stack lead на Emergent", "Decathlon, Pazcare, Synup в прошлом"],
-          "prior_exits": "",
-          "linkedin": ""
+          "name": "Abhinav Soni",
+          "role": "Founder",
+          "bio": "Abhinav was hire #1 at Emergent (YC S24), where he helped hit SWE-Bench #1 and scale the product from $0 to $100M ARR in 8 months.",
+          "linkedin": "https://www.linkedin.com/in/soni-abhinav",
+          "twitter": ""
         }
       ],
       "key_hires": []
     },
     "moat": {
       "summary": "Замкнутый цикл обучения для AI-агентов в проде: обнаружение тихих ошибок + закрепление найденных решений в постоянную память агента ('The Book').",
-      "moat_type": ["tech", "data"],
+      "moat_type": [
+        "tech",
+        "data"
+      ],
       "differentiation": "В отличие от чистой observability (трассировка, eval), Bento строит persistent memory layer — каждое исправленное падение становится переиспользуемым skill/triggered fix. OpenTelemetry-native. Команда — реальный опыт скейлинга агентов на проде на 5M+ пользователях в Emergent."
     },
     "market": {
@@ -57,19 +62,51 @@
       "why_now": "2026 — переход AI-агентов из прототипов в production у enterprise (тезис Sequoia 'This is AGI'), reliability стал блокером масштабирования."
     },
     "competition": {
-      "direct_competitors": ["Sentrial (YC W26)", "Raindrop", "LangSmith / LangFuse", "Arize AI", "Helicone"],
+      "direct_competitors": [
+        "Sentrial (YC W26)",
+        "Raindrop",
+        "LangSmith / LangFuse",
+        "Arize AI",
+        "Helicone"
+      ],
       "competitive_position": "contender",
       "competitive_notes": "Большинство конкурентов делают чистую observability (трейсы + eval). Bento конкурирует за счёт learning layer, но идея 'closed-loop' начинает повторяться в индустрии (Raindrop отгрузил agent self-diagnostics в феврале 2026)."
     },
     "risks": [
-      {"risk": "Конкуренция со стороны hyperscale APM-вендоров (Datadog, New Relic) и SDK-предложений от OpenAI/Anthropic — пятеро vs миллиардные компании", "severity": "high", "category": "market"},
-      {"risk": "Бенчмарки заявлены самой компанией ('internal'), под нагрузкой прод-агентов с длинным горизонтом могут не повторяться", "severity": "medium", "category": "technical"},
-      {"risk": "Категория 'agent observability' быстро коммодизируется — много YC-компаний с похожим описанием в одном батче (Sazabi, Chronicle Labs, Superlog)", "severity": "medium", "category": "market"},
-      {"risk": "Заявленный рост Emergent 0→$100M ARR за 8 месяцев — необычная цифра, требует независимой верификации", "severity": "low", "category": "team"}
+      {
+        "risk": "Конкуренция со стороны hyperscale APM-вендоров (Datadog, New Relic) и SDK-предложений от OpenAI/Anthropic — пятеро vs миллиардные компании",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Бенчмарки заявлены самой компанией ('internal'), под нагрузкой прод-агентов с длинным горизонтом могут не повторяться",
+        "severity": "medium",
+        "category": "technical"
+      },
+      {
+        "risk": "Категория 'agent observability' быстро коммодизируется — много YC-компаний с похожим описанием в одном батче (Sazabi, Chronicle Labs, Superlog)",
+        "severity": "medium",
+        "category": "market"
+      },
+      {
+        "risk": "Заявленный рост Emergent 0→$100M ARR за 8 месяцев — необычная цифра, требует независимой верификации",
+        "severity": "low",
+        "category": "team"
+      }
     ],
     "momentum": [
-      {"date": "2026-05-12", "event": "Публичный лонч на YC", "type": "product", "source_url": "https://www.ycombinator.com/companies/bentolabs-ai"},
-      {"date": "2026-05-15", "event": "Запуск фичи 'Issues' — группировка повторяющихся ошибок агентов", "type": "product", "source_url": "https://x.com/BentoLabsAI"}
+      {
+        "date": "2026-05-12",
+        "event": "Публичный лонч на YC",
+        "type": "product",
+        "source_url": "https://www.ycombinator.com/companies/bentolabs-ai"
+      },
+      {
+        "date": "2026-05-15",
+        "event": "Запуск фичи 'Issues' — группировка повторяющихся ошибок агентов",
+        "type": "product",
+        "source_url": "https://x.com/BentoLabsAI"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -92,12 +129,35 @@
       "Внешняя верификация бенчмарков отсутствует"
     ],
     "sources": [
-      {"label": "YC Company Page", "url": "https://www.ycombinator.com/companies/bentolabs-ai"},
-      {"label": "Bento Labs Website", "url": "https://bentolabs.ai/"},
-      {"label": "Founderland article", "url": "https://www.founderland.ai/articles/bentolabs-launches-monitoring-layer-to-fix-ai-agent-silent-f-mppdmbrg"},
-      {"label": "X / Twitter", "url": "https://x.com/BentoLabsAI"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "YC Company Page",
+        "url": "https://www.ycombinator.com/companies/bentolabs-ai"
+      },
+      {
+        "label": "Bento Labs Website",
+        "url": "https://bentolabs.ai/"
+      },
+      {
+        "label": "Founderland article",
+        "url": "https://www.founderland.ai/articles/bentolabs-launches-monitoring-layer-to-fix-ai-agent-silent-f-mppdmbrg"
+      },
+      {
+        "label": "X / Twitter",
+        "url": "https://x.com/BentoLabsAI"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Monitoring and learning layer for long-running agents. We detect when agents silently fail or drift from the user's goal, system prompt, or tool contracts, show affected users and root cause, and suggest the prompt, skill, or harness fix.\n\nThe founders learned this problem at Emergent (YC S24), where they built production coding agents used by 5M+ users. Abhinav was hire #1 and helped achieve SWE-Bench #1 and scale from $0 to $100M ARR in 8 months. Kaushik was hire #2, led full-stack engineering, and built infrastructure for production agent reliability. Their self-learning engine lifted ARC-AGI-3 by 2.6x and Terminal-Bench 2.0 from 42.2% to 52.4% pass@1.",
+    "yc_url": "https://www.ycombinator.com/companies/bentolabs-ai",
+    "launch": {
+      "title": "BentoLabs AI: Monitoring and Learning layer for long-running agents",
+      "tldr": "BentoLabs AI is the monitoring and learning layer for long-running agents. We detect when agents silently fail or drift from the user's goal, system prompt, or tool contracts, show affected users and root cause, and suggest the prompt, skill, or harness fix. Run 101 is measurably better than run 1.",
+      "url": "https://www.ycombinator.com/launches/Qcw-bentolabs-ai-monitoring-and-learning-layer-for-long-running-agents"
+    },
+    "yc_description_ru": "BentoLabs — это слой мониторинга и обучения для AI-агентов, которые работают подолгу. Мы замечаем, когда агент тихо ломается или отходит от задачи пользователя, системного промпта или контракта инструментов, показываем, кого это задело и в чём причина, и подсказываем, что поправить — промпт, навык или обвязку.\n\nЧем больше команд запускают агентов, тем важнее держать их надёжными в проде. Bento встроен прямо в рабочий цикл и позволяет командам масштабировать агентов, не наращивая при этом ручное «тушение пожаров». В итоге непрозрачные агенты становятся такими, за которыми можно следить, которых можно отлаживать и постоянно улучшать.\n\nОснователи столкнулись с этой проблемой в Emergent (YC S24), где делали и вели production-агентов для написания кода с аудиторией 5M+ пользователей. Abhinav был сотрудником №1 и помог Emergent занять первое место на SWE-Bench и вырасти с нуля до $100M ARR за 8 месяцев. Kaushik был сотрудником №2, отвечал за full-stack и во многом построил инфраструктуру, которая сделала production-агентов надёжными и наблюдаемыми. Собственный движок самообучения Bento поднял внутренние показатели ARC-AGI-3 в 2.6 раза, а Terminal-Bench 2.0 — с 42.2% до 52.4% pass@1 на той же модели, инструментах и бюджете."
   },
   {
     "company_id": "pairio",
@@ -110,7 +170,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 25000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$25M — это valuation cap по SAFE. Других объявленных раундов не найдено."
     },
     "traction": {
@@ -122,30 +184,33 @@
       "notes": "Конкретные имена клиентов не раскрыты."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 3,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
       "founders": [
         {
-          "name": "Co-founder #1 (имя не указано в открытых источниках, выросший в Бразилии/Испании/Китае, учился в UK/Германии)",
-          "role": "Co-Founder",
-          "pedigree_tags": ["TU Munich entrepreneurship scholarship", "успешный events-бизнес во время бакалавра до COVID"],
-          "prior_exits": "",
-          "linkedin": ""
+          "name": "Tim Zinkl",
+          "role": "Founder",
+          "bio": "Grew up in Brazil, Spain and China, studied in the UK and Germany. Built up a successful events business during my undergrad until COVID hit.",
+          "linkedin": "https://www.linkedin.com/in/timzinkl/",
+          "twitter": ""
         },
         {
-          "name": "Co-founder #2",
-          "role": "CTO",
-          "pedigree_tags": ["ex-AI engineer at Lio (YC S23)"],
-          "prior_exits": "",
-          "linkedin": ""
+          "name": "Matthias Wolf",
+          "role": "Founder / CTO",
+          "bio": "CTO @ Pairio (P26). Prev AI engineer @ Lio (S23). B.Sc. General Engineering, M.Sc. AI & Robotics @TUM. Grew up in a blue-collar engineering family. Built AI agent pipelines and enterprise integrations at Lio (S23).",
+          "linkedin": "https://www.linkedin.com/in/matthias-wolf/",
+          "twitter": ""
         }
       ],
       "key_hires": []
     },
     "moat": {
       "summary": "Voice-first AI-ассистент для техников на цеху — захват реального tribal knowledge через голос/фото/видео в момент починки.",
-      "moat_type": ["data", "distribution"],
+      "moat_type": [
+        "data",
+        "distribution"
+      ],
       "differentiation": "Структурированные данные о поломках/решениях собираются в момент работы, а не post-hoc через ERP. Каждая обработанная поломка делает систему лучше для следующего инцидента — компаундирующий datamoat. Интеграции с ERP/DMS уже есть."
     },
     "market": {
@@ -157,19 +222,50 @@
       "why_now": "Дефицит квалифицированных техников + LLM, способные парсить десятки тысяч страниц технической документации, делают voice-first интерфейс реалистичным впервые."
     },
     "competition": {
-      "direct_competitors": ["UpKeep", "Limble CMMS", "Fiix (Rockwell)", "MaintainX"],
+      "direct_competitors": [
+        "UpKeep",
+        "Limble CMMS",
+        "Fiix (Rockwell)",
+        "MaintainX"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Legacy-CMMS лидеры уже большие, но Pairio атакует через voice-first UX и AI-парсинг манулов — то, что в существующих системах либо отсутствует, либо приделано сбоку."
     },
     "risks": [
-      {"risk": "Enterprise-продажи на заводах — медленные циклы, IT-департаменты на legacy инфраструктуре", "severity": "high", "category": "execution"},
-      {"risk": "Голос на шумном цеху — техническое качество распознавания на реальных условиях нужно ещё доказать", "severity": "medium", "category": "technical"},
-      {"risk": "Прокладывание дорожки между США и Германией — два разных регуляторных и продажных рынка для маленькой команды", "severity": "medium", "category": "execution"},
-      {"risk": "Большие игроки (Siemens, SAP, Bosch) могут добавить AI-ассистент к существующим ERP", "severity": "medium", "category": "market"}
+      {
+        "risk": "Enterprise-продажи на заводах — медленные циклы, IT-департаменты на legacy инфраструктуре",
+        "severity": "high",
+        "category": "execution"
+      },
+      {
+        "risk": "Голос на шумном цеху — техническое качество распознавания на реальных условиях нужно ещё доказать",
+        "severity": "medium",
+        "category": "technical"
+      },
+      {
+        "risk": "Прокладывание дорожки между США и Германией — два разных регуляторных и продажных рынка для маленькой команды",
+        "severity": "medium",
+        "category": "execution"
+      },
+      {
+        "risk": "Большие игроки (Siemens, SAP, Bosch) могут добавить AI-ассистент к существующим ERP",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026-04", "event": "Публичный YC launch", "type": "product", "source_url": "https://www.ycombinator.com/companies/pairio"},
-      {"date": "2026-Q2", "event": "Активный поиск US-клиентов через YC-сеть", "type": "press", "source_url": "https://www.ycombinator.com/companies/pairio"}
+      {
+        "date": "2026-04",
+        "event": "Публичный YC launch",
+        "type": "product",
+        "source_url": "https://www.ycombinator.com/companies/pairio"
+      },
+      {
+        "date": "2026-Q2",
+        "event": "Активный поиск US-клиентов через YC-сеть",
+        "type": "press",
+        "source_url": "https://www.ycombinator.com/companies/pairio"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -184,7 +280,11 @@
       "g2_rating": null,
       "product_hunt_score": null,
       "notable_quotes": [
-        {"quote": "Особенно полезно для оборудования, с которым работаешь не каждый день — помогает быстро войти в курс и лучше всё понять.", "source": "Анонимный отзыв техника с сайта Pairio", "url": "https://pairio.com/"}
+        {
+          "quote": "Особенно полезно для оборудования, с которым работаешь не каждый день — помогает быстро войти в курс и лучше всё понять.",
+          "source": "Анонимный отзыв техника с сайта Pairio",
+          "url": "https://pairio.com/"
+        }
       ]
     },
     "data_gaps": [
@@ -194,11 +294,31 @@
       "Выручка / ARR не раскрыты"
     ],
     "sources": [
-      {"label": "YC Company Page", "url": "https://www.ycombinator.com/companies/pairio"},
-      {"label": "Pairio Website", "url": "https://pairio.com/"},
-      {"label": "f4.fund startup profile", "url": "https://f4.fund/startups/pairio"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "YC Company Page",
+        "url": "https://www.ycombinator.com/companies/pairio"
+      },
+      {
+        "label": "Pairio Website",
+        "url": "https://pairio.com/"
+      },
+      {
+        "label": "f4.fund startup profile",
+        "url": "https://f4.fund/startups/pairio"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Pairio is an AI mobile app to help technicians fix broken equipment in factories. Users just take a picture of the broken machine and we search thousands of pages of manuals to find the right solution.",
+    "yc_url": "https://www.ycombinator.com/companies/pairio",
+    "launch": {
+      "title": "Pairio – Fix broken equipment in factories faster",
+      "tldr": "Machine downtime in manufacturing is expensive. Pairio helps technicians and operators resolve faults faster with voice AI. 4 plants in Germany are already using Pairio to reduce equipment downtime.",
+      "url": "https://www.ycombinator.com/launches/Q18-pairio-fix-broken-equipment-in-factories-faster"
+    },
+    "yc_description_ru": "Pairio — мобильное приложение с AI, которое помогает техникам чинить оборудование на заводах. Достаточно сфотографировать сломанный станок — приложение находит нужное решение, просматривая тысячи страниц инструкций."
   },
   {
     "company_id": "finaldose",
@@ -211,7 +331,10 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator (раунд лично ведёт Paul Graham по информации от пользователя)",
       "last_round_post_money_valuation_usd": 60000000,
-      "all_investors": ["Y Combinator", "Paul Graham (lead)"],
+      "all_investors": [
+        "Y Combinator",
+        "Paul Graham (lead)"
+      ],
       "notes": "$60M — это valuation cap по SAFE. Paul Graham публично писал в августе 2025 о двух YC-стартапах с готовыми к клиническим испытаниям 'лекарствами от рака' — FinalDose, по всей видимости, один из них. Самый высокий cap из всех 21 компаний в этом списке."
     },
     "traction": {
@@ -223,37 +346,40 @@
       "notes": "Это биотех на доклинической/ранне-клинической стадии — традиционная 'тракшн' (выручка, пользователи) не применима. Метрика — прохождение научных вех."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 5,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
       "founders": [
         {
-          "name": "CEO (имя в публичных источниках не указано в найденных результатах)",
+          "name": "Jeff Liu",
           "role": "CEO",
-          "pedigree_tags": ["Oxford PhD in Oncology", "репитер-фаундер (Vivid Dx, $15M raised)"],
-          "prior_exits": "Vivid Dx — диагностика сепсиса, сократили время диагностики с 5 дней до 30 минут; привлечено $15M венчурных инвестиций",
-          "linkedin": ""
+          "bio": "Oxford PhD in Oncology. Previous startup (Vivid Dx) solved a multi-decade bottleneck in sepsis diagnostics: low biomass isolation. By overcoming this hurdle, we built the world's fastest diagnostic system - slashing wait times from 5 days to just 30 minutes. Raised $15M in venture backing.",
+          "linkedin": "https://www.linkedin.com/in/jeff-liu-dphil-194a1372/",
+          "twitter": ""
         },
         {
           "name": "Li-Yao Huang",
           "role": "CSO",
-          "pedigree_tags": ["Oxford DPhil in Biochemistry", "5 лет postdoc в MRC Weatherall Institute of Molecular Medicine", "CRISPR-скрининг для онкологии"],
-          "prior_exits": "",
-          "linkedin": ""
+          "bio": "DPhil in Biochemistry from Oxford, where he spent 5 years as a postdoctoral researcher at the MRC Weatherall Institute of Molecular Medicine. Led CRISPR screening projects uncovering new druggable targets in cancer cells and built pipelines reducing hit validation time from months to 7 days. Research focuses on BRCA1-deficient cancers and PARP inhibitor resistance mechanisms.",
+          "linkedin": "https://www.linkedin.com/in/li-yao-huang-13676b1b2",
+          "twitter": ""
         },
         {
           "name": "Steven Lin",
           "role": "CTO",
-          "pedigree_tags": ["Oxford PhD in Computational Biology", "Wellcome Trust full scholarship", "ex-Data Lead at Gutsee Biotech"],
-          "prior_exits": "",
-          "linkedin": ""
+          "bio": "Oxford PhD in Computational Biology with Wellcome Trust full scholarship. Previously Data Lead at Gutsee Biotech. Developed novel machine learning method to use coevolution biology to identify genetic targets that convey drug resistance in viruses. During SARS-CoV-2 pandemic, led UK biobank analysis of human genetics susceptibility for infections.",
+          "linkedin": "https://www.linkedin.com/in/steven-shang-kuan-lin-b8438196/",
+          "twitter": ""
         }
       ],
       "key_hires": []
     },
     "moat": {
       "summary": "Программируемое лекарство, распознающее ДНК внутри клетки и уничтожающее клетку, если её ДНК соответствует 'болезненной' последовательности. Одна молекула — много болезней через смену guide-последовательности.",
-      "moat_type": ["tech", "regulatory"],
+      "moat_type": [
+        "tech",
+        "regulatory"
+      ],
       "differentiation": "Подход 'DNA-first' вместо 'protein-first' (последние 60 лет фармы). Платформенная экономика: одна молекула + новая guide = новое лекарство, R&D-цикл и стоимость приближаются к нулю. Глубокая Oxford-научная экспертиза (3 PhD из Oxford в команде)."
     },
     "market": {
@@ -265,20 +391,56 @@
       "why_now": "CRISPR-инструментарий + накопленная база human genetics позволяют превращать известные disease-driving последовательности в лекарства; платформенный подход впервые масштабируется экономически."
     },
     "competition": {
-      "direct_competitors": ["Intellia Therapeutics", "Editas Medicine", "Verve Therapeutics", "Beam Therapeutics", "CRISPR Therapeutics"],
+      "direct_competitors": [
+        "Intellia Therapeutics",
+        "Editas Medicine",
+        "Verve Therapeutics",
+        "Beam Therapeutics",
+        "CRISPR Therapeutics"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Существующие CRISPR-компании фокусируются на одном-двух показаниях за раз. FinalDose заявляет платформенный подход с прицелом на 80% 'undruggable' раковых таргетов — амбициознее по scope, но и риски выше."
     },
     "risks": [
-      {"risk": "Доставка ДНК-распознающей молекулы внутрь нужных клеток (delivery problem) — главная нерешённая проблема всей gene-editing области", "severity": "high", "category": "technical"},
-      {"risk": "FDA-регуляторный путь для платформенных биологиков сложен, может потребовать отдельной IND-заявки на каждую guide-sequence", "severity": "high", "category": "regulatory"},
-      {"risk": "Off-target эффекты на здоровых клетках с похожей ДНК — фундаментальный риск любой gene-editing терапии", "severity": "high", "category": "technical"},
-      {"risk": "Капитальная интенсивность биотеха — $69k SAFE не профинансирует preclinical-to-clinical путь; нужны крупные Series A/B (десятки-сотни миллионов)", "severity": "high", "category": "financial"},
-      {"risk": "Заявление 'cure all cancers' — высокий маркетинговый риск; научное сообщество скептически смотрит на такие формулировки", "severity": "medium", "category": "market"}
+      {
+        "risk": "Доставка ДНК-распознающей молекулы внутрь нужных клеток (delivery problem) — главная нерешённая проблема всей gene-editing области",
+        "severity": "high",
+        "category": "technical"
+      },
+      {
+        "risk": "FDA-регуляторный путь для платформенных биологиков сложен, может потребовать отдельной IND-заявки на каждую guide-sequence",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Off-target эффекты на здоровых клетках с похожей ДНК — фундаментальный риск любой gene-editing терапии",
+        "severity": "high",
+        "category": "technical"
+      },
+      {
+        "risk": "Капитальная интенсивность биотеха — $69k SAFE не профинансирует preclinical-to-clinical путь; нужны крупные Series A/B (десятки-сотни миллионов)",
+        "severity": "high",
+        "category": "financial"
+      },
+      {
+        "risk": "Заявление 'cure all cancers' — высокий маркетинговый риск; научное сообщество скептически смотрит на такие формулировки",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026-05-12", "event": "Публичный YC launch — 'The first programmable drug to cure all cancers'", "type": "product", "source_url": "https://www.ycombinator.com/launches/QKj-finaldose-the-first-programmable-drug-to-cure-all-cancers"},
-      {"date": "2025-08-25", "event": "Paul Graham твитнул о двух YC-стартапах с готовыми к клинике лекарствами от рака (FinalDose — один из них)", "type": "press", "source_url": "https://x.com/paulg/status/1960096607690736026"}
+      {
+        "date": "2026-05-12",
+        "event": "Публичный YC launch — 'The first programmable drug to cure all cancers'",
+        "type": "product",
+        "source_url": "https://www.ycombinator.com/launches/QKj-finaldose-the-first-programmable-drug-to-cure-all-cancers"
+      },
+      {
+        "date": "2025-08-25",
+        "event": "Paul Graham твитнул о двух YC-стартапах с готовыми к клинике лекарствами от рака (FinalDose — один из них)",
+        "type": "press",
+        "source_url": "https://x.com/paulg/status/1960096607690736026"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -300,11 +462,31 @@
       "Список научных публикаций / препринтов команды отдельно не верифицирован"
     ],
     "sources": [
-      {"label": "YC Company Page", "url": "https://www.ycombinator.com/companies/finaldose"},
-      {"label": "YC Launch Page", "url": "https://www.ycombinator.com/launches/QKj-finaldose-the-first-programmable-drug-to-cure-all-cancers"},
-      {"label": "Dealroom", "url": "https://app.dealroom.co/news/note/finaldose-yc-launch-programmable-drug-platform-targeting-cancer-at-the-dna-level"},
-      {"label": "Paul Graham tweet", "url": "https://x.com/paulg/status/1960096607690736026"}
-    ]
+      {
+        "label": "YC Company Page",
+        "url": "https://www.ycombinator.com/companies/finaldose"
+      },
+      {
+        "label": "YC Launch Page",
+        "url": "https://www.ycombinator.com/launches/QKj-finaldose-the-first-programmable-drug-to-cure-all-cancers"
+      },
+      {
+        "label": "Dealroom",
+        "url": "https://app.dealroom.co/news/note/finaldose-yc-launch-programmable-drug-platform-targeting-cancer-at-the-dna-level"
+      },
+      {
+        "label": "Paul Graham tweet",
+        "url": "https://x.com/paulg/status/1960096607690736026"
+      }
+    ],
+    "yc_description": "FinalDose is building the first programmable drug - a single smart drug molecule that you can insert any diseased genetic code and it can search and destroy cells upon DNA recognition. Unlocking 80% of undruggable targets today. Starting with all cancers.",
+    "yc_url": "https://www.ycombinator.com/companies/finaldose",
+    "launch": {
+      "title": "FinalDose: The first programmable drug to cure all cancers",
+      "tldr": "For 60 years, drug discovery has chased proteins. But ~85% of disease drivers don't have a druggable protein, making them unreachable for modern medicine. The deeper issue: most disease doesn't start at the protein, it starts in the DNA that codes for it. We built a programmable drug that reads DNA inside the cell, decides if it's diseased, and destroys the cell if it is. One platform, reprogrammed to any disease distinguishable on a DNA level.",
+      "url": "https://www.ycombinator.com/launches/QKj-finaldose-the-first-programmable-drug-to-cure-all-cancers"
+    },
+    "yc_description_ru": "FinalDose создаёт первое программируемое лекарство — одну «умную» молекулу, в которую можно заложить генетический код любой болезни; она находит и уничтожает клетки, распознав их по ДНК. Это открывает доступ к 80% мишеней, для которых сегодня нет лекарств. Начинают с онкологии — со всех видов рака."
   },
   {
     "company_id": "madrone",
@@ -317,7 +499,10 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 50000000,
-      "all_investors": ["Y Combinator", "NVIDIA Inception Program (партнёрство, не deal-инвестор)"],
+      "all_investors": [
+        "Y Combinator",
+        "NVIDIA Inception Program (партнёрство, не deal-инвестор)"
+      ],
       "notes": "$50M — valuation cap по SAFE. Также числится в NVIDIA Inception, что для hardware-стартапа в data center cooling — релевантный сигнал."
     },
     "traction": {
@@ -329,30 +514,32 @@
       "notes": "Цифры — собственные расчёты компании, пилотные объекты не названы."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
       "founders": [
         {
           "name": "Akshay Trikha",
           "role": "Founder/CEO",
-          "pedigree_tags": ["ex-ML инженер в QuantumScape (1M+ inferences/month)", "UC Berkeley — предсказание свойств материалов"],
-          "prior_exits": "",
-          "linkedin": ""
+          "bio": "Founder/CEO at Madrone, where I'm making data center cooling more efficient. Prev. trained models with millions of inferences at QuantumScape, and to predict material properties at Berkeley.",
+          "linkedin": "https://www.linkedin.com/in/akshay-trikha/",
+          "twitter": ""
         },
         {
           "name": "Erik Meike",
-          "role": "Co-Founder",
-          "pedigree_tags": ["4 года Hardware Development Engineer в Apple (iPhone wireless power)", "ранее JITx (автоматизация PCB), PRENAV (автономные квадрокоптеры)"],
-          "prior_exits": "",
-          "linkedin": ""
+          "role": "Founder",
+          "bio": "Founder at Madrone (YC P26). Previously Hardware Development Engineer at Apple, working on iPhone wireless power technologies across multiple years. Started career with early-stage hardware/robotics experience at JITx (automated PCB design) and PRENAV (autonomous quadcopter monitoring). Harvey Mudd Engineering.",
+          "linkedin": "https://www.linkedin.com/in/erikmeike/",
+          "twitter": ""
         }
       ],
       "key_hires": []
     },
     "moat": {
       "summary": "Chillerless cooling для дата-центров на основе dew-point thermodynamics — охлаждение до точки росы, минуя механические чиллеры. В жарком Техасе экономия до 30% электричества и воды.",
-      "moat_type": ["tech"],
+      "moat_type": [
+        "tech"
+      ],
       "differentiation": "In-house вертикальный стек: электроника, теплообменники, софт. Apple-grade hardware экспертиза + ML-моделирование материалов. Модульность для быстрого деплоя — критично в гонке за AI-датацентр-мощности."
     },
     "market": {
@@ -364,19 +551,51 @@
       "why_now": "AI-датацентры строятся в жарких регионах (Техас, Аризона, Невада) рекордными темпами; до 40% мощности уходит на охлаждение; каждый процент эффективности = $2.6M GPU-выручки на 100 МВт; grid-permits становятся бутылочным горлом."
     },
     "competition": {
-      "direct_competitors": ["Vertiv", "Schneider Electric", "Munters", "Stulz", "Aligned"],
+      "direct_competitors": [
+        "Vertiv",
+        "Schneider Electric",
+        "Munters",
+        "Stulz",
+        "Aligned"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Madrone атакует legacy chiller+cooling-tower бюджеты, а не rack-level liquid cooling. Главные игроки (Vertiv, Schneider) продают традиционный thermal stack без dew-point технологии — это структурное преимущество, но enterprise-продажи в дата-центры — длинные циклы."
     },
     "risks": [
-      {"risk": "Hardware-стартап с $69k SAFE — потребует существенно больше капитала на pilot deployments и mass-production", "severity": "high", "category": "financial"},
-      {"risk": "Длинные циклы продаж в дата-центры (12–24 мес) и консервативность ops-команд", "severity": "high", "category": "execution"},
-      {"risk": "Riskful деплой в production: один отказ системы охлаждения = миллионы потерь GPU-времени; клиенты будут требовать длинные пилоты", "severity": "high", "category": "technical"},
-      {"risk": "Крупные игроки (Vertiv, Schneider) могут лицензировать/копировать dew-point подход", "severity": "medium", "category": "market"}
+      {
+        "risk": "Hardware-стартап с $69k SAFE — потребует существенно больше капитала на pilot deployments и mass-production",
+        "severity": "high",
+        "category": "financial"
+      },
+      {
+        "risk": "Длинные циклы продаж в дата-центры (12–24 мес) и консервативность ops-команд",
+        "severity": "high",
+        "category": "execution"
+      },
+      {
+        "risk": "Riskful деплой в production: один отказ системы охлаждения = миллионы потерь GPU-времени; клиенты будут требовать длинные пилоты",
+        "severity": "high",
+        "category": "technical"
+      },
+      {
+        "risk": "Крупные игроки (Vertiv, Schneider) могут лицензировать/копировать dew-point подход",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026-05-12", "event": "Публичный YC launch", "type": "product", "source_url": "https://www.ycombinator.com/companies/madrone"},
-      {"date": "2026", "event": "Вступление в NVIDIA Inception Program", "type": "partnership", "source_url": "https://app.dealroom.co/companies/madrone_2"}
+      {
+        "date": "2026-05-12",
+        "event": "Публичный YC launch",
+        "type": "product",
+        "source_url": "https://www.ycombinator.com/companies/madrone"
+      },
+      {
+        "date": "2026",
+        "event": "Вступление в NVIDIA Inception Program",
+        "type": "partnership",
+        "source_url": "https://app.dealroom.co/companies/madrone_2"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -399,11 +618,31 @@
       "Стадия прототипа (lab demo vs. field pilot) не уточнена"
     ],
     "sources": [
-      {"label": "YC Company Page", "url": "https://www.ycombinator.com/companies/madrone"},
-      {"label": "Madrone Website", "url": "https://www.madrone.cool/"},
-      {"label": "Dealroom profile", "url": "https://app.dealroom.co/companies/madrone_2"},
-      {"label": "Zeitgeist analyst note", "url": "https://www.zeitgeist.bot/company/madrone"}
-    ]
+      {
+        "label": "YC Company Page",
+        "url": "https://www.ycombinator.com/companies/madrone"
+      },
+      {
+        "label": "Madrone Website",
+        "url": "https://www.madrone.cool/"
+      },
+      {
+        "label": "Dealroom profile",
+        "url": "https://app.dealroom.co/companies/madrone_2"
+      },
+      {
+        "label": "Zeitgeist analyst note",
+        "url": "https://www.zeitgeist.bot/company/madrone"
+      }
+    ],
+    "yc_description": "Madrone builds cooling systems for data centers. In Texas, where most new sites are, Madrone can cool using 30% less power and water, thanks to novel dew-point cooling technology.",
+    "yc_url": "https://www.ycombinator.com/companies/madrone",
+    "launch": {
+      "title": "Madrone - chiller-less cooling for desert data centers",
+      "tldr": "Giant data centers are being built in the desert and need better cooling. Madrone builds modular cooling systems that chill water to the dew point, slashing power usage and deploying fast.",
+      "url": "https://www.ycombinator.com/launches/QL1-madrone-chiller-less-cooling-for-desert-data-centers"
+    },
+    "yc_description_ru": "Madrone делает системы охлаждения для дата-центров. В Техасе, где строится большинство новых площадок, Madrone охлаждает, расходуя на 30% меньше энергии и воды, — за счёт новой технологии охлаждения по точке росы."
   },
   {
     "company_id": "cohesion",
@@ -416,7 +655,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 30000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$30M — valuation cap по SAFE."
     },
     "traction": {
@@ -428,37 +669,40 @@
       "notes": "Имена фондов под NDA не раскрыты. Это очень сильный pre-launch traction для P26."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 3,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
       "founders": [
         {
-          "name": "Devon (фамилия не указана; email devon@cohesionplatform.com)",
-          "role": "Co-Founder",
-          "pedigree_tags": ["5+ лет public equity investor", "ex-T. Rowe Price"],
-          "prior_exits": "",
-          "linkedin": ""
+          "name": "Devon Krapcho",
+          "role": "Co-Founder and CEO",
+          "bio": "Co-Founder and CEO of Cohesion, former hedge fund analyst for 5+ years at Long Path Partners covering software companies",
+          "linkedin": "https://www.linkedin.com/in/devon-krapcho-439a7498/",
+          "twitter": ""
         },
         {
           "name": "Matthew McBrien",
           "role": "Co-Founder",
-          "pedigree_tags": ["ex-AWS", "ex-T. Rowe Price"],
-          "prior_exits": "",
-          "linkedin": ""
+          "bio": "Co-Founder of Cohesion. Eliminating market inefficiency. Prev. AWS, Security @ Amazon",
+          "linkedin": "https://www.linkedin.com/in/matthew-mcbrien-784b32116/",
+          "twitter": "https://x.com/mmcbrien4"
         },
         {
-          "name": "Matthew Munns",
+          "name": "Matt Munns",
           "role": "Co-Founder",
-          "pedigree_tags": ["ex-AWS", "ex-T. Rowe Price"],
-          "prior_exits": "",
-          "linkedin": ""
+          "bio": "Co-Founder of Cohesion (YC P26). Prev. building AI for investors at T. Rowe Price",
+          "linkedin": "https://www.linkedin.com/in/matthew-munns-98727b138/",
+          "twitter": ""
         }
       ],
       "key_hires": []
     },
     "moat": {
       "summary": "Команда AI-агентов, мониторящих покрытие портфеля публичных акций — earnings, news, нетрадиционные данные (подкасты, X/Twitter) — генерирующих differentiated insights без ручного query-инга.",
-      "moat_type": ["distribution", "data"],
+      "moat_type": [
+        "distribution",
+        "data"
+      ],
       "differentiation": "Distribution moat: основатели — сами public equity investors с 10+ годами на рынке, прямой доступ к heads of research в фондах. Datamoat: нетрадиционные источники данных (подкасты, твиттер-аккаунты CEO) — то, что Bloomberg/FactSet не индексируют."
     },
     "market": {
@@ -470,19 +714,52 @@
       "why_now": "LLM достаточно зрелы, чтобы парсить earnings calls / SEC filings и выделять не-очевидные паттерны; фонды в дикой гонке за edge на фоне AI-driven компрессии маржи в активном менеджменте."
     },
     "competition": {
-      "direct_competitors": ["AlphaSense", "Tegus", "Sentieo (AlphaSense)", "Hebbia", "Kimpton (другая YC P26 компания) — также buy-side research", "WithAI (YC P26) — также asset managers"],
+      "direct_competitors": [
+        "AlphaSense",
+        "Tegus",
+        "Sentieo (AlphaSense)",
+        "Hebbia",
+        "Kimpton (другая YC P26 компания) — также buy-side research",
+        "WithAI (YC P26) — также asset managers"
+      ],
       "competitive_position": "contender",
       "competitive_notes": "Категория переполнена — в этом же YC-батче есть Kimpton и WithAI с очень близким позиционированием. AlphaSense — большой устоявшийся лидер. Преимущество Cohesion — реальный insider-фит команды и уже работающие фонды."
     },
     "risks": [
-      {"risk": "Конкуренция внутри одного YC-батча (Kimpton, WithAI) — три компании в близком пространстве с разной upside-историей", "severity": "high", "category": "market"},
-      {"risk": "AlphaSense/FactSet/Bloomberg могут добавить AI-функционал к существующей дистрибуции и поглотить вертикаль", "severity": "high", "category": "market"},
-      {"risk": "Хедж-фонды — small TAM по числу клиентов; даже доминация даёт ограниченную выручку (нужно сильно vertically расширяться)", "severity": "medium", "category": "market"},
-      {"risk": "Lock-in customization — каждый фонд хочет свой workflow, риск превратиться в кастомное consulting", "severity": "medium", "category": "execution"}
+      {
+        "risk": "Конкуренция внутри одного YC-батча (Kimpton, WithAI) — три компании в близком пространстве с разной upside-историей",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "AlphaSense/FactSet/Bloomberg могут добавить AI-функционал к существующей дистрибуции и поглотить вертикаль",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Хедж-фонды — small TAM по числу клиентов; даже доминация даёт ограниченную выручку (нужно сильно vertically расширяться)",
+        "severity": "medium",
+        "category": "market"
+      },
+      {
+        "risk": "Lock-in customization — каждый фонд хочет свой workflow, риск превратиться в кастомное consulting",
+        "severity": "medium",
+        "category": "execution"
+      }
     ],
     "momentum": [
-      {"date": "2026-04-29", "event": "YC P26 анонс / lаунч-пост на LinkedIn", "type": "press", "source_url": "https://www.linkedin.com/posts/y-combinator_cohesion-yc-p26-is-your-public-equities-activity-7450588902345850881-aa_-"},
-      {"date": "2026-05-05", "event": "Публичный YC launch — 10+ фондов на $10B+ AUM в trial", "type": "product", "source_url": "https://www.ycombinator.com/companies/cohesion"}
+      {
+        "date": "2026-04-29",
+        "event": "YC P26 анонс / lаунч-пост на LinkedIn",
+        "type": "press",
+        "source_url": "https://www.linkedin.com/posts/y-combinator_cohesion-yc-p26-is-your-public-equities-activity-7450588902345850881-aa_-"
+      },
+      {
+        "date": "2026-05-05",
+        "event": "Публичный YC launch — 10+ фондов на $10B+ AUM в trial",
+        "type": "product",
+        "source_url": "https://www.ycombinator.com/companies/cohesion"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -505,11 +782,31 @@
       "Headcount не раскрыт"
     ],
     "sources": [
-      {"label": "YC Company Page", "url": "https://www.ycombinator.com/companies/cohesion"},
-      {"label": "LinkedIn Y Combinator post", "url": "https://www.linkedin.com/posts/y-combinator_cohesion-yc-p26-is-your-public-equities-activity-7450588902345850881-aa_-"},
-      {"label": "Cohesion Platform", "url": "https://cohesionplatform.com/"},
-      {"label": "Ollie Forsyth — YC Spring 2026 batch overview", "url": "https://www.neweconomies.co/p/y-combinator-spring-2026-batch"}
-    ]
+      {
+        "label": "YC Company Page",
+        "url": "https://www.ycombinator.com/companies/cohesion"
+      },
+      {
+        "label": "LinkedIn Y Combinator post",
+        "url": "https://www.linkedin.com/posts/y-combinator_cohesion-yc-p26-is-your-public-equities-activity-7450588902345850881-aa_-"
+      },
+      {
+        "label": "Cohesion Platform",
+        "url": "https://cohesionplatform.com/"
+      },
+      {
+        "label": "Ollie Forsyth — YC Spring 2026 batch overview",
+        "url": "https://www.neweconomies.co/p/y-combinator-spring-2026-batch"
+      }
+    ],
+    "yc_description": "Cohesion is building AI agents for hedge funds. Our agents track earnings and non-traditional datasets like podcasts and X/twitter. Analysts spend hours a week manually tracking these data sources and still miss relevant investing signals. Now, our agents do it for them autonomously.",
+    "yc_url": "https://www.ycombinator.com/companies/cohesion",
+    "launch": {
+      "title": "Cohesion: Your public equities agentic teammate",
+      "tldr": "Cohesion agents track earnings, news, and non-traditional datasets like podcasts and X/Twitter for equity investors seeking automated idea generation without manual setup.",
+      "url": "https://www.ycombinator.com/launches/Pxy-cohesion-your-public-equities-agentic-teammate"
+    },
+    "yc_description_ru": "Cohesion делает AI-агентов для хедж-фондов. Агенты отслеживают отчётности и нестандартные источники данных — подкасты, X/Twitter. Аналитики тратят на это часы каждую неделю вручную и всё равно упускают важные для инвестиций сигналы. Теперь агенты делают это за них — сами."
   },
   {
     "company_id": "foresight",
@@ -522,7 +819,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 30000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$30M — valuation cap по SAFE. Сайт foresight.tt"
     },
     "traction": {
@@ -534,15 +833,33 @@
       "notes": "Подробная traction-информация в открытых источниках на момент исследования не верифицирована."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Eytan Rozenblum",
+          "role": "Founder",
+          "bio": "",
+          "linkedin": "https://www.linkedin.com/in/eytan-rozenblum/",
+          "twitter": ""
+        },
+        {
+          "name": "Antoine Bertrand",
+          "role": "Founder",
+          "bio": "I'm Antoine, a French engineer and second-time founder. I'm a builder at heart. I enjoy solving problems, creating products people love, and scaling them. Before launching Foresight, I co-founded a gaming platform and grew it to 100k monthly active users as CTO. Earlier in my career, I spent five years at Bloomberg building software for the global fixed-income market.",
+          "linkedin": "https://www.linkedin.com/in/antoine-bertrand",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "AI-driven consumer simulations — синтетические потребители для тестирования гипотез до реальных focus group / surveys.",
-      "moat_type": ["tech", "data"],
+      "moat_type": [
+        "tech",
+        "data"
+      ],
       "differentiation": "Конкурируют с традиционными market research firms (Ipsos, Nielsen) через скорость и стоимость синтетических панелей вместо реальных опросов."
     },
     "market": {
@@ -554,17 +871,40 @@
       "why_now": "LLM-персоны достаточно реалистичны, чтобы заменять часть низкоставочного потребительского ресёрча; реальные surveys стали дорогими и медленными."
     },
     "competition": {
-      "direct_competitors": ["Auxos (та же YC P26 — 'AI customer clones')", "Ipsos", "Nielsen", "Qualtrics", "Synthetic Users"],
+      "direct_competitors": [
+        "Auxos (та же YC P26 — 'AI customer clones')",
+        "Ipsos",
+        "Nielsen",
+        "Qualtrics",
+        "Synthetic Users"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Прямой конкурент Auxos в том же YC-батче. Validity синтетических respondents — открытый вопрос индустрии; рынок поделится на доверяющих и нет."
     },
     "risks": [
-      {"risk": "Прямой конкурент Auxos в том же YC-батче с идентичным позиционированием", "severity": "high", "category": "market"},
-      {"risk": "Научная валидность синтетических consumer simulations не доказана — академические работы дают противоречивые результаты", "severity": "high", "category": "technical"},
-      {"risk": "Регуляторные/этические опасения вокруг 'fake respondents' в маркет-ресёрч индустрии", "severity": "medium", "category": "regulatory"}
+      {
+        "risk": "Прямой конкурент Auxos в том же YC-батче с идентичным позиционированием",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Научная валидность синтетических consumer simulations не доказана — академические работы дают противоречивые результаты",
+        "severity": "high",
+        "category": "technical"
+      },
+      {
+        "risk": "Регуляторные/этические опасения вокруг 'fake respondents' в маркет-ресёрч индустрии",
+        "severity": "medium",
+        "category": "regulatory"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -588,10 +928,27 @@
       "Не было проведено глубокое индивидуальное исследование — данные ограничены директорией YC"
     ],
     "sources": [
-      {"label": "YC Startup Directory", "url": "https://www.ycombinator.com/companies?query=foresight"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"},
-      {"label": "Foresight Website", "url": "https://foresight.tt/"}
-    ]
+      {
+        "label": "YC Startup Directory",
+        "url": "https://www.ycombinator.com/companies?query=foresight"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      },
+      {
+        "label": "Foresight Website",
+        "url": "https://foresight.tt/"
+      }
+    ],
+    "yc_description": "Foresight builds AI-powered simulations of human behavior to help companies predict how people will think, react, and choose before making real-world decisions. It lets organizations test countless possible moves in advance, see how each one is likely to play out, and choose the strongest path forward.",
+    "yc_url": "https://www.ycombinator.com/companies/foresight",
+    "launch": {
+      "title": "Foresight - Understand your consumers better than ever",
+      "tldr": "Clients make decisions with 25x more consumer evidence on average without increasing costs. In a blind benchmark spanning 100+ paired estimates: 95% accuracy against fieldwork; 0.88 Lin's CCC.",
+      "url": "https://www.ycombinator.com/launches/QHw-foresight-understand-your-consumers-better-than-ever"
+    },
+    "yc_description_ru": "Foresight строит AI-симуляции поведения людей, чтобы компании понимали, как человек подумает, отреагирует и что выберет, ещё до реальных решений. Организация может заранее прогнать множество вариантов, увидеть, чем каждый обернётся, и выбрать самый сильный путь."
   },
   {
     "company_id": "dispatch",
@@ -604,7 +961,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 50000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$50M — valuation cap по SAFE. Один из самых высоких caps в списке — отражает капиталоёмкость space-hardware."
     },
     "traction": {
@@ -616,15 +975,33 @@
       "notes": "Hardware/aerospace стартап на раннем этапе. Подробная traction в найденных источниках не верифицирована."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Payton Case",
+          "role": "Co-founder & CEO",
+          "bio": "Co-founder & CEO at Dispatch | Building satellites for in space manufacturing | Enjoys long walks in space Formerly Astranis office of the CTO engineer driving everything from spacecraft architecture, to production, to their most critical mission operations.",
+          "linkedin": "https://linkedin.com/in/paytoncase/",
+          "twitter": "https://x.com/dispatchspace"
+        },
+        {
+          "name": "Andrew Mello",
+          "role": "Co-founder & CTO",
+          "bio": "Co-founder & CTO at Dispatch | Let's have an industrial revolution in space I've worked at Apple on AirPods, at Amazon on warehouse automation, at Zoox on convincing Toyotas that someone is driving when they really aren't, and at Astranis leading the Avionics team through multiple generations of satellite designs.",
+          "linkedin": "https://linkedin.com/in/andrew-mello/",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "Аппараты возврата с орбиты — узкоспециализированный hardware для in-space manufacturing рынка.",
-      "moat_type": ["tech", "regulatory"],
+      "moat_type": [
+        "tech",
+        "regulatory"
+      ],
       "differentiation": "Капиталоёмкий aerospace hardware, регуляторные барьеры на запуск/возврат (FAA/NOAA лицензирование) создают высокие barriers to entry."
     },
     "market": {
@@ -636,18 +1013,44 @@
       "why_now": "Стоимость запуска снизилась благодаря SpaceX/Rocket Lab; in-space manufacturing (фарма, полупроводники, оптика) выходит из теории — нужна логистика возврата готовой продукции."
     },
     "competition": {
-      "direct_competitors": ["Varda Space Industries", "Inversion Space", "Sierra Space (Dream Chaser)", "Stoke Space"],
+      "direct_competitors": [
+        "Varda Space Industries",
+        "Inversion Space",
+        "Sierra Space (Dream Chaser)",
+        "Stoke Space"
+      ],
       "competitive_position": "behind",
       "competitive_notes": "Varda и Inversion уже привлекли значительный капитал ($100M+) и провели тестовые миссии. Dispatch — поздний entrant в категорию с очень высоким минимальным capital requirement."
     },
     "risks": [
-      {"risk": "Капиталоёмкость: aerospace hardware требует $100M+ до первого commercial launch; $69k SAFE — это даже не seed", "severity": "high", "category": "financial"},
-      {"risk": "Существующие игроки (Varda) уже на operational stage", "severity": "high", "category": "market"},
-      {"risk": "Регуляторные сложности (FAA, NOAA, ITAR)", "severity": "high", "category": "regulatory"},
-      {"risk": "Зависимость от роста рынка in-space manufacturing — пока он остаётся скорее обещанием, чем реальностью", "severity": "high", "category": "market"}
+      {
+        "risk": "Капиталоёмкость: aerospace hardware требует $100M+ до первого commercial launch; $69k SAFE — это даже не seed",
+        "severity": "high",
+        "category": "financial"
+      },
+      {
+        "risk": "Существующие игроки (Varda) уже на operational stage",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Регуляторные сложности (FAA, NOAA, ITAR)",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Зависимость от роста рынка in-space manufacturing — пока он остаётся скорее обещанием, чем реальностью",
+        "severity": "high",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче, рекомендован Taro Fukuyama в превью YC Demo Day", "type": "press", "source_url": "https://www.linkedin.com/in/tarof/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче, рекомендован Taro Fukuyama в превью YC Demo Day",
+        "type": "press",
+        "source_url": "https://www.linkedin.com/in/tarof/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -670,10 +1073,27 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Dispatch website", "url": "https://dispatch.space/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"},
-      {"label": "Taro Fukuyama YC Demo Day recommendation", "url": "https://www.linkedin.com/in/tarof/"}
-    ]
+      {
+        "label": "Dispatch website",
+        "url": "https://dispatch.space/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      },
+      {
+        "label": "Taro Fukuyama YC Demo Day recommendation",
+        "url": "https://www.linkedin.com/in/tarof/"
+      }
+    ],
+    "yc_description": "Dispatch is building refurbishable reentry vehicles that host and return payloads for companies making ultra-high-value materials (semiconductors, biotech, and pharma) that can only be manufactured in space. Right now, these companies have no practical way to manufacture and get their products back to Earth. We solve this bottleneck. We just returned from the Mojave Desert testing our first full-scale reentry heat shield designed to protect the satellite as it returns from space at Mach 20+, built in an apartment for 100x cheaper than competitors. To test, we held it behind a rocket engine to simulate the forces of atmospheric reentry. IT WORKED! To scale, we anchor permanent infrastructure in orbit - building high power Autonomous Space Stations designed from day one for \"lights-out\" manufacturing serviced by the reentry vehicles.",
+    "yc_url": "https://www.ycombinator.com/companies/dispatch",
+    "launch": {
+      "title": "Dispatch | Satellites for Manufacturing In Space",
+      "tldr": "Gravity is an Invisible Constraint on Manufacturing. Some of the most valuable materials we can make from perfect semiconductors, to novel pharmaceuticals, to 3D printed organs can only be manufactured in microgravity.",
+      "url": "https://www.ycombinator.com/launches/Pnf-dispatch-satellites-for-manufacturing-in-space"
+    },
+    "yc_description_ru": "Dispatch делает многоразовые возвращаемые аппараты, которые выводят на орбиту и возвращают на Землю грузы компаний, производящих сверхдорогие материалы (полупроводники, биотех, фарму) — то, что можно сделать только в космосе. Сейчас у таких компаний нет практичного способа произвести продукт и вернуть его на Землю. Мы снимаем это ограничение.\n\nМы только что вернулись из пустыни Мохаве, где испытывали первый полноразмерный теплозащитный экран — он должен защитить аппарат при входе в атмосферу на скорости выше 20 Махов. Мы собрали его в квартире, в 100 раз дешевле конкурентов, и для теста держали за работающим ракетным двигателем, имитируя нагрузки при входе в атмосферу. Сработало.\n\nЧтобы масштабироваться, мы закрепляем постоянную инфраструктуру на орбите — строим мощные автономные космические станции, изначально рассчитанные на производство без людей, которые обслуживают возвращаемые аппараты."
   },
   {
     "company_id": "dayjob",
@@ -686,7 +1106,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 40000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$40M — valuation cap по SAFE. HQ: United Kingdom. Сайт getdayjob.ai"
     },
     "traction": {
@@ -698,15 +1120,33 @@
       "notes": "Конкретные клиенты в найденных источниках не подтверждены."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 5,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "George Postlethwaite",
+          "role": "CEO and Co-Founder",
+          "bio": "Building Dayjob - autonomous AI agents that run transport operations in real time. Before this, I built Gaea, an ERP for e-waste recyclers. I was an early employee at Deliveroo (acq. Doordash 2025) and launched their UK grocery business, and previously led sales at Otta (LocalGlobe-backed job search platform).",
+          "linkedin": "https://linkedin.com/in/georgepos",
+          "twitter": ""
+        },
+        {
+          "name": "Fred Fooks",
+          "role": "CTO & Co-Founder",
+          "bio": "Building Dayjob - autonomous AI agents that run transport operations in real time. Previously built Gaea, an ERP for e-waste recyclers, from scratch. Engineering Science at Oxford. Background in AI and Data Science at Deloitte and Capgemini.",
+          "linkedin": "https://linkedin.com/in/frederic-fooks",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "AI-оптимизация маршрутов для специфического сегмента waste haulers — глубокая нишевая экспертиза в логистике мусоровывоза.",
-      "moat_type": ["data", "distribution"],
+      "moat_type": [
+        "data",
+        "distribution"
+      ],
       "differentiation": "Wedge-стратегия: starting с waste hauling (где роуты предсказуемы и data-богаты), затем расширение в другие short-haul вертикали."
     },
     "market": {
@@ -718,17 +1158,40 @@
       "why_now": "Дефицит водителей + растущие топливные/wage издержки заставляют операторов оптимизировать; LLM умеют интегрировать unstructured данные (дорожные условия, контракты) лучше чем традиционные VRP-решатели."
     },
     "competition": {
-      "direct_competitors": ["Routific", "OptimoRoute", "Onfleet", "Trimble", "Samsara (fleet management)"],
+      "direct_competitors": [
+        "Routific",
+        "OptimoRoute",
+        "Onfleet",
+        "Trimble",
+        "Samsara (fleet management)"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Категория route optimization переполнена устоявшимися SaaS; Dayjob дифференцируется через узкую waste-вертикаль и AI-агентский подход."
     },
     "risks": [
-      {"risk": "Waste hauling — фрагментированный рынок с тысячами мелких операторов, длинные циклы продаж и низкие ARR per customer", "severity": "high", "category": "execution"},
-      {"risk": "Существующие route optimization решения (Routific, OptimoRoute) могут добавить AI-функционал быстрее", "severity": "medium", "category": "market"},
-      {"risk": "Интеграции с CDL-системами и telematics-провайдерами (Samsara, Geotab) — long sales/eng cycles", "severity": "medium", "category": "execution"}
+      {
+        "risk": "Waste hauling — фрагментированный рынок с тысячами мелких операторов, длинные циклы продаж и низкие ARR per customer",
+        "severity": "high",
+        "category": "execution"
+      },
+      {
+        "risk": "Существующие route optimization решения (Routific, OptimoRoute) могут добавить AI-функционал быстрее",
+        "severity": "medium",
+        "category": "market"
+      },
+      {
+        "risk": "Интеграции с CDL-системами и telematics-провайдерами (Samsara, Geotab) — long sales/eng cycles",
+        "severity": "medium",
+        "category": "execution"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -751,10 +1214,27 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Dayjob website", "url": "https://getdayjob.ai/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"},
-      {"label": "Ollie Forsyth — YC Spring 2026 batch overview", "url": "https://www.neweconomies.co/p/y-combinator-spring-2026-batch"}
-    ]
+      {
+        "label": "Dayjob website",
+        "url": "https://getdayjob.ai/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      },
+      {
+        "label": "Ollie Forsyth — YC Spring 2026 batch overview",
+        "url": "https://www.neweconomies.co/p/y-combinator-spring-2026-batch"
+      }
+    ],
+    "yc_description": "Dayjob does AI Scheduling for Short Haul Trucks. Our scheduling agent plugs into existing ERPs and continuously re-optimises routes in real time - handling new jobs, driver changes, and exceptions automatically. Customers in waste management see 8%+ efficiency gains from day one.\n\nIndustrial logistics plans are still built manually, every single morning. A transport planner sits down at 7am, spends 60 to 90 minutes dragging jobs onto trucks, and the plan is usually wrong by 10am. Our customers tell us they literally cannot hire and train planners fast enough. It's a nightmare when one of those planners is off sick or has to go away on vacation. Humans are being asked to continuously re-optimise hundreds of constraints: vehicle capacity, weight limits, time windows, driver hours, live traffic, all in real time. It's cognitively impossible to do reliably.\n\nDayjob sits on top of existing ERP software. Our scheduling agent builds a full fleet schedule in about 60 seconds. The same task currently takes a human planner most of the morning. We're live with fleets in the UK today, and currently launching in the US. Early results: 5 to 10% improvement in fleet efficiency from day one, 50% improvement in hitting customer time slots, and one customer saw an £800K revenue uplift in their first year.",
+    "yc_url": "https://www.ycombinator.com/companies/dayjob",
+    "launch": {
+      "title": "Dayjob: AI Agents for Industrial Logistics",
+      "tldr": null,
+      "url": "https://www.ycombinator.com/launches/Q32-dayjob-ai-agents-for-industrial-logistics"
+    },
+    "yc_description_ru": "Dayjob занимается AI-планированием маршрутов для грузоперевозок на короткие расстояния. Наш агент подключается к существующим ERP и постоянно пересобирает маршруты в реальном времени — сам обрабатывает новые заказы, замены водителей и нештатные ситуации. Клиенты в сфере вывоза отходов получают прибавку к эффективности от 8% с первого дня."
   },
   {
     "company_id": "perfectbit",
@@ -767,7 +1247,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 35000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$35M — valuation cap по SAFE."
     },
     "traction": {
@@ -779,15 +1261,33 @@
       "notes": "Если действительно есть контракты с frontier-лабораториями (OpenAI/Anthropic/Google), это был бы сильный traction; данные не раскрыты."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Seiji Yamamoto",
+          "role": "Founder",
+          "bio": "Led teams in the Core Llama group at Meta Superintelligence Labs. Senior Staff Research Scientist across 9 years at Meta spanning LLM pre-training and post-training, inference optimization, full-duplex speech models, and computer vision vision models. Before tech: PhD in Physics, published in Proceedings of the National Academy of Sciences and Physical Review Letters, co-authored with Fields Medalist. Educated at Stanford, Rice, Columbia, post-doc at a National Lab.",
+          "linkedin": "https://www.linkedin.com/in/seiji-yamamoto-a630897/",
+          "twitter": ""
+        },
+        {
+          "name": "Peter Vajda",
+          "role": "Founder",
+          "bio": "I worked as Director of Media Generation at Meta before 2026 for 11 years. I was managing the Media GenAI foundation model research and development, including efficient media generation, text to image generation (Emu), image editing, Movie gen, text to video, video editing and character consistent image and video generation. Previously, led efficient deep learning for computer vision teams supporting on-device models for AR/VR. I was Assistant Professor at Stanford University",
+          "linkedin": "https://www.linkedin.com/in/p%C3%A9ter-vajda-9a03aaa/",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "Verifier-grounded подход к training data — каждый sample имеет проверяемый ground truth, что критично для RL-training и post-training frontier-моделей.",
-      "moat_type": ["data", "tech"],
+      "moat_type": [
+        "data",
+        "tech"
+      ],
       "differentiation": "В отличие от Scale AI (human-labeled) и Surge (RLHF), PerfectBit утверждает verifier-based подход — programmatic ground truth для математики/кода/reasoning тасков, потенциально дешевле и масштабируемее."
     },
     "market": {
@@ -799,17 +1299,40 @@
       "why_now": "Frontier-лаборатории испытывают bottleneck в качественных RL-data для reasoning моделей; синтетические + verifier-checked данные становятся новой моделью."
     },
     "competition": {
-      "direct_competitors": ["Scale AI", "Surge AI", "Mercor", "Snorkel AI", "Toloka (LLM training data)"],
+      "direct_competitors": [
+        "Scale AI",
+        "Surge AI",
+        "Mercor",
+        "Snorkel AI",
+        "Toloka (LLM training data)"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Категория доминируется Scale AI (Anthropic, OpenAI клиенты, $13B+ valuation). PerfectBit нужен либо принципиальный technical edge, либо клиенты, которые остались за бортом у Scale."
     },
     "risks": [
-      {"risk": "Customer concentration: на frontier-лаборатории всего 5–6 потенциальных клиентов в мире; потеря одного = существенный удар", "severity": "high", "category": "market"},
-      {"risk": "Scale AI и подобные большие игроки могут предлагать verifier-grounded variants внутри существующих контрактов", "severity": "high", "category": "market"},
-      {"risk": "Frontier-лаборатории постепенно вертикализируют data-генерацию in-house (Anthropic, OpenAI наращивают internal data teams)", "severity": "medium", "category": "market"}
+      {
+        "risk": "Customer concentration: на frontier-лаборатории всего 5–6 потенциальных клиентов в мире; потеря одного = существенный удар",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Scale AI и подобные большие игроки могут предлагать verifier-grounded variants внутри существующих контрактов",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Frontier-лаборатории постепенно вертикализируют data-генерацию in-house (Anthropic, OpenAI наращивают internal data teams)",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -832,9 +1355,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "PerfectBit website", "url": "https://perfectbit.ai/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "PerfectBit website",
+        "url": "https://perfectbit.ai/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "We create a new kind of data for training AI models. Most LLMs are pre-trained on noisy web-scraped text, but they hallucinate and still fail on tasks that humans find trivial. PerfectBit creates high-quality training data that's correct by construction. We verify against physics simulators, scientific databases, formal proof systems. LLMs, robotics, AI for Science, and more.",
+    "yc_url": "https://www.ycombinator.com/companies/perfectbit",
+    "launch": {
+      "title": "PerfectBit: AI Training data, correct by construction",
+      "tldr": "PerfectBit creates high-quality training data that's correct by construction. We verify against physics simulators, scientific databases, formal proof systems. It's what models need to cure hallucination, close common-sense gaps, and reach superintelligence. Reinforcement Learning from Verified Rewards (RLVR) was an early step in this direction. We go further. LLMs, robotics, AI for Science, and more.",
+      "url": "https://www.ycombinator.com/launches/QMv-perfectbit-ai-training-data-correct-by-construction"
+    },
+    "yc_description_ru": "Мы создаём данные нового типа для обучения AI-моделей. Большинство LLM обучают на шумных текстах из интернета — из-за этого они выдумывают и ошибаются даже там, где человеку легко. PerfectBit готовит качественные данные, которые верны по построению: мы проверяем их через физические симуляторы, научные базы и системы формальных доказательств. Для LLM, робототехники, AI для науки и не только."
   },
   {
     "company_id": "hedge-specialty",
@@ -847,7 +1384,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 30000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$30M — valuation cap по SAFE. Известна как Hedge Specialty — 'Specialty E&S broker for hard risks' по описанию в YC директории. Это AI-native excess & surplus брокерство, не классический страховщик."
     },
     "traction": {
@@ -859,15 +1398,33 @@
       "notes": "Конкретный traction в найденных источниках не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Luke Button",
+          "role": "Founder/CEO",
+          "bio": "Building Hedge. Prev. founded Fernstone (AI-powered retail insurance brokerage), led a growth team at Traba (Series A, backed by Founders Fund), Head of Growth at Antimetal, cofounder at Contrast (acquired).",
+          "linkedin": "https://www.linkedin.com/in/lukebutton/",
+          "twitter": "https://x.com/lukebbutton"
+        },
+        {
+          "name": "Luke Rosa",
+          "role": "Founder",
+          "bio": "Building Hedge. Prev. Head of Scaled Systems at Traba (Series A, backed by Founders Fund, Khosla), replaced humans with AI agents to manage $20 MM+ in revenue. Econ at UChicago.",
+          "linkedin": "https://www.linkedin.com/in/luke-rosa-4a2717160",
+          "twitter": "https://x.com/lukerosa_"
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "AI-native подход к underwriting в E&S сегменте — специализированные риски (кибер, exotic property, профильная liability), где underwriting традиционно медленный и manual.",
-      "moat_type": ["tech", "regulatory"],
+      "moat_type": [
+        "tech",
+        "regulatory"
+      ],
       "differentiation": "E&S — менее регулируемый сегмент чем admitted, что даёт скорость; AI-underwriting + AI-дистрибуция могут компрессировать unit economics существующих specialty брокеров."
     },
     "market": {
@@ -879,18 +1436,45 @@
       "why_now": "E&S сегмент рос двузначными темпами последние годы (повышенный риск-аппетит к нестандартным рискам); AI впервые позволяет автоматизировать complex underwriting workflows."
     },
     "competition": {
-      "direct_competitors": ["Coalition (cyber)", "Cowbell Cyber", "Vouch", "Newfront", "Bold Penguin"],
+      "direct_competitors": [
+        "Coalition (cyber)",
+        "Cowbell Cyber",
+        "Vouch",
+        "Newfront",
+        "Bold Penguin"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "InsurTech-вертикаль с big incumbents (Marsh, Aon, AmWINS в E&S); Coalition и подобные уже привлекли крупные суммы. Нужно выбрать узкий сегмент 'hard risks', где big brokers ленятся."
     },
     "risks": [
-      {"risk": "Регуляторные требования — лицензирование E&S broker в каждом штате US медленно и дорого", "severity": "high", "category": "regulatory"},
-      {"risk": "Capacity-зависимость — без backing carriers (Lloyd's, Markel) брокер не может писать политики; underwriter capacity — bottleneck", "severity": "high", "category": "financial"},
-      {"risk": "InsurTech-категория показала разочаровывающие результаты (Lemonade, Hippo, Root — public market underperformance) — investor appetite ниже", "severity": "medium", "category": "financial"},
-      {"risk": "Hard market в E&S циклически уйдёт — soft-market давит на margins", "severity": "medium", "category": "market"}
+      {
+        "risk": "Регуляторные требования — лицензирование E&S broker в каждом штате US медленно и дорого",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Capacity-зависимость — без backing carriers (Lloyd's, Markel) брокер не может писать политики; underwriter capacity — bottleneck",
+        "severity": "high",
+        "category": "financial"
+      },
+      {
+        "risk": "InsurTech-категория показала разочаровывающие результаты (Lemonade, Hippo, Root — public market underperformance) — investor appetite ниже",
+        "severity": "medium",
+        "category": "financial"
+      },
+      {
+        "risk": "Hard market в E&S циклически уйдёт — soft-market давит на margins",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -913,9 +1497,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Hedge Specialty website", "url": "https://hedgespecialty.com/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Hedge Specialty website",
+        "url": "https://hedgespecialty.com/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Hedge is an AI-Native specialty insurance company. We help insurance brokers find faster, cheaper, and better coverage for their customers.\n\nI started a YC-backed AI-native insurance brokerage because buying insurance sucked. We thought the answer was building a better brokerage. But then we became brokers and realized we weren't actually fixing the system. Brokers do important work. They help businesses navigate a messy market. But they don't control the parts of the stack that determine speed, price, and coverage. Every quote still depends on multiple layers of brokers, underwriters, carriers, reinsurers, MGAs, and wholesalers. Each layer is still manual. Someone re-enters the same information by hand, then emails it to another person in the chain who does the same. Even when brokers move fast, quotes still sometimes take days or weeks. Brokers hate this. Their customers hate it even more. We realized the only way to fix this was to go full stack and rebuild the workflows ourselves.\n\nHedge helps insurance brokerages get better, faster, and cheaper coverage for complex businesses. To do this, we're starting with the wholesale layer. The first major bottleneck for brokers. Our competitors are billion-dollar businesses that are still almost entirely human-driven. Ryan Specialty, one of the largest wholesalers, spends almost 60% of revenue on salaries. Their version of innovation is giving manual work to offshore contractors. We think the better version is rebuilding the workflow around AI from day one. Hedge uses AI agents paired with underwriting to help brokers get quotes faster. Soon, we're moving up the stack: combining wholesale distribution and underwriting into one AI-native insurance company built to help brokers win more business.",
+    "yc_url": "https://www.ycombinator.com/companies/hedge",
+    "launch": {
+      "title": "Hedge: AI-native specialty insurance company",
+      "tldr": "We help insurance brokerages get quotes faster and cheaper. We started as brokers, realized insurance is broken end to end, and are now building the plumbing to fix it.",
+      "url": "https://www.ycombinator.com/launches/QGU-hedge-ai-native-specialty-insurance-company"
+    },
+    "yc_description_ru": "Hedge — страховая компания, построенная вокруг AI. Мы помогаем страховым брокерам быстрее и дешевле находить лучшее покрытие для клиентов, в том числе для сложного бизнеса.\n\nНачинаем с оптового слоя — первого узкого места для брокеров. Наши конкуренты — компании на миллиарды долларов, но работа у них до сих пор почти полностью ручная: один из крупнейших оптовиков, Ryan Specialty, тратит около 60% выручки на зарплаты.\n\nМы считаем, что правильнее с самого начала перестроить весь процесс вокруг AI. Hedge связывает AI-агентов с андеррайтингом, чтобы брокеры получали котировки быстрее, и постепенно объединяет оптовую дистрибуцию и андеррайтинг в одну AI-страховую компанию."
   },
   {
     "company_id": "transload",
@@ -928,7 +1526,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 35000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$35M — valuation cap по SAFE. HQ: Германия."
     },
     "traction": {
@@ -940,15 +1540,39 @@
       "notes": "Конкретный traction в найденных источниках не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 3,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Julius Scheel",
+          "role": "Founder & CEO",
+          "bio": "Co-founder & CEO at transload. Top 5% of Analysts at McKinsey. Led a 9-person door-to-door NGO fundraising team at age 17 (€300k donations), built and scaled a virtual clinic at avi medical to 7-figures ARR. Distinction from Technical University of Munich.",
+          "linkedin": "https://www.linkedin.com/in/juliusscheel/",
+          "twitter": ""
+        },
+        {
+          "name": "Nils Börner",
+          "role": "Co-founder & CTO (AI)",
+          "bio": "Co-founder & CTO (AI) of transload. Five years building computer vision systems across deep-tech startups and academic research, with a co-authored paper in IEEE Transactions on Medical Imaging. Graduated top 5% of his Master's in Computer Science at TU Munich and earned a double-degree Master's in Data Science from the University of Queensland, recognized with the Dean's Commendation for Academic Excellence.",
+          "linkedin": "https://www.linkedin.com/in/boenils/",
+          "twitter": "https://x.com/nilsboern"
+        },
+        {
+          "name": "Jago Wahl-Schwentker",
+          "role": "Co-founder & CTO (Engineering)",
+          "bio": "Co-founder & CTO (Engineering) at transload. Previously first software engineer at Veli, where he built an AI emergency alerting system from water and electricity sensor data for care homes and launched a Bluetooth localization product that doubled ARR. Studied Computer Science at the Technical University of Munich.",
+          "linkedin": "https://www.linkedin.com/in/jagowahl/",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "Computer vision для расчёта габаритов/объёма грузов через существующие складские камеры — software-only deployment без покупки lidar/3D-сенсоров.",
-      "moat_type": ["tech"],
+      "moat_type": [
+        "tech"
+      ],
       "differentiation": "Software-only через существующее железо vs. традиционные hardware-dimensioners ($10k+ за устройство, медленный деплой). Аналог с большими 'before/after' экономиками для логистических операторов."
     },
     "market": {
@@ -960,17 +1584,40 @@
       "why_now": "Carriers (FedEx, UPS, DHL) внедрили dimensional pricing — точные габариты прямо влияют на тариф; CV-модели только в 2024–2025 стали достаточно точными для production-измерений."
     },
     "competition": {
-      "direct_competitors": ["Cubiscan (legacy hardware)", "Mettler-Toledo CSN", "Cargosense", "FreightOptics", "Rectangle (YC)"],
+      "direct_competitors": [
+        "Cubiscan (legacy hardware)",
+        "Mettler-Toledo CSN",
+        "Cargosense",
+        "FreightOptics",
+        "Rectangle (YC)"
+      ],
       "competitive_position": "contender",
       "competitive_notes": "Hardware-incumbents (Cubiscan, Mettler-Toledo) дороги и медленны; software-only подход — потенциально disruptive в долгосрочной перспективе."
     },
     "risks": [
-      {"risk": "Качество CV-моделирования на реальных складах (плохое освещение, нестандартные грузы, occlusion) — главный технический риск", "severity": "high", "category": "technical"},
-      {"risk": "Carrier-сертификации (FedEx/UPS audit) необходимы для использования в billing — длинные цикли", "severity": "high", "category": "regulatory"},
-      {"risk": "Конкуренция от incumbent hardware-провайдеров, которые могут добавить CV-софт к существующим устройствам", "severity": "medium", "category": "market"}
+      {
+        "risk": "Качество CV-моделирования на реальных складах (плохое освещение, нестандартные грузы, occlusion) — главный технический риск",
+        "severity": "high",
+        "category": "technical"
+      },
+      {
+        "risk": "Carrier-сертификации (FedEx/UPS audit) необходимы для использования в billing — длинные цикли",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Конкуренция от incumbent hardware-провайдеров, которые могут добавить CV-софт к существующим устройствам",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -993,9 +1640,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Transload website", "url": "https://transload.io/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Transload website",
+        "url": "https://transload.io/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "transload helps logistics companies measure shipments using the security cameras they already have. A pallet, a couch, a tire – we capture its true size as it moves through the warehouse. For our customers, 15% of shipments turn out to be bigger than what the sender claimed. Catching those differences is worth ~$50k per site per month in rebillings and improved trailer utilization.",
+    "yc_url": "https://www.ycombinator.com/companies/transload",
+    "launch": {
+      "title": "transload – we measure freight with security cameras",
+      "tldr": "Trucking companies lose billions because they don't know the actual size of items on trucks. Measurement occurs via existing warehouse security cameras using computer vision—no new equipment required.",
+      "url": "https://www.ycombinator.com/launches/QP2-transload-we-measure-freight-with-security-cameras"
+    },
+    "yc_description_ru": "transload помогает логистическим компаниям замерять грузы с помощью камер видеонаблюдения, которые у них уже есть. Паллета, диван, шина — мы фиксируем реальные габариты, пока груз едет по складу. У наших клиентов 15% отправлений оказываются больше, чем заявил отправитель, а выявление таких расхождений приносит порядка $50k на площадку в месяц за счёт перерасчётов и более плотной загрузки трейлеров."
   },
   {
     "company_id": "zibra-labs",
@@ -1008,7 +1669,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 30000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$30M — valuation cap по SAFE."
     },
     "traction": {
@@ -1020,15 +1683,32 @@
       "notes": "Описание из YC AI Companies директории."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Ibrahim Rabbani",
+          "role": "Founder and CEO",
+          "bio": "Former tech-lead of Ray. Previously building databases at LinkedIn. I've built systems that run on hundreds of thousands of machines and serve over a billion people.",
+          "linkedin": "https://www.linkedin.com/in/israbbani/",
+          "twitter": ""
+        },
+        {
+          "name": "Zac Policzer",
+          "role": "Founder and CTO",
+          "bio": "After a career making software that serves over a billion people, with a background primarily in large databases, I'm now building HPC clusters at Zibra Labs The past two years I've been focused on what the next generation of AI data center software looks like — and working to shape that future. I've been fortunate to do much of this in open source, which I'm deeply passionate about. Talk to me about databases, Mahjong, guitars, or weird horror movies. I'm currently building Zibra Labs.",
+          "linkedin": "https://www.linkedin.com/in/zac-policzer-41160157",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "Утилизация GPU/CPU-кластеров для frontier AI и quant workloads — фокус не на GPU availability (как Lambda/CoreWeave), а на infrastructure software, которая на GPU крутится.",
-      "moat_type": ["tech"],
+      "moat_type": [
+        "tech"
+      ],
       "differentiation": "Двойной вход: hedge funds (HPC backtesting) + AI labs (RL post-training, batch inference) — обе категории требуют похожих primitives (parallel job scheduling, distributed memory)."
     },
     "market": {
@@ -1040,17 +1720,40 @@
       "why_now": "GPU compute дефицитен и дорог; эффективная утилизация существующих кластеров — главная неэффективность отрасли (часто <40% utilization)."
     },
     "competition": {
-      "direct_competitors": ["Anyscale (Ray)", "Modal", "RunPod", "Foundry", "Together AI (infrastructure side)"],
+      "direct_competitors": [
+        "Anyscale (Ray)",
+        "Modal",
+        "RunPod",
+        "Foundry",
+        "Together AI (infrastructure side)"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Категория переполнена; Zibra дифференцируется через двойной target (quant + AI) и фокус на utilization software, а не на reselling GPU compute."
     },
     "risks": [
-      {"risk": "Тяжёлая конкуренция от Anyscale, Modal, AWS SageMaker — все они инвестируют в GPU orchestration", "severity": "high", "category": "market"},
-      {"risk": "Quant funds — small TAM по числу клиентов, и они часто строят инфраструктуру in-house", "severity": "medium", "category": "market"},
-      {"risk": "Frontier AI labs тоже в основном вертикализированы (OpenAI/Anthropic строят свои стеки)", "severity": "medium", "category": "market"}
+      {
+        "risk": "Тяжёлая конкуренция от Anyscale, Modal, AWS SageMaker — все они инвестируют в GPU orchestration",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Quant funds — small TAM по числу клиентов, и они часто строят инфраструктуру in-house",
+        "severity": "medium",
+        "category": "market"
+      },
+      {
+        "risk": "Frontier AI labs тоже в основном вертикализированы (OpenAI/Anthropic строят свои стеки)",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.ycombinator.com/companies/industry/artificial-intelligence"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.ycombinator.com/companies/industry/artificial-intelligence"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1073,10 +1776,27 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Zibra Labs website", "url": "https://zibralabs.ai/"},
-      {"label": "YC AI Industry Directory", "url": "https://www.ycombinator.com/companies/industry/artificial-intelligence"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Zibra Labs website",
+        "url": "https://zibralabs.ai/"
+      },
+      {
+        "label": "YC AI Industry Directory",
+        "url": "https://www.ycombinator.com/companies/industry/artificial-intelligence"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "We build distributed compute clusters with the cheapest CPUs and GPUs across Hyperscalers and Neoclouds for AI. Our mission is to bring frontier-grade infrastructure to everyone. We're starting by building large scale high performance computing (HPC) clusters for quantitative trading firms to run parallel simulation workloads such as backtesting. Our technology generalizes to critical AI workloads such as post-training with reinforcement learning, fine-tuning, long-horizon agents with high tool use, and batch inference.\n\nWe've spent years working together building large scale distributed systems that run on hundreds of thousands of machines and serve billions of users. Every time you leverage your network for a warm intro on LinkedIn, you use three databases that we've built: Venice, Liquid, and Espresso. After LinkedIn, we were tech-leads of Ray, the leading open-source compute platform used by companies such as xAI, Cursor, Bridgewater, P72, Man Group, Two Sigma, and others. Ray has ~12M weekly downloads and is part of the PyTorch Foundation.\n\nWe're building large scale high performance computing (HPC) clusters for quantitative trading firms to run parallel simulation workloads such as backtesting. The scale we're targeting is 100 to 50,000 nodes of mixed hardware (CPUs and GPUs) on hyperscalers and neoclouds, up to 5,000,000 parallel tasks, spot instances for cheaper compute across multiple availability zones, hyperscalers, and neoclouds, < 50ms overhead for task dispatch and scheduling, and run the compute in your cloud or on-prem environment to keep your alpha secure. Our goal is to make testing trading strategies fast, cheap, and reliable.\n\nWe know that existing solutions do not handle this scale, do not have first-class support for spot-instances, and will not match our low-latency and high throughput performance. Our technology generalizes to other large-scale compute workloads such as post-training and reinforcement learning (RL) for frontier and applied AI labs, massively parallel robotics simulation and sim-to-real training for robot foundation model teams, virtual screening and molecular dynamics for techbio and pharma R&D, and scientific simulation (CFD, climate, seismic, FEA) for HPC teams looking to move beyond MPI and SLURM.",
+    "yc_url": "https://www.ycombinator.com/companies/zibra-labs",
+    "launch": {
+      "title": "Zibra Labs: HPC for Quant Trading Firms Running Backtesting at Scale",
+      "tldr": null,
+      "url": "https://www.ycombinator.com/launches/QPY-zibra-labs-hpc-for-quant-trading-firms-running-backtesting-at-scale"
+    },
+    "yc_description_ru": "Мы строим распределённые вычислительные кластеры из самых дешёвых CPU и GPU у гиперскейлеров и neocloud-провайдеров для AI. Наша цель — сделать инфраструктуру фронтир-уровня доступной каждому. Начинаем с больших HPC-кластеров для количественных трейдинговых фирм под параллельные расчёты вроде бэктестинга. Технология переносится и на ключевые AI-задачи: post-training с обучением с подкреплением, дообучение, долгоживущих агентов с активным использованием инструментов и пакетный инференс."
   },
   {
     "company_id": "gojiberry-ai",
@@ -1089,7 +1809,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 40000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$40M — valuation cap по SAFE."
     },
     "traction": {
@@ -1101,15 +1823,39 @@
       "notes": "Конкретный traction в найденных источниках не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 7,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Pierre-Eliott Lallemant",
+          "role": "Co-Founder & CEO",
+          "bio": "Co-Founder & CEO of Gojiberry AI | AI Go-To-Market agents for lean sales teams | 1x Exit",
+          "linkedin": "https://www.linkedin.com/in/pelall/",
+          "twitter": "https://x.com/pierreeliottlal"
+        },
+        {
+          "name": "Romàn Czerny",
+          "role": "Co-Founder & CMO",
+          "bio": "Co-Founder & CMO of Gojiberry AI | AI GTM agents for lean sales teams | 1x Exit (CoCo AI)",
+          "linkedin": "https://www.linkedin.com/in/roman-cherny-a32069419/?skipRedirect=true",
+          "twitter": "https://x.com/romanbuildsaas"
+        },
+        {
+          "name": "Dylan Teixeira",
+          "role": "Co-Founder & CTO",
+          "bio": "Co‑founder and CTO of Gojiberry (AI GTM agents for lean sales teams), previously co‑founded Edusign, a paperless attendance SaaS that grew to multi‑million ARR before I sold in 2025.",
+          "linkedin": "https://www.linkedin.com/in/dylan-txa-b88b0a418/",
+          "twitter": "https://x.com/Dylan_txa"
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "AI GTM-команда (research + personalization + outreach) как сервис для B2B-компаний без in-house SDR-команды.",
-      "moat_type": ["distribution"],
+      "moat_type": [
+        "distribution"
+      ],
       "differentiation": "Конкурирует с outbound-агентствами (Belkins, MartLink) и SaaS (Apollo, Outreach) через AI-агентов, которые делают persona research и пишут персональные сообщения в одном loop."
     },
     "market": {
@@ -1121,17 +1867,42 @@
       "why_now": "LLM позволяют дёшево генерировать персонализированные emails; email deliverability rules заставляют компании отказываться от mass-blast в пользу 1:1 outreach."
     },
     "competition": {
-      "direct_competitors": ["11x.ai", "Artisan", "Clay", "Apollo", "Outreach", "Salesloft", "Common Room"],
+      "direct_competitors": [
+        "11x.ai",
+        "Artisan",
+        "Clay",
+        "Apollo",
+        "Outreach",
+        "Salesloft",
+        "Common Room"
+      ],
       "competitive_position": "behind",
       "competitive_notes": "Категория AI SDR — одна из самых переполненных в 2024–2026; 11x и Artisan уже привлекли крупные суммы и захватили mindshare. Gojiberry — поздний entrant в шумную категорию."
     },
     "risks": [
-      {"risk": "Гипер-конкуренция: 11x, Artisan, Clay, AISDR — все хорошо профинансированы и впереди по traction", "severity": "high", "category": "market"},
-      {"risk": "Email deliverability ужесточается (Google/Microsoft anti-spam) — AI-генерированные cold emails всё больше попадают в spam", "severity": "high", "category": "regulatory"},
-      {"risk": "Низкая дифференциация — все говорят 'AI SDR'; победа за дистрибуцией и брендом", "severity": "high", "category": "market"}
+      {
+        "risk": "Гипер-конкуренция: 11x, Artisan, Clay, AISDR — все хорошо профинансированы и впереди по traction",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Email deliverability ужесточается (Google/Microsoft anti-spam) — AI-генерированные cold emails всё больше попадают в spam",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Низкая дифференциация — все говорят 'AI SDR'; победа за дистрибуцией и брендом",
+        "severity": "high",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1154,9 +1925,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Gojiberry AI website", "url": "https://gojiberry.ai/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Gojiberry AI website",
+        "url": "https://gojiberry.ai/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Gojiberry is building the AI GTM team for B2B companies. We start with outbound: Gojiberry finds buyers showing intent, enriches them, reaches out, follows up, handles replies, and books qualified meetings. Companies use Gojiberry to replace the old way of doing outbound: buying tools, hiring SDRs & agencies, testing lists, writing messages, and guessing what works. Gojiberry turns it into one AI team that finds buyers and books meetings. Every campaign makes Gojiberry smarter. It learns which buyers convert, which signals matter, which messages get replies, and which actions create revenue. Over time, Gojiberry uses what works across similar companies and industries to help every new customer get better results from day one. Long term, Gojiberry will become the system that finds every revenue opportunity and acts on it: outbound leads, website visitors, inbound leads, old CRM leads, replies, meetings, CRM updates, new campaign ideas, and account expansion. The goal is to make every B2B company able to run a high-performing GTM team without hiring one. We grew from $0 to $2.5M ARR in 10 months, are growing 30% MoM, profitable, and used by 2,000+ customers. Customers get 2-5x more positive replies than traditional outbound.",
+    "yc_url": "https://www.ycombinator.com/companies/gojiberry-ai",
+    "launch": {
+      "title": "GojiberryAI - AI GTM brain that detects buying intent, runs conversations, and books qualified demos automatically",
+      "tldr": "GojiberryAI identifies high intent leads, detects real buying signals, and automatically launches personalized conversations on LinkedIn from one single platform.",
+      "url": "https://www.ycombinator.com/launches/Pm3-gojiberryai-ai-gtm-brain-that-detects-buying-intent-runs-conversations-and-books-qualified-demos-automatically"
+    },
+    "yc_description_ru": "Gojiberry строит AI-команду для вывода B2B-продуктов на рынок. Начинаем с исходящих продаж: система находит покупателей с признаками интереса, обогащает данные, пишет им, ведёт переписку и назначает целевые встречи. Компании используют Gojiberry вместо старого подхода — покупки инструментов, найма SDR и агентств, ручного подбора списков и догадок о том, что сработает. Каждая кампания делает систему умнее: она учится, какие покупатели конвертируются и какие сообщения получают ответы. За 10 месяцев команда выросла с нуля до $2.5M ARR, растёт на 30% в месяц, прибыльна, и ей пользуются более 2000 клиентов."
   },
   {
     "company_id": "kinect",
@@ -1169,7 +1954,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 30000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$30M — valuation cap по SAFE. Сайт trykinect.ai"
     },
     "traction": {
@@ -1181,15 +1968,33 @@
       "notes": "Конкретный traction не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Kratik Agrawal",
+          "role": "CEO & Co-Founder",
+          "bio": "CEO & Co-Founder of Kinect. Previously worked at Google Commerce. Built detection models at Anduril, and was on the enterprise new-products team at Verkada. Before Kinect, I was leading the Conversational Intelligence team at Reevo, helping B2B sellers go into each meeting more prepared and win more. CS @ UCLA",
+          "linkedin": "https://www.linkedin.com/in/kratikagrawal/",
+          "twitter": "https://x.com/Kratik_ag"
+        },
+        {
+          "name": "Varun Kandula",
+          "role": "Co-Founder",
+          "bio": "Co-Founder at Kinect. Previously led the Context Graph team at Reevo and worked as an engineer at MongoDB and Capital One. Advised Sephora on \"Ask AI\" tools. Built and scaled his own e-commerce brand to $10K in revenue. As President of NextGen Consulting, led engagements with leading retail brands and sourced $200K+ in contracted ARR across 10+ clients. Former national squash player and peaked at #23 in the US.",
+          "linkedin": "https://www.linkedin.com/in/varunkandula",
+          "twitter": "http://x.com/varunkand"
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "AI shopping assistants интегрируются в e-commerce сайты и выполняют роль 1:1 sales consultant — рекомендации, размер, comparison, конверсия.",
-      "moat_type": ["tech", "distribution"],
+      "moat_type": [
+        "tech",
+        "distribution"
+      ],
       "differentiation": "Конкурирует с традиционным e-com search (Algolia) и chatbots (Drift) через conversational commerce — диалог, который ведёт к покупке."
     },
     "market": {
@@ -1201,17 +2006,40 @@
       "why_now": "LLM достаточно реалистичны, чтобы вести multi-turn shopping conversations; e-com бренды борются за conversion rate на фоне роста CAC."
     },
     "competition": {
-      "direct_competitors": ["Shopify Magic / Shopify Inbox", "Tidio AI", "Klevu", "Rep AI", "Cresta"],
+      "direct_competitors": [
+        "Shopify Magic / Shopify Inbox",
+        "Tidio AI",
+        "Klevu",
+        "Rep AI",
+        "Cresta"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Shopify имеет дистрибуционное преимущество (нативная встройка); independent SaaS должны доказать ROI на conversion. Категория coнкурентная."
     },
     "risks": [
-      {"risk": "Shopify, BigCommerce и др. e-com платформы вертикализируют AI-функционал в native features", "severity": "high", "category": "market"},
-      {"risk": "Доказать incremental conversion lift сложно — A/B тесты дают шумные результаты", "severity": "medium", "category": "execution"},
-      {"risk": "Низкая дифференциация — большинство решений сводится к 'OpenAI API + product catalog'", "severity": "medium", "category": "technical"}
+      {
+        "risk": "Shopify, BigCommerce и др. e-com платформы вертикализируют AI-функционал в native features",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Доказать incremental conversion lift сложно — A/B тесты дают шумные результаты",
+        "severity": "medium",
+        "category": "execution"
+      },
+      {
+        "risk": "Низкая дифференциация — большинство решений сводится к 'OpenAI API + product catalog'",
+        "severity": "medium",
+        "category": "technical"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1234,9 +2062,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Kinect website", "url": "https://trykinect.ai/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Kinect website",
+        "url": "https://trykinect.ai/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Kinect builds AI agents that know your brand, your catalog, and your customers. On your site, they sell every visitor — running the conversation, adapting product pages in real time to each customer segment, picking the right recommendation for the question being asked. The agent picks up on what each shopper actually wants from how they ask, what they hesitate on, what they compare, and what objection makes them bounce. We take all of a brand's data and make a structured catalog, brand voice, fit notes, return reasons, segment-level nuance — all so the Kinect agents truly can speak about a brand. When an agent describes the brand, the version it describes is the one you'd want them to, not whatever it guessed from a public catalog scrape. We expose this data as well in the form of agent storefronts, letting every other AI talk about your brand in the way you would want too. We're building for human shoppers today and the AI agents that shop and discover for them. Either way, the entire website needs to get a lot smarter and personalized. Two surfaces. One layer. Built for scaling DTC ecommerce brands.",
+    "yc_url": "https://www.ycombinator.com/companies/kinect",
+    "launch": {
+      "title": "Kinect: Personalized storefronts that sell, not just show",
+      "tldr": "Kinect builds storefronts that sell, not just show. Our AI agents know each ecommerce brand's catalog, voice, and customer taste — they sell to every visitor on the site, and represent the brand to every external agent (ChatGPT, Gemini, Perplexity) asking about it from outside.",
+      "url": "https://www.ycombinator.com/launches/Q1Q-kinect-personalized-storefronts-that-sell-not-just-show"
+    },
+    "yc_description_ru": "Kinect создаёт AI-агентов, которые знают ваш бренд, каталог и покупателей. На сайте они продают каждому посетителю: ведут диалог, на лету подстраивают страницы товаров под сегмент и подбирают нужную рекомендацию под конкретный вопрос. Агент считывает, чего на самом деле хочет покупатель — по тому, как он спрашивает, где сомневается, что сравнивает и что заставляет уйти. Мы превращаем данные бренда в структурированный каталог с тоном голоса, нюансами по размеру и причинами возвратов, чтобы агент говорил о бренде именно так, как хотели бы вы, а не по случайному описанию из интернета. Эти же данные мы отдаём в виде «витрин для агентов», чтобы и любой другой AI рассказывал о вашем бренде правильно. Мы строим и для живых покупателей сегодня, и для AI-агентов, которые будут покупать за них."
   },
   {
     "company_id": "astraea",
@@ -1249,7 +2091,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 30000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$30M — valuation cap по SAFE. Сайт tryastraea.com"
     },
     "traction": {
@@ -1261,15 +2105,33 @@
       "notes": "Конкретный traction не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Joshua Wang",
+          "role": "Co-founder, CEO",
+          "bio": "Stanford dropout previously studying CS and Math. Top 250 united states (USAMO) Qualifier, USACO Platinum, first intern at Salient (W23) developing enterprise systems.",
+          "linkedin": "https://www.linkedin.com/in/joshua-wang-229196319/",
+          "twitter": "https://x.com/joshwqngsr"
+        },
+        {
+          "name": "Sanmay Sarada",
+          "role": "Co-founder, CTO",
+          "bio": "prev Data Engineer @ Baylor College of Medicine | 4 Publications in Fetal Medicine | CS and Bio at Stanford",
+          "linkedin": "https://www.linkedin.com/in/sanmay-sarada/",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "AI-агенты для biometric processing в клинических испытаниях — ECG/ЭЭГ/имэйджинг анализ, что часто bottleneck в CRO-цепочке.",
-      "moat_type": ["tech", "regulatory"],
+      "moat_type": [
+        "tech",
+        "regulatory"
+      ],
       "differentiation": "Узкая вертикаль biometric data в clinical trials с FDA-валидацией — высокий regulatory moat если будет первой одобренной."
     },
     "market": {
@@ -1281,17 +2143,40 @@
       "why_now": "Clinical trial costs растут двузначными темпами; FDA одобряет AI-валидированные endpoints; sponsors давят на CRO ускорить timeline."
     },
     "competition": {
-      "direct_competitors": ["Medable", "Science 37", "ConcertAI", "Saama Technologies", "Harbor (та же P26 — clinical trial software)"],
+      "direct_competitors": [
+        "Medable",
+        "Science 37",
+        "ConcertAI",
+        "Saama Technologies",
+        "Harbor (та же P26 — clinical trial software)"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "В том же YC-батче есть Harbor с близким описанием. Большие CRO (IQVIA, Parexel) вертикализированы и медленны; AI-стартап с узким wedge может выиграть."
     },
     "risks": [
-      {"risk": "FDA-валидация AI-моделей для clinical endpoints — длинный и дорогой процесс", "severity": "high", "category": "regulatory"},
-      {"risk": "Big pharma (sponsors) — длинные циклы продаж (12–24 мес), требуют references", "severity": "high", "category": "execution"},
-      {"risk": "Прямой конкурент Harbor в том же YC-батче", "severity": "medium", "category": "market"}
+      {
+        "risk": "FDA-валидация AI-моделей для clinical endpoints — длинный и дорогой процесс",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Big pharma (sponsors) — длинные циклы продаж (12–24 мес), требуют references",
+        "severity": "high",
+        "category": "execution"
+      },
+      {
+        "risk": "Прямой конкурент Harbor в том же YC-батче",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1314,9 +2199,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Astraea website", "url": "https://tryastraea.com/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Astraea website",
+        "url": "https://tryastraea.com/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Astraea automates clinical trial biometrics from raw study inputs to FDA-ready outputs. The platform handles data normalization, CDISC mapping, SDTM, ADaM, TFLs, QC, and revision workflows in one auditable system, helping Phase II/III sponsors reduce months of manual programming and data management into automated, reviewable execution.",
+    "yc_url": "https://www.ycombinator.com/companies/astraea",
+    "launch": {
+      "title": "Astraea - Agents Accelerating clinical trials",
+      "tldr": "Clinical trial analysis is still shockingly manual. After a study collects data, teams spend months converting raw clinical data into SDTM, ADaM, TFLs, and submission-ready packages. This work is slow, expensive, and error-prone. Astraea is a platform that completely automates the end-to-end biometrics pipeline from just a protocol and the raw data to a submission ready output.",
+      "url": "https://www.ycombinator.com/launches/QLz-astraea-agents-accelerating-clinical-trials"
+    },
+    "yc_description_ru": "Astraea автоматизирует биометрику клинических исследований — от сырых данных до материалов, готовых к подаче в FDA. Платформа берёт на себя нормализацию данных, маппинг CDISC, SDTM, ADaM, TFL, контроль качества и правки в одной прослеживаемой системе, помогая спонсорам исследований фазы II/III заменить месяцы ручного программирования на автоматическое и проверяемое выполнение. Начинают с онкологии и редких заболеваний, где сложность анализа высока, а каждый сэкономленный месяц на счету."
   },
   {
     "company_id": "klarify",
@@ -1329,7 +2228,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": null,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "MFN (Most Favored Nation) условия — valuation cap не зафиксирован, привязан к будущему priced round. Сайт klarify.ca указывает на канадскую географию (HQ — США по Extruct директории, но домен .ca)."
     },
     "traction": {
@@ -1341,15 +2242,33 @@
       "notes": "Конкретный traction не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 4,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Moody Abdul",
+          "role": "Founder & CEO",
+          "bio": "Founder of Klarify, an AI agent for therapists. Previously founder @ Circleback.ai. Contact: moody@klarify.ca",
+          "linkedin": "https://www.linkedin.com/in/moodyabdul",
+          "twitter": "https://x.com/MoodyAbdulf"
+        },
+        {
+          "name": "Alexander Bergholm",
+          "role": "Founder (CTO)",
+          "bio": "CTO @ Klarify (Batch P26) Here to graduate clients from therapy by enhancing their therapeutic journey. Former Div 1 collegiate CS player, top 50 in Canada — still clutch under pressure.",
+          "linkedin": "https://www.linkedin.com/in/bergholmalexander/",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "AI-ассистент с фокусом на admin work для therapists — нотации сессий по HIPAA, billing-codes, инсуранс-документация.",
-      "moat_type": ["tech", "regulatory"],
+      "moat_type": [
+        "tech",
+        "regulatory"
+      ],
       "differentiation": "Узкая вертикаль therapy (vs. broader healthcare) даёт фокусированный UX и HIPAA/PHIPA compliance готовый к работе. AI-нотации специфичны для psychotherapy (DSM-coding, treatment plans)."
     },
     "market": {
@@ -1361,17 +2280,41 @@
       "why_now": "Mental health practitioners — самая быстрорастущая категория health practitioners в US; LLM-нотации достаточно качественные для clinical documentation; HIPAA-compliant LLM-stack стал доступен в 2024–2025."
     },
     "competition": {
-      "direct_competitors": ["SimplePractice", "TheraNest", "Headway (sourcing + admin)", "Sondermind", "Eleos Health", "Blueprint AI"],
+      "direct_competitors": [
+        "SimplePractice",
+        "TheraNest",
+        "Headway (sourcing + admin)",
+        "Sondermind",
+        "Eleos Health",
+        "Blueprint AI"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "SimplePractice — incumbent с десятками тысяч клиентов; Eleos и Blueprint — AI-native конкуренты с раундами серий A/B. Klarify — поздний entrant."
     },
     "risks": [
-      {"risk": "Регулирование HIPAA/PHIPA и страховое биллинг-комплаэнс — операционно тяжело для маленькой команды", "severity": "high", "category": "regulatory"},
-      {"risk": "Eleos Health, Blueprint AI уже впереди по traction и finansированию", "severity": "high", "category": "market"},
-      {"risk": "Therapy market фрагментирован — тысячи solo-практик, низкие ARR per customer", "severity": "medium", "category": "market"}
+      {
+        "risk": "Регулирование HIPAA/PHIPA и страховое биллинг-комплаэнс — операционно тяжело для маленькой команды",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Eleos Health, Blueprint AI уже впереди по traction и finansированию",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Therapy market фрагментирован — тысячи solo-практик, низкие ARR per customer",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1395,9 +2338,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Klarify website", "url": "https://klarify.ca/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Klarify website",
+        "url": "https://klarify.ca/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Klarify handles every job a therapist does other than the therapy itself, from clinical notes and treatment plans to insurance claims and finding new clients. Therapists hold the world together. They also run businesses, file insurance claims, write letters, fill forms, supervise new grads, and do hours of paperwork every night.\n\nPractice management software has existed for decades. It records what therapists do. It can't actually do any of it.\n\nKlara is the AI at the heart of Klarify. She handles notes, treatment plans, clinical letters, insurance claims, between-session resources, supervision prep, and finding new clients.\n\nNearly 8,300 therapists use Klarify today. Our mission is to empower therapists, not replace them. So they can focus on the one thing only a human can do. Be present with their client.",
+    "yc_url": "https://www.ycombinator.com/companies/klarify",
+    "launch": {
+      "title": "Klarify 🌱 AI Agent for Therapists",
+      "tldr": "Therapists work alone. Klarify is the AI agent that handles every job a therapist does other than the therapy itself: clinical notes, treatment plans, insurance claims, between-session resources, and finding new clients. Nearly 6,000 therapists use Klarify today, and we're growing fast.",
+      "url": "https://www.ycombinator.com/launches/QKh-klarify-ai-agent-for-therapists"
+    },
+    "yc_description_ru": "Klarify берёт на себя всю работу психотерапевта, кроме самой терапии: от заметок по сессиям и планов лечения до страховых заявок и поиска новых клиентов. Терапевты держат мир на себе — и при этом ведут бизнес, оформляют страховые заявки, пишут письма, заполняют формы, курируют новичков и каждый вечер тратят часы на бумаги. Софт для управления практикой существует десятилетиями, но он лишь фиксирует то, что делает терапевт, а сделать за него не может.\n\nKlara — это AI в сердце Klarify. Она ведёт заметки, планы лечения, клинические письма, страховые заявки, материалы между сессиями, подготовку к супервизии и поиск новых клиентов. Сегодня Klarify пользуются почти 8300 терапевтов. Наша задача — не заменить терапевта, а освободить его для того единственного, что может только человек: быть рядом со своим клиентом."
   },
   {
     "company_id": "lightsprint",
@@ -1410,7 +2367,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 40000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$40M — valuation cap по SAFE. Сайт lightsprint.ai"
     },
     "traction": {
@@ -1422,15 +2381,39 @@
       "notes": "Конкретный traction не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 3,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Ben Ong",
+          "role": "Founder/CEO",
+          "bio": "Founder at Lightsprint (YC P26). Ex-VC at January Capital and venture builder at Temasek's venture studio (300B fund). Scaled products in SE group (NYSE: SE, Southeast Asia's unicorn). Prev data scientist at Cheetah Digital.",
+          "linkedin": "https://www.linkedin.com/in/benj-ong/",
+          "twitter": ""
+        },
+        {
+          "name": "Benedict Chan",
+          "role": "Founder",
+          "bio": "Founder at Lightsprint, an AI-native loop for building products: decide → spec → ship → learn → repeat. Past: Engineering leadership — CTO @ BitGo (NYSE: BTGO), Head of Eng @ Chainlink, SDE2 @ Microsoft",
+          "linkedin": "https://linkedin.com/in/bencxr",
+          "twitter": "https://x.com/bencxr"
+        },
+        {
+          "name": "Heng Hong Lee",
+          "role": "Founder",
+          "bio": "Founder at Lightsprint (YC P26). Previously Principal Engineer at HQ.xyz and Head of Engineering at Xweave. Founded Tempest, a custodial Lightning wallet. Led engineering at FAZZ Financial Group for 4 years. Senior Software Engineer at Facebook for 5 years. BA in Electrical Engineering from National University of Singapore.",
+          "linkedin": "https://www.linkedin.com/in/henghonglee",
+          "twitter": "https://x.com/henghonglee"
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "Позиционирование 'GitHub для не-инженеров' — естественный язык → commits в репозиторий. Конкурирует с Vercel v0, Cursor, Replit Agent в no-code/low-code AI пространстве.",
-      "moat_type": ["tech"],
+      "moat_type": [
+        "tech"
+      ],
       "differentiation": "Целевая аудитория — non-engineers (PMs, designers), а не developers. Это либо новая категория, либо очень переполненный сегмент."
     },
     "market": {
@@ -1442,17 +2425,41 @@
       "why_now": "LLM достаточно зрелы, чтобы генерировать рабочий код по prompt; PMs/designers всё чаще хотят shippать самостоятельно, минуя инженерные циклы."
     },
     "competition": {
-      "direct_competitors": ["Cursor (Anysphere)", "Vercel v0", "Replit Agent", "Bolt.new (StackBlitz)", "Lovable", "Devin (Cognition)"],
+      "direct_competitors": [
+        "Cursor (Anysphere)",
+        "Vercel v0",
+        "Replit Agent",
+        "Bolt.new (StackBlitz)",
+        "Lovable",
+        "Devin (Cognition)"
+      ],
       "competitive_position": "behind",
       "competitive_notes": "Категория экстремально переполнена; Cursor и Vercel v0 — лидеры с десятками миллионов выручки и сильными product moat. Lovable и Bolt уже захватили no-code AI mind share."
     },
     "risks": [
-      {"risk": "Гипер-конкуренция от well-funded игроков (Cursor, Vercel, Replit, Lovable) — все привлекли $100M+", "severity": "high", "category": "market"},
-      {"risk": "Низкая дифференциация — без чёткого wedge сложно выделиться", "severity": "high", "category": "market"},
-      {"risk": "AI-generated code quality — non-engineers не могут отладить ошибки агента", "severity": "medium", "category": "technical"}
+      {
+        "risk": "Гипер-конкуренция от well-funded игроков (Cursor, Vercel, Replit, Lovable) — все привлекли $100M+",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Низкая дифференциация — без чёткого wedge сложно выделиться",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "AI-generated code quality — non-engineers не могут отладить ошибки агента",
+        "severity": "medium",
+        "category": "technical"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1475,9 +2482,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Lightsprint website", "url": "https://lightsprint.ai/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Lightsprint website",
+        "url": "https://lightsprint.ai/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Lightsprint is a collaborative platform for software teams to plan visually, preview live and ship with an army of cloud agents. Your whole team, including non-engineers, can now ship end to end reliably.\n\nThe company is founded by Ben Ong, an AI investor who previously scaled AI products at SEA Group (NYSE: SE) and Temasek ($300B fund), Benedict Chan who was VP Engineering at Chainlink and CTO at BitGo (NYSE:BTGO), and Heng Hong Lee who built Facebook Messenger in 2013 and was Director of Engineering at Fazz (YC S17).",
+    "yc_url": "https://www.ycombinator.com/companies/lightsprint",
+    "launch": {
+      "title": "Lightsprint - The Collaborative Product Development Platform",
+      "tldr": "We are building a collaborative platform for software teams to plan visually, preview live and ship with an army of cloud agents. Your whole team, including non-engineers, can now ship end to end reliably.",
+      "url": "https://www.ycombinator.com/launches/QSs-lightsprint-the-collaborative-product-development-platform"
+    },
+    "yc_description_ru": "Lightsprint — платформа для командной работы над софтом: планировать визуально, сразу видеть живой предпросмотр и выпускать продукт силами множества облачных агентов. Вся команда, включая не-инженеров, теперь может надёжно доводить работу до конца. Компанию основали Ben Ong — инвестор в AI, ранее развивавший AI-продукты в SEA Group (NYSE: SE) и Temasek (фонд на $300B); Benedict Chan — бывший VP Engineering в Chainlink и CTO в BitGo; и Heng Hong Lee, который в 2013 году построил Facebook Messenger и был директором по инженерии в Fazz (YC S17)."
   },
   {
     "company_id": "interfaze",
@@ -1490,7 +2511,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 40000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$40M — valuation cap по SAFE. Сайт interfaze.ai. В директории YC описание: 'Deterministic AI model for developer tasks'."
     },
     "traction": {
@@ -1502,15 +2525,32 @@
       "notes": "Конкретный traction не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 5,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Yoeven D Khemlani",
+          "role": "Founder",
+          "bio": "8 years in edge computer vision research | 2nd time founder",
+          "linkedin": "https://linkedin.com/in/yoeven",
+          "twitter": "https://x.com/yoeven"
+        },
+        {
+          "name": "Harsha Vardhan Khurdula",
+          "role": "Co-Founder",
+          "bio": "Building https://interfaze.ai — over 5 years of experience specializing in computer vision, reinforcement learning for SLMs, and AI research with multiple peer-reviewed papers",
+          "linkedin": "https://www.linkedin.com/in/harsha-vardhan-khurdula-99b400183/",
+          "twitter": "https://x.com/khurdula"
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "Узкая специализация на трёх задачах (OCR + extraction + classification) с детерминированными выходами — то, чего general-purpose LLM не дают.",
-      "moat_type": ["tech"],
+      "moat_type": [
+        "tech"
+      ],
       "differentiation": "Конкурирует с general-purpose LLM (OpenAI, Anthropic) на узких developer tasks. Детерминированность — важна для regulated industries (финансы, здравоохранение, юриспруденция)."
     },
     "market": {
@@ -1522,17 +2562,42 @@
       "why_now": "Document-AI пространство (OCR, extraction) растёт на фоне 'digitize everything' трендов; production engineering teams нужны deterministic outputs для compliance."
     },
     "competition": {
-      "direct_competitors": ["Reducto", "Mistral OCR", "Mendable", "Unstructured.io", "Microsoft Document Intelligence", "AWS Textract", "Google Document AI"],
+      "direct_competitors": [
+        "Reducto",
+        "Mistral OCR",
+        "Mendable",
+        "Unstructured.io",
+        "Microsoft Document Intelligence",
+        "AWS Textract",
+        "Google Document AI"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Hyperscalers (AWS, Google, Microsoft) доминируют в общих OCR/document; Reducto и Unstructured — AI-native challengers с привлечёнными раундами. Interfaze — поздний entrant."
     },
     "risks": [
-      {"risk": "Hyperscaler dominance (AWS Textract, Google Document AI) — крупные клиенты часто остаются на AWS/GCP за инерцией", "severity": "high", "category": "market"},
-      {"risk": "Reducto и Unstructured уже привлекли серии A/B и набрали enterprise клиентов", "severity": "high", "category": "market"},
-      {"risk": "Frontier LLMs (Claude, GPT) добавляют document understanding нативно, что компрессирует category margins", "severity": "medium", "category": "market"}
+      {
+        "risk": "Hyperscaler dominance (AWS Textract, Google Document AI) — крупные клиенты часто остаются на AWS/GCP за инерцией",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Reducto и Unstructured уже привлекли серии A/B и набрали enterprise клиентов",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Frontier LLMs (Claude, GPT) добавляют document understanding нативно, что компрессирует category margins",
+        "severity": "medium",
+        "category": "market"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1555,9 +2620,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Interfaze website", "url": "https://interfaze.ai/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Interfaze website",
+        "url": "https://interfaze.ai/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Interfaze is an AI model built on a new architecture that merges specialized DNN/CNN models with transformers for tasks that require deterministic output and high consistency like Document intelligence, Object detection, Classification, Audio understanding and more. Interfaze outperforms large lab models like Gemini flash, Claude Sonnet and the GPT-5.4 mini series.",
+    "yc_url": "https://www.ycombinator.com/companies/interfaze",
+    "launch": {
+      "title": "Interfaze - Deterministic AI for developer tasks: OCR, Object detection, Web scraping, STT, Classification and more",
+      "tldr": "LLMs are built for human-in-the-loop tasks which are highly non-deterministic in nature. We built an AI model for tasks that require high accuracy and verifiable data you can build workflows around.",
+      "url": "https://www.ycombinator.com/launches/Pyw-interfaze-deterministic-ai-for-developer-tasks-ocr-object-detection-web-scraping-stt-classification-and-more"
+    },
+    "yc_description_ru": "Interfaze — AI-модель на новой архитектуре, где специализированные DNN/CNN-модели соединены с трансформерами для задач, требующих точного и стабильного результата: разбор документов, детекция объектов, классификация, понимание аудио и не только. По открытым бенчмаркам Interfaze обходит крупные модели вроде Gemini Flash, Claude Sonnet и серии GPT-5.4 mini."
   },
   {
     "company_id": "complir",
@@ -1570,7 +2649,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": 50000000,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "$50M — valuation cap по SAFE. HQ: Copenhagen, Denmark. Один из самых высоких caps в списке."
     },
     "traction": {
@@ -1582,15 +2663,40 @@
       "notes": "Конкретный traction не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 13,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Gustav Bang",
+          "role": "CEO, Founder",
+          "bio": "",
+          "linkedin": "https://www.linkedin.com/in/gustavbangn/",
+          "twitter": ""
+        },
+        {
+          "name": "Marc Kaa Brejner",
+          "role": "CTO, Founder",
+          "bio": "",
+          "linkedin": "https://www.linkedin.com/in/marc-kaa-brejner/",
+          "twitter": ""
+        },
+        {
+          "name": "Tine Kühnel",
+          "role": "CPO, Founder",
+          "bio": "",
+          "linkedin": "https://www.linkedin.com/in/tinekuhnel/",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "AI-автоматизация product compliance для retail/physical goods брендов — сложная многоюрисдикционная категория сертификаций (CE, FCC, CPSC, EPA, FDA).",
-      "moat_type": ["regulatory", "data"],
+      "moat_type": [
+        "regulatory",
+        "data"
+      ],
       "differentiation": "Аналог Vanta для SaaS (SOC2/ISO), но для hardware/CPG. Регуляторная сложность создаёт высокий moat, если компания построит accreditation-граф."
     },
     "market": {
@@ -1602,18 +2708,45 @@
       "why_now": "Стремительный рост Amazon-/Shopify-брендов и cross-border e-commerce делает compliance bottleneck'ом; AI-парсинг регуляторных документов делает категорию автоматизируемой впервые."
     },
     "competition": {
-      "direct_competitors": ["Vanta (SaaS compliance — adjacent)", "Sourcemap", "TÜV / SGS / Intertek (legacy auditing firms)", "Drata"],
+      "direct_competitors": [
+        "Vanta (SaaS compliance — adjacent)",
+        "Sourcemap",
+        "TÜV / SGS / Intertek (legacy auditing firms)",
+        "Drata"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Физический compliance исторически разрознен — legacy auditors (TÜV, SGS) доминируют, но медленны и дороги. Vanta-like игроков для hardware пока нет на видном плане — Complir может занять категорию."
     },
     "risks": [
-      {"risk": "Регуляторная фрагментация: тысячи стандартов в десятках юрисдикций — масштабирование данных сложно", "severity": "high", "category": "regulatory"},
-      {"risk": "Liability — если AI выдаёт неверный compliance signal и продукт отзывается, ответственность стартапа", "severity": "high", "category": "regulatory"},
-      {"risk": "Длинные циклы продаж в hardware-брендам, которые не привыкли к SaaS-инструментам", "severity": "medium", "category": "execution"}
+      {
+        "risk": "Регуляторная фрагментация: тысячи стандартов в десятках юрисдикций — масштабирование данных сложно",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Liability — если AI выдаёт неверный compliance signal и продукт отзывается, ответственность стартапа",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Длинные циклы продаж в hardware-брендам, которые не привыкли к SaaS-инструментам",
+        "severity": "medium",
+        "category": "execution"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"},
-      {"date": "2026-Q2", "event": "Включён в YC Demo Day preview Taro Fukuyama", "type": "press", "source_url": "https://www.linkedin.com/in/tarof/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      },
+      {
+        "date": "2026-Q2",
+        "event": "Включён в YC Demo Day preview Taro Fukuyama",
+        "type": "press",
+        "source_url": "https://www.linkedin.com/in/tarof/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1636,10 +2769,27 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Complir website", "url": "https://complir.io/"},
-      {"label": "Taro Fukuyama YC Demo Day recommendation", "url": "https://www.linkedin.com/in/tarof/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Complir website",
+        "url": "https://complir.io/"
+      },
+      {
+        "label": "Taro Fukuyama YC Demo Day recommendation",
+        "url": "https://www.linkedin.com/in/tarof/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "AI-powered product compliance platform that makes it easy for retailers to launch and scale products across borders without drowning in regulatory work. Complir's AI agents handle the regulations and documentation across every market you sell in - and keep your entire catalogue audit-ready.\n\nJust one month after Tine and I met back in May 2024, we made a deal with Flying Tiger Copenhagen (a 1,000+ store global retail chain, similar to a European Five Below) and forward deployed ourselves in their offices, working directly with their compliance, packaging, and sourcing teams for over a year.\n\nWe had no idea how much manual work we were about to witness. Regulations are dynamic. Products change. Data is messy. Requirements depend on category, market, material, packaging, claims, and more. Most existing tools treat compliance like static storage.\n\nSo we built an AI-native system that: Maps products to relevant regulatory requirements across markets; Transforms messy product data into structured, audit-ready compliance records; Automatically generates legally required outputs — including translations, warnings, labels, risk assessments, declarations, and technical documentation; Propagates updates when regulations or products change, so documentation stays compliant without manual rework.\n\nToday we manage 100k+ products, work with large retailers across Europe, and are growing ~45% MoM",
+    "yc_url": "https://www.ycombinator.com/companies/complir",
+    "launch": {
+      "title": "Complir - Helping large retailers remove compliance as a bottleneck to launching products globally.",
+      "tldr": null,
+      "url": "https://www.ycombinator.com/launches/Ppt-complir-helping-large-retailers-remove-compliance-as-a-bottleneck-to-launching-products-globally"
+    },
+    "yc_description_ru": "Complir — платформа на AI для соответствия требованиям к товарам: она помогает ритейлерам запускать и масштабировать продукты в разных странах, не утопая в регуляторной работе. AI-агенты Complir берут на себя нормы и документацию для каждого рынка, где вы продаёте, и держат весь каталог готовым к проверке."
   },
   {
     "company_id": "keyframe-labs",
@@ -1652,7 +2802,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": null,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "MFN условия — valuation cap не зафиксирован, привязан к будущему priced round. Сайт keyframelabs.com"
     },
     "traction": {
@@ -1664,15 +2816,32 @@
       "notes": "Конкретный traction не подтверждён."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 2,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Parth Radia",
+          "role": "Co-founder & CEO",
+          "bio": "Parth is co-founder & CEO of Keyframe Labs. Before Keyframe, he spent 5 years at Ericsson on frontier AI, founding and leading a team of 35 building foundation models for voice & video synthesis on one of the world's first petascale human datasets, shipping Ericsson's first generative AI products. Before that, as a research scientist at AT&T Labs he developed novel neural architectures for photorealistic 3D telepresence, enabling the world's first 3D call over production networks. B.S. CS UCLA.",
+          "linkedin": "https://www.linkedin.com/in/parthradia/",
+          "twitter": "https://x.com/parthnradia"
+        },
+        {
+          "name": "Kaahan Radia",
+          "role": "Co-founder & CTO",
+          "bio": "Kaahan is co-founder and CTO of Keyframe Labs, building the world's first photoreal, emotionally expressive AI humans for real-time video agents. Previously, he spent five years at Zipline as a Perception Engineer, building their camera-based detect-and-avoid system for autonomous drone operations. His work spans computer vision and applied ML, with research at CVPR and JAMA. B.A. CS, UC Berkeley.",
+          "linkedin": "https://www.linkedin.com/in/kaahan-radia-2ba47354/",
+          "twitter": "https://x.com/kradisme"
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "Real-time generative video с эмоциональной выразительностью — технически сложная категория, требует генерации 30+ FPS с lip-sync и эмоциональной семантикой.",
-      "moat_type": ["tech"],
+      "moat_type": [
+        "tech"
+      ],
       "differentiation": "В отличие от async-video AI (Synthesia, HeyGen), Keyframe целится в interactive/real-time video calls — намного более сложная технически задача."
     },
     "market": {
@@ -1684,17 +2853,42 @@
       "why_now": "Видео-генерация модели (Veo, Sora, Runway) достигли качества, достаточного для photorealism; latency-оптимизация ещё в работе, окно для нового игрока открыто."
     },
     "competition": {
-      "direct_competitors": ["Synthesia", "HeyGen", "D-ID", "Tavus", "Hour One", "Runway", "Soul Machines"],
+      "direct_competitors": [
+        "Synthesia",
+        "HeyGen",
+        "D-ID",
+        "Tavus",
+        "Hour One",
+        "Runway",
+        "Soul Machines"
+      ],
       "competitive_position": "niche",
       "competitive_notes": "Tavus — самый прямой конкурент (real-time AI video). Synthesia/HeyGen доминируют в async video. Keyframe должен показать значимый latency/quality edge."
     },
     "risks": [
-      {"risk": "Капиталоёмкость training видео-моделей: foundation video-модели от больших игроков (Google Veo, Sora) доминируют downstream", "severity": "high", "category": "financial"},
-      {"risk": "Uncanny valley — emotional photorealism сложен; одна неудачная сессия портит бренд", "severity": "high", "category": "technical"},
-      {"risk": "Use cases (sales, training, mental health) — каждый требует своей customization; risk of niche-fragmentation", "severity": "medium", "category": "execution"}
+      {
+        "risk": "Капиталоёмкость training видео-моделей: foundation video-модели от больших игроков (Google Veo, Sora) доминируют downstream",
+        "severity": "high",
+        "category": "financial"
+      },
+      {
+        "risk": "Uncanny valley — emotional photorealism сложен; одна неудачная сессия портит бренд",
+        "severity": "high",
+        "category": "technical"
+      },
+      {
+        "risk": "Use cases (sales, training, mental health) — каждый требует своей customization; risk of niche-fragmentation",
+        "severity": "medium",
+        "category": "execution"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1717,9 +2911,23 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Keyframe Labs website", "url": "https://keyframelabs.com/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Keyframe Labs website",
+        "url": "https://keyframelabs.com/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "Our real-time foundation models turn AI into lifelike video calls. Add the world's best AI avatars to your agents and applications in minutes with a few lines of embed code. Photorealism, emotion, and scale for as low as $0.06 per minute.",
+    "yc_url": "https://www.ycombinator.com/companies/keyframe-labs",
+    "launch": {
+      "title": "Keyframe Labs - turn AI into lifelike video calls",
+      "tldr": "our real-time, generative models turn AI into lifelike video calls. Deploy in minutes with a few lines of embed code. Photorealism, emotion, and scale for just $0.06 per minute.",
+      "url": "https://www.ycombinator.com/launches/Pwg-keyframe-labs-turn-ai-into-lifelike-video-calls"
+    },
+    "yc_description_ru": "Наши real-time-модели превращают AI в живой видеозвонок. Добавьте лучших в мире AI-аватаров к своим агентам и приложениям за минуты — несколькими строчками кода для встраивания. Фотореализм, эмоции и масштаб — от $0.06 за минуту."
   },
   {
     "company_id": "adialante",
@@ -1732,7 +2940,9 @@
       "last_round_date": "2026-01-15",
       "last_round_lead_investor": "Y Combinator",
       "last_round_post_money_valuation_usd": null,
-      "all_investors": ["Y Combinator"],
+      "all_investors": [
+        "Y Combinator"
+      ],
       "notes": "MFN условия. Сумма YC-инвестиции — $20,924 вместо стандартных $69,748 (по данным пользователя); причина не верифицирована, возможно SAFE на меньшую долю или 'YC-light' формат для глубокотех/медицины. Сайт adialante.com"
     },
     "traction": {
@@ -1744,15 +2954,33 @@
       "notes": "Hardware на ранней стадии. Включён в YC Demo Day preview как 'cancer screening without barriers'."
     },
     "team": {
-      "headcount_current": null,
+      "headcount_current": 4,
       "headcount_6mo_ago": null,
       "hiring_velocity": null,
-      "founders": [],
+      "founders": [
+        {
+          "name": "Efrain Torres",
+          "role": "Founder, CEO",
+          "bio": "CEO, making MRI a mass market cancer screening tool.",
+          "linkedin": "https://www.linkedin.com/in/dr-efraín-torres-85293512a/",
+          "twitter": "https://x.com/ET_adialante"
+        },
+        {
+          "name": "Parker Jenkins",
+          "role": "Founder, COO",
+          "bio": "COO at Adialante. Making cancer screening affordable.",
+          "linkedin": "https://www.linkedin.com/in/parker-jenkins-486893130/",
+          "twitter": ""
+        }
+      ],
       "key_hires": []
     },
     "moat": {
       "summary": "Низкопольная (low-field) портативная МРТ-система — wedge в предбиопсийной диагностике рака простаты, где требуется не максимальное разрешение, а доступность.",
-      "moat_type": ["tech", "regulatory"],
+      "moat_type": [
+        "tech",
+        "regulatory"
+      ],
       "differentiation": "Конкурирует с Hyperfine (portable MRI, NYSE:HYPR) и аналогичными low-field подходами. Wedge на простате — фокусированный clinical use case с высокой clinical value."
     },
     "market": {
@@ -1764,19 +2992,51 @@
       "why_now": "Low-field МРТ-технологии (Hyperfine, Promaxo) демократизировали доступ к МРТ; AI-reconstruction делает low-field изображения клинически приемлемыми; стоимость скрининга рака — главный барьер раннего обнаружения."
     },
     "competition": {
-      "direct_competitors": ["Hyperfine (Swoop)", "Promaxo (специально для простаты)", "Siemens Healthineers", "GE Healthcare", "Philips"],
+      "direct_competitors": [
+        "Hyperfine (Swoop)",
+        "Promaxo (специально для простаты)",
+        "Siemens Healthineers",
+        "GE Healthcare",
+        "Philips"
+      ],
       "competitive_position": "behind",
       "competitive_notes": "Hyperfine публичная (NYSE:HYPR) с готовым устройством. Promaxo конкретно фокусируется на простате — самый прямой конкурент. Adialante — поздний entrant в категорию."
     },
     "risks": [
-      {"risk": "FDA 510(k) или PMA путь для МРТ — годы и десятки миллионов до маркетингового разрешения", "severity": "high", "category": "regulatory"},
-      {"risk": "Hardware-капиталоёмкость: $20k YC-SAFE не профинансирует прототипирование, FDA, clinical trials", "severity": "high", "category": "financial"},
-      {"risk": "Promaxo уже сертифицирован и продаёт МРТ для простаты — прямой конкурент с многолетним отрывом", "severity": "high", "category": "market"},
-      {"risk": "Возмещение страховыми (reimbursement) для нового МРТ-устройства — длинный путь через CMS-коды", "severity": "high", "category": "financial"}
+      {
+        "risk": "FDA 510(k) или PMA путь для МРТ — годы и десятки миллионов до маркетингового разрешения",
+        "severity": "high",
+        "category": "regulatory"
+      },
+      {
+        "risk": "Hardware-капиталоёмкость: $20k YC-SAFE не профинансирует прототипирование, FDA, clinical trials",
+        "severity": "high",
+        "category": "financial"
+      },
+      {
+        "risk": "Promaxo уже сертифицирован и продаёт МРТ для простаты — прямой конкурент с многолетним отрывом",
+        "severity": "high",
+        "category": "market"
+      },
+      {
+        "risk": "Возмещение страховыми (reimbursement) для нового МРТ-устройства — длинный путь через CMS-коды",
+        "severity": "high",
+        "category": "financial"
+      }
     ],
     "momentum": [
-      {"date": "2026", "event": "Участие в YC P26 батче", "type": "funding", "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"},
-      {"date": "2026-Q2", "event": "Включён в YC Demo Day preview Taro Fukuyama как top healthtech / hardtech P26 startup", "type": "press", "source_url": "https://www.linkedin.com/in/tarof/"}
+      {
+        "date": "2026",
+        "event": "Участие в YC P26 батче",
+        "type": "funding",
+        "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      },
+      {
+        "date": "2026-Q2",
+        "event": "Включён в YC Demo Day preview Taro Fukuyama как top healthtech / hardtech P26 startup",
+        "type": "press",
+        "source_url": "https://www.linkedin.com/in/tarof/"
+      }
     ],
     "unit_economics": {
       "gross_margin_pct": null,
@@ -1800,9 +3060,26 @@
       "Не было проведено глубокое индивидуальное исследование"
     ],
     "sources": [
-      {"label": "Adialante website", "url": "https://adialante.com/"},
-      {"label": "Taro Fukuyama YC Demo Day recommendation", "url": "https://www.linkedin.com/in/tarof/"},
-      {"label": "Extruct AI P26 directory", "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"}
-    ]
+      {
+        "label": "Adialante website",
+        "url": "https://adialante.com/"
+      },
+      {
+        "label": "Taro Fukuyama YC Demo Day recommendation",
+        "url": "https://www.linkedin.com/in/tarof/"
+      },
+      {
+        "label": "Extruct AI P26 directory",
+        "url": "https://www.extruct.ai/data-room/ycombinator-companies-p26/"
+      }
+    ],
+    "yc_description": "We know how to improve cancer outcomes by 8x-10x: you catch it early. MRI is the most robust and powerful cancer-detection tool in the world, yet systems cost millions to purchase, take months to install, and require high levels of technical skill to operate. We've redesigned MRI from the ground up with new physics, algorithms, and hardware, all to bring cancer screening to the entire world.\n\nOur mobile MRI is an imaging clinic on wheels. No equipment to buy, no infrastructure needed. For a flat per-scan fee, any medical site can offer MRI cancer screening.\n\nStarting with prostate cancer. Then everything else.",
+    "yc_url": "https://www.ycombinator.com/companies/adialante",
+    "launch": {
+      "title": "Adialante: We're going to screen the world for cancer!",
+      "tldr": "Adialante builds compact and mobile whole-body MRIs. We already have $12.75M in LOIs, $30k in deposits, and our first system will be scanning by demo day.",
+      "url": "https://www.ycombinator.com/launches/QLh-adialante-we-re-going-to-screen-the-world-for-cancer"
+    },
+    "yc_description_ru": "Мы знаем, как улучшить исходы при раке в 8–10 раз: поймать его рано. МРТ — самый мощный инструмент выявления рака, но такие аппараты стоят миллионы, устанавливаются месяцами и требуют высокой квалификации оператора. Мы пересобрали МРТ с нуля — новая физика, алгоритмы и железо, — чтобы сделать скрининг доступным всему миру. Наш мобильный МРТ — это клиника визуализации на колёсах: ничего не нужно покупать и не нужна инфраструктура. За фиксированную плату за скан любая медицинская площадка может предложить МРТ-скрининг рака. Начинают с рака простаты. Дальше — всё остальное."
   }
 ]

@@ -8,9 +8,11 @@ import {
   iconForSector,
   iconColorForSector,
   YC_STATUS_LABELS,
+  YC_STATUS_HINTS,
   HOVER_DOT_TEXTURE,
 } from './yc-sector-colors.js';
 import ycResearchData from '../../../data/yc-research.json';
+import investmentData from '../../../data/yc-investment.json';
 
 // Lookup founders by company name so the listing card can show a compact
 // founder line without plumbing through props.
@@ -37,6 +39,14 @@ export default function YCCompanyCard({ company, onClick }) {
   const founders = (research?.team?.founders || []).map(f => shortFounder(f.name)).filter(Boolean);
   const foundersLine = founders.slice(0, 2).join(' · ');
   const cap = company.yc_cap && company.yc_cap !== 'MFN' ? `cap ${company.yc_cap}` : company.yc_cap || null;
+
+  // Investment preview — whether external money is on the cap table and who.
+  const invest = investmentData.companies?.[company.id] || null;
+  const extInvestors = invest?.external_investors || [];
+  const hasExternal = invest?.tier === 'external' && extInvestors.length > 0;
+  const investorLine = hasExternal
+    ? extInvestors.slice(0, 2).map(x => x.name).join(' · ') + (extInvestors.length > 2 ? ` +${extInvestors.length - 2}` : '')
+    : null;
 
   return (
     <button
@@ -86,7 +96,10 @@ export default function YCCompanyCard({ company, onClick }) {
             domain={domainFromUrl(company.website)}
             size={36}
           />
-          <span style={{
+          <span
+            title={YC_STATUS_HINTS[company.status] || ''}
+            style={{
+            display: 'inline-flex', alignItems: 'center', gap: 5,
             fontSize: 10.5, fontWeight: 500,
             padding: '4px 10px', borderRadius: 6,
             background: 'rgba(255,255,255,0.06)',
@@ -95,7 +108,12 @@ export default function YCCompanyCard({ company, onClick }) {
             backdropFilter: 'blur(4px)',
             WebkitBackdropFilter: 'blur(4px)',
             transition: 'background 200ms',
+            cursor: 'help',
           }}>
+            <span style={{
+              width: 6, height: 6, borderRadius: '50%',
+              background: company.status === 'Active' ? '#10b981' : '#71717a',
+            }} />
             {statusLabel}
           </span>
         </div>
@@ -168,6 +186,34 @@ export default function YCCompanyCard({ company, onClick }) {
           </div>
         )}
 
+        {/* Investment strip — tier badge + external investor names. Always
+            renders so every card answers "is there outside money?". */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
+          fontSize: 10.5, fontFamily: 'ui-monospace,monospace',
+        }}>
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: 5,
+            padding: '3px 8px', borderRadius: 5, whiteSpace: 'nowrap',
+            fontWeight: 700, letterSpacing: '0.02em',
+            color: hasExternal ? '#10b981' : '#71717a',
+            background: hasExternal ? 'rgba(16,185,129,0.10)' : 'rgba(255,255,255,0.04)',
+            border: `1px solid ${hasExternal ? 'rgba(16,185,129,0.35)' : 'rgba(255,255,255,0.07)'}`,
+          }}>
+            <span style={{
+              width: 6, height: 6, borderRadius: '50%',
+              background: hasExternal ? '#10b981' : '#52525b',
+              boxShadow: hasExternal ? '0 0 5px rgba(16,185,129,0.7)' : 'none',
+            }} />
+            {hasExternal ? 'Внешние инвесторы' : 'Только YC'}
+          </span>
+          {investorLine && (
+            <span style={{ color: '#a1a1aa', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {investorLine}
+            </span>
+          )}
+        </div>
+
         {/* Bottom row — # tag chips with small coloured sector icon + CTA */}
         <div style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -227,6 +273,9 @@ export function Logo({ name, url, domain, size = 60, square = true }) {
   const sources = useMemo(() => {
     const arr = [];
     if (url) arr.push(url);
+    // Clearbit returns real brand logos for most company domains; used as a
+    // fallback when the YC-hosted logo URL fails (e.g. expired signed URLs).
+    if (domain) arr.push(`https://logo.clearbit.com/${domain}`);
     if (domain) arr.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
     return arr;
   }, [url, domain]);

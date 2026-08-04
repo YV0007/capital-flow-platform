@@ -55,9 +55,9 @@ const TRACKERS = [
     domain: 'ycombinator.com',
     accent: '#FF6600',
     typeLabel: 'Батч YC',
-    subtitle: 'Y Combinator Summer 2026 — каталог стартапов с research-картой по каждому.',
+    subtitle: 'Y Combinator Spring 2026 — каталог стартапов с картой по инвесторам и research.',
     stats: [
-      { label: 'Батч',     value: 'Summer 2026' },
+      { label: 'Батч',     value: 'Spring 2026' },
       { label: 'Компаний', value: String(ycCompaniesData.length) },
     ],
     lifecycle: { status: 'active' },

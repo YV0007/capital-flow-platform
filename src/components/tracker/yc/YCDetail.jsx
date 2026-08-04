@@ -14,6 +14,11 @@ export default function YCDetail({ company, research, onBack }) {
   const hasResearchFounders = research?.team?.founders?.length > 0;
   const hasLegacyFounders = (company.founders || []).length > 0 && !hasResearchFounders;
 
+  // Detail body now mirrors the YC company page: the long-form English YC
+  // description (falls back to the basic RU description) sits left of the
+  // sticky metadata card.
+  const bodyDescription = research?.yc_description_ru || research?.yc_description || company.description;
+
   return (
     <div>
       {/* Back button */}
@@ -60,9 +65,9 @@ export default function YCDetail({ company, research, onBack }) {
           </div>
           <div style={{
             fontSize: 15, color: '#e4e4e7', lineHeight: 1.75,
-            maxWidth: 720,
+            maxWidth: 720, whiteSpace: 'pre-line',
           }}>
-            {company.description}
+            {bodyDescription}
           </div>
         </div>
 
@@ -88,7 +93,7 @@ export default function YCDetail({ company, research, onBack }) {
 
       {/* Research bundle — sits below the body, full canvas width so the
           groups can breathe and the 2-up card grid has room to read. */}
-      <YCResearchSections research={research} />
+      <YCResearchSections research={research} company={company} />
     </div>
   );
 }

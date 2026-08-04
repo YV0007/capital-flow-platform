@@ -43,9 +43,17 @@ export function iconColorForSector(sector) {
 // Status → Russian label, used on both the card status badge and the
 // metadata card on the detail screen.
 export const YC_STATUS_LABELS = {
-  Active:   'Активна',
-  Inactive: 'Неактивна',
+  Active:   'Работает',
+  Inactive: 'Закрылась',
   Acquired: 'Куплена',
+};
+
+// Tooltip copy that explains what each status actually means (the client
+// found a bare "Активна" ambiguous).
+export const YC_STATUS_HINTS = {
+  Active:   'Компания работает — не закрылась и не куплена',
+  Inactive: 'Компания прекратила работу',
+  Acquired: 'Компанию купили',
 };
 
 // Hover-only dot texture — fine 4px grid, white at 2.5% alpha (matches the

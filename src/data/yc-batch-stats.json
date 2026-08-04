@@ -1,0 +1,97 @@
+{
+  "_meta": {
+    "note": "Сводка по всему батчу YC Spring 2026 (P26) и по портфелю Toloka.VC. Источники: TechCrunch (обзор Demo Day 18 июня 2026), Extruct, PitchBook, Dealroom, пресс-релизы, страницы компаний на YC, данные Toloka.VC (dev.ua / vctr.media). Все суммы сверх $500K — это внешний капитал, отдельный от стандартной сделки YC.",
+    "as_of": "август 2026"
+  },
+  "batch": {
+    "title": "Батч YC Spring 2026",
+    "subtitle": "P26 · Demo Day 16 июня 2026",
+    "size_estimate": 200,
+    "size_range": "194–212",
+    "headline_stats": [
+      { "value": "~200", "label": "компаний в батче", "hint": "Точного числа YC не публикует; оценки трекеров — от 194 до 212." },
+      { "value": "95%", "label": "так или иначе используют AI" },
+      { "value": "~70%", "label": "строят AI-агентов" },
+      { "value": "$500K", "label": "вкладывает YC в каждую", "hint": "Стандартная сделка: $125K под фикс. 7% + $375K по SAFE. Всё, что больше — внешние деньги." }
+    ],
+    "top5": [
+      { "rank": 1, "name": "9 Mothers", "tag": "оборона · анти-дрон", "metric": "~$200M", "metricLabel": "оценка на Demo Day", "note": "Самый дорогой стартап батча и один из самых дорогих в истории YC. Продажи уже на $1.6M, один контракт может вырасти до $35M, портфель заявок — до $1B (покупатель — Пентагон).", "people": "Основатели Russell Smith (уже строил Rainforest QA, YC S12), Roman Khomenko, Bogdan Pyzh · Остин", "flag": "Это оценка со слов инвестора, а не привлечённые деньги. Официально зафиксирована только сделка YC на $500K." },
+      { "rank": 2, "name": "Ploy", "tag": "AI-платформа роста", "metric": "$27M", "metricLabel": "seed — крупнейший в батче", "note": "Автономные агенты собирают и ведут сайт, пишут тексты, запускают кампании и синхронят с CRM. Раунд под лид First Round Capital и YC; среди ангелов — Lenny Rachitsky, Josh Kim (Cursor), Sherwin Wu (OpenAI).", "people": "Основатель Bryant Chou — сооснователь и бывший CTO Webflow (оценка ~$4B)", "flag": "" },
+      { "rank": 3, "name": "Tasklet", "tag": "AI-агент для работы", "metric": "$20M", "metricLabel": "раунд при оценке $175M", "note": "Облачная «операционка» для агентов: описываешь задачу словами — агент 24/7 сам работает через Gmail, Slack, Notion, HubSpot, Salesforce. Раунд под лид Union Square Ventures и Lightspeed; участвовали Jeff Dean и братья Collison. Выручка ~$5M, рост более 1200% с января 2026.", "people": "Основатели Andrew Lee и Jonny Dimond — из команды, создавшей Firebase (куплен Google)", "flag": "" },
+      { "rank": 4, "name": "Drafted", "tag": "генеративная архитектура жилья", "metric": "$16M", "metricLabel": "seed (всего ~$17.5M)", "note": "Мультимодальные модели для проектирования жилья: планировки и 3D-раскладки за секунды. Раунд под лид Buckley Ventures. За месяц до анонса 120 000 пользователей сделали 325 000+ проектов.", "people": "CEO Nick Donahue (ранее Atmos); команда из Stanford, Autodesk, Adobe", "flag": "$16M — раунд под лид фонда, $17.5M — с учётом ангелов и YC." },
+      { "rank": 5, "name": "Adialante", "tag": "медтех · мобильный МРТ", "metric": "~$2.9M", "metricLabel": "seed + грант", "note": "Компактный мобильный МРТ на колёсах: скрининг рака примерно за $250 за снимок, там где обычный МРТ недоступен. Один из 11 заметных стартапов по версии TechCrunch — и при этом компания из портфеля Toloka.", "people": "Основатели Efraín Torres (CEO) и Parker Jenkins (COO), биомедицинские инженеры", "flag": "В портфеле Toloka.VC — важна для сравнения ниже." }
+    ],
+    "top_raises": [
+      { "name": "Ploy", "usd": 27000000, "lead": "First Round Capital + YC" },
+      { "name": "Tasklet", "usd": 20000000, "lead": "Union Square Ventures + Lightspeed" },
+      { "name": "Drafted", "usd": 16000000, "lead": "Buckley Ventures" },
+      { "name": "Adialante", "usd": 2900000, "lead": "Pioneer Fund и др." }
+    ],
+    "top_investors": [
+      { "name": "First Round Capital", "deal": "лид раунда Ploy — $27M", "website": "https://firstround.com/" },
+      { "name": "Union Square Ventures", "deal": "лид раунда Tasklet — $20M", "website": "https://www.usv.com/" },
+      { "name": "Lightspeed", "deal": "со-лид раунда Tasklet", "website": "https://lsvp.com/" },
+      { "name": "Buckley Ventures", "deal": "лид раунда Drafted — $16M", "website": "https://www.buckley.vc/" },
+      { "name": "Y Combinator", "deal": "$500K в каждую компанию батча", "website": "https://www.ycombinator.com/" }
+    ],
+    "sectors": [
+      { "label": "B2B", "pct": 61 },
+      { "label": "Железо и индустрия", "pct": 11 },
+      { "label": "Потребительские", "pct": 6 }
+    ],
+    "geo_sf_pct": 76,
+    "external_round_note": "Именованный внешний раунд сверх сделки YC к середине 2026 закрыла лишь меньшая часть — по оценке 15–25% батча. У большинства пока «только $500K от YC».",
+    "notes": [
+      "Оценка компании (сколько она «стоит») и привлечённые деньги — это разные вещи. У 9 Mothers ~$200M и у Tasklet $175M — это оценки, а реальные деньги привлекли только Ploy ($27M) и Tasklet ($20M).",
+      "Всё, что больше $500K — внешний капитал или гранты, не деньги YC."
+    ]
+  },
+  "toloka": {
+    "title": "Портфель Toloka.VC",
+    "subtitle": "21 компания из батча · синдикат с Founder Factor",
+    "headline_stats": [
+      { "value": "21", "unit": "компания", "label": "в портфеле P26" },
+      { "value": "$1.4M", "label": "вложено всего" },
+      { "value": "~$66.7K", "label": "средний чек" },
+      { "value": "6", "unit": "компаний", "label": "с внешними инвесторами" },
+      { "value": "$35M", "label": "медианный потолок оценки", "hint": "Разброс $25M–$60M; у 3 компаний потолок не зафиксирован." }
+    ],
+    "top5": [
+      { "name": "Adialante", "tag": "мобильный МРТ", "metric": "~$2.9M", "note": "seed (Pioneer Fund, Fogarty Innovation, Brown Venture Group, Walleye Tank + YC) и грант NSF $1.18M. Один из 11 заметных стартапов TechCrunch.", "star": true },
+      { "name": "Complir", "tag": "соответствие товаров нормам", "metric": "€1.7M", "note": "pre-seed под лид Vendep Capital (+ Plug and Play и др.). Один из 11 заметных стартапов TechCrunch.", "star": true },
+      { "name": "Lightsprint", "tag": "разработка с облачными агентами", "metric": "$500K+", "note": "с фондами Batch Ventures, Rebel Fund, Sterling Road, Transpose + YC. Один из 11 заметных стартапов TechCrunch.", "star": true },
+      { "name": "Interfaze", "tag": "AI для документов и OCR", "metric": "~$1.5M", "note": "ещё до YC: pre-seed под лид Antler и раунд $1M под лид Ada Ventures.", "star": false },
+      { "name": "BentoLabs AI", "tag": "мониторинг AI-агентов", "metric": "~$595K", "note": "$500K от YC + ~$95K от We Founder Circle.", "star": false }
+    ],
+    "notable_funds": [
+      { "name": "Pioneer Fund", "into": "Adialante" },
+      { "name": "Vendep Capital", "into": "Complir" },
+      { "name": "Ada Ventures", "into": "Interfaze" },
+      { "name": "Antler", "into": "Interfaze" },
+      { "name": "Rebel Fund", "into": "Lightsprint" }
+    ],
+    "biggest_round": { "name": "Adialante", "usd": 2900000 }
+  },
+  "comparison": {
+    "title": "Насколько удачно выбирает Toloka",
+    "share_of_batch_pct": 10.5,
+    "standouts_held": 3,
+    "standouts_total": 11,
+    "standouts_pct": 27,
+    "base_rate_pct": 5,
+    "over_index": "~5×",
+    "external_backed_pct": 29,
+    "batch_external_pct_range": "15–25%",
+    "median_cap_m": 35,
+    "market_median_m": 17.9,
+    "top_mark_m": 200,
+    "verdict_title": "Вывод: Toloka заметно выше среднего по батчу",
+    "verdict": "Toloka держит 3 из 11 стартапов, которых инвесторы назвали заметными (Adialante, Complir, Lightsprint) — это 27% списка при том, что случайно попадание составило бы около 5%. То есть синдикат попадает в консенсус-фаворитов примерно в 5 раз чаще случайного. По деньгам Toloka заходит в средний сегмент (медианный потолок $35M — выше рынка ~$17.9M, но ниже топ-марок $175–200M), а внешний капитал сверх YC уже привлекли около 29% её компаний — на уровне или чуть выше батча (15–25%). Итог: выбор Toloka работает — они не «дно», а верхняя часть батча.",
+    "points": [
+      { "label": "Доля батча у Toloka", "value": "~10.5%", "note": "21 компания из ~200" },
+      { "label": "Заметные стартапы (по версии инвесторов)", "value": "3 из 11", "note": "27% списка против ~5% случайно" },
+      { "label": "Попадание в фаворитов", "value": "~5×", "note": "чаще случайного" },
+      { "label": "С внешним капиталом сверх YC", "value": "~29%", "note": "против 15–25% по батчу" }
+    ]
+  }
+}
