@@ -17901,756 +17901,9 @@
     }
   },
   "gasturbines": {
-    "asOf": "2026-07-28",
-    "intro": "Газовая турбина превращает энергию сгорающего природного газа в электричество. Для дата-центра это единственный источник надёжной мощности круглые сутки, который вводится за 2–3 года и не зависит от солнца и ветра: атомная станция строится около 10 лет, а очередь на подключение к перегруженной сети — 4–7 лет. Поэтому турбину всё чаще ставят прямо на площадке рядом с потреблением (behind-the-meter), не дожидаясь сетевого присоединения.\n\nКак это работает. Внутри машины три секции на одном валу. Сначала компрессор засасывает воздух и сжимает его в десятки раз. Затем в камере сгорания сжатый воздух смешивается с газом и поджигается — температура струи доходит до ~1 500 °C. Наконец, этот раскалённый поток бьёт по лопаткам турбины и раскручивает вал; часть мощности уходит обратно на вращение компрессора, а остальное крутит электрогенератор. Один агрегат класса H/J мощностью 300–500 МВт способен питать дата-центр среднего размера. В комбинированном цикле выхлоп турбины дополнительно кипятит воду и крутит вторую, паровую турбину — так КПД поднимают выше 60%.\n\nСамая нагруженная деталь — лопатки первых ступеней сразу за камерой сгорания: они работают в потоке горячее, чем плавится их собственный металл. Чтобы это выдержать, каждую лопатку отливают из монокристаллического жаропрочного суперсплава — цельным кристаллом без границ зёрен, по которым металл трескался бы, — покрывают термобарьерным слоем и охлаждают изнутри воздухом через внутренние каналы. Именно это литьё — самое дефицитное звено всей цепочки: его контролируют по сути две компании, Howmet и PCC (входит в Berkshire Hathaway), вместе ~70–80% рынка высококлассных лопаток, брак на сложнейших сплавах — двузначный процент, а мощности распроданы. Освоить его быстро нельзя: это десятилетия металлургии горячей секции и многолетняя стендовая проверка.\n\nЭкономика бизнеса состоит из двух слоёв. Первый — продажа оборудования: в 2025 году заказы удвоились до 846 турбин (~100 ГВт), тогда как совокупная мощность трёх производителей — лишь 60–70 ГВт в год, и из-за дефицита цены выросли на 195% с 2019 года. Второй слой и есть главный источник прибыли — обслуживание. Продав машину, производитель на десятилетия привязывает к себе заказчика сервисным контрактом (LTSA) на 15–25 лет: он приносит порядка $5 млн в год с каждой турбины за запчасти, ремонт горячей секции и модернизацию. Эта повторяющаяся выручка даёт около 75% операционной прибыли газового подразделения — сервис приносит в 2–4 раза больше денег, чем продажа самого железа.\n\nКто вкладывает и сколько. Заказчик платит почти любую цену, потому что для дата-центра стоимостью в миллиарды нехватка мощности означает простой всей стройки, а очередь за турбиной расписана почти на десятилетие вперёд. Поэтому покупатели резервируют производственные слоты на годы (у GE Vernova в резервированиях — 63 ГВт) и подписывают сервис ещё до поставки. Производители в ответ вкладывают миллиарды: GE Vernova планирует ~$9 млрд суммарных капвложений и R&D до 2028 года и разгоняет выпуск в Гринвилле с 37 турбин (2025) до 74 (2027), Siemens Energy вложил более $1 млрд в производство в США. Но литьё лопаток и подготовка кадров тормозят разгон, поэтому полная нормализация сроков — не раньше конца 2020-х.\n\nРынок и концентрация. Совокупный рынок оборудования и сервиса оценивают в ~$68 млрд (2025) с ростом до ~$105 млрд к 2030 году, причём сервис растёт быстрее оборудования (~10% против ~5–7% в год). Тяжёлые турбины выпускают всего три производителя — GE Vernova, Siemens Energy и Mitsubishi Power; за 30 лет в сегмент не вошёл ни один новый игрок. Установленный парк GE Vernova — ~7 000 турбин, примерно половина всей газовой генерации в мире, и именно он год за годом кормит сервисный поток.",
-    "tldr": [
-      "Суперцикл, ограниченный предложением: заказы на 100 ГВт при производственной мощности 60–70 ГВт в год. GE Vernova: портфель 116 ГВт (53 ГВт твёрдые заказы + 63 ГВт резервирования), целится в 125+ ГВт к концу 2026. Siemens Energy: рекордный портфель газового сервиса €60 млрд, 43% доли рынка (>10 МВт). Цены выросли на 195% с 2019 года. Стоимость электростанции комбинированного цикла CCGT (газовая + паровая турбины вместе) — ~$2 157/кВт (+66% с 2023).",
-      "AI и дата-центры — новый драйвер: ~35 ГВт газовых турбин, поставленных прямо на площадке рядом с серверами (behind-the-meter), к 2030 году. Stargate/SB Energy — 9,2 ГВт в Огайо (~$33 млрд). xAI Colossus работает на ~1 500 МВт собственной генерации. ~25% заказов Siemens и GE Vernova связаны с дата-центрами. Проникновение газовых турбин в новые дата-центры: ~10–20% (2025) → ~50–60% к 2030.",
-      "Сервисные контракты — главный центр прибыли: рынок ~$42–45 млрд (2025), растёт ~9–10% в год. У GE Vernova сервис = ~45% выручки, ~70% портфеля, ~75% операционной прибыли энергетического сегмента. ~$5 млн с турбины в год на протяжении 17–21 лет. Дуополия в литье лопаток (Howmet + PCC, входит в Berkshire Hathaway) — самое концентрированное дефицитное звено: ~70–80% монокристаллических деталей горячей секции (лопатки, отлитые цельным кристаллом без границ зёрен). Центральный вопрос: это долгосрочный структурный сдвиг на 30 лет — или мост на ~10 лет до малых реакторов и аккумуляторов?"
-    ],
-    "verdict": {
-      "subScores": {
-        "growth": 9,
-        "moat": 9,
-        "cyclicality": 6,
-        "valuation": 7
-      },
-      "summary": "Настоящий суперцикл с ~десятилетием законтрактованного производства (116 ГВт заказов при ~10 ГВт/год мощности крупных турбин) + 20-летний поток дохода от сервисных контрактов. Олигополия «Большой тройки» производителей + дуополия Howmet/PCC в литье лопаток (отливка самых горячих деталей турбины) = устойчивая конкурентная структура. Спрос от AI/дата-центров (~35 ГВт к 2030) накладывается на выбытие угольных станций + электрификацию + требования надёжности. Ценообразование убедительное (+195% с 2019). Но мультипликаторы уже на пике цикла (GE Vernova ~46–58 прогнозных прибылей), и Barclays понизил Siemens Energy до «продавать» с аргументом «пик цикла». Рекомендация: перевес в циклическом росте, разумный вход — стратегия «штанга»: сервисные компаундеры — компании с растущим повторяющимся доходом (GE Vernova на просадках, Howmet) + более дешёвая «Большая тройка» (Siemens Energy, Mitsubishi/MHI).",
-      "horizon": "3–7 лет у производителей турбин (конвертация портфеля заказов плюс сервисные контракты на 17–21 год); 5–10 лет у поставщиков литья и сплавов.",
-      "sizing": "New-equipment ~$11–26 млрд (2025, scope-dependent). Services ~$42–45 млрд (2025), ~9–10% CAGR. Combined equipment+services = ~$55–70 млрд",
-      "keyQuestion": "Газовые турбины — долгосрочный структурный сдвиг или мост на ~10 лет, который вытеснят SMR и аккумуляторы?",
-      "bull": [
-        "Портфели заказов = десятилетие загрузки + 20-летние сервисные аннуитеты: GE Vernova 116 ГВт, Siemens €60 млрд газового сервиса, ~$81–85 млрд сервисного портфеля. ~7 000 установленных турбин = двигатель повторяющейся выручки. Такая видимость редкость в капитальных товарах.",
-        "Предложение, а не спрос — ограничитель: ~110 ГВт заказов при ~60–70 ГВт/год мощности (Wood Mackenzie). Устойчивая ценовая власть и расширение маржи (GE Vernova Power EBITDA 16,3%, +500 базисных пунктов). Дуополия в литье лопаток (отливка самых горячих деталей турбины) контролирует темп выпуска.",
-        "Дуополия в литье лопаток (Howmet/PCC) зарабатывает независимо от того, какой производитель побеждает: выручка Howmet от деталей турбин ~$1 млрд → $2+ млрд за 3–5 лет (+39% за год, I кв. 2026). Маржа EBITDA 33,3%. Мощности распроданы. Самое дефицитное звено всей цепочки."
-      ],
-      "bear": [
-        "Это цикл — а мультипликаторы уже на пике: Barclays понизил Siemens Energy, аргументируя пиком заказов, свободного денежного потока (FCF) и дефицита в 2026 году. GE Vernova ~46–58 прогнозных прибылей предполагает безупречное исполнение. Однозначные процентные движения на настроениях = асимметричный даунсайд.",
-        "Спрос на электроэнергию от AI может быть переоценён: задержки и перерасходы Stargate видны; сеть, а не турбины, обеспечила первый гигаватт дата-центра. В сетевом операторе PJM 65–80% заявленных мощностей вышли из очереди до соглашения. Фантомный спрос завышает реальные заказы.",
-        "Стек замещения (ядерные контракты PPA на поставку электроэнергии, аккумуляторы, водородные турбины, поршневые двигатели) может ударить во второй половине 2030-х: именно когда новые мощности выйдут на рынок — классический переинвест в капитальных товарах. Углеродная политика добавляет неопределённости."
-      ]
-    },
-    "marketSizing": {
-      "cagr": "~5–7% CAGR (equipment, mid-range); ~9–10% CAGR (services/aftermarket)",
-      "chartTitle": "Газовые турбины — оборудование + сервис, $ млрд",
-      "tam": [
-        {
-          "year": "2024",
-          "value": 55.0,
-          "label": "~$55 млрд",
-          "source": "equipment ~$23 млрд + services ~$42 млрд (combined estimate)"
-        },
-        {
-          "year": "2025",
-          "value": 68.0,
-          "label": "~$68 млрд",
-          "source": "equipment $23–26 млрд + services $42–45 млрд"
-        },
-        {
-          "year": "2027",
-          "value": 80.0,
-          "label": "~$80 млрд",
-          "source": "оценка при mid-single-digit equipment + ~10% services CAGR"
-        },
-        {
-          "year": "2030",
-          "value": 105.0,
-          "label": "~$105 млрд",
-          "source": "equipment ~$35–43 млрд + services ~$65–70 млрд"
-        },
-        {
-          "year": "2033",
-          "value": 135.0,
-          "label": "~$135 млрд",
-          "source": "equipment ~$43 млрд (FBI) + services ~$92 млрд (GVR)"
-        }
-      ],
-      "bomShare": {
-        "value": "~15–25%",
-        "note": "Gas turbine = largest single equipment item в CCGT plant. Turbine-only ~$600/kW (WoodMac end-2027) vs full CCGT ~$2 157/kW. Services 2–4× equipment revenue — the real profit center"
-      },
-      "volumeVsPrice": "Both: orders doubled (399→846 units, 58→100 GW). Pricing +195% с 2019 (WoodMac). CCGT capital cost +66% за 2 года (BNEF). GEV new bids +10–20% vs Q4 2025. Volume + pricing = rare double tailwind."
-    },
-    "valueCapture": {
-      "margins": [
-        {
-          "layer": "Howmet (литьё лопаток — аналог Nvidia)",
-          "margin": "33,3% EBITDA сегмента",
-          "source": "Детали турбин ~$1 млрд → $2+ млрд. ~70–80% дуополия с PCC. Мощности распроданы. Ключевое ограничение, определяющее темп выпуска OEM"
-        },
-        {
-          "layer": "OEM — оборудование (GE Vernova Gas Power)",
-          "margin": "16,3% EBITDA (+500 б.п.)",
-          "source": "Портфель 116 ГВт. Ценообразование +10–20% к IV кв. 2025. Маржа оборудования ниже сервисной"
-        },
-        {
-          "layer": "OEM — сервис LTSA (GE Vernova)",
-          "margin": "~75% операционной прибыли Power (оценка)",
-          "source": "~$81–85 млрд сервисного портфеля. ~$5 млн/турбина/год × 17–21 лет. ~70% портфеля. Аннуитет"
-        },
-        {
-          "layer": "Siemens Energy Gas Services",
-          "margin": "растёт (прогноз 10–12% на FY26)",
-          "source": "Рекордный портфель €60 млрд. ~€35 млрд сервисной выручки за ~20 лет. 43% доли >10 МВт"
-        },
-        {
-          "layer": "Суперсплавы (Carpenter, ATI)",
-          "margin": "растёт",
-          "source": "Продажи в энергетику +32% за квартал (Carpenter). «Фундаментальный дисбаланс спроса и предложения» в никелевых суперсплавах"
-        }
-      ],
-      "bottleneckNow": "Hot-section castings (Howmet/PCC duopoly): single-crystal blades, reject rates double-digit на hardest alloys. Manufacturing capacity ~60–70 GW/yr vs ~110 GW orders. Skilled labor.",
-      "bottleneckNext": "Gas pipeline infrastructure для BTM sites. Grid interconnection (4–7 лет, PJM). Hydrogen blending infrastructure. Superalloy raw materials.",
-      "capitalIntensity": "Высокая: GEV ~$9 млрд cumulative capex/R&D through 2028. Siemens >$1 млрд US investment. New CCGT plant ~$2 157/kW × 300–600 MW = $650 млн–$1,3 млрд per plant.",
-      "takeaway": "LTSA aftermarket = profit center (services 2–4× equipment revenue). Value accrues к OEM oligopoly (locked-in services) и casting duopoly (physical constraint). EPC = competitive, lower margin."
-    },
-    "competition": {
-      "concentration": "Big Three = ~2/3 of turbines в plants under construction (GEM). Heavy-duty = tight oligopoly. Casting = effective duopoly (Howmet + PCC ~70–80%). MHI #1 by MW (36%, 2023; 56% Advanced Class). GEV #1 installed base (~7 000 turbines, ~800 GW). Siemens 43% share >10 MW.",
-      "shareTrajectory": [
-        {
-          "player": "GE Vernova",
-          "now": "116 GW backlog, ~18,5% orders (2025)",
-          "direction": "↑",
-          "detail": "Largest installed base (~7 000 turbines). Greenville: 37→62→74 units/yr. ~$81–85 млрд services. 9HA ~20 GW under construction"
-        },
-        {
-          "player": "Siemens Energy",
-          "now": "43% share >10 MW, €60 млрд Gas Services",
-          "direction": "↑",
-          "detail": "Booked out to FY2028. Broadest H2-tested portfolio. HL-class. Record €154 млрд total backlog"
-        },
-        {
-          "player": "Mitsubishi Power (MHI)",
-          "now": "#1 by MW (36%, 2023)",
-          "direction": "↑",
-          "detail": "56% Advanced Class. JAC >64% CC efficiency, >120 J-class orders. Most aggressive 100% H2 timeline (2028 large-frame)"
-        },
-        {
-          "player": "Baker Hughes",
-          "now": "$1 млрд DC orders Q1 2026",
-          "direction": "↑",
-          "detail": "NovaLT16 100% H2-ready. Kodiak deal 1,8 GW. Modular 150–300 MW BTM blocks"
-        },
-        {
-          "player": "China Big Three (Harbin/Shanghai/Dongfang)",
-          "now": "First domestic 300 MW F-class (Oct 2024)",
-          "direction": "→",
-          "detail": "~55% efficiency. Roughly a generation behind H/J-class. Not export threat in advanced, но domestic displacement"
-        }
-      ],
-      "players": [
-        {
-          "name": "GE Vernova",
-          "share": "~18,5% (2025 orders)",
-          "edge": "Largest installed base (~7 000); 9HA/LM aero; LTSA annuity ~$81–85 млрд; Stargate 29 aeros"
-        },
-        {
-          "name": "Siemens Energy",
-          "share": "43% (>10 MW)",
-          "edge": "Broadest H2-tested portfolio; HL-class; booked out to FY2028; grid-tech optionality"
-        },
-        {
-          "name": "MHI/Mitsubishi Power",
-          "share": "#1 by MW (36%)",
-          "edge": "JAC >64% efficiency; 56% Advanced Class; most aggressive 100% H2 (large-frame 2028)"
-        },
-        {
-          "name": "Howmet Aerospace",
-          "share": "~35–40% castings",
-          "edge": "Single-crystal blade duopoly с PCC; ~70–80% of high-end airfoils; sold out; 33,3% EBITDA"
-        },
-        {
-          "name": "Baker Hughes",
-          "share": "Mid-tier + BTM",
-          "edge": "NovaLT16 100% H2; modular BTM; LNG turbomachinery; $1 млрд DC orders Q1 2026"
-        }
-      ],
-      "switchingCost": "Экстремально высокие: каждая турбина привязана к производителю через систему управления (софт GE или Siemens нельзя заменить) и через уникальные запчасти — лопатки из специальных сплавов подходят только к конкретной модели. Сервисные контракты (LTSA) на 15–25 лет делают замену экономически бессмысленной. Проверка новой турбины у заказчика занимает годы.",
-      "entryBarrier": "Экстремальный: десятилетия R&D по металлургии горячей секции, литьё монокристаллических лопаток, термобарьерные покрытия, системы сгорания — и многолетняя валидация (Mitsubishi T-Point 2). Естественная олигополия — ни один новый игрок не вошёл на рынок за 30 лет.",
-      "takeaway": "Tightest oligopoly в energy equipment. Big Three + casting duopoly = structural, не cyclical competitive advantage. LTSA lock-in = 20+ year recurring revenue. Entry barriers = among highest в any industrial sector."
-    },
-    "demand": {
-      "soldOut": [
-        {
-          "year": "2026",
-          "pct": 98,
-          "note": "116 GW backlog (GEV). 846 units / 100,3 GW ordered (2025, >2× 2024). Siemens booked to FY2028. ~4-year lead times. Manufacturing capacity ~60–70 GW/yr vs ~110 GW orders"
-        },
-        {
-          "year": "2027",
-          "pct": 95,
-          "note": "GEV targeting 70–80 heavy-duty/yr, ~20 GW/yr shipments. New capacity ramping. Но demand continues (DC + coal retirement + grid)"
-        },
-        {
-          "year": "2028",
-          "pct": 85,
-          "note": "~10,6 GW CCGT potentially online (EIA, most since 2018). Supply catching up but demand broadening (H2-ready, BTM scaling)"
-        }
-      ],
-      "contractStructure": "LTSA = 17–21 year contracts, ~25% installed fleet covered, ~70% renewal rate. Multi-year slot reservations (GEV 63 GW). Take-or-pay structures. OEMs selecting customers. BTM: direct hyperscaler PPAs.",
-      "customerConcentration": "Distributed: utilities/IPPs (Vistra, Constellation, NRG, Talen, NextEra), hyperscalers (Microsoft, Amazon, Google, Meta, OpenAI/Stargate), sovereign/Middle East. ~25% orders DC-linked.",
-      "backlog": "GEV total ~$176 млрд; Gas Power 116 GW (firm 53 + reservations 63), guiding ≥125 GW YE2026. Siemens Gas Services €60 млрд. MHI Energy Systems bookings +45% YoY. Howmet GT parts sold out.",
-      "pricing": "CCGT capital cost ~$2 157/kW (+66% с 2023, BNEF). Turbine-only ~$600/kW к end-2027 (+195% с 2019, WoodMac). EPRI: ~$2 000→$3 000/kW за 6 мес. GEV bids +10–20% vs Q4 2025. Secondary-market CCGT prices +3× с 2020.",
-      "takeaway": "Rare confluence: AI + electrification + coal retirement + reliability. Orders >2× YoY. Pricing power clear и sustained. Supply = constraint, not demand. Backlogs = ~decade of committed output."
-    },
-    "supply": {
-      "balance": [
-        {
-          "year": "2026",
-          "state": "дефицит",
-          "color": "#ef4444",
-          "detail": "~110 GW ordered vs ~60–70 GW/yr capacity (WoodMac). ~4-year lead times. Slot reservations growing. Casting duopoly bottleneck"
-        },
-        {
-          "year": "2027",
-          "state": "дефицит",
-          "color": "#ef4444",
-          "detail": "GEV ramping: 62→74 units/yr Greenville. Siemens >$1 млрд US investment. But demand continues growing"
-        },
-        {
-          "year": "2028",
-          "state": "напряжённо",
-          "color": "#f59e0b",
-          "detail": "Capacity catching up (~20 GW/yr GEV target). Supply normalization begins. But ~100+ GW backlog = ~decade committed"
-        }
-      ],
-      "capacityAdds": [
-        {
-          "name": "GE Vernova Greenville: 37 (2025) → 62 (2026) → 74 (2027) heavy-duty units. Target 70–80/yr, ~20 GW/yr by 2027, stretch ~30 GW by 2030",
-          "when": "2025–2030",
-          "impact": "Largest GT manufacturing ramp. ~$300 млн Gas Power + Robotech acquisition"
-        },
-        {
-          "name": "Siemens Energy: >$1 млрд US investment (Feb 2026). NC GT manufacturing + $300 млн MS high-voltage plant",
-          "when": "2026–2028",
-          "impact": "US manufacturing expansion. Still 'supply-constrained rather than demand-constrained'"
-        },
-        {
-          "name": "MHI: Takasago validation + capacity expansion. Energy Systems bookings +45% YoY",
-          "when": "2025–2027",
-          "impact": "Advanced Class leader expanding"
-        },
-        {
-          "name": "Solar Turbines (Caterpillar): capacity +2,5× by 2030. Q4 FY2025 sales +23%",
-          "when": "2025–2030",
-          "impact": "Mid-market BTM capacity expansion"
-        },
-        {
-          "name": "Baker Hughes: $1 млрд DC orders Q1 2026. Kodiak 1,8 GW. Turbine-X/Twenty20 network",
-          "when": "2025–2028",
-          "impact": "Modular BTM blocks for datacenters"
-        }
-      ],
-      "leadTime": "Heavy-duty: ~4 years (Siemens booked to FY2028). Aeroderivative: 12–18 months (S&P Global). Slot reservations growing (GEV 63 GW). Build time +23% (BNEF).",
-      "utilization": "High: manufacturing capacity ~60–70 GW/yr vs ~110 GW orders. GEV Greenville = 1,5 млн sq ft. Howmet casting: sold out, reject rates double-digit. Carpenter: 'fundamental supply-demand imbalance'.",
-      "crowdingOut": "DC/BTM demand crowding out utility grid orders. Hyperscaler willingness to pay premium = slot prioritization. Some customers pushed to alternatives (engines, fuel cells, smaller frames).",
-      "takeaway": "~110 GW ordered vs ~60–70 GW/yr capacity = ~decade committed output. Ramp gradual (casting bottleneck, skilled labor). Full normalization not before late 2020s."
-    },
-    "unitEconomics": {
-      "pricePerUnit": "Heavy-duty: tens to >$100 млн each by class. CCGT plant: ~$2 157/kW installed (2025, BNEF, +66% с 2023). Simple-cycle: $728–1 544/kW (GridLab). Turbine-only: $171/kW (largest ~600 MW) to $1 150/kW (1 MW). WoodMac: ~$600/kW turbine-only к end-2027 (+195%).",
-      "grossMargin": "GEV Power EBITDA 16,3% (Q1 2026, +500 bps). Siemens Gas Services improving (FY26 guide 10–12% group). Howmet Engine Products 33,3% EBITDA. Services margins structurally > equipment margins. LTSAs ~75% of Power operating profit (est.).",
-      "costCurve": "Gas CCGT LCOE: $48–109/MWh (Lazard v18, unsubsidized). Gas peaker: $149–251. Solar: $38–78. Wind: $37–86. Gas = not cheapest new-build, но cheapest firm/dispatchable + existing fleet marginal cost competitive. Henry Hub ~$4→$4,90 (2025→26, EIA STEO).",
-      "yields": [
-        {
-          "gen": "LTSA services (~$5 млн/turbine/yr)",
-          "pct": "~75% Power op profit",
-          "note": "17–21 year contracts. ~70% renewal. ~7 000 turbines serviced (GEV). $81–85 млрд backlog. The annuity"
-        },
-        {
-          "gen": "Heavy-duty equipment",
-          "pct": "16,3% EBITDA (GEV)",
-          "note": "Lower margin than services, но pricing +195%. ~$600/kW turbine-only к end-2027"
-        },
-        {
-          "gen": "Aeroderivative (BTM/fast-start)",
-          "pct": "higher per-unit margin",
-          "note": "Stargate: 29 GEV aeros (~1 GW). Lead times 12–18 мес. BTM premium pricing"
-        },
-        {
-          "gen": "Single-crystal castings (Howmet)",
-          "pct": "33,3% EBITDA margin",
-          "note": "GT parts ~$1 млрд → $2 млрд+. Sold out. Duopoly pricing power"
-        }
-      ],
-      "takeaway": "LTSA = annuity business: ~$5 млн/turbine × 17–21 лет × 7 000 fleet = massive recurring revenue. Equipment margins expanding (+500 bps, +195% pricing). Casting margins structural (duopoly)."
-    },
-    "roadmap": {
-      "generations": [
-        {
-          "name": "F-class (~55% CC efficiency)",
-          "node": "legacy",
-          "year": "1990s–present",
-          "note": "Workhorse installed base. China's first domestic 300 MW F-class Oct 2024. Still serviceable fleet"
-        },
-        {
-          "name": "G/H-class (~60–62% CC)",
-          "node": "mainstream",
-          "year": "2010s–present",
-          "note": "GEV HA-class, Siemens HL-class. Mainstream heavy-duty. 50%+ H2 blends today"
-        },
-        {
-          "name": "J-class (>64% CC, JAC)",
-          "node": "shipping",
-          "year": "2020s",
-          "note": "MHI JAC = most efficient. >120 cumulative J-class orders. 2,3 млн+ operating hours. 56% Advanced Class share"
-        },
-        {
-          "name": "Hydrogen-ready (30–50% H2 blend)",
-          "node": "shipping",
-          "year": "2024–2026",
-          "note": "All Big Three offer ≥30% H2 today. GEV 44% demonstrated (NYPA Brentwood). ~47% of turbines under construction can blend 50%"
-        },
-        {
-          "name": "100% hydrogen turbines",
-          "node": "development",
-          "year": "2028–2030",
-          "note": "MHI target 2028 large-frame 100% H2. Kawasaki L30A already 100% H2 (small). GEV/Siemens 100% DLN testing"
-        },
-        {
-          "name": "CCGT + CCS",
-          "node": "early R&D",
-          "year": "2027–2030+",
-          "note": "Baker Hughes/NetPower, Frontier CCS hub. Reduces emissions but adds cost. Adds addressable market"
-        }
-      ],
-      "disruption": [
-        {
-          "tech": "SMRs / nuclear",
-          "verdict": "Not near-term substitute (mostly 2030s+); hyperscalers signing nuclear PPAs in parallel, not instead",
-          "tone": "mixed",
-          "detail": "Microsoft/TMI, Meta/Constellation, Amazon/Talen, Oklo/Meta — nuclear PPAs. But mostly 2030s+. Not a substitute for firm power needed 2027–2030. Nuclear = complement short/medium-term.",
-          "angle": "Timeline protects current order book. Long-term (2030s) = real competition for baseload."
-        },
-        {
-          "tech": "Long-duration storage / renewables + storage",
-          "verdict": "Extends but doesn't yet replace firm dispatch. Lazard: standalone storage $80–190+/MWh",
-          "tone": "mixed",
-          "detail": "Solar-plus-storage $50–131/MWh vs gas CCGT $48–109. Standalone 4-hr storage higher still. Solar/wind = cheapest new-build, but firm-power gap persists. Rising firming costs + low gas prices widen gas advantage для 24/7 DC load.",
-          "angle": "Not displacing gas for firm baseload near-term. Monitor cost decline trajectory."
-        },
-        {
-          "tech": "Carbon pricing / ESG",
-          "verdict": "Key political risk to destination-fuel thesis. Low-Med prob (US), Med (EU)",
-          "tone": "negative",
-          "detail": "US policy tailwind offsets near-term. But carbon pricing could make new gas unviable longer-term. Hydrogen slippage → 'H2-ready' turbines run on gas indefinitely = stranded asset / greenwashing risk (GEM).",
-          "angle": "The back-half-of-2030s risk. Monitor EU ETS, US state programs, hydrogen mandates."
-        }
-      ],
-      "takeaway": "H2-readiness is the insurance policy. All Big Three offer ≥30% today; 100% H2 by 2028–2030 on roadmap. CCGT+CCS adds option value. SMRs/storage = 2030s competition, not 2020s substitute. Near-term: gas = the firm-power answer."
-    },
-    "dependencies": {
-      "upstream": [
-        {
-          "item": "Single-crystal blade castings",
-          "supplier": "Howmet Aerospace + PCC/Berkshire (~70–80% duopoly)",
-          "note": "Most concentrated choke point. Sold out. Reject rates double-digit. Governs OEM output. → раздел picks"
-        },
-        {
-          "item": "Nickel superalloys",
-          "supplier": "Carpenter Technology, ATI Inc, Acerinox (Haynes)",
-          "note": "'Fundamental supply-demand imbalance' (Carpenter). Energy sales +32% sequentially. → раздел Сырьё"
-        },
-        {
-          "item": "Природный газ",
-          "supplier": "Henry Hub ~$4→$4,90 (2025→26)",
-          "note": "Fuel cost. Low gas prices = dispatch advantage vs renewables для 24/7 load. → раздел Газопроводы (pending)"
-        },
-        {
-          "item": "Трансформаторы / grid equipment",
-          "supplier": "GE Vernova, Siemens, Hitachi, Eaton",
-          "note": "Grid interconnection = 4–7 лет. Transformer lead times 128–160+ wks. → раздел Трансформаторы"
-        },
-        {
-          "item": "Controls / DCS",
-          "supplier": "GE, Siemens (proprietary)",
-          "note": "Proprietary controls lock customers в LTSA. Reinforces switching costs и aftermarket revenue"
-        }
-      ],
-      "downstream": "Utilities/IPPs (Vistra, Constellation, NRG, Talen, NextEra), hyperscalers (Microsoft, Amazon, Google, Meta, OpenAI/Stargate), EPC firms (Bechtel, B&V, Fluor, KBR, Kiewit), grid operators.",
-      "correlation": "Высокая корреляция с hyperscaler capex, coal-plant retirements, grid reliability mandates, и gas prices (dispatch economics). LTSA revenue = less cyclical (locked 17–21 yrs). Equipment orders = more cyclical.",
-      "takeaway": "Casting duopoly + superalloy suppliers = the binding upstream constraint, не OEM design capacity. Pipeline/grid = downstream bottleneck для BTM sites. LTSA lock-in insulates revenue from cycle."
-    },
-    "risks": [
-      {
-        "risk": "Cycle-peak valuation de-rating",
-        "prob": "Средняя-Высокая",
-        "impact": "Высокий",
-        "note": "Barclays cut Siemens to Underweight ('peak cycle'). GEV ~46–58× forward EPS. Priced for perfection."
-      },
-      {
-        "risk": "AI-power demand overbuilt / phantom backlog",
-        "prob": "Средняя",
-        "impact": "Высокий",
-        "note": "Stargate delays visible. PJM: 65–80% capacity withdrew. Not all 116 GW converts to firm orders."
-      },
-      {
-        "risk": "Hot-section supply bottleneck caps revenue",
-        "prob": "Высокая",
-        "impact": "Средний",
-        "note": "Constrains OEM output — governor on revenue, не demand risk. Howmet/PCC sold out."
-      },
-      {
-        "risk": "Carbon pricing / ESG makes new gas unviable",
-        "prob": "Низкая-Средняя (US)",
-        "impact": "Высокий",
-        "note": "US policy tailwind near-term. EU Med probability. Key destination-fuel risk."
-      },
-      {
-        "risk": "SMRs / LDES displace gas faster than expected",
-        "prob": "Низкая (pre-2030)",
-        "impact": "Высокий",
-        "note": "Timeline protects current order book. 2030s = real competition."
-      },
-      {
-        "risk": "Hydrogen timeline slips → stranded H2-ready assets",
-        "prob": "Средняя-Высокая",
-        "impact": "Средний",
-        "note": "GEM flagged greenwashing risk. If 100% H2 slips past 2030, turbines run on gas indefinitely."
-      },
-      {
-        "risk": "BTM gas faces local air-quality opposition",
-        "prob": "Средняя",
-        "impact": "Средний",
-        "note": "Community opposition to DC/BTM growing (RBC). Permitting risk."
-      },
-      {
-        "risk": "Natural gas price spikes",
-        "prob": "Средняя",
-        "impact": "Средний",
-        "note": "Henry Hub ~$4→$4,90. Spikes reduce dispatch advantage vs renewables."
-      }
-    ],
-    "picks": [
-      {
-        "group": "Дефицитное звено и справедливые имена",
-        "tone": "leader",
-        "badge": "аннуитет + chokepoint",
-        "note": "Лучшая маржа — в дефицитном литье и в 20-летнем сервисном аннуитете, а не в самой продаже оборудования.",
-        "rows": [
-          {
-            "company": "Howmet Aerospace",
-            "ticker": "NYSE: HWM",
-            "mcap": "~$115 млрд",
-            "exposure": "литьё монокристаллических лопаток (дуополия с PCC, ~70–80%)",
-            "why": "Дефицитное звено, которое гейтит выпуск всей отрасли; 33,3% EBITDA, распродано; маржа выше производителей турбин.",
-            "priced": "~32x EBITDA закладывает распроданную дуополию; циклично к авиа/энергетике, но структурно защищено."
-          },
-          {
-            "company": "Siemens Energy",
-            "ticker": "XETRA: ENR",
-            "mcap": "~$135–160 млрд",
-            "exposure": "43% рынка >10 МВт; сервисный портфель €60 млрд",
-            "why": "Самый широкий проверенный на водороде парк, рекордный сервисный аннуитет, законтрактован до FY2028. Дешевле GE Vernova.",
-            "priced": "Справедливо: «продавать» от Barclays — про цикл оборудования, но сервисный портфель это игнорирует."
-          },
-          {
-            "company": "Mitsubishi Heavy Industries",
-            "ticker": "TSE: 7011",
-            "mcap": "~$85 млрд",
-            "exposure": "№1 по мощности (36%); эффективность >64%",
-            "why": "Самая высокая эффективность (снижает счёт за топливо по парку) и самая агрессивная программа 100% водорода к 2028; заказы +45% г/г.",
-            "priced": "Диверсифицированный конгломерат — разводнённая экспозиция, но дешевле чистых имён."
-          }
-        ]
-      },
-      {
-        "group": "Качество под совершенство и косвенные ставки",
-        "tone": "emerging",
-        "badge": "дорого / косвенно",
-        "note": "Лучшее качество, но оценённое под совершенство, плюс более дешёвые косвенные способы отыграть дефицит мощности.",
-        "rows": [
-          {
-            "company": "GE Vernova",
-            "ticker": "NYSE: GEV",
-            "mcap": "~$274 млрд",
-            "exposure": "крупнейший парк (~7 000) + аннуитет $81–85 млрд + Stargate",
-            "why": "Лучшее качество: портфель 116 ГВт, компаундинг сервиса, расширение маржи, лидер по установкам на площадке.",
-            "risk": "~46–58x закладывает годы безупречного исполнения; асимметричный даунсайд, если цикл заказов проходит пик в 2026."
-          },
-          {
-            "company": "Baker Hughes",
-            "ticker": "NASDAQ: BKR",
-            "mcap": "~$90–100 млрд",
-            "exposure": "установки прямо на площадке; модульные турбины",
-            "why": "$1 млрд заказов от дата-центров за квартал; NovaLT16 на 100% водорода; лидер по быстрым модульным решениям.",
-            "risk": "Средний эшелон в оборудовании; часть бизнеса — нефтегаз, разводняет экспозицию."
-          },
-          {
-            "company": "Carpenter Technology",
-            "ticker": "NYSE: CRS",
-            "mcap": "~$19,5 млрд",
-            "exposure": "жаропрочные никелевые сплавы для турбин",
-            "why": "Продажи в энергетику +32% за квартал; «фундаментальный дисбаланс спроса и предложения» по никелевым сплавам.",
-            "risk": "Циклична к авиа/энергетике; ставка на сохранение дефицита сплавов."
-          },
-          {
-            "company": "Vistra",
-            "ticker": "NYSE: VST",
-            "mcap": "~$55–60 млрд",
-            "exposure": "сетевая компания — покупает и эксплуатирует турбины",
-            "why": "Более дешёвый косвенный способ отыграть дефицит мощности — владеет самими мегаваттами (см. [[power|электроэнергия]]).",
-            "risk": "Чувствительна к ценам на электричество и прогнозу спроса; не производитель, а покупатель."
-          }
-        ]
-      }
-    ],
-    "picksTakeaway": "Разделяй долговечный сервисный аннуитет (держать сквозь цикл) и цикличную продажу оборудования (докупать на просадках). Настоящее дефицитное звено — литьё лопаток (Howmet). GE Vernova — лучшее качество, но оценённое под совершенство; Siemens — справедливо; Vistra — дешёвый косвенный способ отыграть тот же дефицит мощности.",
-    "monitoring": {
-      "metrics": [
-        "GEV / Siemens Energy / MHI order intake и backlog (GW + $) — company 8-Ks / earnings, quarterly",
-        "Heavy-duty GT lead times и slot reservations — Utility Dive, S&P Global, company calls, quarterly",
-        "Turbine $/kW pricing — EPRI, GridLab, BNEF, WoodMac, semi-annual",
-        "US CCGT construction starts — EIA Monthly Electric Generator Inventory, monthly",
-        "BTM gas permits/announcements (hyperscaler) — Cleanview, RBC, DCD, ongoing",
-        "Henry Hub forward curve — EIA STEO, monthly (~$4→$4,90)",
-        "Superalloy/casting capacity и backlog — Howmet, Carpenter, ATI earnings, quarterly",
-        "Hydrogen blending validations / mandates — OEM releases, POWER, ongoing"
-      ],
-      "canary": [
-        "GEV или Siemens backlog-growth deceleration (QoQ decline) — demand peaking signal",
-        "OEM book-to-bill drops below 1,0 for two consecutive quarters — cycle turning",
-        "Heavy-duty lead times compress below 2 years — supply catching up, pricing pressure",
-        "Hyperscaler DC BTM capex guidance cuts — AI-power demand disappointment",
-        "Carbon pricing legislation passes in US — destination-fuel thesis risk",
-        "100% H2 commercial deployment delays beyond 2030 — stranded-asset / greenwashing escalation"
-      ],
-      "ladder": {
-        "intact": [
-          "портфели GE Vernova / Siemens / MHI растут кв/кв; book-to-bill >1,0",
-          "сроки поставки тяжёлых турбин держатся ~4 года; литьё лопаток распродано (Howmet)",
-          "продления LTSA держатся на ~70%+; сервисный портфель растёт",
-          "маржа Power расширяется (GEV EBITDA 16,3%+); заказы behind-the-meter на дата-центры ускоряются"
-        ],
-        "watch": [
-          "рост портфеля замедляется кв/кв — сигнал прохождения пика (тезис Barclays)",
-          "сроки поставки тяжёлых турбин сжимаются к 2 годам; мощности (Greenville 74 машины/год) выходят вперёд спроса",
-          "проникновение behind-the-meter буксует; 100% водород сдвигается за 2030 (риск stranded-активов)",
-          "отзывы заявок в очередях PJM/ERCOT учащаются — подтверждение «фантомного» спроса"
-        ],
-        "broken": [
-          "book-to-bill OEM ниже 1,0 два квартала подряд — цикл разворачивается",
-          "сроки поставки падают ниже 2 лет — предложение догоняет, ценовое давление",
-          "капрасходы гиперскейлеров на дата-центры срезаны — разочарование в спросе на энергию от AI",
-          "в США принимают углеродное ценообразование ИЛИ SMR/аккумуляторы начинают коммерчески вытеснять газ раньше срока; литьё лопаток перестаёт быть распроданным"
-        ]
-      }
-    },
-    "update": {
-      "asOf": "Июль 2026",
-      "headline": "Gas turbines: supply-constrained super-cycle — 116 GW backlog, orders >2× YoY, pricing +195%",
-      "summary": "Глобальные заказы 2025: 846 турбин / 100,3 ГВт (вдвое больше, чем в 2024). GE Vernova: портфель 116 ГВт, целится в 125+ ГВт. Siemens: рекорд €60 млрд газового сервиса. ~110 ГВт заказов при ~60–70 ГВт/год мощности. Цены +195% с 2019. AI/дата-центры: ~35 ГВт за забором к 2030, Stargate 9,2 ГВт. Центральное напряжение: устойчивость суперцикла против пиковых мультипликаторов (GE Vernova ~46–58 прогнозных прибылей).",
-      "stories": [
-        {
-          "date": "2026-07-22",
-          "source": "GE Vernova Q2 2026 8-K",
-          "title": "GE Vernova: 116 GW backlog, Power EBITDA 16,3% (+500 bps)",
-          "tone": "positive",
-          "verdict": "Premier LTSA annuity + purest super-cycle play. ~$81–85 млрд services backlog. DC orders $2,4 млрд Q1 alone",
-          "detail": "Q2 orders +88% organically. Firm 53 GW + reservations 63 GW; guiding ≥125 GW YE2026. Total backlog ~$176 млрд. Greenville ramping 37→74 units. Stargate 29 aeros. Но ~46–58× forward = priced for perfection."
-        },
-        {
-          "date": "2026-07-01",
-          "source": "Howmet Aerospace Q1 2026",
-          "title": "Howmet: GT parts ~$1 млрд → $2 млрд+ (3–5 лет, +39% YoY Q1)",
-          "tone": "positive",
-          "verdict": "Casting duopoly = most concentrated choke point. Sold out. 33,3% EBITDA. Captures value regardless of OEM winner",
-          "detail": "Single-crystal blade duopoly с PCC (~70–80% of high-end airfoils). Reject rates double-digit on hardest alloys. Capacity sold out. Engine Products 33,3% EBITDA margin."
-        },
-        {
-          "date": "2026-06-15",
-          "source": "Barclays",
-          "title": "Barclays cuts Siemens Energy to Underweight: 'peak cycle'",
-          "tone": "negative",
-          "verdict": "Peak orders/FCF/tightness all arrive 2026 per Barclays. Valuation risk = dominant risk, not demand",
-          "detail": "GEV ~46–58× forward EPS. Siemens Energy +~200% YoY. Single-digit % moves на sentiment. Priced for years of flawless execution."
-        },
-        {
-          "date": "2026-02-17",
-          "source": "Commerce Dept / OpenAI",
-          "title": "Stargate/SB Energy 9,2 GW Ohio (~$33 млрд BTM gas)",
-          "tone": "positive",
-          "verdict": "Largest BTM announcement. xAI Colossus ~1 498 MW operating. BTM penetration ~10–20% → ~50–60% by 2030",
-          "detail": "Distributed turbines, first units within a year, full deployment by end of decade. $4,2 млрд AEP transmission upgrade. RBC: planned US BTM ~70 GW turbine + ~18 GW engine. ~25% Siemens/GEV orders = DC-linked."
-        },
-        {
-          "date": "2026-02-15",
-          "source": "Siemens Energy",
-          "title": "Siemens Energy: >$1 млрд US investment; Gas Services €60 млрд record backlog",
-          "tone": "positive",
-          "verdict": "Broadest H2-tested portfolio; booked out to FY2028; grid-tech optionality",
-          "detail": "NC GT manufacturing + $300 млн MS plant. 43% share >10 MW. Record Q2 orders €17,75 млрд; group backlog €154 млрд. GT revenue >€11 млрд (+25,4%)."
-        },
-        {
-          "date": "2026-01-15",
-          "source": "Utility Dive",
-          "title": "Global orders: 846 units / 100,3 GW (>2× vs 2024)",
-          "tone": "positive",
-          "verdict": "More than doubling in one year. US alone: 427 units / 43,1 GW. Manufacturing = binding constraint",
-          "detail": "Wood Mackenzie: ~110 GW ordered vs ~60–70 GW/yr capacity. ~Decade of committed output at current rates. Manufacturing throughput = binding constraint."
-        }
-      ],
-      "bottomLine": "Genuine super-cycle: ~decade committed output, 20+ year LTSA annuities, +195% pricing. Но cycle-peak valuations (GEV ~46–58×) = dominant risk. Scale in на pullbacks. Core thesis: supply-constrained OEM oligopoly + casting duopoly = durable value. Duration debate (bridge vs destination) resolves 2030s."
-    },
-    "news": [],
-    "mentalModel": {
-      "chain": [
-        "AI-стройке электричество нужно сегодня, а ядерная станция будет только через 10 лет",
-        "газовая турбина — единственный источник надёжной мощности 24/7, который ставится за 2–3 года",
-        "заказы удвоились за год (100 ГВт) при производственной мощности «Большой тройки» всего 60–70 ГВт/год",
-        "выпуск капается литьём монокристаллических лопаток (дуополия Howmet/PCC) — самое дефицитное звено",
-        "турбина продаётся с премией (+195% с 2019), но главная прибыль — 20-летний сервис LTSA",
-        "каждая проданная турбина = ~$5 млн/год сервиса на 17–21 год → аннуитет с парка ~7 000 машин"
-      ],
-      "framework": "Основная прибыль возникает не от разовой продажи турбины, а от сервисного контракта (LTSA) на 15–25 лет, который закрепляется в момент поставки. Каждая проданная сегодня машина приносит производителю два десятилетия повторяющейся высокомаржинальной выручки за обслуживание, запчасти и модернизацию, причём ~70% контрактов продлеваются. Сервис даёт в 2–4 раза больше выручки, чем само оборудование, и около 75% операционной прибыли подразделения Power. Поэтому ценность бизнеса определяется размером установленного парка (~7 000 турбин у GE Vernova), а не заказами одного года: продажа новой турбины ценна прежде всего тем, что открывает следующий двадцатилетний сервисный поток.",
-      "revenueFormula": "Выручка = новые турбины × цена (+195% с 2019) + установленный парк (~7 000) × ~$5 млн сервис/год × 17–21 лет",
-      "drivers": [
-        {
-          "var": "Установленный парк × LTSA",
-          "weight": "главный драйвер",
-          "note": "~7 000 турбин GE Vernova (~800 ГВт, ~половина всей газовой генерации), сервисный портфель ~$81–85 млрд. ~70% контрактов продлеваются. Это аннуитет, который растёт с каждой новой поставкой и даёт ~75% операционной прибыли Power."
-        },
-        {
-          "var": "Конверсия портфеля новых заказов",
-          "weight": "ключевой",
-          "note": "116 ГВт у GE Vernova (53 твёрдых + 63 резервирования), Siemens забронирован до FY2028. Выпуск ограничен литьём лопаток (60–70 ГВт/год), поэтому цены растут (+10–20% к IV кв. 2025). Каждый ГВт поставки = будущий LTSA."
-        },
-        {
-          "var": "Проникновение behind-the-meter в дата-центры",
-          "weight": "опцион",
-          "note": "~35 ГВт «за забором» к 2030, Stargate 9,2 ГВт. ~25% заказов Siemens и GE Vernova уже связаны с дата-центрами; проникновение в новые площадки ~10–20% (2025) → ~50–60% к 2030."
-        }
-      ]
-    },
-    "moatBreakdown": {
-      "components": [
-        {
-          "factor": "Издержки переключения / LTSA-лок-ин",
-          "score": 10,
-          "trend": "flat",
-          "note": "каждая турбина привязана к производителю через проприетарную систему управления (софт GE или Siemens не заменить) и уникальные запчасти (лопатки подходят только к своей модели). Сервисные контракты на 15–25 лет делают смену производителя экономически бессмысленной. ~70% продлений."
-        },
-        {
-          "factor": "Себестоимость / литьё лопаток",
-          "score": 9,
-          "trend": "up",
-          "note": "монокристаллические лопатки горячей секции — дуополия Howmet + PCC (~70–80%), мощности распроданы, доля брака двузначная на самых сложных сплавах. Именно это ключевое ограничение определяет темп выпуска ВСЕХ OEM — зарабатывает независимо от того, кто победит."
-        },
-        {
-          "factor": "Технология / металлургия горячей секции",
-          "score": 9,
-          "trend": "flat",
-          "note": "десятилетия R&D: монокристаллы, термобарьерные покрытия, системы сгорания, многолетняя валидация (Mitsubishi T-Point 2). Естественная олигополия — ни один новый игрок не вошёл на рынок за 30 лет."
-        },
-        {
-          "factor": "Масштаб парка / данные",
-          "score": 8,
-          "trend": "up",
-          "note": "GE Vernova — ~7 000 турбин, крупнейший установленный парк. Больше парк → больше сервисных контрактов → больше данных для оптимизации горячей секции → выше маржа сервиса. Накапливающееся преимущество."
-        },
-        {
-          "factor": "Сертификация / валидация у заказчика",
-          "score": 7,
-          "trend": "flat",
-          "note": "проверка новой турбины у заказчика занимает годы, что усиливает лок-ин. Но это скорее следствие технологического барьера, чем самостоятельная защита."
-        },
-        {
-          "factor": "Долговечность спроса (мост или пункт назначения)",
-          "score": 5,
-          "trend": "down",
-          "note": "единственная трещина: SMR, аккумуляторы большой длительности, водород и углеродная политика могут ударить во второй половине 2030-х — как раз когда выйдут новые мощности. H2-готовность (≥30% сегодня, 100% к 2028–30) — страховой полис, но вопрос «мост или пункт назначения» пока не решён."
-        }
-      ],
-      "takeaway": "Самая плотная олигополия в энергетическом оборудовании: LTSA-лок-ин + дуополия в литье лопаток — структурны, а не цикличны. Пять из шести опор крепки или крепнут. Единственная трещина — вопрос долговечности спроса на 30 лет (SMR/аккумуляторы/углеродная политика), но он разрешится в 2030-х, а не сейчас. Ближайшие годы газ — это ответ на надёжную мощность."
-    },
-    "expectations": {
-      "impliedGrowth": "GE Vernova при ~46–58× прогнозной прибыли закладывает годы конверсии портфеля 116 ГВт, компаундинг LTSA и дальнейшее расширение маржи. Siemens Energy дешевле — Barclays понизил до «продавать» с аргументом «пик цикла в 2026». Howmet при ~32×+ EBITDA закладывает распроданную дуополию в литье.",
-      "marketBelieves": "Настоящий суперцикл: ~десятилетие законтрактованного выпуска, 20-летний сервисный аннуитет — качество заслуживает пиковых мультипликаторов. Рынок трактует весь бизнес как секулярный рост.",
-      "weThink": "Сервисный аннуитет действительно долговечен (законтрактован на 17–21 год, слабо чувствителен к циклу) — это недооценённая подушка. Но заказы на оборудование цикличны, и мультипликаторы уже закладывают пик; аргумент Barclays про «пик цикла в 2026» имеет основания для оборудования. Расхождение: рынок оценивает всё как рост, мы разделяем долговечный аннуитет (держать сквозь цикл) и цикличное оборудование/мультипликатор (докупать на просадках).",
-      "verdict": "GE Vernova — дорого (но лучшее качество) · Siemens Energy — справедливо · Vistra — дешёвый способ отыграть тему",
-      "metrics": [
-        {
-          "label": "Forward P/E · GE Vernova",
-          "now": "~46–58x",
-          "history": "IPO 2024 — без длинной истории",
-          "note": "+~88% за 52 недели; закладывает годы безупречного исполнения; однозначные движения на настроениях = асимметричный даунсайд"
-        },
-        {
-          "label": "Оценка · Siemens Energy",
-          "now": "дешевле GE Vernova",
-          "history": "+~200% г/г",
-          "note": "Barclays: «пик цикла», понижение до Underweight. FY26 маржа 10–12%. Более дешёвая экспозиция на «Большую тройку» + опцион на сетевой сегмент"
-        },
-        {
-          "label": "EV/EBITDA · Howmet",
-          "now": "~32x+",
-          "history": "премия на пике цикла",
-          "note": "дуополия в литье лопаток, мощности распроданы, 33,3% EBITDA сегмента; +~88% г/г. Но привязка к авиационному циклу (аэро = большая часть спроса)"
-        },
-        {
-          "label": "Сервисный портфель · GE Vernova",
-          "now": "~$81–85 млрд",
-          "history": "растёт с парком",
-          "note": "20-летний аннуитет ~$5 млн/турбина/год — долговечный якорь, который держит выручку даже если заказы на оборудование развернутся"
-        },
-        {
-          "label": "EV/EBITDA · Vistra",
-          "now": "~13x",
-          "history": "—",
-          "note": "IPP с газовым парком ~50 ГВт — дешёвый способ отыграть премию к цене электроэнергии от AI; вторичные цены CCGT выросли в 3× с 2020"
-        }
-      ],
-      "takeaway": "GE Vernova оценён под совершенство — качество заслужено, но не на любой цене. Ключ — разделить два бизнеса: долговечный LTSA-аннуитет (недооценённая подушка) и цикличное оборудование с пиковым мультипликатором. Именно на смешении этих двух рынок и переплачивает; более дешёвые способы отыграть тему — Siemens Energy и Vistra."
-    },
-    "scenarios": {
-      "cases": [
-        {
-          "name": "Медвежий",
-          "prob": "25%",
-          "revenue": "заказы разворачиваются, выручка ~плоская",
-          "margin": "оборудование сжимается, сервис держит пол",
-          "multiple": "де-рейт к ~25–30x",
-          "ret": "−15…−25%/год",
-          "color": "#ef4444",
-          "note": "цикл заказов проходит пик в 2026 (Barclays), рост портфеля замедляется; «фантомный» спрос AI вскрывается (PJM 65–80% ушло до соглашения), задержки Stargate; мультипликатор оборудования падает — но LTSA-аннуитет смягчает провал выручки"
-        },
-        {
-          "name": "Базовый",
-          "prob": "50%",
-          "revenue": "~10–15%/год",
-          "margin": "держится/растёт (GEV Power EBITDA 16,3%+)",
-          "multiple": "сжатие с пика к ~40x",
-          "ret": "+8…+15%/год",
-          "color": "#f59e0b",
-          "note": "116 ГВт портфеля конвертируются в течение ~десятилетия, LTSA компаундирует, цены липкие; мощности выходят постепенно (ключевое ограничение в литье лопаток); де-рейтинг умеренный"
-        },
-        {
-          "name": "Бычий",
-          "prob": "25%",
-          "revenue": "18–22%/год",
-          "margin": "дальнейший рост маржи",
-          "multiple": "~50x держится",
-          "ret": "+20…+28%/год",
-          "color": "#10b981",
-          "note": "суперцикл длится: проникновение behind-the-meter в дата-центры доходит до 50–60%, литьё лопаток остаётся распроданным, оборудование + LTSA компаундируют вместе; выбытие угля + надёжность поддерживают спрос"
-        }
-      ],
-      "expectedReturn": "~+8…+12%/год (взвешенно) — даунсайд смягчён сервисным аннуитетом сильнее, чем у трансформаторов",
-      "takeaway": "Ключевая асимметрия: 20-летний LTSA-аннуитет продолжает компаундировать, даже если заказы на оборудование развернутся — это пол под даунсайдом, которого нет в чисто оборудовании. Риск — в мультипликаторе и цикле заказов, а не в повторяющейся сервисной базе. Апсайд — рост проникновения в дата-центры и ценовая власть."
-    },
-    "problems": {
-      "items": [
-        {
-          "problem": "Газовая турбина — единственный источник надёжной мощности 24/7, который вводится за 2–3 года, поэтому дата-центры выстроились за ней в очередь. В 2025 году заказали 846 турбин (100 ГВт) — вдвое больше, чем годом ранее, а совокупная мощность трёх производителей (GE Vernova, Siemens Energy, Mitsubishi Power) — лишь 60–70 ГВт в год. Корень дефицита — литьё лопаток первых ступеней горячей секции из монокристаллических жаропрочных сплавов (лопатка отлита цельным кристаллом без границ зёрен, чтобы выдержать поток горячее собственной точки плавления): его контролируют всего две компании, Howmet и PCC (входит в Berkshire Hathaway), вместе ~70–80% рынка, и их мощности распроданы при двузначном проценте брака. В результате срок поставки тяжёлой турбины дошёл до ~4 лет, Siemens Energy забронирован до 2028 года, а портфель заказов GE Vernova (116 ГВт) — это около десятилетия законтрактованного выпуска.",
-          "solution": "Расшивают очередь через наращивание производства и бронирование слотов. GE Vernova увеличивает выпуск в Гринвилле с 37 турбин (2025) до 62 (2026) и 74 (2027), цель — ~20 ГВт в год к 2027 и до ~30 ГВт к 2030; Siemens Energy вложил >$1 млрд в производство в США, Mitsubishi расширяет Takasago. Заказчики бронируют производственные слоты на годы вперёд (у GE Vernova в резервированиях — 63 ГВт) и подписывают долгосрочные сервисные контракты LTSA (обслуживание и ремонт на 15–25 лет). Одновременно расширяют само дефицитное звено — литьё лопаток: Howmet ведёт выпуск деталей турбин с ~$1 млрд к цели $2+ млрд, поставщики суперсплавов Carpenter и ATI наращивают мощности. Но литьё лопаток и подготовка кадров тормозят разгон — полная нормализация не раньше конца 2020-х.",
-          "winners": "Выигрывают производители, уже держащие зарезервированные слоты и сервисный поток. GE Vernova — крупнейший установленный парк (~7 000 турбин, около половины мировой газовой генерации), портфель 116 ГВт и сервисный портфель ~$81–85 млрд, дающий ~$5 млн с турбины в год в течение 17–21 лет и ~75% операционной прибыли подразделения. Siemens Energy — 43% рынка машин мощнее 10 МВт и портфель Gas Services €60 млрд. Mitsubishi Power — #1 по мощности (36%) и лидер по КПД (турбина JAC >64%). Отдельно — Howmet как физическое дефицитное звено всей цепочки: он зарабатывает независимо от того, чья турбина победит, с рентабельностью сегмента 33,3% EBITDA. Все они забронированы на годы и сами выбирают заказчиков.",
-          "gap": "Догоняющему конкуренту мешает не спрос, а очередь и барьеры: срок поставки тяжёлой турбины ~4 года, книги заказов расписаны почти на десятилетие вперёд, а литьё монокристаллических лопаток нельзя быстро скопировать — это десятилетия металлургии горячей секции и многолетняя стендовая проверка (Mitsubishi проверяет турбины на стенде T-Point 2 годами). За 30 лет на рынок тяжёлых турбин не вошёл ни один новый игрок. Китайская тройка (Harbin/Shanghai/Dongfang) в 2024 году освоила лишь 300 МВт F-класса с ~55% КПД — примерно на поколение отстаёт от передового H/J-класса и на экспорт в этом сегменте не претендует."
-        }
-      ],
-      "takeaway": "Расшивка очереди укрепляет нынешнюю тройку: новые мощности строят те же GE Vernova, Siemens и Mitsubishi, а сервисные контракты LTSA (обслуживание на 15–25 лет) привязывают заказчика на 20+ лет. Дефицит и литейная дуополия Howmet/PCC поднимают и цены, и барьер входа — дверь для новичка не открывается."
-    },
-    "whatIsIt": "Это машина, которая сжигает природный газ и превращает его энергию во вращение вала, а тот крутит электрогенератор и вырабатывает электричество. Для дата-центра это способ получить надёжную мощность круглые сутки за 2–3 года, не завися от солнца, ветра и перегруженной сети, к которой очередь на подключение растягивается на годы. Поэтому такие машины всё чаще ставят прямо на площадке рядом с серверами, не дожидаясь присоединения к общей сети.",
+    "asOf": "август 2026",
     "thesis": {
-      "bigIdea": "Под газовые турбины сейчас выстроилась очередь до 2030-х — но это ставка не навсегда. Сегодня им нет замены: только они быстро дают дата-центру гигаватты стабильной мощности. Завтра газ уязвим — он грязнее других источников и зависит от поставок топлива, а к 2030-м стабильную базовую мощность даст и атом: большие станции и малые модульные реакторы. Поэтому главный вопрос — не сегодняшний дефицит, а что защитит вложения, когда новые продажи турбин начнёт забирать атом. Защищает не продажа оборудования, а обслуживание уже проданных турбин на 20 лет вперёд и литьё самых горячих деталей, где темп всей отрасли задают всего два завода в мире.",
+      "bigIdea": "Рынок привык считать газовые турбины зрелым циклическим оборудованием. Но AI превратил их в одно из самых дефицитных звеньев всей стройки: серверы и коробку дата-центра гиперскейлер строит быстрее, чем получает гигаватты надёжной мощности от сети, — а быстро и прямо у кампуса их даёт только газ (2–5 лет против 7–15 у атома). Ценна здесь не сама продажа турбины, а тройка: дефицитные производственные слоты, растущие цены и сервис установленного парка на десятилетия. Забирают это трое — GE Vernova, Siemens Energy и Mitsubishi. Но дефицит уже не тайна: акции переоценены, и главный риск теперь не спрос, а цена, которая закладывает почти идеальную конверсию всех резервирований.",
       "stream": [
         {
           "k": "h",
@@ -18659,53 +17912,136 @@
         {
           "k": "p",
           "lead": true,
-          "t": "Самый быстрый способ запитать [[rack|дата-центр|берёт GPU в долг]] — не сеть и не атом, а газовая турбина. Её вводят за 2–3 года против ~10 лет у атомной станции и 4–7 лет в очереди на подключение к [[power|перегруженной сети|не генерация, а подключение]]. Поэтому турбину всё чаще ставят прямо на площадке рядом с потреблением, минуя сеть. Заказы удвоились, и турбины распроданы до 2030-х."
+          "t": "Проблема AI-стройки — не цена электричества, а время подключения. Большой кампус потребляет от сотен мегаватт до нескольких гигаватт, а существующая сеть часто не может дать столько без новых подстанций, [[transformers|трансформаторов|сталь внутри него]], линий и разрешений — это годы. Крупную газовую станцию можно построить быстрее новой АЭС, она даёт управляемую мощность круглосуточно и ставится прямо у [[rack|вычислительного кампуса|берёт GPU в долг]]. Для гиперскейлера потерянный год — это не только отложенная выручка, а задержка доступа к вычислениям. Поэтому он готов платить за электричество дороже, если газ запускает кластер на два-три года раньше."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "399 → 846",
-              "l": "заказов турбин за год (58 → 100 ГВт)",
-              "n": "удвоение спроса — редкий двойной попутный ветер: и объём, и цена"
+              "v": "время, а не цена",
+              "l": "по чему выбирают источник для AI-кампуса",
+              "n": "год простоя дороже премии за газовую генерацию"
             },
             {
-              "v": "~4 года",
-              "l": "срок поставки крупной турбины",
-              "n": "мощности ~60–70 ГВт/год против ~110 ГВт заказов"
+              "v": "+75%",
+              "l": "мировые заказы турбин 2025 к 2019–2020",
+              "n": "~40 ГВт/год → ~70 ГВт"
             },
             {
-              "v": "~25%",
-              "l": "заказов связаны с дата-центрами",
-              "n": "новый и самый быстрорастущий спрос"
+              "v": "116 ГВт",
+              "l": "портфель заказов и резервирований GE Vernova (Q2 2026)",
+              "n": "почти пять лет её будущего выпуска"
             }
           ]
         },
         {
           "k": "h",
-          "t": "Как работает турбина и почему её ставят на площадке"
+          "t": "Как работает — и почему её ставят прямо на площадке"
         },
         {
           "k": "p",
-          "t": "Газовая турбина сжигает природный газ и вращает вал, который генерирует электричество: компрессор сжимает воздух, камера сгорания разогревает его до ~1500 °C, а сама турбина на одном валу превращает поток газа во вращение. Это единственный источник надёжной круглосуточной мощности, который можно поставить за 2–3 года, и он не зависит от солнца и ветра. Поэтому гиперскейлеры всё чаще ставят турбину прямо у дата-центра, минуя очередь на сеть. Газ — не самая дешёвая новая генерация, но самая дешёвая управляемая мощность по требованию, а скорость важнее цены, когда ждёт гигаватт."
+          "t": "Турбина сжимает воздух, смешивает с газом, сжигает — горячие газы вращают вал и генератор. Два варианта. Простой цикл (simple-cycle): выхлоп не используют повторно — строится быстро, дешевле, годится как резерв и пик, но КПД ~35–44%. Комбинированный цикл (CCGT): теплом выхлопа делают пар для второй турбины — КПД крупных станций превышает 60%, меньше газа на МВт·ч, лучше под постоянную базовую нагрузку кампуса, но дороже и дольше строится. Одна крупная H-class машина (старший класс турбин) выдаёт чуть более 400 МВт в простом цикле; блок комбинированного цикла — примерно 600–1 300 МВт."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "2–3 года",
-              "l": "ввод турбины",
-              "n": "против ~10 лет у атома и 4–7 лет в очереди на сеть"
+              "v": ">400 МВт",
+              "l": "одна H-class турбина в простом цикле",
+              "n": "блок CCGT — 600–1 300 МВт"
             },
             {
-              "v": "~$2 157/кВт",
-              "l": "полная парогазовая установка",
-              "n": "+66% с 2023 года"
+              "v": ">60%",
+              "l": "КПД крупной станции комбинированного цикла",
+              "n": "против 35–44% у простого цикла"
             },
             {
-              "v": ">$100 млн",
-              "l": "одна крупная турбина",
-              "n": "плюс десятилетия сервиса сверху"
+              "v": "$0,8–2,0 млрд",
+              "l": "стройка 1 ГВт: простой → комбинированный цикл",
+              "n": "с газопроводом и подключением — до $2,8 млрд"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Насколько резко вырос рынок"
+        },
+        {
+          "k": "p",
+          "t": "Исторически турбины покупали энергокомпании и промышленность. AI сменил заказчика — теперь спрос формируют гиперскейлеры, разработчики дата-центров, neocloud-компании и нефтегазовые фирмы, строящие генерацию на своей площадке. Мировые заказы: ~40 ГВт в 2019–2020, 57,4 ГВт в 2024, а только за I полугодие 2025 — 41,7 ГВт, с оценкой ~70 ГВт за весь год. При среднем capex $1,3–1,8 млн/МВт это соответствует $91–126 млрд полной стоимости станций — новая волна энергетических капзатрат."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "40 → 70 ГВт",
+              "l": "мировые заказы турбин, 2019–2020 → 2025 (оценка)",
+              "n": "за 6 месяцев 2025 заказали больше, чем раньше за год"
+            },
+            {
+              "v": "$91–126 млрд",
+              "l": "полная стоимость станций под ~70 ГВт заказов",
+              "n": "исполняется несколько лет, но масштаб задан"
+            },
+            {
+              "v": "57,4 ГВт",
+              "l": "мировые заказы за 2024",
+              "n": "+44% к нормальному уровню 2019–2020"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Куда уходит каждый $1 млрд проекта"
+        },
+        {
+          "k": "p",
+          "t": "Компании не раскрывают цену отдельной турбины, поэтому это ориентировочная структура капзатрат проекта, а не официальные цены. Главный вывод: сам производитель турбины забирает лишь 20–30 центов с каждого доллара первоначальных капзатрат — остальное уходит на генподряд (проектирование-закупки-стройка, EPC), электрическую инфраструктуру, газопровод и площадку. Но экономическая ценность производителя выше этой доли: после поставки начинается сервис."
+        },
+        {
+          "k": "bars",
+          "items": [
+            {
+              "label": "Газовые турбины и генераторы",
+              "value": 25,
+              "display": "20–30%",
+              "note": "$200–300 млн — доля самого OEM"
+            },
+            {
+              "label": "EPC: стройка и монтаж",
+              "value": 25,
+              "display": "20–30%",
+              "note": "$200–300 млн"
+            },
+            {
+              "label": "Площадка, вода, охлаждение",
+              "value": 15,
+              "display": "10–20%",
+              "note": "$100–200 млн"
+            },
+            {
+              "label": "Паровая турбина + котёл-утилизатор (CCGT)",
+              "value": 14,
+              "display": "10–18%",
+              "note": "$100–180 млн"
+            },
+            {
+              "label": "Электрическая инфраструктура",
+              "value": 11,
+              "display": "8–15%",
+              "note": "$80–150 млн"
+            },
+            {
+              "label": "Газопровод и подача топлива",
+              "value": 8,
+              "display": "5–12%",
+              "note": "$50–120 млн"
+            },
+            {
+              "label": "Управление и автоматика",
+              "value": 4,
+              "display": "3–6%",
+              "note": "$30–60 млн"
             }
           ]
         },
@@ -18715,127 +18051,215 @@
         },
         {
           "k": "p",
-          "lead": true,
-          "t": "И вот что рынок проскакивает. Продажа турбины — разовое и цикличное событие. Но с каждой турбиной идёт сервисный контракт (LTSA) на 17–21 год по ~$5 млн за турбину в год. Этот сервис — в 2–4 раза больше выручки от самого оборудования и около 75% прибыли, и он почти не двигается с циклом. GE Vernova обслуживает ~7 000 турбин с сервисным портфелем $81–85 млрд. Это не ростовая акция — это 20-летний аннуитет, спрятанный внутри неё."
+          "t": "Продажа новой турбины — тяжёлый промышленный бизнес: аванс на производство, дорогие материалы, гарантии, возможные штрафы, невысокая начальная маржа. Сервис устроен куда привлекательнее: сменить производителя почти невозможно (детали подходят только к его конструкции), простой станции очень дорог, обслуживание повторяется десятилетиями, часть контрактов индексируется по инфляции. У GE Vernova ~7 000 установленных турбин, и более 55% всего портфеля заказов — это сервис. За жизненный цикл денежный поток от инспекций, замены горячих частей и модернизаций может сравняться с ценой самого оборудования или превзойти её. Поэтому размер установленного парка часто важнее объёма продаж одного года."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "~$5 млн/год",
-              "l": "сервис одной турбины × 17–21 год",
-              "n": "почти нечувствителен к циклу"
+              "v": "~7 000",
+              "l": "установленных турбин GE Vernova",
+              "n": "каждая годами приносит сервисный доход"
             },
             {
-              "v": "~75%",
-              "l": "операционной прибыли — сервис",
-              "n": "а не продажа оборудования"
+              "v": ">55%",
+              "l": "портфеля заказов GE Vernova — сервис",
+              "n": "повторяющийся поток, не зависит от одного года продаж"
             },
             {
-              "v": "$81–85 млрд",
-              "l": "сервисный портфель GE Vernova",
-              "n": "~7 000 обслуживаемых турбин — аннуитет"
+              "v": "25–40 лет",
+              "l": "срок службы турбины",
+              "n": "сервис за цикл может превзойти цену оборудования"
             }
           ]
         },
         {
-          "k": "p",
-          "t": "То есть здесь склеены два разных бизнеса: цикличная продажа оборудования и долговечный сервисный аннуитет."
-        },
-        {
           "k": "h",
-          "t": "Дефицит внутри дефицита — литьё самых горячих деталей"
+          "t": "Дефицит внутри дефицита — жаропрочные сплавы и литьё"
         },
         {
           "k": "p",
-          "lead": true,
-          "t": "И, как у чипов, у турбин есть своё ограничение. Самые горячие детали турбины — те, что стоят прямо в потоке газа при ~1500 °C, — отливают по сути две компании: Howmet и PCC (~70–80% таких деталей высшего класса). Их отливают как единый кристалл жаропрочного металла, доля брака на самых сложных деталях доходит до ~30–50% (оценка), мощности ~60–70 ГВт/год против ~110 ГВт заказов, и всё распродано. Именно эта дуополия по литью задаёт темп, с которым каждый производитель может отгружать турбины."
+          "t": "Горячая часть турбины работает при температуре выше точки плавления обычных металлов. Нужны монокристаллические лопатки, сложные каналы охлаждения, керамические покрытия и никелевые суперсплавы — плюс крупные роторные поковки и прецизионное литьё. Это, а не «титан», — реальное физическое горлышко: жаропрочные суперсплавы, специальные поковки, литьё и покрытия. Мощность здесь не нарастить быстро, а без этих деталей не собрать ни одну крупную машину. Отсюда отдельные бенефициары — литейщики и производители сплавов (Howmet, Carpenter)."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "~70–80%",
-              "l": "самых горячих деталей — Howmet + PCC",
-              "n": "дуополия по литью — самое дефицитное звено"
+              "v": "> плавления",
+              "l": "температура в горячей части турбины",
+              "n": "нужны монокристаллические лопатки и суперсплавы"
             },
             {
-              "v": "33,3%",
-              "l": "EBITDA у Howmet",
-              "n": "распродано; маржа выше, чем у производителей турбин"
+              "v": "3 барьера",
+              "l": "температура + надёжность + банковская финансируемость",
+              "n": "проект финансируют только под проверенное оборудование"
             },
             {
-              "v": "60–70 vs 110 ГВт",
-              "l": "мощности литья против заказов",
-              "n": "литьё гейтит выпуск всей отрасли"
+              "v": "десятки $ млн",
+              "l": "одна крупная инспекция горячей части",
+              "n": "и так каждые несколько тысяч часов работы"
             }
           ]
         },
         {
-          "k": "p",
-          "t": "Howmet для турбин — это то же, что Nvidia для вычислений: дефицитное звено, которое забирает повышенную маржу и определяет выпуск всех остальных."
-        },
-        {
           "k": "h",
-          "t": "Кто держит рынок"
+          "t": "Кто держит рынок — олигополия из трёх"
         },
         {
           "k": "p",
-          "t": "Производители — олигополия: GE Vernova (~18,5% заказов, крупнейший парк ~7 000 турбин), Siemens Energy (43% рынка >10 МВт), Mitsubishi (№1 по мощности, самая высокая эффективность >64%). Вокруг них — дуополия литья (Howmet/PCC), производители жаропрочных сплавов (Carpenter, ATI — «фундаментальный дисбаланс спроса и предложения» по никелевым сплавам) и Baker Hughes (специалист по установкам прямо на площадке)."
+          "t": "Крупную H-class турбину крайне трудно воспроизвести: температура, доказанная надёжность (несколько дней простоя 1-ГВт кампуса дороже экономии на непроверенной машине), банковская финансируемость под гарантии производителя, сложная цепочка поставок и сеть обслуживания на 25–40 лет. Поэтому рынок крупных базовых машин — тройной олигополь. GE Vernova, Siemens Energy и Mitsubishi поставляют около двух третей турбин для строящихся газовых станций."
         },
         {
-          "k": "bars",
-          "t": "Где сидит маржа",
-          "items": [
-            {
-              "label": "Сервис — 20-летнее обслуживание",
-              "value": 75,
-              "display": "~75% прибыли",
-              "note": "почти нечувствителен к циклу"
-            },
-            {
-              "label": "Howmet — литьё самых горячих деталей",
-              "value": 33,
-              "display": "33,3% EBITDA",
-              "note": "дуополия, распродано"
-            },
-            {
-              "label": "Оборудование (GE Vernova Gas Power)",
-              "value": 16,
-              "display": "16,3% EBITDA",
-              "note": "ниже сервиса, цикличнее"
-            }
+          "k": "table",
+          "head": [
+            "Игрок",
+            "Позиция",
+            "Портфель заказов",
+            "Главный риск"
+          ],
+          "rows": [
+            [
+              "GE Vernova",
+              "№1 по парку, самый прямой AI-exposure в США",
+              "116 ГВт (53 твёрдых + 63 резерв)",
+              "высокие ожидания в цене"
+            ],
+            [
+              "Siemens Energy",
+              "газ + сеть, широкая ставка на всё горлышко мощности",
+              "€138 млрд по группе",
+              "сложность группы, Gamesa"
+            ],
+            [
+              "Mitsubishi (MHI)",
+              "сильна в Азии, ранняя фаза цикла",
+              "53 крупные турбины (~21 ГВт)",
+              "скидка за конгломерат"
+            ]
           ]
         },
         {
-          "k": "p",
-          "t": "Закономерность: сервисный аннуитет и дефицит литья держат лучшую маржу; сама продажа оборудования — более низкомаржинальная и цикличная часть."
-        },
-        {
           "k": "h",
-          "t": "Кто покупает — и как это законтрактовано"
+          "t": "Кто покупает — и по каким сделкам"
         },
         {
           "k": "p",
-          "t": "Спрос широкий — сетевые компании (Vistra, Constellation, Talen), гиперскейлеры (Microsoft, Amazon, Google, OpenAI/Stargate), суверенные покупатели — и ~25% заказов уже связаны с дата-центрами. Портфели на рекордах: GE Vernova 116 ГВт (цель ≥125 ГВт к концу года), Siemens €60 млрд, у Mitsubishi заказы +45% г/г. Распродано на ~98% на 2026 при сроках поставки ~4 года."
+          "t": "Покупательская цепочка изменилась: раньше было «производитель → энергокомпания → сеть → дата-центр», теперь всё чаще «производитель → энергопартнёр → выделенная станция → гиперскейлер». Это снимает зависимость от общей скорости развития сети. Ниже — публично известные AI-сделки, а не намерения."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Проект",
+            "Мощность",
+            "Энергетические капзатраты (оценка)"
+          ],
+          "rows": [
+            [
+              "Microsoft ↔ Chevron, Западный Техас",
+              "2,67 ГВт",
+              "$3,2–5,3 млрд (~6–7 турбин 7HA)"
+            ],
+            [
+              "Meta ↔ Entergy, Луизиана",
+              "~2,3 ГВт",
+              "$3,2–4,6 млрд (2028–2029, 4–6 турбин)"
+            ],
+            [
+              "Microsoft/Crusoe, Abilene",
+              "0,9 ГВт",
+              "$1,2–1,8 млрд (кампус до ~2,1 ГВт)"
+            ],
+            [
+              "xAI, Memphis",
+              "0,42 ГВт",
+              "$0,4–0,8 млрд (35 мобильных турбин)"
+            ],
+            [
+              "xAI, Colossus 2 (Миссисипи)",
+              ">0,5 ГВт",
+              "$0,5–1,0 млрд (46 турбин)"
+            ],
+            [
+              "Crusoe ↔ Boom",
+              "1,21 ГВт",
+              "$1,0–2,0 млрд (новые турбины Superpower)"
+            ]
+          ],
+          "note": "Оценки капитала на создание генерации, а не раскрытые цены сделок."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "116 ГВт",
-              "l": "портфель GE Vernova (цель ≥125)",
-              "n": "десятилетие законтрактованного выпуска"
+              "v": "~8 ГВт",
+              "l": "суммарно по этим публичным AI-проектам",
+              "n": "и это не считая Stargate, Amazon, Google, Oracle"
             },
             {
-              "v": "€60 млрд",
-              "l": "сервисный портфель Siemens",
-              "n": "~€35 млрд сервисной выручки за ~20 лет"
+              "v": "$9,5–15,5 млрд",
+              "l": "энергетические капзатраты по ним",
+              "n": "из них $2–4 млрд — прямо на турбины и генераторы"
             },
             {
-              "v": "98%",
-              "l": "распродано на 2026",
-              "n": "Siemens законтрактован до FY2028"
+              "v": "$500 млн–$1 млрд",
+              "l": "500 МВт временной мобильной генерации (xAI)",
+              "n": "дороже за МВт — премия за скорость"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Сколько это в деньгах: каждый +1 ГВт AI-нагрузки"
+        },
+        {
+          "k": "p",
+          "t": "Каждый дополнительный гигаватт выделенной газовой мощности прямо конвертируется в заказы производителей. Простой цикл: 2–3 крупные турбины, $0,8–1,2 млрд капзатрат, $200–350 млн выручки OEM. Комбинированный цикл: ~2 газовые + паровая турбина, $1,4–2,0 млрд капзатрат, $300–550 млн OEM. В масштабе: каждые 10 ГВт под AI — это $10–20 млрд стройки, $2,5–5 млрд первичной выручки основных производителей, 20–30 заказов на крупные H-class машины и многомиллиардный будущий сервис. Даже если газ закроет лишь 20–30 ГВт нового AI-спроса — это десятки миллиардов капзатрат."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "$10–20 млрд",
+              "l": "стройка на каждые +10 ГВт газа под AI",
+              "n": "$2,5–5 млрд из них — первичная выручка OEM"
+            },
+            {
+              "v": "20–30",
+              "l": "заказов на крупные турбины на 10 ГВт",
+              "n": "плюс многолетний сервисный хвост"
+            },
+            {
+              "v": "$300–550 млн",
+              "l": "выручка OEM с 1 ГВт комбинированного цикла",
+              "n": "простой цикл — $200–350 млн"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Финансы производителей: цикл уже виден в марже"
+        },
+        {
+          "k": "p",
+          "t": "Важно, что растут не только заказы, но и маржа. У GE Vernova сегмент Power в 2025 дал ~$11 млрд выручки при ~$1,2 млрд EBITDA (маржа ~10,6%). У Siemens Energy сервис газовых турбин показал рост выручки +14,2% и маржу 13,0%, а на 2026 год ориентир — рост 16–18% и маржа 14–16%; компания даже вернула ранее закрытое производство турбин в Шарлотт. У MHI сегмент Energy Systems дал маржу ~11,3% с ориентиром к ~13%. Дефицит слотов даёт ценовую власть — и она конвертируется в расширение маржи."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "~10,6%",
+              "l": "маржа EBITDA сегмента Power GE Vernova (2025)",
+              "n": "$11 млрд выручки, $1,2 млрд EBITDA"
+            },
+            {
+              "v": "13% → 14–16%",
+              "l": "маржа сервиса газовых турбин Siemens",
+              "n": "ориентир на 2026 — рост выручки 16–18%"
+            },
+            {
+              "v": "перезапуск",
+              "l": "Siemens вернула завод турбин в Шарлотт",
+              "n": "раньше мощности сокращали — теперь возвращают"
             }
           ]
         },
@@ -18845,45 +18269,84 @@
         },
         {
           "k": "p",
-          "t": "Рынок купил это как долгую волну роста на десятилетие вперёд — законтрактованный выпуск плюс 20-летний сервис, «качество заслуживает пиковых мультипликаторов». GE Vernova стоит ~46–58 прибылей, +88% за год. Весь бизнес оценивается как рост."
-        },
-        {
-          "k": "stat",
-          "items": [
-            {
-              "v": "~46–58x",
-              "l": "прибыли стоит GE Vernova",
-              "n": "+88% за год — заложены годы безупречного исполнения"
-            },
-            {
-              "v": "десятилетие",
-              "l": "видимость портфеля",
-              "n": "рынок трактует весь бизнес как ровный рост на десятилетие"
-            },
-            {
-              "v": "«продавать»",
-              "l": "Barclays по Siemens",
-              "n": "аргумент — «пик цикла в 2026» (для оборудования)"
-            }
-          ]
+          "t": "Операционная картина исключительно сильна, и рынок это видит: заказы растут, портфели рекордные, цены повышаются, мощности заняты, сервисная база расширяется, маржа увеличивается. Отсюда расхожая ставка: газовые турбины — один из главных бенефициаров энергетического подъёма под AI на годы вперёд."
         },
         {
           "k": "h",
-          "t": "Почему рынок перестарался"
+          "t": "Почему рынок мог перестараться"
         },
         {
           "k": "p",
-          "lead": true,
-          "t": "Ошибка — считать один бизнес так, будто это одно целое. Сервисный аннуитет действительно долговечен: контракты на 17–21 год, ~70% продлеваются, слабо чувствителен к циклу — недооценённая подушка. Но заказы на оборудование цикличны, и мультипликатор ~50x уже закладывает пик. Barclays понизил Siemens до «продавать», аргументируя пиком цикла в 2026, — и для оборудования у этого есть основания. Часть AI-спроса к тому же [[power|«фантомная»|не генерация, а подключение]] (значительная доля очереди на подключение так и не подключается), а проекты вроде Stargate могут сдвигаться."
-        },
-        {
-          "k": "p",
-          "lead": true,
-          "t": "Поэтому правильная рамка — не «ростовая акция», а: держать долговечный аннуитет сквозь цикл, а цикличный мультипликатор оборудования докупать на просадках, а не гнаться за ним на пике."
+          "t": "Но 116 ГВт GE Vernova — это 53 ГВт твёрдых заказов плюс 63 ГВт резервирований производственных слотов. Резервирование — не окончательный заказ: клиент бронирует окно и лишь позже доводит проект до контракта. Если AI-спрос завышен (эффективность моделей растёт, часть заявок дублируется, прибыльность AI-продуктов буксует), резервирования могут не конвертироваться. А если к 2029–2031 все производители одновременно нарастят выпуск, рынок снова станет избыточным. Поэтому твёрдый портфель, резервирование и меморандум о намерениях нужно различать."
         },
         {
           "k": "quote",
-          "t": "Это не одна ростовая компания, а две: 20-летний сервисный аннуитет, который держат сквозь цикл, и цикличная продажа оборудования, которую докупают на просадках."
+          "t": "116 ГВт — это не одинаково твёрдый портфель: 53 ГВт под контрактами и 63 ГВт зарезервированных слотов. Даже твёрдая половина — это больше двух лет производства, но конверсия резерва в заказ и есть главный вопрос тезиса."
+        },
+        {
+          "k": "h",
+          "t": "Куда движется — технология, деньги и топливо"
+        },
+        {
+          "k": "p",
+          "t": "Турбина бесполезна без топлива: 1 ГВт комбинированного цикла требует ~50–55 млрд кубических футов газа в год, 30 ГВт под AI — уже 1,5–1,7 трлн кубических футов. Это вторичный цикл капзатрат — газопроводы, компрессоры, хранение, LNG, добыча, — но ценность там менее концентрирована: газовый рынок куда конкурентнее. Дальше турбины будут модернизировать под смеси с водородом и улавливание CO₂. Главное же — где в цепочке сидит стоимость: не там, где течёт больше газа, а там, где мало поставщиков и есть многолетний сервис."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Звено цепочки",
+            "Ценность",
+            "Почему"
+          ],
+          "rows": [
+            [
+              "Сервис и горячая часть",
+              "9,5 / 10",
+              "барьер 10/10, маржа 9/10 — повторяется десятилетиями"
+            ],
+            [
+              "Крупные производители турбин",
+              "9 / 10",
+              "тройной олигополь, дефицит слотов, ценовая власть"
+            ],
+            [
+              "Оборудование сети",
+              "9 / 10",
+              "[[transformers|трансформаторы|сталь внутри него]] и подстанции нужны при любом источнике"
+            ],
+            [
+              "Суперсплавы, поковки, литьё",
+              "8 / 10",
+              "физическое горлышко, но мощность не нарастить быстро"
+            ],
+            [
+              "EPC и стройка",
+              "7 / 10",
+              "спрос высокий, но барьер и маржа низкие"
+            ],
+            [
+              "Газопроводы",
+              "7,5 / 10",
+              "вторичный цикл, но конкурентнее"
+            ],
+            [
+              "Новые стартапы турбин",
+              "5 / 10",
+              "спрос есть, барьера почти нет — риск исполнения"
+            ]
+          ]
+        },
+        {
+          "k": "p",
+          "t": "И ключевое для долгосрочного держателя: когда дефицит самих турбин к началу 2030-х спадёт, стоимость не обнулится — тезис перейдёт от «дефицита оборудования» к «монетизации установленного парка». Парк останется, сервис вырастет, больше часов работы — больше замен деталей, плюс модернизации под водород и CO₂. Это тот случай, когда решение горлышка не убивает бизнес, а превращает циклического производителя в компанию с большой базой, сервисной выручкой и свободным денежным потоком."
+        },
+        {
+          "k": "h",
+          "t": "Газ против атома — bridge, а не тупик"
+        },
+        {
+          "k": "p",
+          "t": "Газ выигрывает первую фазу AI-стройки, потому что доступен раньше: 2–5 лет против 7–15 у новой [[nuc|атомной станции|уже построенный, лицензированный и подключённый]] и $1–2 млн/МВт против $7–15 млн/МВт. У него хуже с выбросами и есть топливный риск, зато выше гибкость нагрузки. [[nuc|Атом|уже построенный, лицензированный и подключённый]] может выиграть следующую фазу — после 2030-х, когда AI-нагрузка станет постоянной, а гиперскейлеры захотят снизить углеродный след (через перезапуски реакторов и малые модульные реакторы). Поэтому газ и атом не исключают друг друга: газ — быстрый мост, атом — потенциальная долгосрочная база."
         },
         {
           "k": "h",
@@ -18891,121 +18354,27 @@
         },
         {
           "k": "p",
-          "t": "GE Vernova при ~46–58x закладывает годы безупречной конверсии портфеля, компаундинг сервиса и дальнейшее расширение маржи — оценка под совершенство, с асимметричным даунсайдом на любом развороте настроений. Siemens Energy дешевле (аргумент «продавать» — про цикл оборудования, но её сервисный портфель €60 млрд реален). Howmet при ~32x EBITDA закладывает распроданную дуополию литья. А Vistra — сетевая компания, которая покупает и эксплуатирует турбины, — более дешёвый косвенный способ отыграть тот же дефицит мощности."
-        },
-        {
-          "k": "p",
-          "t": "Наш вывод: GE Vernova — дорого (но лучшее качество); Siemens Energy — справедливо; Howmet — дефицитное звено; Vistra — дешёвый способ отыграть тему."
-        },
-        {
-          "k": "h",
-          "t": "Куда движется технология — и куда идут деньги"
-        },
-        {
-          "k": "p",
-          "t": "Два сдвига. Турбины наперегонки учатся сжигать водород (Mitsubishi целит на 100% водорода к 2028, у Siemens — самый широкий проверенный на водороде парк), чтобы не стать «мёртвым активом» в декарбонизирующейся энергетике: способность работать на водороде — это разница между 40-летним аннуитетом и ранним списанием. И масштабируется установка на площадке — лёгкие турбины быстрого запуска прямо у дата-центра (Stargate заказал 29 турбин GE Vernova, ~1 ГВт). Эффективность растёт (Mitsubishi >64%), а это снижает счёт за топливо по всему установленному парку."
-        },
-        {
-          "k": "p",
-          "t": "Куда идут деньги: гиперскейлеры и сетевые компании подписывают многолетние соглашения о резерве, чтобы застолбить дефицитные слоты (Baker Hughes набрал $1 млрд заказов от дата-центров за квартал); производители турбин и литья вкладываются в мощности — но самые горячие детали и кадры готовят годами, поэтому дефицит сам себя поддерживает; а сетевые компании скупают турбины на вторичном рынке по ценам втрое выше 2020 года, лишь бы получить мощность сейчас. Это законтрактованный на годы капитал с 20-летним сервисным хвостом."
+          "t": "Здесь важно отделить операционный тезис от тезиса по акции. Операционно всё сильно. Но акции лидеров уже воспринимаются как главные бенефициары энергетического подъёма — и просто исполнить план (GE выпустить 24 ГВт, Siemens дойти до 14–16% маржи сервиса, MHI отработать портфель) недостаточно для дальнейшей переоценки. Нужны более высокая цена новых заказов, лучшая конверсия портфеля в деньги, рост сервисной маржи и продолжение заказов после 2028–2029. Иначе результаты будут отличными, а доходность акций — средней. Именно оценка, а не качество бизнеса, — главное ограничение тезиса."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "29 турбин",
-              "l": "Stargate заказал у GE Vernova (~1 ГВт)",
-              "n": "установка прямо на площадке набирает масштаб"
+              "v": "24 ГВт",
+              "l": "цель выпуска GE Vernova к 2028",
+              "n": "с ~20 ГВт в 2026 — рост дисциплинированный, не экстремальный"
             },
             {
-              "v": "$1 млрд",
-              "l": "заказов Baker Hughes от дата-центров за квартал",
-              "n": "специалист по установкам на площадке"
+              "v": "8 / 10",
+              "l": "риск «рост уже в цене»",
+              "n": "ограничение — оценка, а не качество бизнеса"
             },
             {
-              "v": "×3",
-              "l": "цены турбин на вторичном рынке с 2020",
-              "n": "платят, лишь бы получить мощность сейчас"
+              "v": "116 / 24 ≈ 4,8",
+              "l": "лет выпуска в портфеле GE при мощности 2028",
+              "n": "часть резерва может не конвертироваться"
             }
           ]
-        },
-        {
-          "k": "p",
-          "t": "На что ставят игроки: производители турбин — на то, что дефицит продержится достаточно, чтобы перецен­ить оборудование И закрепить десятилетия сервиса. Howmet/PCC — на сохранение дуополии литья. Производители сплавов — на дисбаланс по никелю. Гиперскейлеры — на установку у дата-центра, чтобы обойти очередь на сеть. Сетевые компании (Vistra) — на владение самими мегаваттами. Главные вопросы впереди — готовность к водороду и когда мощности литья наконец догонят спрос."
-        },
-        {
-          "k": "h",
-          "t": "Газ против других источников — и не заменит ли его атом"
-        },
-        {
-          "k": "p",
-          "t": "Раз это ставка на технологию, главный вопрос — устоит ли она. У каждого источника свой компромисс между скоростью запуска, круглосуточной мощностью, чистотой и ценой. Самое дешёвое — подключение к сети, но оно упирается в очередь 4–7 лет и [[transformers|дефицит трансформаторов|сталь внутри него]]. Газовая турбина выигрывает по одной решающей причине: только она даёт гигаватты стабильной мощности за 2–3 года. Но это преимущество именно сегодняшнее."
-        },
-        {
-          "k": "table",
-          "head": [
-            "Источник",
-            "Скорость и масштаб сейчас",
-            "Слабое место"
-          ],
-          "rows": [
-            [
-              "[[power|Подключение к сети|не генерация, а подключение]]",
-              "дёшево, но очередь 4–7 лет",
-              "[[transformers|дефицит трансформаторов|сталь внутри него]], медленно"
-            ],
-            [
-              "Газовая турбина",
-              "гигаватты за 2–3 года, круглосуточно, прямо на площадке",
-              "выбросы CO₂, зависит от поставок газа"
-            ],
-            [
-              "[[nuc|Атомная станция]]",
-              "чистая мощность круглосуточно",
-              "стройка 10+ лет; существующие блоки уже разобраны гиперскейлерами"
-            ],
-            [
-              "[[smr|Малые модульные реакторы]]",
-              "чистая база, удобны для дата-центров",
-              "первые блоки ~2030+, пока не готовы в масштабе"
-            ],
-            [
-              "Солнце + аккумуляторы",
-              "дёшево и чисто",
-              "не даёт круглосуточной мощности без огромного запаса"
-            ],
-            [
-              "[[fuel|Топливные элементы]]",
-              "на площадке, быстро, чище газа",
-              "дороже за мегаватт, меньший масштаб"
-            ]
-          ],
-          "note": "Сравнение по способности дать дата-центру стабильную мощность в ближайшие годы"
-        },
-        {
-          "k": "stat",
-          "items": [
-            {
-              "v": "~2–3 года",
-              "l": "газ против 10+ лет у новой атомной станции",
-              "n": "скорость — сегодня незаменимый плюс газа"
-            },
-            {
-              "v": "~2030+",
-              "l": "когда малые реакторы выйдут в масштаб",
-              "n": "тогда начнётся замещение НОВЫХ продаж турбин"
-            },
-            {
-              "v": "20–40 лет",
-              "l": "служит уже установленная турбина",
-              "n": "сервисный доход защищён от замещения"
-            }
-          ]
-        },
-        {
-          "k": "p",
-          "lead": true,
-          "t": "Вывод по замещению: в это десятилетие газ незаменим — ничто другое не даёт гигаватты быстрой круглосуточной мощности, поэтому турбины и распроданы до 2030-х. В 2030-е картина меняется: [[smr|малые модульные реакторы]] и новая [[nuc|атомная]] база начнут отбирать долю у новых продаж турбин. Но саму технологию это не обнуляет по трём причинам: уже установленные турбины работают и обслуживаются 20–40 лет независимо от новых заказов; переход на водород и улавливание CO₂ продлевают им жизнь в чистеющей энергетике; а роль газа смещается с постоянной базовой мощности на быстрый резерв рядом с атомом, солнцем и [[fuel|топливными элементами]]. Под ударом — не обслуживание и не литьё, а именно цикл продаж нового оборудования."
         },
         {
           "k": "h",
@@ -19014,29 +18383,33 @@
         {
           "k": "table",
           "head": [
-            "Сигнал",
-            "Что он будет значить"
+            "Риск",
+            "Что означает"
           ],
           "rows": [
             [
-              "Цикл заказов проходит пик в 2026 (Barclays) / вскрывается «фантомный» спрос",
-              "Мультипликатор оборудования снижается — но сервисный аннуитет смягчает провал"
+              "AI-спрос завышен",
+              "резервирования не станут твёрдыми заказами — упор в эффективность моделей и дубли заявок"
             ],
             [
-              "Мощности литья (Howmet/PCC) догоняют спрос",
-              "Выпуск турбин растёт, но премия дефицитного звена сужается"
+              "Производители перерасширят мощности",
+              "к 2029–2031 рынок снова избыточен, ценовая власть уходит"
             ],
             [
-              "Ретрофиты на водород подтверждают 40-летний аннуитет",
-              "Сервисный портфель переоценивается вверх (бычий)"
+              "Экологическое регулирование",
+              "лимиты CO₂/NOx, вода, суды; споры вокруг xAI — стройка раньше разрешений рискованна"
             ],
             [
-              "Вывод угля + очереди на сеть держат газ как единственную быструю мощность",
-              "Спрос сохраняется за 2030 (бычий)"
+              "Скачок цены газа",
+              "при $8–10/MMBtu топливо — $54–67/МВт·ч; общая стоимость выше возобновляемых"
             ],
             [
-              "Малые модульные реакторы выходят на масштаб раньше конца 2030-х",
-              "появляется быстрая чистая база — риск замещения для НОВЫХ продаж оборудования (медвежий для цикла)"
+              "Альтернативы",
+              "топливные элементы, малые реакторы, геотермия, накопители — но ни одна пока не даёт масштаб + скорость + 24/7"
+            ],
+            [
+              "ПОДТВЕРЖДАЕТ: резерв → твёрдый заказ",
+              "рост цены новых заказов и сервисной маржи, заказы после 2028 — сигнал, что цикл длиннее"
             ]
           ]
         },
@@ -19047,15 +18420,148 @@
         {
           "k": "p",
           "lead": true,
-          "t": "Итог. Газовые турбины — единственный способ быстро дать дата-центру гигаватты мощности, поэтому очередь расписана до 2030-х. Но платить за это как за вечный рост нельзя: мультипликатор на оборудование уже на пике, а в 2030-е новые продажи начнёт забирать атом."
+          "t": "Газовые турбины — не самый большой пул AI-капзатрат (больше уйдёт в GPU, дата-центры и сеть), но одно из самых концентрированных звеньев. В кампусе за $20–50 млрд турбины — лишь несколько процентов стоимости, но без них не работает ничего, поэтому их экономическая значимость сильно выше доли. Сценарий: 2026–2028 — дефицит, рост цен и портфелей; 2028–2030 — рост поставок и выручки; после 2030 — нормализация новых заказов, но расширение высокомаржинального сервиса. Решение горлышка не обнуляет стоимость — оно превращает циклического производителя в компанию с большой базой и сервисным аннуитетом."
         },
         {
           "k": "p",
           "lead": true,
-          "t": "Бизнес в отрасли устроен просто: турбину продают один раз, а потом обслуживают её ~20 лет. Поэтому сервис и литьё самых горячих деталей (Howmet/PCC) меньше завязаны на цикл продаж и на приход атома — их и стоит предпочесть. Само оборудование (GE Vernova по ~50x — качество, но дорого; Siemens дешевле) докупать только на просадках; а Vistra — более дешёвый способ отыграть тот же дефицит мощности."
+          "t": "Вывод: разделяйте долговечный сервисный аннуитет (держать сквозь цикл) и цикличную продажу оборудования (докупать на просадках). Реальное дефицитное звено — литьё и суперсплавы горячей части (Howmet, Carpenter). GE Vernova — самый чистый и сильный AI-exposure, но оценён под совершенство; Siemens Energy — шире (газ + сеть) и справедливее; Mitsubishi — качественнее по цене, но менее чистый. Главная опасность — не в том, что турбины перестанут быть нужны, а в том, чтобы заплатить цену, которая уже предполагает идеальную конверсию всех резервирований и продолжение подъёма далеко за 2030 год."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Если ваш стиль",
+            "Чем закрыть тему"
+          ],
+          "rows": [
+            [
+              "Самый прямой и сильный AI-exposure",
+              "GE Vernova — крупнейший парк, сервис и сеть; но премия в цене"
+            ],
+            [
+              "Широкая ставка на всё горлышко мощности",
+              "Siemens Energy — газ + трансформаторы + распределительное оборудование + сеть"
+            ],
+            [
+              "Дефицитное звено без угадывания OEM",
+              "Howmet, Carpenter — литьё и суперсплавы горячей части нужны всем троим"
+            ],
+            [
+              "Более диверсифицированный промышленный play",
+              "Mitsubishi — рост заказов в Азии и США, но скидка за конгломерат"
+            ],
+            [
+              "Косвенно через спрос на мощность",
+              "Vistra — тот же дефицит мощности, дешевле; Baker Hughes/Quanta — газ и стройка"
+            ],
+            [
+              "Асимметрия и венчурный риск",
+              "Boom Supersonic (частная) — ставка на новый вход через дефицит, барьер низкий"
+            ]
+          ],
+          "note": "Не рекомендация, а соответствие инструмента стилю — решение за инвестором."
         }
       ]
-    }
+    },
+    "picks": [
+      {
+        "group": "Ядро — олигополия турбин, сервис и дефицитное литьё",
+        "tone": "leader",
+        "badge": "высокая уверенность",
+        "note": "Тройной олигополь крупных турбин плюс физическое горлышко горячей части. Забирают дефицитные слоты, ценовую власть и сервис установленного парка на десятилетия.",
+        "rows": [
+          {
+            "company": "GE Vernova",
+            "ticker": "NYSE: GEV",
+            "mcap": "портфель 116 ГВт",
+            "exposure": "крупнейший парк (~7 000 турбин), платформа H-class, сервис + оборудование сети",
+            "why": "Самый прямой exposure к американской AI-стройке: 116 ГВт заказов и резервирований против ~24 ГВт мощности к 2028; >55% портфеля — сервис. Уже поставляет Chevron под со-размещённые проекты. Расширение дисциплинированное.",
+            "priced": "Рынок уже оценивает как ключевого бенефициара; хорошая операционная динамика может не дать переоценки, если резерв не конвертируется."
+          },
+          {
+            "company": "Siemens Energy",
+            "ticker": "ETR: ENR",
+            "mcap": "backlog €138 млрд",
+            "exposure": "газовые турбины + трансформаторы + распределительное оборудование + сеть + сервис",
+            "why": "Ставка не только на газ, а на всё горлышко мощности. Сервис газовых турбин: маржа 13% с ориентиром 14–16% на 2026; вернула закрытый завод турбин в США. Выигрывает, даёт AI ток газ или сеть.",
+            "priced": "Сложная структура группы и риск Siemens Gamesa; часть позитивного цикла уже в стоимости."
+          },
+          {
+            "company": "Mitsubishi Heavy Industries",
+            "ticker": "TSE: 7011",
+            "mcap": "53 турбины в портфеле",
+            "exposure": "высокоэффективные турбины JAC, сильная позиция в Азии, комбинированный цикл",
+            "why": "Третий участник олигополии на ранней фазе цикла; маржа Energy Systems ~11,3% с ориентиром к 13%. Менее очевидный способ отыграть дефицит турбин.",
+            "risk": "Конгломерат (оборона, авиация, судостроение, атом) размывает чистоту тезиса; exposure к сети слабее."
+          },
+          {
+            "company": "Howmet Aerospace",
+            "ticker": "NYSE: HWM",
+            "mcap": "литьё горячей части",
+            "exposure": "прецизионное литьё лопаток и деталей горячей части турбин",
+            "why": "Дефицит внутри дефицита: монокристаллические лопатки и литьё горячей части — физическое горлышко, которое нельзя быстро расшить. Нужны всем трём производителям.",
+            "priced": "Двойной exposure на аэрокосмос и энергетику уже ценится рынком; циклическая часть выручки."
+          },
+          {
+            "company": "Carpenter Technology",
+            "ticker": "NYSE: CRS",
+            "mcap": "жаропрочные сплавы",
+            "exposure": "никелевые суперсплавы и специальные сплавы для горячей части",
+            "why": "Материал, из которого делают самые горячие детали турбины; мощность по суперсплавам ограничена, что даёт ценовую власть в цикле спроса.",
+            "risk": "Меньше и цикличнее OEM; результат зависит от общего спроса на суперсплавы (аэрокосмос + энергетика)."
+          }
+        ]
+      },
+      {
+        "group": "Вторичные и рискованные ставки",
+        "tone": "emerging",
+        "badge": "средний–высокий риск",
+        "note": "Косвенный exposure к тому же дефициту мощности, инфраструктурная стройка или ставка на новый вход. Меньше барьер или меньше чистота тезиса.",
+        "rows": [
+          {
+            "company": "Baker Hughes",
+            "ticker": "NASDAQ: BKR",
+            "mcap": "турбины + LNG + компрессоры",
+            "exposure": "авиапроизводные турбины, компрессоры, инфраструктура газа и LNG, сервис",
+            "why": "Выигрывает и от генерации, и от роста потребления газа — вторичный цикл капзатрат на топливную инфраструктуру.",
+            "risk": "Значительная часть бизнеса зависит от нефтегазового цикла, а не только от AI-спроса на мощность."
+          },
+          {
+            "company": "Caterpillar",
+            "ticker": "NYSE: CAT",
+            "mcap": "Solar Turbines",
+            "exposure": "промышленные турбины Solar, генераторы, распределённая генерация, компрессоры",
+            "why": "Интересна при переходе от гигантских станций к модульным решениям на площадке (behind-the-meter) — быстрый запуск и резерв.",
+            "risk": "Газовые турбины — малая доля выручки CAT; общий результат зависит от строительного и промышленного циклов."
+          },
+          {
+            "company": "Quanta Services",
+            "ticker": "NYSE: PWR",
+            "mcap": "EPC и сети",
+            "exposure": "строительство станций, подстанций, линий передачи и газовой инфраструктуры",
+            "why": "Инфраструктуру нужно построить независимо от того, чья турбина выбрана — прямой exposure на объём стройки.",
+            "risk": "Низкий барьер и маржа генподряда (EPC 5–6/10 по привлекательности); конкурентный рынок."
+          },
+          {
+            "company": "Vistra",
+            "ticker": "NYSE: VST",
+            "mcap": "power producer",
+            "exposure": "диверсифицированный парк генерации в регионах роста дата-центров",
+            "why": "Косвенный и более дешёвый способ отыграть тот же дефицит мощности — зарабатывает на общем росте цен и потребления электроэнергии.",
+            "risk": "Не чистая ставка на турбины; результат зависит от газа, погоды, retail-маржи и регулирования."
+          },
+          {
+            "company": "Boom Supersonic",
+            "ticker": "Pvt",
+            "mcap": "частная",
+            "exposure": "турбина Superpower 42 МВт на базе авиадвигателя; заказ Crusoe на 1,21 ГВт",
+            "why": "Пытается войти в энергетику через дефицит традиционных турбин; для Crusoe решает не LCOE, а скорость получения мощности.",
+            "risk": "Новый продукт без парка и сервисной сети; производство нужно масштабировать, долговечность в стационаре не доказана — барьер почти нулевой."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": null
   },
   "server": {
     "asOf": "2026-07-31",
@@ -21598,9 +21104,9 @@
     "picksTakeaway": null
   },
   "renewables": {
-    "asOf": "2026-08-04",
+    "asOf": "август 2026",
     "thesis": {
-      "bigIdea": "Возобновляемая энергия кажется плохим выбором для AI: солнце и ветер дают ток не круглосуточно, а дата-центру нужна стабильная мощность 24/7. Но это неверное прочтение. Гиперскейлеры — крупнейшие в мире покупатели чистой энергии (Microsoft законтрактовала 40 ГВт, Amazon — 20 ГВт), потому что солнце с аккумулятором — самый дешёвый и самый быстрый новый источник, когда газовые турбины распроданы до 2030-х, а атом строится 10+ лет. Ценность здесь не в самой панели (её делают дёшево в Китае), а в хранении (аккумуляторы Tesla — спрос выше выпуска), в американском производителе панелей, защищённом от Китая (First Solar, портфель заказов 45 ГВт), и в застройщиках с готовым портфелем (NextEra). Играть — не «солнце вообще», а хранение и защищённые от Китая имена.",
+      "bigIdea": "Рынок спорит о крайностях: одни говорят «AI нужна мощность 24/7, а солнце и ветер прерывисты — плохая ставка», другие — «AI нужна энергия, покупай любую возобновляемую». Оба неправы. Солнце и ветер уже выиграли за самый дешёвый и самый быстрый новый мегаватт·час, а гиперскейлеры сделали их банкируемыми контрактами на 10–20 лет. Но дёшево — не значит круглосуточно, и генерация становится избыточной: за 2025 год мир добавил 692 ГВт. Поэтому стоимость уходит от самой панели (она уже биржевой товар) к дефициту: подключение к сети, передача, хранение, твёрдая мощность и готовые проекты с разрешениями. Выигрывает не тот, кто делает больше панелей, а тот, кто владеет этим ограничением.",
       "stream": [
         {
           "k": "h",
@@ -21609,125 +21115,222 @@
         {
           "k": "p",
           "lead": true,
-          "t": "Возобновляемая энергия — это солнце, ветер, гидро и аккумуляторы к ним. Для AI её роль неочевидна: солнце и ветер дают ток не постоянно, а дата-центру нужна стабильная мощность круглосуточно. И всё же именно гиперскейлеры — крупнейшие в мире покупатели чистой энергии: Microsoft законтрактовала около 40 ГВт (больше всех), Amazon — около 20 ГВт. Причина простая — спрос на ток огромный (потребление дата-центров в США идёт с 41 ГВт в 2026-м к 66 ГВт в 2027-м), а солнце с аккумулятором строится быстрее и дешевле любой альтернативы."
+          "t": "Солнце и ветер — самый дешёвый и самый быстрый новый источник электричества: наземный ветер ~$33, солнце ~$44 за МВт·ч, без топливного риска, а построить их часто можно быстрее атома или крупного газа. Гиперскейлеры законтрактовывают их на 10–20 лет вперёд. Но у этого есть предел: [[rack|дата-центру|берёт GPU в долг]] нужна мощность каждую секунду, а солнце даёт ток днём, ветер — по погоде. Поэтому ВИЭ могут дёшево закрыть большую долю годового потребления, но сами по себе не обеспечивают надёжность 24/7 без батарей, передачи, избытка мощности и твёрдой генерации."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "~40 ГВт",
-              "l": "чистой энергии законтрактовала Microsoft",
-              "n": "крупнейший в мире покупатель; Amazon — ~20 ГВт"
+              "v": "5 149 ГВт",
+              "l": "мировая мощность ВИЭ на конец 2025",
+              "n": "+692 ГВт за год, из них ~510 ГВт солнца"
             },
             {
-              "v": "41 → 66 ГВт",
-              "l": "спрос дата-центров США, 2026 → 2027",
-              "n": "весь этот ток надо где-то взять"
+              "v": "$33 / $44",
+              "l": "LCOE наземного ветра / солнца, за МВт·ч (2025)",
+              "n": "дешевле газа и атома за новый мегаватт·час"
             },
             {
-              "v": "$700 млрд",
-              "l": "капрасходы четвёрки гиперскейлеров, 2026",
-              "n": "часть идёт напрямую в энергию"
+              "v": "1–3 года",
+              "l": "срок стройки солнечной станции",
+              "n": "против 8–15+ лет у новой большой АЭС"
             }
           ]
         },
         {
           "k": "h",
-          "t": "Проблема: солнце и ветер не дают ток круглосуточно"
+          "t": "Дёшево — не значит круглосуточно"
         },
         {
           "k": "p",
-          "t": "Главная слабость — прерывистость. Солнечная панель работает в среднем лишь около четверти времени (ночью и в облака — ноль), ветряк — примерно треть. А обучение и работа AI требуют стабильной мощности 24 часа в сутки. Поэтому само по себе солнце или ветер дата-центр не запитает: нужен либо огромный запас, либо аккумуляторы, которые сглаживают провалы. Именно поэтому чистая ставка здесь — не панель, а то, что делает её мощность стабильной."
+          "t": "Ключевая ошибка — считать, что годовое покрытие равно почасовому. Кампус на 1 ГВт при загрузке 90% съедает ~7,9 TWh в год; чтобы покрыть это по году, нужно ~3,6 ГВт солнца (при коэффициенте загрузки 25%). Но такой парк выдаёт заметно больше 1 ГВт в полдень и почти ноль ночью. Чтобы приблизиться к режиму 24/7, к системе добавляют географически разнесённые ветер и солнце, батареи, управление спросом, передачу, гидро, геотермию, [[nuc|атом|уже построенный, лицензированный и подключённый]] или [[gasturbines|газ|самый быстрый способ]]. Поэтому паспортную мощность ВИЭ нельзя напрямую сравнивать с нагрузкой дата-центра без поправки на время и надёжность."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "~25%",
-              "l": "времени реально работает солнечная панель",
-              "n": "ночью и в облака — ноль"
+              "v": "7,9 TWh/год",
+              "l": "потребление кампуса 1 ГВт при загрузке 90%",
+              "n": "как годовая выработка небольшой страны"
             },
             {
-              "v": "~35%",
-              "l": "столько же у ветряка",
-              "n": "ветер непостоянен"
+              "v": "3,6 ГВт солнца",
+              "l": "чтобы покрыть это по году (CF 25%)",
+              "n": "но >1 ГВт в полдень и ~0 ночью"
             },
             {
-              "v": "24/7",
-              "l": "мощность, которая нужна AI",
-              "n": "разрыв закрывают аккумуляторы"
+              "v": "25% / 40%",
+              "l": "коэффициент загрузки солнца / ветра",
+              "n": "поэтому мощности нужно кратно больше нагрузки"
             }
           ]
         },
         {
           "k": "h",
-          "t": "Почему это всё равно работает — цена, скорость и хранение"
+          "t": "Оптимальная система — не только панели"
         },
         {
           "k": "p",
-          "t": "У солнца с аккумулятором два решающих плюса — цена и скорость. Это самый дешёвый новый источник, и его можно поставить прямо на площадке за месяцы, минуя очередь на подключение к сети, — тогда как [[gasturbines|газовые турбины|самый быстрый способ]] распроданы до 2030-х, а [[nuc|атомная станция]] строится 10+ лет. Аккумуляторы делают эту мощность стабильной: в США за первый квартал 2026 поставили рекордные 9,7 ГВт·ч хранения. Tesla и Sunrun строят из распределённых батарей виртуальную электростанцию на 16 ГВт под дата-центры."
+          "t": "Экономически оптимальная энергосистема AI — это не «побольше панелей», а связка: дешёвая генерация ВИЭ + короткие батареи + расширенная передача + твёрдая генерация (газ, атом, гидро или геотермия) + софт управления энергией + долгосрочные контракты. Возобновляемая энергия здесь — дешёвый фундамент, а не полная замена газа и атома. Именно поэтому ВИЭ и газ на ближайшую фазу стройки скорее дополняют друг друга, чем конкурируют."
+        },
+        {
+          "k": "h",
+          "t": "Где сидит стоимость — уже не в панели"
+        },
+        {
+          "k": "p",
+          "t": "Сама панель сильно подешевела из-за огромных мощностей, прежде всего в Китае, — это уже биржевой товар с тонкой маржой. Стоимость уходит выше по цепочке: готовое подключение к сети, права на разработку, право на господдержку по локализации, трекеры, инверторы и силовая электроника, генподряд, обслуживание, интеграция хранения и торговля электроэнергией. Премия за девелопмент может быть выше премии за производство: панель можно отвезти куда угодно, а подключённый к сети проект в удачной точке не воспроизвести."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "месяцы",
-              "l": "срок постройки солнце+хранение на площадке",
-              "n": "против 2–3 лет у газа и 10+ у атома"
+              "v": "5,0 / 10",
+              "l": "инвест-оценка биржевых солнечных модулей",
+              "n": "перепроизводство в Китае, нет дифференциации"
             },
             {
-              "v": "9,7 ГВт·ч",
-              "l": "хранения поставили в США за 1 кв. 2026",
-              "n": "рекордный старт года"
+              "v": "8,3 / 10",
+              "l": "оценка девелоперов с готовым подключением",
+              "n": "дефицит — право подключиться, а не панель"
             },
             {
-              "v": "16 ГВт",
-              "l": "виртуальная электростанция Tesla + Sunrun",
-              "n": "из распределённых батарей под дата-центры"
+              "v": "45,1 ГВт",
+              "l": "портфель First Solar (защищённая ниша)",
+              "n": "$13,6 млрд, поставки расписаны до 2030"
             }
           ]
         },
         {
           "k": "h",
-          "t": "Где сидит стоимость — не панель, а хранение и защита от Китая"
+          "t": "Сеть — вот настоящее ограничение"
         },
         {
           "k": "p",
-          "t": "Сами солнечные панели — товар: ~80% выпуска у Китая, цена падает, заработать на них трудно. Долговечная стоимость в трёх местах. Первое — хранение: аккумуляторы Tesla Megapack распроданы (спрос выше выпуска шесть кварталов подряд). Второе — единственный крупный производитель панелей в США, защищённый от Китая тарифами: First Solar с портфелем заказов ~45 ГВт. Третье — застройщики с готовым портфелем чистой и стабильной мощности: у NextEra один только портфель хранения ~110 ГВт. Панель — товар, а хранение и защита от Китая — нет."
-        },
-        {
-          "k": "h",
-          "t": "Кто покупает — гиперскейлеры"
-        },
-        {
-          "k": "p",
-          "t": "Спрос идёт от тех же [[rack|гиперскейлеров и неооблаков|берёт GPU в долг]]. Microsoft обошла Amazon как крупнейший в мире покупатель чистой энергии — ~40 ГВт; Amazon — ~20 ГВт; Google в феврале 2026 подписал с TotalEnergies солнечный контракт на 1 ГВт под техасские дата-центры (первая сделка гигаваттного масштаба); Meta вкладывается в космическую солнечную энергию и долгое хранение. Контракты многолетние — это законтрактованный спрос, а не обещание."
-        },
-        {
-          "k": "h",
-          "t": "Финансы игроков"
-        },
-        {
-          "k": "p",
-          "t": "First Solar во 2 кв. 2026 — выручка $1,06 млрд при портфеле заказов ~45 ГВт; цель — 25 ГВт мощностей к концу 2026 (14 ГВт в США). NextEra за квартал добавляет ~4 ГВт новых проектов (солнце, хранение, ветер), план развития на 2026–2032 — 76–107 ГВт. У Tesla аккумуляторы Megapack ограничены не спросом, а выпуском; завод в Хьюстоне даст до 50 ГВт·ч в год. Fluence — чистая ставка на сетевое хранение."
+          "t": "Дефицит не в проектах, а в возможности их подключить и передать ток. На конец 2024 в США ~10 300 проектов стояли в очереди на подключение — это ~1 400 ГВт генерации и ~890 ГВт хранения; при этом ~408 ГВт уже имели соглашение о подключении, но ещё не были построены. Самый ценный актив — не технология, а право впрыснуть электричество в сеть в коммерчески пригодной точке (нужны [[transformers|трансформаторы и подстанции|сталь внутри него]] и [[power|само подключение|не генерация, а подключение]]). А по мере роста солнца растёт и сброс выработки: в 1П 2026 Калифорния ограничила ~4,5 млн MWh ВИЭ — больше, чем за весь 2025 год."
         },
         {
           "k": "stat",
           "items": [
             {
-              "v": "45 ГВт",
-              "l": "портфель заказов First Solar",
-              "n": "выручка $1,06 млрд за квартал; защищён тарифами от Китая"
+              "v": "1 400 ГВт",
+              "l": "генерации в очереди на подключение (США)",
+              "n": "плюс 890 ГВт хранения — очередь, а не дефицит проектов"
             },
             {
-              "v": "76–107 ГВт",
-              "l": "план развития NextEra на 2026–2032",
-              "n": "крупнейший застройщик; хранение ~110 ГВт"
+              "v": "408 ГВт",
+              "l": "с соглашением, но ещё не построены",
+              "n": "ограничение — подключить и передать, а не построить"
             },
             {
-              "v": "50 ГВт·ч/год",
-              "l": "завод аккумуляторов Tesla в Хьюстоне",
-              "n": "~10 000 Megapack в год; спрос выше выпуска"
+              "v": "4,5 млн MWh",
+              "l": "Калифорния сбросила ВИЭ за 1П 2026",
+              "n": "больше, чем за весь 2025 — растёт ценность хранения"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Батареи — прямее бенефициар, чем панели"
+        },
+        {
+          "k": "p",
+          "t": "Хранение — более прямой бенефициар AI, чем большая часть производства панелей. Батарея сдвигает дневное солнце в вечер, регулирует частоту, даёт быстрый резерв и участвует в рынке мощности — доход складывается из нескольких источников сразу (арбитраж, вспомогательные услуги, плата за мощность, толлинг). Литий силён на горизонте 1–4 часа, но четырёхчасовая система не закрывает несколько суток слабой погоды. Долгие технологии (железо-воздух, проточные, гидроаккумуляция) дают больший потенциал, но и куда больший коммерческий риск."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "$192–458/кВт·ч",
+              "l": "стоимость сетевой батареи (зависит от объёма)",
+              "n": "−93% с 2010, но 4 часа не закрывают несколько суток"
+            },
+            {
+              "v": "93%",
+              "l": "новых солнечных проектов в очереди — с хранением",
+              "n": "больше солнца = больше нужно батарей"
+            },
+            {
+              "v": "41%",
+              "l": "солнца Калифорнии уже с батареями",
+              "n": "хранение сдвигает полдень в вечер"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Кто покупает — гиперскейлеры меняют финансирование"
+        },
+        {
+          "k": "p",
+          "t": "Главный эффект AI — не рост спотовой цены солнца, а появление кредитоспособного долгосрочного покупателя рядом с большой нагрузкой. Договор на покупку электроэнергии (PPA) на 10–20 лет превращает нефинансируемый проект в банкируемый актив: даёт пол по выручке, снимает ценовой риск, позволяет привлечь долг и потом продать актив инфраструктурному фонду. Ниже — раскрытые сделки; заметен и сдвиг от «годового покрытия сертификатами» к твёрдой, локальной и почасовой чистой энергии."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Кто ↔ платформа",
+            "Объём",
+            "Что показывает"
+          ],
+          "rows": [
+            [
+              "Microsoft ↔ Brookfield",
+              ">10,5 ГВт (США+Европа), 5 лет",
+              "почти ×8 к прежнему рекордному корпоративному PPA"
+            ],
+            [
+              "Amazon",
+              ">600 проектов, ~9 ГВт в Европе",
+              "крупнейший корп. покупатель 5 лет подряд; 100% покрытие в 2024"
+            ],
+            [
+              "Meta",
+              "сдвиг к твёрдой генерации",
+              "20 лет на Clinton (1 121 МВт атом) + геотермия"
+            ],
+            [
+              "Google",
+              "почасовое 24/7 покрытие",
+              "будущие контракты наградят форму выработки и хранение"
+            ],
+            [
+              "TotalEnergies ↔ KKR",
+              "50% в 1,2 ГВт за €1,8 млрд",
+              "рециклинг капитала: институционал покупает готовое"
+            ],
+            [
+              "Shell → TotalEnergies",
+              "500 МВт + 3,5 ГВт пайплайн",
+              "не каждый владелец верит в доходность ВИЭ"
+            ]
+          ],
+          "note": "PPA — долгосрочный договор на покупку электроэнергии; делает проект банкируемым."
+        },
+        {
+          "k": "h",
+          "t": "Финансы игроков — кто зарабатывает"
+        },
+        {
+          "k": "p",
+          "t": "First Solar — редкий пример высокой маржи в модулях: портфель 45,1 ГВт ($13,6 млрд), за 2 кв 2026 выручка $1,06 млрд и прибыль $423 млн, гайд по продажам на 2026 — $4,9–5,2 млрд. Но эта прибыльность сильно завязана на налоговые кредиты и тарифную защиту. Fluence — прямая ставка на сетевое хранение: портфель $5,3 млрд, ~85% выручки 2026 покрыто, но маржа железа лишь 13,7% — это высокобета-исполнение, а не спокойный компаундер. NextEra превращает рост нагрузки в контрактованную стройку: ~33 ГВт портфеля после 1 кв 2026, +4 ГВт за квартал, ~110 ГВт пайплайн батарей."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "$1,06 млрд",
+              "l": "выручка First Solar за 2 кв 2026",
+              "n": "прибыль $423 млн — редкая маржа для модулей"
+            },
+            {
+              "v": "$5,3 млрд",
+              "l": "портфель заказов Fluence (хранение)",
+              "n": "но маржа 13,7% — высокобета-исполнение"
+            },
+            {
+              "v": "~33 ГВт",
+              "l": "портфель NextEra после 1 кв 2026",
+              "n": "+4 ГВт за квартал, ~110 ГВт пайплайн батарей"
             }
           ]
         },
@@ -21737,78 +21340,140 @@
         },
         {
           "k": "p",
-          "t": "Технология идёт в сторону хранения: долгое хранение (на много часов), виртуальные электростанции из тысяч батарей и установка прямо на площадке дата-центра, минуя сеть. Meta изучает даже космическую солнечную энергию. Деньги идут туда же: Tesla расширяет выпуск аккумуляторов (Хьюстон до 50 ГВт·ч, отдельный завод с LG на $4,3 млрд), First Solar строит новый завод на 3,7 ГВт, NextEra наращивает портфель хранения. Ставка всех — что узким местом будет не солнце, а то, чем его сглаживают."
-        },
-        {
-          "k": "stat",
-          "items": [
-            {
-              "v": "$4,3 млрд",
-              "l": "завод аккумуляторов Tesla + LG",
-              "n": "выпуск батарей растёт под спрос"
-            },
-            {
-              "v": "+3,7 ГВт",
-              "l": "новый завод панелей First Solar в США",
-              "n": "локализация против китайских тарифов"
-            },
-            {
-              "v": "хранение",
-              "l": "главный драйвер, а не сама панель",
-              "n": "долгое хранение + виртуальные электростанции"
-            }
-          ]
-        },
-        {
-          "k": "h",
-          "t": "Риски"
-        },
-        {
-          "k": "p",
-          "t": "Прерывистость никуда не делась: без дешёвого хранения солнце и ветер не заменят стабильный источник. Панели и ячейки давит Китай — цена падает, маржа на них тонкая. Политика: льготы и налоговые кредиты в США могут срезать, что бьёт по экономике проектов. [[power|Подключение к сети|не генерация, а подключение]] и [[transformers|дефицит трансформаторов|сталь внутри него]] тормозят ввод даже готовых мощностей. И предложение самого хранения ограничено — аккумуляторы в дефиците."
-        },
-        {
-          "k": "h",
-          "t": "Сигналы"
+          "t": "Модель, которая забирает стоимость, — не «держать актив вечно», а рециклинг капитала: девелопер строит или собирает портфель, контрактует, финансирует стройку, продаёт долю институциональному капиталу и реинвестирует, сохраняя управление. KKR купил 50% в портфеле 1,2 ГВт у TotalEnergies за €1,8 млрд; Shell, наоборот, продал европейские ВИЭ-активы (500 МВт + 3,5 ГВт пайплайн) — рост мощности может продолжаться, даже когда часть владельцев выходит, потому что рост не гарантирует доходность каждому. А самый защищённый слой — оборудование сети (GE Vernova, Eaton, Schneider) и подрядчики передачи (Quanta): они снимают капитал независимо от того, что победит в генерации."
         },
         {
           "k": "table",
           "head": [
-            "Сигнал",
-            "Значение"
+            "Игрок",
+            "На что ставит"
           ],
           "rows": [
             [
-              "Гиперскейлеры наращивают контракты на солнце+хранение",
-              "спрос подтверждается — бычий для хранения и First Solar/NextEra"
+              "NextEra",
+              "масштаб + регулируемая база + пайплайн под крупную нагрузку — ~33 ГВт портфель"
             ],
             [
-              "Megapack и заводы аккумуляторов остаются распроданы",
-              "хранение — реальное ограничение (бычий для Tesla/Fluence)"
+              "Brookfield Renewable",
+              "глобальная платформа + гидро для твёрдости + рециклинг капитала (рамка Microsoft)"
             ],
             [
-              "В США срезают льготы и налоговые кредиты на чистую энергию",
-              "экономика проектов ухудшается (медвежий)"
+              "GE Vernova",
+              "сеть + газ + ветер — выигрывает при любом миксе"
             ],
             [
-              "Китай продолжает валить цену на панели",
-              "заработок в самой панели исчезает — ценность только в хранении и защите тарифами"
+              "First Solar",
+              "защищённое тонкоплёночное производство в США, вне зависимости от Китая"
+            ],
+            [
+              "Nextracker",
+              "трекеры и софт — менее товарный слой, чем панель"
             ]
           ]
         },
         {
           "k": "h",
-          "t": "Вывод"
+          "t": "Что уже в цене — карта стоимости"
+        },
+        {
+          "k": "p",
+          "t": "По аналитической шкале сектора самая привлекательная экономика — не в самой генерации, а на слой в стороне: в оборудовании сети, передаче, готовом подключении и интеграции хранения. Биржевые модули и офшорный ветер оценены низко, а бытовые установщики — ниже всех и почти без прямой связи с AI. Отсюда и переклассификация: Sunrun — это «распределённая энергия», а не «генерация для AI»."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Сегмент",
+            "AI-оценка"
+          ],
+          "rows": [
+            [
+              "Оборудование сети (Eaton, Schneider, ABB)",
+              "8,5 / 10"
+            ],
+            [
+              "Подрядчики передачи (Quanta, MYR)",
+              "8,3 / 10"
+            ],
+            [
+              "Девелоперы с готовым подключением",
+              "8,3 / 10"
+            ],
+            [
+              "Интеграция сетевых батарей",
+              "7,8 / 10"
+            ],
+            [
+              "Защищённое солнечное производство США",
+              "7,8 / 10"
+            ],
+            [
+              "Действующие ВИЭ-активы",
+              "6,5 / 10"
+            ],
+            [
+              "Офшорный ветер",
+              "5,0 / 10"
+            ],
+            [
+              "Биржевые солнечные модули",
+              "5,0 / 10"
+            ],
+            [
+              "Бытовые установщики (Sunrun)",
+              "3,8 / 10"
+            ]
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Что сломает тезис"
+        },
+        {
+          "k": "table",
+          "head": [
+            "Риск",
+            "Что означает"
+          ],
+          "rows": [
+            [
+              "Ставки процента",
+              "ВИЭ — это финансирование: выше ставка = выше LCOE и меньше стоимость капитала актива"
+            ],
+            [
+              "Перепроизводство в Китае",
+              "хорошо девелоперам и владельцам, плохо недифференцированным производителям"
+            ],
+            [
+              "Политика и тарифы",
+              "маржа First Solar сильно зависит от налоговых кредитов и защиты"
+            ],
+            [
+              "Каннибализация и сброс",
+              "каждый новый солнечный проект снижает цену захвата у соседей — считать capture price"
+            ],
+            [
+              "Стоимость подключения",
+              "сетевые апгрейды могут обнулить экономику после лет разработки"
+            ],
+            [
+              "Переоценка спроса AI",
+              "если эффективность растёт быстрее, часть пайплайна задержится (но спрос диверсифицирован электрификацией)"
+            ]
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Итог — если запомнить одно"
         },
         {
           "k": "p",
           "lead": true,
-          "t": "Возобновляемая энергия для AI — это не про «солнце вместо всего», а про самый дешёвый и быстрый новый источник, который гиперскейлеры уже скупают в гигаваттах. Но заработок не в самой панели (её давит Китай), а в том, что делает мощность стабильной, и в именах, защищённых от Китая."
+          "t": "Возобновляемая энергия — дешёвый фундамент энергосистемы AI и один из крупнейших физических получателей капитала цикла: кампус 1 ГВт съедает ~7,9 TWh в год, а покрыть это солнцем — это ~3,6 ГВт мощности. Но генерация становится избыточной (692 ГВт добавлено за 2025), и сама по себе она не даёт круглосуточную твёрдую мощность. Поэтому ВИЭ не отменяют газ и атом — они растут рядом с ними."
         },
         {
           "k": "p",
           "lead": true,
-          "t": "Единого «правильного» имени нет — есть инструмент под ваш стиль. Ниже карта, решение за инвестором. Общий риск для всех — прерывистость без дешёвого хранения и срез льгот в США."
+          "t": "Вывод: не «AI нужна энергия — покупай любую ВИЭ», а владеть дефицитом. Избыточную доходность забирают те, кто контролирует подключение к сети, передачу, хранение, дифференцированное оборудование и твёрдую мощность: NextEra и Brookfield Renewable (масштаб, гидро и рециклинг капитала), GE Vernova (сеть + газ + ветер), First Solar (защищённая ниша), Nextracker (трекеры и софт). А биржевые модули, бытовые установщики и незаконтрактованный офшор — слабее как прямая ставка на AI. Лучшая позиция — на слой в стороне от самой товарной генерации."
         },
         {
           "k": "table",
@@ -21818,20 +21483,24 @@
           ],
           "rows": [
             [
-              "Ставка на «арматуру», а не на товар",
-              "хранение: Tesla (Megapack), Fluence — спрос выше выпуска"
+              "Масштаб и рециклинг капитала",
+              "NextEra, Brookfield Renewable — девелоперы с портфелем, подключением и контрактами гиперскейлеров"
             ],
             [
-              "Защита от Китая + видимый портфель",
-              "First Solar (панели США, ~45 ГВт заказов), NextEra (застройщик + атом)"
+              "Нейтрально к миксу — сеть и оборудование",
+              "GE Vernova — выигрывает при солнце, газе или модернизации сети"
             ],
             [
-              "Распределёнка и виртуальные электростанции",
-              "Sunrun — солнце+батареи у потребителя, VPP под дата-центры"
+              "Дифференцированное производство",
+              "First Solar — тонкая плёнка и защита США; Nextracker — трекеры и софт"
             ],
             [
-              "Широкая ставка на электрификацию",
-              "GE Vernova — ветер + сеть (см. [[transformers|трансформаторы|сталь внутри него]])"
+              "Прямая ставка на хранение (выше риск)",
+              "Tesla Megapack, Fluence — сетевые батареи, но исполнение и маржа"
+            ],
+            [
+              "Избегать как прямую ставку на AI",
+              "биржевые модули, бытовой солнечный (Sunrun), незаконтрактованный офшор"
             ]
           ],
           "note": "Не рекомендация, а соответствие инструмента стилю — решение за инвестором."
@@ -21840,70 +21509,103 @@
     },
     "picks": [
       {
-        "group": "Качество — хранение и защита от Китая",
+        "group": "Владельцы дефицита — масштаб, сеть и дифференциация",
         "tone": "leader",
-        "badge": "не товар, а арматура",
-        "note": "Заработок не в самой панели (её давит Китай), а в хранении и в именах, защищённых тарифами и с видимым портфелем.",
+        "badge": "высокая уверенность",
+        "note": "Стоимость уходит от панели к дефициту: подключение, передача, хранение, твёрдая мощность и дифференцированное оборудование. Эти имена им и владеют.",
         "rows": [
-          {
-            "company": "First Solar",
-            "ticker": "NASDAQ: FSLR",
-            "mcap": "~$25 млрд (оценка)",
-            "exposure": "единственный крупный производитель панелей в США, защищён от Китая тарифами; портфель заказов ~45 ГВт",
-            "why": "Не товарная ставка: тарифы и правила локализации отгораживают от китайского демпинга. Выручка $1,06 млрд за квартал, цель 25 ГВт мощностей к концу 2026.",
-            "priced": "Политический риск: срез налоговых кредитов бьёт по экономике; провал новых заказов между поколениями."
-          },
           {
             "company": "NextEra Energy",
             "ticker": "NYSE: NEE",
-            "mcap": "~$150 млрд (оценка)",
-            "exposure": "крупнейший в мире застройщик возобновляемой энергии и хранения + владеет атомом",
-            "why": "Готовый портфель чистой и стабильной мощности: план 76–107 ГВт на 2026–2032, хранение ~110 ГВт. Продаёт мегаватты гиперскейлерам напрямую.",
-            "priced": "Регуляторика и ставки; часть роста уже в цене; слияние с Dominion в процессе."
+            "mcap": "~33 ГВт портфель",
+            "exposure": "регулируемая FPL + крупнейший девелопер ВИЭ и хранения + передача",
+            "why": "Масштаб, стоимость капитала и пайплайн под крупную нагрузку: ~33 ГВт портфеля после 1 кв 2026, +4 ГВт за квартал, ~110 ГВт пайплайн батарей, ~21 ГВт запросов крупной нагрузки в FPL. Один из сильнейших AI-power компаундеров.",
+            "priced": "Чувствителен к ставкам и налоговой политике; крупные капзатраты; не чистая ВИЭ (растёт газ и дата-центры)."
           },
           {
-            "company": "Tesla",
-            "ticker": "NASDAQ: TSLA",
-            "mcap": "~$1,4 трлн (оценка)",
-            "exposure": "аккумуляторы Megapack для сети; энергосегмент растёт быстрее авто",
-            "why": "Хранение — реальное ограничение: Megapack распродан шесть кварталов подряд, завод в Хьюстоне даёт до 50 ГВт·ч/год. Прямая ставка на «арматуру» перехода.",
-            "priced": "Оценка привязана к авто и роботам; энергетика — пока меньшая часть выручки."
+            "company": "Brookfield Renewable",
+            "ticker": "NYSE: BEPC",
+            "mcap": "рамка Microsoft 10,5 ГВт",
+            "exposure": "гидро + солнце + ветер + хранение; глобальная платформа рециклинга капитала",
+            "why": "Не обязана держать актив вечно: разрабатывает, контрактует, финансирует, продаёт долю и реинвестирует. Гидро даёт твёрдость, которой нет у чисто солнечных портфелей. Рамка Microsoft на 10,5 ГВт — валидация позиции.",
+            "priced": "Сложная финансовая структура и долг; чувствительность к стоимости финансирования; не путать с Brookfield Corporation."
+          },
+          {
+            "company": "GE Vernova",
+            "ticker": "NYSE: GEV",
+            "mcap": "сеть + газ + ветер",
+            "exposure": "оборудование сети + газовые турбины + ветер + электрификация",
+            "why": "Забирает капитал независимо от того, придёт ли AI-электричество от ВИЭ, газа или модернизации сети. Сеть и газ дают лучшую ближнюю экономику, чем производство ветряных турбин.",
+            "priced": "Ветровое подразделение исторически несло гарантийные и ценовые риски; премия за AI-энергетику уже в цене."
+          },
+          {
+            "company": "First Solar",
+            "ticker": "NASDAQ: FSLR",
+            "mcap": "45,1 ГВт / $13,6 млрд",
+            "exposure": "тонкоплёночные модули CdTe, производство в США",
+            "why": "Дифференцированная технология вне зависимости от кристаллического кремния Китая, защита США. Портфель 45,1 ГВт ($13,6 млрд), Q2'26 выручка $1,06 млрд, прибыль $423 млн — редкая маржа для модулей.",
+            "priced": "Прибыльность сильно зависит от налоговых кредитов и тарифов; концентрация портфеля; риск отмен и смены политики."
+          },
+          {
+            "company": "Nextracker",
+            "ticker": "NASDAQ: NXT",
+            "mcap": "трекеры + софт",
+            "exposure": "солнечные трекеры (поворот панелей за солнцем) + управление",
+            "why": "Менее товарный слой цепочки, чем панель: техника плюс софт повышают выработку, сменить поставщика сложнее, чем купить модуль; вне экономики ячеек и пластин.",
+            "priced": "Ценовая конкуренция, стоимость стали, концентрация клиентов; дешёвые модули могут толкать к простым фиксированным установкам."
           }
         ]
       },
       {
-        "group": "Чистое хранение и распределёнка — выше риск",
+        "group": "Хранение и более рискованные ставки",
         "tone": "emerging",
-        "badge": "хранение / ветер",
-        "note": "Более узкие и цикличные ставки на хранение, распределённую энергию и ветер.",
+        "badge": "средний–высокий риск",
+        "note": "Прямее завязаны на хранение или несут больше исполнения и левериджа; не путать с чистой ставкой на дефицит.",
         "rows": [
+          {
+            "company": "Tesla",
+            "ticker": "NASDAQ: TSLA",
+            "mcap": "Megapack — хранение",
+            "exposure": "Megapack (сетевое хранение) + Powerwall + софт",
+            "why": "Прямее бенефициар, чем производство панелей: спрос на сетевое хранение растёт, масштаб производства важен; узнаваемый интегрированный продукт и кредитоспособный контрагент.",
+            "risk": "Не чистая ставка на ВИЭ — оценка задаётся всей Tesla; цена ячеек, конкуренция из Китая, пожарные и гарантийные риски."
+          },
           {
             "company": "Fluence Energy",
             "ticker": "NASDAQ: FLNC",
-            "mcap": "~$3 млрд (оценка)",
-            "exposure": "чистая ставка на сетевое хранение (СП Siemens и AES)",
-            "why": "Прямой бенефициар бума хранения без экспозиции на цикличность самих панелей.",
-            "risk": "Тонкая маржа, конкуренция с Tesla и китайскими поставщиками ячеек; исполнение проектов."
+            "mcap": "$5,3 млрд backlog",
+            "exposure": "сетевое хранение + сервис + софт оптимизации",
+            "why": "Прямой доступ к рынку сетевых батарей; портфель $5,3 млрд, ~85% выручки 2026 покрыто, гайд $3,2–3,6 млрд.",
+            "risk": "Маржа железа 13,7%, задержки проектов, оборотный капитал, конкуренция вертикальных китайских поставщиков — высокобета-исполнение, не компаундер."
           },
           {
-            "company": "Sunrun",
-            "ticker": "NASDAQ: RUN",
-            "mcap": "~$5 млрд (оценка)",
-            "exposure": "распределённые солнце+батареи; виртуальная электростанция с Tesla на 16 ГВт под дата-центры",
-            "why": "Ставка на распределённую энергию и виртуальные электростанции как гибкую мощность для сети и дата-центров.",
-            "risk": "Зависит от льгот и ставок; исторически убыточная модель; чувствительна к политике."
+            "company": "AES",
+            "ticker": "NYSE: AES",
+            "mcap": "IPP + хранение",
+            "exposure": "ВИЭ + хранение + крупные корпоративные клиенты",
+            "why": "Девелопмент и владение активами с контрактами гиперскейлеров; экспозиция на рост контрактованной генерации.",
+            "risk": "Высокий леверидж и сложность проектов; чувствительность к ставкам и регулированию."
           },
           {
             "company": "Vestas",
             "ticker": "CPH: VWS",
-            "mcap": "~$25 млрд (оценка)",
-            "exposure": "крупнейший производитель ветряков",
-            "why": "Прямая ставка на ветер как часть чистой генерации.",
-            "risk": "Экономика ветра слабее солнца; проекты дорожают и буксуют; тонкая маржа."
+            "mcap": "ветер + сервис",
+            "exposure": "ветряные турбины + крупная сервисная база",
+            "why": "Сервис — длинные контракты, повторяющаяся выручка и более защищённая маржа, чем продажа новых турбин.",
+            "risk": "Агрессивная борьба за долю рынка, гарантийные, инфляционные и исполнительные риски производства турбин."
+          },
+          {
+            "company": "Iberdrola",
+            "ticker": "BME: IBE",
+            "mcap": "сети + ВИЭ",
+            "exposure": "электросети + возобновляемая генерация",
+            "why": "Сети плюс генерация — экспозиция на дефицит передачи, а не только на панели.",
+            "risk": "Регуляторная и региональная сложность; результат зависит от тарифных решений."
           }
         ]
       }
-    ]
+    ],
+    "picksTakeaway": null
   },
   "nuc": {
     "asOf": "август 2026",
@@ -22435,6 +22137,580 @@
             "exposure": "advanced-реакторы; контракт с Google на серию блоков",
             "why": "Первый корпоративный контракт на серию (fleet), а не один демо-проект — обучение между блоками.",
             "risk": "Технология не доказана в коммерческом масштабе; сроки после 2030; новая топливная цепочка. Частная — прямого доступа нет."
+          }
+        ]
+      }
+    ],
+    "picksTakeaway": null
+  },
+  "smr": {
+    "asOf": "август 2026",
+    "thesis": {
+      "bigIdea": "Рынок то и дело торгует малые реакторы как уже наступившую атомную революцию и скупает pure-play разработчиков под объявленные гигаватты. Но это ранняя стадия формирования капитала, а не готовый класс активов: реальные миллиарды идут, но финансируют они первый-в-своём-роде проект (инженерия, лицензии, топливо, стройка), а не поток одинаковых реакторов с предсказуемой доходностью. Объявленные ГВт — ещё не профинансированная стройка. Меньший реактор сам по себе не дешевле; вся ставка — на удешевление от серии, а первые станции будут дорогими ($6–12 тыс./кВт, $120–200/МВт·ч). Поэтому выигрывает не самый низкий рекламный LCOE, а платформа с профинансированным первым проектом, топливом, заказчиками и видимой серией — X-energy, TerraPower, GE Hitachi, Rolls-Royce, Kairos. А для публичного рынка надёжнее топливо и компоненты: они зарабатывают до пуска реакторов.",
+      "stream": [
+        {
+          "k": "h",
+          "t": "Что такое малый реактор — и в чём обещание"
+        },
+        {
+          "k": "p",
+          "lead": true,
+          "t": "Малый модульный реактор (SMR) — это реактор деления мощностью до ~300 МВт на модуль. Суть не в том, что он меньше, а в том, что большая часть станции стандартизирована, делается на заводе, везётся модулями и собирается по повторяемым процедурам в нескольких одинаковых блоках. Это должно перевернуть традицию, где каждая АЭС — уникальный мегапроект. Обещание: смириться с меньшим масштабом одного блока, но отыграть это стандартизацией, короткой стройкой, меньшей нагрузкой финансирования и повторением. На Западе это обещание пока не проверено."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "≤300 МВт",
+              "l": "мощность одного модуля SMR",
+              "n": "ставка на заводскую серию, а не на размер"
+            },
+            {
+              "v": "$80–100/МВт·ч",
+              "l": "порог экономики без чрезвычайных субсидий",
+              "n": "ключевой нерешённый вопрос сектора"
+            },
+            {
+              "v": "~5 лет",
+              "l": "целевой срок стройки вместо 10+",
+              "n": "меньше процентов за время стройки — это и решает экономику"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Почему капитал пошёл именно сейчас"
+        },
+        {
+          "k": "p",
+          "t": "Три причины. Первая — вернулся спрос на электричество: [[rack|AI-дата-центры|берёт GPU в долг]], электрификация, вывод угля. Кампусу нужны сотни мегаватт круглосуточно, а солнце и ветер сами по себе постоянную мощность не дают. Вторая — гиперскейлеры решают часть проблемы финансирования: дают не «поддержку», а капитал, долгосрочную закупку электроэнергии (PPA), портфель проектов и кредитоспособного покупателя — это резко улучшает банкируемость. Третья — господдержка стала достаточно крупной: программа демонстраций отобрала TerraPower и X-energy, у Natrium — до $2 млрд софинансирования, у TVA и Holtec — до $800 млн."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "$500 млн",
+              "l": "раунд Amazon в X-energy",
+              "n": "цель >5 ГВт проектов к 2039"
+            },
+            {
+              "v": "до $2 млрд",
+              "l": "госфинансирование Natrium (Минэнерго)",
+              "n": "TerraPower с партнёрами удваивает — конверт ~$4 млрд"
+            },
+            {
+              "v": "до $800 млн",
+              "l": "Минэнерго на TVA и Holtec",
+              "n": "лёгководные SMR в Теннесси и Мичигане"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Насколько это близко к коммерции — карта готовности"
+        },
+        {
+          "k": "p",
+          "t": "Ближе, чем три года назад, но дальше, чем предполагают котировки. Важно различать исследовательский реактор, разрешение на стройку, законченный обзор проекта, демонстрационный блок и коммерчески работающий парк. Большинство западных проектов — между лицензированием и первой демонстрацией."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Проект / платформа",
+            "Мощность",
+            "Этап"
+          ],
+          "rows": [
+            [
+              "TerraPower Natrium (Вайоминг)",
+              "345 МВт (≈500 пик со storage)",
+              "разрешение NRC на стройку (2026), работы идут"
+            ],
+            [
+              "X-energy — Dow, Seadrift (Техас)",
+              "4×80 = 320 МВт + пром. пар",
+              "заявка на стройку принята NRC (2025), эко-обзор"
+            ],
+            [
+              "GE Hitachi BWRX-300",
+              "300 МВт, лёгкая вода",
+              "стройка на Darlington (Канада), Clinch River (TVA)"
+            ],
+            [
+              "Kairos Hermes → Hermes 2",
+              "демо → первый ток",
+              "поэтапные демо; путь с Google до 500 МВт к 2035"
+            ],
+            [
+              "Rolls-Royce SMR",
+              "≈470 МВт",
+              "выбран для программы Британии; ČEZ до 3 ГВт в Чехии"
+            ],
+            [
+              "NuScale VOYGR (US460)",
+              "лёгкая вода",
+              "одобрен NRC (2025), но профинансированной стройки нет"
+            ],
+            [
+              "Oklo Aurora",
+              "микрореактор",
+              "до-коммерческая; сделка с Meta до 1,2 ГВт (Огайо)"
+            ]
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Почему меньший реактор не значит дешевле"
+        },
+        {
+          "k": "p",
+          "t": "Реактор в 10 раз меньше не стоит в 10 раз дешевле: пультовая, лицензирование, охрана, аварийное планирование, подключение к сети, персонал — во многом постоянные затраты. Поэтому у малого блока обычно выше стоимость киловатта, если заводская серия и упрощённая конструкция это не перекроют. И главное различие — «первый-в-своём-роде» (FOAK) против «энного» (NOAK). Первый блок несёт разовые расходы на проект, оснастку, обучение регулятора и ошибки стройки; зрелый парк выигрывает от повторного инжиниринга, серийных модулей и дешёвого финансирования. Отрасль любит называть цены серии, а инвестор финансирует реальность первого блока."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "$6–12 тыс./кВт",
+              "l": "капзатраты первого блока (FOAK)",
+              "n": "цель серии (NOAK) — $3–6 тыс./кВт"
+            },
+            {
+              "v": "$120–200/МВт·ч",
+              "l": "LCOE первых станций",
+              "n": "цель зрелой отрасли — ~$100/МВт·ч и ниже (МАГАТЭ)"
+            },
+            {
+              "v": "$293 млн/год",
+              "l": "возврат капитала на блок $3,5 млрд @8%/40 лет",
+              "n": "стоимость капитала решает экономику"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Предупреждение NuScale"
+        },
+        {
+          "k": "p",
+          "t": "Самый ясный финансовый урок — отменённый в 2023 году проект NuScale с UAMPS. Целевая цена выросла с ~$58 до $89/МВт·ч даже после крупной господдержки, а смета проекта — с ~$5,3 до $9,3 млрд; коммунальщики не подписались на достаточный объём, и проект закрыли. Это не доказывает, что все SMR неэкономичны. Это доказывает, что инфляция съедает ранние оценки, малые коммунальщики не тянут бесконечный рост сметы, а успех лицензирования — ещё не банкируемость."
+        },
+        {
+          "k": "quote",
+          "t": "Регуляторный успех не гарантирует, что проект удастся профинансировать. Целевая цена UAMPS выросла с $58 до $89/МВт·ч, смета — с $5,3 до $9,3 млрд, и парковый тезис рухнул до первой станции."
+        },
+        {
+          "k": "h",
+          "t": "Почему гиперскейлеры готовы платить премию"
+        },
+        {
+          "k": "p",
+          "t": "Google, Amazon и Meta не обязаны обыгрывать средний опт. Они ценят гарантированную круглосуточную мощность, скорость получения будущих гигаватт, гибкость размещения, независимость от цены газа и чистую энергию. Дата-центр, который не может получить [[power|подключение|не генерация, а подключение]], теряет куда больше, чем разница между током по $100 и по $60/МВт·ч. Для дома $100/МВт·ч непривлекательны, а для AI-кампуса на миллиарды вычислений надёжная мощность оправдывает премию. Так возникает реальный первый рынок для SMR ещё до того, как они станут самым дешёвым источником."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "$100 vs $60",
+              "l": "премию за МВт·ч примет AI-кампус, а не население",
+              "n": "нет тока — теряешь миллиарды вычислений"
+            },
+            {
+              "v": ">5 / 0,5 / 6,6 ГВт",
+              "l": "цели по атому: Amazon / Google / Meta",
+              "n": "спрос, способный заказать серию, а не один демо"
+            },
+            {
+              "v": "PPA + капитал",
+              "l": "гиперскейлер даёт финансирование, а не одобрение",
+              "n": "кредитоспособный покупатель делает проект банкируемым"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Экономика на примере: блок 320 МВт"
+        },
+        {
+          "k": "p",
+          "t": "Блок из четырёх модулей на 320 МВт при загрузке 92% даёт ~2,58 млн MWh в год: при $90/МВт·ч это ~$232 млн выручки, при $130 — ~$335 млн. Если блок стоит $3,5 млрд ($10 940/кВт), возврат капитала при 8% и сроке 40 лет — ~$293 млн в год до операционных: при $90/МВт·ч экономика не сходится без налоговых кредитов, дешёвого госфинансирования, дохода от пром. пара или платы за мощность. При $2 млрд ($6 250/кВт) нагрузка становится посильной. Промышленное тепло сильно улучшает экономику: реактор X-energy у Dow продаёт и электричество, и пар — конкурирует не с током, а с током плюс газовый пар. Хранилище Natrium сдвигает выработку в дорогие часы — добавляет доход за мощность и арбитраж."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "2,58 млн MWh",
+              "l": "выработка блока 320 МВт при загрузке 92%",
+              "n": "~$232 млн выручки при $90/МВт·ч"
+            },
+            {
+              "v": "$232 → $335 млн",
+              "l": "годовая выручка блока при $90 → $130/МВт·ч",
+              "n": "цена электроэнергии решает всё"
+            },
+            {
+              "v": "$6,3 vs $10,9 тыс./кВт",
+              "l": "блок 320 МВт за $2 млрд против $3,5 млрд",
+              "n": "при $3,5 млрд без субсидий не сходится"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Кто сколько вложил — реальные сделки"
+        },
+        {
+          "k": "p",
+          "t": "Капитал уже серьёзный, но различайте объявленные гигаватты и профинансированную стройку. Ниже — раскрытые обязательства и суммы."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Кто ↔ платформа",
+            "Обязательство",
+            "Капитал / статус"
+          ],
+          "rows": [
+            [
+              "Amazon ↔ X-energy",
+              ">5 ГВт к 2039; старт 320 → 960 МВт",
+              "$500 млн раунд (лид Amazon) + финансирование топлива"
+            ],
+            [
+              "TerraPower (Gates)",
+              "Natrium в Вайоминге",
+              "$650 млн частных (2025) + до $2 млрд от Минэнерго"
+            ],
+            [
+              "Meta ↔ TerraPower / Oklo",
+              "до 6,6 ГВт атома к 2035",
+              "2 блока Natrium (~690 МВт) к 2032 + Oklo до 1,2 ГВт"
+            ],
+            [
+              "Google ↔ Kairos",
+              "до 500 МВт к 2035, первый ~2030",
+              "закупка электроэнергии; первый блок TVA ~50 МВт"
+            ],
+            [
+              "Минэнерго США ↔ TVA / Holtec",
+              "лёгководные SMR",
+              "до $800 млн совместного финансирования"
+            ],
+            [
+              "Гос-во + ČEZ ↔ Rolls-Royce SMR",
+              "до 3 ГВт в Чехии",
+              "£210 млн гос + £280 млн частных, ČEZ — акционер"
+            ]
+          ],
+          "note": "PPA — долгосрочный договор на покупку электроэнергии; делает проект банкируемым."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "$650 млн",
+              "l": "частный раунд TerraPower (2025)",
+              "n": "Gates, NVentures, HD Hyundai + до $2 млрд от Минэнерго"
+            },
+            {
+              "v": "£490 млн",
+              "l": "раскрытое финансирование Rolls-Royce SMR",
+              "n": "£210 млн гос + £280 млн частных; ČEZ до 3 ГВт"
+            },
+            {
+              "v": "$1,3 млрд",
+              "l": "ликвидность NuScale на конец 2025",
+              "n": "но во многом из эмиссии акций, а не продаж реакторов"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Где осядет стоимость — не только реактор"
+        },
+        {
+          "k": "p",
+          "t": "Для публичного инвестора разработчик реактора — не всегда лучшая ставка, потому что цепочка зарабатывает раньше, чем реакторы дают ток. Топливо и обогащение — возможно, более узкое горлышко, чем сборка реактора: многим новым реакторам нужен HALEU (уран повышенного обогащения), а западная цепочка HALEU и TRISO-топлива только строится (Centrus, Cameco, своё топливо у X-energy). Ядерные компоненты — сосуды, теплообменники, насосы, поковки, спецсплавы — делают BWX Technologies, Curtiss-Wright, Doosan, MHI. Генподряд (проектирование-закупки-стройка) идёт Fluor и Bechtel (Fluor уже работает на проекте Dow). А действующие операторы и владельцы площадок (TVA, Ontario Power, Energy Northwest, ČEZ) могут получить регулируемую доходность и переиспользовать угольные площадки."
+        },
+        {
+          "k": "h",
+          "t": "Куда движется — что реально удешевит SMR"
+        },
+        {
+          "k": "p",
+          "t": "Одна станция будет дорогой; программа из 10–20 одинаковых блоков размазывает проект, лицензирование, оснастку и обучение — поэтому серийные рамки Google, Amazon, Meta и ČEZ важнее разрозненных меморандумов. Дальше решают не физика реактора, а обычная стройка (бетон, трубопроводы, переделки, производительность труда — оттуда большинство перерасходов), дешёвое финансирование (LCOE крайне чувствителен к ставке), короткий срок от финального решения до пуска, переиспользование угольных и атомных площадок и единые нормы регулирования между странами. Успешная SMR-компания — это компания-строитель, а не только компания-физик."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Кто",
+            "На что ставит в малых реакторах"
+          ],
+          "rows": [
+            [
+              "Amazon",
+              "X-energy: >5 ГВт к 2039, старт 320 МВт + своё топливо TRISO"
+            ],
+            [
+              "Google",
+              "Kairos: путь до 500 МВт к 2035, первый блок ~50 МВт с TVA"
+            ],
+            [
+              "Meta",
+              "TerraPower Natrium (~690 МВт к 2032) + Oklo до 1,2 ГВт в Огайо"
+            ],
+            [
+              "Британия + ČEZ",
+              "Rolls-Royce SMR — до 3 ГВт в Чехии, гос-во как заказчик"
+            ],
+            [
+              "Минэнерго США",
+              "не один дизайн, а слои: демо, топливо, лёгководные и продвинутые"
+            ]
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Что уже в цене"
+        },
+        {
+          "k": "p",
+          "t": "Рынок часто оценивает Oklo так, будто она успешно пролицензируется, обеспечит топливо, профинансирует несколько станций и выйдет на большой парк с высокой маржой: большой upside при успехе и почти нет защиты, если сроки сдвинутся на годы. Это долгосрочный опцион на вероятность, а не коммунальная компания. Оценка NuScale отражает лидерство в лицензировании и ликвидность, но профинансированной коммерческой стройки ещё нет, а эмиссия акций (ATM на $750 млн) — это капитал, а не коммерческое подтверждение, и она разводняет акционеров. BWXT и Cameco меньше зависят от одного исхода — у них уже есть выручка и денежный поток."
+        },
+        {
+          "k": "stat",
+          "items": [
+            {
+              "v": "$7,3 млрд",
+              "l": "оценка Oklo (4 авг 2026)",
+              "n": "без парка — цена на будущих сериях, не на активах"
+            },
+            {
+              "v": "$3,0 млрд",
+              "l": "оценка NuScale",
+              "n": "ликвидность есть, профинансированной стройки нет"
+            },
+            {
+              "v": "$750 млн",
+              "l": "эмиссия акций NuScale (ATM, 4 кв 2025)",
+              "n": "усиливает компанию, но разводняет акционеров"
+            }
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Что сломает тезис"
+        },
+        {
+          "k": "table",
+          "head": [
+            "Риск",
+            "Что означает"
+          ],
+          "rows": [
+            [
+              "Перерасход сметы",
+              "реклама скрывает полную стоимость проекта — сравнивайте total cost, а не цену модуля"
+            ],
+            [
+              "Срыв сроков",
+              "задержка на 2 года — рост процентов, штрафы, потеря доверия, новая эмиссия"
+            ],
+            [
+              "Топливо (HALEU)",
+              "реактор готов, а топлива нет — тормозит Natrium, микрореакторы, быстрые реакторы"
+            ],
+            [
+              "Разводнение",
+              "до-выручки разработчики финансируются эмиссией — акционер может проиграть при удачных реакторах"
+            ],
+            [
+              "Инфляция обещаний",
+              "меморандум ≠ финальное решение ≠ профинансированная стройка — считайте только поздние стадии"
+            ],
+            [
+              "Конкуренция",
+              "большие АЭС (AP1000, APR1400) и [[gasturbines|газ + хранение|самый быстрый способ]] могут быть дешевле за кВт"
+            ]
+          ]
+        },
+        {
+          "k": "h",
+          "t": "Вероятности — трезвая оценка"
+        },
+        {
+          "k": "table",
+          "head": [
+            "Событие (к 2035, если не указано)",
+            "Вероятность"
+          ],
+          "rows": [
+            [
+              "Несколько западных SMR работают коммерчески",
+              "75–85%"
+            ],
+            [
+              "SMR — крупный мировой источник энергии до 2040",
+              "35–50%"
+            ],
+            [
+              "SMR стабильно дешевле газа, солнца+хранения и больших АЭС по LCOE",
+              "20–35%"
+            ],
+            [
+              "Публичным разработчикам понадобится ещё капитал (доп. эмиссия)",
+              ">70%"
+            ],
+            [
+              "Поставщики топлива и компонентов зарабатывают раньше разработчиков",
+              ">80%"
+            ]
+          ],
+          "note": "Оценки вероятностей, а не прогноз. Ключевой сигнал — не новое партнёрство, а раскрытая проверяемая стоимость первого блока."
+        },
+        {
+          "k": "h",
+          "t": "Итог — если запомнить одно"
+        },
+        {
+          "k": "p",
+          "lead": true,
+          "t": "Малые реакторы — уже не выдуманная тема: государства, гиперскейлеры и промышленность вкладывают реальные миллиарды (Amazon ~$500 млн в X-energy и >5 ГВт; TerraPower $650 млн + до $2 млрд; Минэнерго до $800 млн; Meta до 6,6 ГВт; Rolls-Royce ~£490 млн). Этого хватит, чтобы довести до рынка несколько первых станций. Но это ещё не доказательство, что они будут дёшевы. Следующее горлышко сектора — переход от привлечения капитала к проверке стоимости: вторая и третья станции должны стоить меньше первой."
+        },
+        {
+          "k": "p",
+          "lead": true,
+          "t": "Вывод: выигрывает не самый низкий рекламный LCOE, а платформа, которая превратит субсидированный первый проект в серию, которую частные заказчики готовы финансировать. Самые полные системы — X-energy (Amazon, Dow, топливо) и TerraPower (капитал, стройка, хранилище, Meta); самая банкируемая конструкция — GE Hitachi BWRX-300; европейская серия — Rolls-Royce с ČEZ; дисциплинированный путь — Kairos с Google. Для публичного рынка надёжнее топливо, компоненты и обогащение (BWXT, Cameco, Centrus) — они зарабатывают до пуска. Oklo и NuScale — не коммунальные компании, а долгосрочные опционы: большой upside, но оценивать по вероятностно-взвешенным будущим проектам, а не по объявленным гигаваттам."
+        },
+        {
+          "k": "table",
+          "head": [
+            "Если ваш стиль",
+            "Чем закрыть тему"
+          ],
+          "rows": [
+            [
+              "Самая банкируемая конструкция",
+              "GE Vernova (GE Hitachi BWRX-300) — обычная лёгкая вода, опытные операторы, международный портфель"
+            ],
+            [
+              "Самая полная коммерческая система",
+              "X-energy (частная) — Amazon, Dow, своё топливо; либо TerraPower — капитал + хранилище + Meta"
+            ],
+            [
+              "Зарабатывает до пуска реакторов",
+              "BWX Technologies, Cameco — компоненты, топливо и уран нужны всем платформам"
+            ],
+            [
+              "Ставка на топливное горлышко",
+              "Centrus — обогащение и HALEU (но политика и высокая оценка)"
+            ],
+            [
+              "Асимметрия и венчурный риск",
+              "Oklo, NuScale — большой upside, но разводнение и сроки; малыми позициями, как опцион"
+            ],
+            [
+              "Европейская серия и косвенно",
+              "Rolls-Royce — гос-выбор + ČEZ, но SMR — малая часть аэрокосмос-группы"
+            ]
+          ],
+          "note": "Не рекомендация, а соответствие инструмента стилю — решение за инвестором."
+        }
+      ]
+    },
+    "picks": [
+      {
+        "group": "Профинансированные платформы и цепочка, что зарабатывает первой",
+        "tone": "leader",
+        "badge": "высокая уверенность",
+        "note": "Самые полные коммерческие системы и поставщики, которые зарабатывают до пуска реакторов — меньше зависят от того, чей дизайн победит.",
+        "rows": [
+          {
+            "company": "GE Vernova",
+            "ticker": "NYSE: GEV",
+            "mcap": "GE Hitachi BWRX-300",
+            "exposure": "простой лёгководный реактор BWRX-300 на опыте кипящих реакторов",
+            "why": "Самая банкируемая ставка: обычное топливо, опытные операторы (Ontario Power в Канаде, TVA), международный портфель, ниже технологическая новизна — выше вероятность дойти до серийной эксплуатации.",
+            "priced": "SMR — лишь часть большого бизнеса GEV; прямой публичной чистоты мало, и первый проект может выйти за смету."
+          },
+          {
+            "company": "X-energy",
+            "ticker": "Pvt",
+            "mcap": "частная",
+            "exposure": "Xe-100 (4×80=320 МВт) + промышленный пар + своё TRISO-топливо; Amazon, Dow, Energy Northwest",
+            "why": "Самая полная коммерческая система: капитал Amazon ($500 млн), промышленный клиент Dow, сетевой партнёр, собственное топливо и цель >5 ГВт. Продаёт не только ток, но и пром. пар.",
+            "priced": "Частная — прямого доступа нет; первый-в-своём-роде газовый реактор и топливный завод несут риск исполнения."
+          },
+          {
+            "company": "TerraPower",
+            "ticker": "Pvt",
+            "mcap": "частная",
+            "exposure": "Natrium: 345 МВт натриевый реактор + солевое хранилище (~500 МВт пик); Gates, Meta",
+            "why": "Лучше всех капитализирована: $650 млн частных, до $2 млрд от Минэнерго, реальная стройка в Вайоминге, разрешение NRC, хранилище даёт доход за мощность. Проект-эталон для всего сектора.",
+            "priced": "Частная; амбициозный натриевый реактор и зависимость от HALEU-топлива, крупный бюджет первого блока."
+          },
+          {
+            "company": "BWX Technologies",
+            "ticker": "NYSE: BWXT",
+            "mcap": "~$15,8 млрд",
+            "exposure": "ядерные компоненты, топливо, военно-морские реакторы, микрореакторы",
+            "why": "Лучшая ставка с поправкой на риск: зарабатывает уже сейчас на компонентах и оборонных программах, не завися от того, чей SMR победит. Поставляет развитие, прототипы и топливо до пуска реакторов.",
+            "priced": "Высокий P/E (премия за дефицитное ядерное производство); коммерческий SMR-upside реализуется медленно."
+          },
+          {
+            "company": "Cameco",
+            "ticker": "NYSE: CCJ",
+            "mcap": "~$40,4 млрд",
+            "exposure": "уран + топливный цикл + доля в Westinghouse",
+            "why": "Выигрывает от роста всей отрасли, а не от одного разработчика; не требует, чтобы какая-то одна цель по стоимости SMR была достигнута.",
+            "priced": "Цикличность урана; оценка уже отражает возрождение атома; зависит от общего темпа стройки реакторов."
+          }
+        ]
+      },
+      {
+        "group": "Pure-play разработчики и концентрированные ставки — потенциал и риск",
+        "tone": "emerging",
+        "badge": "высокий риск",
+        "note": "Большой upside при успехе, но длинные сроки, риск исполнения и разводнения; оценивать как вероятностно-взвешенные опционы, а не как коммунальные компании.",
+        "rows": [
+          {
+            "company": "Oklo",
+            "ticker": "NYSE: OKLO",
+            "mcap": "~$7,3 млрд",
+            "exposure": "микрореакторы + модель владения активом и продажи электроэнергии; сделка с Meta до 1,2 ГВт",
+            "why": "Модель владельца-оператора удерживает экономику реактора за весь срок службы — потенциально трансформационно; спрос от дата-центров.",
+            "risk": "До-выручки: лицензии, топливо, финансирование стройки, разводнение; оценка — на будущих сериях, а не на активах. Соглашение с Meta ≠ профинансированный заказ."
+          },
+          {
+            "company": "NuScale Power",
+            "ticker": "NYSE: SMR",
+            "mcap": "~$3,0 млрд",
+            "exposure": "лёгководный US460 (одобрен NRC); проект в Румынии, ENTRA1, зона TVA",
+            "why": "Самая продвинутая история одобрения дизайна в США и ликвидность ~$1,3 млрд на выживание; переоценка возможна при реальном финальном решении по проекту.",
+            "risk": "Проект UAMPS отменён; ликвидность из эмиссии акций (ATM $750 млн), а не из продаж реакторов; регуляторный успех ≠ банкируемость. Ключ — первый профинансированный FID."
+          },
+          {
+            "company": "Centrus Energy",
+            "ticker": "NYSE: LEU",
+            "mcap": "~$4,2 млрд",
+            "exposure": "американское обогащение урана и HALEU",
+            "why": "Рычаг на топливное горлышко, а не на стройку реактора: многим продвинутым реакторам нужен HALEU, а западная цепочка ограничена.",
+            "risk": "Сильная зависимость от политики и концентрация контрактов; спрос завязан на реальное строительство реакторов; высокая оценка."
+          },
+          {
+            "company": "Kairos Power",
+            "ticker": "Pvt",
+            "mcap": "частная",
+            "exposure": "солевое охлаждение + TRISO; поэтапные демо Hermes; Google до 500 МВт, TVA",
+            "why": "Дисциплинированная стратегия повторяющихся демонстраций снижает риск обнаружить фундаментальную ошибку внутри многомиллиардной станции; сильная техническая репутация.",
+            "risk": "Коммерческий масштаб — через несколько этапов; частная; экономику не оценить без раскрытых цен контрактов."
+          },
+          {
+            "company": "Rolls-Royce",
+            "ticker": "LSE: RR",
+            "mcap": "косвенно, SMR — часть группы",
+            "exposure": "Rolls-Royce SMR (~470 МВт): гос-выбор Британии, ČEZ-акционер, до 3 ГВт в Чехии",
+            "why": "Гос-выбор и участие ČEZ (не просто клиент, а акционер) могут создать европейскую серию; сильный инженерный бренд.",
+            "risk": "SMR — малая часть аэрокосмос-оборонной группы; политическая зависимость и тяжёлая история британских строек; работающего SMR ещё нет."
           }
         ]
       }

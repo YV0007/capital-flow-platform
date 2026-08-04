@@ -3067,5 +3067,71 @@
     "ppr": "Pvt",
     "geo": "US",
     "note": "Advanced-реакторы; первый корпоративный контракт на серию блоков с Google. Ставка на 2030+."
+  },
+  {
+    "company": "Boom Supersonic",
+    "ticker": "Pvt",
+    "sector": "Gas Turbines",
+    "conviction": "Low",
+    "riskTier": "Aggressive",
+    "horizon": "5–10y",
+    "ppr": "Pvt",
+    "geo": "US",
+    "note": "Турбина Superpower 42 МВт на базе авиадвигателя; заказ Crusoe на 1,21 ГВт. Ставка на вход в энергетику через дефицит турбин — барьер низкий."
+  },
+  {
+    "company": "TerraPower",
+    "ticker": "Pvt",
+    "sector": "SMR",
+    "conviction": "Medium",
+    "riskTier": "Aggressive",
+    "horizon": "5–10y",
+    "ppr": "Pvt",
+    "geo": "US",
+    "note": "Natrium: натриевый реактор 345 МВт + солевое хранилище; Gates, до $2 млрд от Минэнерго, соглашение с Meta. Лучше всех капитализированный разработчик."
+  },
+  {
+    "company": "Brookfield Renewable",
+    "ticker": "NYSE: BEPC",
+    "sector": "Renewables",
+    "conviction": "High",
+    "riskTier": "Growth",
+    "horizon": "3–5y",
+    "ppr": "Pub",
+    "geo": "Global",
+    "note": "Глобальная платформа ВИЭ + гидро для твёрдости + рециклинг капитала; рамка Microsoft на 10,5 ГВт."
+  },
+  {
+    "company": "Nextracker",
+    "ticker": "NASDAQ: NXT",
+    "sector": "Renewables",
+    "conviction": "Medium-High",
+    "riskTier": "Growth",
+    "horizon": "3–5y",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Солнечные трекеры и софт — менее товарный слой цепочки, чем панель."
+  },
+  {
+    "company": "AES",
+    "ticker": "NYSE: AES",
+    "sector": "Renewables",
+    "conviction": "Medium",
+    "riskTier": "Aggressive",
+    "horizon": "3–5y",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "IPP: ВИЭ, хранение и крупные корпоративные контракты; высокий леверидж."
+  },
+  {
+    "company": "Iberdrola",
+    "ticker": "BME: IBE",
+    "sector": "Renewables",
+    "conviction": "Medium",
+    "riskTier": "Growth",
+    "horizon": "3–5y",
+    "ppr": "Pub",
+    "geo": "EU",
+    "note": "Электросети + возобновляемая генерация — экспозиция на дефицит передачи."
   }
 ]
