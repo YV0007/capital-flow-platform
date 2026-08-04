@@ -118,6 +118,7 @@ const NODES_RAW = [
   { id: 'fuel',        label: 'Топливные элементы', sector: 'Fuel Cells',   bucket: 'Power & Grid',             layer: 5 },
   { id: 'gaspipe',     label: 'Газопроводы',      sector: 'Gas Pipelines',  bucket: 'Power & Grid',             layer: 5 },
   { id: 'gasturbines', label: 'Газовые турбины',  sector: 'Gas Turbines',   bucket: 'Power & Grid',             layer: 5 },
+  { id: 'renewables',  label: 'Возобновляемая энергия', sector: 'Renewables', bucket: 'Power & Grid',           layer: 5 },
 
   // L7 — Power Delivery
   { id: 'power',       label: 'Электроэнергия',   sector: 'Power',          bucket: 'Power & Grid',             layer: 6 },
@@ -371,6 +372,7 @@ const EDGES_RAW = [
   // Power origin → delivery
   ['gaspipe',      'gasturbines'],
   ['gasturbines',  'power'],
+  ['renewables',   'power'],
   ['nuc',          'power'],
   ['smr',          'power'],
   ['fuel',         'power'],

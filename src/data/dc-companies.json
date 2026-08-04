@@ -2979,5 +2979,60 @@
     "ppr": "Pvt",
     "geo": "US",
     "note": "Оптическая фабрика Photonic Fabric — связь ускорителей с пулами памяти по свету; ставка на «стену памяти»."
+  },
+  {
+    "company": "First Solar",
+    "ticker": "NASDAQ: FSLR",
+    "sector": "Renewables",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Крупнейший производитель солнечных панелей в США, защищён от Китая тарифами; портфель заказов ~45 ГВт."
+  },
+  {
+    "company": "Tesla",
+    "ticker": "NASDAQ: TSLA",
+    "sector": "Renewables",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Аккумуляторы Megapack для сети — спрос выше выпуска; энергетический сегмент растёт быстрее авто."
+  },
+  {
+    "company": "Fluence Energy",
+    "ticker": "NASDAQ: FLNC",
+    "sector": "Renewables",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Чистая ставка на сетевое хранение энергии (совместное предприятие Siemens и AES)."
+  },
+  {
+    "company": "Sunrun",
+    "ticker": "NASDAQ: RUN",
+    "sector": "Renewables",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "US",
+    "note": "Распределённые солнце+хранение; виртуальная электростанция с Tesla на 16 ГВт под дата-центры."
+  },
+  {
+    "company": "Vestas",
+    "ticker": "CPH: VWS",
+    "sector": "Renewables",
+    "conviction": "Med-High",
+    "riskTier": "Growth",
+    "horizon": "3–5 лет",
+    "ppr": "Pub",
+    "geo": "DK",
+    "note": "Крупнейший производитель ветряков; экономика ветра слабее солнца."
   }
 ]
