@@ -354,19 +354,19 @@ function CapitalFlowCoverArt() {
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
       <defs>
         <radialGradient id="cfw-bg" cx="50%" cy="52%" r="75%">
-          <stop offset="0%"   stopColor="#ffffff" />
-          <stop offset="70%"  stopColor="#f2f6fa" />
-          <stop offset="100%" stopColor="#e3ebf3" />
+          <stop offset="0%"   stopColor="#101720" />
+          <stop offset="65%"  stopColor="#0b1017" />
+          <stop offset="100%" stopColor="#07090c" />
         </radialGradient>
       </defs>
 
       <rect width="200" height="120" fill="url(#cfw-bg)" />
 
       {/* edges under everything */}
-      <g stroke="#4d7ba6" fill="none">
+      <g stroke="#6fa3d4" fill="none">
         {edges.map((e, i) => (
           <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-            strokeWidth={e.w} strokeOpacity={e.o} />
+            strokeWidth={e.w} strokeOpacity={e.o * 0.9} />
         ))}
       </g>
 
@@ -374,15 +374,18 @@ function CapitalFlowCoverArt() {
       <g>
         {nodes.map((n, i) => (
           <circle key={i} cx={n.x} cy={n.y} r={n.r}
-            fill="#3f7fb0" fillOpacity="0.88" stroke="#2c5e88" strokeWidth="0.25" />
+            fill="#4f92c9" fillOpacity="0.92" stroke="#2b3f55" strokeWidth="0.25" />
         ))}
       </g>
 
       {/* large pale hub circles on top */}
       <g>
         {hubs.map((h, i) => (
-          <circle key={i} cx={h.x} cy={h.y} r={h.r}
-            fill="#fdfefe" stroke="#8aa9c4" strokeWidth="0.7" />
+          <g key={i}>
+            <circle cx={h.x} cy={h.y} r={h.r + 2.5} fill="#9cc4e8" fillOpacity="0.12" />
+            <circle cx={h.x} cy={h.y} r={h.r}
+              fill="#eaf3fb" stroke="#7fa8cd" strokeWidth="0.7" />
+          </g>
         ))}
       </g>
     </svg>
