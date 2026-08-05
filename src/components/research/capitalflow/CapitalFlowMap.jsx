@@ -30,14 +30,16 @@ import Legend from './Legend.jsx';
 import EntityPanel from './EntityPanel.jsx';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD } from './format.js';
+import { applyStaticLayout } from './layout.js';
 import { buildGraph, buildAdjacency, DISCLAIMER } from '../../../data/capitalFlowData.js';
 
 const MONO = 'ui-monospace, monospace';
 const BG = '#08090C';
 
 export default function CapitalFlowMap({ onBack }) {
-  // Built once; the force engine mutates these objects in place.
+  // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
+  const regions = useMemo(() => applyStaticLayout(graph.nodes), [graph]);
   const graphData = useMemo(() => ({ nodes: graph.nodes, links: graph.links }), [graph]);
   const adjacency = useMemo(() => buildAdjacency(graph.links), [graph]);
   const nodeById = useMemo(() => new Map(graph.nodes.map(n => [n.id, n])), [graph]);
@@ -159,6 +161,7 @@ export default function CapitalFlowMap({ onBack }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [clearSelection]);
 
+
   // ── Derived display data ───────────────────────────────────────────────
   const selectedNode = selectedNodeId ? nodeById.get(selectedNodeId) : null;
   const selectedFlow = selectedFlowId ? linkById.get(selectedFlowId) : null;
@@ -209,6 +212,7 @@ export default function CapitalFlowMap({ onBack }) {
         <FlowGraph
           fgRef={fgRef}
           graphData={graphData}
+          regions={regions}
           matchedNodes={matchedNodes}
           matchedLinks={matchedLinks}
           selectedNodeId={selectedNodeId}

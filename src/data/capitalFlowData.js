@@ -22,18 +22,21 @@
 // ── Groups — the cluster regions on the map ──────────────────────────────
 // `anchor` is the region's home position in graph coordinates: capital
 // sources sit left, capital sinks right, physical world at the bottom.
+// Colours are deliberately muted/desaturated — the map should read like an
+// institutional diagram, not neon. Anchors are legacy (static layout now
+// owns positions — see components/research/capitalflow/layout.js).
 export const GROUP_META = {
-  fund:        { label: 'Funds & Sovereigns',  color: '#E3B34C', anchor: { x: -640, y:  -40 }, blurb: 'Pooled capital — VC, PE, infra, sovereign wealth.' },
-  individual:  { label: 'Individuals',         color: '#F472B6', anchor: { x: -600, y: -360 }, blurb: 'People deploying personal capital.' },
-  lab:         { label: 'Frontier Labs',       color: '#C084FC', anchor: { x: -130, y: -140 }, blurb: 'Model builders — the biggest capital sinks and committers.' },
-  hyperscaler: { label: 'Hyperscalers',        color: '#38BDF8', anchor: { x:  280, y: -300 }, blurb: 'Own the clouds. Buy chips, sell compute.' },
-  neocloud:    { label: 'Neoclouds',           color: '#2DD4BF', anchor: { x:  140, y:  150 }, blurb: 'GPU landlords — vendor-financed compute capacity.' },
-  silicon:     { label: 'Silicon',             color: '#818CF8', anchor: { x:  620, y: -100 }, blurb: 'Chip designers and the foundry everything funnels into.' },
-  equipment:   { label: 'Fab Equipment',       color: '#94A3B8', anchor: { x:  950, y:  140 }, blurb: 'The tools fabs are built from — litho, etch, deposition, packaging.' },
-  power:       { label: 'Power & Energy',      color: '#4ADE80', anchor: { x:  480, y:  380 }, blurb: 'Turbines, grid gear, cooling, nuclear — the physical constraint.' },
-  project:     { label: 'Projects & DC Assets',color: '#FB923C', anchor: { x: -140, y:  360 }, blurb: 'Physical builds and data-centre operators money lands in.' },
-  government:  { label: 'Government',          color: '#34D399', anchor: { x: -480, y:  380 }, blurb: 'State money — grants, loans, direct equity.' },
-  defense:     { label: 'Defense',             color: '#F87171', anchor: { x: -840, y: -280 }, blurb: 'Defence tech funded outside the prime-contractor route.' },
+  fund:        { label: 'Funds & Sovereigns',  color: '#C2A36B', anchor: { x: -640, y:  -40 }, blurb: 'Pooled capital — VC, PE, infra, sovereign wealth.' },
+  individual:  { label: 'Individuals',         color: '#C089A8', anchor: { x: -600, y: -360 }, blurb: 'People deploying personal capital.' },
+  lab:         { label: 'Frontier Labs',       color: '#A08FD0', anchor: { x: -130, y: -140 }, blurb: 'Model builders — the biggest capital sinks and committers.' },
+  hyperscaler: { label: 'Hyperscalers',        color: '#6BABD6', anchor: { x:  280, y: -300 }, blurb: 'Own the clouds. Buy chips, sell compute.' },
+  neocloud:    { label: 'Neoclouds',           color: '#63BCAD', anchor: { x:  140, y:  150 }, blurb: 'GPU landlords — vendor-financed compute capacity.' },
+  silicon:     { label: 'Silicon',             color: '#8893D8', anchor: { x:  620, y: -100 }, blurb: 'Chip designers and the foundry everything funnels into.' },
+  equipment:   { label: 'Fab Equipment',       color: '#98A2AE', anchor: { x:  950, y:  140 }, blurb: 'The tools fabs are built from — litho, etch, deposition, packaging.' },
+  power:       { label: 'Power & Energy',      color: '#82B98D', anchor: { x:  480, y:  380 }, blurb: 'Turbines, grid gear, cooling, nuclear — the physical constraint.' },
+  project:     { label: 'Projects & DC Assets',color: '#C99B72', anchor: { x: -140, y:  360 }, blurb: 'Physical builds and data-centre operators money lands in.' },
+  government:  { label: 'Government',          color: '#6FB39A', anchor: { x: -480, y:  380 }, blurb: 'State money — grants, loans, direct equity.' },
+  defense:     { label: 'Defense',             color: '#C08585', anchor: { x: -840, y: -280 }, blurb: 'Defence tech funded outside the prime-contractor route.' },
 };
 
 // ── Signal tiers — the spec's weighting model ────────────────────────────
@@ -48,14 +51,14 @@ export const TIER_META = {
 
 // One colour per deal type. Drives edge colour and the deal-type filter.
 export const DEAL_TYPE_META = {
-  'Equity':             { color: '#A78BFA', blurb: 'Cash for ownership.' },
-  'Compute commitment': { color: '#22D3EE', blurb: 'A contracted promise to buy compute over time.' },
-  'Purchase':           { color: '#FB923C', blurb: 'Hardware or equipment bought outright.' },
-  'Contract':           { color: '#A3E635', blurb: 'A supply, capacity or offtake agreement.' },
-  'Acquisition':        { color: '#F472B6', blurb: 'Buying control of an asset or company.' },
-  'Debt':               { color: '#FBBF24', blurb: 'Loans, notes, project finance.' },
-  'Partnership':        { color: '#34D399', blurb: 'Joint venture / co-investment vehicle.' },
-  'Grant':              { color: '#8B9DB0', blurb: 'Non-dilutive state money or philanthropy.' },
+  'Equity':             { color: '#9D8FD8', blurb: 'Cash for ownership.' },
+  'Compute commitment': { color: '#62B5CC', blurb: 'A contracted promise to buy compute over time.' },
+  'Purchase':           { color: '#C9985F', blurb: 'Hardware or equipment bought outright.' },
+  'Contract':           { color: '#A9BF6B', blurb: 'A supply, capacity or offtake agreement.' },
+  'Acquisition':        { color: '#C287A8', blurb: 'Buying control of an asset or company.' },
+  'Debt':               { color: '#CCAF62', blurb: 'Loans, notes, project finance.' },
+  'Partnership':        { color: '#74B896', blurb: 'Joint venture / co-investment vehicle.' },
+  'Grant':              { color: '#93A3B3', blurb: 'Non-dilutive state money or philanthropy.' },
 };
 
 // ══════════════════════════════════════════════════════════════════════════

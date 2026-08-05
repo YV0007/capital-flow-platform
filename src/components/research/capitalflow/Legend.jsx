@@ -8,7 +8,8 @@ import { GROUP_META, DEAL_TYPE_META } from '../../../data/capitalFlowData.js';
 const MONO = 'ui-monospace, monospace';
 
 export default function Legend({ counts }) {
-  const [open, setOpen] = useState(true);
+  // Collapsed by default — the left column of the map lives behind it.
+  const [open, setOpen] = useState(false);
 
   return (
     <div style={{
@@ -44,7 +45,7 @@ export default function Legend({ counts }) {
             ))}
           </Section>
 
-          <Section title="Fill = role">
+          <Section title="Dot = role">
             <Row label="Receives capital" title="A destination for money.">
               <Disc filled color="#a1a1aa" />
             </Row>
@@ -68,13 +69,16 @@ export default function Legend({ counts }) {
             marginTop: 10, paddingTop: 9, borderTop: '1px solid #1c1d23',
             fontSize: 9, color: '#6b6b74', fontFamily: MONO, lineHeight: 1.65,
           }}>
-            Circle size = total capital in + out.<br />
+            Block size = total capital in + out.<br />
+            Capsule = capital source · block = company<br />
+            · sharp plate = physical asset.<br />
+            Zone caption shows the sector's totals.<br />
             Line thickness = deal size.<br />
             Arrow points the way the money goes.<br />
             <span style={{ color: '#8b8b93' }}>
-              Click an entity → breakdown panel.<br />
+              Click a block → breakdown panel.<br />
               Click a line → deal detail.<br />
-              Esc clears. Drag to pin a node.
+              Esc clears the selection.
             </span>
           </div>
         </div>

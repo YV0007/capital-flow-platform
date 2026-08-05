@@ -1,73 +1,29 @@
 // ══════════════════════════════════════════════════════════════════════════
-// FlowGraph — the full-screen canvas.
+// FlowGraph — the full-screen canvas. STATIC diagram, not a simulation.
 //
-// LAYOUT ENGINE — not a plain force hairball. Three custom forces shape a
-// deliberate "capital geography":
-//   · clusterForce  — pulls every node toward its group's anchor region
-//                     (funds left → labs centre → hyperscalers/silicon right
-//                      → equipment/power at the physical edge)
-//   · collideForce  — keeps nodes from overlapping (naive O(n²), fine at ~70)
-//   · a weak charge + very weak links, so cross-cluster flows bend between
-//     regions instead of dragging them into each other
-// Group regions get a faint tinted halo + an uppercase caption painted
-// underneath the nodes, so the map reads like a labeled diagram.
+// Positions come pre-pinned from layout.js (fx/fy on every node); all d3
+// forces are disabled and the engine runs zero ticks, so nothing ever drifts.
+// Dragging a block moves only that block. Zoom/pan stay live.
 //
 // VISUAL ENCODING
-//   · node colour   → group (funds gold, labs violet, hyperscalers sky…)
-//   · filled disc   → receives capital · hollow → deploys · ring → both
-//   · node radius   → total capital in + out (√-scaled, tight range)
-//   · edge colour   → deal type · thickness → amount · arrow → direction
-//   · labels        → screen-constant size (never blow up when zooming);
-//                     Tier-1/2 names always on, the rest appear as you zoom
+//   · node = labeled block (name inside — no floating labels)
+//   · block border/dot colour → group
+//   · role dot: filled = receives capital · hollow = deploys · dot-in-ring = both
+//   · block size (3 tiers)  → total capital in + out
+//   · edge colour → deal type · thickness → amount · arrow → direction
+//   · dimmed = filtered out or outside the selected neighbourhood
 // ══════════════════════════════════════════════════════════════════════════
 
-import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
-import { fmtUSD, nodeRadius, linkWidth, shortLabel } from './format.js';
+import { fmtUSD, linkWidth } from './format.js';
 import { GROUP_META, TIER_META } from '../../../data/capitalFlowData.js';
 
 const BG = '#08090C';
 
-// ── Custom forces ────────────────────────────────────────────────────────
-function makeClusterForce(strength = 0.055) {
-  let nodes = [];
-  const force = (alpha) => {
-    for (const n of nodes) {
-      const a = GROUP_META[n.group]?.anchor;
-      if (!a) continue;
-      n.vx += (a.x - n.x) * strength * alpha;
-      n.vy += (a.y - n.y) * strength * alpha;
-    }
-  };
-  force.initialize = (ns) => { nodes = ns; };
-  return force;
-}
-
-function makeCollideForce(pad = 19) {
-  let nodes = [];
-  const force = () => {
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const a = nodes[i], b = nodes[j];
-        const min = nodeRadius(a) + nodeRadius(b) + pad;
-        let dx = b.x - a.x, dy = b.y - a.y;
-        let d = Math.hypot(dx, dy);
-        if (d < 1e-4) { d = 1e-4; dx = min; dy = 0; }
-        if (d < min) {
-          const push = ((min - d) / d) * 0.42;
-          const px = dx * push, py = dy * push;
-          a.x -= px; a.y -= py;
-          b.x += px; b.y += py;
-        }
-      }
-    }
-  };
-  force.initialize = (ns) => { nodes = ns; };
-  return force;
-}
-
 export default function FlowGraph({
   graphData,
+  regions,
   matchedNodes, matchedLinks,
   selectedNodeId, selectedLinkId,
   neighbourNodes, neighbourLinks,
@@ -77,6 +33,7 @@ export default function FlowGraph({
 }) {
   const wrapRef = useRef(null);
   const fittedRef = useRef(false);
+  const lastResizeRef = useRef(typeof performance !== 'undefined' ? performance.now() : 0);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [hoverNodeId, setHoverNodeId] = useState(null);
   const [hoverLinkId, setHoverLinkId] = useState(null);
@@ -87,21 +44,51 @@ export default function FlowGraph({
     if (!el) return;
     const ro = new ResizeObserver(entries => {
       const r = entries[0].contentRect;
+      lastResizeRef.current = performance.now();
       setSize({ w: Math.max(320, r.width), h: Math.max(360, r.height) });
     });
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
-  // ── Force tuning ───────────────────────────────────────────────────────
+  // Frame the whole map on first paint. zoomToFit silently no-ops until the
+  // graph has ingested its data, so keep calling it until the zoom actually
+  // moves off its default (then stop for good — never fight the user).
+  // Frame the whole map on load. Two traps here: (1) fitting before the
+  // graph has ingested its data zooms into a degenerate bbox; (2) the
+  // library resets the camera whenever the canvas size changes, wiping any
+  // fit done too early. So fit only once the bbox is real AND the size has
+  // been stable for a moment — then leave the camera to the user for good.
+  useEffect(() => {
+    let ticks = 0;
+    let goodFits = 0;
+    const iv = setInterval(() => {
+      ticks += 1;
+      if (ticks >= 60) { clearInterval(iv); return; }
+      if (performance.now() - lastResizeRef.current < 600) return;
+      const fg = fgRef.current;
+      if (!fg) return;
+      const bbox = fg.getGraphBbox?.();
+      const ready = bbox && Number.isFinite(bbox.x?.[0]) && (bbox.x[1] - bbox.x[0]) > 100;
+      if (!ready) return;
+      fg.zoomToFit(goodFits === 0 ? 0 : 200, 70);
+      goodFits += 1;
+      if (goodFits >= 2) {
+        fittedRef.current = true;
+        clearInterval(iv);
+      }
+    }, 250);
+    return () => clearInterval(iv);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ── Kill every force — the layout is fixed ─────────────────────────────
   useEffect(() => {
     const fg = fgRef.current;
     if (!fg) return;
-    fg.d3Force('center', null);                                 // clusters own the layout
-    fg.d3Force('charge')?.strength(-140).distanceMax(340);
-    fg.d3Force('link')?.distance(110).strength(0.028);          // flows bend, don't drag
-    fg.d3Force('cluster', makeClusterForce());
-    fg.d3Force('collide', makeCollideForce());
+    fg.d3Force('center', null);
+    fg.d3Force('charge', null);
+    fg.d3Force('link', null);
   }, [fgRef, graphData]);
 
   const hasSelection = !!selectedNodeId || !!selectedLinkId;
@@ -118,118 +105,113 @@ export default function FlowGraph({
     return neighbourLinks.has(l.id);
   }, [matchedLinks, neighbourLinks, hasSelection]);
 
-  // ── Region captions + halos, painted under everything ──────────────────
-  const groupVisible = useMemo(() => {
-    const s = new Set();
-    graphData.nodes.forEach(n => { if (matchedNodes.has(n.id)) s.add(n.group); });
-    return s;
-  }, [graphData, matchedNodes]);
-
+  // ── Island zones, painted under everything: tinted frame + caption +
+  // aggregate capital stats, so the overview reads sector totals directly.
   const paintRegions = useCallback((ctx) => {
-    Object.entries(GROUP_META).forEach(([key, g]) => {
-      if (!groupVisible.has(key)) return;
-      const { x, y } = g.anchor;
-      // soft tinted halo
-      const grad = ctx.createRadialGradient(x, y, 0, x, y, 240);
-      grad.addColorStop(0, hexA(g.color, 0.045));
-      grad.addColorStop(1, hexA(g.color, 0));
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(x, y, 240, 0, 2 * Math.PI);
+    regions.forEach(r => {
+      // zone plate
+      roundRect(ctx, r.x, r.y, r.w, r.h, 34);
+      ctx.fillStyle = hexA(r.color, 0.032);
       ctx.fill();
-      // caption — graph-space (zooms with the world, like a map label)
-      ctx.font = '700 30px ui-monospace, monospace';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = hexA(g.color, 0.16);
-      ctx.fillText(g.label.toUpperCase(), x, y - 190);
-    });
-  }, [groupVisible]);
+      ctx.setLineDash([10, 12]);
+      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = hexA(r.color, 0.22);
+      ctx.stroke();
+      ctx.setLineDash([]);
 
-  // ── Node painter ───────────────────────────────────────────────────────
-  const paintNode = useCallback((node, ctx, globalScale) => {
-    const r = nodeRadius(node);
+      // caption + aggregate stats above the zone
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'bottom';
+      ctx.font = '700 30px ui-monospace, monospace';
+      ctx.fillStyle = hexA(r.color, 0.6);
+      ctx.fillText(r.label, r.x + 10, r.y - 34);
+      if (r.stats) {
+        ctx.font = '600 21px ui-monospace, monospace';
+        ctx.fillStyle = hexA(r.color, 0.38);
+        ctx.fillText(r.stats, r.x + 10, r.y - 8);
+      }
+    });
+  }, [regions]);
+
+  // ── Block painter ──────────────────────────────────────────────────────
+  // Shape = class: capsule → capital source · rounded block → company ·
+  // sharp plate → physical asset. Fill tint = role (sinks tinted, sources
+  // hollow). Top two size tiers print their dollar total inside.
+  const paintNode = useCallback((node, ctx) => {
+    const w = node.blockW, h = node.blockH;
+    const x = node.x - w / 2, y = node.y - h / 2;
     const lit = nodeLit(node);
     const selected = node.id === selectedNodeId;
     const hovered = node.id === hoverNodeId;
-    const alpha = lit ? 1 : 0.08;
+    const alpha = lit ? 1 : 0.07;
     const col = node.color;
+    const r = node.blockShape === 'capsule' ? h / 2 : node.blockShape === 'asset' ? 4 : 9;
 
     ctx.save();
     ctx.globalAlpha = alpha;
 
+    // soft glow behind the selected / hovered block
     if (lit && (selected || hovered)) {
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, r + (selected ? 6 : 4), 0, 2 * Math.PI);
-      ctx.fillStyle = hexA(col, selected ? 0.25 : 0.15);
+      roundRect(ctx, x - 4, y - 4, w + 8, h + 8, r + 4);
+      ctx.fillStyle = hexA(col, selected ? 0.22 : 0.13);
       ctx.fill();
     }
 
-    // Body — filled = receives capital, hollow = deploys
-    const isSink = node.type === 'target' || node.type === 'both';
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, r, 0, 2 * Math.PI);
-    if (isSink) {
-      ctx.fillStyle = lit ? col : hexA(col, 0.5);
+    // body — fill tint by role: receives = tinted, deploys = hollow dark
+    roundRect(ctx, x, y, w, h, r);
+    const tint = node.type === 'target' ? 0.16 : node.type === 'both' ? 0.08 : 0;
+    ctx.fillStyle = lit ? '#10131b' : '#0d1016';
+    ctx.fill();
+    if (tint > 0) {
+      roundRect(ctx, x, y, w, h, r);
+      ctx.fillStyle = hexA(col, tint);
       ctx.fill();
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = BG;
-      ctx.stroke();
+    }
+    ctx.lineWidth = selected ? 2 : node.blockTier <= 1 ? 1.5 : 1.1;
+    ctx.strokeStyle = selected ? '#e8e8ec' : hexA(col, hovered ? 0.95 : node.blockTier <= 1 ? 0.75 : 0.5);
+    ctx.stroke();
+
+    // role dot — filled = receives · hollow = deploys · dot-in-ring = both
+    const dr = h * 0.13;
+    const dx = x + h * 0.52, dy = node.y;
+    if (node.type === 'target') {
+      ctx.beginPath(); ctx.arc(dx, dy, dr, 0, 2 * Math.PI);
+      ctx.fillStyle = col; ctx.fill();
+    } else if (node.type === 'player') {
+      ctx.beginPath(); ctx.arc(dx, dy, dr, 0, 2 * Math.PI);
+      ctx.lineWidth = 1.5; ctx.strokeStyle = col; ctx.stroke();
     } else {
-      ctx.fillStyle = BG;
-      ctx.fill();
-      ctx.lineWidth = 1.8;
-      ctx.strokeStyle = col;
-      ctx.stroke();
+      ctx.beginPath(); ctx.arc(dx, dy, dr, 0, 2 * Math.PI);
+      ctx.lineWidth = 1.2; ctx.strokeStyle = col; ctx.stroke();
+      ctx.beginPath(); ctx.arc(dx, dy, dr * 0.45, 0, 2 * Math.PI);
+      ctx.fillStyle = col; ctx.fill();
     }
 
-    // Ring marks entities that both deploy and receive
-    if (node.type === 'both') {
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, r + 2.6, 0, 2 * Math.PI);
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = hexA(col, 0.7);
-      ctx.stroke();
+    // name — inside the block, so labels can never crowd each other
+    if (showLabels || selected || hovered) {
+      ctx.font = `${node.blockTier <= 1 ? 700 : 600} ${node.blockFont}px -apple-system, "Segoe UI", sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = selected || hovered ? '#ffffff' : node.blockTier <= 1 ? '#eceff4' : '#c2c2cb';
+      ctx.fillText(node.blockLabel, x + h * 0.92, node.y + 0.5);
+
+      // dollar total inside the big tiers — size + number carry the weight
+      if (node.blockValue) {
+        ctx.font = `600 ${node.blockFont - 4}px ui-monospace, monospace`;
+        ctx.textAlign = 'right';
+        ctx.fillStyle = hexA(col, 0.9);
+        ctx.fillText(node.blockValue, x + w - h * 0.45, node.y + 0.5);
+      }
     }
 
-    if (selected) {
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, r + 6, 0, 2 * Math.PI);
-      ctx.lineWidth = 1.3;
-      ctx.strokeStyle = '#fafafa';
-      ctx.stroke();
-    }
-
-    // ── Labels — SCREEN-CONSTANT size (px / scale), clamped, never huge ──
-    const zoomedIn = globalScale > 1.5;
-    const show = showLabels && lit && (
-      selected || hovered ||
-      node.tier === 1 || node.tier === 2 ||
-      r > 8 || zoomedIn
-    );
-    if (show) {
-      const px = selected || hovered ? 12 : node.tier === 1 ? 10.5 : 9.5;   // px on screen
-      const fs = px / globalScale;                                          // → graph units
-      ctx.font = `600 ${fs}px -apple-system, "Segoe UI", sans-serif`;
+    // total flow under the block on focus (small tiers only — big ones
+    // already show it inside)
+    if (lit && (selected || hovered) && !node.blockValue) {
+      ctx.font = `600 ${Math.max(10, node.blockFont - 1)}px ui-monospace, monospace`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      const label = shortLabel(node.name);
-      const y = node.y + r + 3 / globalScale + 1.5;
-      const w = ctx.measureText(label).width;
-      ctx.globalAlpha = alpha * 0.66;
-      ctx.fillStyle = BG;
-      ctx.fillRect(node.x - w / 2 - 2.5 / globalScale, y - 1 / globalScale, w + 5 / globalScale, fs * 1.25);
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = selected || hovered ? '#ffffff' : node.tier === 1 ? '#e8e8ec' : '#b9b9c2';
-      ctx.fillText(label, node.x, y);
-
-      // amount, only on focus or deep zoom — small mono, screen-constant
-      if (selected || hovered || globalScale > 2.6) {
-        const fs2 = (px - 2.5) / globalScale;
-        ctx.font = `500 ${fs2}px ui-monospace, monospace`;
-        ctx.fillStyle = hexA(col, 0.95);
-        ctx.fillText(fmtUSD(node.totalFlow), node.x, y + fs * 1.3);
-      }
+      ctx.fillStyle = hexA(col, 0.95);
+      ctx.fillText(fmtUSD(node.totalFlow), node.x, y + h + 5);
     }
 
     ctx.restore();
@@ -237,24 +219,23 @@ export default function FlowGraph({
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
     ctx.fillStyle = colour;
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, nodeRadius(node) + 5, 0, 2 * Math.PI);
+    roundRect(ctx, node.x - node.blockW / 2, node.y - node.blockH / 2, node.blockW, node.blockH, 8);
     ctx.fill();
   }, []);
 
   // ── Link styling ───────────────────────────────────────────────────────
   const linkColor = useCallback((l) => {
     const lit = linkLit(l);
-    if (!lit) return hexA('#3f3f46', 0.1);
+    if (!lit) return hexA('#3f3f46', 0.08);
     if (l.id === selectedLinkId) return '#fafafa';
     if (l.id === hoverLinkId) return hexA(l.color, 1);
-    return hexA(l.color, hasSelection ? 0.9 : 0.62);
+    return hexA(l.color, hasSelection ? 0.9 : 0.5);
   }, [linkLit, selectedLinkId, hoverLinkId, hasSelection]);
 
   const linkW = useCallback((l) => {
-    const w = linkWidth(l);
-    if (l.id === selectedLinkId) return w + 1.4;
-    if (l.id === hoverLinkId) return w + 0.9;
+    const w = linkWidth(l) * 1.4;
+    if (l.id === selectedLinkId) return w + 1.6;
+    if (l.id === hoverLinkId) return w + 1;
     return w;
   }, [selectedLinkId, hoverLinkId]);
 
@@ -282,8 +263,8 @@ export default function FlowGraph({
         <span style="color:#71717a">${esc(role)}</span>
       </div>
       <div style="display:grid;grid-template-columns:auto auto;gap:2px 14px">
-        <span style="color:#71717a">Capital in</span><span style="color:#34D399;text-align:right">${fmtUSD(n.totalInflow)}</span>
-        <span style="color:#71717a">Capital out</span><span style="color:#F59E0B;text-align:right">${fmtUSD(n.totalOutflow)}</span>
+        <span style="color:#71717a">Capital in</span><span style="color:#82B98D;text-align:right">${fmtUSD(n.totalInflow)}</span>
+        <span style="color:#71717a">Capital out</span><span style="color:#C2A36B;text-align:right">${fmtUSD(n.totalOutflow)}</span>
       </div>
       <div style="margin-top:7px;color:#52525b;font-size:9px">Click → full breakdown panel</div>
     `);
@@ -322,10 +303,10 @@ export default function FlowGraph({
           linkColor={linkColor}
           linkWidth={linkW}
           linkCurvature="curvature"
-          linkDirectionalArrowLength={3.6}
-          linkDirectionalArrowRelPos={0.96}
+          linkDirectionalArrowLength={7}
+          linkDirectionalArrowRelPos={0.93}
           linkDirectionalParticles={particles}
-          linkDirectionalParticleWidth={2.4}
+          linkDirectionalParticleWidth={3}
           linkDirectionalParticleSpeed={0.006}
           linkDirectionalParticleColor={(l) => l.color}
           onNodeClick={(n) => onNodeClick(n.id)}
@@ -334,16 +315,9 @@ export default function FlowGraph({
           onNodeHover={(n) => setHoverNodeId(n ? n.id : null)}
           onLinkHover={(l) => setHoverLinkId(l ? l.id : null)}
           onNodeDragEnd={(n) => { n.fx = n.x; n.fy = n.y; }}
-          onEngineStop={() => {
-            if (!fittedRef.current) {
-              fittedRef.current = true;
-              fgRef.current?.zoomToFit(600, 80);
-            }
-          }}
-          d3VelocityDecay={0.32}
-          cooldownTime={6000}
-          warmupTicks={80}
-          minZoom={0.2}
+          cooldownTicks={0}
+          warmupTicks={0}
+          minZoom={0.12}
           maxZoom={9}
         />
       )}
@@ -352,6 +326,16 @@ export default function FlowGraph({
 }
 
 // ── helpers ──────────────────────────────────────────────────────────────
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
 function hexA(hex, a) {
   const h = hex.replace('#', '');
   const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
