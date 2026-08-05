@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════
-// AssetMap — force-directed-style sector map embedded inside the matrix card.
+// AssetMap – force-directed-style sector map embedded inside the matrix card.
 // Static deterministic ring layout (no jitter), hover tooltip, click → detail
 // modal with backdrop blur, drag-to-pin, scroll/buttons zoom, pan, risk filter.
 // A self-contained canvas component; lives inside the matrix feature container.
@@ -18,7 +18,7 @@ const zbtn = {
 const mLabel = { fontFamily: 'ui-monospace,monospace', fontSize: 9.5, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6, fontWeight: 700 };
 const mVal = { fontSize: 13.5, color: '#fafafa', fontWeight: 500 };
 
-// Mirrors the dcBucketFor helper in DataCentersAI.jsx — duplicated here so AssetMap
+// Mirrors the dcBucketFor helper in DataCentersAI.jsx – duplicated here so AssetMap
 // is self-contained and we don't drag the whole report module into this leaf.
 function dcBucketFor(sector) {
   for (const [name, def] of Object.entries(DC_BUCKETS)) {
@@ -97,7 +97,7 @@ export default function AssetMap({ rows }) {
     // Preload each company's logo. Primary: Clearbit (real logos); on failure,
     // fall back to a Google favicon; if that also fails, the renderer draws a
     // colored dot with the ticker instead. Images are display-only (no pixel
-    // readback) so we don't set crossOrigin — that avoids CORS load failures.
+    // readback) so we don't set crossOrigin – that avoids CORS load failures.
     const logos = {};   // node.id → { img, loaded }
     nodes.forEach(n => {
       const domain = DC_DOMAINS[n.data.company];
@@ -224,7 +224,7 @@ export default function AssetMap({ rows }) {
       for (const name of bucketNames) {
         const h = hubs[name];
 
-        // Clean solid disc — flat dark fill, crisp sector ring, no glow.
+        // Clean solid disc – flat dark fill, crisp sector ring, no glow.
         ctx.fillStyle = '#101013';
         ctx.beginPath(); ctx.arc(h.x, h.y, h.r, 0, Math.PI*2); ctx.fill();
         ctx.strokeStyle = hexA(h.color, 0.95);
@@ -295,7 +295,7 @@ export default function AssetMap({ rows }) {
           const dw = iw * s, dh = ih * s;
           ctx.drawImage(rec.img, n.x - dw/2, n.y - dh/2, dw, dh);
           ctx.restore();
-          // sector-colored ring (uniform — encodes the bucket, not conviction)
+          // sector-colored ring (uniform – encodes the bucket, not conviction)
           ctx.strokeStyle = hexA(n.color, 0.95);
           ctx.lineWidth = lift ? 3 : 2.2;
           ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI*2); ctx.stroke();
@@ -314,7 +314,7 @@ export default function AssetMap({ rows }) {
           }
         }
 
-        // Ticker label OUTSIDE, below the dot — always visible (not dimmed-out)
+        // Ticker label OUTSIDE, below the dot – always visible (not dimmed-out)
         if (alpha > 0.4) {
           ctx.font = `${lift ? '700' : '600'} 9.5px ui-monospace, "SF Mono", Menlo, monospace`;
           ctx.textAlign = 'center';

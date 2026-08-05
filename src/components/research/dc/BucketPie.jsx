@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════
-// BucketPie + BucketSidePanel — Section 2 of the Data Centers for AI report.
+// BucketPie + BucketSidePanel – Section 2 of the Data Centers for AI report.
 // The two are tightly coupled: hovering a slice of the pie reveals detail in
 // the side panel, and hovering a row in the side panel highlights its slice.
 // Lifting the shared `hovered` state into the parent DataCentersAI component
@@ -7,7 +7,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 import React, { useEffect, useState } from 'react';
 
-// Pie chart — receives bucketStats and a hovered setter from parent.
+// Pie chart – receives bucketStats and a hovered setter from parent.
 // Slices animate in on mount, scale up on hover, and dim others.
 export function BucketPie({ buckets, hovered, setHovered }) {
   const [mounted, setMounted] = useState(false);
