@@ -271,14 +271,133 @@ function ProxyCoverArt() {
   );
 }
 
+// Capital Flow Map — cover in the style of the classic blue network-analysis
+// visual the client picked as reference: a dense steel-blue force graph on a
+// light background, hundreds of small nodes in soft clusters, translucent
+// edges, and a handful of large pale hub circles at the centre. Everything is
+// generated deterministically (seeded PRNG) so the cover never re-flows.
+const CF_COVER = (() => {
+  // mulberry32 — tiny deterministic PRNG
+  let seed = 20260805;
+  const rnd = () => {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const gauss = () => (rnd() + rnd() + rnd() - 1.5) / 1.5;   // ~[-1,1], centre-weighted
+
+  // Cluster centres across the 200x120 canvas — denser mass around the middle.
+  const clusters = [
+    { x: 100, y: 62, s: 30, n: 46 },  // core
+    { x: 62,  y: 40, s: 22, n: 30 },
+    { x: 142, y: 42, s: 22, n: 30 },
+    { x: 46,  y: 84, s: 18, n: 24 },
+    { x: 148, y: 88, s: 19, n: 24 },
+    { x: 172, y: 26, s: 14, n: 16 },
+    { x: 26,  y: 22, s: 13, n: 16 },
+    { x: 104, y: 104, s: 15, n: 18 },
+    { x: 186, y: 64, s: 11, n: 12 },
+    { x: 14,  y: 56, s: 11, n: 12 },
+  ];
+
+  const nodes = [];
+  clusters.forEach((c, ci) => {
+    for (let i = 0; i < c.n; i++) {
+      nodes.push({
+        x: c.x + gauss() * c.s,
+        y: c.y + gauss() * c.s * 0.78,
+        r: 0.7 + rnd() * 1.3,
+        c: ci,
+      });
+    }
+  });
+
+  // Hubs — large pale circles, centre-left like the reference image.
+  const hubs = [
+    { x: 88,  y: 66, r: 6.2 },
+    { x: 101, y: 57, r: 4.8 },
+    { x: 79,  y: 55, r: 4.2 },
+    { x: 95,  y: 78, r: 3.9 },
+    { x: 110, y: 70, r: 3.4 },
+    { x: 70,  y: 70, r: 3.0 },
+  ];
+
+  // Edges: hub↔hub mesh, node→hub spokes, plus local cluster links.
+  const edges = [];
+  for (let i = 0; i < hubs.length; i++) {
+    for (let j = i + 1; j < hubs.length; j++) {
+      edges.push({ x1: hubs[i].x, y1: hubs[i].y, x2: hubs[j].x, y2: hubs[j].y, w: 0.7, o: 0.5 });
+    }
+  }
+  nodes.forEach((n, i) => {
+    if (rnd() < 0.55) {
+      const h = hubs[Math.floor(rnd() * hubs.length)];
+      edges.push({ x1: n.x, y1: n.y, x2: h.x, y2: h.y, w: 0.25, o: 0.16 });
+    }
+    // a couple of near-neighbour links inside the cluster
+    for (let k = 0; k < 2; k++) {
+      const m = nodes[Math.floor(rnd() * nodes.length)];
+      if (m !== n && m.c === n.c) {
+        edges.push({ x1: n.x, y1: n.y, x2: m.x, y2: m.y, w: 0.2, o: 0.14 });
+      }
+    }
+  });
+
+  return { nodes, hubs, edges };
+})();
+
+function CapitalFlowCoverArt() {
+  const { nodes, hubs, edges } = CF_COVER;
+  return (
+    <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+      <defs>
+        <radialGradient id="cfw-bg" cx="50%" cy="52%" r="75%">
+          <stop offset="0%"   stopColor="#ffffff" />
+          <stop offset="70%"  stopColor="#f2f6fa" />
+          <stop offset="100%" stopColor="#e3ebf3" />
+        </radialGradient>
+      </defs>
+
+      <rect width="200" height="120" fill="url(#cfw-bg)" />
+
+      {/* edges under everything */}
+      <g stroke="#4d7ba6" fill="none">
+        {edges.map((e, i) => (
+          <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
+            strokeWidth={e.w} strokeOpacity={e.o} />
+        ))}
+      </g>
+
+      {/* small steel-blue nodes */}
+      <g>
+        {nodes.map((n, i) => (
+          <circle key={i} cx={n.x} cy={n.y} r={n.r}
+            fill="#3f7fb0" fillOpacity="0.88" stroke="#2c5e88" strokeWidth="0.25" />
+        ))}
+      </g>
+
+      {/* large pale hub circles on top */}
+      <g>
+        {hubs.map((h, i) => (
+          <circle key={i} cx={h.x} cy={h.y} r={h.r}
+            fill="#fdfefe" stroke="#8aa9c4" strokeWidth="0.7" />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
 // Picks the right cover art for a given research id.
 function ResearchCover({ id, color }) {
   if (id === 'holdings')       return <HoldingsCoverArt />;
   if (id === 'data-centers-ai') return <DataCentersCoverArt />;
   if (id === 'proxy')          return <ProxyCoverArt color={color} />;
+  if (id === 'capital-flow-map') return <CapitalFlowCoverArt color={color} />;
   return <ResearchCoverNodes color={color} />;
 }
 
 
 export default ResearchCover;
-export { ResearchCoverNodes, HoldingsCoverArt, DataCentersCoverArt, ProxyCoverArt };
+export { ResearchCoverNodes, HoldingsCoverArt, DataCentersCoverArt, ProxyCoverArt, CapitalFlowCoverArt };
