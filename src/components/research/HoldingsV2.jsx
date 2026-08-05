@@ -348,7 +348,7 @@ function RecentMoves({ items }) {
           const isOpen = open === i;
           return (
             <div key={i} style={{ borderTop: i ? `1px solid ${C.lineSoft}` : 'none' }}>
-              <div onClick={() => has && setOpen(isOpen ? null : i)} style={{ display: 'grid', gridTemplateColumns: '68px 78px 1fr 132px 14px', gap: 12, alignItems: 'baseline', padding: '9px 0', fontSize: 12.5, cursor: has ? 'pointer' : 'default' }}>
+              <div onClick={() => has && setOpen(isOpen ? null : i)} style={{ display: 'grid', gridTemplateColumns: '68px auto 1fr 132px 14px', gap: 12, alignItems: 'baseline', padding: '9px 0', fontSize: 12.5, cursor: has ? 'pointer' : 'default' }}>
                 <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{m.date}</div>
                 <div style={{ fontSize: 9.5, padding: '2px 7px', borderRadius: 10, background: C.line, color: C.inkSoft, letterSpacing: '.06em', fontWeight: 600, textAlign: 'center', justifySelf: 'start' }}>{m.type.toUpperCase()}</div>
                 <div style={{ color: C.ink, display: 'flex', gap: 7, alignItems: 'center', flexWrap: 'wrap' }}>
