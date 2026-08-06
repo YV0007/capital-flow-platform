@@ -17,7 +17,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { fmtUSD, linkWidth } from './format.js';
-import { GROUP_META, TIER_META } from '../../../data/capitalFlowData.js';
+import { SECTOR_META, CLASS_META, TIER_META, STATUS_META } from '../../../data/capitalMap.js';
 
 const BG = '#08090C';
 
@@ -109,13 +109,19 @@ export default function FlowGraph({
   // aggregate capital stats, so the overview reads sector totals directly.
   const paintRegions = useCallback((ctx) => {
     regions.forEach(r => {
-      // zone plate
+      // zone plate — a sector carrying a fired signal glows brighter.
       roundRect(ctx, r.x, r.y, r.w, r.h, 34);
-      ctx.fillStyle = hexA(r.color, 0.032);
+      ctx.fillStyle = hexA(r.color, r.lit ? 0.075 : 0.032);
       ctx.fill();
-      ctx.setLineDash([10, 12]);
-      ctx.lineWidth = 1.4;
-      ctx.strokeStyle = hexA(r.color, 0.22);
+      if (r.lit) {
+        ctx.setLineDash([]);
+        ctx.lineWidth = 2.2;
+        ctx.strokeStyle = hexA(r.color, 0.7);
+      } else {
+        ctx.setLineDash([10, 12]);
+        ctx.lineWidth = 1.4;
+        ctx.strokeStyle = hexA(r.color, 0.22);
+      }
       ctx.stroke();
       ctx.setLineDash([]);
 
@@ -123,12 +129,22 @@ export default function FlowGraph({
       ctx.textAlign = 'left';
       ctx.textBaseline = 'bottom';
       ctx.font = '700 30px ui-monospace, monospace';
-      ctx.fillStyle = hexA(r.color, 0.6);
+      ctx.fillStyle = hexA(r.color, r.lit ? 0.85 : 0.6);
       ctx.fillText(r.label, r.x + 10, r.y - 34);
       if (r.stats) {
         ctx.font = '600 21px ui-monospace, monospace';
         ctx.fillStyle = hexA(r.color, 0.38);
         ctx.fillText(r.stats, r.x + 10, r.y - 8);
+      }
+      // signal badge — the alpha. Only when the sector is lighting up.
+      if (r.lit) {
+        const theme = r.signals?.[0]?.theme || 'signal';
+        const badge = `◆ ${theme}`.toUpperCase();
+        ctx.font = '700 17px ui-monospace, monospace';
+        ctx.textAlign = 'right';
+        ctx.fillStyle = hexA(r.color, 0.92);
+        ctx.fillText(badge, r.x + r.w - 10, r.y - 12);
+        ctx.textAlign = 'left';
       }
     });
   }, [regions]);
@@ -143,7 +159,10 @@ export default function FlowGraph({
     const lit = nodeLit(node);
     const selected = node.id === selectedNodeId;
     const hovered = node.id === hoverNodeId;
-    const alpha = lit ? 1 : 0.07;
+    // Stale (no activity in 180d) → cooled/muted, never hidden. watch-only
+    // (candidate-only) nodes read a touch softer than confirmed ones.
+    const dim = node.stale ? 0.42 : node.watchOnly ? 0.72 : 1;
+    const alpha = lit ? dim : 0.07;
     const col = node.color;
     const r = node.blockShape === 'capsule' ? h / 2 : node.blockShape === 'asset' ? 4 : 9;
 
@@ -169,7 +188,16 @@ export default function FlowGraph({
     }
     ctx.lineWidth = selected ? 2 : node.blockTier <= 1 ? 1.5 : 1.1;
     ctx.strokeStyle = selected ? '#e8e8ec' : hexA(col, hovered ? 0.95 : node.blockTier <= 1 ? 0.75 : 0.5);
+    if (node.stale) ctx.setLineDash([5, 4]);   // cooled-off nodes read dashed
     ctx.stroke();
+    ctx.setLineDash([]);
+    // key-tier allocator → a small filled marker top-right of the block
+    if (node.tier === 'key') {
+      ctx.beginPath();
+      ctx.arc(x + w - 6, y + 6, 2.6, 0, 2 * Math.PI);
+      ctx.fillStyle = hexA('#FBBF24', 0.95);
+      ctx.fill();
+    }
 
     // role dot — filled = receives · hollow = deploys · dot-in-ring = both
     const dr = h * 0.13;
@@ -247,24 +275,31 @@ export default function FlowGraph({
 
   // ── Hover tooltips ─────────────────────────────────────────────────────
   const nodeTooltip = useCallback((n) => {
-    const g = GROUP_META[n.group];
+    const cls = CLASS_META[n.cls];
+    const sec = n.sector ? SECTOR_META[n.sector] : null;
     const t = n.tier ? TIER_META[n.tier] : null;
-    const role = n.type === 'both' ? 'Deploys & receives'
-      : n.type === 'player' ? 'Deploys capital' : 'Receives capital';
+    const role = n.type === 'player' ? 'Allocator · deploys' : 'Target · receives';
+    const side = n.type === 'player'
+      ? `<span style="color:#71717a">Capital out</span><span style="color:#C2A36B;text-align:right">${fmtUSD(n.totalOutflow)}</span>`
+      : `<span style="color:#71717a">Capital in</span><span style="color:#82B98D;text-align:right">${fmtUSD(n.totalInflow)}</span>`;
     return tip(`
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:5px">
         <span style="font-weight:700;font-size:12.5px;color:#fafafa">${esc(n.name)}</span>
         ${t ? `<span style="color:${t.color};font-size:9px;font-weight:700">${t.short} ${t.stars}</span>` : ''}
+        ${n.stale ? '<span style="color:#94A3B8;font-size:9px;font-weight:700">COOLED</span>' : ''}
       </div>
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
         <span style="width:7px;height:7px;border-radius:50%;background:${n.color}"></span>
-        <span style="color:#a1a1aa">${esc(g?.label || n.group)}</span>
+        <span style="color:#a1a1aa">${esc(cls?.label || n.cls)}</span>
+        ${sec ? `<span style="color:#3f3f46">·</span><span style="color:#71717a">${esc(sec.label)}</span>` : ''}
         <span style="color:#3f3f46">·</span>
         <span style="color:#71717a">${esc(role)}</span>
       </div>
       <div style="display:grid;grid-template-columns:auto auto;gap:2px 14px">
-        <span style="color:#71717a">Capital in</span><span style="color:#82B98D;text-align:right">${fmtUSD(n.totalInflow)}</span>
-        <span style="color:#71717a">Capital out</span><span style="color:#C2A36B;text-align:right">${fmtUSD(n.totalOutflow)}</span>
+        <span style="color:#71717a">Capital</span><span style="color:#e4e4e7;text-align:right">${fmtUSD(n.capital)}</span>
+        ${side}
+        <span style="color:#71717a">Deals</span><span style="color:#a1a1aa;text-align:right">${n.deals}</span>
+        <span style="color:#71717a">Last activity</span><span style="color:#a1a1aa;text-align:right">${esc(n.last_activity || '—')}</span>
       </div>
       <div style="margin-top:7px;color:#52525b;font-size:9px">Click → full breakdown panel</div>
     `);
@@ -273,12 +308,15 @@ export default function FlowGraph({
   const linkTooltip = useCallback((l) => {
     const s = typeof l.source === 'object' ? l.source.name : l.sourceId;
     const t = typeof l.target === 'object' ? l.target.name : l.targetId;
+    const st = STATUS_META[l.status] || {};
     return tip(`
-      <div style="font-weight:700;font-size:12.5px;color:#fafafa;margin-bottom:4px">${fmtUSD(l.amountUSD)}</div>
+      <div style="font-weight:700;font-size:12.5px;color:#fafafa;margin-bottom:4px">${l.disclosed ? fmtUSD(l.amount) : 'Undisclosed'}</div>
       <div style="color:#d4d4d8;margin-bottom:5px">${esc(s)} <span style="color:${l.color}">→</span> ${esc(t)}</div>
       <div style="display:flex;gap:6px;align-items:center">
         <span style="width:7px;height:7px;border-radius:2px;background:${l.color}"></span>
-        <span style="color:#a1a1aa">${esc(l.dealType)}</span>
+        <span style="color:#a1a1aa">${esc(l.eventLabel)}</span>
+        <span style="color:#3f3f46">·</span>
+        <span style="color:${st.color || '#71717a'}">${esc(st.short || l.status)}</span>
         <span style="color:#3f3f46">·</span>
         <span style="color:#71717a">${esc(l.date)}</span>
       </div>
@@ -302,6 +340,7 @@ export default function FlowGraph({
           linkLabel={linkTooltip}
           linkColor={linkColor}
           linkWidth={linkW}
+          linkLineDash={(l) => (STATUS_META[l.status]?.dash || null)}
           linkCurvature="curvature"
           linkDirectionalArrowLength={7}
           linkDirectionalArrowRelPos={0.93}

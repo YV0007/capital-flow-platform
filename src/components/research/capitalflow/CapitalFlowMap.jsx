@@ -1,27 +1,33 @@
 // ══════════════════════════════════════════════════════════════════════════
 // CapitalFlowMap — FULL-SCREEN section shell.
 //
+// Renders src/data/capitalMap.json — the file the Capital Flow engine exports
+// each cycle. Nothing here is hard-coded: swap in next week's file and the map
+// changes with no code edit.
+//
 // The canvas fills the viewport below the app header; every control floats
 // over it:
-//   · top bar    — back, title + live stats, search, filter/labels/reset
-//   · filter drawer — tiers · groups · deal types · min-flow (slides from top)
+//   · top bar    — back, title + generated-date + live stats, search, controls
+//   · filter drawer — sector · class · tier · event · status · min-flow
 //   · legend     — bottom-left, collapsible
 //   · disclaimer — bottom-right chip, expandable
 //   · entity panel (right) and flow card (bottom-centre) on selection
 //
 // FILTER SEMANTICS
-//   · Tier and Group select ENTITIES.
-//   · Deal type and Min flow select FLOWS.
-//   · A flow shows when it passes the flow filters AND touches ≥1 selected
-//     entity; an entity shows when it sits on a shown flow. That is why
-//     "Hyperscalers" surfaces the hyperscalers AND their counterparties.
-// Selection (click) is a second layer on top: it dims everything outside the
-// chosen neighbourhood and clears with Esc / background click.
+//   · Sector · Class · Tier select ENTITIES (OR-unioned into a seed set).
+//   · Event · Status · Min flow select FLOWS.
+//   · A flow shows when it passes the flow filters AND touches ≥1 seeded
+//     entity; an entity shows when it sits on a shown flow — so a sector
+//     surfaces its targets AND the allocators funding them.
+//   · Watch toggle reveals candidate-only ("watch / unconfirmed") entities,
+//     which are kept off the main map by default (inclusion rule).
+// Selection (click) dims everything outside the chosen neighbourhood; Esc /
+// background click clears it.
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
-  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, TriangleAlert,
+  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, TriangleAlert, Eye,
 } from 'lucide-react';
 
 import FlowGraph from './FlowGraph.jsx';
@@ -31,7 +37,7 @@ import EntityPanel from './EntityPanel.jsx';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD } from './format.js';
 import { applyStaticLayout } from './layout.js';
-import { buildGraph, buildAdjacency, DISCLAIMER } from '../../../data/capitalFlowData.js';
+import { buildGraph, buildAdjacency, DISCLAIMER, META } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 const BG = '#08090C';
@@ -39,7 +45,7 @@ const BG = '#08090C';
 export default function CapitalFlowMap({ onBack }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
-  const regions = useMemo(() => applyStaticLayout(graph.nodes), [graph]);
+  const regions = useMemo(() => applyStaticLayout(graph.nodes, graph.sectors), [graph]);
   const graphData = useMemo(() => ({ nodes: graph.nodes, links: graph.links }), [graph]);
   const adjacency = useMemo(() => buildAdjacency(graph.links), [graph]);
   const nodeById = useMemo(() => new Map(graph.nodes.map(n => [n.id, n])), [graph]);
@@ -49,10 +55,13 @@ export default function CapitalFlowMap({ onBack }) {
 
   // ── Filter state ───────────────────────────────────────────────────────
   const [query, setQuery] = useState('');
-  const [tiers, setTiers] = useState(() => new Set());
-  const [groups, setGroups] = useState(() => new Set());
-  const [dealTypes, setDealTypes] = useState(() => new Set());
+  const [sectors, setSectors] = useState(() => new Set());   // entities (targets)
+  const [classes, setClasses] = useState(() => new Set());   // entities
+  const [tiers, setTiers] = useState(() => new Set());       // entities (allocators)
+  const [families, setFamilies] = useState(() => new Set()); // flows (event family)
+  const [statuses, setStatuses] = useState(() => new Set()); // flows
   const [minAmount, setMinAmount] = useState(0);
+  const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   // ── Selection state ────────────────────────────────────────────────────
@@ -63,19 +72,25 @@ export default function CapitalFlowMap({ onBack }) {
 
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
-    const entityFilterOn = groups.size > 0 || tiers.size > 0;
-    const selectedEntities = new Set(
-      graph.nodes
-        .filter(n => (!groups.size || groups.has(n.group)) &&
-                     (!tiers.size || (n.tier != null && tiers.has(n.tier))))
-        .map(n => n.id)
+    const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0;
+    // Seed = nodes matching ANY active entity selection (OR-union) — robust to
+    // mixing target-only (sector) and allocator-only (tier) dimensions.
+    const seed = new Set(
+      graph.nodes.filter(n => {
+        if (!entityFilterOn) return true;
+        const mSec = sectors.size && n.sector && sectors.has(n.sector);
+        const mCls = classes.size && classes.has(n.cls);
+        const mTier = tiers.size && n.tier && tiers.has(n.tier);
+        return mSec || mCls || mTier;
+      }).map(n => n.id)
     );
 
     const links = new Set();
     graph.links.forEach(l => {
-      if (dealTypes.size && !dealTypes.has(l.dealType)) return;
-      if (l.amountUSD < minAmount) return;
-      if (entityFilterOn && !selectedEntities.has(l.sourceId) && !selectedEntities.has(l.targetId)) return;
+      if (families.size && !families.has(l.family)) return;
+      if (statuses.size && !statuses.has(l.status)) return;
+      if (minAmount > 0 && l.amountUSD < minAmount) return;
+      if (entityFilterOn && !seed.has(l.sourceId) && !seed.has(l.targetId)) return;
       links.add(l.id);
     });
 
@@ -85,10 +100,20 @@ export default function CapitalFlowMap({ onBack }) {
       nodes.add(l.sourceId);
       nodes.add(l.targetId);
     });
-    graph.nodes.forEach(n => { if (n.degree === 0 && selectedEntities.has(n.id)) nodes.add(n.id); });
+    graph.nodes.forEach(n => { if (n.degree === 0 && seed.has(n.id)) nodes.add(n.id); });
+
+    // Inclusion rule: candidate-only ("watch") nodes stay off the main map
+    // unless the user opts in — then drop them and any link that touches them.
+    if (!showWatch) {
+      graph.nodes.forEach(n => { if (n.watchOnly) nodes.delete(n.id); });
+      graph.links.forEach(l => {
+        const s = nodeById.get(l.sourceId), t = nodeById.get(l.targetId);
+        if ((s && s.watchOnly) || (t && t.watchOnly)) links.delete(l.id);
+      });
+    }
 
     return { matchedNodes: nodes, matchedLinks: links };
-  }, [graph, groups, tiers, dealTypes, minAmount]);
+  }, [graph, sectors, classes, tiers, families, statuses, minAmount, showWatch, nodeById]);
 
   // ── Selection neighbourhood ────────────────────────────────────────────
   const { neighbourNodes, neighbourLinks } = useMemo(() => {
@@ -140,9 +165,11 @@ export default function CapitalFlowMap({ onBack }) {
   const resetView = useCallback(() => { fgRef.current?.zoomToFit(700, 80); }, []);
 
   const resetFilters = useCallback(() => {
+    setSectors(new Set());
+    setClasses(new Set());
     setTiers(new Set());
-    setGroups(new Set());
-    setDealTypes(new Set());
+    setFamilies(new Set());
+    setStatuses(new Set());
     setMinAmount(0);
     setQuery('');
   }, []);
@@ -168,15 +195,19 @@ export default function CapitalFlowMap({ onBack }) {
   const adj = selectedNodeId ? adjacency.get(selectedNodeId) : null;
 
   const legendCounts = useMemo(() => {
-    const group = {}, dealType = {};
-    graph.nodes.forEach(n => { if (matchedNodes.has(n.id)) group[n.group] = (group[n.group] || 0) + 1; });
-    graph.links.forEach(l => { if (matchedLinks.has(l.id)) dealType[l.dealType] = (dealType[l.dealType] || 0) + 1; });
-    return { group, dealType };
+    const sector = {}, cls = {}, family = {};
+    graph.nodes.forEach(n => {
+      if (!matchedNodes.has(n.id)) return;
+      if (n.sector) sector[n.sector] = (sector[n.sector] || 0) + 1;
+      cls[n.cls] = (cls[n.cls] || 0) + 1;
+    });
+    graph.links.forEach(l => { if (matchedLinks.has(l.id)) family[l.family] = (family[l.family] || 0) + 1; });
+    return { sector, cls, family };
   }, [graph, matchedNodes, matchedLinks]);
 
-  const activeFilterCount = tiers.size + groups.size + dealTypes.size + (minAmount > 0 ? 1 : 0);
+  const activeFilterCount = sectors.size + classes.size + tiers.size + families.size + statuses.size + (minAmount > 0 ? 1 : 0);
   const visibleTotal = useMemo(
-    () => graph.links.reduce((s, l) => s + (matchedLinks.has(l.id) ? l.amountUSD : 0), 0),
+    () => graph.links.reduce((s, l) => s + (matchedLinks.has(l.id) && l.disclosed ? l.amount : 0), 0),
     [graph, matchedLinks]
   );
 
@@ -248,16 +279,28 @@ export default function CapitalFlowMap({ onBack }) {
             <ChevronLeft size={13} /> Research
           </button>
           <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
-              Capital Flow Map
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+              <span style={{ fontSize: 15, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
+                Capital Flow Map
+              </span>
+              <span title="Date this data was generated by the Capital Flow engine"
+                style={{ fontSize: 9, color: '#52525b', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
+                AS OF {META.generated}
+              </span>
             </div>
             <div style={{ fontSize: 9.5, color: '#71717a', fontFamily: MONO, marginTop: 2, whiteSpace: 'nowrap' }}>
               <span style={{ color: '#38BDF8', fontWeight: 700 }}>{fmtUSD(activeFilterCount ? visibleTotal : graph.stats.totalTracked)}</span>
-              {activeFilterCount ? ' in view' : ' tracked'}
+              {activeFilterCount ? ' in view' : ' disclosed'}
               <span style={{ color: '#3f3f46' }}> · </span>
-              {matchedNodes.size}<span style={{ color: '#52525b' }}>/{graph.stats.entityCount}</span> entities
+              {matchedNodes.size}<span style={{ color: '#52525b' }}>/{graph.stats.nodeCount}</span> entities
               <span style={{ color: '#3f3f46' }}> · </span>
               {matchedLinks.size}<span style={{ color: '#52525b' }}>/{graph.stats.flowCount}</span> flows
+              {graph.stats.signalCount > 0 && (
+                <>
+                  <span style={{ color: '#3f3f46' }}> · </span>
+                  <span style={{ color: '#FBBF24', fontWeight: 700 }}>{graph.stats.signalCount} signal{graph.stats.signalCount === 1 ? '' : 's'}</span>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -308,7 +351,7 @@ export default function CapitalFlowMap({ onBack }) {
                   <span style={{ width: 7, height: 7, borderRadius: '50%', background: s.color, flexShrink: 0 }} />
                   <span style={{ fontSize: 11.5, color: '#e4e4e7', fontWeight: 600 }}>{s.name}</span>
                   <span style={{ fontSize: 9.5, color: '#52525b', fontFamily: MONO, marginLeft: 'auto' }}>
-                    {fmtUSD(s.totalFlow)}
+                    {fmtUSD(s.capital)}
                   </span>
                 </button>
               ))}
@@ -322,6 +365,11 @@ export default function CapitalFlowMap({ onBack }) {
             <SlidersHorizontal size={12} />
             Filters{activeFilterCount ? ` · ${activeFilterCount}` : ''}
           </TopBtn>
+          {graph.stats.watchCount > 0 && (
+            <TopBtn onClick={() => setShowWatch(s => !s)} label="Show watch / unconfirmed entities" active={showWatch} wide>
+              <Eye size={12} /> Watch{showWatch ? ` · ${graph.stats.watchCount}` : ''}
+            </TopBtn>
+          )}
           <TopBtn onClick={() => setShowLabels(s => !s)} label="Toggle labels" active={showLabels}>
             <Tag size={12} />
           </TopBtn>
@@ -339,9 +387,12 @@ export default function CapitalFlowMap({ onBack }) {
       {/* ── Filter drawer ───────────────────────────────────────────────── */}
       {drawerOpen && (
         <FilterDrawer
+          sectorsPresent={graph.sectors}
+          sectors={sectors} onToggleSector={toggleIn(setSectors)}
+          classes={classes} onToggleClass={toggleIn(setClasses)}
           tiers={tiers} onToggleTier={toggleIn(setTiers)}
-          groups={groups} onToggleGroup={toggleIn(setGroups)}
-          dealTypes={dealTypes} onToggleDealType={toggleIn(setDealTypes)}
+          families={families} onToggleFamily={toggleIn(setFamilies)}
+          statuses={statuses} onToggleStatus={toggleIn(setStatuses)}
           minAmount={minAmount} onMinAmount={setMinAmount} maxAmount={graph.maxAmount}
           activeCount={activeFilterCount}
           onReset={resetFilters}
@@ -369,19 +420,19 @@ export default function CapitalFlowMap({ onBack }) {
       <Legend counts={legendCounts} />
 
       {/* ── Disclaimer chip / card ──────────────────────────────────────── */}
-      <div style={{ position: 'absolute', right: 14, bottom: 14, zIndex: 12, maxWidth: 420 }}>
+      <div style={{ position: 'absolute', right: 14, bottom: 14, zIndex: 12, maxWidth: 440 }}>
         {disclaimerOpen ? (
           <div style={{
             padding: '11px 13px',
-            background: 'rgba(14,15,20,0.96)', border: '1px solid rgba(245,158,11,0.3)',
+            background: 'rgba(14,15,20,0.96)', border: '1px solid rgba(56,189,248,0.28)',
             borderRadius: 10, backdropFilter: 'blur(8px)',
           }}>
             <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-              <TriangleAlert size={12} color="#F59E0B" style={{ flexShrink: 0, marginTop: 2 }} />
+              <TriangleAlert size={12} color="#38BDF8" style={{ flexShrink: 0, marginTop: 2 }} />
               <div style={{ fontSize: 10, color: '#a1a1aa', lineHeight: 1.55, fontFamily: MONO }}>
                 {DISCLAIMER}
                 <span style={{ color: '#71717a' }}>
-                  {' '}{Math.round(graph.stats.reportedShare * 100)}% of flows carry a reported figure; the rest are marked ESTIMATE on the deal card.
+                  {' '}{Math.round(graph.stats.disclosedShare * 100)}% of flows carry a disclosed amount.
                 </span>
               </div>
               <button onClick={() => setDisclaimerOpen(false)}
@@ -395,12 +446,12 @@ export default function CapitalFlowMap({ onBack }) {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '6px 10px',
-              background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.28)',
+              background: 'rgba(56,189,248,0.07)', border: '1px solid rgba(56,189,248,0.26)',
               borderRadius: 8, cursor: 'pointer',
-              fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: '#F59E0B',
+              fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: '#38BDF8',
               textTransform: 'uppercase', letterSpacing: '0.08em',
             }}>
-            <TriangleAlert size={11} /> Illustrative data
+            <TriangleAlert size={11} /> Engine data · {META.generated}
           </button>
         )}
       </div>

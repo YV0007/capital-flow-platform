@@ -1,24 +1,35 @@
 // FilterDrawer — floating filter panel over the full-screen canvas.
-// Tier + Group select entities; Deal type + Min flow select flows
-// (semantics live in CapitalFlowMap; this component is presentational).
+// Sector · Class · Tier select entities; Event · Status · Min flow select
+// flows (semantics live in CapitalFlowMap; this component is presentational).
 
 import { X, RotateCcw } from 'lucide-react';
-import { GROUP_META, DEAL_TYPE_META, TIER_META } from '../../../data/capitalFlowData.js';
+import {
+  SECTOR_META, CLASS_META, TIER_META, FAMILY_META, STATUS_META,
+} from '../../../data/capitalMap.js';
 import { fmtUSD } from './format.js';
 
 const MONO = 'ui-monospace, monospace';
 
 export default function FilterDrawer({
+  sectorsPresent,
+  sectors, onToggleSector,
+  classes, onToggleClass,
   tiers, onToggleTier,
-  groups, onToggleGroup,
-  dealTypes, onToggleDealType,
+  families, onToggleFamily,
+  statuses, onToggleStatus,
   minAmount, onMinAmount, maxAmount,
   activeCount, onReset, onClose,
 }) {
+  // Only offer the sectors that are actually in the file this cycle.
+  const sectorKeys = Object.keys(sectorsPresent || {})
+    .sort((a, b) => (SECTOR_META[a]?.order ?? 99) - (SECTOR_META[b]?.order ?? 99));
+  const allocClasses = Object.entries(CLASS_META).filter(([, v]) => v.side === 'allocator');
+  const targetClasses = Object.entries(CLASS_META).filter(([, v]) => v.side === 'target');
+
   return (
     <div style={{
       position: 'absolute', top: 58, right: 16, zIndex: 32,
-      width: 'min(430px, calc(100vw - 32px))',
+      width: 'min(440px, calc(100vw - 32px))',
       background: 'rgba(13,14,19,0.97)',
       border: '1px solid #26262e', borderRadius: 12,
       backdropFilter: 'blur(12px)',
@@ -58,15 +69,54 @@ export default function FilterDrawer({
       </div>
 
       <div style={{ padding: '12px 14px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-        {/* Signal tier */}
+        {/* Sector */}
         <div>
-          <GroupLabel>Signal tier · entities</GroupLabel>
+          <GroupLabel>Sector · targets</GroupLabel>
+          <ChipWrap>
+            {sectorKeys.map(k => {
+              const s = sectorsPresent[k];
+              const meta = SECTOR_META[k] || {};
+              return (
+                <Chip key={k} on={sectors.has(k)} color={meta.color || '#71717a'}
+                  title={`${s.deals} deals · ${fmtUSD(s.capital)}${s.lit ? ' · signal firing' : ''}`}
+                  onClick={() => onToggleSector(k)}>
+                  {s.lit && <span style={{ color: '#FBBF24', marginRight: -1 }}>◆</span>}
+                  {meta.label || k}
+                </Chip>
+              );
+            })}
+          </ChipWrap>
+        </div>
+
+        {/* Class */}
+        <div>
+          <GroupLabel>Allocator class · entities</GroupLabel>
+          <ChipWrap>
+            {allocClasses.map(([k, v]) => (
+              <Chip key={k} on={classes.has(k)} color={v.color} onClick={() => onToggleClass(k)}>
+                {v.label}
+              </Chip>
+            ))}
+          </ChipWrap>
+          <div style={{ height: 8 }} />
+          <GroupLabel>Target class · entities</GroupLabel>
+          <ChipWrap>
+            {targetClasses.map(([k, v]) => (
+              <Chip key={k} on={classes.has(k)} color={v.color} square onClick={() => onToggleClass(k)}>
+                {v.label}
+              </Chip>
+            ))}
+          </ChipWrap>
+        </div>
+
+        {/* Tier */}
+        <div>
+          <GroupLabel>Allocator tier · entities</GroupLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {Object.entries(TIER_META).map(([k, t]) => {
-              const key = Number(k);
-              const on = tiers.has(key);
+              const on = tiers.has(k);
               return (
-                <button key={k} onClick={() => onToggleTier(key)} title={t.blurb}
+                <button key={k} onClick={() => onToggleTier(k)} title={t.blurb}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 9,
                     padding: '7px 10px',
@@ -75,7 +125,7 @@ export default function FilterDrawer({
                     borderRadius: 8, cursor: 'pointer', textAlign: 'left',
                     transition: 'all 130ms',
                   }}>
-                  <span style={{ fontSize: 9, color: t.color, fontFamily: MONO, fontWeight: 800, width: 18, flexShrink: 0 }}>{t.short}</span>
+                  <span style={{ fontSize: 9, color: t.color, fontFamily: MONO, fontWeight: 800, width: 40, flexShrink: 0 }}>{t.short}</span>
                   <span style={{ fontSize: 11.5, color: on ? '#fafafa' : '#c4c4cb', fontWeight: 600, flex: 1 }}>{t.label}</span>
                   <span style={{ fontSize: 9, color: t.color, letterSpacing: 1 }}>{t.stars}</span>
                 </button>
@@ -84,25 +134,25 @@ export default function FilterDrawer({
           </div>
         </div>
 
-        {/* Groups */}
+        {/* Event family */}
         <div>
-          <GroupLabel>Group · entities</GroupLabel>
+          <GroupLabel>Event type · flows</GroupLabel>
           <ChipWrap>
-            {Object.entries(GROUP_META).map(([k, g]) => (
-              <Chip key={k} on={groups.has(k)} color={g.color} title={g.blurb} onClick={() => onToggleGroup(k)}>
-                {g.label}
+            {Object.entries(FAMILY_META).map(([k, v]) => (
+              <Chip key={k} on={families.has(k)} color={v.color} square onClick={() => onToggleFamily(k)}>
+                {v.label}
               </Chip>
             ))}
           </ChipWrap>
         </div>
 
-        {/* Deal types */}
+        {/* Status */}
         <div>
-          <GroupLabel>Deal type · flows</GroupLabel>
+          <GroupLabel>Confidence · flows</GroupLabel>
           <ChipWrap>
-            {Object.entries(DEAL_TYPE_META).map(([k, v]) => (
-              <Chip key={k} on={dealTypes.has(k)} color={v.color} title={v.blurb} square onClick={() => onToggleDealType(k)}>
-                {k}
+            {Object.entries(STATUS_META).map(([k, v]) => (
+              <Chip key={k} on={statuses.has(k)} color={v.color} title={v.blurb} onClick={() => onToggleStatus(k)}>
+                {v.label}
               </Chip>
             ))}
           </ChipWrap>
@@ -128,8 +178,9 @@ export default function FilterDrawer({
         </div>
 
         <div style={{ fontSize: 9, color: '#5b5b64', fontFamily: MONO, lineHeight: 1.6, borderTop: '1px solid #1c1d23', paddingTop: 10 }}>
-          Tier and Group pick <span style={{ color: '#a1a1aa' }}>entities</span> — their counterparties stay visible so you can follow the money.
-          Deal type and Min size pick <span style={{ color: '#a1a1aa' }}>flows</span>.
+          Sector, class and tier pick <span style={{ color: '#a1a1aa' }}>entities</span> — their counterparties stay visible so you can follow the money.
+          Event, confidence and min size pick <span style={{ color: '#a1a1aa' }}>flows</span>.
+          Undisclosed-amount flows drop out once a minimum is set.
         </div>
       </div>
     </div>

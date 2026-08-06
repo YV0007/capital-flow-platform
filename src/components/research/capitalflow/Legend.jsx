@@ -1,20 +1,20 @@
 // Legend overlay — the key to the visual encoding + interaction hints.
-// Collapsible; open by default because the map is unreadable without it.
+// Collapsible; the left column of the map lives behind it, so closed by
+// default.
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { GROUP_META, DEAL_TYPE_META } from '../../../data/capitalFlowData.js';
+import { SECTOR_META, FAMILY_META, STATUS_META } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 
 export default function Legend({ counts }) {
-  // Collapsed by default — the left column of the map lives behind it.
   const [open, setOpen] = useState(false);
 
   return (
     <div style={{
       position: 'absolute', left: 14, bottom: 14, zIndex: 12,
-      width: open ? 238 : 122,
+      width: open ? 248 : 122,
       background: 'rgba(13,14,19,0.94)',
       border: '1px solid #24242c', borderRadius: 10,
       backdropFilter: 'blur(8px)',
@@ -36,31 +36,37 @@ export default function Legend({ counts }) {
       </button>
 
       {open && (
-        <div style={{ padding: '10px 11px 12px', maxHeight: 'min(430px, calc(100vh - 320px))', overflowY: 'auto' }}>
-          <Section title="Colour = group">
-            {Object.entries(GROUP_META).map(([k, v]) => (
-              <Row key={k} label={v.label} count={counts.group?.[k]} title={v.blurb}>
-                <span style={{ width: 9, height: 9, borderRadius: '50%', background: v.color }} />
+        <div style={{ padding: '10px 11px 12px', maxHeight: 'min(460px, calc(100vh - 300px))', overflowY: 'auto' }}>
+          <Section title="Zone = sector">
+            {Object.entries(SECTOR_META)
+              .sort((a, b) => a[1].order - b[1].order)
+              .filter(([k]) => counts.sector?.[k])
+              .map(([k, v]) => (
+                <Row key={k} label={v.label} count={counts.sector?.[k]}>
+                  <span style={{ width: 9, height: 9, borderRadius: '50%', background: v.color }} />
+                </Row>
+              ))}
+          </Section>
+
+          <Section title="Dot = role">
+            <Row label="Target · receives"><Disc filled color="#a1a1aa" /></Row>
+            <Row label="Allocator · deploys"><Disc color="#a1a1aa" /></Row>
+          </Section>
+
+          <Section title="Line = event type">
+            {Object.entries(FAMILY_META).map(([k, v]) => (
+              <Row key={k} label={v.label} count={counts.family?.[k]}>
+                <span style={{ width: 13, height: 2.5, borderRadius: 2, background: v.color }} />
               </Row>
             ))}
           </Section>
 
-          <Section title="Dot = role">
-            <Row label="Receives capital" title="A destination for money.">
-              <Disc filled color="#a1a1aa" />
-            </Row>
-            <Row label="Deploys capital" title="A source of money.">
-              <Disc color="#a1a1aa" />
-            </Row>
-            <Row label="Does both" title="Deploys and receives — most of the AI stack.">
-              <Disc filled ring color="#a1a1aa" />
-            </Row>
-          </Section>
-
-          <Section title="Line = deal type">
-            {Object.entries(DEAL_TYPE_META).map(([k, v]) => (
-              <Row key={k} label={k} count={counts.dealType?.[k]} title={v.blurb}>
-                <span style={{ width: 13, height: 2.5, borderRadius: 2, background: v.color }} />
+          <Section title="Line style = confidence">
+            {Object.entries(STATUS_META).map(([k, v]) => (
+              <Row key={k} label={v.label} title={v.blurb}>
+                <span style={{
+                  width: 15, height: 0, borderTop: `2px ${v.dash ? 'dashed' : 'solid'} #a1a1aa`,
+                }} />
               </Row>
             ))}
           </Section>
@@ -69,12 +75,12 @@ export default function Legend({ counts }) {
             marginTop: 10, paddingTop: 9, borderTop: '1px solid #1c1d23',
             fontSize: 9, color: '#6b6b74', fontFamily: MONO, lineHeight: 1.65,
           }}>
-            Block size = total capital in + out.<br />
-            Capsule = capital source · block = company<br />
+            Block size = capital.<br />
+            Capsule = allocator / fund · block = company<br />
             · sharp plate = physical asset.<br />
-            Zone caption shows the sector's totals.<br />
-            Line thickness = deal size.<br />
-            Arrow points the way the money goes.<br />
+            <span style={{ color: '#FBBF24' }}>◆</span> dot / bright frame = signal firing.<br />
+            Dashed &amp; faded block = cooled (180d idle).<br />
+            Line thickness = deal size · arrow = direction.<br />
             <span style={{ color: '#8b8b93' }}>
               Click a block → breakdown panel.<br />
               Click a line → deal detail.<br />
@@ -102,7 +108,7 @@ function Section({ title, children }) {
 function Row({ label, count, title, children }) {
   return (
     <div title={title} style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: title ? 'help' : 'default' }}>
-      <span style={{ width: 14, display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+      <span style={{ width: 15, display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
         {children}
       </span>
       <span style={{ fontSize: 10, color: '#a1a1aa', fontFamily: MONO, flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -115,18 +121,15 @@ function Row({ label, count, title, children }) {
   );
 }
 
-function Disc({ filled, ring, color }) {
+function Disc({ filled, color }) {
   return (
     <span style={{ position: 'relative', width: 11, height: 11, display: 'inline-block' }}>
       <span style={{
-        position: 'absolute', inset: ring ? 2 : 0,
+        position: 'absolute', inset: 0,
         borderRadius: '50%',
         background: filled ? color : 'transparent',
         border: filled ? 'none' : `1.6px solid ${color}`,
       }} />
-      {ring && (
-        <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: `1px solid ${color}`, opacity: 0.6 }} />
-      )}
     </span>
   );
 }

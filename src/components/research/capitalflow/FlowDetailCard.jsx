@@ -2,16 +2,20 @@
 // bottom-centre so the graph stays visible and interactive behind it.
 
 import { X, ArrowRight } from 'lucide-react';
-import { fmtUSD, CONFIDENCE_META, STATUS_META } from './format.js';
-import { DEAL_TYPE_META } from '../../../data/capitalFlowData.js';
+import { fmtUSD } from './format.js';
+import {
+  EVENT_TYPE_META, STATUS_META, SOURCE_TIER_LABEL, SECTOR_META,
+} from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 
 export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, onOpenEntity }) {
   if (!flow) return null;
-  const conf = CONFIDENCE_META[flow.confidence] || CONFIDENCE_META.estimate;
-  const stat = STATUS_META[flow.status] || STATUS_META.Active;
-  const dt = DEAL_TYPE_META[flow.dealType] || {};
+  const et = EVENT_TYPE_META[flow.event_type] || { label: flow.event_type };
+  const stat = STATUS_META[flow.status] || { label: flow.status, color: '#71717a' };
+  const sec = flow.sector ? SECTOR_META[flow.sector] : null;
+  const src = sourceNode?.name || flow.sourceId?.replace(/^alloc:/, '');
+  const tgt = targetNode?.name || flow.targetId?.replace(/^target:/, '');
 
   return (
     <div style={{
@@ -30,16 +34,16 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         padding: '12px 14px', borderBottom: '1px solid #1c1c21',
       }}>
         <div style={{
-          fontSize: 21, fontWeight: 700, color: '#fafafa',
+          fontSize: 21, fontWeight: 700, color: flow.disclosed ? '#fafafa' : '#71717a',
           letterSpacing: '-0.02em', fontFamily: MONO, flexShrink: 0,
         }}>
-          {fmtUSD(flow.amountUSD)}
+          {flow.disclosed ? fmtUSD(flow.amount) : 'Undisclosed'}
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0, flex: 1 }}>
-          <EntityChip node={sourceNode} onClick={onOpenEntity} />
+          <EntityChip node={sourceNode} fallback={src} onClick={onOpenEntity} />
           <ArrowRight size={13} color={flow.color} style={{ flexShrink: 0 }} />
-          <EntityChip node={targetNode} onClick={onOpenEntity} />
+          <EntityChip node={targetNode} fallback={tgt} onClick={onOpenEntity} />
         </div>
 
         <button onClick={onClose} title="Close"
@@ -55,59 +59,53 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         display: 'flex', gap: 7, flexWrap: 'wrap',
         padding: '10px 14px', borderBottom: '1px solid #1c1c21',
       }}>
-        <Tag color={flow.color} title={dt.blurb}>{flow.dealType}</Tag>
+        <Tag color={flow.color}>{et.label}</Tag>
+        {sec && <Tag color={sec.color}>{sec.label}</Tag>}
         <Tag color="#71717a">{flow.date}</Tag>
-        {flow.holdingPeriod && <Tag color="#71717a">{flow.holdingPeriod}</Tag>}
-        <Tag color={stat.color}>{flow.status}</Tag>
-        <Tag color={conf.color} title={conf.blurb}>{conf.label}</Tag>
+        <Tag color={stat.color} title={stat.blurb}>{stat.label}</Tag>
       </div>
 
-      {/* Reasoning */}
+      {/* Provenance */}
       <div style={{ padding: '12px 14px' }}>
-        <Label>Why the money moved</Label>
+        <Label>What this flow is</Label>
         <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.6 }}>
-          {flow.reasoning}
+          {src} {et.label.toLowerCase()} into {tgt}
+          {sec ? ` — ${sec.label} sector` : ''}.
+          {' '}This edge is the engine's record of one allocator's participation; a single deal
+          can appear as several edges when multiple allocators join the same round.
         </div>
 
-        {flow.keyMetrics && (
-          <>
-            <Label style={{ marginTop: 13 }}>Key metrics</Label>
-            <div style={{ fontSize: 11.5, color: '#a1a1aa', fontFamily: MONO, lineHeight: 1.6 }}>
-              {flow.keyMetrics}
-            </div>
-          </>
-        )}
-
-        {flow.sourceNote && (
-          <div style={{
-            marginTop: 12, paddingTop: 10, borderTop: '1px solid #17171b',
-            fontSize: 10, color: '#5b5b64', fontFamily: MONO, lineHeight: 1.5,
-          }}>
-            Source: {flow.sourceNote}
-          </div>
-        )}
+        <Label style={{ marginTop: 13 }}>Confidence &amp; source</Label>
+        <div style={{ fontSize: 11.5, color: '#a1a1aa', fontFamily: MONO, lineHeight: 1.7 }}>
+          <span style={{ color: stat.color }}>{stat.short || flow.status}</span>
+          <span style={{ color: '#3f3f46' }}> — </span>{stat.blurb || ''}
+          <br />
+          <span style={{ color: '#71717a' }}>{SOURCE_TIER_LABEL[flow.sourceTier] || `Source tier ${flow.sourceTier}`}</span>
+        </div>
       </div>
     </div>
   );
 }
 
-function EntityChip({ node, onClick }) {
-  if (!node) return null;
+function EntityChip({ node, fallback, onClick }) {
+  const name = node?.name || fallback;
+  if (!name) return null;
+  const color = node?.color || '#71717a';
   return (
-    <button onClick={() => onClick(node.id)} title={`Open ${node.name}`}
+    <button onClick={() => node && onClick(node.id)} title={node ? `Open ${node.name}` : ''}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
         padding: '4px 9px', background: '#141418',
         border: '1px solid #26262c', borderRadius: 7,
-        cursor: 'pointer', minWidth: 0, maxWidth: 190,
+        cursor: node ? 'pointer' : 'default', minWidth: 0, maxWidth: 190,
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.borderColor = node.color + '80')}
+      onMouseEnter={(e) => (e.currentTarget.style.borderColor = color + '80')}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#26262c')}>
-      <span style={{ width: 7, height: 7, borderRadius: '50%', background: node.color, flexShrink: 0 }} />
+      <span style={{ width: 7, height: 7, borderRadius: '50%', background: color, flexShrink: 0 }} />
       <span style={{
         fontSize: 11.5, color: '#e4e4e7', fontWeight: 600,
         overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-      }}>{node.name}</span>
+      }}>{name}</span>
     </button>
   );
 }

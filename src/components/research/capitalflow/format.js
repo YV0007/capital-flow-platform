@@ -28,18 +28,6 @@ export function linkWidth(link) {
   return 0.8 + 4 * Math.sqrt(link.amountShare || 0);
 }
 
-/** Colour for the confidence chip. */
-export const CONFIDENCE_META = {
-  reported: { label: 'REPORTED', color: '#34D399', blurb: 'Figure was disclosed or directly reported.' },
-  estimate: { label: 'ESTIMATE', color: '#F59E0B', blurb: 'Figure is assembled from analyst or press estimates.' },
-};
-
-export const STATUS_META = {
-  Announced: { color: '#FBBF24' },
-  Active:    { color: '#34D399' },
-  Closed:    { color: '#71717a' },
-};
-
 /** Truncates long entity names for on-canvas labels. */
 export function shortLabel(name, max = 22) {
   return name.length > max ? name.slice(0, max - 1) + '…' : name;

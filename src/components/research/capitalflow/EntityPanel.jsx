@@ -1,10 +1,13 @@
 // Slide-in right panel — the distribution breakdown for one entity.
-// Answers: who puts money in here, how much, in what form, and where does
-// this entity's own money go. The graph stays live underneath.
+// Answers: who puts money in here (targets) or where this allocator's money
+// goes, how much, in what form, at what confidence. The graph stays live
+// underneath.
 
 import { X, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
-import { fmtUSD, CONFIDENCE_META, STATUS_META } from './format.js';
-import { GROUP_META, TIER_META } from '../../../data/capitalFlowData.js';
+import { fmtUSD } from './format.js';
+import {
+  SECTOR_META, CLASS_META, TIER_META, STATUS_META,
+} from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 const W = 380;
@@ -14,10 +17,11 @@ export default function EntityPanel({
   selectedFlowId, onSelectFlow, onOpenEntity, onClose,
 }) {
   if (!node) return null;
-  const grp = GROUP_META[node.group];
+  const cls = CLASS_META[node.cls];
+  const sec = node.sector ? SECTOR_META[node.sector] : null;
   const tier = node.tier ? TIER_META[node.tier] : null;
-  const role = node.type === 'both' ? 'Deploys & receives capital'
-    : node.type === 'player' ? 'Deploys capital' : 'Receives capital';
+  const role = node.kind === 'allocator' ? 'Allocator · deploys capital' : 'Target · receives capital';
+  const isAllocator = node.kind === 'allocator';
 
   return (
     <aside style={{
@@ -42,7 +46,7 @@ export default function EntityPanel({
               {node.name}
             </div>
             <div style={{ fontSize: 10, color: '#71717a', fontFamily: MONO, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              {grp?.label || node.group} · {node.sector}
+              {cls?.label || node.cls}{sec ? ` · ${sec.label}` : ''}
             </div>
           </div>
           <button onClick={onClose} title="Close panel"
@@ -68,13 +72,21 @@ export default function EntityPanel({
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
             }}>{tier.short} · {tier.label} <span style={{ letterSpacing: 1 }}>{tier.stars}</span></span>
           )}
-          {node.tier == null && node.watchlist && (
-            <span title="On the watchlist but not yet tier-assigned in the research spec" style={{
+          {node.stale && (
+            <span title="No activity in 180 days — cooled off, kept in memory." style={{
+              display: 'inline-block', padding: '3px 8px',
+              background: '#16161a', border: '1px dashed #33343c', borderRadius: 5,
+              fontSize: 9, color: '#94A3B8', fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
+            }}>Cooled · 180d idle</span>
+          )}
+          {node.watchOnly && (
+            <span title="Only candidate (unconfirmed) flows so far — kept off the main map by default." style={{
               display: 'inline-block', padding: '3px 8px',
               background: '#16161a', border: '1px dashed #33343c', borderRadius: 5,
               fontSize: 9, color: '#71717a', fontFamily: MONO, fontWeight: 600,
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
-            }}>Tier — TBD</span>
+            }}>Watch · unconfirmed</span>
           )}
         </div>
       </div>
@@ -82,23 +94,29 @@ export default function EntityPanel({
       {/* Scroll body */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px 28px' }}>
         {/* Totals */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
-          <Stat label="Capital in" value={fmtUSD(node.totalInflow)} sub={`${node.inflowCount} flow${node.inflowCount === 1 ? '' : 's'}`} color="#34D399" />
-          <Stat label="Capital out" value={fmtUSD(node.totalOutflow)} sub={`${node.outflowCount} flow${node.outflowCount === 1 ? '' : 's'}`} color="#F59E0B" />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
+          <Stat label="Capital" value={fmtUSD(node.capital)} sub={isAllocator ? 'deployed' : 'received'} color={isAllocator ? '#C2A36B' : '#82B98D'} />
+          <Stat label="Deals" value={String(node.deals)} sub={`${node.degree} flow${node.degree === 1 ? '' : 's'} tracked`} color="#e4e4e7" />
         </div>
 
-        <Section title="What this node is">
-          <div style={{ fontSize: 12.5, color: '#c4c4cb', lineHeight: 1.62 }}>
-            {node.description}
-          </div>
-        </Section>
+        {/* Activity window */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16,
+          padding: '8px 11px', background: '#0F0F13', border: '1px solid #1e1e23', borderRadius: 9,
+          fontSize: 10, fontFamily: MONO,
+        }}>
+          <span style={{ color: '#52525b' }}>ACTIVE</span>
+          <span style={{ color: '#a1a1aa' }}>{node.first_seen}</span>
+          <span style={{ color: '#3f3f46' }}>→</span>
+          <span style={{ color: '#a1a1aa' }}>{node.last_activity}</span>
+        </div>
 
         {inbound.length > 0 && (
           <Section title={`Who invests here · ${fmtUSD(node.totalInflow)}`} icon={<ArrowDownLeft size={11} color="#34D399" />}>
             <FlowList
-              flows={inbound} total={node.totalInflow} counterpartyKey="sourceId"
+              flows={inbound} counterpartyKey="sourceId"
               nodeById={nodeById} selectedFlowId={selectedFlowId}
-              onSelectFlow={onSelectFlow} onOpenEntity={onOpenEntity} accent="#34D399"
+              onSelectFlow={onSelectFlow} onOpenEntity={onOpenEntity}
             />
           </Section>
         )}
@@ -106,9 +124,9 @@ export default function EntityPanel({
         {outbound.length > 0 && (
           <Section title={`Where its money goes · ${fmtUSD(node.totalOutflow)}`} icon={<ArrowUpRight size={11} color="#F59E0B" />}>
             <FlowList
-              flows={outbound} total={node.totalOutflow} counterpartyKey="targetId"
+              flows={outbound} counterpartyKey="targetId"
               nodeById={nodeById} selectedFlowId={selectedFlowId}
-              onSelectFlow={onSelectFlow} onOpenEntity={onOpenEntity} accent="#F59E0B"
+              onSelectFlow={onSelectFlow} onOpenEntity={onOpenEntity}
             />
           </Section>
         )}
@@ -124,16 +142,14 @@ export default function EntityPanel({
 }
 
 // ── Ranked flow list with share bars ────────────────────────────────────
-function FlowList({ flows, total, counterpartyKey, nodeById, selectedFlowId, onSelectFlow, onOpenEntity, accent }) {
+function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFlow, onOpenEntity }) {
   const max = Math.max(...flows.map(f => f.amountUSD), 1);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       {flows.map(f => {
         const cp = nodeById.get(f[counterpartyKey]);
-        const share = total > 0 ? (f.amountUSD / total) * 100 : 0;
         const on = f.id === selectedFlowId;
-        const conf = CONFIDENCE_META[f.confidence] || CONFIDENCE_META.estimate;
-        const stat = STATUS_META[f.status] || STATUS_META.Active;
+        const stat = STATUS_META[f.status] || {};
         return (
           <button key={f.id} onClick={() => onSelectFlow(f.id)}
             style={{
@@ -165,11 +181,8 @@ function FlowList({ flows, total, counterpartyKey, nodeById, selectedFlowId, onS
                 }}>
                 {cp ? cp.name : f[counterpartyKey]}
               </span>
-              <span style={{ fontSize: 12, fontWeight: 700, color: '#fafafa', fontFamily: MONO, flexShrink: 0 }}>
-                {fmtUSD(f.amountUSD)}
-              </span>
-              <span style={{ fontSize: 9.5, color: accent, fontFamily: MONO, flexShrink: 0, minWidth: 34, textAlign: 'right' }}>
-                {share >= 1 ? Math.round(share) : share.toFixed(1)}%
+              <span style={{ fontSize: 12, fontWeight: 700, color: f.disclosed ? '#fafafa' : '#71717a', fontFamily: MONO, flexShrink: 0 }}>
+                {f.disclosed ? fmtUSD(f.amount) : '—'}
               </span>
             </span>
             <span style={{
@@ -177,12 +190,11 @@ function FlowList({ flows, total, counterpartyKey, nodeById, selectedFlowId, onS
               marginTop: 5, fontSize: 9.5, fontFamily: MONO,
             }}>
               <span style={{ width: 6, height: 6, borderRadius: 2, background: f.color, flexShrink: 0 }} />
-              <span style={{ color: '#a1a1aa' }}>{f.dealType}</span>
+              <span style={{ color: '#a1a1aa' }}>{f.eventLabel}</span>
               <span style={{ color: '#3f3f46' }}>·</span>
               <span style={{ color: '#71717a' }}>{f.date}</span>
               <span style={{ flex: 1 }} />
-              <span style={{ color: stat.color }}>{f.status}</span>
-              <span style={{ color: conf.color, opacity: 0.75 }} title={conf.blurb}>{conf.label[0]}</span>
+              <span title={stat.blurb} style={{ color: stat.color || '#71717a', cursor: 'help' }}>{stat.short || f.status}</span>
             </span>
           </button>
         );
