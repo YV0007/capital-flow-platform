@@ -1,0 +1,117 @@
+{
+  "_meta": {
+    "note": "Полный рейтинг батча YC Spring 2026 (P26). Двухслойная гибридная модель, шкала 0–100. Компании с раскрытыми жёсткими данными несут непрерывный балл; остальные — балл-пол своего тира. [TOLOKA] — позиция в портфеле Toloka.VC / Founder Factor (21 всего).",
+    "as_of": "август 2026",
+    "score_note": "Балл 0–100. Порядок точный сверху и намеренно грубый внизу — честный предел при таких данных."
+  },
+  "toloka_total": 21,
+  "factors": [
+    { "key": "valuation", "label": "Оценка", "weight": 25, "desc": "Post-money оценка или SAFE cap, если раскрыты." },
+    { "key": "funding", "label": "Привлечённый капитал", "weight": 25, "desc": "Внешние деньги сверх стандартной сделки YC ($500K). Сам $500K от YC не считается." },
+    { "key": "revenue", "label": "Выручка / ARR", "weight": 25, "desc": "Раскрытая выручка или ARR." },
+    { "key": "attention", "label": "Внимание", "weight": 25, "desc": "Пресса (TechCrunch, Forbes, Inc.), известные фонды, founder с прошлым экзитом." }
+  ],
+  "how_it_works": {
+    "intro": "Полностью по всем 4 факторам можно оценить только ~15% батча — у остальных данные не раскрыты. Поэтому две «полки»:",
+    "shelves": [
+      { "label": "Точный балл", "scope": "топ ~25 компаний", "desc": "У кого есть минимум 2 из 4 факторов — считается реальный балл (log + z-score по раскрытым данным, среднее по имеющимся факторам, шкала 0–100)." },
+      { "label": "Тир", "scope": "остальные ~160", "desc": "Распределены по 5 уровням на основе того, какие факторы вообще раскрыты. Точного балла нет — данных недостаточно." }
+    ],
+    "meaning": "Tier 1–2 — подтверждён реальными данными (оценка / капитал / выручка / пресса). Tier 3 — только заявленная самими компаниями выручка. Tier 4–5 — «нет раскрытых данных», а не «слабая компания»."
+  },
+  "tiers": [
+    {
+      "id": 1,
+      "name": "Breakout",
+      "accent": "#fbbf24",
+      "criteria": "Раскрытая оценка ≥$100M, раунд ≥$10M или яркая трекшн-история",
+      "companies": [
+        { "rank": 1, "name": "Tasklet", "score": 98 },
+        { "rank": 2, "name": "9 Mothers", "score": 96 },
+        { "rank": 3, "name": "Ploy", "score": 93 },
+        { "rank": 4, "name": "Drafted", "score": 88 }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Funded / Covered",
+      "accent": "#34d399",
+      "criteria": "Названный внешний раунд, топовая пресса или яркий повторный founder",
+      "companies": [
+        { "rank": 5, "name": "Adialante", "score": 78, "toloka": true },
+        { "rank": 6, "name": "Complir", "score": 74, "toloka": true },
+        { "rank": 7, "name": "Lightsprint", "score": 72, "toloka": true },
+        { "rank": 8, "name": "Dispatch", "score": 70, "toloka": true },
+        { "rank": 9, "name": "Sazabi", "score": 68 },
+        { "rank": 10, "name": "Silmaril", "score": 66 },
+        { "rank": 11, "name": "Superset", "score": 65 },
+        { "rank": 12, "name": "Arga Labs", "score": 64 },
+        { "rank": 13, "name": "Interfaze", "score": 62, "toloka": true },
+        { "rank": 14, "name": "Gojiberry AI", "score": 61, "toloka": true },
+        { "rank": 15, "name": "Ageless AI", "score": 60 },
+        { "rank": 16, "name": "Inth", "score": 59 },
+        { "rank": 17, "name": "Juno", "score": 58 },
+        { "rank": 18, "name": "KelAI", "score": 57 },
+        { "rank": 19, "name": "Minicor", "score": 56 },
+        { "rank": 20, "name": "Enjamb", "score": 55 },
+        { "rank": 21, "name": "BentoLabs AI", "score": 54, "toloka": true },
+        { "rank": 22, "name": "Apollo Atomics", "score": 54 },
+        { "rank": 23, "name": "Asendia AI", "score": 53 },
+        { "rank": 24, "name": "Harbor", "score": 53 },
+        { "rank": 25, "name": "MochaTrade", "score": 52 }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Revenue-disclosed only",
+      "accent": "#60a5fa",
+      "criteria": "В 32 раскрывших выручку у Riveter, без раунда/прессы",
+      "companies": [
+        { "rank": 26, "name": "Trellis", "score": 50 },
+        { "rank": 27, "name": "Zibra Labs", "score": 50, "toloka": true },
+        { "rank": 28, "name": "Transload", "score": 49, "toloka": true },
+        { "rank": 29, "name": "Klarify", "score": 49, "toloka": true },
+        { "rank": 30, "name": "Hedge", "score": 48, "toloka": true },
+        { "rank": 31, "name": "Pairio", "score": 48, "toloka": true },
+        { "rank": 32, "name": "Cohesion", "score": 47, "toloka": true }
+      ],
+      "more": { "label": "~25 других компаний с раскрытой выручкой (не Toloka)", "rankLabel": "33–57", "scoreRange": "45–50" }
+    },
+    {
+      "id": 4,
+      "name": "Signal-light",
+      "accent": "#a1a1aa",
+      "criteria": "Fluenta LRS ≥ медианы батча (~48.5) и/или самозаявленный трекшн; без стороннего датапоинта",
+      "companies": [
+        { "name": "FinalDose", "score": 42, "toloka": true },
+        { "name": "Madrone", "score": 42, "toloka": true },
+        { "name": "Foresight", "score": 41, "toloka": true },
+        { "name": "Dayjob", "score": 41, "toloka": true },
+        { "name": "PerfectBit", "score": 40, "toloka": true },
+        { "name": "Kinect", "score": 40, "toloka": true },
+        { "name": "Astraea", "score": 40, "toloka": true },
+        { "name": "Keyframe Labs", "score": 40, "toloka": true }
+      ],
+      "more": { "label": "~55–70 других компаний (не Toloka)", "scoreRange": "38–44" }
+    },
+    {
+      "id": 5,
+      "name": "YC-floor-only",
+      "accent": "#52525b",
+      "criteria": "Ничего не раскрыто сверх стандартной сделки (~$500K / $7.1M SAFE)",
+      "companies": [],
+      "more": { "label": "~50–70 компаний без отличающих публичных данных", "scoreRange": "33–37" }
+    }
+  ],
+  "toloka_placement": {
+    "title": "Где сидят 21 позиция Toloka",
+    "rows": [
+      { "tier": "Tier 1 — Breakout", "count": 0, "names": "" },
+      { "tier": "Tier 2 — Funded / Covered", "count": 6, "names": "Adialante, Complir, Lightsprint, Dispatch, Interfaze, Gojiberry AI (BentoLabs на стыке T2/T3)" },
+      { "tier": "Tier 3 — Revenue-disclosed", "count": 6, "names": "Zibra Labs, Transload, Klarify, Hedge, Pairio, Cohesion" },
+      { "tier": "Tier 4 — Signal-light", "count": 8, "names": "FinalDose, Madrone, Foresight, Dayjob, PerfectBit, Kinect, Astraea, Keyframe Labs" }
+    ],
+    "consensus": "4 из 11 заметных стартапов TechCrunch — позиции Toloka (Adialante, Complir, Lightsprint, Dispatch), ~5x переиндекс к базовой ставке батча (~5%).",
+    "precise_note": "Точно (непрерывным баллом) рейтингуются ~4–6 позиций. Остальные — только по тиру."
+  }
+}

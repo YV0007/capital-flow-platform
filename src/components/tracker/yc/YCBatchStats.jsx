@@ -8,6 +8,7 @@
 import React from 'react';
 import { ExternalLink, Star, Trophy } from 'lucide-react';
 import data from '../../../data/yc-batch-stats.json';
+import YCBatchRanking from './YCBatchRanking.jsx';
 
 const fmtUsd = (n) => {
   if (n == null) return null;
@@ -20,6 +21,7 @@ export default function YCBatchStats() {
   return (
     <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 20 }}>
       <BatchBlock d={data.batch} />
+      <YCBatchRanking />
       <TolokaBlock d={data.toloka} />
       <ComparisonBlock d={data.comparison} />
     </div>
