@@ -79,6 +79,18 @@ export default function Legend({ counts }) {
             })}
           </Section>
 
+          <Section title="Grade = source × credibility">
+            <Row label="A1 — primary, confirmed" title="Letter = source reliability A(best)–E; digit = credibility 1(best)–5.">
+              <span style={{ fontSize: 9, fontWeight: 800, color: '#34D399', fontFamily: MONO }}>A1</span>
+            </Row>
+            <Row label="C3 — press, single source">
+              <span style={{ fontSize: 9, fontWeight: 800, color: '#FBBF24', fontFamily: MONO }}>C3</span>
+            </Row>
+            <Row label="C4 — uncorroborated">
+              <span style={{ fontSize: 9, fontWeight: 800, color: '#94A3B8', fontFamily: MONO }}>C4</span>
+            </Row>
+          </Section>
+
           <div style={{
             marginTop: 10, paddingTop: 9, borderTop: '1px solid #1c1d23',
             fontSize: 9, color: '#6b6b74', fontFamily: MONO, lineHeight: 1.65,
@@ -87,7 +99,8 @@ export default function Legend({ counts }) {
             Sources ring the centre, grouped by class;<br />
             sectors orbit outside.<br />
             <span style={{ color: '#FBBF24' }}>◆</span> / bright cell = signal firing.<br />
-            Bond thickness = deal size · arrow = direction.<br />
+            <span style={{ color: '#F5B942' }}>▢</span> warm outline = elite network.<br />
+            Bond opacity = confidence · thickness = size.<br />
             <span style={{ color: '#8b8b93' }}>
               Click a node → breakdown panel.<br />
               Click a bond → deal detail.<br />

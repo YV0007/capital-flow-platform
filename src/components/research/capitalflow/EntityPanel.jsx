@@ -3,14 +3,20 @@
 // goes, how much, in what form, at what confidence. The graph stays live
 // underneath.
 
-import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2 } from 'lucide-react';
+import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users } from 'lucide-react';
 import { fmtUSD } from './format.js';
 import {
-  SECTOR_META, CLASS_META, TIER_META, STATUS_META,
+  SECTOR_META, CLASS_META, TIER_META, STATUS_META, NETWORK_META, gradeBlurb,
 } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 const W = 380;
+
+// Confidence → colour (green strong · amber medium · slate weak).
+function gradeColor(c) {
+  if (c == null) return '#94A3B8';
+  return c >= 80 ? '#34D399' : c >= 60 ? '#FBBF24' : '#94A3B8';
+}
 
 export default function EntityPanel({
   node, inbound, outbound, nodeById,
@@ -71,6 +77,15 @@ export default function EntityPanel({
               fontSize: 9, color: tier.color, fontFamily: MONO, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
             }}>{tier.short} · {tier.label} <span style={{ letterSpacing: 1 }}>{tier.stars}</span></span>
+          )}
+          {node.network && (
+            <span title={`Member of the ${NETWORK_META[node.network]?.label || node.network} network`} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 8px',
+              background: (NETWORK_META[node.network]?.color || '#F5B942') + '18',
+              border: `1px solid ${(NETWORK_META[node.network]?.color || '#F5B942')}55`, borderRadius: 5,
+              fontSize: 9, color: NETWORK_META[node.network]?.color || '#F5B942', fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
+            }}><Users size={10} /> {NETWORK_META[node.network]?.label || node.network}</span>
           )}
           {node.stale && (
             <span title="No activity in 180 days — cooled off, kept in memory." style={{
@@ -263,7 +278,12 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
               <span style={{ color: '#3f3f46' }}>·</span>
               <span style={{ color: '#71717a' }}>{f.date}</span>
               <span style={{ flex: 1 }} />
-              <span title={stat.blurb} style={{ color: stat.color || '#71717a', cursor: 'help' }}>{stat.short || f.status}</span>
+              {f.grade && (
+                <span title={`Grade ${f.grade} — ${gradeBlurb(f.grade)}. Confidence ${f.confidence}/100.`}
+                  style={{ color: gradeColor(f.confidence), fontWeight: 700, cursor: 'help' }}>
+                  {f.grade}·{f.confidence}
+                </span>
+              )}
             </span>
           </button>
         );

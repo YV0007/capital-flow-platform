@@ -27,8 +27,9 @@
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
-  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, TriangleAlert, Eye,
+  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, TriangleAlert, Eye, Layers, Target,
 } from 'lucide-react';
+import { NETWORK_META } from '../../../data/capitalMap.js';
 
 import FlowGraph from './FlowGraph.jsx';
 import FilterDrawer from './FilterBar.jsx';
@@ -45,7 +46,8 @@ const BG = '#08090C';
 export default function CapitalFlowMap({ onBack }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
-  const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links), [graph]);
+  const [groupMode, setGroupMode] = useState('sector');      // 'sector' | 'theme' (v2 view switch)
+  const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links, { groupMode, themes: graph.themes }), [graph, groupMode]);
   const graphData = useMemo(() => ({ nodes: graph.nodes, links: graph.links }), [graph]);
   const adjacency = useMemo(() => buildAdjacency(graph.links), [graph]);
   const nodeById = useMemo(() => new Map(graph.nodes.map(n => [n.id, n])), [graph]);
@@ -60,7 +62,10 @@ export default function CapitalFlowMap({ onBack }) {
   const [tiers, setTiers] = useState(() => new Set());       // entities (allocators)
   const [families, setFamilies] = useState(() => new Set()); // flows (event family)
   const [statuses, setStatuses] = useState(() => new Set()); // flows
+  const [themes, setThemes] = useState(() => new Set());     // entities (targets, by theme)
+  const [networks, setNetworks] = useState(() => new Set()); // entities (allocators, by network)
   const [minAmount, setMinAmount] = useState(0);
+  const [minConfidence, setMinConfidence] = useState(0);     // flows (v2 grade score)
   const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -72,16 +77,18 @@ export default function CapitalFlowMap({ onBack }) {
 
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
-    const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0;
+    const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0 || themes.size > 0 || networks.size > 0;
     // Seed = nodes matching ANY active entity selection (OR-union) — robust to
-    // mixing target-only (sector) and allocator-only (tier) dimensions.
+    // mixing target-only (sector/theme) and allocator-only (tier/network) dims.
     const seed = new Set(
       graph.nodes.filter(n => {
         if (!entityFilterOn) return true;
         const mSec = sectors.size && n.sector && sectors.has(n.sector);
         const mCls = classes.size && classes.has(n.cls);
         const mTier = tiers.size && n.tier && tiers.has(n.tier);
-        return mSec || mCls || mTier;
+        const mTheme = themes.size && n.themeKey && themes.has(n.themeKey);
+        const mNet = networks.size && n.network && networks.has(n.network);
+        return mSec || mCls || mTier || mTheme || mNet;
       }).map(n => n.id)
     );
 
@@ -90,6 +97,7 @@ export default function CapitalFlowMap({ onBack }) {
       if (families.size && !families.has(l.family)) return;
       if (statuses.size && !statuses.has(l.status)) return;
       if (minAmount > 0 && l.amountUSD < minAmount) return;
+      if (minConfidence > 0 && (l.confidence == null || l.confidence < minConfidence)) return;
       if (entityFilterOn && !seed.has(l.sourceId) && !seed.has(l.targetId)) return;
       links.add(l.id);
     });
@@ -113,7 +121,7 @@ export default function CapitalFlowMap({ onBack }) {
     }
 
     return { matchedNodes: nodes, matchedLinks: links };
-  }, [graph, sectors, classes, tiers, families, statuses, minAmount, showWatch, nodeById]);
+  }, [graph, sectors, classes, tiers, families, statuses, themes, networks, minAmount, minConfidence, showWatch, nodeById]);
 
   // ── Selection neighbourhood ────────────────────────────────────────────
   const { neighbourNodes, neighbourLinks } = useMemo(() => {
@@ -170,7 +178,10 @@ export default function CapitalFlowMap({ onBack }) {
     setTiers(new Set());
     setFamilies(new Set());
     setStatuses(new Set());
+    setThemes(new Set());
+    setNetworks(new Set());
     setMinAmount(0);
+    setMinConfidence(0);
     setQuery('');
   }, []);
 
@@ -205,11 +216,13 @@ export default function CapitalFlowMap({ onBack }) {
     return { sector, cls, family };
   }, [graph, matchedNodes, matchedLinks]);
 
-  const activeFilterCount = sectors.size + classes.size + tiers.size + families.size + statuses.size + (minAmount > 0 ? 1 : 0);
+  const activeFilterCount = sectors.size + classes.size + tiers.size + families.size + statuses.size
+    + themes.size + networks.size + (minAmount > 0 ? 1 : 0) + (minConfidence > 0 ? 1 : 0);
   const visibleTotal = useMemo(
     () => graph.links.reduce((s, l) => s + (matchedLinks.has(l.id) && l.disclosed ? l.amount : 0), 0),
     [graph, matchedLinks]
   );
+  const networksPresent = useMemo(() => [...new Set(graph.nodes.map(n => n.network).filter(Boolean))], [graph]);
 
   // Search suggestions
   const suggestions = query.trim()
@@ -361,6 +374,11 @@ export default function CapitalFlowMap({ onBack }) {
 
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
+          <TopBtn onClick={() => setGroupMode(m => (m === 'sector' ? 'theme' : 'sector'))}
+            label="Group by sector or theme" active={groupMode === 'theme'} wide>
+            {groupMode === 'sector' ? <Target size={12} /> : <Layers size={12} />}
+            {groupMode === 'sector' ? 'Sectors' : 'Themes'}
+          </TopBtn>
           <TopBtn onClick={() => setDrawerOpen(o => !o)} label="Filters" active={drawerOpen || activeFilterCount > 0} wide>
             <SlidersHorizontal size={12} />
             Filters{activeFilterCount ? ` · ${activeFilterCount}` : ''}
@@ -384,16 +402,27 @@ export default function CapitalFlowMap({ onBack }) {
         </div>
       </div>
 
+      {/* ── Beneficiary read-through (public tickers) ───────────────────── */}
+      {graph.beneficiaries && graph.beneficiaries.length > 0 && (
+        <BeneficiaryPanel items={graph.beneficiaries} />
+      )}
+
       {/* ── Filter drawer ───────────────────────────────────────────────── */}
       {drawerOpen && (
         <FilterDrawer
           sectorsPresent={graph.sectors}
           sectors={sectors} onToggleSector={toggleIn(setSectors)}
+          themesPresent={graph.themes}
+          themesSel={themes} onToggleTheme={toggleIn(setThemes)}
           classes={classes} onToggleClass={toggleIn(setClasses)}
           tiers={tiers} onToggleTier={toggleIn(setTiers)}
+          networksPresent={networksPresent}
+          networksSel={networks} onToggleNetwork={toggleIn(setNetworks)}
           families={families} onToggleFamily={toggleIn(setFamilies)}
           statuses={statuses} onToggleStatus={toggleIn(setStatuses)}
           minAmount={minAmount} onMinAmount={setMinAmount} maxAmount={graph.maxAmount}
+          minConfidence={minConfidence} onMinConfidence={setMinConfidence}
+          confidenceThreshold={graph.confidenceThreshold}
           activeCount={activeFilterCount}
           onReset={resetFilters}
           onClose={() => setDrawerOpen(false)}
@@ -487,6 +516,61 @@ export default function CapitalFlowMap({ onBack }) {
           onOpenEntity={focusEntity}
           onClose={() => setSelectedNodeId(null)}
         />
+      )}
+    </div>
+  );
+}
+
+// ── Beneficiary read-through panel — public tickers private capital points at.
+// The highest-value actionable signal, so it gets its own always-visible card.
+function BeneficiaryPanel({ items }) {
+  const [open, setOpen] = useState(true);
+  // Parse "NVDA (NVIDIA): 9 private flows converge" → ticker / name / count.
+  const parsed = items.map(s => {
+    const m = /^([A-Z.]{1,6})\s*\(([^)]+)\):\s*(\d+)/.exec(s.theme || '');
+    return {
+      ticker: m ? m[1] : (s.theme || '').split(' ')[0],
+      name: m ? m[2] : '',
+      count: m ? +m[3] : Math.round(s.strength || 0),
+      strength: s.strength || 0,
+    };
+  }).sort((a, b) => b.count - a.count);
+
+  return (
+    <div style={{
+      position: 'absolute', left: 14, top: 92, zIndex: 14, width: open ? 250 : 190,
+      background: 'rgba(13,14,19,0.95)', border: '1px solid #2b2f24', borderRadius: 10,
+      backdropFilter: 'blur(8px)', boxShadow: '0 16px 40px -16px rgba(0,0,0,0.9)', overflow: 'hidden',
+    }}>
+      <button onClick={() => setOpen(o => !o)} style={{
+        display: 'flex', alignItems: 'center', gap: 7, width: '100%', padding: '8px 11px',
+        background: 'transparent', border: 'none', cursor: 'pointer',
+        color: '#FBBF24', fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.1em',
+      }}>
+        <Target size={12} /> Public read-through
+        <span style={{ marginLeft: 'auto', color: '#71717a' }}>{parsed.length}</span>
+      </button>
+      {open && (
+        <div style={{ padding: '2px 8px 10px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ fontSize: 8.5, color: '#5b5b64', fontFamily: MONO, padding: '0 3px 4px', lineHeight: 1.5 }}>
+            Public tickers many private flows converge on — the actionable beneficiaries.
+          </div>
+          {parsed.map((b, i) => (
+            <a key={i} href={`https://duckduckgo.com/?q=${encodeURIComponent(b.ticker + ' ' + b.name + ' stock')}`}
+              target="_blank" rel="noopener noreferrer" title={`${b.name} — ${b.count} private flows converge`}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 7,
+                background: '#16170f', border: '1px solid #2b2f1e', textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#FBBF2455')}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#2b2f1e')}>
+              <span style={{ fontSize: 12, fontWeight: 800, color: '#FBBF24', fontFamily: MONO, minWidth: 42 }}>{b.ticker}</span>
+              <span style={{ fontSize: 10.5, color: '#c4c4cb', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.name}</span>
+              <span style={{ fontSize: 10, color: '#a1a1aa', fontFamily: MONO }}>{b.count}×</span>
+            </a>
+          ))}
+        </div>
       )}
     </div>
   );

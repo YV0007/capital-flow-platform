@@ -4,7 +4,7 @@
 
 import { X, RotateCcw } from 'lucide-react';
 import {
-  SECTOR_META, CLASS_META, TIER_META, FAMILY_META, STATUS_META,
+  SECTOR_META, CLASS_META, TIER_META, FAMILY_META, STATUS_META, THEME_META, NETWORK_META,
 } from '../../../data/capitalMap.js';
 import { fmtUSD } from './format.js';
 
@@ -13,16 +13,21 @@ const MONO = 'ui-monospace, monospace';
 export default function FilterDrawer({
   sectorsPresent,
   sectors, onToggleSector,
+  themesPresent, themesSel, onToggleTheme,
   classes, onToggleClass,
   tiers, onToggleTier,
+  networksPresent, networksSel, onToggleNetwork,
   families, onToggleFamily,
   statuses, onToggleStatus,
   minAmount, onMinAmount, maxAmount,
+  minConfidence, onMinConfidence, confidenceThreshold,
   activeCount, onReset, onClose,
 }) {
   // Only offer the sectors that are actually in the file this cycle.
   const sectorKeys = Object.keys(sectorsPresent || {})
     .sort((a, b) => (SECTOR_META[a]?.order ?? 99) - (SECTOR_META[b]?.order ?? 99));
+  const themeKeys = Object.keys(themesPresent || {})
+    .sort((a, b) => (THEME_META[a]?.order ?? 99) - (THEME_META[b]?.order ?? 99));
   const allocClasses = Object.entries(CLASS_META).filter(([, v]) => v.side === 'allocator');
   const targetClasses = Object.entries(CLASS_META).filter(([, v]) => v.side === 'target');
 
@@ -88,6 +93,27 @@ export default function FilterDrawer({
           </ChipWrap>
         </div>
 
+        {/* Theme (second dimension) */}
+        {themeKeys.length > 0 && (
+          <div>
+            <GroupLabel>Theme · narrative</GroupLabel>
+            <ChipWrap>
+              {themeKeys.map(k => {
+                const t = themesPresent[k];
+                const meta = THEME_META[k] || {};
+                return (
+                  <Chip key={k} on={themesSel.has(k)} color={meta.color || '#71717a'}
+                    title={`${t.deals} deals · ${fmtUSD(t.capital)}${t.lit ? ' · signal firing' : ''}`}
+                    onClick={() => onToggleTheme(k)}>
+                    {t.lit && <span style={{ color: '#FBBF24', marginRight: -1 }}>◆</span>}
+                    {meta.label || k}
+                  </Chip>
+                );
+              })}
+            </ChipWrap>
+          </div>
+        )}
+
         {/* Class */}
         <div>
           <GroupLabel>Allocator class · entities</GroupLabel>
@@ -134,6 +160,23 @@ export default function FilterDrawer({
           </div>
         </div>
 
+        {/* Network */}
+        {networksPresent && networksPresent.length > 0 && (
+          <div>
+            <GroupLabel>Network · elite allocators</GroupLabel>
+            <ChipWrap>
+              {networksPresent.map(k => {
+                const v = NETWORK_META[k] || { label: k, color: '#F5B942' };
+                return (
+                  <Chip key={k} on={networksSel.has(k)} color={v.color} onClick={() => onToggleNetwork(k)}>
+                    {v.label}
+                  </Chip>
+                );
+              })}
+            </ChipWrap>
+          </div>
+        )}
+
         {/* Event family */}
         <div>
           <GroupLabel>Event type · flows</GroupLabel>
@@ -148,7 +191,7 @@ export default function FilterDrawer({
 
         {/* Status */}
         <div>
-          <GroupLabel>Confidence · flows</GroupLabel>
+          <GroupLabel>Status · flows</GroupLabel>
           <ChipWrap>
             {Object.entries(STATUS_META).map(([k, v]) => (
               <Chip key={k} on={statuses.has(k)} color={v.color} title={v.blurb} onClick={() => onToggleStatus(k)}>
@@ -156,6 +199,24 @@ export default function FilterDrawer({
               </Chip>
             ))}
           </ChipWrap>
+        </div>
+
+        {/* Confidence score (v2 grade) */}
+        <div>
+          <GroupLabel>Minimum confidence{confidenceThreshold != null ? ` · engine floor ${confidenceThreshold}` : ''}</GroupLabel>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <input
+              type="range" min={0} max={100} step={5} value={minConfidence || 0}
+              onChange={(e) => onMinConfidence(+e.target.value)}
+              style={{ flex: 1, accentColor: '#34D399', height: 3, cursor: 'pointer' }}
+            />
+            <span style={{
+              fontSize: 11, fontFamily: MONO, fontWeight: 700,
+              color: minConfidence > 0 ? '#34D399' : '#52525b', minWidth: 52, textAlign: 'right',
+            }}>
+              {minConfidence > 0 ? `≥ ${minConfidence}` : 'all'}
+            </span>
+          </div>
         </div>
 
         {/* Min amount */}

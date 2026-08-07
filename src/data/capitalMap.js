@@ -125,8 +125,80 @@ export const SOURCE_TIER_LABEL = {
   5: 'Tier 5 · single source',
 };
 
+// ── Confidence grade (Admiralty-style): letter = source reliability, digit =
+// information credibility. Used for tooltips + the legend key.
+export const GRADE_LETTER = {
+  A: 'Primary / official source (SEC, IR, gov)',
+  B: 'Top data platform',
+  C: 'Quality press',
+  D: 'Specialist / analyst',
+  E: 'Social / rumor',
+};
+export const GRADE_DIGIT = {
+  1: 'Confirmed by a primary source',
+  2: 'Two+ independent sources agree',
+  3: 'Single credible source',
+  4: 'Uncorroborated',
+  5: 'Doubtful',
+};
+export function gradeBlurb(grade) {
+  if (!grade || grade.length < 2) return '';
+  return `${GRADE_LETTER[grade[0]] || grade[0]} · ${GRADE_DIGIT[grade[1]] || grade[1]}`;
+}
+
+// ── Themes — a SECOND dimension, orthogonal to sectors (which narrative a
+// deal belongs to). 10 canonical themes. Flows don't carry a theme, so a
+// target's theme is derived from its sector (SECTOR_TO_THEME below).
+export const THEME_META = {
+  frontier_ai:         { label: 'Frontier AI',        color: '#8E9BE6', order: 0 },
+  ai_infrastructure:   { label: 'AI Infrastructure',  color: '#5A93DE', order: 1 },
+  ai_applications:     { label: 'AI Applications',    color: '#9DB6EA', order: 2 },
+  energy_for_ai:       { label: 'Energy for AI',      color: '#49C2AE', order: 3 },
+  defense_ai:          { label: 'Defense AI',         color: '#6E7E9A', order: 4 },
+  robotics_embodiment: { label: 'Robotics',           color: '#8088D6', order: 5 },
+  sovereign_ai:        { label: 'Sovereign AI',       color: '#58ABCB', order: 6 },
+  biotech_ai:          { label: 'Biotech AI',         color: '#5FB0A8', order: 7 },
+  space:               { label: 'Space',              color: '#7079DE', order: 8 },
+  crypto_ai:           { label: 'Crypto AI',          color: '#45C0D0', order: 9 },
+};
+
+export const SECTOR_TO_THEME = {
+  'ai-labs': 'frontier_ai',
+  'datacenters': 'ai_infrastructure', 'ai-compute': 'ai_infrastructure',
+  'semiconductors': 'ai_infrastructure', 'neocloud': 'ai_infrastructure',
+  'networking': 'ai_infrastructure', 'cloud-hyperscale': 'ai_infrastructure',
+  'fab-equipment': 'ai_infrastructure',
+  'power-energy': 'energy_for_ai', 'nuclear': 'energy_for_ai',
+  'robotics': 'robotics_embodiment',
+  'defense-tech': 'defense_ai',
+  'ai-applications': 'ai_applications', 'ai-data': 'ai_applications',
+  'ai-data-platform': 'ai_applications', 'ai-services-rollup': 'ai_applications',
+  'ai-diversified': 'ai_applications',
+};
+
+// ── Elite networks an individual allocator can belong to. Warm accents so a
+// networked node pops against the cool palette.
+export const NETWORK_META = {
+  paypal_mafia:     { label: 'PayPal Mafia',      color: '#F5B942' },
+  thiel_extended:   { label: 'Thiel Extended',    color: '#E8975E' },
+  thiel_fellowship: { label: 'Thiel Fellowship',  color: '#D98CA8' },
+};
+
+// ── Signal rule labels — rendered so users know WHY a group lit up.
+export const RULE_META = {
+  sector_swarm:                { label: 'Sector swarm',        blurb: 'Several key allocators piled into one sector in a short window.' },
+  theme_swarm:                 { label: 'Theme swarm',         blurb: 'Key allocators converged on one cross-sector narrative.' },
+  smart_money_follow:          { label: 'Smart-money follow',  blurb: 'A key allocator led; others followed shortly after.' },
+  beneficiary_concentration:   { label: 'Beneficiary',         blurb: 'Multiple private flows point at one public ticker — the actionable read-through.' },
+  stealth_accumulation:        { label: 'Stealth accumulation',blurb: 'Repeated stakes quietly building in one target.' },
+  repeat_conviction:           { label: 'Repeat conviction',   blurb: 'The same network keeps re-backing a target.' },
+  network_convergence:         { label: 'Network convergence', blurb: 'A tracked network is converging on one target.' },
+  defense_network_convergence: { label: 'Defense convergence', blurb: 'A defence-linked network is converging.' },
+};
+
 export const META = {
   generated: raw.generated,
+  confidenceThreshold: typeof raw.confidence_threshold === 'number' ? raw.confidence_threshold : 60,
   totals: raw.totals || { nodes: (raw.nodes || []).length, flows: (raw.flows || []).length, sectors: Object.keys(raw.sectors || {}).length },
 };
 
@@ -232,11 +304,14 @@ export function buildGraph(data = raw) {
       capital: n.capital || 0,
       totalInflow: 0, totalOutflow: 0, inflowCount: 0, outflowCount: 0,
       confirmed: false,           // set below — has ≥1 verified/verified_alpha flow
+      aboveThreshold: false,      // set below — has ≥1 flow at/above confidence_threshold
       sectorLit: n.sector ? litSectors.has(n.sector) : false,
+      themeKey: n.sector ? (SECTOR_TO_THEME[n.sector] || null) : null,
       x: 0, y: 0,
     };
   });
   const nodeById = new Map(nodes.map(n => [n.id, n]));
+  const threshold = typeof data.confidence_threshold === 'number' ? data.confidence_threshold : 60;
 
   // Drop flows that reference an unknown node (defensive — the engine dedupes).
   const valid = rawFlows.filter(f => {
@@ -271,14 +346,20 @@ export function buildGraph(data = raw) {
     if (f.status === 'verified' || f.status === 'verified_alpha') {
       src.confirmed = true; tgt.confirmed = true;
     }
+    if (typeof f.confidence === 'number' && f.confidence >= threshold) {
+      src.aboveThreshold = true; tgt.aboveThreshold = true;
+    }
 
     return {
-      ...f,
+      ...f,                     // includes confidence + grade (v2)
       id: `${f.source}=>${f.target}#${i}`,
       sourceId: f.source, targetId: f.target,
       eventLabel: et.label,
       family: et.family,
       color: et.color,
+      theme: SECTOR_TO_THEME[f.sector] || null,
+      confidence: typeof f.confidence === 'number' ? f.confidence : null,
+      grade: f.grade || null,
       amountUSD: amt,          // 0 when undisclosed (used only for sizing)
       disclosed,
       sourceTier: f.tier,      // 1..5 — do NOT confuse with allocator tier
@@ -291,10 +372,10 @@ export function buildGraph(data = raw) {
   nodes.forEach(n => {
     n.totalFlow = n.capital;
     n.degree = n.inflowCount + n.outflowCount;
-    // A node is on the MAIN map when it carries a verified/verified_alpha flow,
-    // OR sits in a sector with a fired signal (inclusion rule). candidate-only
-    // nodes are watch/unconfirmed — muted / behind a toggle.
-    n.watchOnly = !n.confirmed && !n.sectorLit;
+    // A node reaches the MAIN map when it has ≥1 flow at/above the engine's
+    // confidence_threshold, OR a verified/verified_alpha flow, OR sits in a
+    // signalling sector. Everything else is watch/unconfirmed (behind a toggle).
+    n.watchOnly = !(n.confirmed || n.aboveThreshold) && !n.sectorLit;
   });
 
   const maxCapital = Math.max(1, ...nodes.map(n => n.capital));
@@ -315,21 +396,56 @@ export function buildGraph(data = raw) {
     };
   });
 
+  // Themes — the second dimension, same shape as sectors (v2).
+  const themes = {};
+  Object.entries(data.themes || {}).forEach(([key, t]) => {
+    themes[key] = {
+      key,
+      ...t,
+      lit: Array.isArray(t.signals) && t.signals.length > 0,
+      label: THEME_META[key]?.label || key,
+      color: THEME_META[key]?.color || '#7C8FD0',
+    };
+  });
+
+  // Beneficiary-concentration signals — public tickers private capital points
+  // at. The highest-value read-through, surfaced prominently in the UI.
+  const beneficiaries = [];
+  const seenBenef = new Set();
+  const collect = (obj, dim) => Object.values(obj).forEach(g =>
+    (g.signals || []).forEach(s => {
+      if (s.rule === 'beneficiary_concentration' && !seenBenef.has(s.theme)) {
+        seenBenef.add(s.theme);
+        beneficiaries.push({ ...s, dim, group: g.key });
+      }
+    }));
+  collect(sectors, 'sector');
+  collect(themes, 'theme');
+
   const disclosedTotal = links.reduce((acc, l) => acc + (l.disclosed ? l.amount : 0), 0);
+  const confVals = links.map(l => l.confidence).filter(c => typeof c === 'number');
   const stats = {
     nodeCount: nodes.length,
     allocatorCount: nodes.filter(n => n.kind === 'allocator').length,
     targetCount: nodes.filter(n => n.kind === 'target').length,
     flowCount: links.length,
     sectorCount: Object.keys(sectors).length,
+    themeCount: Object.keys(themes).length,
     signalCount: Object.values(sectors).filter(s => s.lit).length,
+    themeSignalCount: Object.values(themes).filter(t => t.lit).length,
     staleCount: nodes.filter(n => n.stale).length,
     watchCount: nodes.filter(n => n.watchOnly).length,
+    networkCount: nodes.filter(n => n.network).length,
+    beneficiaryCount: beneficiaries.length,
+    aboveThresholdFlows: confVals.filter(c => c >= threshold).length,
     totalTracked: disclosedTotal,
     disclosedShare: links.length ? links.filter(l => l.disclosed).length / links.length : 0,
   };
 
-  return { nodes, links, sectors, stats, generated: data.generated, maxCapital, maxAmount };
+  return {
+    nodes, links, sectors, themes, beneficiaries, stats,
+    generated: data.generated, confidenceThreshold: threshold, maxCapital, maxAmount,
+  };
 }
 
 /** Adjacency lookup: node id → { inbound: [links], outbound: [links] }. */

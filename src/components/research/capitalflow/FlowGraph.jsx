@@ -17,7 +17,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { fmtUSD, linkWidth } from './format.js';
-import { SECTOR_META, CLASS_META, TIER_META, STATUS_META } from '../../../data/capitalMap.js';
+import { SECTOR_META, CLASS_META, TIER_META, STATUS_META, NETWORK_META } from '../../../data/capitalMap.js';
 
 const BG = '#08090C';
 
@@ -258,6 +258,15 @@ export default function FlowGraph({
       ctx.fillText(node.monogram || '?', cx, cy + S * 0.02);
     }
 
+    // networked allocator → warm outer bracket ring (elite-network member)
+    if (node.network) {
+      const nc = NETWORK_META[node.network]?.color || '#F5B942';
+      roundRect(ctx, x - 4, y - 4, S + 8, S + 8, corner + 4);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = hexA(nc, hovered || selected ? 1 : 0.85);
+      ctx.stroke();
+    }
+
     // accent rim = domain colour (keeps the colour encoding)
     roundRect(ctx, x, y, S, S, corner);
     ctx.lineWidth = selected ? 2.6 : goldRim ? 2.2 : 1.6;
@@ -298,9 +307,11 @@ export default function FlowGraph({
     const lit = linkLit(l);
     if (!lit) return hexA('#3f3f46', 0.06);
     if (l.id === selectedLinkId) return '#fafafa';
-    // All bonds are SOLID; confidence is carried by opacity (verified strong,
-    // alpha medium, candidate faint), and bigger flows read stronger.
-    const conf = l.status === 'verified' ? 1 : l.status === 'verified_alpha' ? 0.7 : 0.46;
+    // All bonds are SOLID; confidence (0–100 grade score) drives opacity so
+    // high-confidence flows read stronger. Falls back to status when absent.
+    const conf = typeof l.confidence === 'number'
+      ? 0.3 + 0.7 * (l.confidence / 100)
+      : (l.status === 'verified' ? 1 : l.status === 'verified_alpha' ? 0.7 : 0.46);
     const a = (0.36 + 0.55 * Math.sqrt(l.amountShare || 0)) * conf;
     if (l.id === hoverLinkId) return hexA(l.color, Math.min(1, a + 0.45));
     return hexA(l.color, hasSelection ? Math.min(1, a + 0.3) : a);

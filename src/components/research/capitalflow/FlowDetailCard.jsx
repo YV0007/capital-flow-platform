@@ -1,13 +1,19 @@
 // Inline breakdown of a single flow (edge click). Floats over the canvas
 // bottom-centre so the graph stays visible and interactive behind it.
 
-import { X, ArrowRight } from 'lucide-react';
+import { X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { fmtUSD } from './format.js';
 import {
-  EVENT_TYPE_META, STATUS_META, SOURCE_TIER_LABEL, SECTOR_META,
+  EVENT_TYPE_META, STATUS_META, SOURCE_TIER_LABEL, SECTOR_META, gradeBlurb,
 } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
+
+// Confidence → colour (green strong · amber medium · slate weak).
+function confColor(c) {
+  if (c == null) return '#94A3B8';
+  return c >= 80 ? '#34D399' : c >= 60 ? '#FBBF24' : '#94A3B8';
+}
 
 export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, onOpenEntity }) {
   if (!flow) return null;
@@ -63,6 +69,11 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         {sec && <Tag color={sec.color}>{sec.label}</Tag>}
         <Tag color="#71717a">{flow.date}</Tag>
         <Tag color={stat.color} title={stat.blurb}>{stat.label}</Tag>
+        {flow.grade && (
+          <Tag color={confColor(flow.confidence)} title={`Grade ${flow.grade} — ${gradeBlurb(flow.grade)}. Confidence ${flow.confidence}/100.`}>
+            {flow.grade} · {flow.confidence}
+          </Tag>
+        )}
       </div>
 
       {/* Provenance */}
@@ -76,6 +87,23 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         </div>
 
         <Label style={{ marginTop: 13 }}>Confidence &amp; source</Label>
+        {flow.grade != null && (
+          <div style={{ marginBottom: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
+              <ShieldCheck size={13} color={confColor(flow.confidence)} />
+              <span style={{ fontSize: 14, fontWeight: 700, color: confColor(flow.confidence), fontFamily: MONO }}>
+                {flow.grade}
+              </span>
+              <span style={{ fontSize: 11, color: '#71717a', fontFamily: MONO }}>{gradeBlurb(flow.grade)}</span>
+              <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 700, color: confColor(flow.confidence), fontFamily: MONO }}>
+                {flow.confidence}<span style={{ color: '#52525b', fontSize: 10 }}>/100</span>
+              </span>
+            </div>
+            <div style={{ height: 4, borderRadius: 3, background: '#1c1c21', overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${flow.confidence}%`, background: confColor(flow.confidence), borderRadius: 3 }} />
+            </div>
+          </div>
+        )}
         <div style={{ fontSize: 11.5, color: '#a1a1aa', fontFamily: MONO, lineHeight: 1.7 }}>
           <span style={{ color: stat.color }}>{stat.short || flow.status}</span>
           <span style={{ color: '#3f3f46' }}> — </span>{stat.blurb || ''}
