@@ -48,9 +48,16 @@ export default function Legend({ counts }) {
               ))}
           </Section>
 
-          <Section title="Dot = role">
-            <Row label="Target · receives"><Disc filled color="#a1a1aa" /></Row>
-            <Row label="Allocator · deploys"><Disc color="#a1a1aa" /></Row>
+          <Section title="Form = what it is">
+            <Row label="Target · money lands"><GTarget /></Row>
+            <Row label="Allocator · deploys"><GSource /></Row>
+            <Row label="Fund · pooled capital"><GFund /></Row>
+            <Row label="Project · physical build"><GProject /></Row>
+          </Section>
+
+          <Section title="Rim = weight / trust">
+            <Row label="Key / core allocator" title="Decides where billions go."><GRim color="#FDE047" /></Row>
+            <Row label="Stale or unconfirmed" title="No activity in 180d, or candidate-only."><GRim dashed /></Row>
           </Section>
 
           <Section title="Line = event type">
@@ -61,29 +68,29 @@ export default function Legend({ counts }) {
             ))}
           </Section>
 
-          <Section title="Line style = confidence">
-            {Object.entries(STATUS_META).map(([k, v]) => (
-              <Row key={k} label={v.label} title={v.blurb}>
-                <span style={{
-                  width: 15, height: 0, borderTop: `2px ${v.dash ? 'dashed' : 'solid'} #a1a1aa`,
-                }} />
-              </Row>
-            ))}
+          <Section title="Line opacity = confidence">
+            {Object.entries(STATUS_META).map(([k, v]) => {
+              const op = k === 'verified' ? 1 : k === 'verified_alpha' ? 0.6 : 0.32;
+              return (
+                <Row key={k} label={v.label} title={v.blurb}>
+                  <span style={{ width: 15, height: 0, borderTop: `2.5px solid rgba(161,161,170,${op})` }} />
+                </Row>
+              );
+            })}
           </Section>
 
           <div style={{
             marginTop: 10, paddingTop: 9, borderTop: '1px solid #1c1d23',
             fontSize: 9, color: '#6b6b74', fontFamily: MONO, lineHeight: 1.65,
           }}>
-            Block size = capital.<br />
-            Capsule = allocator / fund · block = company<br />
-            · sharp plate = physical asset.<br />
-            <span style={{ color: '#FBBF24' }}>◆</span> dot / bright frame = signal firing.<br />
-            Dashed &amp; faded block = cooled (180d idle).<br />
-            Line thickness = deal size · arrow = direction.<br />
+            Node colour = domain · node size = capital.<br />
+            Sources ring the centre, grouped by class;<br />
+            sectors orbit outside.<br />
+            <span style={{ color: '#FBBF24' }}>◆</span> / bright cell = signal firing.<br />
+            Bond thickness = deal size · arrow = direction.<br />
             <span style={{ color: '#8b8b93' }}>
-              Click a block → breakdown panel.<br />
-              Click a line → deal detail.<br />
+              Click a node → breakdown panel.<br />
+              Click a bond → deal detail.<br />
               Esc clears the selection.
             </span>
           </div>
@@ -121,15 +128,46 @@ function Row({ label, count, title, children }) {
   );
 }
 
-function Disc({ filled, color }) {
+// Glyphs mirror the on-canvas token language.
+const N = '#a1a1aa';
+
+function GTarget() {
+  return <span style={{ width: 11, height: 11, borderRadius: '50%', background: N, display: 'inline-block' }} />;
+}
+
+function GSource() {
   return (
-    <span style={{ position: 'relative', width: 11, height: 11, display: 'inline-block' }}>
-      <span style={{
-        position: 'absolute', inset: 0,
-        borderRadius: '50%',
-        background: filled ? color : 'transparent',
-        border: filled ? 'none' : `1.6px solid ${color}`,
-      }} />
+    <span style={{ position: 'relative', width: 12, height: 12, display: 'inline-block' }}>
+      <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: `1.4px solid ${N}` }} />
+      <span style={{ position: 'absolute', inset: 3.5, borderRadius: '50%', background: N }} />
     </span>
+  );
+}
+
+function GFund() {
+  return (
+    <span style={{ position: 'relative', width: 12, height: 12, display: 'inline-block' }}>
+      <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: N }} />
+      <span style={{ position: 'absolute', inset: 3, borderRadius: '50%', border: '1px solid rgba(8,9,12,0.85)' }} />
+    </span>
+  );
+}
+
+function GProject() {
+  return (
+    <span style={{ position: 'relative', width: 12, height: 12, display: 'inline-block' }}>
+      <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: N }} />
+      <span style={{ position: 'absolute', inset: 3, transform: 'rotate(45deg)', border: '1px solid rgba(8,9,12,0.85)' }} />
+    </span>
+  );
+}
+
+function GRim({ color = N, dashed }) {
+  return (
+    <span style={{
+      width: 11, height: 11, borderRadius: '50%', display: 'inline-block',
+      border: `1.6px ${dashed ? 'dashed' : 'solid'} ${color}`,
+      background: dashed ? 'transparent' : 'rgba(161,161,170,0.18)',
+    }} />
   );
 }

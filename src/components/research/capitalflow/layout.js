@@ -1,182 +1,243 @@
 // ══════════════════════════════════════════════════════════════════════════
-// Static layout — allocators (source) on the left, target sector zones on the
-// right. The architecture is the data:
-//   · Capital SOURCES (allocators) cluster on the left, grouped by class —
-//     one island per class present in the file (venture, corporate, …).
-//   · Capital SINKS (targets) cluster on the right, grouped by SECTOR — one
-//     island per sector present. Sectors are the 12 canonical cluster zones.
-//   · Money flows left → right. A sector carrying a fired signal this cycle
-//     (sectors[x].signals) gets a highlighted frame — the whole point.
-//   · Inside an island the heaviest node sits at the centre, the rest spiral
-//     outward by capital — a glance shows who dominates each zone.
+// "Capital atom" — radial molecule layout.
 //
-// Everything is deterministic and pinned (fx/fy): no simulation. Zones are
-// derived from whatever classes/sectors are IN THE FILE — nothing hard-coded,
-// so next week's file lays itself out with no code change.
+// Read from the centre out:
+//   · NUCLEUS  — the allocators (capital sources) packed in the middle. Each
+//     sits at the *direction of the sectors it funds* (capital-weighted mean
+//     angle), so bonds leave the nucleus pointing at their destination.
+//   · ORBIT    — the sectors, one compact circular CELL each, placed on a ring
+//     in AI-stack order (software → compute → chips → cloud → datacenters →
+//     power → physical/defense). The sequence itself is the navigation.
+//   · Inside a cell, targets are circle-packed, heaviest at the core.
+//   · Capital radiates OUTWARD, nucleus → orbit, so a glance reads source →
+//     destination without tracing the whole graph.
+//
+// Deterministic + pinned (fx/fy) — no simulation, no per-reload drift. Derived
+// entirely from whatever is in the file.
 // ══════════════════════════════════════════════════════════════════════════
 
 import { SECTOR_META, CLASS_META } from '../../../data/capitalMap.js';
 import { shortLabel, fmtUSD } from './format.js';
 
 const GOLDEN = 2.399963229728653;
+// Source classes, inner→outer in rough "concentration" order.
+const CLASS_ORDER = ['individual', 'vc', 'corporate', 'alt_manager', 'sovereign'];
 
-// Deterministic per-id jitter so islands look organic, never random.
 function hash01(str, salt) {
   let h = 2166136261 ^ salt;
   for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
   return ((h >>> 0) % 1000) / 1000;
 }
 
-/**
- * Pins every node, precomputes block metrics, and returns the island regions
- * (bbox + aggregate stats + `lit` flag) for the canvas to paint. Mutates the
- * (memoised) node objects — call once per graph build.
- */
-export function applyStaticLayout(nodes, sectors = {}) {
-  nodes.forEach(sizeBlock);
-
-  // ── Group nodes into islands ─────────────────────────────────────────────
-  // Allocators → by class (left band). Targets → by sector (right grid).
-  const allocGroups = {};   // cls  → nodes
-  const targetGroups = {};  // sector → nodes
-  nodes.forEach(n => {
-    if (n.kind === 'allocator') (allocGroups[n.cls] ||= []).push(n);
-    else (targetGroups[n.sector || '_none'] ||= []).push(n);
-  });
-
-  // Order allocator classes by total capital (heaviest band on top).
-  const allocClasses = Object.keys(allocGroups).sort(
-    (a, b) => sumCapital(allocGroups[b]) - sumCapital(allocGroups[a])
-  );
-  // Order target sectors by the canonical SECTOR_META order.
-  const targetSectors = Object.keys(targetGroups).sort(
-    (a, b) => (SECTOR_META[a]?.order ?? 99) - (SECTOR_META[b]?.order ?? 99)
-  );
-
-  const regions = [];
-
-  // Left band: allocator class islands, stacked vertically.
-  const ALLOC_X = -1500;
-  const allocRows = Math.max(1, allocClasses.length);
-  const ALLOC_VGAP = 520;
-  const allocTop = -((allocRows - 1) * ALLOC_VGAP) / 2;
-  allocClasses.forEach((cls, i) => {
-    packIsland(allocGroups[cls], { x: ALLOC_X, y: allocTop + i * ALLOC_VGAP, spacing: 104 });
-  });
-
-  // Right grid: target sector islands. Columns of sectors, laid left→right by
-  // canonical order, wrapping into rows so the field stays roughly square.
-  const cols = Math.max(1, Math.ceil(Math.sqrt(targetSectors.length * 1.6)));
-  const COL_W = 720, ROW_H = 620, GRID_X0 = 120, GRID_Y0 = -((Math.ceil(targetSectors.length / cols) - 1) * ROW_H) / 2;
-  targetSectors.forEach((sec, i) => {
-    const col = i % cols, row = Math.floor(i / cols);
-    packIsland(targetGroups[sec], { x: GRID_X0 + col * COL_W, y: GRID_Y0 + row * ROW_H, spacing: 108 });
-  });
-
-  relaxOverlaps(nodes);
-
-  // ── Region frames + stats, computed AFTER relaxation ─────────────────────
-  const pushRegion = (list, { color, label, kind, key }) => {
-    if (!list || !list.length) return;
-    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-    let capital = 0;
-    list.forEach(n => {
-      minX = Math.min(minX, n.fx - n.blockW / 2); maxX = Math.max(maxX, n.fx + n.blockW / 2);
-      minY = Math.min(minY, n.fy - n.blockH / 2); maxY = Math.max(maxY, n.fy + n.blockH / 2);
-      capital += n.capital || 0;
-    });
-    const PADX = 60, PADY = 54;
-    const sec = key ? sectors[key] : null;
-    regions.push({
-      x: minX - PADX, y: minY - PADY,
-      w: (maxX - minX) + PADX * 2, h: (maxY - minY) + PADY * 2,
-      color, label: label.toUpperCase(), kind, count: list.length,
-      stats: `${kind === 'allocator' ? 'OUT' : 'IN'} ${fmtUSD(capital)}`,
-      lit: !!(sec && sec.lit),
-      signals: sec?.signals || [],
-    });
-  };
-
-  allocClasses.forEach(cls =>
-    pushRegion(allocGroups[cls], {
-      color: CLASS_META[cls]?.color || '#C2A36B',
-      label: CLASS_META[cls]?.label || cls,
-      kind: 'allocator',
-    }));
-  targetSectors.forEach(sec =>
-    pushRegion(targetGroups[sec], {
-      color: SECTOR_META[sec]?.color || '#71717a',
-      label: SECTOR_META[sec]?.label || (sec === '_none' ? 'Unsectored' : sec),
-      kind: 'target', key: sec,
-    }));
-
-  return regions;
+function sizeAtom(n, maxCap) {
+  const share = Math.sqrt((n.capital || 0) / maxCap);
+  n.r = 10 + 34 * share;
+  n.atomTier = share > 0.6 ? 0 : share > 0.3 ? 1 : share > 0.12 ? 2 : 3;
+  n.atomLabel = shortLabel(n.name, 22);
+  n.atomValue = n.atomTier <= 1 ? fmtUSD(n.capital) : null;
+  // Label priority: bigger capital + higher allocator tier show their tag at
+  // lower zoom; everything else only reveals as you zoom into its section.
+  const tierBonus = n.tier === 'core' ? 0.5 : n.tier === 'key' ? 0.35 : n.tier === 'watch' ? 0.15 : 0;
+  const imp = share + tierBonus;
+  n.labelScale = Math.max(0.14, Math.min(1.5, 0.9 - imp * 0.8));
 }
 
-function sumCapital(list) { return list.reduce((s, n) => s + (n.capital || 0), 0); }
-
-// Golden-angle spiral: heaviest node at the centre, the rest packing outward.
-function packIsland(list, isle) {
-  const sorted = [...list].sort((a, b) => (b.capital || 0) - (a.capital || 0));
-  sorted.forEach((n, k) => {
-    if (k === 0) { n.fx = isle.x; n.fy = isle.y; }
-    else {
-      const a = k * GOLDEN + hash01(n.id, 7) * 0.7;
-      const r = isle.spacing * Math.sqrt(k + 0.4);
-      n.fx = isle.x + Math.cos(a) * r * 1.25;
-      n.fy = isle.y + Math.sin(a) * r * 0.82;
-    }
-    n.x = n.fx; n.y = n.fy;
+function packRelative(members, spread, pad) {
+  members.forEach((n, k) => {
+    if (k === 0) { n._ox = 0; n._oy = 0; return; }
+    const a = k * GOLDEN + hash01(n.id, 7) * 0.6;
+    const rr = spread * Math.sqrt(k) + n.r;
+    n._ox = Math.cos(a) * rr; n._oy = Math.sin(a) * rr;
   });
+  relax(members, '_ox', '_oy', pad, 90);
+  let R = 0;
+  members.forEach(n => { R = Math.max(R, Math.hypot(n._ox, n._oy) + n.r); });
+  return R;
 }
 
-// ── Block metrics — 4 size tiers driven by capital share. The two top tiers
-// print their dollar total inside the block, so scale carries meaning at a
-// glance. Shape = class family (capsule = source/fund, block = company,
-// sharp plate = physical asset).
-function sizeBlock(n) {
-  const s = n.flowShare || 0;
-  const t = s > 0.35 ? 0 : s > 0.12 ? 1 : s > 0.02 ? 2 : 3;
-  n.blockTier = t;
-  n.blockH = [50, 40, 30, 24][t];
-  n.blockFont = [20, 16, 12.5, 10.5][t];
-  n.blockLabel = shortLabel(n.name, 22);
-  n.blockValue = t <= 1 ? fmtUSD(n.capital) : null;
-  n.blockShape = CLASS_META[n.cls]?.shape || (n.kind === 'allocator' ? 'capsule' : 'company');
-  const nameW = n.blockLabel.length * n.blockFont * 0.56;
-  const valueW = n.blockValue ? n.blockValue.length * (n.blockFont - 4) * 0.62 + 18 : 0;
-  n.blockW = Math.max(76, nameW + valueW + n.blockH * 0.95 + 18);
-}
-
-// Deterministic pairwise separation; lighter blocks yield more than heavy
-// ones, so island centres stay put.
-function relaxOverlaps(nodes) {
-  const PAD = 30;
-  const sorted = [...nodes].sort((a, b) => a.id.localeCompare(b.id));
-  for (let iter = 0; iter < 140; iter++) {
+function relax(list, kx, ky, pad, iters) {
+  for (let it = 0; it < iters; it++) {
     let moved = false;
-    for (let i = 0; i < sorted.length; i++) {
-      for (let j = i + 1; j < sorted.length; j++) {
-        const a = sorted[i], b = sorted[j];
-        const minX = (a.blockW + b.blockW) / 2 + PAD;
-        const minY = (a.blockH + b.blockH) / 2 + PAD;
-        const dx = b.fx - a.fx, dy = b.fy - a.fy;
-        const ox = minX - Math.abs(dx), oy = minY - Math.abs(dy);
-        if (ox <= 0 || oy <= 0) continue;
-        moved = true;
-        const wa = Math.sqrt(a.flowShare || 0) + 0.08;
-        const wb = Math.sqrt(b.flowShare || 0) + 0.08;
-        const shareA = wb / (wa + wb), shareB = wa / (wa + wb);
-        if (ox < oy) {
-          const push = (ox / 2 + 1) * Math.sign(dx || hash01(a.id, 3) - 0.5);
-          a.fx -= push * shareA; b.fx += push * shareB;
-        } else {
-          const push = (oy / 2 + 1) * Math.sign(dy || hash01(a.id, 5) - 0.5);
-          a.fy -= push * shareA; b.fy += push * shareB;
+    for (let i = 0; i < list.length; i++) {
+      for (let j = i + 1; j < list.length; j++) {
+        const a = list[i], b = list[j];
+        const dx = b[kx] - a[kx], dy = b[ky] - a[ky];
+        let d = Math.hypot(dx, dy) || 0.01;
+        const min = a.r + b.r + pad;
+        if (d < min) {
+          moved = true;
+          const p = (min - d) / 2, ux = dx / d, uy = dy / d;
+          a[kx] -= ux * p; a[ky] -= uy * p; b[kx] += ux * p; b[ky] += uy * p;
         }
       }
     }
     if (!moved) break;
   }
-  nodes.forEach(n => { n.x = n.fx; n.y = n.fy; });
+}
+
+/**
+ * Pins every node into the capital-atom and returns the regions to paint
+ * (one 'core' + one 'sector' cell each). Mutates the (memoised) node objects.
+ */
+export function applyMoleculeLayout(nodes, sectors = {}, links = []) {
+  const maxCap = Math.max(1, ...nodes.map(n => n.capital || 0));
+  nodes.forEach(n => sizeAtom(n, maxCap));
+
+  const nodeById = new Map(nodes.map(n => [n.id, n]));
+  const targets = nodes.filter(n => n.kind === 'target');
+  const allocators = nodes.filter(n => n.kind === 'allocator');
+
+  // ── Orbit: sectors present, in canonical AI-stack order ──────────────────
+  const secOrder = k => (SECTOR_META[k]?.order ?? 100);
+  const present = [...new Set(targets.map(t => t.sector || '_none'))]
+    .sort((a, b) => secOrder(a) - secOrder(b));
+  const N = Math.max(1, present.length);
+  // Capital-weighted angular spans → big sectors claim more room, spacing is
+  // uneven (organic, not a mechanical ring). A small per-sector wobble too.
+  const sectorCapOf = {};
+  present.forEach(k => {
+    sectorCapOf[k] = targets.filter(t => (t.sector || '_none') === k).reduce((s, n) => s + (n.capital || 0), 0);
+  });
+  const maxSecCap = Math.max(1, ...present.map(k => sectorCapOf[k]));
+  const weights = present.map(k => 0.65 + sectorCapOf[k] / maxSecCap);
+  const wsum = weights.reduce((a, b) => a + b, 0) || 1;
+  const angleOf = {};
+  let accA = -Math.PI / 2;
+  present.forEach((k, i) => {
+    const span = (2 * Math.PI * weights[i]) / wsum;
+    angleOf[k] = accA + span / 2 + (hash01(k, 11) - 0.5) * span * 0.3;
+    accA += span;
+  });
+
+  const cellR = {}, cellMem = {};
+  present.forEach(k => {
+    const mem = targets.filter(t => (t.sector || '_none') === k)
+      .sort((a, b) => (b.capital || 0) - (a.capital || 0));
+    cellMem[k] = mem;
+    cellR[k] = Math.max(packRelative(mem, 16, 13), 38);
+  });
+
+  // ── Nucleus: allocator CLASS-clusters on an inner ring ───────────────────
+  // Each source TYPE (individuals · venture · corporate · alt-managers ·
+  // sovereign) gets its own labelled, colour-coded cluster — ordered around
+  // the ring by the direction it funds — so you can read where each type of
+  // capital goes instead of one undifferentiated blob.
+  const outByAlloc = {};
+  links.forEach(l => { (outByAlloc[l.sourceId] ||= []).push(l); });
+
+  const classesPresent = [...new Set(allocators.map(a => a.cls))]
+    .sort((a, b) => CLASS_ORDER.indexOf(a) - CLASS_ORDER.indexOf(b));
+  const Nc = Math.max(1, classesPresent.length);
+
+  // Pack each class's allocators into a sub-cluster; measure its radius.
+  const classMem = {}, classR = {};
+  classesPresent.forEach(c => {
+    const mem = allocators.filter(a => a.cls === c).sort((x, y) => (y.capital || 0) - (x.capital || 0));
+    classMem[c] = mem;
+    classR[c] = Math.max(packRelative(mem, 15, 12), 42);
+  });
+
+  // Order classes around the ring by the direction they fund (neighbours fund
+  // neighbours → shorter bonds), then space them evenly for clean separation.
+  const classFund = {};
+  classesPresent.forEach(c => {
+    let vx = 0, vy = 0;
+    classMem[c].forEach(a => (outByAlloc[a.id] || []).forEach(l => {
+      const ang = angleOf[nodeById.get(l.targetId)?.sector || l.sector || '_none'];
+      if (ang == null) return;
+      const w = Math.max(1, l.amount || 0);
+      vx += Math.cos(ang) * w; vy += Math.sin(ang) * w;
+    }));
+    classFund[c] = (vx === 0 && vy === 0) ? 0 : Math.atan2(vy, vx);
+  });
+  const ringOrder = [...classesPresent].sort((a, b) => classFund[a] - classFund[b]);
+  const classAngleOf = {};
+  ringOrder.forEach((c, i) => { classAngleOf[c] = -Math.PI / 2 + (2 * Math.PI * i) / Nc; });
+
+  // Inner ring radius so class-clusters clear each other.
+  let coreRing = 0;
+  if (Nc > 1) {
+    const chordC = 2 * Math.sin(Math.PI / Nc);
+    for (let i = 0; i < Nc; i++) {
+      const a = ringOrder[i], b = ringOrder[(i + 1) % Nc];
+      coreRing = Math.max(coreRing, (classR[a] + classR[b] + 165) / chordC);
+    }
+  }
+
+  classesPresent.forEach(c => {
+    const ang = classAngleOf[c];
+    const cx = Math.cos(ang) * coreRing, cy = Math.sin(ang) * coreRing;
+    classMem[c].forEach(n => { n.fx = cx + n._ox; n.fy = cy + n._oy; n.x = n.fx; n.y = n.fy; });
+  });
+  const maxClassR = Math.max(0, ...classesPresent.map(c => classR[c]));
+  const coreR = coreRing + maxClassR;
+
+  // ── Outer sector ring: cells clear each other AND the source ring ────────
+  const GAP_CELL = 200;
+  let ring = 0;
+  const chord = 2 * Math.sin(Math.PI / N) || 0.0001;
+  for (let i = 0; i < N; i++) {
+    const a = present[i], b = present[(i + 1) % N];
+    ring = Math.max(ring, (cellR[a] + cellR[b] + GAP_CELL) / chord);
+  }
+  const maxCellR = Math.max(0, ...present.map(k => cellR[k]));
+  ring = Math.max(ring, coreR + maxCellR + 330);
+
+  // Per-sector radius jitter so cells sit organically off the perfect ring —
+  // some pushed out, some pulled in — then a light de-overlap of centres.
+  const sectorPos = {};
+  present.forEach(k => {
+    const rr = ring * (0.84 + 0.3 * hash01(k, 5));
+    sectorPos[k] = { x: Math.cos(angleOf[k]) * rr, y: Math.sin(angleOf[k]) * rr };
+  });
+  for (let it = 0; it < 80; it++) {
+    let moved = false;
+    for (let i = 0; i < present.length; i++) {
+      for (let j = i + 1; j < present.length; j++) {
+        const a = sectorPos[present[i]], b = sectorPos[present[j]];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d = Math.hypot(dx, dy) || 0.01;
+        const min = cellR[present[i]] + cellR[present[j]] + 130;
+        if (d < min) {
+          moved = true;
+          const p = (min - d) / 2, ux = dx / d, uy = dy / d;
+          a.x -= ux * p; a.y -= uy * p; b.x += ux * p; b.y += uy * p;
+        }
+      }
+    }
+    if (!moved) break;
+  }
+  present.forEach(k => {
+    const c = sectorPos[k];
+    cellMem[k].forEach(n => { n.fx = c.x + n._ox; n.fy = c.y + n._oy; n.x = n.fx; n.y = n.fy; });
+  });
+
+  // ── Regions to paint ─────────────────────────────────────────────────────
+  const regions = [];
+  classesPresent.forEach(c => {
+    const ang = classAngleOf[c];
+    const cx = Math.cos(ang) * coreRing, cy = Math.sin(ang) * coreRing;
+    const cap = classMem[c].reduce((s, n) => s + (n.capital || 0), 0);
+    regions.push({
+      type: 'source', key: c, cx, cy, r: classR[c] + 24,
+      color: CLASS_META[c]?.color || '#9aa3b2',
+      label: (CLASS_META[c]?.label || c).toUpperCase(),
+      stats: `OUT ${fmtUSD(cap)}`,
+    });
+  });
+  present.forEach(k => {
+    const cx = sectorPos[k].x, cy = sectorPos[k].y;
+    const sec = sectors[k];
+    const cap = cellMem[k].reduce((s, n) => s + (n.capital || 0), 0);
+    regions.push({
+      type: 'sector', key: k, cx, cy, r: cellR[k] + 32,
+      color: SECTOR_META[k]?.color || '#9aa3b2',
+      label: (SECTOR_META[k]?.label || (k === '_none' ? 'Unsectored' : k)).toUpperCase(),
+      stats: `IN ${fmtUSD(cap)}`,
+      lit: !!(sec && sec.lit), signals: sec?.signals || [],
+      count: cellMem[k].length,
+    });
+  });
+
+  return regions;
 }

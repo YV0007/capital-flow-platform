@@ -36,7 +36,7 @@ import Legend from './Legend.jsx';
 import EntityPanel from './EntityPanel.jsx';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD } from './format.js';
-import { applyStaticLayout } from './layout.js';
+import { applyMoleculeLayout } from './layout.js';
 import { buildGraph, buildAdjacency, DISCLAIMER, META } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
@@ -45,7 +45,7 @@ const BG = '#08090C';
 export default function CapitalFlowMap({ onBack }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
-  const regions = useMemo(() => applyStaticLayout(graph.nodes, graph.sectors), [graph]);
+  const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links), [graph]);
   const graphData = useMemo(() => ({ nodes: graph.nodes, links: graph.links }), [graph]);
   const adjacency = useMemo(() => buildAdjacency(graph.links), [graph]);
   const nodeById = useMemo(() => new Map(graph.nodes.map(n => [n.id, n])), [graph]);

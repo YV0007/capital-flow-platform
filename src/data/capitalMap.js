@@ -26,35 +26,43 @@
 
 import raw from './capitalMap.json';
 import entityRef from './entityReference.json';
+import logoManifest from './logoManifest.json';
 
-// ── The 12 canonical sectors = the cluster zones of the map ────────────────
-// Muted / desaturated palette — the map should read like an institutional
-// diagram, not neon. `order` fixes the left→right, top→bottom zone sequence.
+// ── Sector cluster zones. `order` walks the AI value chain — software →
+// compute → chips → cloud → datacenters → power → physical/defense — so the
+// ring reads intuitively. Palette is brighter/more saturated, short of neon.
+// Monochromatic COOL palette — one family (blue · indigo · cyan · teal ·
+// slate). Sectors are told apart by brightness/saturation, not rainbow hue,
+// so the map reads calm and institutional rather than candy-bright.
 export const SECTOR_META = {
-  'ai-labs':          { label: 'AI Labs',          color: '#A08FD0', order: 0 },
-  'ai-compute':       { label: 'AI Compute',       color: '#8F9BD6', order: 1 },
-  'semiconductors':   { label: 'Semiconductors',   color: '#8893D8', order: 2 },
-  'fab-equipment':    { label: 'Fab Equipment',    color: '#98A2AE', order: 3 },
-  'cloud-hyperscale': { label: 'Cloud / Hyperscale', color: '#6BABD6', order: 4 },
-  'neocloud':         { label: 'Neoclouds',        color: '#63BCAD', order: 5 },
-  'datacenters':      { label: 'Datacenters',      color: '#C99B72', order: 6 },
-  'power-energy':     { label: 'Power & Energy',   color: '#82B98D', order: 7 },
-  'nuclear':          { label: 'Nuclear',          color: '#8FBF8A', order: 8 },
-  'networking':       { label: 'Networking',       color: '#6FB39A', order: 9 },
-  'robotics':         { label: 'Robotics',         color: '#C089A8', order: 10 },
-  'defense-tech':     { label: 'Defense Tech',     color: '#C08585', order: 11 },
+  'ai-labs':            { label: 'AI Labs',            color: '#8E9BE6', order: 0 },
+  'ai-diversified':     { label: 'AI Diversified',     color: '#AEB8EE', order: 1 },
+  'ai-data-platform':   { label: 'AI Data Platform',   color: '#6F93DE', order: 2 },
+  'ai-applications':    { label: 'AI Applications',    color: '#9DB6EA', order: 3 },
+  'ai-services-rollup': { label: 'AI Services',        color: '#5FB6D2', order: 4 },
+  'ai-compute':         { label: 'AI Compute',         color: '#5A93DE', order: 5 },
+  'semiconductors':     { label: 'Semiconductors',     color: '#7079DE', order: 6 },
+  'fab-equipment':      { label: 'Fab Equipment',      color: '#93A0BC', order: 7 },
+  'cloud-hyperscale':   { label: 'Cloud / Hyperscale', color: '#4FA6E0', order: 8 },
+  'neocloud':           { label: 'Neoclouds',          color: '#45C0D0', order: 9 },
+  'datacenters':        { label: 'Datacenters',        color: '#6389C4', order: 10 },
+  'power-energy':       { label: 'Power & Energy',     color: '#49C2AE', order: 11 },
+  'nuclear':            { label: 'Nuclear',            color: '#5ACAD4', order: 12 },
+  'networking':         { label: 'Networking',         color: '#58ABCB', order: 13 },
+  'robotics':           { label: 'Robotics',           color: '#8088D6', order: 14 },
+  'defense-tech':       { label: 'Defense Tech',       color: '#6E7E9A', order: 15 },
 };
 
 // ── Entity class — allocator classes deploy capital, target classes receive
 // it. Drives node colour (allocators), on-canvas block shape, and the class
 // filter. `side` = which band the node lives in (source vs sink).
 export const CLASS_META = {
-  // allocators (deploy)
-  corporate:    { label: 'Corporate',        color: '#6BABD6', shape: 'capsule', side: 'allocator' },
-  vc:           { label: 'Venture',          color: '#A08FD0', shape: 'capsule', side: 'allocator' },
-  alt_manager:  { label: 'Alt Manager',      color: '#C2A36B', shape: 'capsule', side: 'allocator' },
-  sovereign:    { label: 'Sovereign',        color: '#6FB39A', shape: 'capsule', side: 'allocator' },
-  individual:   { label: 'Individual',       color: '#C089A8', shape: 'capsule', side: 'allocator' },
+  // allocators (deploy) — cool monochromatic family
+  corporate:    { label: 'Corporate',        color: '#5AA9CF', shape: 'capsule', side: 'allocator' },
+  vc:           { label: 'Venture',          color: '#8E9BE6', shape: 'capsule', side: 'allocator' },
+  alt_manager:  { label: 'Alt Manager',      color: '#93A0BC', shape: 'capsule', side: 'allocator' },
+  sovereign:    { label: 'Sovereign',        color: '#49C2AE', shape: 'capsule', side: 'allocator' },
+  individual:   { label: 'Individual',       color: '#9A8FD2', shape: 'capsule', side: 'allocator' },
   // targets (receive)
   private:      { label: 'Private co.',      color: '#9D8FD8', shape: 'company', side: 'target' },
   public:       { label: 'Public co.',       color: '#62B5CC', shape: 'company', side: 'target' },
@@ -66,27 +74,27 @@ export const CLASS_META = {
 // ── Event type → edge family + colour. One colour per family; drives edge
 // colour, the legend, and the event-type filter.
 export const EVENT_TYPE_META = {
-  equity:               { label: 'Equity',            family: 'equity',      color: '#9D8FD8' },
-  minority_stake:       { label: 'Minority stake',    family: 'equity',      color: '#9D8FD8' },
-  funding_round:        { label: 'Funding round',     family: 'equity',      color: '#9D8FD8' },
-  corporate_investment: { label: 'Corp. investment',  family: 'equity',      color: '#9D8FD8' },
-  follow_on:            { label: 'Follow-on',          family: 'equity',      color: '#9D8FD8' },
-  project_finance:      { label: 'Project finance',   family: 'debt',        color: '#CCAF62' },
-  acquisition:          { label: 'Acquisition',       family: 'acquisition', color: '#C287A8' },
-  fund_launch:          { label: 'Fund launch',       family: 'fund',        color: '#74B896' },
-  spv:                  { label: 'SPV',               family: 'fund',        color: '#74B896' },
-  grant:                { label: 'Grant',             family: 'grant',       color: '#93A3B3' },
-  sovereign_investment: { label: 'Sovereign invest.', family: 'sovereign',   color: '#C9985F' },
+  equity:               { label: 'Equity',            family: 'equity',      color: '#7C8FD0' },
+  minority_stake:       { label: 'Minority stake',    family: 'equity',      color: '#7C8FD0' },
+  funding_round:        { label: 'Funding round',     family: 'equity',      color: '#7C8FD0' },
+  corporate_investment: { label: 'Corp. investment',  family: 'equity',      color: '#7C8FD0' },
+  follow_on:            { label: 'Follow-on',          family: 'equity',      color: '#7C8FD0' },
+  project_finance:      { label: 'Project finance',   family: 'debt',        color: '#8496B4' },
+  acquisition:          { label: 'Acquisition',       family: 'acquisition', color: '#9A88C0' },
+  fund_launch:          { label: 'Fund launch',       family: 'fund',        color: '#5FB0A8' },
+  spv:                  { label: 'SPV',               family: 'fund',        color: '#5FB0A8' },
+  grant:                { label: 'Grant',             family: 'grant',       color: '#8391A8' },
+  sovereign_investment: { label: 'Sovereign invest.', family: 'sovereign',   color: '#6C9ACB' },
 };
 
 // The distinct families, for a compact legend (colour is shared within a family).
 export const FAMILY_META = {
-  equity:      { label: 'Equity / rounds',    color: '#9D8FD8' },
-  debt:        { label: 'Project finance',    color: '#CCAF62' },
-  acquisition: { label: 'Acquisition',        color: '#C287A8' },
-  fund:        { label: 'Fund / SPV',         color: '#74B896' },
-  grant:       { label: 'Grant',              color: '#93A3B3' },
-  sovereign:   { label: 'Sovereign',          color: '#C9985F' },
+  equity:      { label: 'Equity / rounds',    color: '#7C8FD0' },
+  debt:        { label: 'Project finance',    color: '#8496B4' },
+  acquisition: { label: 'Acquisition',        color: '#9A88C0' },
+  fund:        { label: 'Fund / SPV',         color: '#5FB0A8' },
+  grant:       { label: 'Grant',              color: '#8391A8' },
+  sovereign:   { label: 'Sovereign',          color: '#6C9ACB' },
 };
 
 // ── Confidence — the engine's `status`. Drives edge dashing + the chip.
@@ -100,9 +108,11 @@ export const STATUS_META = {
 
 // ── Allocator tier — importance weighting from the engine.
 export const TIER_META = {
-  key:   { short: 'KEY',   stars: '★★★', label: 'Key allocator', color: '#FBBF24',
+  core:  { short: 'CORE',  stars: '★★★★', label: 'Core allocator', color: '#FDE047',
+           blurb: 'A defining node of its network — the deepest-conviction repeat allocators.' },
+  key:   { short: 'KEY',   stars: '★★★',  label: 'Key allocator', color: '#FBBF24',
            blurb: 'Decides where billions go. Strongest predictor of where capital moves next.' },
-  watch: { short: 'WATCH', stars: '★★',  label: 'Watchlist',     color: '#C084FC',
+  watch: { short: 'WATCH', stars: '★★',   label: 'Watchlist',     color: '#C084FC',
            blurb: 'On the tracked universe; a secondary-weight allocator.' },
 };
 
@@ -124,6 +134,52 @@ export const DISCLAIMER =
   'Generated by the Capital Flow engine from public filings, official releases and press reporting. ' +
   'Statuses (verified / verified α / candidate) are the engine\'s own confidence marks and are rendered as-is — never overridden. ' +
   'Amounts are as disclosed; some flows are undisclosed. Not investment advice.';
+
+// Root domain from a URL (drops www.), or null if unparseable.
+function domainOf(url) {
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return null; }
+}
+
+// Handle from an x.com / twitter URL (…/JeffBezos → "JeffBezos").
+function xHandle(url) {
+  try { return new URL(url).pathname.replace(/^\/+/, '').split('/')[0] || null; } catch { return null; }
+}
+
+// Ordered logo candidates: real company logo / founder photo first, favicon
+// as a fallback. `fallback=false` makes unavatar 404 on a miss so we can fall
+// through to the next candidate (and ultimately the monogram tile).
+function buildLogoUrls(links = []) {
+  const out = [];
+  const push = (u) => { if (u && !out.includes(u)) out.push(u); };
+  const website = links.find(l => l.kind === 'website');
+  const xl = links.find(l => l.kind === 'x');
+  const firm = links.find(l => l.kind === 'firm');
+
+  const webDom = website ? domainOf(website.url) : null;
+  if (webDom) {
+    push(`https://unavatar.io/${webDom}?fallback=false`);
+    push(`https://www.google.com/s2/favicons?sz=128&domain=${webDom}`);
+  }
+  const h = xl ? xHandle(xl.url) : null;
+  if (h) {
+    push(`https://unavatar.io/x/${h}?fallback=false`);
+    push(`https://unavatar.io/twitter/${h}?fallback=false`);
+  }
+  const firmDom = firm ? domainOf(firm.url) : null;
+  if (firmDom) {
+    push(`https://unavatar.io/${firmDom}?fallback=false`);
+    push(`https://www.google.com/s2/favicons?sz=128&domain=${firmDom}`);
+  }
+  return out;
+}
+
+// 1–2 letter monogram for the logo fallback tile ("OpenAI"→"OP", "Peter Thiel"→"PT").
+function monogramOf(label) {
+  const words = String(label || '').replace(/[^A-Za-z0-9 ]/g, ' ').trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return '?';
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return (words[0][0] + words[1][0]).toUpperCase();
+}
 
 // ══════════════════════════════════════════════════════════════════════════
 // buildGraph — reshape the contract into { nodes, links, sectors, stats }.
@@ -157,12 +213,18 @@ export function buildGraph(data = raw) {
     const profileType = n.profile_type || ref?.type ||
       (isAllocator ? (n.cls === 'individual' ? 'person' : 'org')
                    : (n.cls === 'fund' ? 'fund' : n.cls === 'project' ? 'project' : 'org'));
+    // Real brand logo / founder photo, pre-fetched into public/logos/ by
+    // scripts/fetch_logos.py (reliable, offline, no runtime DNS). Monogram
+    // tile is the fallback for the entities without one.
+    const localLogo = logoManifest[n.id];
     return {
       ...n,
       name: n.label,
       description,
       links,
       profileType,
+      logoUrls: localLogo ? [localLogo] : [],
+      monogram: monogramOf(n.label),
       searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(n.label)}`,
       // FlowGraph role encoding: 'player' deploys · 'target' receives.
       type: isAllocator ? 'player' : 'target',

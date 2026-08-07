@@ -38,6 +38,42 @@ export default function FlowGraph({
   const [hoverNodeId, setHoverNodeId] = useState(null);
   const [hoverLinkId, setHoverLinkId] = useState(null);
 
+  // ── Brand-logo image cache — load once, repaint when they arrive ───────
+  const logoCache = useRef(new Map());
+  const [logoTick, setLogoTick] = useState(0);
+  const refreshTimer = useRef(null);
+  const scheduleRefresh = useCallback(() => {
+    if (refreshTimer.current) return;
+    refreshTimer.current = setTimeout(() => {
+      refreshTimer.current = null;
+      setLogoTick(t => t + 1);           // new painter identity → force a redraw
+      fgRef.current?.refresh?.();
+    }, 120);
+  }, [fgRef]);
+  // Try each logo candidate in order; fall through to the monogram on misses.
+  const getLogo = useCallback((node) => {
+    const urls = node.logoUrls || [];
+    const c = logoCache.current;
+    if (c.has(node.id)) return c.get(node.id);
+    const entry = { img: null, ok: false, done: false };
+    c.set(node.id, entry);
+    if (!urls.length) { entry.done = true; return entry; }
+    let i = 0;
+    const tryNext = () => {
+      if (i >= urls.length) { entry.done = true; entry.ok = false; scheduleRefresh(); return; }
+      const img = new Image();
+      entry.img = img;
+      img.onload = () => {
+        if (img.naturalWidth > 0) { entry.ok = true; entry.done = true; scheduleRefresh(); }
+        else { i++; tryNext(); }
+      };
+      img.onerror = () => { i++; tryNext(); };
+      img.src = urls[i];
+    };
+    tryNext();
+    return entry;
+  }, [scheduleRefresh]);
+
   // ── Responsive canvas ──────────────────────────────────────────────────
   useEffect(() => {
     const el = wrapRef.current;
@@ -105,173 +141,188 @@ export default function FlowGraph({
     return neighbourLinks.has(l.id);
   }, [matchedLinks, neighbourLinks, hasSelection]);
 
-  // ── Island zones, painted under everything: tinted frame + caption +
-  // aggregate capital stats, so the overview reads sector totals directly.
+  // ── Source-class clusters (inner) + sector cells (outer) ───────────────
   const paintRegions = useCallback((ctx) => {
     regions.forEach(r => {
-      // zone plate — a sector carrying a fired signal glows brighter.
-      roundRect(ctx, r.x, r.y, r.w, r.h, 34);
-      ctx.fillStyle = hexA(r.color, r.lit ? 0.075 : 0.032);
-      ctx.fill();
-      if (r.lit) {
-        ctx.setLineDash([]);
-        ctx.lineWidth = 2.2;
-        ctx.strokeStyle = hexA(r.color, 0.7);
-      } else {
-        ctx.setLineDash([10, 12]);
-        ctx.lineWidth = 1.4;
-        ctx.strokeStyle = hexA(r.color, 0.22);
-      }
-      ctx.stroke();
-      ctx.setLineDash([]);
+      const lit = r.lit;
+      const source = r.type === 'source';
 
-      // caption + aggregate stats above the zone
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'bottom';
-      ctx.font = '700 30px ui-monospace, monospace';
-      ctx.fillStyle = hexA(r.color, r.lit ? 0.85 : 0.6);
-      ctx.fillText(r.label, r.x + 10, r.y - 34);
-      if (r.stats) {
-        ctx.font = '600 21px ui-monospace, monospace';
-        ctx.fillStyle = hexA(r.color, 0.38);
-        ctx.fillText(r.stats, r.x + 10, r.y - 8);
+      // Soft glow POOL — a zone, not a bordered circle. Radial fade to nothing.
+      const glowR = r.r * 1.45;
+      const baseA = source ? 0.085 : (lit ? 0.16 : 0.075);
+      const g = ctx.createRadialGradient(r.cx, r.cy, r.r * 0.12, r.cx, r.cy, glowR);
+      g.addColorStop(0, hexA(r.color, baseA));
+      g.addColorStop(0.65, hexA(r.color, baseA * 0.4));
+      g.addColorStop(1, hexA(r.color, 0));
+      ctx.beginPath();
+      ctx.arc(r.cx, r.cy, glowR, 0, 2 * Math.PI);
+      ctx.fillStyle = g;
+      ctx.fill();
+
+      // Only a signalling sector gets a faint accent ring (the alpha moment).
+      if (lit) {
+        ctx.beginPath();
+        ctx.arc(r.cx, r.cy, r.r + 4, 0, 2 * Math.PI);
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = hexA(r.color, 0.5);
+        ctx.stroke();
       }
-      // signal badge — the alpha. Only when the sector is lighting up.
-      if (r.lit) {
-        const theme = r.signals?.[0]?.theme || 'signal';
-        const badge = `◆ ${theme}`.toUpperCase();
-        ctx.font = '700 17px ui-monospace, monospace';
-        ctx.textAlign = 'right';
-        ctx.fillStyle = hexA(r.color, 0.92);
-        ctx.fillText(badge, r.x + r.w - 10, r.y - 12);
-        ctx.textAlign = 'left';
+
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.font = `700 ${source ? 19 : 25}px ui-monospace, monospace`;
+      ctx.fillStyle = hexA(r.color, source ? 0.85 : lit ? 0.96 : 0.72);
+      ctx.fillText(r.label, r.cx, r.cy - r.r - 12);
+
+      if (lit) {
+        ctx.font = '700 14px ui-monospace, monospace';
+        ctx.fillStyle = hexA(r.color, 0.9);
+        ctx.fillText(`◆ ${r.signals?.[0]?.theme || 'signal'}`.toUpperCase(), r.cx, r.cy - r.r - 38);
+      }
+
+      if (r.stats) {
+        ctx.textBaseline = 'top';
+        ctx.font = `600 ${source ? 13 : 17}px ui-monospace, monospace`;
+        ctx.fillStyle = hexA(r.color, 0.4);
+        ctx.fillText(r.stats, r.cx, r.cy + r.r + 8);
       }
     });
   }, [regions]);
 
-  // ── Block painter ──────────────────────────────────────────────────────
-  // Shape = class: capsule → capital source · rounded block → company ·
-  // sharp plate → physical asset. Fill tint = role (sinks tinted, sources
-  // hollow). Top two size tiers print their dollar total inside.
-  const paintNode = useCallback((node, ctx) => {
-    const w = node.blockW, h = node.blockH;
-    const x = node.x - w / 2, y = node.y - h / 2;
+  // ── Node painter — brand-logo "app-icon" tile ─────────────────────────
+  //   logo   = the real company mark (Clearbit) · monogram tile fallback
+  //   colour = domain (accent rim: sector for targets · class for allocators)
+  //   size   = capital · gold rim = key/core · dashed = stale / unconfirmed
+  //   labels reveal by zoom, ranked by importance (see node.labelScale)
+  const paintNode = useCallback((node, ctx, globalScale) => {
     const lit = nodeLit(node);
     const selected = node.id === selectedNodeId;
     const hovered = node.id === hoverNodeId;
-    // Stale (no activity in 180d) → cooled/muted, never hidden. watch-only
-    // (candidate-only) nodes read a touch softer than confirmed ones.
-    const dim = node.stale ? 0.42 : node.watchOnly ? 0.72 : 1;
-    const alpha = lit ? dim : 0.07;
+    const dim = node.stale ? 0.4 : node.watchOnly ? 0.72 : 1;
+    const alpha = lit ? dim : 0.06;
     const col = node.color;
-    const r = node.blockShape === 'capsule' ? h / 2 : node.blockShape === 'asset' ? 4 : 9;
+    const R = node.r || 12;
+    const cx = node.x, cy = node.y;
+    const S = R * 1.85;              // tile side
+    const half = S / 2;
+    const x = cx - half, y = cy - half;
+    const corner = S * 0.26;        // rounded-square radius (app-icon look)
+    const goldRim = node.tier === 'key' || node.tier === 'core';
 
     ctx.save();
     ctx.globalAlpha = alpha;
 
-    // soft glow behind the selected / hovered block
+    // selection / hover glow
     if (lit && (selected || hovered)) {
-      roundRect(ctx, x - 4, y - 4, w + 8, h + 8, r + 4);
-      ctx.fillStyle = hexA(col, selected ? 0.22 : 0.13);
-      ctx.fill();
+      roundRect(ctx, x - 5, y - 5, S + 10, S + 10, corner + 4);
+      ctx.fillStyle = hexA(col, selected ? 0.28 : 0.15); ctx.fill();
+    }
+    // core-tier → faint gold halo
+    if (node.tier === 'core') {
+      roundRect(ctx, x - 3, y - 3, S + 6, S + 6, corner + 3);
+      ctx.lineWidth = 1.4; ctx.strokeStyle = hexA('#FDE047', 0.6); ctx.stroke();
     }
 
-    // body — fill tint by role: receives = tinted, deploys = hollow dark
-    roundRect(ctx, x, y, w, h, r);
-    const tint = node.type === 'target' ? 0.16 : node.type === 'both' ? 0.08 : 0;
-    ctx.fillStyle = lit ? '#10131b' : '#0d1016';
+    // cheap flat drop shadow (an offset dark tile) — no shadowBlur, so it stays
+    // fast even while the flow particles keep the canvas repainting.
+    roundRect(ctx, x + R * 0.06 + 1, y + R * 0.16 + 1, S, S, corner);
+    ctx.fillStyle = 'rgba(0,0,0,0.45)';
     ctx.fill();
-    if (tint > 0) {
-      roundRect(ctx, x, y, w, h, r);
-      ctx.fillStyle = hexA(col, tint);
-      ctx.fill();
+    // tile base
+    roundRect(ctx, x, y, S, S, corner);
+    ctx.fillStyle = '#0e0f14';
+    ctx.fill();
+
+    const logo = getLogo(node);
+    if (logo && logo.ok && logo.img && logo.img.naturalWidth) {
+      // light plate so dark logos read, then the logo contained with padding
+      roundRect(ctx, x, y, S, S, corner);
+      ctx.fillStyle = '#f4f5f7'; ctx.fill();
+      ctx.save();
+      roundRect(ctx, x, y, S, S, corner); ctx.clip();
+      const pad = S * 0.15;
+      const iw = logo.img.naturalWidth, ih = logo.img.naturalHeight;
+      const box = S - pad * 2;
+      const sc = Math.min(box / iw, box / ih);
+      ctx.drawImage(logo.img, cx - (iw * sc) / 2, cy - (ih * sc) / 2, iw * sc, ih * sc);
+      ctx.restore();
+    } else {
+      // monogram tile: domain-colour gradient + initials
+      const g = ctx.createLinearGradient(x, y, x + S, y + S);
+      g.addColorStop(0, mix(col, '#ffffff', 0.22));
+      g.addColorStop(1, mix(col, '#05060a', 0.45));
+      roundRect(ctx, x, y, S, S, corner); ctx.fillStyle = g; ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.92)';
+      ctx.font = `800 ${S * 0.4}px -apple-system, "Segoe UI", sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(node.monogram || '?', cx, cy + S * 0.02);
     }
-    ctx.lineWidth = selected ? 2 : node.blockTier <= 1 ? 1.5 : 1.1;
-    ctx.strokeStyle = selected ? '#e8e8ec' : hexA(col, hovered ? 0.95 : node.blockTier <= 1 ? 0.75 : 0.5);
-    if (node.stale) ctx.setLineDash([5, 4]);   // cooled-off nodes read dashed
+
+    // accent rim = domain colour (keeps the colour encoding)
+    roundRect(ctx, x, y, S, S, corner);
+    ctx.lineWidth = selected ? 2.6 : goldRim ? 2.2 : 1.6;
+    ctx.strokeStyle = selected ? '#ffffff' : goldRim ? '#FDE047' : hexA(col, hovered ? 1 : 0.9);
+    if (node.stale || node.watchOnly) ctx.setLineDash([3, 3]);
     ctx.stroke();
     ctx.setLineDash([]);
-    // key-tier allocator → a small filled marker top-right of the block
-    if (node.tier === 'key') {
-      ctx.beginPath();
-      ctx.arc(x + w - 6, y + 6, 2.6, 0, 2 * Math.PI);
-      ctx.fillStyle = hexA('#FBBF24', 0.95);
-      ctx.fill();
-    }
 
-    // role dot — filled = receives · hollow = deploys · dot-in-ring = both
-    const dr = h * 0.13;
-    const dx = x + h * 0.52, dy = node.y;
-    if (node.type === 'target') {
-      ctx.beginPath(); ctx.arc(dx, dy, dr, 0, 2 * Math.PI);
-      ctx.fillStyle = col; ctx.fill();
-    } else if (node.type === 'player') {
-      ctx.beginPath(); ctx.arc(dx, dy, dr, 0, 2 * Math.PI);
-      ctx.lineWidth = 1.5; ctx.strokeStyle = col; ctx.stroke();
-    } else {
-      ctx.beginPath(); ctx.arc(dx, dy, dr, 0, 2 * Math.PI);
-      ctx.lineWidth = 1.2; ctx.strokeStyle = col; ctx.stroke();
-      ctx.beginPath(); ctx.arc(dx, dy, dr * 0.45, 0, 2 * Math.PI);
-      ctx.fillStyle = col; ctx.fill();
-    }
-
-    // name — inside the block, so labels can never crowd each other
-    if (showLabels || selected || hovered) {
-      ctx.font = `${node.blockTier <= 1 ? 700 : 600} ${node.blockFont}px -apple-system, "Segoe UI", sans-serif`;
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = selected || hovered ? '#ffffff' : node.blockTier <= 1 ? '#eceff4' : '#c2c2cb';
-      ctx.fillText(node.blockLabel, x + h * 0.92, node.y + 0.5);
-
-      // dollar total inside the big tiers — size + number carry the weight
-      if (node.blockValue) {
-        ctx.font = `600 ${node.blockFont - 4}px ui-monospace, monospace`;
-        ctx.textAlign = 'right';
-        ctx.fillStyle = hexA(col, 0.9);
-        ctx.fillText(node.blockValue, x + w - h * 0.45, node.y + 0.5);
+    // label — reveal by zoom, ranked by importance (node.labelScale)
+    const gs = globalScale || 1;
+    const showLabel = selected || hovered || (showLabels && gs >= (node.labelScale || 1));
+    if (showLabel) {
+      const lx = cx + half + 6;
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      const big = node.atomTier <= 1;
+      ctx.font = `${big ? 700 : 600} ${Math.max(11, R * 0.62)}px -apple-system, "Segoe UI", sans-serif`;
+      ctx.fillStyle = selected || hovered ? '#ffffff' : hexA('#e6e8ee', big ? 0.96 : 0.78);
+      ctx.fillText(node.atomLabel, lx, cy - (node.atomValue ? R * 0.42 : 0));
+      if (node.atomValue) {
+        ctx.font = `600 ${Math.max(10, R * 0.5)}px ui-monospace, monospace`;
+        ctx.fillStyle = hexA(mix(col, '#ffffff', 0.3), 0.95);
+        ctx.fillText(node.atomValue, lx, cy + R * 0.5);
       }
     }
 
-    // total flow under the block on focus (small tiers only — big ones
-    // already show it inside)
-    if (lit && (selected || hovered) && !node.blockValue) {
-      ctx.font = `600 ${Math.max(10, node.blockFont - 1)}px ui-monospace, monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillStyle = hexA(col, 0.95);
-      ctx.fillText(fmtUSD(node.totalFlow), node.x, y + h + 5);
-    }
-
     ctx.restore();
-  }, [nodeLit, selectedNodeId, hoverNodeId, showLabels]);
+  }, [nodeLit, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick]);
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
+    const S = (node.r || 12) * 1.85, half = S / 2;
     ctx.fillStyle = colour;
-    roundRect(ctx, node.x - node.blockW / 2, node.y - node.blockH / 2, node.blockW, node.blockH, 8);
+    roundRect(ctx, node.x - half, node.y - half, S, S, S * 0.26);
     ctx.fill();
   }, []);
 
   // ── Link styling ───────────────────────────────────────────────────────
   const linkColor = useCallback((l) => {
     const lit = linkLit(l);
-    if (!lit) return hexA('#3f3f46', 0.08);
+    if (!lit) return hexA('#3f3f46', 0.06);
     if (l.id === selectedLinkId) return '#fafafa';
-    if (l.id === hoverLinkId) return hexA(l.color, 1);
-    return hexA(l.color, hasSelection ? 0.9 : 0.5);
+    // All bonds are SOLID; confidence is carried by opacity (verified strong,
+    // alpha medium, candidate faint), and bigger flows read stronger.
+    const conf = l.status === 'verified' ? 1 : l.status === 'verified_alpha' ? 0.7 : 0.46;
+    const a = (0.36 + 0.55 * Math.sqrt(l.amountShare || 0)) * conf;
+    if (l.id === hoverLinkId) return hexA(l.color, Math.min(1, a + 0.45));
+    return hexA(l.color, hasSelection ? Math.min(1, a + 0.3) : a);
   }, [linkLit, selectedLinkId, hoverLinkId, hasSelection]);
 
   const linkW = useCallback((l) => {
-    const w = linkWidth(l) * 1.4;
+    // Restrained widths — importance reads through opacity + flow, not girth.
+    const w = 0.6 + 2.8 * Math.sqrt(l.amountShare || 0);
     if (l.id === selectedLinkId) return w + 1.6;
     if (l.id === hoverLinkId) return w + 1;
     return w;
   }, [selectedLinkId, hoverLinkId]);
 
   const particles = useCallback((l) => {
-    if (l.id === selectedLinkId) return 5;
-    if (hasSelection && neighbourLinks.has(l.id) && matchedLinks.has(l.id)) return 3;
+    // Motion only on focus (selection / neighbourhood) — the map stays calm and
+    // still when idle, so it never continuously repaints. Movement is a reward
+    // for clicking in, not constant noise.
+    if (l.id === selectedLinkId) return 6;
+    if (l.id === hoverLinkId) return 4;
+    if (hasSelection) return (neighbourLinks.has(l.id) && matchedLinks.has(l.id)) ? 4 : 0;
     return 0;
-  }, [selectedLinkId, hasSelection, neighbourLinks, matchedLinks]);
+  }, [selectedLinkId, hoverLinkId, hasSelection, neighbourLinks, matchedLinks]);
 
   // ── Hover tooltips ─────────────────────────────────────────────────────
   const nodeTooltip = useCallback((n) => {
@@ -340,13 +391,12 @@ export default function FlowGraph({
           linkLabel={linkTooltip}
           linkColor={linkColor}
           linkWidth={linkW}
-          linkLineDash={(l) => (STATUS_META[l.status]?.dash || null)}
           linkCurvature="curvature"
-          linkDirectionalArrowLength={7}
-          linkDirectionalArrowRelPos={0.93}
+          linkDirectionalArrowLength={(l) => 4 + 7 * Math.sqrt(l.amountShare || 0)}
+          linkDirectionalArrowRelPos={0.92}
           linkDirectionalParticles={particles}
-          linkDirectionalParticleWidth={3}
-          linkDirectionalParticleSpeed={0.006}
+          linkDirectionalParticleWidth={(l) => 1.6 + 3 * Math.sqrt(l.amountShare || 0)}
+          linkDirectionalParticleSpeed={(l) => 0.003 + 0.005 * (l.amountShare || 0)}
           linkDirectionalParticleColor={(l) => l.color}
           onNodeClick={(n) => onNodeClick(n.id)}
           onLinkClick={(l) => onLinkClick(l.id)}
@@ -379,6 +429,17 @@ function hexA(hex, a) {
   const h = hex.replace('#', '');
   const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
   return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+}
+
+// Blend two hex colours by t (0 = a, 1 = b). Used for the atom gradient.
+function mix(a, b, t) {
+  const pa = parseInt(a.replace('#', ''), 16), pb = parseInt(b.replace('#', ''), 16);
+  const ar = (pa >> 16) & 255, ag = (pa >> 8) & 255, ab = pa & 255;
+  const br = (pb >> 16) & 255, bg = (pb >> 8) & 255, bb = pb & 255;
+  const r = Math.round(ar + (br - ar) * t);
+  const g = Math.round(ag + (bg - ag) * t);
+  const bl = Math.round(ab + (bb - ab) * t);
+  return `rgb(${r},${g},${bl})`;
 }
 
 function esc(s) {

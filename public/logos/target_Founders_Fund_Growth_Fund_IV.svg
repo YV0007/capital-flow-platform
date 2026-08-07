@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg version="1.2" baseProfile="tiny-ps" viewBox="0 0 50 50" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+  <title>FF</title>
+  <g>
+    <rect x="0" fill="#EE344C" width="50" height="12.534"/>
+    <rect y="12.402" fill="#A5DCE0" width="50" height="12.534"/>
+    <rect x="0" y="24.929" fill="#68C9CE" width="50" height="12.534"/>
+    <rect y="37.331" fill="#0C1923" width="50" height="12.534"/>
+  </g>
+</svg>
