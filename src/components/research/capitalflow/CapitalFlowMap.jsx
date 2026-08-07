@@ -407,12 +407,22 @@ export default function CapitalFlowMap({ onBack }) {
           pointerEvents: 'none', zIndex: 8,
         }}>
           <div style={{
-            padding: '14px 18px', background: 'rgba(14,15,20,0.94)',
+            padding: '16px 20px', background: 'rgba(14,15,20,0.94)',
             border: '1px solid #26262e', borderRadius: 10,
             fontSize: 12, color: '#a1a1aa', fontFamily: MONO, textAlign: 'center',
           }}>
-            No flows match these filters.<br />
-            <span style={{ color: '#52525b', fontSize: 11 }}>Loosen the min-flow slider or clear a chip.</span>
+            {graph.stats.flowCount === 0 ? (
+              <>
+                <span style={{ color: '#38BDF8', fontWeight: 700, letterSpacing: '0.08em' }}>CLEAN SLATE</span><br />
+                <span style={{ display: 'inline-block', marginTop: 6 }}>No capital-flow data loaded yet.</span><br />
+                <span style={{ color: '#52525b', fontSize: 11 }}>Waiting for the next engine run to deliver <code>capitalMap.json</code>.</span>
+              </>
+            ) : (
+              <>
+                No flows match these filters.<br />
+                <span style={{ color: '#52525b', fontSize: 11 }}>Loosen the min-flow slider or clear a chip.</span>
+              </>
+            )}
           </div>
         </div>
       )}

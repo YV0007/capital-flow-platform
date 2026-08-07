@@ -25,6 +25,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 import raw from './capitalMap.json';
+import entityRef from './entityReference.json';
 
 // ── The 12 canonical sectors = the cluster zones of the map ────────────────
 // Muted / desaturated palette — the map should read like an institutional
@@ -147,9 +148,22 @@ export function buildGraph(data = raw) {
     const color = isAllocator
       ? (clsMeta.color || '#C2A36B')
       : (SECTOR_META[n.sector]?.color || clsMeta.color || '#71717a');
+    // Profile (who/what it is + a link). Engine-emitted fields win, then the
+    // dashboard reference file, then a safe web-search fallback so a click
+    // never lands on a wrong/guessed URL.
+    const ref = entityRef[n.id] || null;
+    const description = n.description || ref?.description || null;
+    const links = (Array.isArray(n.links) && n.links.length ? n.links : ref?.links) || [];
+    const profileType = n.profile_type || ref?.type ||
+      (isAllocator ? (n.cls === 'individual' ? 'person' : 'org')
+                   : (n.cls === 'fund' ? 'fund' : n.cls === 'project' ? 'project' : 'org'));
     return {
       ...n,
       name: n.label,
+      description,
+      links,
+      profileType,
+      searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(n.label)}`,
       // FlowGraph role encoding: 'player' deploys · 'target' receives.
       type: isAllocator ? 'player' : 'target',
       color,

@@ -3,7 +3,7 @@
 // goes, how much, in what form, at what confidence. The graph stays live
 // underneath.
 
-import { X, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
+import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2 } from 'lucide-react';
 import { fmtUSD } from './format.js';
 import {
   SECTOR_META, CLASS_META, TIER_META, STATUS_META,
@@ -93,6 +93,9 @@ export default function EntityPanel({
 
       {/* Scroll body */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px 28px' }}>
+        {/* Profile — who/what this is + official link(s) */}
+        <ProfileBlock node={node} />
+
         {/* Totals */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
           <Stat label="Capital" value={fmtUSD(node.capital)} sub={isAllocator ? 'deployed' : 'received'} color={isAllocator ? '#C2A36B' : '#82B98D'} />
@@ -138,6 +141,72 @@ export default function EntityPanel({
         )}
       </div>
     </aside>
+  );
+}
+
+// ── Profile: who/what this is + a link ──────────────────────────────────
+// Description + link come from the engine data if present, else the dashboard
+// reference file. When neither has a verified link we show a Search fallback
+// (never a guessed URL).
+function ProfileBlock({ node }) {
+  const links = node.links || [];
+  const hasProfile = !!node.description || links.length > 0;
+  return (
+    <div style={{
+      marginBottom: 16, padding: '11px 12px',
+      background: '#0F0F13', border: '1px solid #1e1e23', borderRadius: 10,
+    }}>
+      <div style={{
+        fontSize: 8.5, color: '#6b6b74', fontFamily: MONO, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 7,
+      }}>
+        {node.profileType === 'person' ? 'Who this is'
+          : node.profileType === 'project' ? 'What this is'
+          : node.profileType === 'fund' ? 'About this fund' : 'About'}
+      </div>
+
+      <div style={{ fontSize: 12.5, color: node.description ? '#c4c4cb' : '#6b6b74', lineHeight: 1.6, fontStyle: node.description ? 'normal' : 'italic' }}>
+        {node.description || 'No profile on file yet — use search below to look it up.'}
+      </div>
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 10 }}>
+        {links.map((l, i) => <LinkChip key={i} link={l} />)}
+        {links.length === 0 && (
+          <LinkChip link={{ kind: 'search', label: `Search "${node.name}"`, url: node.searchUrl }} />
+        )}
+      </div>
+
+      {!hasProfile && (
+        <div style={{ marginTop: 7, fontSize: 9, color: '#3f3f46', fontFamily: MONO }}>
+          Reference not yet added for this entity.
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LinkChip({ link }) {
+  const Icon = link.kind === 'website' ? Globe
+    : link.kind === 'linkedin' ? Linkedin
+    : link.kind === 'firm' ? Building2
+    : link.kind === 'search' ? Search
+    : ExternalLink;
+  const label = link.label || (link.kind === 'x' ? 'X / social' : link.kind === 'website' ? 'Website' : 'Link');
+  return (
+    <a href={link.url} target="_blank" rel="noopener noreferrer" title={link.url}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        padding: '5px 10px', background: '#141418',
+        border: '1px solid #26262c', borderRadius: 7,
+        color: '#c4c4cb', fontSize: 10.5, fontFamily: MONO, fontWeight: 600,
+        textDecoration: 'none', cursor: 'pointer', maxWidth: '100%',
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#3f9bd6'; e.currentTarget.style.color = '#e4e4e7'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#26262c'; e.currentTarget.style.color = '#c4c4cb'; }}>
+      <Icon size={12} style={{ flexShrink: 0, opacity: 0.85 }} />
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+      {link.kind !== 'search' && <ExternalLink size={10} style={{ flexShrink: 0, opacity: 0.5 }} />}
+    </a>
   );
 }
 
