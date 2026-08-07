@@ -1,0 +1,148 @@
+{
+  "_note": "Editorial deal context, dashboard-side. The Capital Flow engine emits facts (who, what, how much, how confident) and never emits interpretation — this file is where the interpretation lives, keyed by '<source id>=>><target id>' with the '=>' separator. `angle` is a 3-6 word kicker; `read` is 2-4 sentences on WHY the capital moved and what it implies. Nothing here may contradict or restate the engine's numbers, and nothing here is a quote — it is our own framing. A flow with no entry falls back to a composed line (see composeRead in capitalMap.js).",
+
+  "alloc:BlackRock=>target:Aligned Data Centers": {
+    "angle": "Buying the landlord, not the tenant",
+    "read": "The largest single flow on the map, and it buys capacity rather than models. BlackRock's infrastructure arm takes control of an AI-ready developer-operator across the Americas — the pick-and-shovel position where the return is contracted rent, not an option on which lab wins. The read-through runs straight to the power, cooling and switchgear suppliers those campuses have to order from."
+  },
+  "alloc:Brookfield=>target:Bloom Energy": {
+    "angle": "Power is the binding constraint",
+    "read": "Interconnect queues, not GPUs, now set the pace of the buildout. Brookfield underwrites on-site solid-oxide generation so campuses can energize ahead of the utility — buying years, which is the scarcest input in this cycle. Project-finance structure means the return is contracted cash flow rather than a levered call on AI demand."
+  },
+  "alloc:Blue Owl=>target:Kirkwood Infrastructure Group": {
+    "angle": "The connective tissue trade",
+    "read": "Compute clusters are worth little unstitched. Blue Owl seeds a fiber-and-conduit platform to own the connectivity backbone between AI campuses — the least glamorous, most toll-like layer of the stack. The SPV wrapper signals a build-and-hold asset, not a flip."
+  },
+  "alloc:DigitalBridge=>target:Nippon Gateway Infrastructure": {
+    "angle": "Japan's colocation shortage",
+    "read": "DigitalBridge buys into Japan through NEC's data-center assets in Greater Tokyo and Osaka — sites with power and permits already attached in a market where new grid capacity is effectively rationed. The scarce asset here is the connection, not the shell. First mover on the sector's smart-money cluster this cycle."
+  },
+  "alloc:Blackstone=>target:QTS Realty Trust": {
+    "angle": "Financing its own portfolio company",
+    "read": "Blackstone funds the next build phase of a hyperscale operator it already owns — capital recycling inside the house rather than a new position. Read it as a demand signal: the incremental dollar goes to AI-ready campuses, and QTS's leasing pace is the tell for whether hyperscaler appetite is still running ahead of supply."
+  },
+  "alloc:BlackRock=>target:Meta El Paso data center JV (Project Sopaipilla)": {
+    "angle": "Hyperscaler capex, moved off balance sheet",
+    "read": "A 1GW campus built for a single occupant, with BlackRock-managed funds holding 80% and Meta 20%. Meta gets the compute without the capex line; BlackRock gets a long-dated lease against one of the strongest tenant credits in tech. Expect the structure to be copied — it converts AI buildout into an investable, bond-like asset."
+  },
+  "alloc:SoftBank=>target:OpenAI": {
+    "angle": "Concentration as strategy",
+    "read": "SoftBank doubles down on the single position that now defines its book. At this size it stops being a venture bet and becomes an index on frontier-model economics — if inference margins compress there is no diversification behind it. It also buys strategic proximity to the compute programme SoftBank is financing on the other side of this map."
+  },
+  "alloc:Blackstone=>target:Japan AI data centers": {
+    "angle": "Industrial ruins into compute",
+    "read": "Retired LCD and fab plants come with the two things a greenfield site cannot buy quickly: heavy grid connections and industrial zoning. Blackstone underwrites the Japanese leg of the buildout on that arbitrage. Status is candidate — treat the size as directional until a primary source lands."
+  },
+  "alloc:NVIDIA=>target:Safe Superintelligence": {
+    "angle": "The supplier buying its customer",
+    "read": "NVIDIA takes a stake in a lab whose entire cost base is NVIDIA silicon. Strategically it locks in a frontier design partner; financially it is the circularity the market keeps flagging — revenue and investment travelling the same loop. Small against NVIDIA's cash, large as a signal of where the next architecture gets shaped."
+  },
+  "alloc:Meta=>target:Meta-BlackRock El Paso data center JV": {
+    "angle": "The other side of the JV",
+    "read": "Meta's 20% of the vehicle that owns the campus Meta will fully occupy. Holding the site through a JV rather than as owned capex keeps the Sopaipilla notes off the corporate balance sheet while Meta still controls the compute. The same asset appears twice on this map — once from each partner."
+  },
+  "alloc:Peter Thiel=>target:Founders Fund Growth Fund IV": {
+    "angle": "Dry powder ahead of the round",
+    "read": "The firm's largest vehicle, aimed at late stage rather than seed — a view that this cycle's winners are already identifiable and simply need capital to stay private longer. Fund launches are the leading indicator on this map: money committed here reappears as deals two to six quarters out."
+  },
+  "alloc:Galaxy Digital=>target:Galaxy Helios Data Centers II (Dickens County TX)": {
+    "angle": "Mining rigs out, GPUs in",
+    "read": "Phase two of converting a West Texas crypto site into AI/HPC capacity anchored by CoreWeave. The trade is the interconnect: hundreds of megawatts already energized for mining are worth far more serving inference. The cleanest example on this map of stranded power being repriced by AI demand."
+  },
+  "alloc:Elad Gil=>target:Odyssey": {
+    "angle": "World models as the next modality",
+    "read": "Odyssey trains real-time world models — video you can act inside rather than watch. Gil moving first here is what the engine flagged as smart money; two allocators followed within three weeks. The founders come out of self-driving, where real-time simulation was the hard-won skill."
+  },
+  "alloc:Garry Tan=>target:Odyssey": {
+    "angle": "The follow, three weeks later",
+    "read": "YC's president joining after Gil's lead is exactly the clustering this map exists to catch — conviction propagating through one network before the round is fully priced. On its own a small cheque; as the second name on the same cap table inside 21 days, a position signal."
+  },
+  "alloc:Garry Tan=>target:Monogram": {
+    "angle": "Betting against the chat box",
+    "read": "Monogram generates interactive visual interfaces instead of returning text — a wager that the chat window is a transitional UI. Small and early, but interface resets are what decide which layer of the application stack accrues the value."
+  },
+  "alloc:Jeff Bezos=>target:General Intuition": {
+    "angle": "Gameplay as proprietary training data",
+    "read": "A lab spun out of a gaming-clip platform, training agents on spatial-temporal reasoning from human play — a data source no frontier lab can simply scrape. Bezos and Schmidt entered the same round, which is the convergence the engine lit up in AI Labs this cycle."
+  },
+  "alloc:Eric Schmidt=>target:General Intuition": {
+    "angle": "Second heavyweight, same round",
+    "read": "Schmidt's cheques cluster where AI meets physical and strategic capability, and he lands here alongside Bezos. Two allocators of this weight on one early cap table says more about the data asset than about current model quality."
+  },
+  "alloc:Jeff Bezos=>target:CuspAI": {
+    "angle": "AI pointed at atoms",
+    "read": "Materials discovery is the highest-leverage non-language application: better sorbents, catalysts and batteries compound into every physical industry. Backing an AI materials foundry is the same thesis as the robotics cheques in this book, one layer further upstream."
+  },
+  "alloc:Jeff Bezos=>target:Prometheus": {
+    "angle": "The stealth position",
+    "read": "Heavily capitalized and deliberately quiet — models built to understand the physical world for industrial use. The portfolio pattern is clear: language is assumed, and the frontier being funded is embodiment. Unconfirmed status; the size is what would matter if it firms up."
+  },
+  "alloc:Jeff Bezos=>target:Generalist AI": {
+    "angle": "Hardware-agnostic embodiment",
+    "read": "Foundation models for dexterous manipulation that run on anyone's robot — the Android strategy for embodied AI, against the vertically integrated approach. Third robotics-adjacent name in the same book, which makes it a thesis rather than a punt."
+  },
+  "alloc:Jeff Bezos=>target:Flourish": {
+    "angle": "Attacking the energy cost of inference",
+    "read": "A brain-inspired compute architecture aimed at the one number that decides how far AI spreads: joules per token. Take inference energy down an order of magnitude and whole classes of application become viable — the same argument that makes inference silicon the crowded trade this cycle."
+  },
+  "alloc:Reid Hoffman=>target:Prentis": {
+    "angle": "Agents that use software like people do",
+    "read": "Computer-use models driving browser, desktop and mobile — the wrapper that turns a model into labour without waiting for every vendor to ship an API. Hoffman's cheques track the enterprise-adoption path; this is a bet on where agent value actually lands."
+  },
+  "alloc:Peter Thiel=>target:Etched": {
+    "angle": "Inference silicon, not training silicon",
+    "read": "Etched burns the transformer straight into the die — no generality, enormous throughput per watt on the one architecture that matters. The bet is that this cycle's economics shift from training runs to serving tokens, and that as token cost falls, demand expands faster than general-purpose GPUs can absorb it. Whoever owns the cheapest inference stack captures that expansion — and three separate allocators on this map are already in the name."
+  },
+  "alloc:Stanley Druckenmiller=>target:Etched": {
+    "angle": "A macro investor on a private cap table",
+    "read": "Druckenmiller does not usually appear this early, which is the point. It reads as a levered private expression of a view he can only blunt in public markets: compute demand keeps outrunning supply, and the margin migrates to whoever serves inference cheapest."
+  },
+  "alloc:Peter Thiel=>target:Panthalassa": {
+    "angle": "Taking compute offshore",
+    "read": "Wave-powered floating platforms running AI compute at sea — a direct answer to the two hard constraints on land, grid interconnect and permitting. Classic long-horizon shape: a physical, jurisdiction-light bet rather than another application-layer round. Unconfirmed, and the engineering risk is the whole story."
+  },
+  "alloc:Sequoia=>target:Valar Atomics": {
+    "angle": "Power the buildout can own",
+    "read": "Small modular reactors sold to compute and industry — the only supply that scales with demand instead of queuing for the grid. A billion at this stage prices in regulatory success, which is the real variable. Sits directly upstream of every datacenter flow on this map."
+  },
+  "alloc:Sequoia=>target:Etched": {
+    "angle": "The priced round behind the crowd",
+    "read": "Sequoia and a16z co-anchor $300M into the inference-ASIC bet the individual allocators are also chasing. When the venture majors and the family offices converge on one name inside a single cycle, the scarce input is allocation, not capital."
+  },
+  "alloc:Andreessen Horowitz=>target:Etched": {
+    "angle": "Co-anchor on the same round",
+    "read": "The other half of Etched's round. a16z runs the full AI stack, so silicon is the hedge against value concentrating in models it does not own. Two brand-name leads on identical terms compresses the window for anyone else to get in."
+  },
+  "alloc:Andreessen Horowitz=>target:Cathedral": {
+    "angle": "Software-defined offensive cyber",
+    "read": "Ex-government staff building AI-powered military cyber capability — a category where the buyer is a state and the moat is clearance, not code. a16z and Sequoia entering together mirrors the defense playbook that already worked twice this decade."
+  },
+  "alloc:Sequoia=>target:Cathedral": {
+    "angle": "The second lead",
+    "read": "Sequoia matches a16z into the same round. Two firms of this size splitting a $160M cheque suggests the constraint is contract timing rather than conviction — the value accrues when programme-of-record budget lands."
+  },
+  "alloc:Andreessen Horowitz=>target:Atoms": {
+    "angle": "Robots as labour, sold by the hour",
+    "read": "Kalanick's industrial-robotics company aims at food, mining and transport — physical work priced per task rather than hardware sold per unit. $1.7B at this stage is a factory bet, not a software bet: the risk sits in capex and uptime, not model quality."
+  },
+  "alloc:Khosla Ventures=>target:Norm Ai": {
+    "angle": "Compliance is the sharpest agent wedge",
+    "read": "Norm turns regulation into executable compliance agents — a domain where output is auditable, the buyer already holds the budget line, and errors get caught by design. Exactly the shape of AI application that survives enterprise procurement."
+  },
+  "alloc:Coatue=>target:Norm Ai": {
+    "angle": "Crossover money entering earlier",
+    "read": "Coatue joins Khosla on the same round. Public-market crossover funds moving this far down-stage is a familiar late-cycle pattern: capital chasing an entry point before the listed comparables reprice."
+  },
+  "alloc:Coatue=>target:Databricks": {
+    "angle": "Own the data layer, not the model",
+    "read": "Models commoditize; the governed enterprise data they are trained and served on does not. A $3B late-stage cheque is a bet that the lakehouse becomes the control point for corporate AI — and a pre-listing position in the most obvious IPO candidate in the stack."
+  },
+  "alloc:Altimeter=>target:Thrive Holdings": {
+    "angle": "AI roll-up of boring businesses",
+    "read": "Thrive buys traditional IT and accounting firms and rewires them with AI — margin expansion on acquired revenue rather than a product launch. If it works it is the cleanest way to monetize models without owning one; the strategic stake behind it tells you who supplies the intelligence."
+  },
+  "alloc:Coatue=>target:Coatue Retail Fund": {
+    "angle": "Retail capital enters the private AI trade",
+    "read": "Coatue's first retail-facing crossover vehicle, aimed at public tech and late-stage private AI. The structure matters more than the size: when a private-market trade is opened to retail, the institutional entry is already behind us. Worth tracking as a cycle marker."
+  }
+}

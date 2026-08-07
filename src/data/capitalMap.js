@@ -27,6 +27,7 @@
 import raw from './capitalMap.json';
 import entityRef from './entityReference.json';
 import logoManifest from './logoManifest.json';
+import flowNotes from './flowNotes.json';
 
 // ── Sector cluster zones. `order` walks the AI value chain — software →
 // compute → chips → cloud → datacenters → power → physical/defense — so the
@@ -144,6 +145,37 @@ export const GRADE_DIGIT = {
 export function gradeBlurb(grade) {
   if (!grade || grade.length < 2) return '';
   return `${GRADE_LETTER[grade[0]] || grade[0]} · ${GRADE_DIGIT[grade[1]] || grade[1]}`;
+}
+
+// Confidence band — plain-English label for the 0-100 score, so a number is
+// never shown on its own.
+export function confidenceBand(c) {
+  if (c == null) return { label: 'Not scored', color: '#94A3B8' };
+  if (c >= 85) return { label: 'High confidence', color: '#34D399' };
+  if (c >= 60) return { label: 'Solid confidence', color: '#FBBF24' };
+  if (c >= 40) return { label: 'Thin confidence', color: '#94A3B8' };
+  return { label: 'Weak confidence', color: '#8b8b95' };
+}
+
+// ── Deal context ────────────────────────────────────────────────────────
+// The engine ships facts, never interpretation. `flowNotes.json` is where the
+// interpretation lives (hand-written, dashboard-side). Anything the file
+// doesn't cover falls back to a composed line built strictly from what we
+// already know about the two entities — no invented facts.
+export function flowNote(sourceId, targetId) {
+  return flowNotes[`${sourceId}=>${targetId}`] || null;
+}
+
+export function composeRead(flow, srcNode, tgtNode) {
+  const src = srcNode?.name || String(flow.sourceId || '').replace(/^alloc:/, '');
+  const tgt = tgtNode?.name || String(flow.targetId || '').replace(/^target:/, '');
+  const et = EVENT_TYPE_META[flow.event_type];
+  const sec = flow.sector ? SECTOR_META[flow.sector] : null;
+  const what = tgtNode?.description ? ` ${tgtNode.description}` : '';
+  const where = sec ? ` It sits in ${sec.label}, ` +
+    `${sec.order <= 5 ? 'the model-and-compute end of the stack' : sec.order <= 10 ? 'the physical infrastructure layer' : 'the power and hardware layer'} of the AI buildout.` : '';
+  return `${src} — ${(et?.label || flow.event_type || 'flow').toLowerCase()} into ${tgt}.${what}${where}`
+    + ' No written read on file for this deal yet.';
 }
 
 // ── Themes — a SECOND dimension, orthogonal to sectors (which narrative a
@@ -360,6 +392,7 @@ export function buildGraph(data = raw) {
       theme: SECTOR_TO_THEME[f.sector] || null,
       confidence: typeof f.confidence === 'number' ? f.confidence : null,
       grade: f.grade || null,
+      note: flowNote(f.source, f.target),   // editorial read, or null
       amountUSD: amt,          // 0 when undisclosed (used only for sizing)
       disclosed,
       sourceTier: f.tier,      // 1..5 — do NOT confuse with allocator tier

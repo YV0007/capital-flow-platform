@@ -1,38 +1,40 @@
 // Inline breakdown of a single flow (edge click). Floats over the canvas
 // bottom-centre so the graph stays visible and interactive behind it.
+//
+// `rightInset` = px of canvas covered by the entity panel; the card centres
+// itself in the REMAINING space so the two never overlap.
 
-import { X, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, ArrowRight, ShieldCheck, Quote } from 'lucide-react';
 import { fmtUSD } from './format.js';
 import {
-  EVENT_TYPE_META, STATUS_META, SOURCE_TIER_LABEL, SECTOR_META, gradeBlurb,
+  EVENT_TYPE_META, STATUS_META, SOURCE_TIER_LABEL, SECTOR_META,
+  GRADE_LETTER, GRADE_DIGIT, confidenceBand, composeRead,
 } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 
-// Confidence → colour (green strong · amber medium · slate weak).
-function confColor(c) {
-  if (c == null) return '#94A3B8';
-  return c >= 80 ? '#34D399' : c >= 60 ? '#FBBF24' : '#94A3B8';
-}
-
-export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, onOpenEntity }) {
+export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, onOpenEntity, rightInset = 0 }) {
   if (!flow) return null;
   const et = EVENT_TYPE_META[flow.event_type] || { label: flow.event_type };
   const stat = STATUS_META[flow.status] || { label: flow.status, color: '#71717a' };
   const sec = flow.sector ? SECTOR_META[flow.sector] : null;
   const src = sourceNode?.name || flow.sourceId?.replace(/^alloc:/, '');
   const tgt = targetNode?.name || flow.targetId?.replace(/^target:/, '');
+  const band = confidenceBand(flow.confidence);
+  const note = flow.note;
 
   return (
     <div style={{
-      position: 'absolute', left: '50%', bottom: 16, transform: 'translateX(-50%)',
-      zIndex: 20, width: 'min(620px, calc(100% - 300px))', minWidth: 340,
+      position: 'absolute', left: `calc(50% - ${rightInset / 2}px)`, bottom: 16,
+      transform: 'translateX(-50%)',
+      zIndex: 20, width: `min(620px, calc(100% - ${rightInset + 60}px))`, minWidth: 320,
       background: 'rgba(12,12,15,0.97)',
       border: `1px solid ${flow.color}44`,
       borderRadius: 12,
       backdropFilter: 'blur(10px)',
       boxShadow: `0 24px 60px -18px rgba(0,0,0,0.95), 0 0 0 1px ${flow.color}18`,
       animation: 'cfmRise 200ms cubic-bezier(0.2,0.8,0.2,1)',
+      transition: 'left 220ms cubic-bezier(0.2,0.8,0.2,1), width 220ms cubic-bezier(0.2,0.8,0.2,1)',
     }}>
       {/* Header — the flow itself */}
       <div style={{
@@ -60,7 +62,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         </button>
       </div>
 
-      {/* Facts strip */}
+      {/* Facts strip — every chip reads in plain English. */}
       <div style={{
         display: 'flex', gap: 7, flexWrap: 'wrap',
         padding: '10px 14px', borderBottom: '1px solid #1c1c21',
@@ -69,41 +71,88 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         {sec && <Tag color={sec.color}>{sec.label}</Tag>}
         <Tag color="#71717a">{flow.date}</Tag>
         <Tag color={stat.color} title={stat.blurb}>{stat.label}</Tag>
-        {flow.grade && (
-          <Tag color={confColor(flow.confidence)} title={`Grade ${flow.grade} — ${gradeBlurb(flow.grade)}. Confidence ${flow.confidence}/100.`}>
-            {flow.grade} · {flow.confidence}
+        {flow.confidence != null && (
+          <Tag color={band.color} title="How well-sourced this flow is — see Confidence & source below.">
+            {band.label} · {flow.confidence}/100
           </Tag>
         )}
       </div>
 
-      {/* Provenance */}
-      <div style={{ padding: '12px 14px' }}>
-        <Label>What this flow is</Label>
-        <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.6 }}>
-          {src} {et.label.toLowerCase()} into {tgt}
-          {sec ? ` — ${sec.label} sector` : ''}.
-          {' '}This edge is the engine's record of one allocator's participation; a single deal
-          can appear as several edges when multiple allocators join the same round.
+      {/* ── The read — WHY the capital moved. ─────────────────────────── */}
+      <div style={{ padding: '13px 14px 12px' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 7 }}>
+          <Label style={{ marginBottom: 0 }}>The read</Label>
+          {note?.angle && (
+            <span style={{
+              fontSize: 10.5, color: flow.color, fontFamily: MONO, fontWeight: 700,
+              letterSpacing: '0.02em', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>
+              {note.angle}
+            </span>
+          )}
         </div>
 
-        <Label style={{ marginTop: 13 }}>Confidence &amp; source</Label>
-        {flow.grade != null && (
-          <div style={{ marginBottom: 8 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
-              <ShieldCheck size={13} color={confColor(flow.confidence)} />
-              <span style={{ fontSize: 14, fontWeight: 700, color: confColor(flow.confidence), fontFamily: MONO }}>
-                {flow.grade}
-              </span>
-              <span style={{ fontSize: 11, color: '#71717a', fontFamily: MONO }}>{gradeBlurb(flow.grade)}</span>
-              <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 700, color: confColor(flow.confidence), fontFamily: MONO }}>
+        <div style={{
+          position: 'relative', padding: '11px 13px 11px 15px',
+          background: '#0E0F13', borderRadius: 9,
+          border: '1px solid #1c1d23',
+          overflow: 'hidden',
+        }}>
+          <span style={{
+            position: 'absolute', left: 0, top: 0, bottom: 0, width: 2,
+            background: `linear-gradient(180deg, ${flow.color}, ${flow.color}22)`,
+          }} />
+          {note ? (
+            <div style={{ fontSize: 12.5, color: '#d7d7dd', lineHeight: 1.68 }}>{note.read}</div>
+          ) : (
+            <div style={{ fontSize: 12.5, color: '#8b8b95', lineHeight: 1.68 }}>
+              {composeRead(flow, sourceNode, targetNode)}
+            </div>
+          )}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 5, marginTop: 9,
+            fontSize: 8.5, color: '#4a4a53', fontFamily: MONO, letterSpacing: '0.06em', textTransform: 'uppercase',
+          }}>
+            <Quote size={9} /> Our framing · not from the engine, not a quote
+          </div>
+        </div>
+
+        {/* ── Confidence & source ─────────────────────────────────────── */}
+        <Label style={{ marginTop: 15 }}>Confidence &amp; source</Label>
+
+        {flow.confidence != null && (
+          <div style={{ marginBottom: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+              <ShieldCheck size={13} color={band.color} />
+              <span style={{ fontSize: 12.5, fontWeight: 700, color: band.color }}>{band.label}</span>
+              <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 700, color: band.color, fontFamily: MONO }}>
                 {flow.confidence}<span style={{ color: '#52525b', fontSize: 10 }}>/100</span>
               </span>
             </div>
             <div style={{ height: 4, borderRadius: 3, background: '#1c1c21', overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${flow.confidence}%`, background: confColor(flow.confidence), borderRadius: 3 }} />
+              <div style={{ height: '100%', width: `${flow.confidence}%`, background: band.color, borderRadius: 3 }} />
             </div>
           </div>
         )}
+
+        {/* Grade decoded — the letter and the digit each get their own line, so
+            "C4" is never left as a bare code. */}
+        {flow.grade && flow.grade.length >= 2 && (
+          <div style={{
+            padding: '9px 11px', background: '#0E0F13',
+            border: '1px solid #1c1d23', borderRadius: 9, marginBottom: 10,
+          }}>
+            <div style={{
+              fontSize: 8.5, color: '#4a4a53', fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.11em', marginBottom: 7,
+            }}>
+              Grade {flow.grade} — what the two characters mean
+            </div>
+            <GradePart char={flow.grade[0]} kind="Source" text={GRADE_LETTER[flow.grade[0]]} color={band.color} />
+            <GradePart char={flow.grade[1]} kind="Corroboration" text={GRADE_DIGIT[flow.grade[1]]} color={band.color} last />
+          </div>
+        )}
+
         <div style={{ fontSize: 11.5, color: '#a1a1aa', fontFamily: MONO, lineHeight: 1.7 }}>
           <span style={{ color: stat.color }}>{stat.short || flow.status}</span>
           <span style={{ color: '#3f3f46' }}> — </span>{stat.blurb || ''}
@@ -111,6 +160,29 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           <span style={{ color: '#71717a' }}>{SOURCE_TIER_LABEL[flow.sourceTier] || `Source tier ${flow.sourceTier}`}</span>
         </div>
       </div>
+    </div>
+  );
+}
+
+// One decoded half of the Admiralty grade: "C — Source: quality press".
+function GradePart({ char, kind, text, color, last }) {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 9,
+      paddingBottom: last ? 0 : 6, marginBottom: last ? 0 : 6,
+      borderBottom: last ? 'none' : '1px solid #17181d',
+    }}>
+      <span style={{
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        width: 20, height: 20, borderRadius: 5, flexShrink: 0,
+        background: color + '18', border: `1px solid ${color}44`,
+        color, fontSize: 11, fontWeight: 800, fontFamily: MONO,
+      }}>{char}</span>
+      <span style={{
+        fontSize: 9, color: '#52525b', fontFamily: MONO, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.08em', width: 92, flexShrink: 0,
+      }}>{kind}</span>
+      <span style={{ fontSize: 11.5, color: '#c4c4cb', lineHeight: 1.45 }}>{text || '—'}</span>
     </div>
   );
 }

@@ -55,8 +55,9 @@ export default function Legend({ counts }) {
             <Row label="Project · physical build"><GProject /></Row>
           </Section>
 
-          <Section title="Rim = weight / trust">
-            <Row label="Key / core allocator" title="Decides where billions go."><GRim color="#FDE047" /></Row>
+          <Section title="Pips = allocator rank">
+            <Row label="Core allocator" title="A defining node of its network — deepest-conviction repeat allocators."><GPips n={2} /></Row>
+            <Row label="Key allocator" title="Decides where billions go."><GPips n={1} /></Row>
             <Row label="Stale or unconfirmed" title="No activity in 180d, or candidate-only."><GRim dashed /></Row>
           </Section>
 
@@ -171,6 +172,17 @@ function GProject() {
     <span style={{ position: 'relative', width: 12, height: 12, display: 'inline-block' }}>
       <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: N }} />
       <span style={{ position: 'absolute', inset: 3, transform: 'rotate(45deg)', border: '1px solid rgba(8,9,12,0.85)' }} />
+    </span>
+  );
+}
+
+// Rank pips — the neutral rule drawn under a ranked allocator's tile.
+function GPips({ n }) {
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, width: 13, justifyContent: 'center' }}>
+      {Array.from({ length: n }, (_, i) => (
+        <span key={i} style={{ width: 5, height: 2, borderRadius: 1, background: '#D6DAE4' }} />
+      ))}
     </span>
   );
 }

@@ -34,7 +34,6 @@ function sizeAtom(n, maxCap) {
   n.r = 10 + 34 * share;
   n.atomTier = share > 0.6 ? 0 : share > 0.3 ? 1 : share > 0.12 ? 2 : 3;
   n.atomLabel = shortLabel(n.name, 22);
-  n.atomValue = n.atomTier <= 1 ? fmtUSD(n.capital) : null;
   // Label priority: bigger capital + higher allocator tier show their tag at
   // lower zoom; everything else only reveals as you zoom into its section.
   const tierBonus = n.tier === 'core' ? 0.5 : n.tier === 'key' ? 0.35 : n.tier === 'watch' ? 0.15 : 0;

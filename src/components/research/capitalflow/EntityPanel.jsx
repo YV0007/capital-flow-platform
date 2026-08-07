@@ -3,24 +3,24 @@
 // goes, how much, in what form, at what confidence. The graph stays live
 // underneath.
 
-import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users } from 'lucide-react';
+import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, FileText } from 'lucide-react';
 import { fmtUSD } from './format.js';
 import {
-  SECTOR_META, CLASS_META, TIER_META, STATUS_META, NETWORK_META, gradeBlurb,
+  SECTOR_META, CLASS_META, TIER_META, NETWORK_META, confidenceBand,
 } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 const W = 380;
 
-// Confidence → colour (green strong · amber medium · slate weak).
-function gradeColor(c) {
-  if (c == null) return '#94A3B8';
-  return c >= 80 ? '#34D399' : c >= 60 ? '#FBBF24' : '#94A3B8';
+// Sum of a flow list when at least one amount is disclosed — else null, so the
+// UI can say "undisclosed" instead of a misleading $0.
+function totalOrNull(flows, total) {
+  return flows.some(f => f.disclosed) ? fmtUSD(total) : 'undisclosed';
 }
 
 export default function EntityPanel({
   node, inbound, outbound, nodeById,
-  selectedFlowId, onSelectFlow, onOpenEntity, onClose,
+  selectedFlowId, onSelectFlow, onOpenEntity, onClose, topInset = 0,
 }) {
   if (!node) return null;
   const cls = CLASS_META[node.cls];
@@ -31,7 +31,7 @@ export default function EntityPanel({
 
   return (
     <aside style={{
-      position: 'absolute', top: 0, right: 0, bottom: 0, width: W, zIndex: 25,
+      position: 'absolute', top: topInset, right: 0, bottom: 0, width: W, zIndex: 25,
       background: 'rgba(10,10,12,0.985)',
       borderLeft: '1px solid #24242a',
       backdropFilter: 'blur(10px)',
@@ -113,7 +113,13 @@ export default function EntityPanel({
 
         {/* Totals */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
-          <Stat label="Capital" value={fmtUSD(node.capital)} sub={isAllocator ? 'deployed' : 'received'} color={isAllocator ? '#C2A36B' : '#82B98D'} />
+          {/* capital 0 with deals on file = every amount undisclosed, not zero */}
+          <Stat
+            label="Capital"
+            value={node.capital > 0 ? fmtUSD(node.capital) : node.degree > 0 ? '—' : '$0'}
+            sub={node.capital > 0 ? (isAllocator ? 'deployed' : 'received') : node.degree > 0 ? 'amounts undisclosed' : 'nothing tracked'}
+            color={node.capital > 0 ? (isAllocator ? '#C2A36B' : '#82B98D') : '#71717a'}
+          />
           <Stat label="Deals" value={String(node.deals)} sub={`${node.degree} flow${node.degree === 1 ? '' : 's'} tracked`} color="#e4e4e7" />
         </div>
 
@@ -130,7 +136,9 @@ export default function EntityPanel({
         </div>
 
         {inbound.length > 0 && (
-          <Section title={`Who invests here · ${fmtUSD(node.totalInflow)}`} icon={<ArrowDownLeft size={11} color="#34D399" />}>
+          <Section title={`Who invests here · ${totalOrNull(inbound, node.totalInflow)}`}
+            hint="Click a name to open it. Click the deal icon for the write-up."
+            icon={<ArrowDownLeft size={11} color="#34D399" />}>
             <FlowList
               flows={inbound} counterpartyKey="sourceId"
               nodeById={nodeById} selectedFlowId={selectedFlowId}
@@ -140,7 +148,9 @@ export default function EntityPanel({
         )}
 
         {outbound.length > 0 && (
-          <Section title={`Where its money goes · ${fmtUSD(node.totalOutflow)}`} icon={<ArrowUpRight size={11} color="#F59E0B" />}>
+          <Section title={`Where its money goes · ${totalOrNull(outbound, node.totalOutflow)}`}
+            hint="Click a name to open it. Click the deal icon for the write-up."
+            icon={<ArrowUpRight size={11} color="#F59E0B" />}>
             <FlowList
               flows={outbound} counterpartyKey="targetId"
               nodeById={nodeById} selectedFlowId={selectedFlowId}
@@ -191,9 +201,14 @@ function ProfileBlock({ node }) {
         )}
       </div>
 
-      {!hasProfile && (
-        <div style={{ marginTop: 7, fontSize: 9, color: '#3f3f46', fontFamily: MONO }}>
-          Reference not yet added for this entity.
+      {/* Why some entities show a search box instead of a link: we only ever
+          link a URL we hold on file — private offices and stealth companies
+          usually have none, and a guessed URL is worse than no URL. */}
+      {links.length === 0 && (
+        <div style={{ marginTop: 8, fontSize: 9, color: '#4a4a53', fontFamily: MONO, lineHeight: 1.55 }}>
+          {hasProfile
+            ? 'No official site on file — private office / no public web presence. We search rather than guess a URL.'
+            : 'Reference not yet added for this entity.'}
         </div>
       )}
     </div>
@@ -226,6 +241,9 @@ function LinkChip({ link }) {
 }
 
 // ── Ranked flow list with share bars ────────────────────────────────────
+// The ROW is the counterparty: clicking it walks the panel over to that entity
+// (the primary intent — "who did they back? show me that company"). The deal
+// write-up is a separate, explicit button so the two never fight each other.
 function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFlow, onOpenEntity }) {
   const max = Math.max(...flows.map(f => f.amountUSD), 1);
   return (
@@ -233,15 +251,16 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
       {flows.map(f => {
         const cp = nodeById.get(f[counterpartyKey]);
         const on = f.id === selectedFlowId;
-        const stat = STATUS_META[f.status] || {};
+        const band = confidenceBand(f.confidence);
         return (
-          <button key={f.id} onClick={() => onSelectFlow(f.id)}
+          <div key={f.id}
+            onClick={() => cp && onOpenEntity(cp.id)}
+            title={cp ? `Open ${cp.name}` : ''}
             style={{
-              position: 'relative', display: 'block', width: '100%', textAlign: 'left',
-              padding: '8px 10px', borderRadius: 8,
+              position: 'relative', padding: '8px 10px', borderRadius: 8,
               background: on ? '#17171c' : '#0F0F13',
               border: `1px solid ${on ? f.color + '66' : '#1e1e23'}`,
-              cursor: 'pointer', overflow: 'hidden',
+              cursor: cp ? 'pointer' : 'default', overflow: 'hidden',
               transition: 'border-color 130ms, background 130ms',
             }}
             onMouseEnter={(e) => { if (!on) e.currentTarget.style.borderColor = '#33333a'; }}
@@ -253,23 +272,22 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
               background: `linear-gradient(90deg, ${f.color}1f, ${f.color}05)`,
               pointerEvents: 'none',
             }} />
-            <span style={{ position: 'relative', display: 'flex', alignItems: 'baseline', gap: 8 }}>
-              <span
-                onClick={(e) => { e.stopPropagation(); if (cp) onOpenEntity(cp.id); }}
-                title={cp ? `Open ${cp.name}` : ''}
-                style={{
-                  fontSize: 12, fontWeight: 600, color: '#e4e4e7',
-                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                  flex: 1, minWidth: 0, textDecoration: 'underline', textDecorationColor: '#2f2f36',
-                  textUnderlineOffset: 3,
-                }}>
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'baseline', gap: 6 }}>
+              <span style={{
+                fontSize: 12, fontWeight: 600, color: '#e4e4e7',
+                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                minWidth: 0,
+              }}>
                 {cp ? cp.name : f[counterpartyKey]}
               </span>
+              <ChevronRight size={11} color="#52525b" style={{ flexShrink: 0, alignSelf: 'center' }} />
+              <span style={{ flex: 1 }} />
               <span style={{ fontSize: 12, fontWeight: 700, color: f.disclosed ? '#fafafa' : '#71717a', fontFamily: MONO, flexShrink: 0 }}>
                 {f.disclosed ? fmtUSD(f.amount) : '—'}
               </span>
-            </span>
-            <span style={{
+            </div>
+
+            <div style={{
               position: 'relative', display: 'flex', alignItems: 'center', gap: 6,
               marginTop: 5, fontSize: 9.5, fontFamily: MONO,
             }}>
@@ -278,30 +296,55 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
               <span style={{ color: '#3f3f46' }}>·</span>
               <span style={{ color: '#71717a' }}>{f.date}</span>
               <span style={{ flex: 1 }} />
-              {f.grade && (
-                <span title={`Grade ${f.grade} — ${gradeBlurb(f.grade)}. Confidence ${f.confidence}/100.`}
-                  style={{ color: gradeColor(f.confidence), fontWeight: 700, cursor: 'help' }}>
-                  {f.grade}·{f.confidence}
+
+              {/* confidence as a meter, not a code */}
+              {f.confidence != null && (
+                <span title={`${band.label} — ${f.confidence}/100. Open the deal card for the full source breakdown.`}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 5, cursor: 'help' }}>
+                  <span style={{ width: 26, height: 3, borderRadius: 2, background: '#232329', overflow: 'hidden' }}>
+                    <span style={{ display: 'block', height: '100%', width: `${f.confidence}%`, background: band.color }} />
+                  </span>
+                  <span style={{ color: band.color, fontWeight: 700 }}>{f.confidence}</span>
                 </span>
               )}
-            </span>
-          </button>
+
+              <button
+                onClick={(e) => { e.stopPropagation(); onSelectFlow(f.id); }}
+                title={on ? 'Hide the deal write-up' : 'Read the deal write-up'}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: 20, height: 20, borderRadius: 5, flexShrink: 0,
+                  background: on ? f.color + '22' : '#17171c',
+                  border: `1px solid ${on ? f.color + '66' : '#26262c'}`,
+                  color: on ? f.color : '#6b6b74', cursor: 'pointer', padding: 0,
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#e4e4e7'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = on ? f.color : '#6b6b74'; }}>
+                <FileText size={11} />
+              </button>
+            </div>
+          </div>
         );
       })}
     </div>
   );
 }
 
-function Section({ title, icon, children }) {
+function Section({ title, icon, hint, children }) {
   return (
     <div style={{ marginBottom: 18 }}>
       <div style={{
-        display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8,
+        display: 'flex', alignItems: 'center', gap: 6, marginBottom: hint ? 4 : 8,
         fontSize: 9, color: '#6b6b74', fontFamily: MONO, fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.12em',
       }}>
         {icon}{title}
       </div>
+      {hint && (
+        <div style={{ fontSize: 9, color: '#4a4a53', fontFamily: MONO, marginBottom: 8, lineHeight: 1.5 }}>
+          {hint}
+        </div>
+      )}
       {children}
     </div>
   );

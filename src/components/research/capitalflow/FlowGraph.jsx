@@ -64,8 +64,12 @@ export default function FlowGraph({
       const img = new Image();
       entry.img = img;
       img.onload = () => {
-        if (img.naturalWidth > 0) { entry.ok = true; entry.done = true; scheduleRefresh(); }
-        else { i++; tryNext(); }
+        if (img.naturalWidth > 0) {
+          entry.ok = true; entry.done = true;
+          // SVGs scale for free; rasters get an upscale cap in paintNode.
+          entry.vector = /\.svg(\?|$)/i.test(urls[i]);
+          scheduleRefresh();
+        } else { i++; tryNext(); }
       };
       img.onerror = () => { i++; tryNext(); };
       img.src = urls[i];
@@ -207,7 +211,9 @@ export default function FlowGraph({
     const half = S / 2;
     const x = cx - half, y = cy - half;
     const corner = S * 0.26;        // rounded-square radius (app-icon look)
-    const goldRim = node.tier === 'key' || node.tier === 'core';
+    // Allocator rank. Encoded as a quiet neutral pip (below), NOT as a coloured
+    // rim — the gold outline fought the logos and read as a warning state.
+    const rank = node.tier === 'core' ? 2 : node.tier === 'key' ? 1 : 0;
 
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -216,11 +222,6 @@ export default function FlowGraph({
     if (lit && (selected || hovered)) {
       roundRect(ctx, x - 5, y - 5, S + 10, S + 10, corner + 4);
       ctx.fillStyle = hexA(col, selected ? 0.28 : 0.15); ctx.fill();
-    }
-    // core-tier → faint gold halo
-    if (node.tier === 'core') {
-      roundRect(ctx, x - 3, y - 3, S + 6, S + 6, corner + 3);
-      ctx.lineWidth = 1.4; ctx.strokeStyle = hexA('#FDE047', 0.6); ctx.stroke();
     }
 
     // cheap flat drop shadow (an offset dark tile) — no shadowBlur, so it stays
@@ -243,7 +244,16 @@ export default function FlowGraph({
       const pad = S * 0.15;
       const iw = logo.img.naturalWidth, ih = logo.img.naturalHeight;
       const box = S - pad * 2;
-      const sc = Math.min(box / iw, box / ih);
+      let sc = Math.min(box / iw, box / ih);
+      // Some brands only publish a 16-32px favicon. Blowing one up to fill the
+      // tile turns it to mush, so cap the upscale at 2x the source's real
+      // pixels — a small sharp mark beats a large blurry one. Vectors (and
+      // anything already large) are unaffected.
+      if (!logo.vector) {
+        const gsNow = globalScale || 1;
+        sc = Math.min(sc, 2 / gsNow);
+      }
+      ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(logo.img, cx - (iw * sc) / 2, cy - (ih * sc) / 2, iw * sc, ih * sc);
       ctx.restore();
     } else {
@@ -267,13 +277,29 @@ export default function FlowGraph({
       ctx.stroke();
     }
 
-    // accent rim = domain colour (keeps the colour encoding)
+    // accent rim = domain colour (keeps the colour encoding). One weight for
+    // everyone; rank is carried by the pips below, not by the rim.
     roundRect(ctx, x, y, S, S, corner);
-    ctx.lineWidth = selected ? 2.6 : goldRim ? 2.2 : 1.6;
-    ctx.strokeStyle = selected ? '#ffffff' : goldRim ? '#FDE047' : hexA(col, hovered ? 1 : 0.9);
+    ctx.lineWidth = selected ? 2.4 : 1.4;
+    ctx.strokeStyle = selected ? '#ffffff' : hexA(col, hovered ? 1 : 0.72);
     if (node.stale || node.watchOnly) ctx.setLineDash([3, 3]);
     ctx.stroke();
     ctx.setLineDash([]);
+
+    // Rank pips — a small neutral rule under the tile. Two = core, one = key.
+    // Quiet enough to ignore, consistent enough to scan.
+    if (rank) {
+      const pipW = S * 0.16, pipH = Math.max(1.6, S * 0.035), gap = pipW * 0.5;
+      const totalW = rank * pipW + (rank - 1) * gap;
+      let px = cx - totalW / 2;
+      const py = y + S + Math.max(3, S * 0.075);
+      ctx.fillStyle = hexA('#D6DAE4', selected || hovered ? 0.95 : 0.55);
+      for (let i = 0; i < rank; i++) {
+        roundRect(ctx, px, py, pipW, pipH, pipH / 2);
+        ctx.fill();
+        px += pipW + gap;
+      }
+    }
 
     // label — reveal by zoom, ranked by importance (node.labelScale)
     const gs = globalScale || 1;
@@ -284,12 +310,10 @@ export default function FlowGraph({
       const big = node.atomTier <= 1;
       ctx.font = `${big ? 700 : 600} ${Math.max(11, R * 0.62)}px -apple-system, "Segoe UI", sans-serif`;
       ctx.fillStyle = selected || hovered ? '#ffffff' : hexA('#e6e8ee', big ? 0.96 : 0.78);
-      ctx.fillText(node.atomLabel, lx, cy - (node.atomValue ? R * 0.42 : 0));
-      if (node.atomValue) {
-        ctx.font = `600 ${Math.max(10, R * 0.5)}px ui-monospace, monospace`;
-        ctx.fillStyle = hexA(mix(col, '#ffffff', 0.3), 0.95);
-        ctx.fillText(node.atomValue, lx, cy + R * 0.5);
-      }
+      // Name only — the capital figure used to sit under it, but it was
+      // unreadable at map contrast and duplicated the panel. Amounts live in
+      // the hover card and the entity panel.
+      ctx.fillText(node.atomLabel, lx, cy);
     }
 
     ctx.restore();

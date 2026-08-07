@@ -29,8 +29,6 @@ import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
   ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, TriangleAlert, Eye, Layers, Target,
 } from 'lucide-react';
-import { NETWORK_META } from '../../../data/capitalMap.js';
-
 import FlowGraph from './FlowGraph.jsx';
 import FilterDrawer from './FilterBar.jsx';
 import Legend from './Legend.jsx';
@@ -42,6 +40,10 @@ import { buildGraph, buildAdjacency, DISCLAIMER, META } from '../../../data/capi
 
 const MONO = 'ui-monospace, monospace';
 const BG = '#08090C';
+// Height reserved by the top overlay bar. Every floating surface (right panel,
+// filter drawer) starts below it so nothing ever sits under the controls.
+const TOPBAR_H = 62;
+const PANEL_W = 380;   // must match EntityPanel's width
 
 export default function CapitalFlowMap({ onBack }) {
   // Built once; positions are pinned by the static layout — no simulation.
@@ -273,10 +275,11 @@ export default function CapitalFlowMap({ onBack }) {
       {/* ── Top overlay bar ─────────────────────────────────────────────── */}
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30,
+        height: TOPBAR_H, boxSizing: 'border-box',
         display: 'flex', alignItems: 'center', gap: 10,
-        padding: '12px 16px',
+        padding: '0 16px',
         pointerEvents: 'none',
-        background: 'linear-gradient(180deg, rgba(8,9,12,0.9) 0%, rgba(8,9,12,0.55) 60%, transparent 100%)',
+        background: 'linear-gradient(180deg, rgba(8,9,12,0.96) 0%, rgba(8,9,12,0.92) 70%, rgba(8,9,12,0) 100%)',
       }}>
         {/* Back + title + stats */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, pointerEvents: 'auto', minWidth: 0 }}>
@@ -402,11 +405,6 @@ export default function CapitalFlowMap({ onBack }) {
         </div>
       </div>
 
-      {/* ── Beneficiary read-through (public tickers) ───────────────────── */}
-      {graph.beneficiaries && graph.beneficiaries.length > 0 && (
-        <BeneficiaryPanel items={graph.beneficiaries} />
-      )}
-
       {/* ── Filter drawer ───────────────────────────────────────────────── */}
       {drawerOpen && (
         <FilterDrawer
@@ -459,7 +457,11 @@ export default function CapitalFlowMap({ onBack }) {
       <Legend counts={legendCounts} />
 
       {/* ── Disclaimer chip / card ──────────────────────────────────────── */}
-      <div style={{ position: 'absolute', right: 14, bottom: 14, zIndex: 12, maxWidth: 440 }}>
+      <div style={{
+        position: 'absolute', right: (selectedNode ? PANEL_W : 0) + 14, bottom: 14,
+        zIndex: 12, maxWidth: 440,
+        transition: 'right 220ms cubic-bezier(0.2,0.8,0.2,1)',
+      }}>
         {disclaimerOpen ? (
           <div style={{
             padding: '11px 13px',
@@ -502,11 +504,13 @@ export default function CapitalFlowMap({ onBack }) {
           targetNode={nodeById.get(selectedFlow.targetId)}
           onClose={() => setSelectedFlowId(null)}
           onOpenEntity={focusEntity}
+          rightInset={selectedNode ? PANEL_W : 0}
         />
       )}
 
       {selectedNode && (
         <EntityPanel
+          topInset={TOPBAR_H}
           node={selectedNode}
           inbound={(adj?.inbound || [])}
           outbound={(adj?.outbound || [])}
@@ -516,61 +520,6 @@ export default function CapitalFlowMap({ onBack }) {
           onOpenEntity={focusEntity}
           onClose={() => setSelectedNodeId(null)}
         />
-      )}
-    </div>
-  );
-}
-
-// ── Beneficiary read-through panel — public tickers private capital points at.
-// The highest-value actionable signal, so it gets its own always-visible card.
-function BeneficiaryPanel({ items }) {
-  const [open, setOpen] = useState(true);
-  // Parse "NVDA (NVIDIA): 9 private flows converge" → ticker / name / count.
-  const parsed = items.map(s => {
-    const m = /^([A-Z.]{1,6})\s*\(([^)]+)\):\s*(\d+)/.exec(s.theme || '');
-    return {
-      ticker: m ? m[1] : (s.theme || '').split(' ')[0],
-      name: m ? m[2] : '',
-      count: m ? +m[3] : Math.round(s.strength || 0),
-      strength: s.strength || 0,
-    };
-  }).sort((a, b) => b.count - a.count);
-
-  return (
-    <div style={{
-      position: 'absolute', left: 14, top: 92, zIndex: 14, width: open ? 250 : 190,
-      background: 'rgba(13,14,19,0.95)', border: '1px solid #2b2f24', borderRadius: 10,
-      backdropFilter: 'blur(8px)', boxShadow: '0 16px 40px -16px rgba(0,0,0,0.9)', overflow: 'hidden',
-    }}>
-      <button onClick={() => setOpen(o => !o)} style={{
-        display: 'flex', alignItems: 'center', gap: 7, width: '100%', padding: '8px 11px',
-        background: 'transparent', border: 'none', cursor: 'pointer',
-        color: '#FBBF24', fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
-        textTransform: 'uppercase', letterSpacing: '0.1em',
-      }}>
-        <Target size={12} /> Public read-through
-        <span style={{ marginLeft: 'auto', color: '#71717a' }}>{parsed.length}</span>
-      </button>
-      {open && (
-        <div style={{ padding: '2px 8px 10px', display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <div style={{ fontSize: 8.5, color: '#5b5b64', fontFamily: MONO, padding: '0 3px 4px', lineHeight: 1.5 }}>
-            Public tickers many private flows converge on — the actionable beneficiaries.
-          </div>
-          {parsed.map((b, i) => (
-            <a key={i} href={`https://duckduckgo.com/?q=${encodeURIComponent(b.ticker + ' ' + b.name + ' stock')}`}
-              target="_blank" rel="noopener noreferrer" title={`${b.name} — ${b.count} private flows converge`}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 7,
-                background: '#16170f', border: '1px solid #2b2f1e', textDecoration: 'none',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#FBBF2455')}
-              onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#2b2f1e')}>
-              <span style={{ fontSize: 12, fontWeight: 800, color: '#FBBF24', fontFamily: MONO, minWidth: 42 }}>{b.ticker}</span>
-              <span style={{ fontSize: 10.5, color: '#c4c4cb', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.name}</span>
-              <span style={{ fontSize: 10, color: '#a1a1aa', fontFamily: MONO }}>{b.count}×</span>
-            </a>
-          ))}
-        </div>
       )}
     </div>
   );
