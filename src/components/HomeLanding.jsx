@@ -13,7 +13,6 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useEffect, useState } from 'react';
-import { Target, BookOpen, TrendingUp } from 'lucide-react';
 import CapitalFlowsHome from './home/CapitalFlowsHome.jsx';
 import HoldingsHome from './home/HoldingsHome.jsx';
 import SupplyChainHome from './home/SupplyChainHome.jsx';
@@ -86,7 +85,50 @@ function NavChip({ label, color, onClick, filled }) {
   );
 }
 
-function FooterTile({ icon: Icon, title, desc, accent, onClick, delay }) {
+// ── Custom footer marks — thin geometric line work instead of stock icons ─
+function MarkBase({ children }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+      aria-hidden="true">
+      {children}
+    </svg>
+  );
+}
+
+// Live position monitoring — a pulse line.
+function TrackerMark() {
+  return (
+    <MarkBase>
+      <path d="M3 12h3.5l2.5-5.5 4 11 2.5-5.5H21" />
+    </MarkBase>
+  );
+}
+
+// Research library — books on a shelf, one leaning.
+function LibraryMark() {
+  return (
+    <MarkBase>
+      <path d="M5 4.5v15M9.5 4.5v15" />
+      <path d="M13.6 5.4l4.6 13.6" />
+      <path d="M3.5 19.5h17" />
+    </MarkBase>
+  );
+}
+
+// Proxy — exposure routed through an intermediate node.
+function ProxyMark() {
+  return (
+    <MarkBase>
+      <circle cx="4.6" cy="12" r="1.9" />
+      <circle cx="12" cy="12" r="3" />
+      <circle cx="19.4" cy="12" r="1.9" />
+      <path d="M6.5 12H9M15 12h2.5" />
+    </MarkBase>
+  );
+}
+
+function FooterTile({ mark, title, desc, accent, onClick, delay }) {
   const [hovered, setHovered] = useState(false);
   return (
     <Reveal delay={delay}>
@@ -106,12 +148,13 @@ function FooterTile({ icon: Icon, title, desc, accent, onClick, delay }) {
         }}
       >
         <span style={{
-          width: 42, height: 42, borderRadius: 11, flexShrink: 0,
-          background: `linear-gradient(135deg, ${accent}28 0%, ${accent}0a 100%)`,
-          border: `1px solid ${accent}40`,
+          width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+          background: `${accent}0d`,
+          border: `1px solid ${accent}30`,
+          color: accent,
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          <Icon size={18} style={{ color: accent }} strokeWidth={2} />
+          {mark}
         </span>
         <span style={{ minWidth: 0 }}>
           <span style={{ display: 'block', fontSize: 15, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em' }}>
@@ -231,7 +274,7 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
           display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16,
         }}>
           <FooterTile
-            icon={Target}
+            mark={<TrackerMark />}
             title="VC-трекер"
             desc="Живой мониторинг венчурной позиции — сигналы, скоринг, коммуникации синдиката."
             accent="#9A8FD2"
@@ -239,7 +282,7 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
             delay={0}
           />
           <FooterTile
-            icon={BookOpen}
+            mark={<LibraryMark />}
             title="Библиотека исследований"
             desc="Все глубокие отчёты — секторы, тезисы и полная карта портфеля."
             accent="#8E9BE6"
@@ -247,7 +290,7 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
             delay={90}
           />
           <FooterTile
-            icon={TrendingUp}
+            mark={<ProxyMark />}
             title="Прокси"
             desc="Доступ к частному AI через публичные холдинги — окна входа, концентрация, проекции."
             accent="#F59E0B"
