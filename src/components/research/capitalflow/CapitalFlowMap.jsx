@@ -10,7 +10,6 @@
 //   · top bar    — back, title + generated-date + live stats, search, controls
 //   · filter drawer — sector · class · tier · event · status · min-flow
 //   · legend     — bottom-left, collapsible
-//   · disclaimer — bottom-right chip, expandable
 //   · entity panel (right) and flow card (bottom-centre) on selection
 //
 // FILTER SEMANTICS
@@ -27,7 +26,7 @@
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
-  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, TriangleAlert, Eye, Layers, Target,
+  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, Eye, Layers, Target,
 } from 'lucide-react';
 import FlowGraph from './FlowGraph.jsx';
 import FilterDrawer from './FilterBar.jsx';
@@ -36,7 +35,7 @@ import EntityPanel from './EntityPanel.jsx';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD } from './format.js';
 import { applyMoleculeLayout } from './layout.js';
-import { buildGraph, buildAdjacency, DISCLAIMER, META } from '../../../data/capitalMap.js';
+import { buildGraph, buildAdjacency, META } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 const BG = '#08090C';
@@ -75,7 +74,6 @@ export default function CapitalFlowMap({ onBack }) {
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [selectedFlowId, setSelectedFlowId] = useState(null);
   const [showLabels, setShowLabels] = useState(true);
-  const [disclaimerOpen, setDisclaimerOpen] = useState(false);
 
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
@@ -455,47 +453,6 @@ export default function CapitalFlowMap({ onBack }) {
       )}
 
       <Legend counts={legendCounts} />
-
-      {/* ── Disclaimer chip / card ──────────────────────────────────────── */}
-      <div style={{
-        position: 'absolute', right: (selectedNode ? PANEL_W : 0) + 14, bottom: 14,
-        zIndex: 12, maxWidth: 440,
-        transition: 'right 220ms cubic-bezier(0.2,0.8,0.2,1)',
-      }}>
-        {disclaimerOpen ? (
-          <div style={{
-            padding: '11px 13px',
-            background: 'rgba(14,15,20,0.96)', border: '1px solid rgba(56,189,248,0.28)',
-            borderRadius: 10, backdropFilter: 'blur(8px)',
-          }}>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-              <TriangleAlert size={12} color="#38BDF8" style={{ flexShrink: 0, marginTop: 2 }} />
-              <div style={{ fontSize: 10, color: '#a1a1aa', lineHeight: 1.55, fontFamily: MONO }}>
-                {DISCLAIMER}
-                <span style={{ color: '#71717a' }}>
-                  {' '}{Math.round(graph.stats.disclosedShare * 100)}% of flows carry a disclosed amount.
-                </span>
-              </div>
-              <button onClick={() => setDisclaimerOpen(false)}
-                style={{ background: 'none', border: 'none', color: '#52525b', cursor: 'pointer', padding: 2, lineHeight: 0, flexShrink: 0 }}>
-                <X size={12} />
-              </button>
-            </div>
-          </div>
-        ) : (
-          <button onClick={() => setDisclaimerOpen(true)} title={DISCLAIMER}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              padding: '6px 10px',
-              background: 'rgba(56,189,248,0.07)', border: '1px solid rgba(56,189,248,0.26)',
-              borderRadius: 8, cursor: 'pointer',
-              fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: '#38BDF8',
-              textTransform: 'uppercase', letterSpacing: '0.08em',
-            }}>
-            <TriangleAlert size={11} /> Engine data · {META.generated}
-          </button>
-        )}
-      </div>
 
       {selectedFlow && (
         <FlowDetailCard
