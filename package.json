@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "logos": "python3 scripts/fetch_logos.py",
+    "logos:all": "python3 scripts/fetch_logos.py --all"
   },
   "dependencies": {
     "lucide-react": "^0.396.0",

@@ -22,6 +22,9 @@ Stages 1, 2a, 2b complete. Stage 3 (Tracker migration) is next.
 - `index_slim.html` is the source monolith — gitignored, never commit it
 - Don't ask permission to read files. Do ask before destructive ops (rm -rf, force-push)
 - Commit author email is set globally — don't change it
+- After a new `capitalMap.json` lands, `npm run logos` fills brand marks for the new
+  entities (the engine's `deliver.py` already does this automatically). See
+  `src/components/research/capitalflow/README.md` § Logo pipeline.
 
 ## Token budget rules
 - NEVER read full data JSONs (`src/data/*.json`, `src/data/holdings-v2/**/*.json`) — they are 200–400 KB each and burn 50–100K tokens per read.

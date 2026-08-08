@@ -52,6 +52,43 @@ sectors{ <key>: { deals, capital, allocators, signals[] } }
   source tier).
 - `Legend.jsx`, `format.js` — key + shared formatters.
 
+## Editorial layer (what the engine does NOT ship)
+The engine ships facts only. Two dashboard-side files carry interpretation and
+presentation, and both are keyed by the engine's own ids:
+
+- **`../../../data/flowNotes.json`** — the *read* on a deal: a short `angle`
+  kicker plus 2-4 sentences on why the capital moved, keyed
+  `"<source id>=><target id>"`. Rendered as "The read" in the flow card and
+  labelled as our framing, never as a quote. A flow with no entry falls back to
+  `composeRead()` in the adapter, which states only what the entities are.
+  **Coverage is partial** — new flows arrive faster than notes are written; the
+  fallback is what un-noted flows show.
+- **`../../../data/entityReference.json` + `public/logos/`** — who an entity is,
+  its links, and its brand mark. Maintained by `scripts/fetch_logos.py`.
+
+### Logo pipeline
+```
+npm run logos        # only entities missing a logo (incremental, fast)
+npm run logos:all    # re-fetch everything, keep the sharpest result
+```
+It walks **capitalMap.json's node list** (not just the reference file, so new
+entities are actually attempted), and for each one:
+1. uses a curated website/firm/X link if `entityReference.json` has one;
+2. otherwise resolves a domain from the name and **verifies the page identifies
+   itself as that entity** before trusting it — generic one-word names need an
+   industry keyword too. Resolved sites are written back into
+   `entityReference.json` marked `auto_resolved` for review;
+3. downloads every candidate and keeps the **sharpest** (SVG wins; otherwise
+   largest min(w,h)) — node tiles render ~90px, so a 16px favicon is mush;
+4. falls back to the **sponsor's** mark for fund vehicles and JVs
+   ("Altimeter Kilauea Fund II, L.P." → Altimeter);
+5. leaves anything unverifiable as a monogram tile. A wrong logo is worse than
+   no logo.
+
+This runs automatically on every engine delivery — `engine/deliver.py` in the
+Capital Flow repo invokes it after copying the new map and includes the results
+in the same commit. `run_week.py --no-logos` skips it.
+
 ## Reconstruction rules (from the engine handoff)
 - **Inclusion:** a node reaches the main map when it carries ≥1
   `verified`/`verified_alpha` flow, or sits in a signalling sector.

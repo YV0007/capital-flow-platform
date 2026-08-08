@@ -1,57 +1,1002 @@
 {
   "_note": "Dashboard-maintained reference: who/what each Capital Flow entity is + an official link. Keyed by node id from capitalMap.json. The engine may later emit `description`/`links` on nodes directly, which take precedence over this file. Entries here are curated + link-verified; entities with no entry fall back to a web-search link in the UI. `type`: org | person | fund | project. `links[].kind`: website | x | linkedin | firm | news.",
-
-  "alloc:BlackRock": { "type": "org", "description": "World's largest asset manager (~$12T AUM); its infrastructure arm (GIP) is a lead financier of AI data-center and power buildout.", "links": [{ "kind": "website", "label": "blackrock.com", "url": "https://www.blackrock.com" }] },
-  "alloc:SoftBank": { "type": "org", "description": "Japanese holding/investment group behind the Vision Funds; a lead backer of OpenAI and large AI-infrastructure bets.", "links": [{ "kind": "website", "label": "group.softbank", "url": "https://group.softbank/en" }] },
-  "alloc:Blackstone": { "type": "org", "description": "Largest alternative-asset manager; deploys real-estate and infrastructure capital into data centers and digital infrastructure.", "links": [{ "kind": "website", "label": "blackstone.com", "url": "https://www.blackstone.com" }] },
-  "alloc:Brookfield": { "type": "org", "description": "Global alternative-asset manager focused on infrastructure, real assets and renewable power — key to AI data-center and energy finance.", "links": [{ "kind": "website", "label": "brookfield.com", "url": "https://www.brookfield.com" }] },
-  "alloc:Meta": { "type": "org", "description": "Meta Platforms — hyperscaler deploying balance-sheet capital into AI compute, data centers and model development.", "links": [{ "kind": "website", "label": "about.meta.com", "url": "https://about.meta.com" }] },
-  "alloc:NVIDIA": { "type": "org", "description": "Dominant AI-accelerator maker; also a strategic investor taking stakes across the AI-compute and neocloud stack.", "links": [{ "kind": "website", "label": "nvidia.com", "url": "https://www.nvidia.com" }] },
-  "alloc:Coatue": { "type": "org", "description": "Technology-focused crossover investment manager active across late-stage AI and public tech.", "links": [{ "kind": "website", "label": "coatue.com", "url": "https://www.coatue.com" }] },
-  "alloc:Andreessen Horowitz": { "type": "org", "description": "a16z — venture firm and one of the most active investors in AI startups across the stack.", "links": [{ "kind": "website", "label": "a16z.com", "url": "https://a16z.com" }] },
-  "alloc:Sequoia": { "type": "org", "description": "Sequoia Capital — venture firm backing foundational AI and infrastructure companies.", "links": [{ "kind": "website", "label": "sequoiacap.com", "url": "https://www.sequoiacap.com" }] },
-  "alloc:Khosla Ventures": { "type": "org", "description": "Venture firm; early OpenAI backer and active across frontier AI and deep tech.", "links": [{ "kind": "website", "label": "khoslaventures.com", "url": "https://www.khoslaventures.com" }] },
-  "alloc:Altimeter": { "type": "org", "description": "Altimeter Capital — technology-focused public/private crossover investment firm.", "links": [{ "kind": "website", "label": "altimeter.com", "url": "https://www.altimeter.com" }] },
-  "alloc:Blue Owl": { "type": "org", "description": "Blue Owl Capital — alternative-asset manager active in digital-infrastructure and data-center financing.", "links": [{ "kind": "website", "label": "blueowl.com", "url": "https://www.blueowl.com" }] },
-  "alloc:DigitalBridge": { "type": "org", "description": "Digital-infrastructure investment manager (data centers, towers, fiber) central to AI-buildout capital.", "links": [{ "kind": "website", "label": "digitalbridge.com", "url": "https://www.digitalbridge.com" }] },
-  "alloc:Galaxy Digital": { "type": "org", "description": "Digital-asset and data-center company converting crypto-mining sites (e.g. Helios, TX) into AI/HPC capacity.", "links": [{ "kind": "website", "label": "galaxy.com", "url": "https://www.galaxy.com" }] },
-
-  "alloc:Peter Thiel": { "type": "person", "description": "Co-founder of PayPal and Palantir; founder of Founders Fund. Long-horizon backer of frontier tech.", "links": [{ "kind": "firm", "label": "Founders Fund", "url": "https://foundersfund.com" }] },
-  "alloc:Jeff Bezos": { "type": "person", "description": "Founder of Amazon and Blue Origin; invests personally via Bezos Expeditions.", "links": [{ "kind": "x", "label": "@JeffBezos", "url": "https://x.com/JeffBezos" }, { "kind": "firm", "label": "Bezos Expeditions", "url": "https://www.bezosexpeditions.com" }] },
-  "alloc:Reid Hoffman": { "type": "person", "description": "Co-founder of LinkedIn and Inflection AI; partner at Greylock. Prolific AI angel investor.", "links": [{ "kind": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/reidhoffman" }, { "kind": "firm", "label": "Greylock", "url": "https://greylock.com" }] },
-  "alloc:Elad Gil": { "type": "person", "description": "Serial entrepreneur and prolific angel/solo-GP investor in AI startups; author of the High Growth Handbook.", "links": [{ "kind": "website", "label": "eladgil.com", "url": "https://eladgil.com" }] },
-  "alloc:Garry Tan": { "type": "person", "description": "President & CEO of Y Combinator; founder of Initialized Capital.", "links": [{ "kind": "x", "label": "@garrytan", "url": "https://x.com/garrytan" }, { "kind": "firm", "label": "Y Combinator", "url": "https://www.ycombinator.com" }] },
-  "alloc:Eric Schmidt": { "type": "person", "description": "Former Google/Alphabet CEO & chairman; funds science and AI/defense via Schmidt Sciences and Schmidt Futures.", "links": [{ "kind": "firm", "label": "Schmidt Sciences", "url": "https://www.schmidtsciences.org" }] },
-  "alloc:Stanley Druckenmiller": { "type": "person", "description": "Legendary macro investor; runs the Duquesne Family Office.", "links": [] },
-
-  "target:OpenAI": { "type": "org", "description": "Frontier AI lab behind ChatGPT and the GPT models; among the most heavily capitalized private AI companies.", "links": [{ "kind": "website", "label": "openai.com", "url": "https://openai.com" }] },
-  "target:Safe Superintelligence": { "type": "org", "description": "SSI — AI lab founded by Ilya Sutskever focused solely on building safe superintelligence.", "links": [{ "kind": "website", "label": "ssi.inc", "url": "https://ssi.inc" }] },
-  "target:Databricks": { "type": "org", "description": "Data + AI platform (lakehouse) used to build and serve AI/ML at enterprise scale.", "links": [{ "kind": "website", "label": "databricks.com", "url": "https://www.databricks.com" }] },
-  "target:Bloom Energy": { "type": "org", "description": "Public maker of solid-oxide fuel cells providing on-site power for data centers.", "links": [{ "kind": "website", "label": "bloomenergy.com", "url": "https://www.bloomenergy.com" }] },
-  "target:QTS Realty Trust": { "type": "org", "description": "Hyperscale data-center operator (Blackstone-owned) building large AI-ready campuses.", "links": [{ "kind": "website", "label": "qtsdatacenters.com", "url": "https://www.qtsdatacenters.com" }] },
-  "target:Etched": { "type": "org", "description": "Startup building transformer-specialized inference ASICs (Sohu) for large language models.", "links": [{ "kind": "website", "label": "etched.com", "url": "https://www.etched.com" }] },
-  "target:Valar Atomics": { "type": "org", "description": "Nuclear-energy startup developing small modular reactors to power compute and industry.", "links": [{ "kind": "website", "label": "valaratomics.com", "url": "https://www.valaratomics.com" }] },
-  "target:Aligned Data Centers": { "type": "org", "description": "Hyperscale/colo data-center developer-operator building AI-ready capacity across the Americas.", "links": [{ "kind": "website", "label": "aligneddc.com", "url": "https://www.aligneddc.com" }] },
-
-  "target:Japan AI data centers": { "type": "project", "description": "SoftBank-led AI data-center buildout in Japan (including a former Sharp LCD plant in Osaka converted for OpenAI-agent workloads), part of the Stargate Japan effort.", "links": [{ "kind": "website", "label": "group.softbank", "url": "https://group.softbank/en" }] },
-  "target:Meta El Paso data center JV (Project Sopaipilla)": { "type": "project", "description": "~$14B El Paso, Texas data-center campus (codename Project Sopaipilla) developed via a Meta–BlackRock venture; BlackRock-managed funds hold 80% and Meta 20%, with Meta as sole occupant of the 1GW site.", "links": [{ "kind": "news", "label": "Meta press release", "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Announces-New-Strategic-Venture-with-BlackRock-to-Develop-Data-Center-in-El-Paso/default.aspx" }] },
-  "target:Meta-BlackRock El Paso data center JV": { "type": "project", "description": "The Meta–BlackRock joint venture (Project Sopaipilla) owning and developing the ~$14B, 1GW El Paso, Texas AI data-center campus, financed partly via $12.5B of Sopaipilla notes.", "links": [{ "kind": "news", "label": "Meta press release", "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Announces-New-Strategic-Venture-with-BlackRock-to-Develop-Data-Center-in-El-Paso/default.aspx" }] },
-  "target:Coatue Retail Fund": { "type": "fund", "description": "Coatue's first retail-oriented crossover vehicle (Coatue Innovative Strategies Fund), investing in public tech and late-stage AI/private companies; raised ~$8B.", "links": [{ "kind": "website", "label": "coatue.com", "url": "https://www.coatue.com" }] },
-  "target:Founders Fund Growth Fund IV": { "type": "fund", "description": "Founders Fund's fourth late-stage growth fund (~$6B), the firm's largest, backing late-stage tech and AI companies.", "links": [{ "kind": "firm", "label": "foundersfund.com", "url": "https://foundersfund.com" }] },
-  "target:Galaxy Helios Data Centers II (Dickens County TX)": { "type": "project", "description": "Expansion phase of Galaxy Digital's Helios campus in Dickens County, West Texas — a former crypto-mining site converted to a multi-gigawatt AI/HPC data center anchored by CoreWeave.", "links": [{ "kind": "website", "label": "galaxy.com", "url": "https://www.galaxy.com" }] },
-  "target:Thrive Holdings": { "type": "org", "description": "Holding company launched by Josh Kushner's Thrive Capital that acquires traditional services firms (IT, accounting) and rewires them with AI; OpenAI holds a strategic stake.", "links": [] },
-  "target:Atoms": { "type": "org", "description": "Industrial-robotics company from Uber co-founder Travis Kalanick (rebranded from City Storage Systems), building 'gainfully employed' robots for food, mining and transport; raised $1.7B led by a16z.", "links": [{ "kind": "website", "label": "atoms.co", "url": "https://www.atoms.co" }] },
-  "target:Cathedral": { "type": "org", "description": "Defense/cyber startup founded by former DOGE staffers building AI-powered military cyber capabilities; backed by a16z and Sequoia.", "links": [] },
-  "target:Norm Ai": { "type": "org", "description": "New York startup that converts regulations and policies into compliance AI agents for regulated enterprises.", "links": [{ "kind": "website", "label": "norm.ai", "url": "https://www.norm.ai" }] },
-  "target:Panthalassa": { "type": "org", "description": "Startup building self-propelled, wave-powered floating platforms (Ocean-3) to run AI compute at sea; backed by Peter Thiel.", "links": [] },
-  "target:Flourish": { "type": "org", "description": "AI startup building a brain-inspired, energy-efficient computing architecture (Cortex AI); founded by Rob Williams and neuroscientist Thomas Reardon, backed by Jeff Bezos, Lux Capital and GV.", "links": [] },
-  "target:Kirkwood Infrastructure Group": { "type": "org", "description": "Fiber and conduit infrastructure platform launched by Blue Owl's Digital Infrastructure strategy to build the connectivity backbone for AI-era data centers.", "links": [{ "kind": "news", "label": "Blue Owl announcement", "url": "https://www.blueowl.com/news/funds-managed-blue-owl-digital-infrastructure-strategy-launch-kirkwood-infrastructure-group" }] },
-  "target:Nippon Gateway Infrastructure": { "type": "project", "description": "Japanese colocation data-center platform formed by DigitalBridge and JEXI, launched with NEC data-center assets in Greater Tokyo and Osaka.", "links": [{ "kind": "news", "label": "DigitalBridge announcement", "url": "https://www.digitalbridge.com/news/2026-07-01-digitalbridge-and-jexi-announce-formation-of-nippon-gateway-infrastructure-a-new-data-center-platform-in-japan" }] },
-  "target:Odyssey": { "type": "org", "description": "AI research company building real-time world models, founded by self-driving veterans Oliver Cameron and Jeff Hawke.", "links": [{ "kind": "website", "label": "odyssey.ml", "url": "https://odyssey.ml" }] },
-  "target:Monogram": { "type": "org", "description": "AI startup from Udemy/Carbon Health founder Eren Bali building a general-purpose AI app that generates interactive visual UIs rather than chat; raised a $40M seed.", "links": [] },
-  "target:General Intuition": { "type": "org", "description": "AI research lab spun out of gaming-clip platform Medal, training agents for spatial-temporal reasoning on gameplay data; led by Pim de Witte.", "links": [{ "kind": "website", "label": "generalintuition.com", "url": "https://www.generalintuition.com" }] },
-  "target:CuspAI": { "type": "org", "description": "Cambridge, UK AI-driven materials-discovery startup co-founded by Chad Edwards and Prof. Max Welling; backs an 'AI Materials Foundry'.", "links": [{ "kind": "website", "label": "cusp.ai", "url": "https://cusp.ai" }] },
-  "target:Prometheus": { "type": "org", "description": "Project Prometheus — heavily capitalized, stealth AI company from Jeff Bezos and Vik Bajaj building models that understand the physical world for industrial robotics.", "links": [] },
-  "target:Generalist AI": { "type": "org", "description": "San Francisco robotics-AI company building hardware-agnostic embodied foundation models (GEN-1) for dexterous manipulation.", "links": [{ "kind": "website", "label": "generalistai.com", "url": "https://generalistai.com" }] },
-  "target:Prentis": { "type": "org", "description": "AI research lab building computer-use models/agents that operate software across browser, desktop and mobile; co-founded by Ritankar Das with Reid Hoffman and Mark Pincus.", "links": [{ "kind": "website", "label": "prentis.ai", "url": "https://www.prentis.ai" }] }
+  "alloc:BlackRock": {
+    "type": "org",
+    "description": "World's largest asset manager (~$12T AUM); its infrastructure arm (GIP) is a lead financier of AI data-center and power buildout.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "blackrock.com",
+        "url": "https://www.blackrock.com"
+      }
+    ]
+  },
+  "alloc:SoftBank": {
+    "type": "org",
+    "description": "Japanese holding/investment group behind the Vision Funds; a lead backer of OpenAI and large AI-infrastructure bets.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "group.softbank",
+        "url": "https://group.softbank/en"
+      }
+    ]
+  },
+  "alloc:Blackstone": {
+    "type": "org",
+    "description": "Largest alternative-asset manager; deploys real-estate and infrastructure capital into data centers and digital infrastructure.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "blackstone.com",
+        "url": "https://www.blackstone.com"
+      }
+    ]
+  },
+  "alloc:Brookfield": {
+    "type": "org",
+    "description": "Global alternative-asset manager focused on infrastructure, real assets and renewable power — key to AI data-center and energy finance.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "brookfield.com",
+        "url": "https://www.brookfield.com"
+      }
+    ]
+  },
+  "alloc:Meta": {
+    "type": "org",
+    "description": "Meta Platforms — hyperscaler deploying balance-sheet capital into AI compute, data centers and model development.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "about.meta.com",
+        "url": "https://about.meta.com"
+      }
+    ]
+  },
+  "alloc:NVIDIA": {
+    "type": "org",
+    "description": "Dominant AI-accelerator maker; also a strategic investor taking stakes across the AI-compute and neocloud stack.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "nvidia.com",
+        "url": "https://www.nvidia.com"
+      }
+    ]
+  },
+  "alloc:Coatue": {
+    "type": "org",
+    "description": "Technology-focused crossover investment manager active across late-stage AI and public tech.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "coatue.com",
+        "url": "https://www.coatue.com"
+      }
+    ]
+  },
+  "alloc:Andreessen Horowitz": {
+    "type": "org",
+    "description": "a16z — venture firm and one of the most active investors in AI startups across the stack.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "a16z.com",
+        "url": "https://a16z.com"
+      }
+    ]
+  },
+  "alloc:Sequoia": {
+    "type": "org",
+    "description": "Sequoia Capital — venture firm backing foundational AI and infrastructure companies.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "sequoiacap.com",
+        "url": "https://www.sequoiacap.com"
+      }
+    ]
+  },
+  "alloc:Khosla Ventures": {
+    "type": "org",
+    "description": "Venture firm; early OpenAI backer and active across frontier AI and deep tech.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "khoslaventures.com",
+        "url": "https://www.khoslaventures.com"
+      }
+    ]
+  },
+  "alloc:Altimeter": {
+    "type": "org",
+    "description": "Altimeter Capital — technology-focused public/private crossover investment firm.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "altimeter.com",
+        "url": "https://www.altimeter.com"
+      }
+    ]
+  },
+  "alloc:Blue Owl": {
+    "type": "org",
+    "description": "Blue Owl Capital — alternative-asset manager active in digital-infrastructure and data-center financing.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "blueowl.com",
+        "url": "https://www.blueowl.com"
+      }
+    ]
+  },
+  "alloc:DigitalBridge": {
+    "type": "org",
+    "description": "Digital-infrastructure investment manager (data centers, towers, fiber) central to AI-buildout capital.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "digitalbridge.com",
+        "url": "https://www.digitalbridge.com"
+      }
+    ]
+  },
+  "alloc:Galaxy Digital": {
+    "type": "org",
+    "description": "Digital-asset and data-center company converting crypto-mining sites (e.g. Helios, TX) into AI/HPC capacity.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "galaxy.com",
+        "url": "https://www.galaxy.com"
+      }
+    ]
+  },
+  "alloc:Peter Thiel": {
+    "type": "person",
+    "description": "Co-founder of PayPal and Palantir; founder of Founders Fund. Long-horizon backer of frontier tech.",
+    "links": [
+      {
+        "kind": "firm",
+        "label": "Founders Fund",
+        "url": "https://foundersfund.com"
+      }
+    ]
+  },
+  "alloc:Jeff Bezos": {
+    "type": "person",
+    "description": "Founder of Amazon and Blue Origin; invests personally via Bezos Expeditions.",
+    "links": [
+      {
+        "kind": "x",
+        "label": "@JeffBezos",
+        "url": "https://x.com/JeffBezos"
+      },
+      {
+        "kind": "firm",
+        "label": "Bezos Expeditions",
+        "url": "https://www.bezosexpeditions.com"
+      }
+    ]
+  },
+  "alloc:Reid Hoffman": {
+    "type": "person",
+    "description": "Co-founder of LinkedIn and Inflection AI; partner at Greylock. Prolific AI angel investor.",
+    "links": [
+      {
+        "kind": "linkedin",
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/reidhoffman"
+      },
+      {
+        "kind": "firm",
+        "label": "Greylock",
+        "url": "https://greylock.com"
+      }
+    ]
+  },
+  "alloc:Elad Gil": {
+    "type": "person",
+    "description": "Serial entrepreneur and prolific angel/solo-GP investor in AI startups; author of the High Growth Handbook.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "eladgil.com",
+        "url": "https://eladgil.com"
+      }
+    ]
+  },
+  "alloc:Garry Tan": {
+    "type": "person",
+    "description": "President & CEO of Y Combinator; founder of Initialized Capital.",
+    "links": [
+      {
+        "kind": "x",
+        "label": "@garrytan",
+        "url": "https://x.com/garrytan"
+      },
+      {
+        "kind": "firm",
+        "label": "Y Combinator",
+        "url": "https://www.ycombinator.com"
+      }
+    ]
+  },
+  "alloc:Eric Schmidt": {
+    "type": "person",
+    "description": "Former Google/Alphabet CEO & chairman; funds science and AI/defense via Schmidt Sciences and Schmidt Futures.",
+    "links": [
+      {
+        "kind": "firm",
+        "label": "Schmidt Sciences",
+        "url": "https://www.schmidtsciences.org"
+      }
+    ]
+  },
+  "alloc:Stanley Druckenmiller": {
+    "type": "person",
+    "description": "Legendary macro investor; runs the Duquesne Family Office.",
+    "links": []
+  },
+  "target:OpenAI": {
+    "type": "org",
+    "description": "Frontier AI lab behind ChatGPT and the GPT models; among the most heavily capitalized private AI companies.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "openai.com",
+        "url": "https://openai.com"
+      }
+    ]
+  },
+  "target:Safe Superintelligence": {
+    "type": "org",
+    "description": "SSI — AI lab founded by Ilya Sutskever focused solely on building safe superintelligence.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "ssi.inc",
+        "url": "https://ssi.inc"
+      }
+    ]
+  },
+  "target:Databricks": {
+    "type": "org",
+    "description": "Data + AI platform (lakehouse) used to build and serve AI/ML at enterprise scale.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "databricks.com",
+        "url": "https://www.databricks.com"
+      }
+    ]
+  },
+  "target:Bloom Energy": {
+    "type": "org",
+    "description": "Public maker of solid-oxide fuel cells providing on-site power for data centers.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "bloomenergy.com",
+        "url": "https://www.bloomenergy.com"
+      }
+    ]
+  },
+  "target:QTS Realty Trust": {
+    "type": "org",
+    "description": "Hyperscale data-center operator (Blackstone-owned) building large AI-ready campuses.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "qtsdatacenters.com",
+        "url": "https://www.qtsdatacenters.com"
+      }
+    ]
+  },
+  "target:Etched": {
+    "type": "org",
+    "description": "Startup building transformer-specialized inference ASICs (Sohu) for large language models.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "etched.com",
+        "url": "https://www.etched.com"
+      }
+    ]
+  },
+  "target:Valar Atomics": {
+    "type": "org",
+    "description": "Nuclear-energy startup developing small modular reactors to power compute and industry.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "valaratomics.com",
+        "url": "https://www.valaratomics.com"
+      }
+    ]
+  },
+  "target:Aligned Data Centers": {
+    "type": "org",
+    "description": "Hyperscale/colo data-center developer-operator building AI-ready capacity across the Americas.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "aligneddc.com",
+        "url": "https://www.aligneddc.com"
+      }
+    ]
+  },
+  "target:Japan AI data centers": {
+    "type": "project",
+    "description": "SoftBank-led AI data-center buildout in Japan (including a former Sharp LCD plant in Osaka converted for OpenAI-agent workloads), part of the Stargate Japan effort.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "group.softbank",
+        "url": "https://group.softbank/en"
+      }
+    ]
+  },
+  "target:Meta El Paso data center JV (Project Sopaipilla)": {
+    "type": "project",
+    "description": "~$14B El Paso, Texas data-center campus (codename Project Sopaipilla) developed via a Meta–BlackRock venture; BlackRock-managed funds hold 80% and Meta 20%, with Meta as sole occupant of the 1GW site.",
+    "links": [
+      {
+        "kind": "news",
+        "label": "Meta press release",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Announces-New-Strategic-Venture-with-BlackRock-to-Develop-Data-Center-in-El-Paso/default.aspx"
+      }
+    ]
+  },
+  "target:Meta-BlackRock El Paso data center JV": {
+    "type": "project",
+    "description": "The Meta–BlackRock joint venture (Project Sopaipilla) owning and developing the ~$14B, 1GW El Paso, Texas AI data-center campus, financed partly via $12.5B of Sopaipilla notes.",
+    "links": [
+      {
+        "kind": "news",
+        "label": "Meta press release",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Announces-New-Strategic-Venture-with-BlackRock-to-Develop-Data-Center-in-El-Paso/default.aspx"
+      }
+    ]
+  },
+  "target:Coatue Retail Fund": {
+    "type": "fund",
+    "description": "Coatue's first retail-oriented crossover vehicle (Coatue Innovative Strategies Fund), investing in public tech and late-stage AI/private companies; raised ~$8B.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "coatue.com",
+        "url": "https://www.coatue.com"
+      }
+    ]
+  },
+  "target:Founders Fund Growth Fund IV": {
+    "type": "fund",
+    "description": "Founders Fund's fourth late-stage growth fund (~$6B), the firm's largest, backing late-stage tech and AI companies.",
+    "links": [
+      {
+        "kind": "firm",
+        "label": "foundersfund.com",
+        "url": "https://foundersfund.com"
+      }
+    ]
+  },
+  "target:Galaxy Helios Data Centers II (Dickens County TX)": {
+    "type": "project",
+    "description": "Expansion phase of Galaxy Digital's Helios campus in Dickens County, West Texas — a former crypto-mining site converted to a multi-gigawatt AI/HPC data center anchored by CoreWeave.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "galaxy.com",
+        "url": "https://www.galaxy.com"
+      }
+    ]
+  },
+  "target:Thrive Holdings": {
+    "type": "org",
+    "description": "Holding company launched by Josh Kushner's Thrive Capital that acquires traditional services firms (IT, accounting) and rewires them with AI; OpenAI holds a strategic stake.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "thriveholdings.com",
+        "url": "https://thriveholdings.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Atoms": {
+    "type": "org",
+    "description": "Industrial-robotics company from Uber co-founder Travis Kalanick (rebranded from City Storage Systems), building 'gainfully employed' robots for food, mining and transport; raised $1.7B led by a16z.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "atoms.co",
+        "url": "https://www.atoms.co"
+      }
+    ]
+  },
+  "target:Cathedral": {
+    "type": "org",
+    "description": "Defense/cyber startup founded by former DOGE staffers building AI-powered military cyber capabilities; backed by a16z and Sequoia.",
+    "links": []
+  },
+  "target:Norm Ai": {
+    "type": "org",
+    "description": "New York startup that converts regulations and policies into compliance AI agents for regulated enterprises.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "norm.ai",
+        "url": "https://www.norm.ai"
+      }
+    ]
+  },
+  "target:Panthalassa": {
+    "type": "org",
+    "description": "Startup building self-propelled, wave-powered floating platforms (Ocean-3) to run AI compute at sea; backed by Peter Thiel.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "panthalassa.com",
+        "url": "https://panthalassa.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Flourish": {
+    "type": "org",
+    "description": "AI startup building a brain-inspired, energy-efficient computing architecture (Cortex AI); founded by Rob Williams and neuroscientist Thomas Reardon, backed by Jeff Bezos, Lux Capital and GV.",
+    "links": []
+  },
+  "target:Kirkwood Infrastructure Group": {
+    "type": "org",
+    "description": "Fiber and conduit infrastructure platform launched by Blue Owl's Digital Infrastructure strategy to build the connectivity backbone for AI-era data centers.",
+    "links": [
+      {
+        "kind": "news",
+        "label": "Blue Owl announcement",
+        "url": "https://www.blueowl.com/news/funds-managed-blue-owl-digital-infrastructure-strategy-launch-kirkwood-infrastructure-group"
+      }
+    ]
+  },
+  "target:Nippon Gateway Infrastructure": {
+    "type": "project",
+    "description": "Japanese colocation data-center platform formed by DigitalBridge and JEXI, launched with NEC data-center assets in Greater Tokyo and Osaka.",
+    "links": [
+      {
+        "kind": "news",
+        "label": "DigitalBridge announcement",
+        "url": "https://www.digitalbridge.com/news/2026-07-01-digitalbridge-and-jexi-announce-formation-of-nippon-gateway-infrastructure-a-new-data-center-platform-in-japan"
+      }
+    ]
+  },
+  "target:Odyssey": {
+    "type": "org",
+    "description": "AI research company building real-time world models, founded by self-driving veterans Oliver Cameron and Jeff Hawke.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "odyssey.ml",
+        "url": "https://odyssey.ml"
+      }
+    ]
+  },
+  "target:Monogram": {
+    "type": "org",
+    "description": "AI startup from Udemy/Carbon Health founder Eren Bali building a general-purpose AI app that generates interactive visual UIs rather than chat; raised a $40M seed.",
+    "links": []
+  },
+  "target:General Intuition": {
+    "type": "org",
+    "description": "AI research lab spun out of gaming-clip platform Medal, training agents for spatial-temporal reasoning on gameplay data; led by Pim de Witte.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "generalintuition.com",
+        "url": "https://www.generalintuition.com"
+      }
+    ]
+  },
+  "target:CuspAI": {
+    "type": "org",
+    "description": "Cambridge, UK AI-driven materials-discovery startup co-founded by Chad Edwards and Prof. Max Welling; backs an 'AI Materials Foundry'.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "cusp.ai",
+        "url": "https://cusp.ai"
+      }
+    ]
+  },
+  "target:Prometheus": {
+    "type": "org",
+    "description": "Project Prometheus — heavily capitalized, stealth AI company from Jeff Bezos and Vik Bajaj building models that understand the physical world for industrial robotics.",
+    "links": []
+  },
+  "target:Generalist AI": {
+    "type": "org",
+    "description": "San Francisco robotics-AI company building hardware-agnostic embodied foundation models (GEN-1) for dexterous manipulation.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "generalistai.com",
+        "url": "https://generalistai.com"
+      }
+    ]
+  },
+  "target:Prentis": {
+    "type": "org",
+    "description": "AI research lab building computer-use models/agents that operate software across browser, desktop and mobile; co-founded by Ritankar Das with Reid Hoffman and Mark Pincus.",
+    "links": [
+      {
+        "kind": "website",
+        "label": "prentis.ai",
+        "url": "https://www.prentis.ai"
+      }
+    ]
+  },
+  "alloc:MGX": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "mgx.com",
+        "url": "https://mgx.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:US Government": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "usgovernment.com",
+        "url": "https://usgovernment.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Electronic Arts": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "electronicarts.com",
+        "url": "https://electronicarts.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Amazon": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "amazon.io",
+        "url": "https://amazon.io"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:KKR": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "kkr.com",
+        "url": "https://kkr.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:OpenAI Group PBC": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "openaigrouppbc.com",
+        "url": "https://openaigrouppbc.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Anthropic": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "anthropic.com",
+        "url": "https://anthropic.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Mubadala": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "mubadala.com",
+        "url": "https://mubadala.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Anthropic": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "anthropic.com",
+        "url": "https://anthropic.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Azora": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "azora.com",
+        "url": "https://azora.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Hadrian": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "hadrian.com",
+        "url": "https://hadrian.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Base Power": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "basepower.com",
+        "url": "https://basepower.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Aypa Power": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "aypapower.com",
+        "url": "https://aypapower.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Microsoft": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "microsoft.ai",
+        "url": "https://microsoft.ai"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Microsoft Frontier Company": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "microsoftfrontiercompany.com",
+        "url": "https://microsoftfrontiercompany.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Founders Fund": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "foundersfund.com",
+        "url": "https://foundersfund.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Chai Discovery": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "chaidiscovery.com",
+        "url": "https://chaidiscovery.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Greenoaks": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "greenoaks.com",
+        "url": "https://greenoaks.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:GlobalFoundries": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "globalfoundries.com",
+        "url": "https://globalfoundries.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Glow": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "glow.io",
+        "url": "https://glow.io"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:HappyRobot": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "happyrobot.com",
+        "url": "https://happyrobot.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:State Affairs": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "stateaffairs.com",
+        "url": "https://stateaffairs.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Neo Security": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "neosecurity.co",
+        "url": "https://neosecurity.co"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Extropic": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "extropic.com",
+        "url": "https://extropic.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Convex": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "convex.com",
+        "url": "https://convex.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:P-1 AI": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "p1.ai",
+        "url": "https://p1.ai"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Aeluma": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "aeluma.com",
+        "url": "https://aeluma.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Ambrook": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "ambrook.com",
+        "url": "https://ambrook.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Ellis": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "ellis.com",
+        "url": "https://ellis.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Summit Ridge Energy": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "summitridgeenergy.com",
+        "url": "https://summitridgeenergy.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Alphabet": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "alphabet.com",
+        "url": "https://alphabet.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Proxima Fusion": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "proximafusion.com",
+        "url": "https://proximafusion.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Mistral AI": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "mistral.ai",
+        "url": "https://mistral.ai"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:David Sacks": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "davidsacks.co",
+        "url": "https://davidsacks.co"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:SkillBench": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "skillbench.com",
+        "url": "https://skillbench.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Patrick Collison": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "patrickcollison.com",
+        "url": "https://patrickcollison.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Radical Numerics": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "radicalnumerics.ai",
+        "url": "https://radicalnumerics.ai"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Gravis Robotics AG": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "gravisrobotics.com",
+        "url": "https://gravisrobotics.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Craft Ventures V, LP": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "craftventures.com",
+        "url": "https://craftventures.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:NAVER Corporation": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "naver.com",
+        "url": "https://naver.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Nebius Group N.V.": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "nebius.com",
+        "url": "https://nebius.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Volta Infra Holdings": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "voltainfra.com",
+        "url": "https://voltainfra.com"
+      }
+    ],
+    "auto_resolved": true
+  }
 }

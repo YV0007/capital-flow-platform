@@ -1,0 +1,55 @@
+# Entities rendering as a monogram tile.
+# Many are correct (projects, JVs, funds, private individuals).
+# For any that IS a real company, add a website link to
+# src/data/entityReference.json and re-run `npm run logos`.
+
+target:DOE Paducah Site AI data center campus (Western Kentucky)	DOE Paducah Site AI data center campus (Western Kentucky)
+target:Richland Parish / Hyperion data center (Louisiana)	Richland Parish / Hyperion data center (Louisiana)
+target:MGX Fund I	MGX Fund I
+alloc:Saudi PIF	Saudi PIF
+target:KKR Global Infrastructure Investors V	KKR Global Infrastructure Investors V
+target:TeraWulf Justified Data Campus (Kentucky)	TeraWulf Justified Data Campus (Kentucky)
+target:Saudi PIF strategic investments (US export credit facility)	Saudi PIF strategic investments (US export credit facility)
+alloc:Korea Investment Corporation	Korea Investment Corporation
+target:KIC strategic investment account (AI / data centers / strategic industries)	KIC strategic investment account (AI / data centers / strategic industries)
+target:Sturgeon County data center (Alberta, Canada)	Sturgeon County data center (Alberta, Canada)
+target:NAVER GAK Sejong AI factory (Korea national AI factory)	NAVER GAK Sejong AI factory (Korea national AI factory)
+target:Akita 500MW AI data center (Japan)	Akita 500MW AI data center (Japan)
+target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbourne (third campus)
+target:Williams Power Innovation JV (Socrates, Apollo, Aquila, Socrates the Younger, Neo)	Williams Power Innovation JV (Socrates, Apollo, Aquila, Socrates the Younger, Neo)
+target:Volta AI Infrastructure Program	Volta AI Infrastructure Program
+target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
+target:EDF power solutions North America	EDF power solutions North America
+target:AirTrunk SYD3 (Western Sydney)	AirTrunk SYD3 (Western Sydney)
+target:ABB Robotics	ABB Robotics
+target:ABB Robotics acquisition financing	ABB Robotics acquisition financing
+alloc:Thrive Capital	Thrive Capital
+target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
+target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
+target:Lucid Group	Lucid Group
+target:Cathedral	Cathedral
+target:Genesis Mission first project cohort (278 projects)	Genesis Mission first project cohort (278 projects)
+target:Kepler Computing	Kepler Computing
+target:Multibeam Corporation	Multibeam Corporation
+target:Flourish	Flourish
+target:Singularity Defense	Singularity Defense
+alloc:Vinod Khosla	Vinod Khosla
+target:Prometheus project (Idaho National Laboratory and partners)	Prometheus project (Idaho National Laboratory and partners)
+target:Thintronics	Thintronics
+target:OBSIDIA Semiconductors	OBSIDIA Semiconductors
+target:Kirkwood Infrastructure Group	Kirkwood Infrastructure Group
+target:Nippon Gateway Infrastructure (NGI)	Nippon Gateway Infrastructure (NGI)
+target:SB Neo	SB Neo
+target:France sovereign AI infrastructure framework	France sovereign AI infrastructure framework
+alloc:Brian Singerman	Brian Singerman
+target:GPx TX LP	GPx TX LP
+target:Quiet Select TX LP	Quiet Select TX LP
+target:LifeMine Therapeutics	LifeMine Therapeutics
+target:Monogram	Monogram
+alloc:Dylan Field	Dylan Field
+alloc:Stanley Druckenmiller	Stanley Druckenmiller
+target:Prometheus	Prometheus
+target:Paducah AI/HPC innovation campus	Paducah AI/HPC innovation campus
+target:Savannah River Site AI data center	Savannah River Site AI data center
+target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
+target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure

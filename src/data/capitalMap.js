@@ -162,8 +162,13 @@ export function confidenceBand(c) {
 // interpretation lives (hand-written, dashboard-side). Anything the file
 // doesn't cover falls back to a composed line built strictly from what we
 // already know about the two entities — no invented facts.
-export function flowNote(sourceId, targetId) {
-  return flowNotes[`${sourceId}=>${targetId}`] || null;
+// Resolution order: a read the ENGINE wrote at research time wins (the research
+// agents know the deal best and cover every new flow), then the hand-written
+// dashboard file, then null -> composeRead().
+export function flowNote(flow) {
+  if (flow.read) return { angle: flow.angle || null, read: flow.read, from: 'engine' };
+  const n = flowNotes[`${flow.source}=>${flow.target}`];
+  return n ? { ...n, from: 'dashboard' } : null;
 }
 
 export function composeRead(flow, srcNode, tgtNode) {
@@ -392,7 +397,7 @@ export function buildGraph(data = raw) {
       theme: SECTOR_TO_THEME[f.sector] || null,
       confidence: typeof f.confidence === 'number' ? f.confidence : null,
       grade: f.grade || null,
-      note: flowNote(f.source, f.target),   // editorial read, or null
+      note: flowNote(f),                    // editorial read, or null
       amountUSD: amt,          // 0 when undisclosed (used only for sizing)
       disclosed,
       sourceTier: f.tier,      // 1..5 — do NOT confuse with allocator tier

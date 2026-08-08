@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="64" fill="#1A3A24"/>
+  <text x="256" y="340" text-anchor="middle" font-family="'Satoshi', 'Inter', 'Helvetica Neue', sans-serif" font-weight="700" font-size="320" letter-spacing="0.05em" fill="#FAFCFA">V</text>
+  <line x1="196" y1="380" x2="316" y2="380" stroke="#C9A84C" stroke-width="6"/>
+</svg>
