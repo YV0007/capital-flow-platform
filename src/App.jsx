@@ -94,6 +94,16 @@ export default function App() {
     setTrackerOpen(true);
     if (companyId) switchCompany(companyId);
   };
+
+  // Deep-link from the home landing straight into a specific research page
+  // (Capital Flow Map, Holdings, DC supply chain, Proxy) — enters research
+  // mode without clearing the target id the way updateMode does.
+  const openResearchPage = (researchId) => {
+    setMode('research');
+    setTrackerOpen(false);
+    setActiveResearchId(researchId);
+    try { window.localStorage.setItem(MODE_KEY, 'research'); } catch {}
+  };
   const closeTracker = () => setTrackerOpen(false);
 
   // ─── Tracker app state ────────────────────────────────────────────
@@ -368,7 +378,7 @@ export default function App() {
     return (
       <div style={{ minHeight: '100vh', background: '#0A0A0B', color: '#e4e4e7' }}>
         <Header mode={mode} onChangeMode={updateMode} />
-        <HomeLanding onChoose={updateMode} />
+        <HomeLanding onChoose={updateMode} onOpenResearch={openResearchPage} />
       </div>
     );
   }
