@@ -17,7 +17,7 @@ import { Target, BookOpen, TrendingUp } from 'lucide-react';
 import CapitalFlowsHome from './home/CapitalFlowsHome.jsx';
 import HoldingsHome from './home/HoldingsHome.jsx';
 import SupplyChainHome from './home/SupplyChainHome.jsx';
-import { WEEK_STATS, GENERATED } from './home/homeData.js';
+import { WEEK_STATS } from './home/homeData.js';
 import { fmtUSD } from './research/capitalflow/format.js';
 import { Reveal, MONO, EASE } from './home/ui.jsx';
 
@@ -152,13 +152,6 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
         maxWidth: 1200, margin: '0 auto', padding: '76px 32px 0',
         textAlign: 'center',
       }}>
-        <div style={{
-          fontSize: 10.5, color: '#71717a', fontFamily: MONO, fontWeight: 600,
-          textTransform: 'uppercase', letterSpacing: '0.32em', marginBottom: 22,
-          animation: `hmFloatIn 700ms ${EASE} backwards`,
-        }}>
-          Инвестиционная аналитика · неделя {GENERATED}
-        </div>
         <h1 style={{
           fontSize: 'clamp(48px, 7.5vw, 92px)', fontWeight: 700, margin: 0,
           letterSpacing: '-0.035em', lineHeight: 1.02,
@@ -168,14 +161,6 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
         }}>
           AB Investment
         </h1>
-        <div style={{
-          fontSize: 14.5, color: '#a1a1aa', margin: '20px auto 0', maxWidth: 560, lineHeight: 1.6,
-          animation: `hmFloatIn 700ms ${EASE} 160ms backwards`,
-        }}>
-          Единое рабочее пространство: кто и куда вкладывает капитал в AI,
-          что лежит в портфеле и что стоит изучить следующим.
-        </div>
-
         {/* Live weekly stats */}
         <div style={{
           display: 'flex', justifyContent: 'center', alignItems: 'flex-start',
