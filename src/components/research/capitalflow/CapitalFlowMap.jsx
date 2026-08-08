@@ -44,7 +44,7 @@ const BG = '#08090C';
 const TOPBAR_H = 62;
 const PANEL_W = 380;   // must match EntityPanel's width
 
-export default function CapitalFlowMap({ onBack }) {
+export default function CapitalFlowMap({ onBack, initialFlowId }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
   const [groupMode, setGroupMode] = useState('sector');      // 'sector' | 'theme' (v2 view switch)
@@ -171,6 +171,35 @@ export default function CapitalFlowMap({ onBack }) {
   }, []);
 
   const resetView = useCallback(() => { fgRef.current?.zoomToFit(700, 80); }, []);
+
+  // Deep-link (e.g. a flow row on the home landing): open with that flow
+  // pre-selected — the detail card shows immediately — then glide the camera
+  // to the deal once the initial auto-fit in FlowGraph has settled (fighting
+  // it earlier gets overridden by the fit loop).
+  useEffect(() => {
+    if (!initialFlowId) return;
+    const link = linkById.get(initialFlowId);
+    if (!link) return;
+    setSelectedFlowId(initialFlowId);
+    let ticks = 0;
+    const iv = setInterval(() => {
+      ticks += 1;
+      if (ticks >= 20) { clearInterval(iv); return; }
+      const fg = fgRef.current;
+      const bbox = fg?.getGraphBbox?.();
+      const ready = bbox && Number.isFinite(bbox.x?.[0]) && (bbox.x[1] - bbox.x[0]) > 100;
+      if (!ready || ticks < 5) return;
+      const src = nodeById.get(link.sourceId);
+      const tgt = nodeById.get(link.targetId);
+      if (src?.x != null && tgt?.x != null) {
+        fg.centerAt((src.x + tgt.x) / 2, (src.y + tgt.y) / 2, 700);
+        fg.zoom(1.5, 700);
+      }
+      clearInterval(iv);
+    }, 300);
+    return () => clearInterval(iv);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialFlowId]);
 
   const resetFilters = useCallback(() => {
     setSectors(new Set());

@@ -77,6 +77,7 @@ function loadInitialMode() {
 export default function App() {
   const [mode, setMode] = useState(loadInitialMode);
   const [activeResearchId, setActiveResearchId] = useState(null);
+  const [researchContext, setResearchContext] = useState(null);
   // Tracker landing page is shown when `trackerOpen` is false. Entering
   // tracker mode always lands here; clicking a card flips this true and
   // the existing company-tracker UI takes over.
@@ -85,6 +86,7 @@ export default function App() {
   const updateMode = (next) => {
     setMode(next);
     setActiveResearchId(null);
+    setResearchContext(null);
     // Always land on the tracker home when (re-)entering tracker mode.
     setTrackerOpen(false);
     try { window.localStorage.setItem(MODE_KEY, next); } catch {}
@@ -97,11 +99,14 @@ export default function App() {
 
   // Deep-link from the home landing straight into a specific research page
   // (Capital Flow Map, Holdings, DC supply chain, Proxy) — enters research
-  // mode without clearing the target id the way updateMode does.
-  const openResearchPage = (researchId) => {
+  // mode without clearing the target id the way updateMode does. `context`
+  // carries page-specific focus (e.g. { flowId } pre-selects a deal on the
+  // Capital Flow Map).
+  const openResearchPage = (researchId, context = null) => {
     setMode('research');
     setTrackerOpen(false);
     setActiveResearchId(researchId);
+    setResearchContext(context);
     try { window.localStorage.setItem(MODE_KEY, 'research'); } catch {}
   };
   const closeTracker = () => setTrackerOpen(false);
@@ -388,7 +393,10 @@ export default function App() {
       <div style={{ minHeight: '100vh', background: '#0A0A0B', color: '#e4e4e7' }}>
         <Header mode={mode} onChangeMode={updateMode} />
         {activeResearchId
-          ? <ResearchDetail researchId={activeResearchId} onBack={() => setActiveResearchId(null)} />
+          ? <ResearchDetail
+              researchId={activeResearchId}
+              context={researchContext}
+              onBack={() => { setActiveResearchId(null); setResearchContext(null); }} />
           : <ResearchLanding onOpen={(id) => setActiveResearchId(id)} />}
       </div>
     );

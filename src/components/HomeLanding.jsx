@@ -178,7 +178,8 @@ function FooterTile({ mark, title, desc, accent, onClick, delay }) {
 const SECTION_GAP = 110;
 
 export default function HomeLanding({ onChoose, onOpenResearch }) {
-  const openResearch = (id) => (onOpenResearch ? onOpenResearch(id) : onChoose('research'));
+  const openResearch = (id, context) =>
+    (onOpenResearch ? onOpenResearch(id, context || null) : onChoose('research'));
 
   return (
     <div style={{
@@ -257,7 +258,13 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
 
       {/* ── Blocks ─────────────────────────────────────────────────────── */}
       <div style={{ marginTop: SECTION_GAP }}>
-        <CapitalFlowsHome onOpen={() => openResearch('capital-flow-map')} />
+        {/* A row click carries its flow id → the map opens on that deal. */}
+        <CapitalFlowsHome
+          onOpen={(flowId) => openResearch(
+            'capital-flow-map',
+            typeof flowId === 'string' ? { flowId } : null,
+          )}
+        />
       </div>
 
       <div style={{ marginTop: SECTION_GAP }}>

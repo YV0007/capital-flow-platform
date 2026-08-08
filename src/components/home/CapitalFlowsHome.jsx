@@ -183,7 +183,7 @@ function FlowRow({ flow, index, onOpen }) {
   return (
     <Reveal delay={index * 90}>
       <button
-        onClick={onOpen}
+        onClick={() => onOpen(flow.id)}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
