@@ -32,6 +32,7 @@ import FlowGraph from './FlowGraph.jsx';
 import FilterDrawer from './FilterBar.jsx';
 import Legend from './Legend.jsx';
 import EntityPanel from './EntityPanel.jsx';
+import AllocatorDeepDive from './AllocatorDeepDive.jsx';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD } from './format.js';
 import { applyMoleculeLayout } from './layout.js';
@@ -74,6 +75,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [selectedFlowId, setSelectedFlowId] = useState(null);
   const [showLabels, setShowLabels] = useState(true);
+  const [deepDiveOpen, setDeepDiveOpen] = useState(false);   // allocator breakdown over the panel
 
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
@@ -149,6 +151,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     const node = nodeById.get(id);
     setSelectedNodeId(id);
     setSelectedFlowId(null);
+    setDeepDiveOpen(false);
     const fg = fgRef.current;
     if (fg && node && node.x != null) {
       fg.centerAt(node.x + 120, node.y, 600);   // nudge left of the side panel
@@ -158,6 +161,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
   const handleNodeClick = useCallback((id) => {
     setSelectedFlowId(null);
+    setDeepDiveOpen(false);
     setSelectedNodeId(prev => (prev === id ? null : id));
   }, []);
 
@@ -168,6 +172,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const clearSelection = useCallback(() => {
     setSelectedNodeId(null);
     setSelectedFlowId(null);
+    setDeepDiveOpen(false);
   }, []);
 
   const resetView = useCallback(() => { fgRef.current?.zoomToFit(700, 80); }, []);
@@ -497,7 +502,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         />
       )}
 
-      {selectedNode && (
+      {selectedNode && !deepDiveOpen && (
         <EntityPanel
           topInset={TOPBAR_H}
           node={selectedNode}
@@ -507,7 +512,20 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           selectedFlowId={selectedFlowId}
           onSelectFlow={(id) => setSelectedFlowId(prev => (prev === id ? null : id))}
           onOpenEntity={focusEntity}
+          onDeepDive={selectedNode.kind === 'allocator' ? () => setDeepDiveOpen(true) : null}
           onClose={() => setSelectedNodeId(null)}
+        />
+      )}
+
+      {selectedNode && deepDiveOpen && (
+        <AllocatorDeepDive
+          topInset={TOPBAR_H}
+          node={selectedNode}
+          outbound={(adj?.outbound || [])}
+          nodeById={nodeById}
+          onOpenEntity={focusEntity}
+          onBack={() => setDeepDiveOpen(false)}
+          onClose={() => { setDeepDiveOpen(false); setSelectedNodeId(null); }}
         />
       )}
     </div>

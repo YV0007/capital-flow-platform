@@ -20,7 +20,7 @@ function totalOrNull(flows, total) {
 
 export default function EntityPanel({
   node, inbound, outbound, nodeById,
-  selectedFlowId, onSelectFlow, onOpenEntity, onClose, topInset = 0,
+  selectedFlowId, onSelectFlow, onOpenEntity, onClose, onDeepDive, topInset = 0,
 }) {
   if (!node) return null;
   const cls = CLASS_META[node.cls];
@@ -121,6 +121,25 @@ export default function EntityPanel({
       <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px 28px' }}>
         {/* Profile — who/what this is + official link(s) */}
         <ProfileBlock node={node} />
+
+        {/* Deep-dive — allocators only: background, decision logic, track
+            record, strategy. Companies (targets) keep the standard panel. */}
+        {isAllocator && onDeepDive && (
+          <button onClick={() => onDeepDive(node.id)}
+            title="Expanded allocator breakdown — background, latest investments, track record, strategy"
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+              width: '100%', padding: '9px 12px', marginBottom: 14,
+              background: 'rgba(56,189,248,0.07)', border: '1px solid rgba(56,189,248,0.3)',
+              borderRadius: 9, color: '#38BDF8', fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer',
+              transition: 'all 130ms',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(56,189,248,0.13)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(56,189,248,0.07)'; }}>
+            Detailed breakdown <ChevronRight size={12} />
+          </button>
+        )}
 
         {/* Totals */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
