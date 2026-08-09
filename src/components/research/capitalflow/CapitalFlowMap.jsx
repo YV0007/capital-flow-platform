@@ -27,12 +27,16 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
   ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, Eye, Layers, Target,
+  Table2, Share2,
 } from 'lucide-react';
 import FlowGraph from './FlowGraph.jsx';
 import FilterDrawer from './FilterBar.jsx';
 import Legend from './Legend.jsx';
 import EntityPanel from './EntityPanel.jsx';
 import AllocatorDeepDive from './AllocatorDeepDive.jsx';
+import RosterTable from './RosterTable.jsx';
+import useWatchlists from './useWatchlists.js';
+import { WatchlistSelector } from './WatchlistControl.jsx';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD } from './format.js';
 import { applyMoleculeLayout } from './layout.js';
@@ -70,6 +74,11 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [minConfidence, setMinConfidence] = useState(0);     // flows (v2 grade score)
   const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [view, setView] = useState('map');                   // 'map' | 'roster' (tracking table)
+
+  // ── Watchlists — saved subsets of the map (localStorage) ───────────────
+  const wl = useWatchlists();
+  const activeList = wl.activeList;
 
   // ── Selection state ────────────────────────────────────────────────────
   const [selectedNodeId, setSelectedNodeId] = useState(null);
@@ -80,10 +89,15 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
     const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0 || themes.size > 0 || networks.size > 0;
+    // Active watchlist narrows the universe first: only members can seed the
+    // view (their direct counterparties still surface via the flows, so the
+    // subset stays navigable vertex↔edge).
+    const wlSet = activeList ? new Set(activeList.ids) : null;
     // Seed = nodes matching ANY active entity selection (OR-union) — robust to
     // mixing target-only (sector/theme) and allocator-only (tier/network) dims.
     const seed = new Set(
       graph.nodes.filter(n => {
+        if (wlSet && !wlSet.has(n.id)) return false;
         if (!entityFilterOn) return true;
         const mSec = sectors.size && n.sector && sectors.has(n.sector);
         const mCls = classes.size && classes.has(n.cls);
@@ -100,7 +114,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
       if (statuses.size && !statuses.has(l.status)) return;
       if (minAmount > 0 && l.amountUSD < minAmount) return;
       if (minConfidence > 0 && (l.confidence == null || l.confidence < minConfidence)) return;
-      if (entityFilterOn && !seed.has(l.sourceId) && !seed.has(l.targetId)) return;
+      if ((entityFilterOn || wlSet) && !seed.has(l.sourceId) && !seed.has(l.targetId)) return;
       links.add(l.id);
     });
 
@@ -123,7 +137,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     }
 
     return { matchedNodes: nodes, matchedLinks: links };
-  }, [graph, sectors, classes, tiers, families, statuses, themes, networks, minAmount, minConfidence, showWatch, nodeById]);
+  }, [graph, sectors, classes, tiers, families, statuses, themes, networks, minAmount, minConfidence, showWatch, nodeById, activeList]);
 
   // ── Selection neighbourhood ────────────────────────────────────────────
   const { neighbourNodes, neighbourLinks } = useMemo(() => {
@@ -149,6 +163,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   // ── Handlers ───────────────────────────────────────────────────────────
   const focusEntity = useCallback((id) => {
     const node = nodeById.get(id);
+    setView('map');                 // a roster row lands you on the map, entity open
     setSelectedNodeId(id);
     setSelectedFlowId(null);
     setDeepDiveOpen(false);
@@ -369,7 +384,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
               if (e.key === 'Enter' && suggestions[0]) { focusEntity(suggestions[0].id); setSearchOpen(false); }
               if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
             }}
-            placeholder="Find an entity…"
+            placeholder={view === 'roster' ? 'Filter the roster…' : 'Find an entity…'}
             style={{
               width: '100%', padding: '7px 26px 7px 27px',
               background: 'rgba(18,19,24,0.9)', border: '1px solid #26262e', borderRadius: 8,
@@ -382,7 +397,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
               <X size={12} />
             </button>
           )}
-          {searchOpen && suggestions.length > 0 && (
+          {view === 'map' && searchOpen && suggestions.length > 0 && (
             <div style={{
               position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 50,
               background: '#101116', border: '1px solid #26262e', borderRadius: 8,
@@ -412,30 +427,41 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
-          <TopBtn onClick={() => setGroupMode(m => (m === 'sector' ? 'theme' : 'sector'))}
-            label="Group by sector or theme" active={groupMode === 'theme'} wide>
-            {groupMode === 'sector' ? <Target size={12} /> : <Layers size={12} />}
-            {groupMode === 'sector' ? 'Sectors' : 'Themes'}
+          <TopBtn onClick={() => setView(v => (v === 'map' ? 'roster' : 'map'))}
+            label={view === 'map' ? 'Tracking roster — every tracked entity as a table' : 'Back to the map'}
+            active={view === 'roster'} wide>
+            {view === 'map' ? <Table2 size={12} /> : <Share2 size={12} />}
+            {view === 'map' ? 'Roster' : 'Map'}
           </TopBtn>
-          <TopBtn onClick={() => setDrawerOpen(o => !o)} label="Filters" active={drawerOpen || activeFilterCount > 0} wide>
-            <SlidersHorizontal size={12} />
-            Filters{activeFilterCount ? ` · ${activeFilterCount}` : ''}
-          </TopBtn>
-          {graph.stats.watchCount > 0 && (
-            <TopBtn onClick={() => setShowWatch(s => !s)} label="Show watch / unconfirmed entities" active={showWatch} wide>
-              <Eye size={12} /> Watch{showWatch ? ` · ${graph.stats.watchCount}` : ''}
-            </TopBtn>
-          )}
-          <TopBtn onClick={() => setShowLabels(s => !s)} label="Toggle labels" active={showLabels}>
-            <Tag size={12} />
-          </TopBtn>
-          <TopBtn onClick={resetView} label="Reset view">
-            <Maximize2 size={12} />
-          </TopBtn>
-          {(selectedNodeId || selectedFlowId) && (
-            <TopBtn onClick={clearSelection} label="Clear selection (Esc)" wide>
-              Clear · Esc
-            </TopBtn>
+          <WatchlistSelector wl={wl} />
+          {view === 'map' && (
+            <>
+              <TopBtn onClick={() => setGroupMode(m => (m === 'sector' ? 'theme' : 'sector'))}
+                label="Group by sector or theme" active={groupMode === 'theme'} wide>
+                {groupMode === 'sector' ? <Target size={12} /> : <Layers size={12} />}
+                {groupMode === 'sector' ? 'Sectors' : 'Themes'}
+              </TopBtn>
+              <TopBtn onClick={() => setDrawerOpen(o => !o)} label="Filters" active={drawerOpen || activeFilterCount > 0} wide>
+                <SlidersHorizontal size={12} />
+                Filters{activeFilterCount ? ` · ${activeFilterCount}` : ''}
+              </TopBtn>
+              {graph.stats.watchCount > 0 && (
+                <TopBtn onClick={() => setShowWatch(s => !s)} label="Show watch / unconfirmed entities" active={showWatch} wide>
+                  <Eye size={12} /> Watch{showWatch ? ` · ${graph.stats.watchCount}` : ''}
+                </TopBtn>
+              )}
+              <TopBtn onClick={() => setShowLabels(s => !s)} label="Toggle labels" active={showLabels}>
+                <Tag size={12} />
+              </TopBtn>
+              <TopBtn onClick={resetView} label="Reset view">
+                <Maximize2 size={12} />
+              </TopBtn>
+              {(selectedNodeId || selectedFlowId) && (
+                <TopBtn onClick={clearSelection} label="Clear selection (Esc)" wide>
+                  Clear · Esc
+                </TopBtn>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -462,8 +488,20 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         />
       )}
 
+      {/* ── Tracking roster — table view of the whole tracked universe ──── */}
+      {view === 'roster' && (
+        <RosterTable
+          topInset={TOPBAR_H}
+          nodes={graph.nodes}
+          query={query}
+          activeList={activeList}
+          wl={wl}
+          onOpenEntity={focusEntity}
+        />
+      )}
+
       {/* Empty state */}
-      {matchedLinks.size === 0 && (
+      {view === 'map' && matchedLinks.size === 0 && (
         <div style={{
           position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
           pointerEvents: 'none', zIndex: 8,
@@ -489,9 +527,9 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         </div>
       )}
 
-      <Legend counts={legendCounts} />
+      {view === 'map' && <Legend counts={legendCounts} />}
 
-      {selectedFlow && (
+      {view === 'map' && selectedFlow && (
         <FlowDetailCard
           flow={selectedFlow}
           sourceNode={nodeById.get(selectedFlow.sourceId)}
@@ -502,7 +540,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         />
       )}
 
-      {selectedNode && !deepDiveOpen && (
+      {view === 'map' && selectedNode && !deepDiveOpen && (
         <EntityPanel
           topInset={TOPBAR_H}
           node={selectedNode}
@@ -513,11 +551,12 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           onSelectFlow={(id) => setSelectedFlowId(prev => (prev === id ? null : id))}
           onOpenEntity={focusEntity}
           onDeepDive={selectedNode.kind === 'allocator' ? () => setDeepDiveOpen(true) : null}
+          wl={wl}
           onClose={() => setSelectedNodeId(null)}
         />
       )}
 
-      {selectedNode && deepDiveOpen && (
+      {view === 'map' && selectedNode && deepDiveOpen && (
         <AllocatorDeepDive
           topInset={TOPBAR_H}
           node={selectedNode}

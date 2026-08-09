@@ -8,6 +8,7 @@ import { fmtUSD } from './format.js';
 import {
   SECTOR_META, CLASS_META, TIER_META, NETWORK_META, confidenceBand,
 } from '../../../data/capitalMap.js';
+import { WatchlistMenu } from './WatchlistControl.jsx';
 
 const MONO = 'ui-monospace, monospace';
 const W = 380;
@@ -20,7 +21,7 @@ function totalOrNull(flows, total) {
 
 export default function EntityPanel({
   node, inbound, outbound, nodeById,
-  selectedFlowId, onSelectFlow, onOpenEntity, onClose, onDeepDive, topInset = 0,
+  selectedFlowId, onSelectFlow, onOpenEntity, onClose, onDeepDive, wl, topInset = 0,
 }) {
   if (!node) return null;
   const cls = CLASS_META[node.cls];
@@ -55,6 +56,7 @@ export default function EntityPanel({
               {cls?.label || node.cls}{sec ? ` · ${sec.label}` : ''}
             </div>
           </div>
+          {wl && <WatchlistMenu wl={wl} entityId={node.id} />}
           <button onClick={onClose} title="Close panel"
             style={{ background: 'none', border: 'none', color: '#52525b', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
             onMouseEnter={(e) => (e.currentTarget.style.color = '#d4d4d8')}
