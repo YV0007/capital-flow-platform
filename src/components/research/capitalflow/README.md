@@ -48,9 +48,32 @@ sectors{ <key>: { deals, capital, allocators, signals[] } }
 - `FilterBar.jsx` — sector · class · tier (entities) + event · confidence ·
   min-size (flows).
 - `EntityPanel.jsx` — per-entity breakdown (who invests / where money goes).
+- `AllocatorDeepDive.jsx` — the "Detailed breakdown" view, **allocators only**:
+  background/thesis, latest-investments decision logic (derived strictly from
+  tracked flows), track record by fiscal year + YTD (always flagged
+  provisional), and source-attributed strategy. Canonical summaries come from
+  a `profile` object on the node (engine-emitted, wins) or
+  `../../../data/allocatorProfiles.json` (payload sidecar); anything missing
+  renders an honest "no data" state — never estimated dashboard-side.
+- `RosterTable.jsx` — the tracking roster: table view of the whole tracked
+  universe (Roster toggle in the top bar). Each row labels the entity and the
+  dimension monitored (investor deploying vs company/fund/project receiving);
+  sortable columns, kind chips, search-filtered, watchlist-aware. Row click
+  jumps to the map with the entity selected.
+- `useWatchlists.js` + `WatchlistControl.jsx` — named, saved, cross-entity
+  watchlists (localStorage `cfm:watchlists:v1`). Add/remove from the entity
+  panel bookmark or a roster row; activating a list from the top-bar selector
+  narrows map + roster to its members (their direct counterparties stay
+  visible so the subset remains navigable).
 - `FlowDetailCard.jsx` — per-flow detail (event, sector, date, confidence,
   source tier).
 - `Legend.jsx`, `format.js` — key + shared formatters.
+
+### National affiliation (sovereign flags)
+Government / sovereign allocators render their country flag as the node icon
+(`public/flags/<cc>.png`, pre-fetched like logos) so national capital sources
+read instantly. `country` on a node (engine-emitted) wins; the curated
+fallback lives in `entityReference.json` (`country` + `countryLabel`).
 
 ## Editorial layer (what the engine does NOT ship)
 The engine ships facts only. Two dashboard-side files carry interpretation and
