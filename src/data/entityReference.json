@@ -79,6 +79,7 @@
   },
   "alloc:Andreessen Horowitz": {
     "type": "org",
+    "displayName": "a16z",
     "description": "a16z — venture firm and one of the most active investors in AI startups across the stack.",
     "links": [
       {

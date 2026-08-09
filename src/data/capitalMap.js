@@ -317,6 +317,9 @@ export function buildGraph(data = raw) {
     // dashboard reference file, then a safe web-search fallback so a click
     // never lands on a wrong/guessed URL.
     const ref = entityRef[n.id] || null;
+    // Display-name override (e.g. "Andreessen Horowitz" → "a16z") — lives in
+    // the dashboard reference file so it survives engine re-deliveries.
+    const displayName = ref?.displayName || n.label;
     const description = n.description || ref?.description || null;
     const links = (Array.isArray(n.links) && n.links.length ? n.links : ref?.links) || [];
     const profileType = n.profile_type || ref?.type ||
@@ -328,13 +331,13 @@ export function buildGraph(data = raw) {
     const localLogo = logoManifest[n.id];
     return {
       ...n,
-      name: n.label,
+      name: displayName,
       description,
       links,
       profileType,
       logoUrls: localLogo ? [localLogo] : [],
-      monogram: monogramOf(n.label),
-      searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(n.label)}`,
+      monogram: monogramOf(displayName),
+      searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(displayName)}`,
       // FlowGraph role encoding: 'player' deploys · 'target' receives.
       type: isAllocator ? 'player' : 'target',
       color,

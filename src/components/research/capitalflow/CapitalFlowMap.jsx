@@ -255,7 +255,10 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
   // Search suggestions
   const suggestions = query.trim()
-    ? graph.nodes.filter(n => n.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 7)
+    ? graph.nodes.filter(n => {
+        const q = query.trim().toLowerCase();
+        return n.name.toLowerCase().includes(q) || n.label.toLowerCase().includes(q);
+      }).slice(0, 7)
     : [];
   const searchRef = useRef(null);
   const [searchOpen, setSearchOpen] = useState(false);
