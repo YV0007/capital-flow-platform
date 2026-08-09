@@ -12,7 +12,11 @@ Stages 1, 2a, 2b complete. Stage 3 (Tracker migration) is next.
 - Subcomponents used by only one parent live in a same-name subfolder (e.g. `research/dc/`)
 - Relative imports, not aliases
 - Russian + English mix is fine — Holdings is Russian, Tracker is English
-- Dark mode only, never reintroduce a light/dark toggle
+- Dark theme is the default. A light theme exists behind the Header toggle
+  (`app:theme` in localStorage) — wired up on the home landing via the
+  `--hm-*` CSS variables in `HomeLanding.jsx`; being expanded to the other
+  sections page by page. Light = sharp/cool (white surfaces on `#F4F7FB`,
+  slate text), never creamy. Keep both themes working when touching home.
 
 ## Workflow rules
 - Always run `npm run build` before pushing. Never push if it fails.

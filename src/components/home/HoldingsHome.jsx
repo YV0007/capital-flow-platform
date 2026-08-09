@@ -12,8 +12,9 @@ import { useState } from 'react';
 import { TOP_HOLDINGS, HOLDINGS_NEWS } from './homeData.js';
 import { SectionHeader, LogoTile, Reveal, MONO, EASE } from './ui.jsx';
 
-const UP = '#34D399';
-const DOWN = '#F87171';
+// Deeper green/red than the zinc-dark originals — hold contrast on both themes.
+const UP = '#10B981';
+const DOWN = '#EF4444';
 
 function Sparkline({ points, down, id }) {
   if (!points.length) return null;
@@ -61,8 +62,8 @@ function HoldingRow({ h, index, onOpen }) {
         onMouseLeave={() => setHovered(false)}
         style={{
           display: 'block', width: '100%', textAlign: 'left', font: 'inherit',
-          background: hovered ? `linear-gradient(90deg, ${h.accent}0d 0%, rgba(255,255,255,0.02) 65%)` : 'rgba(255,255,255,0.015)',
-          border: `1px solid ${hovered ? h.accent + '45' : 'rgba(255,255,255,0.07)'}`,
+          background: hovered ? `linear-gradient(90deg, ${h.accent}0d 0%, var(--hm-surface) 65%)` : 'var(--hm-surface)',
+          border: `1px solid ${hovered ? h.accent + '45' : 'var(--hm-border)'}`,
           borderRadius: 14, padding: '14px 18px', cursor: 'pointer',
           transition: `all 240ms ${EASE}`,
           transform: hovered ? 'translateX(4px)' : 'none',
@@ -73,21 +74,21 @@ function HoldingRow({ h, index, onOpen }) {
           gridTemplateColumns: '18px 34px minmax(120px, 1.1fr) minmax(110px, 1fr) auto',
           alignItems: 'center', gap: 14,
         }}>
-          <span style={{ fontSize: 11, fontFamily: MONO, fontWeight: 700, color: hovered ? h.accent : '#3f3f46', transition: 'color 200ms' }}>
+          <span style={{ fontSize: 11, fontFamily: MONO, fontWeight: 700, color: hovered ? h.accent : 'var(--hm-rank)', transition: 'color 200ms' }}>
             {String(index + 1).padStart(2, '0')}
           </span>
           <LogoTile src={h.logo} mono={h.monogram} color={h.accent} size={34} radius={9} />
           <span style={{ minWidth: 0 }}>
-            <span style={{ display: 'block', fontSize: 14.5, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <span style={{ display: 'block', fontSize: 14.5, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {h.name}
             </span>
-            <span style={{ display: 'block', fontSize: 10, fontFamily: MONO, color: '#71717a', letterSpacing: '0.04em', marginTop: 2 }}>
+            <span style={{ display: 'block', fontSize: 10, fontFamily: MONO, color: 'var(--hm-text5)', letterSpacing: '0.04em', marginTop: 2 }}>
               {h.ticker} · {h.type}
             </span>
           </span>
           <Sparkline points={h.points} down={h.down} id={h.id} />
           <span style={{ textAlign: 'right', minWidth: 84 }}>
-            <span style={{ display: 'block', fontSize: 15, fontWeight: 700, fontFamily: MONO, color: '#fafafa', letterSpacing: '-0.01em' }}>
+            <span style={{ display: 'block', fontSize: 15, fontWeight: 700, fontFamily: MONO, color: 'var(--hm-text)', letterSpacing: '-0.01em' }}>
               {h.price}
             </span>
             <span style={{
@@ -107,8 +108,8 @@ function HoldingRow({ h, index, onOpen }) {
           transition: `max-height 300ms ${EASE}, opacity 240ms ${EASE}`,
         }}>
           <div style={{
-            marginTop: 11, paddingTop: 11, borderTop: '1px solid rgba(255,255,255,0.07)',
-            fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.5,
+            marginTop: 11, paddingTop: 11, borderTop: '1px solid var(--hm-border)',
+            fontSize: 11.5, color: 'var(--hm-text3)', lineHeight: 1.5,
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
           }}>
             {h.tagline}
@@ -144,25 +145,25 @@ function NewsItem({ n, onOpenHoldings }) {
           background: n.accent, boxShadow: hovered ? `0 0 8px ${n.accent}` : 'none',
           transition: 'box-shadow 200ms',
         }} />
-        <span style={{ position: 'absolute', top: 18, bottom: -14, left: 4, width: 1, background: 'rgba(255,255,255,0.07)' }} />
+        <span style={{ position: 'absolute', top: 18, bottom: -14, left: 4, width: 1, background: 'var(--hm-border)' }} />
       </span>
       <span style={{ minWidth: 0 }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
           <span style={{ fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: n.accent, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             {n.holdingName}
           </span>
-          <span style={{ fontSize: 9.5, fontFamily: MONO, color: '#52525b' }}>{n.date}</span>
+          <span style={{ fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text6)' }}>{n.date}</span>
         </span>
         <span style={{
           display: 'block', fontSize: 12.5, fontWeight: 600, lineHeight: 1.4,
-          color: hovered ? '#fafafa' : '#d4d4d8', transition: 'color 180ms',
+          color: hovered ? 'var(--hm-text)' : 'var(--hm-text2)', transition: 'color 180ms',
         }}>
           {n.title}
         </span>
         {n.text && (
           <span style={{
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
-            fontSize: 11, color: '#71717a', lineHeight: 1.5, marginTop: 3,
+            fontSize: 11, color: 'var(--hm-text5)', lineHeight: 1.5, marginTop: 3,
           }}>
             {n.text}
           </span>
@@ -200,8 +201,8 @@ export default function HoldingsHome({ onOpen }) {
         {/* News feed */}
         <Reveal delay={140}>
           <div style={{
-            background: 'rgba(255,255,255,0.015)',
-            border: '1px solid rgba(255,255,255,0.07)',
+            background: 'var(--hm-surface)',
+            border: '1px solid var(--hm-border)',
             borderRadius: 16, padding: '18px 18px 8px', position: 'relative',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6, padding: '0 6px' }}>
@@ -210,11 +211,11 @@ export default function HoldingsHome({ onOpen }) {
                   width: 7, height: 7, borderRadius: '50%', background: '#2FD9C4',
                   animation: 'hmPulse 2.2s ease-in-out infinite',
                 }} />
-                <span style={{ fontSize: 10, fontFamily: MONO, fontWeight: 700, color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.16em' }}>
+                <span style={{ fontSize: 10, fontFamily: MONO, fontWeight: 700, color: 'var(--hm-text3)', textTransform: 'uppercase', letterSpacing: '0.16em' }}>
                   Лента новостей
                 </span>
               </span>
-              <span style={{ fontSize: 9.5, fontFamily: MONO, color: '#52525b' }}>
+              <span style={{ fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text6)' }}>
                 все холдинги
               </span>
             </div>
@@ -228,14 +229,14 @@ export default function HoldingsHome({ onOpen }) {
             {/* bottom fade + CTA */}
             <div style={{
               position: 'absolute', left: 1, right: 1, bottom: 1, height: 64, borderRadius: '0 0 16px 16px',
-              background: 'linear-gradient(180deg, rgba(10,10,11,0) 0%, #0A0A0B 85%)',
+              background: 'linear-gradient(180deg, var(--hm-fade0) 0%, var(--hm-bg) 85%)',
               display: 'flex', alignItems: 'flex-end', justifyContent: 'center', pointerEvents: 'none',
             }}>
               <button
                 onClick={onOpen}
                 style={{
                   pointerEvents: 'auto', marginBottom: 10,
-                  background: 'rgba(24,24,27,0.9)', border: '1px solid #2FD9C440',
+                  background: 'var(--hm-solid)', border: '1px solid #2FD9C440',
                   borderRadius: 999, padding: '6px 16px', cursor: 'pointer',
                   fontSize: 10, fontFamily: MONO, fontWeight: 700, color: '#2FD9C4',
                   textTransform: 'uppercase', letterSpacing: '0.1em',

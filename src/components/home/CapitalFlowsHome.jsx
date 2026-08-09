@@ -56,7 +56,7 @@ function WaveField({ surges, hovered, onHover }) {
             d={b.d}
             fill={b.color}
             style={{
-              opacity: hovered === b.key ? 0.42 : 0.13 + 0.1 * b.share,
+              opacity: `calc(${hovered === b.key ? 0.42 : 0.13 + 0.1 * b.share} * var(--hm-wave-boost, 1))`,
               transition: 'opacity 250ms',
               cursor: 'pointer',
             }}
@@ -67,10 +67,10 @@ function WaveField({ surges, hovered, onHover }) {
       <rect x="0" y="0" width={W * 2} height="170" fill="url(#hmWaveFade)" pointerEvents="none" />
       <defs>
         <linearGradient id="hmWaveFade" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#0A0A0B" stopOpacity="1" />
-          <stop offset="0.28" stopColor="#0A0A0B" stopOpacity="0" />
-          <stop offset="0.75" stopColor="#0A0A0B" stopOpacity="0" />
-          <stop offset="1" stopColor="#0A0A0B" stopOpacity="1" />
+          <stop offset="0" style={{ stopColor: 'var(--hm-bg)' }} stopOpacity="1" />
+          <stop offset="0.28" style={{ stopColor: 'var(--hm-bg)' }} stopOpacity="0" />
+          <stop offset="0.75" style={{ stopColor: 'var(--hm-bg)' }} stopOpacity="0" />
+          <stop offset="1" style={{ stopColor: 'var(--hm-bg)' }} stopOpacity="1" />
         </linearGradient>
       </defs>
     </svg>
@@ -86,8 +86,8 @@ function SurgeChip({ surge, hovered, onHover, onOpen }) {
       onMouseLeave={() => onHover(null)}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 9,
-        background: active ? surge.color + '1c' : 'rgba(255,255,255,0.03)',
-        border: `1px solid ${active ? surge.color + '80' : 'rgba(255,255,255,0.09)'}`,
+        background: active ? surge.color + '1c' : 'var(--hm-chip)',
+        border: `1px solid ${active ? surge.color + '80' : 'var(--hm-border2)'}`,
         borderRadius: 999, padding: '7px 14px', cursor: 'pointer',
         transition: `all 220ms ${EASE}`, font: 'inherit',
       }}
@@ -98,7 +98,7 @@ function SurgeChip({ surge, hovered, onHover, onOpen }) {
         animation: surge.lit ? 'hmPulse 2.2s ease-in-out infinite' : 'none',
         flexShrink: 0,
       }} />
-      <span style={{ fontSize: 12, fontWeight: 600, color: '#e4e4e7', letterSpacing: '-0.01em' }}>
+      <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--hm-text2)', letterSpacing: '-0.01em' }}>
         {surge.label}
       </span>
       <span style={{ fontSize: 11, fontFamily: MONO, color: surge.color, fontWeight: 700 }}>
@@ -108,9 +108,9 @@ function SurgeChip({ surge, hovered, onHover, onOpen }) {
       </span>
       {surge.signalLabel && (
         <span style={{
-          fontSize: 9, fontFamily: MONO, fontWeight: 700, color: '#71717a',
+          fontSize: 9, fontFamily: MONO, fontWeight: 700, color: 'var(--hm-text5)',
           textTransform: 'uppercase', letterSpacing: '0.08em',
-          borderLeft: '1px solid rgba(255,255,255,0.12)', paddingLeft: 9,
+          borderLeft: '1px solid var(--hm-border4)', paddingLeft: 9,
         }}>
           {surge.signalLabel}
         </span>
@@ -189,9 +189,9 @@ function FlowRow({ flow, index, onOpen }) {
         style={{
           display: 'block', width: '100%', textAlign: 'left', font: 'inherit',
           background: hovered
-            ? `linear-gradient(90deg, ${flow.sectorColor}0e 0%, rgba(255,255,255,0.02) 60%)`
-            : 'rgba(255,255,255,0.015)',
-          border: `1px solid ${hovered ? flow.sectorColor + '45' : 'rgba(255,255,255,0.07)'}`,
+            ? `linear-gradient(90deg, ${flow.sectorColor}0e 0%, var(--hm-surface) 60%)`
+            : 'var(--hm-surface)',
+          border: `1px solid ${hovered ? flow.sectorColor + '45' : 'var(--hm-border)'}`,
           borderRadius: 16, padding: '16px 20px', cursor: 'pointer',
           transition: `all 240ms ${EASE}`,
           transform: hovered ? 'translateY(-2px)' : 'none',
@@ -206,7 +206,7 @@ function FlowRow({ flow, index, onOpen }) {
           {/* rank */}
           <span style={{
             fontSize: 12, fontFamily: MONO, fontWeight: 700,
-            color: hovered ? flow.sectorColor : '#3f3f46', transition: 'color 200ms',
+            color: hovered ? flow.sectorColor : 'var(--hm-rank)', transition: 'color 200ms',
           }}>
             {String(index + 1).padStart(2, '0')}
           </span>
@@ -216,12 +216,12 @@ function FlowRow({ flow, index, onOpen }) {
             <LogoTile src={flow.allocator.logo} mono={flow.allocator.monogram} color={flow.sectorColor} />
             <span style={{ minWidth: 0 }}>
               <span style={{
-                display: 'block', fontSize: 13.5, fontWeight: 600, color: '#fafafa',
+                display: 'block', fontSize: 13.5, fontWeight: 600, color: 'var(--hm-text)',
                 letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
               }}>
                 {flow.allocator.name}
               </span>
-              <span style={{ display: 'block', fontSize: 9.5, fontFamily: MONO, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <span style={{ display: 'block', fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 {flow.allocator.clsLabel}
               </span>
             </span>
@@ -237,12 +237,12 @@ function FlowRow({ flow, index, onOpen }) {
             <LogoTile src={flow.target.logo} mono={flow.target.monogram} color={flow.sectorColor} />
             <span style={{ minWidth: 0 }}>
               <span style={{
-                display: 'block', fontSize: 13.5, fontWeight: 600, color: '#fafafa',
+                display: 'block', fontSize: 13.5, fontWeight: 600, color: 'var(--hm-text)',
                 letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
               }}>
                 {flow.target.name}
               </span>
-              <span style={{ display: 'block', fontSize: 9.5, fontFamily: MONO, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <span style={{ display: 'block', fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 {flow.eventLabel}
               </span>
             </span>
@@ -252,7 +252,7 @@ function FlowRow({ flow, index, onOpen }) {
           <span style={{ textAlign: 'right' }}>
             <span style={{
               display: 'block', fontSize: 16, fontWeight: 700, fontFamily: MONO,
-              color: flow.disclosed ? '#fafafa' : '#71717a', letterSpacing: '-0.02em',
+              color: flow.disclosed ? 'var(--hm-text)' : 'var(--hm-text5)', letterSpacing: '-0.02em',
             }}>
               {flow.disclosed ? fmtUSD(flow.amountUSD) : 'н/д'}
             </span>
@@ -271,10 +271,10 @@ function FlowRow({ flow, index, onOpen }) {
           transition: `max-height 320ms ${EASE}, opacity 260ms ${EASE}`,
         }}>
           <div style={{
-            marginTop: 12, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.07)',
+            marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--hm-border)',
             display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 20,
           }}>
-            <span style={{ fontSize: 12, color: '#a1a1aa', lineHeight: 1.55, maxWidth: 760 }}>
+            <span style={{ fontSize: 12, color: 'var(--hm-text3)', lineHeight: 1.55, maxWidth: 760 }}>
               <span style={{
                 fontSize: 9, fontFamily: MONO, fontWeight: 700, color: flow.statusColor,
                 textTransform: 'uppercase', letterSpacing: '0.09em', marginRight: 10,

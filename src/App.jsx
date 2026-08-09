@@ -50,6 +50,17 @@ import {
 } from './components/tracker/news/BriefStack.jsx';
 
 const MODE_KEY = 'app:mode';
+const THEME_KEY = 'app:theme';
+
+function loadInitialTheme() {
+  try {
+    const v = typeof window !== 'undefined' && window.localStorage
+      ? window.localStorage.getItem(THEME_KEY)
+      : null;
+    if (v === 'light' || v === 'dark') return v;
+  } catch {}
+  return 'dark';
+}
 
 // Tab registry — monolith lines 11558–11567. Icon refs come straight from
 // lucide-react. Used by the tab nav bar and the dispatch switch below.
@@ -78,6 +89,16 @@ export default function App() {
   const [mode, setMode] = useState(loadInitialMode);
   const [activeResearchId, setActiveResearchId] = useState(null);
   const [researchContext, setResearchContext] = useState(null);
+  // Light/dark theme — dark is the default; the light skin is wired up on
+  // the home landing first and expands page-by-page from there.
+  const [uiTheme, setUiTheme] = useState(loadInitialTheme);
+  const toggleTheme = () => {
+    setUiTheme((t) => {
+      const next = t === 'dark' ? 'light' : 'dark';
+      try { window.localStorage.setItem(THEME_KEY, next); } catch {}
+      return next;
+    });
+  };
   // Tracker landing page is shown when `trackerOpen` is false. Entering
   // tracker mode always lands here; clicking a card flips this true and
   // the existing company-tracker UI takes over.
@@ -380,10 +401,16 @@ export default function App() {
 
   // ─── Home / Research modes ───────────────────────────────────────
   if (mode === 'home') {
+    const light = uiTheme === 'light';
     return (
-      <div style={{ minHeight: '100vh', background: '#0A0A0B', color: '#e4e4e7' }}>
-        <Header mode={mode} onChangeMode={updateMode} />
-        <HomeLanding onChoose={updateMode} onOpenResearch={openResearchPage} />
+      <div style={{
+        minHeight: '100vh',
+        background: light ? '#F4F7FB' : '#0A0A0B',
+        color: light ? '#0F172A' : '#e4e4e7',
+        transition: 'background 300ms',
+      }}>
+        <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
+        <HomeLanding onChoose={updateMode} onOpenResearch={openResearchPage} theme={uiTheme} />
       </div>
     );
   }

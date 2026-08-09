@@ -44,7 +44,7 @@ function HeroStat({ label, value, format, accent, delay }) {
   return (
     <div style={{ textAlign: 'center', minWidth: 130 }}>
       <div style={{
-        fontSize: 30, fontWeight: 700, fontFamily: MONO, color: '#fafafa',
+        fontSize: 30, fontWeight: 700, fontFamily: MONO, color: 'var(--hm-text)',
         letterSpacing: '-0.03em', lineHeight: 1,
       }}>
         {format(v)}
@@ -72,9 +72,9 @@ function NavChip({ label, color, onClick, filled }) {
         fontSize: 11.5, fontWeight: 600, letterSpacing: '0.01em',
         background: filled
           ? (hovered ? color : color + 'e6')
-          : (hovered ? color + '16' : 'rgba(255,255,255,0.03)'),
-        color: filled ? '#09090b' : (hovered ? color : '#d4d4d8'),
-        border: `1px solid ${filled ? 'transparent' : (hovered ? color + '70' : 'rgba(255,255,255,0.1)')}`,
+          : (hovered ? color + '16' : 'var(--hm-chip)'),
+        color: filled ? '#09090b' : (hovered ? color : 'var(--hm-text2)'),
+        border: `1px solid ${filled ? 'transparent' : (hovered ? color + '70' : 'var(--hm-border3)')}`,
         transition: `all 220ms ${EASE}`,
         transform: hovered ? 'translateY(-2px)' : 'none',
       }}
@@ -139,8 +139,8 @@ function FooterTile({ mark, title, desc, accent, onClick, delay }) {
         style={{
           display: 'flex', alignItems: 'center', gap: 16, width: '100%',
           textAlign: 'left', font: 'inherit',
-          background: hovered ? `linear-gradient(120deg, ${accent}10 0%, rgba(255,255,255,0.02) 70%)` : 'rgba(255,255,255,0.015)',
-          border: `1px solid ${hovered ? accent + '50' : 'rgba(255,255,255,0.07)'}`,
+          background: hovered ? `linear-gradient(120deg, ${accent}10 0%, var(--hm-surface) 70%)` : 'var(--hm-surface)',
+          border: `1px solid ${hovered ? accent + '50' : 'var(--hm-border)'}`,
           borderRadius: 16, padding: '20px 22px', cursor: 'pointer',
           transition: `all 240ms ${EASE}`,
           transform: hovered ? 'translateY(-4px)' : 'none',
@@ -157,10 +157,10 @@ function FooterTile({ mark, title, desc, accent, onClick, delay }) {
           {mark}
         </span>
         <span style={{ minWidth: 0 }}>
-          <span style={{ display: 'block', fontSize: 15, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em' }}>
+          <span style={{ display: 'block', fontSize: 15, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.01em' }}>
             {title}
           </span>
-          <span style={{ display: 'block', fontSize: 11.5, color: '#8b8b95', lineHeight: 1.45, marginTop: 3 }}>
+          <span style={{ display: 'block', fontSize: 11.5, color: 'var(--hm-text4)', lineHeight: 1.45, marginTop: 3 }}>
             {desc}
           </span>
         </span>
@@ -177,19 +177,18 @@ function FooterTile({ mark, title, desc, accent, onClick, delay }) {
 
 const SECTION_GAP = 110;
 
-export default function HomeLanding({ onChoose, onOpenResearch }) {
+export default function HomeLanding({ onChoose, onOpenResearch, theme = 'dark' }) {
   const openResearch = (id, context) =>
     (onOpenResearch ? onOpenResearch(id, context || null) : onChoose('research'));
 
   return (
-    <div style={{
+    <div className="hm-root" data-theme={theme} style={{
       minHeight: 'calc(100vh - 60px)',
       paddingBottom: 120,
-      background:
-        'radial-gradient(1000px 520px at 18% -10%, rgba(56,189,248,0.07) 0%, transparent 60%), ' +
-        'radial-gradient(900px 480px at 85% 8%, rgba(47,217,196,0.05) 0%, transparent 60%), ' +
-        '#0A0A0B',
+      background: 'var(--hm-page-bg)',
+      color: 'var(--hm-text)',
       overflowX: 'hidden',
+      transition: 'background 300ms',
     }}>
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <div style={{
@@ -199,7 +198,7 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
         <h1 style={{
           fontSize: 'clamp(48px, 7.5vw, 92px)', fontWeight: 700, margin: 0,
           letterSpacing: '-0.035em', lineHeight: 1.02,
-          background: 'linear-gradient(180deg, #fafafa 10%, #8b8b95 100%)',
+          background: 'var(--hm-title-grad)',
           WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
           animation: `hmFloatIn 700ms ${EASE} 80ms backwards`,
         }}>
@@ -307,8 +306,72 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
         </div>
       </div>
 
-      {/* ── Shared keyframes for the whole landing ─────────────────────── */}
+      {/* ── Theme tokens + shared keyframes for the whole landing ──────── */}
       <style>{`
+        .hm-root {
+          --hm-page-bg:
+            radial-gradient(1000px 520px at 18% -10%, rgba(56,189,248,0.07) 0%, transparent 60%),
+            radial-gradient(900px 480px at 85% 8%, rgba(47,217,196,0.05) 0%, transparent 60%),
+            #0A0A0B;
+          --hm-bg: #0A0A0B;
+          --hm-fade0: rgba(10,10,11,0);
+          --hm-text: #fafafa;
+          --hm-text2: #d4d4d8;
+          --hm-text3: #a1a1aa;
+          --hm-text4: #8b8b95;
+          --hm-text5: #71717a;
+          --hm-text6: #52525b;
+          --hm-rank: #3f3f46;
+          --hm-surface: rgba(255,255,255,0.015);
+          --hm-chip: rgba(255,255,255,0.03);
+          --hm-chip2: rgba(255,255,255,0.05);
+          --hm-card-strong: rgba(15,15,17,0.9);
+          --hm-solid: rgba(24,24,27,0.9);
+          --hm-hair: rgba(255,255,255,0.06);
+          --hm-border: rgba(255,255,255,0.07);
+          --hm-border2: rgba(255,255,255,0.09);
+          --hm-border3: rgba(255,255,255,0.10);
+          --hm-border4: rgba(255,255,255,0.12);
+          --hm-border5: rgba(255,255,255,0.14);
+          --hm-tile: #131316;
+          --hm-tile-border: rgba(255,255,255,0.08);
+          --hm-title-grad: linear-gradient(180deg, #fafafa 10%, #8b8b95 100%);
+          --hm-scroll: #27272a;
+          --hm-scroll2: #3f3f46;
+          --hm-wave-boost: 1;
+        }
+        .hm-root[data-theme="light"] {
+          --hm-page-bg:
+            radial-gradient(1000px 520px at 18% -10%, rgba(2,132,199,0.10) 0%, transparent 60%),
+            radial-gradient(900px 480px at 85% 8%, rgba(13,148,136,0.08) 0%, transparent 60%),
+            #F4F7FB;
+          --hm-bg: #F4F7FB;
+          --hm-fade0: rgba(244,247,251,0);
+          --hm-text: #0F172A;
+          --hm-text2: #334155;
+          --hm-text3: #475569;
+          --hm-text4: #5D6B80;
+          --hm-text5: #64748B;
+          --hm-text6: #94A3B8;
+          --hm-rank: #C3CEDB;
+          --hm-surface: #FFFFFF;
+          --hm-chip: #FFFFFF;
+          --hm-chip2: #EEF2F7;
+          --hm-card-strong: #FFFFFF;
+          --hm-solid: rgba(255,255,255,0.94);
+          --hm-hair: rgba(15,23,42,0.08);
+          --hm-border: rgba(15,23,42,0.10);
+          --hm-border2: rgba(15,23,42,0.12);
+          --hm-border3: rgba(15,23,42,0.14);
+          --hm-border4: rgba(15,23,42,0.18);
+          --hm-border5: rgba(15,23,42,0.22);
+          --hm-tile: #EDF1F7;
+          --hm-tile-border: rgba(15,23,42,0.10);
+          --hm-title-grad: linear-gradient(180deg, #0F172A 15%, #46628A 100%);
+          --hm-scroll: #CBD5E1;
+          --hm-scroll2: #94A3B8;
+          --hm-wave-boost: 1.7;
+        }
         @keyframes hmFloatIn {
           from { opacity: 0; transform: translateY(22px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -341,8 +404,8 @@ export default function HomeLanding({ onChoose, onOpenResearch }) {
         }
         .hm-news-scroll::-webkit-scrollbar { width: 4px; }
         .hm-news-scroll::-webkit-scrollbar-track { background: transparent; }
-        .hm-news-scroll::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
-        .hm-news-scroll::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+        .hm-news-scroll::-webkit-scrollbar-thumb { background: var(--hm-scroll); border-radius: 4px; }
+        .hm-news-scroll::-webkit-scrollbar-thumb:hover { background: var(--hm-scroll2); }
         @media (max-width: 900px) {
           .hm-holdings-grid { grid-template-columns: 1fr !important; }
         }

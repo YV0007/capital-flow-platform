@@ -27,9 +27,9 @@ function BucketCard({ card, active, onOpen }) {
       style={{
         width: CARD_W, flexShrink: 0, textAlign: 'left', font: 'inherit',
         background: lift
-          ? `linear-gradient(160deg, ${card.color}12 0%, rgba(15,15,17,0.9) 55%)`
-          : 'rgba(255,255,255,0.015)',
-        border: `1px solid ${lift ? card.color + '55' : 'rgba(255,255,255,0.07)'}`,
+          ? `linear-gradient(160deg, ${card.color}12 0%, var(--hm-card-strong) 55%)`
+          : 'var(--hm-surface)',
+        border: `1px solid ${lift ? card.color + '55' : 'var(--hm-border)'}`,
         borderRadius: 16, padding: 0, overflow: 'hidden', cursor: 'pointer',
         transition: `all 280ms ${EASE}`,
         transform: hovered ? 'translateY(-5px)' : 'none',
@@ -50,16 +50,16 @@ function BucketCard({ card, active, onOpen }) {
         }}>
           Цепочка поставок
         </span>
-        <span style={{ display: 'block', fontSize: 17, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.015em', lineHeight: 1.2, marginBottom: 12 }}>
+        <span style={{ display: 'block', fontSize: 17, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.015em', lineHeight: 1.2, marginBottom: 12 }}>
           {card.name}
         </span>
 
         {card.companies.map((c) => (
           <span key={c.name} style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, marginBottom: 5 }}>
-            <span style={{ fontSize: 12.5, fontWeight: 600, color: '#d4d4d8', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <span style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--hm-text2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {c.name}
             </span>
-            <span style={{ fontSize: 9.5, fontFamily: MONO, color: '#71717a', whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text5)', whiteSpace: 'nowrap' }}>
               {c.ticker}
             </span>
           </span>
@@ -71,8 +71,8 @@ function BucketCard({ card, active, onOpen }) {
       </span>
       <span style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '11px 20px', borderTop: '1px solid rgba(255,255,255,0.06)',
-        fontSize: 9.5, fontFamily: MONO, color: '#71717a', letterSpacing: '0.05em',
+        padding: '11px 20px', borderTop: '1px solid var(--hm-hair)',
+        fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text5)', letterSpacing: '0.05em',
       }}>
         <span>
           {card.companyCount} {ruPlural(card.companyCount, ['компания', 'компании', 'компаний'])}
@@ -127,13 +127,13 @@ export default function SupplyChainHome({ onOpen }) {
       aria-label={dir > 0 ? 'Next' : 'Previous'}
       style={{
         width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
-        background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
-        color: '#a1a1aa', fontSize: 15, cursor: 'pointer',
+        background: 'var(--hm-chip)', border: '1px solid var(--hm-border3)',
+        color: 'var(--hm-text3)', fontSize: 15, cursor: 'pointer',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         transition: 'all 180ms',
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.color = '#fafafa'; e.currentTarget.style.borderColor = '#3f3f46'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.color = '#a1a1aa'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
+      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--hm-text)'; e.currentTarget.style.borderColor = 'var(--hm-border5)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--hm-text3)'; e.currentTarget.style.borderColor = 'var(--hm-border3)'; }}
     >
       {dir > 0 ? '→' : '←'}
     </button>
@@ -187,7 +187,7 @@ export default function SupplyChainHome({ onOpen }) {
                   aria-label={`Go to slide ${i + 1}`}
                   style={{
                     width: i === index ? 22 : 7, height: 7, borderRadius: 999,
-                    background: i === index ? '#22D3EE' : '#3f3f46',
+                    background: i === index ? '#22D3EE' : 'var(--hm-rank)',
                     border: 'none', cursor: 'pointer', padding: 0,
                     transition: `all 300ms ${EASE}`,
                   }}

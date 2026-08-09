@@ -50,11 +50,11 @@ export function SectionHeader({ eyebrow, title, sub, accent, actionLabel, onActi
           <span style={{ width: 18, height: 1, background: accent, display: 'inline-block', opacity: 0.7 }} />
           {eyebrow}
         </div>
-        <div style={{ fontSize: 26, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
+        <div style={{ fontSize: 26, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
           {title}
         </div>
         {sub && (
-          <div style={{ fontSize: 13, color: '#a1a1aa', marginTop: 8, lineHeight: 1.55 }}>{sub}</div>
+          <div style={{ fontSize: 13, color: 'var(--hm-text3)', marginTop: 8, lineHeight: 1.55 }}>{sub}</div>
         )}
       </div>
       {actionLabel && (
@@ -93,7 +93,7 @@ export function LogoTile({ src, mono, color, size = 30, radius = 8 }) {
     return (
       <span style={{
         width: size, height: size, borderRadius: radius, flexShrink: 0,
-        background: '#131316', border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--hm-tile)', border: '1px solid var(--hm-tile-border)',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden',
       }}>
