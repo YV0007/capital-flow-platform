@@ -26,7 +26,7 @@ import {
   ArrowUpRight, Sparkles, Info,
 } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
-import { STATUS_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
+import { STATUS_META, RULE_META, sectorLabel, basisLabel } from '../../../data/capitalMap.js';
 import { engineSectorRank } from './clusterStats.js';
 
 const MONO = 'ui-monospace, monospace';
@@ -139,7 +139,7 @@ export default function ClusterReport({ report, onOpenEntity, onClose, topInset 
         {/* Engine's own ranking, when it covers this sector. Shown rather than
             reconciled: if it disagrees with ours, that is worth seeing. */}
         {engineRank && (
-          <div title={engineRank.basis || undefined} style={{
+          <div title={basisLabel(engineRank.basis) || undefined} style={{
             marginTop: 7, fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO,
             display: 'flex', alignItems: 'center', gap: 5, cursor: engineRank.basis ? 'help' : 'default',
           }}>

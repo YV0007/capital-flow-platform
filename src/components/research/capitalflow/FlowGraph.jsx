@@ -468,15 +468,15 @@ export default function FlowGraph({
     const cls = CLASS_META[n.cls];
     const sec = n.sector ? SECTOR_META[n.sector] : null;
     const t = n.tier ? TIER_META[n.tier] : null;
-    const role = n.type === 'player' ? 'Allocator · deploys' : 'Target · receives';
+    const role = n.type === 'player' ? 'Инвестор · вкладывает' : 'Получатель · привлекает';
     const side = n.type === 'player'
-      ? `<span style="color:${T.tipText4}">Capital out</span><span style="color:${tone("#C2A36B", mode)};text-align:right">${fmtUSD(n.totalOutflow)}</span>`
-      : `<span style="color:${T.tipText4}">Capital in</span><span style="color:${tone("#82B98D", mode)};text-align:right">${fmtUSD(n.totalInflow)}</span>`;
+      ? `<span style="color:${T.tipText4}">Вложено</span><span style="color:${tone("#C2A36B", mode)};text-align:right">${fmtUSD(n.totalOutflow)}</span>`
+      : `<span style="color:${T.tipText4}">Получено</span><span style="color:${tone("#82B98D", mode)};text-align:right">${fmtUSD(n.totalInflow)}</span>`;
     return tip(T, `
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:5px">
         <span style="font-weight:700;font-size:12.5px;color:${T.tipText}">${esc(n.name)}</span>
         ${t ? `<span style="color:${tone(t.color, mode)};font-size:9px;font-weight:700">${t.short} ${t.stars}</span>` : ''}
-        ${n.stale ? '<span style="color:${T.tipText4};font-size:9px;font-weight:700">COOLED</span>' : ''}
+        ${n.stale ? '<span style="color:${T.tipText4};font-size:9px;font-weight:700">ОСТЫЛ</span>' : ''}
       </div>
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
         <span style="width:7px;height:7px;border-radius:50%;background:${tone(n.color, mode)}"></span>
@@ -486,12 +486,12 @@ export default function FlowGraph({
         <span style="color:${T.tipText4}">${esc(role)}</span>
       </div>
       <div style="display:grid;grid-template-columns:auto auto;gap:2px 14px">
-        <span style="color:${T.tipText4}">Capital</span><span style="color:${T.tipText2};text-align:right">${fmtUSD(n.capital)}</span>
+        <span style="color:${T.tipText4}">Капитал</span><span style="color:${T.tipText2};text-align:right">${fmtUSD(n.capital)}</span>
         ${side}
-        <span style="color:${T.tipText4}">Deals</span><span style="color:${T.tipText3};text-align:right">${n.deals}</span>
-        <span style="color:${T.tipText4}">Last activity</span><span style="color:${T.tipText3};text-align:right">${esc(n.last_activity || '—')}</span>
+        <span style="color:${T.tipText4}">Сделки</span><span style="color:${T.tipText3};text-align:right">${n.deals}</span>
+        <span style="color:${T.tipText4}">Активность</span><span style="color:${T.tipText3};text-align:right">${esc(n.last_activity || '—')}</span>
       </div>
-      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Click → full breakdown panel</div>
+      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Клик → панель разбора</div>
     `);
   }, [mode, T]);
 
@@ -500,7 +500,7 @@ export default function FlowGraph({
     const t = typeof l.target === 'object' ? l.target.name : l.targetId;
     const st = STATUS_META[l.status] || {};
     return tip(T, `
-      <div style="font-weight:700;font-size:12.5px;color:${T.tipText};margin-bottom:4px">${l.disclosed ? fmtUSD(l.amount) : 'Undisclosed'}</div>
+      <div style="font-weight:700;font-size:12.5px;color:${T.tipText};margin-bottom:4px">${l.disclosed ? fmtUSD(l.amount) : 'Не раскрыто'}</div>
       <div style="color:${T.tipText2};margin-bottom:5px">${esc(s)} <span style="color:${tone(l.color, mode)}">→</span> ${esc(t)}</div>
       <div style="display:flex;gap:6px;align-items:center">
         <span style="width:7px;height:7px;border-radius:2px;background:${tone(l.color, mode)}"></span>
@@ -510,7 +510,7 @@ export default function FlowGraph({
         <span style="color:${T.tipRule}">·</span>
         <span style="color:${T.tipText4}">${esc(l.date)}</span>
       </div>
-      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Click → deal detail</div>
+      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Клик → карточка сделки</div>
     `);
   }, [mode, T]);
 

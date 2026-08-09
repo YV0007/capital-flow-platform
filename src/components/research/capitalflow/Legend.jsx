@@ -96,16 +96,16 @@ export default function Legend({ counts }) {
             marginTop: 10, paddingTop: 9, borderTop: '1px solid var(--cf-border-soft)',
             fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, lineHeight: 1.65,
           }}>
-            Node colour = domain · node size = capital.<br />
-            Sources ring the centre, grouped by class;<br />
-            sectors orbit outside.<br />
-            <span style={{ color: 'var(--cf-warn)' }}>◆</span> / bright cell = signal firing.<br />
-            <span style={{ color: 'var(--cf-warn)' }}>▢</span> warm outline = elite network.<br />
-            Bond opacity = confidence · thickness = size.<br />
+            Цвет узла = сфера · размер = капитал.<br />
+            Инвесторы в центре, сгруппированы по классам;<br />
+            секторы — по орбите вокруг.<br />
+            <span style={{ color: 'var(--cf-warn)' }}>◆</span> / яркая зона = сработал сигнал.<br />
+            <span style={{ color: 'var(--cf-warn)' }}>▢</span> тёплая рамка = элитная сеть.<br />
+            Прозрачность связи = надёжность · толщина = сумма.<br />
             <span style={{ color: 'var(--cf-text4)' }}>
-              Click a node → breakdown panel.<br />
-              Click a bond → deal detail.<br />
-              Esc clears the selection.
+              Клик по узлу → панель разбора.<br />
+              Клик по связи → карточка сделки.<br />
+              Esc снимает выделение.
             </span>
           </div>
         </div>

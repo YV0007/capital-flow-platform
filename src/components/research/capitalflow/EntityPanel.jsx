@@ -4,7 +4,7 @@
 // underneath.
 
 import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, FileText, Newspaper } from 'lucide-react';
-import { fmtUSD } from './format.js';
+import { fmtUSD, plural } from './format.js';
 import {
   SECTOR_META, CLASS_META, TIER_META, NETWORK_META, confidenceBand,
 } from '../../../data/capitalMap.js';
@@ -16,7 +16,7 @@ const W = 380;
 // Sum of a flow list when at least one amount is disclosed — else null, so the
 // UI can say "undisclosed" instead of a misleading $0.
 function totalOrNull(flows, total) {
-  return flows.some(f => f.disclosed) ? fmtUSD(total) : 'undisclosed';
+  return flows.some(f => f.disclosed) ? fmtUSD(total) : 'не раскрыто';
 }
 
 export default function EntityPanel({
@@ -27,7 +27,7 @@ export default function EntityPanel({
   const cls = CLASS_META[node.cls];
   const sec = node.sector ? SECTOR_META[node.sector] : null;
   const tier = node.tier ? TIER_META[node.tier] : null;
-  const role = node.kind === 'allocator' ? 'Allocator · deploys capital' : 'Target · receives capital';
+  const role = node.kind === 'allocator' ? 'Инвестор · вкладывает капитал' : 'Получатель · привлекает капитал';
   const isAllocator = node.kind === 'allocator';
 
   return (
@@ -57,7 +57,7 @@ export default function EntityPanel({
             </div>
           </div>
           {wl && <WatchlistMenu wl={wl} entityId={node.id} />}
-          <button onClick={onClose} title="Close panel"
+          <button onClick={onClose} title="Закрыть панель"
             style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -81,7 +81,7 @@ export default function EntityPanel({
             }}>{tier.short} · {tier.label} <span style={{ letterSpacing: 1 }}>{tier.stars}</span></span>
           )}
           {node.country && (
-            <span title={`National capital source — ${node.countryLabel || node.country.toUpperCase()}`} style={{
+            <span title={`Национальная принадлежность — ${node.countryLabel || node.country.toUpperCase()}`} style={{
               display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 8px',
               background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)', borderRadius: 5,
               fontSize: 9, color: 'var(--cf-text3)', fontFamily: MONO, fontWeight: 700,
@@ -92,7 +92,7 @@ export default function EntityPanel({
             </span>
           )}
           {node.network && (
-            <span title={`Member of the ${NETWORK_META[node.network]?.label || node.network} network`} style={{
+            <span title={`Участник сети «${NETWORK_META[node.network]?.label || node.network}»`} style={{
               display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 8px',
               background: (NETWORK_META[node.network]?.color || '#F5B942') + '18',
               border: `1px solid ${(NETWORK_META[node.network]?.color || '#F5B942')}55`, borderRadius: 5,
@@ -101,20 +101,20 @@ export default function EntityPanel({
             }}><Users size={10} /> {NETWORK_META[node.network]?.label || node.network}</span>
           )}
           {node.stale && (
-            <span title="No activity in 180 days — cooled off, kept in memory." style={{
+            <span title="Нет активности 180 дней — остыл, но остаётся в памяти." style={{
               display: 'inline-block', padding: '3px 8px',
               background: 'var(--cf-surface2)', border: '1px dashed var(--cf-border-dashed)', borderRadius: 5,
               fontSize: 9, color: 'var(--cf-muted)', fontFamily: MONO, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
-            }}>Cooled · 180d idle</span>
+            }}>Остыл · 180 дн тишины</span>
           )}
           {node.watchOnly && (
-            <span title="Only candidate (unconfirmed) flows so far — kept off the main map by default." style={{
+            <span title="Пока только неподтверждённые потоки-кандидаты — по умолчанию скрыт с основной карты." style={{
               display: 'inline-block', padding: '3px 8px',
               background: 'var(--cf-surface2)', border: '1px dashed var(--cf-border-dashed)', borderRadius: 5,
               fontSize: 9, color: 'var(--cf-text5)', fontFamily: MONO, fontWeight: 600,
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
-            }}>Watch · unconfirmed</span>
+            }}>Наблюдение · не подтверждено</span>
           )}
         </div>
       </div>
@@ -128,7 +128,7 @@ export default function EntityPanel({
             record, strategy. Companies (targets) keep the standard panel. */}
         {isAllocator && onDeepDive && (
           <button onClick={() => onDeepDive(node.id)}
-            title="Expanded allocator breakdown — background, latest investments, track record, strategy"
+            title="Расширенный разбор инвестора — бэкграунд, последние инвестиции, трек-рекорд, стратегия"
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
               width: '100%', padding: '9px 12px', marginBottom: 14,
@@ -139,7 +139,7 @@ export default function EntityPanel({
             }}
             onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--cf-accent-bg)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--cf-accent-bg)'; }}>
-            Detailed breakdown <ChevronRight size={12} />
+            Подробный разбор <ChevronRight size={12} />
           </button>
         )}
 
@@ -147,12 +147,12 @@ export default function EntityPanel({
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
           {/* capital 0 with deals on file = every amount undisclosed, not zero */}
           <Stat
-            label="Capital"
+            label="Капитал"
             value={node.capital > 0 ? fmtUSD(node.capital) : node.degree > 0 ? '—' : '$0'}
-            sub={node.capital > 0 ? (isAllocator ? 'deployed' : 'received') : node.degree > 0 ? 'amounts undisclosed' : 'nothing tracked'}
+            sub={node.capital > 0 ? (isAllocator ? 'вложено' : 'получено') : node.degree > 0 ? 'суммы не раскрыты' : 'ничего не отслежено'}
             color={node.capital > 0 ? (isAllocator ? 'var(--cf-gold)' : 'var(--cf-green2)') : 'var(--cf-text5)'}
           />
-          <Stat label="Deals" value={String(node.deals)} sub={`${node.degree} flow${node.degree === 1 ? '' : 's'} tracked`} color="var(--cf-text1)" />
+          <Stat label="Сделки" value={String(node.deals)} sub={`${node.degree} ${plural(node.degree, ['поток', 'потока', 'потоков'])} отслежено`} color="var(--cf-text1)" />
         </div>
 
         {/* Activity window */}
@@ -161,15 +161,15 @@ export default function EntityPanel({
           padding: '8px 11px', background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 9,
           fontSize: 10, fontFamily: MONO,
         }}>
-          <span style={{ color: 'var(--cf-text7)' }}>ACTIVE</span>
+          <span style={{ color: 'var(--cf-text7)' }}>АКТИВЕН</span>
           <span style={{ color: 'var(--cf-text3)' }}>{node.first_seen}</span>
           <span style={{ color: 'var(--cf-text9)' }}>→</span>
           <span style={{ color: 'var(--cf-text3)' }}>{node.last_activity}</span>
         </div>
 
         {inbound.length > 0 && (
-          <Section title={`Who invests here · ${totalOrNull(inbound, node.totalInflow)}`}
-            hint="Click a name to open it. Click the deal icon for the write-up."
+          <Section title={`Кто инвестирует сюда · ${totalOrNull(inbound, node.totalInflow)}`}
+            hint="Клик по имени открывает объект. Клик по иконке — разбор сделки."
             icon={<ArrowDownLeft size={11} color="var(--cf-good)" />}>
             <FlowList
               flows={inbound} counterpartyKey="sourceId"
@@ -180,8 +180,8 @@ export default function EntityPanel({
         )}
 
         {outbound.length > 0 && (
-          <Section title={`Where its money goes · ${totalOrNull(outbound, node.totalOutflow)}`}
-            hint="Click a name to open it. Click the deal icon for the write-up."
+          <Section title={`Куда идут его деньги · ${totalOrNull(outbound, node.totalOutflow)}`}
+            hint="Клик по имени открывает объект. Клик по иконке — разбор сделки."
             icon={<ArrowUpRight size={11} color="#F59E0B" />}>
             <FlowList
               flows={outbound} counterpartyKey="targetId"
@@ -193,7 +193,7 @@ export default function EntityPanel({
 
         {inbound.length === 0 && outbound.length === 0 && (
           <div style={{ fontSize: 11, color: 'var(--cf-text7)', fontFamily: MONO, fontStyle: 'italic' }}>
-            No flows recorded yet for this entity.
+            По этому объекту пока нет отслеженных потоков.
           </div>
         )}
       </div>
@@ -217,19 +217,19 @@ function ProfileBlock({ node }) {
         fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 7,
       }}>
-        {node.profileType === 'person' ? 'Who this is'
-          : node.profileType === 'project' ? 'What this is'
-          : node.profileType === 'fund' ? 'About this fund' : 'About'}
+        {node.profileType === 'person' ? 'Кто это'
+          : node.profileType === 'project' ? 'Что это'
+          : node.profileType === 'fund' ? 'О фонде' : 'Описание'}
       </div>
 
       <div style={{ fontSize: 12.5, color: node.description ? 'var(--cf-text2)' : 'var(--cf-text6)', lineHeight: 1.6, fontStyle: node.description ? 'normal' : 'italic' }}>
-        {node.description || 'No profile on file yet — use search below to look it up.'}
+        {node.description || 'Профиля в данных пока нет — найдите через поиск ниже.'}
       </div>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 10 }}>
         {links.map((l, i) => <LinkChip key={i} link={l} />)}
         {links.length === 0 && (
-          <LinkChip link={{ kind: 'search', label: `Search "${node.name}"`, url: node.searchUrl }} />
+          <LinkChip link={{ kind: 'search', label: `Искать «${node.name}»`, url: node.searchUrl }} />
         )}
       </div>
 
@@ -239,15 +239,15 @@ function ProfileBlock({ node }) {
       {links.length === 0 && (
         <div style={{ marginTop: 8, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.55 }}>
           {hasProfile
-            ? 'No official site on file — private office / no public web presence. We search rather than guess a URL.'
-            : 'No reference in the payload for this entity yet — an engine-side coverage gap, not something we fill in by hand.'}
+            ? 'Официального сайта в данных нет — частная структура или без публичного сайта. Мы ищем, а не угадываем адрес.'
+            : 'В данных движка пока нет справки по этому объекту — пробел покрытия на стороне движка, вручную мы его не заполняем.'}
         </div>
       )}
 
       {/* When the engine researched this entity, stamp the date it did so. */}
       {node.referenceAsOf && (
         <div style={{ marginTop: 8, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO }}>
-          Researched by the engine · {node.referenceAsOf}
+          Исследовано движком · {node.referenceAsOf}
         </div>
       )}
     </div>
@@ -263,9 +263,9 @@ function LinkChip({ link }) {
     : ExternalLink;
   // `read_more` carries the publication name as its label — show it as such so
   // the chip reads "Reuters", not a bare "Link".
-  const label = link.label || (link.kind === 'x' ? 'X / social'
-    : link.kind === 'website' ? 'Website'
-    : link.kind === 'read_more' ? 'Read more' : 'Link');
+  const label = link.label || (link.kind === 'x' ? 'X / соцсеть'
+    : link.kind === 'website' ? 'Сайт'
+    : link.kind === 'read_more' ? 'Читать' : 'Ссылка');
   return (
     <a href={link.url} target="_blank" rel="noopener noreferrer" title={link.url}
       style={{
@@ -299,7 +299,7 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
         return (
           <div key={f.id}
             onClick={() => cp && onOpenEntity(cp.id)}
-            title={cp ? `Open ${cp.name}` : ''}
+            title={cp ? `Открыть ${cp.name}` : ''}
             style={{
               position: 'relative', padding: '8px 10px', borderRadius: 8,
               background: on ? 'var(--cf-surface3)' : 'var(--cf-surface1)',
@@ -343,7 +343,7 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
 
               {/* confidence as a meter, not a code */}
               {f.confidence != null && (
-                <span title={`${band.label} — ${f.confidence}/100. Open the deal card for the full source breakdown.`}
+                <span title={`${band.label} — ${f.confidence}/100. Откройте карточку сделки, чтобы увидеть источники.`}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 5, cursor: 'help' }}>
                   <span style={{ width: 26, height: 3, borderRadius: 2, background: 'var(--cf-border-soft)', overflow: 'hidden' }}>
                     <span style={{ display: 'block', height: '100%', width: `${f.confidence}%`, background: band.color }} />
@@ -354,7 +354,7 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
 
               <button
                 onClick={(e) => { e.stopPropagation(); onSelectFlow(f.id); }}
-                title={on ? 'Hide the deal write-up' : 'Read the deal write-up'}
+                title={on ? 'Скрыть разбор сделки' : 'Открыть разбор сделки'}
                 style={{
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   width: 20, height: 20, borderRadius: 5, flexShrink: 0,

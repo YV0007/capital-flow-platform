@@ -1,9 +1,9 @@
 [
   {
     "id": "capital-flow-map",
-    "title": "Capital Flow Map",
+    "title": "Карта потоков капитала",
     "subtitle": "Кто кому даёт деньги в AI, полупроводниках, инфраструктуре и энергетике — интерактивная карта направленных потоков капитала.",
-    "sector": "Capital Flows",
+    "sector": "Потоки капитала",
     "dateCompleted": "2026-08-06",
     "companyCount": 46,
     "sectionCount": 33,

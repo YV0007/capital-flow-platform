@@ -279,11 +279,11 @@ export const SECTOR_TO_THEME = {
 // only — the code itself is the payload's, and an unmapped code falls back to
 // the uppercase code rather than being guessed at.
 export const COUNTRY_NAMES = {
-  us: 'United States', ca: 'Canada', gb: 'United Kingdom', ae: 'United Arab Emirates',
-  sa: 'Saudi Arabia', qa: 'Qatar', kw: 'Kuwait', kr: 'South Korea', jp: 'Japan',
-  cn: 'China', tw: 'Taiwan', sg: 'Singapore', in: 'India', il: 'Israel',
-  de: 'Germany', fr: 'France', nl: 'Netherlands', ch: 'Switzerland',
-  se: 'Sweden', no: 'Norway', au: 'Australia',
+  us: 'США', ca: 'Канада', gb: 'Великобритания', ae: 'ОАЭ',
+  sa: 'Саудовская Аравия', qa: 'Катар', kw: 'Кувейт', kr: 'Южная Корея', jp: 'Япония',
+  cn: 'Китай', tw: 'Тайвань', sg: 'Сингапур', in: 'Индия', il: 'Израиль',
+  de: 'Германия', fr: 'Франция', nl: 'Нидерланды', ch: 'Швейцария',
+  se: 'Швеция', no: 'Норвегия', au: 'Австралия',
 };
 
 // ── Elite networks an individual allocator can belong to. Warm accents so a
@@ -316,6 +316,22 @@ export const META = {
 // strings explain how each number was derived and must never be recomputed or
 // paraphrased dashboard-side.
 export const AGGREGATES = raw.aggregates || null;   // top_sector · top_company · thesis_shares
+
+// The engine's `basis` strings are shipped verbatim and never paraphrased.
+// Known ones get a faithful Russian rendering; anything unknown falls back to
+// the engine's own wording, so a new basis is never silently mistranslated.
+const BASIS_RU = {
+  'confirmed events (verified/verified_alpha), capital-weighted; undisclosed amounts count as 0':
+    'подтверждённые события (verified/verified_alpha), взвешено по капиталу; нераскрытые суммы считаются как 0',
+  'confirmed events; ranked by distinct tracked allocators, then capital behind the target':
+    'подтверждённые события; ранжировано по числу уникальных инвесторов, затем по капиталу за компанией',
+  'share of confirmed events per canonical theme (the stated rationale dimension of config/rules.yaml); by_capital ignores undisclosed amounts':
+    'доля подтверждённых событий по каноническим темам; расчёт по капиталу игнорирует нераскрытые суммы',
+};
+export function basisLabel(basis) {
+  if (!basis) return null;
+  return BASIS_RU[basis] || basis;
+}
 export const AUDIT = raw.audit || null;             // the engine's verdict on this delivery
 
 // ── Track-record metric names → display labels. Presentation only; an unknown

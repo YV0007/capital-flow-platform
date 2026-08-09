@@ -14,7 +14,7 @@
 // tap away on every single row.
 
 import { X, ChevronLeft, AlertTriangle, ExternalLink, ArrowUpRight, BookOpen, TrendingUp, Compass, ChevronRight, Crosshair } from 'lucide-react';
-import { fmtUSD } from './format.js';
+import { fmtUSD, plural } from './format.js';
 import {
   SECTOR_META, CLASS_META, TIER_META, THEME_META, confidenceBand, sectorLabel,
   metricLabel, formatTrackValue, SOURCE_TIER_LABEL,
@@ -93,7 +93,7 @@ export default function AllocatorDeepDive({
       {/* Header */}
       <div style={{ padding: '14px 16px 12px', borderBottom: '1px solid var(--cf-border-soft)', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <button onClick={onBack} title="Back to the entity panel"
+          <button onClick={onBack} title="Назад к панели объекта"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 3, padding: '5px 9px 5px 5px',
               background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)', borderRadius: 7,
@@ -101,7 +101,7 @@ export default function AllocatorDeepDive({
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text0)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text3)')}>
-            <ChevronLeft size={12} /> Panel
+            <ChevronLeft size={12} /> Назад
           </button>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, minWidth: 0 }}>
@@ -109,17 +109,17 @@ export default function AllocatorDeepDive({
                 {node.name}
               </span>
               <span style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
-                ALLOCATOR BREAKDOWN
+                РАЗБОР ИНВЕСТОРА
               </span>
             </div>
             <div style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2 }}>
               {cls?.label || node.cls}
               {tier ? <> · <span style={{ color: tier.color }}>{tier.label}</span></> : null}
               {node.countryLabel ? <> · {node.countryLabel}</> : null}
-              {profile?.as_of ? <> · researched {profile.as_of}</> : null}
+              {profile?.as_of ? <> · исследовано {profile.as_of}</> : null}
             </div>
           </div>
-          <button onClick={onClose} title="Close"
+          <button onClick={onClose} title="Закрыть"
             style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -132,23 +132,23 @@ export default function AllocatorDeepDive({
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px 18px 32px' }}>
 
         {/* ── Background / context ── */}
-        <DiveSection icon={<BookOpen size={11} color="#8E9BE6" />} title="Background · focus, thesis, style">
+        <DiveSection icon={<BookOpen size={11} color="#8E9BE6" />} title="Бэкграунд · фокус, тезис, стиль">
           {(profile?.background || node.description) ? (
             <>
               <p style={{ margin: 0, fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>
                 {profile?.background || node.description}
               </p>
-              {profile?.focus && <Trait label="Focus" text={profile.focus} />}
-              {profile?.style && <Trait label="Style" text={profile.style} />}
-              {profile?.thesis && <Trait label="Thesis" text={profile.thesis} />}
+              {profile?.focus && <Trait label="Фокус" text={profile.focus} />}
+              {profile?.style && <Trait label="Стиль" text={profile.style} />}
+              {profile?.thesis && <Trait label="Тезис" text={profile.thesis} />}
             </>
           ) : (
-            <NoData what="background summary" />
+            <NoData what="Бэкграунда" />
           )}
         </DiveSection>
 
         {/* ── Latest investments · decision logic ── */}
-        <DiveSection icon={<ArrowUpRight size={11} color="#F59E0B" />} title="Latest investments · decision logic">
+        <DiveSection icon={<ArrowUpRight size={11} color="#F59E0B" />} title="Последние инвестиции · логика решений">
           {profile?.latest_investments_summary && (
             <p style={{ margin: '0 0 10px', fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>
               {profile.latest_investments_summary}
@@ -157,11 +157,11 @@ export default function AllocatorDeepDive({
           {outbound.length > 0 ? (
             <>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 10 }}>
-                <MiniStat label="Tracked deals" value={String(outbound.length)}
-                  sub={node.confirmedDeals != null ? `${node.confirmedDeals} confirmed` : null} />
-                <MiniStat label="Disclosed capital" value={disclosed.length ? fmtUSD(node.totalOutflow) : '—'}
-                  sub={disclosed.length < outbound.length ? `${outbound.length - disclosed.length} undisclosed` : null} />
-                <MiniStat label="Last activity" value={node.last_activity || '—'} />
+                <MiniStat label="Сделок отслежено" value={String(outbound.length)}
+                  sub={node.confirmedDeals != null ? `${node.confirmedDeals} подтверждено` : null} />
+                <MiniStat label="Раскрытый капитал" value={disclosed.length ? fmtUSD(node.totalOutflow) : '—'}
+                  sub={disclosed.length < outbound.length ? `${outbound.length - disclosed.length} без суммы` : null} />
+                <MiniStat label="Последняя активность" value={node.last_activity || '—'} />
               </div>
 
               {topSectors.length > 0 && (
@@ -174,7 +174,7 @@ export default function AllocatorDeepDive({
                     }}>
                       {sectorLabel(key)}
                       <span style={{ color: 'var(--cf-text5)', fontWeight: 600 }}>
-                        {s.deals} deal{s.deals === 1 ? '' : 's'}{s.amount > 0 ? ` · ${fmtUSD(s.amount)}` : ''}
+                        {s.deals} {plural(s.deals, ['сделка', 'сделки', 'сделок'])}{s.amount > 0 ? ` · ${fmtUSD(s.amount)}` : ''}
                       </span>
                     </span>
                   ))}
@@ -185,7 +185,7 @@ export default function AllocatorDeepDive({
               {thesis.length > 0 && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 12 }}>
                   {thesis.map(([key, share]) => (
-                    <span key={key} title="The engine's share of this allocator's confirmed events per canonical theme."
+                    <span key={key} title="Доля подтверждённых событий инвестора по каноническим темам — расчёт движка."
                       style={{
                         display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 8px',
                         background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 5,
@@ -205,7 +205,7 @@ export default function AllocatorDeepDive({
                   const band = confidenceBand(f.confidence);
                   return (
                     <button key={f.id} onClick={() => tgt && onOpenEntity(tgt.id)}
-                      title={tgt ? `Open ${tgt.name}` : ''}
+                      title={tgt ? `Открыть ${tgt.name}` : ''}
                       style={{
                         display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px',
                         background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 8,
@@ -234,11 +234,11 @@ export default function AllocatorDeepDive({
                 })}
               </div>
             </>
-          ) : !profile?.latest_investments_summary && <NoData what="tracked investments" />}
+          ) : !profile?.latest_investments_summary && <NoData what="Отслеженных инвестиций" />}
         </DiveSection>
 
         {/* ── Track record ── */}
-        <DiveSection icon={<TrendingUp size={11} color="var(--cf-good)" />} title="Track record · by fiscal year">
+        <DiveSection icon={<TrendingUp size={11} color="var(--cf-good)" />} title="Трек-рекорд · по финансовым годам">
           {byMetric.length > 0 ? (
             <>
               {byMetric.map(g => (
@@ -261,28 +261,28 @@ export default function AllocatorDeepDive({
               )}
             </>
           ) : (
-            <NoData what="track-record figures"
-              detail="The engine ships track record per allocator with a source on every row; this one is not covered yet. Reported as a coverage gap rather than filled in here." />
+            <NoData what="Цифр трек-рекорда"
+              detail="Движок присылает трек-рекорд с источником на каждой строке; этот инвестор пока не покрыт. Отмечено как пробел покрытия, вручную не заполняется." />
           )}
         </DiveSection>
 
         {/* ── Strategy ── */}
-        <DiveSection icon={<Compass size={11} color="#5FB6D2" />} title="Strategy · source-attributed">
+        <DiveSection icon={<Compass size={11} color="#5FB6D2" />} title="Стратегия · с указанием источника">
           {profile?.strategy ? (
             <>
               <p style={{ margin: 0, fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>{profile.strategy}</p>
               {profile.strategy_source_url && (
-                <SourceLink url={profile.strategy_source_url} label="Strategy source" style={{ marginTop: 10 }} />
+                <SourceLink url={profile.strategy_source_url} label="Источник стратегии" style={{ marginTop: 10 }} />
               )}
             </>
           ) : (
-            <NoData what="stated strategy" />
+            <NoData what="Заявленной стратегии" />
           )}
         </DiveSection>
 
         {/* ── Everything the engine cited for this allocator ── */}
         {Array.isArray(profile?.sources) && profile.sources.length > 0 && (
-          <DiveSection icon={<Crosshair size={11} color="var(--cf-muted)" />} title={`Sources · ${profile.sources.length}`}>
+          <DiveSection icon={<Crosshair size={11} color="var(--cf-muted)" />} title={`Источники · ${profile.sources.length}`}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {profile.sources.map((s, i) => {
                 const url = typeof s === 'string' ? s : s.url;
@@ -295,9 +295,9 @@ export default function AllocatorDeepDive({
 
         {/* Provenance footer */}
         <div style={{ marginTop: 4, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.6 }}>
-          Background, track record and strategy are delivered by the Capital Flow engine and rendered as-is —
-          never edited, recomputed or gap-filled here. Deal rows above are the engine's tracked flows.
-          Provisional rows are unaudited: treat them as indicative until the fiscal year closes.
+          Бэкграунд, трек-рекорд и стратегию присылает движок Capital Flow, здесь они отображаются как есть —
+          без правок, пересчётов и заполнения пробелов. Строки сделок выше — отслеженные движком потоки.
+          Строки «предварительно» — неаудированные цифры: ориентир, пока не закрыт финансовый год.
         </div>
       </div>
     </aside>
@@ -360,7 +360,7 @@ function TrackRow({ row }) {
         {row.fiscal_year}
       </span>
       {row.scope && (
-        <span title="Which vehicle or segment this row covers"
+        <span title="Какой фонд или сегмент покрывает эта строка"
           style={{
             padding: '1px 6px', borderRadius: 4, background: 'var(--cf-surface3)', border: '1px solid var(--cf-border)',
             fontSize: 8.5, color: 'var(--cf-text3)', fontFamily: MONO, fontWeight: 700, flexShrink: 0, cursor: 'help',
@@ -369,21 +369,21 @@ function TrackRow({ row }) {
         </span>
       )}
       {row.provisional && (
-        <span title="Provisional — unaudited figure. Indicative until the fiscal year closes and an audited source lands."
+        <span title="Предварительная неаудированная цифра. Ориентир, пока не закрыт финансовый год и нет аудированного источника."
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 6px',
             background: '#FBBF2414', border: '1px solid #FBBF2440', borderRadius: 4,
             fontSize: 8, color: 'var(--cf-warn)', fontFamily: MONO, fontWeight: 700,
             textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help', flexShrink: 0,
           }}>
-          <AlertTriangle size={9} /> Provisional
+          <AlertTriangle size={9} /> Предварительно
         </span>
       )}
       <span style={{ flex: 1 }} />
       {row.notes && (
         <span title={row.notes}
           style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, cursor: 'help', flexShrink: 0 }}>
-          note
+          прим.
         </span>
       )}
       {row.source_url && (
@@ -393,7 +393,7 @@ function TrackRow({ row }) {
           compact />
       )}
       <span style={{ fontSize: 12.5, fontWeight: 700, color, fontFamily: MONO, flexShrink: 0, minWidth: 58, textAlign: 'right' }}>
-        {value ?? 'no data'}
+        {value ?? 'нет данных'}
       </span>
     </div>
   );
@@ -411,13 +411,13 @@ function SourceLink({ url, label, title, compact, style }) {
       }}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cf-link-hover)')}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border)')}>
-      {label || 'Source'} <ExternalLink size={compact ? 8 : 10} style={{ opacity: 0.6 }} />
+      {label || 'Источник'} <ExternalLink size={compact ? 8 : 10} style={{ opacity: 0.6 }} />
     </a>
   );
 }
 
 function hostOf(url) {
-  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'Source'; }
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'Источник'; }
 }
 
 // Honest empty state — §6: never fabricate or interpolate a missing value.
@@ -427,7 +427,7 @@ function NoData({ what, detail }) {
       padding: '10px 12px', background: 'var(--cf-surface1)', border: '1px dashed var(--cf-border)', borderRadius: 8,
       fontSize: 11, color: 'var(--cf-text6)', fontFamily: MONO, lineHeight: 1.6, fontStyle: 'italic',
     }}>
-      No {what} in the payload yet — shown as missing rather than guessed.
+      {what} в данных пока нет — показано как пропуск, а не догадка.
       {detail && <div style={{ marginTop: 5, fontStyle: 'normal', fontSize: 9.5, color: 'var(--cf-text8)' }}>{detail}</div>}
     </div>
   );

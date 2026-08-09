@@ -46,7 +46,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
   // Source links arrive from the engine when it has them (a `sources` array or
   // a single `url`). We never synthesise one — an unsourced flow says so.
   const links = Array.isArray(flow.sources) ? flow.sources.filter(s => s && s.url)
-    : flow.url ? [{ url: flow.url, label: 'Source' }] : [];
+    : flow.url ? [{ url: flow.url, label: 'Источник' }] : [];
 
   // The grade decoded into plain English, joined with the status — one line
   // that carries what used to be two boxes.
@@ -78,7 +78,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           fontSize: 22, fontWeight: 700, color: flow.disclosed ? 'var(--cf-text0)' : 'var(--cf-text5)',
           letterSpacing: '-0.02em', fontFamily: MONO, flexShrink: 0, lineHeight: 1,
         }}>
-          {flow.disclosed ? fmtUSD(flow.amount) : 'Undisclosed'}
+          {flow.disclosed ? fmtUSD(flow.amount) : 'Не раскрыто'}
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0, flex: 1 }}>
@@ -87,7 +87,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           <EntityChip node={targetNode} fallback={tgt} onClick={onOpenEntity} />
         </div>
 
-        <button onClick={onClose} title="Close"
+        <button onClick={onClose} title="Закрыть"
           style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -103,8 +103,8 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         <Tag color={flow.color}>{et.label}</Tag>
         {sec && <Tag color={sec.color}>{sec.label}</Tag>}
         <Tag color="#8b95a8"
-          title={age != null ? `${age} day${age === 1 ? '' : 's'} before the payload date (${META.generated})` : undefined}>
-          {flow.date}{age != null ? ` · ${age}d` : ''}
+          title={age != null ? `За ${age} дн до даты выгрузки (${META.generated})` : undefined}>
+          {flow.date}{age != null ? ` · ${age} дн` : ''}
         </Tag>
       </div>
 
@@ -117,7 +117,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
                 fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
                 textTransform: 'uppercase', letterSpacing: '0.12em', flexShrink: 0,
               }}>
-                Confidence
+                Надёжность
               </span>
               <span style={{ flex: 1, height: 4, borderRadius: 3, background: 'var(--cf-border-soft)', overflow: 'hidden', minWidth: 40 }}>
                 <span style={{ display: 'block', height: '100%', width: `${flow.confidence}%`, background: band.color, borderRadius: 3 }} />
@@ -141,14 +141,14 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           </>
         ) : (
           <div style={{ fontSize: 11, color: 'var(--cf-text6)', fontFamily: MONO, fontStyle: 'italic' }}>
-            Not scored by the engine — treat as unweighted.
+            Движок не оценил надёжность — считайте вес нулевым.
           </div>
         )}
 
         {/* Where it came from + the link, when the payload carries one. */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 9 }}>
           <span style={{ fontSize: 10.5, color: 'var(--cf-text5)', fontFamily: MONO }}>
-            {SOURCE_TIER_LABEL[flow.sourceTier] || `Source tier ${flow.sourceTier}`}
+            {SOURCE_TIER_LABEL[flow.sourceTier] || `Уровень источника ${flow.sourceTier}`}
           </span>
           <span style={{ flex: 1 }} />
           {links.length > 0
@@ -163,13 +163,13 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cf-link-hover)')}
                   onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border)')}>
-                  {l.label || 'Source'} <ExternalLink size={9} style={{ opacity: 0.6 }} />
+                  {l.label || 'Источник'} <ExternalLink size={9} style={{ opacity: 0.6 }} />
                 </a>
               ))
             : (
-              <span title="The engine grades each flow's sourcing but does not yet emit the source URLs. Shown as missing rather than guessed."
+              <span title="Движок оценивает источники каждого потока, но пока не присылает ссылки. Показано как пропуск, а не угадано."
                 style={{ fontSize: 10, color: 'var(--cf-text8)', fontFamily: MONO, cursor: 'help' }}>
-                no source link in payload
+                в данных нет ссылки на источник
               </span>
             )}
         </div>
@@ -178,7 +178,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
       {/* ── Our read — commentary, so it stays folded by default ───────── */}
       <div style={{ borderTop: '1px solid var(--cf-border-soft)' }}>
         <button onClick={() => setReadOpen(o => !o)}
-          title={readOpen ? 'Hide our read' : 'Our written read on why this capital moved'}
+          title={readOpen ? 'Скрыть комментарий' : 'Наш разбор — почему двинулся этот капитал'}
           style={{
             display: 'flex', alignItems: 'center', gap: 7, width: '100%',
             padding: '9px 14px', background: 'transparent', border: 'none',
@@ -191,7 +191,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = readOpen ? 'var(--cf-text2)' : 'var(--cf-text4)')}>
           {readOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-          The read
+          Комментарий
           {note?.angle && !readOpen && (
             <span style={{
               color: flow.color, fontWeight: 600, textTransform: 'none', letterSpacing: 0,
@@ -226,7 +226,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
                 display: 'flex', alignItems: 'center', gap: 5, marginTop: 9,
                 fontSize: 8.5, color: 'var(--cf-text8)', fontFamily: MONO, letterSpacing: '0.06em', textTransform: 'uppercase',
               }}>
-                <Quote size={9} /> Our framing · not from the engine, not a quote
+                <Quote size={9} /> Наша трактовка · не данные движка и не цитата
               </div>
             </div>
           </div>
@@ -241,7 +241,7 @@ function EntityChip({ node, fallback, onClick }) {
   if (!name) return null;
   const color = node?.color || 'var(--cf-text5)';
   return (
-    <button onClick={() => node && onClick(node.id)} title={node ? `Open ${node.name}` : ''}
+    <button onClick={() => node && onClick(node.id)} title={node ? `Открыть ${node.name}` : ''}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
         padding: '4px 9px', background: 'var(--cf-surface2)',
