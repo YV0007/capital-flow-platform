@@ -76,8 +76,19 @@ sectors{ <key>: { deals, capital, allocators, signals[] } }
   panel bookmark or a roster row; activating a list from the top-bar selector
   narrows map + roster to its members (their direct counterparties stay
   visible so the subset remains navigable).
-- `FlowDetailCard.jsx` — per-flow detail (event, sector, date, confidence,
-  source tier).
+- `FlowDetailCard.jsx` — per-flow detail (edge click). Deliberately answers
+  four questions and stops: **how much · between whom · when · how far to
+  trust it**. Three tags only (event type · sector · date + age in days
+  against the payload date); the confidence score is one row — bar, score,
+  and a single line decoding the Admiralty grade *and* the status into plain
+  English ("Quality press · Uncorroborated · Candidate"), so no status or
+  confidence chip is duplicated up in the tags. Source tier and the source
+  link sit on one row. Our written read is commentary, not fact, so it is
+  folded behind a disclosure button and the card stays scannable by default.
+  **Source links:** the payload grades each flow's sourcing (`tier`, `grade`)
+  but does not yet emit URLs — the card renders `flow.sources[]` / `flow.url`
+  the moment the engine ships them, and says "no source link in payload"
+  until then rather than guessing one. *(Backend request.)*
 - `Legend.jsx`, `format.js` — key + shared formatters.
 
 ### National affiliation (sovereign flags)
