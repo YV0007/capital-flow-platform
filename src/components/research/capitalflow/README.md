@@ -110,6 +110,29 @@ sector is the one grouping dimension. The adapter still ingests the payload's
 `themes` block because theme-level **signals** feed the beneficiary read-through;
 nothing theme-shaped is rendered.
 
+## Entity reference & allocator intelligence — ENGINE-OWNED
+The engine owns the "what this is" content outright. The dashboard renders it
+and never edits, recomputes or gap-fills it.
+
+| Payload | Feeds | Rendered by |
+|---|---|---|
+| `nodes[].description` / `links[]` / `reference_as_of` (targets) | the About card | `EntityPanel.jsx` |
+| `allocators[<name>].profile` | background · focus · style · thesis · latest-investments summary · strategy + `strategy_source_url` · `sources[]` | `AllocatorDeepDive.jsx` |
+| `allocators[<name>].track_record[]` | per-fiscal-year rows, grouped by `metric`, each with `scope`, `provisional`, `source_tier`, `source_url`, `notes` | `AllocatorDeepDive.jsx` |
+| `aggregates` (`top_sector` / `top_company` / `thesis_shares`, each with a `basis`) | the "This cycle" summary — **`basis` strings render verbatim, figures are never recomputed** | `EntityTable.jsx` |
+| `audit` | the engine-audit badge (passed/failed + warnings) | `EntityTable.jsx` |
+| `nodes[].country` | sovereign flags + country metadata | see below |
+
+**Precedence:** engine node fields beat `entityReference.json`, exactly as that
+file's `_note` anticipates. `entityReference.json` and `allocatorProfiles.json`
+are now **legacy fallbacks only** — do not hand-curate new entries for entities
+the engine covers. `links[].kind` adds `read_more` (exactly one article per
+entity; the label is the publication name).
+
+**Coverage gaps are engine-side.** A target rendering the empty About card
+means the engine has not referenced it yet — report it back rather than filling
+it in here. The empty state says as much in the UI.
+
 ## Editorial layer (what the engine does NOT ship)
 The engine ships facts only. Two dashboard-side files carry interpretation and
 presentation, and both are keyed by the engine's own ids:

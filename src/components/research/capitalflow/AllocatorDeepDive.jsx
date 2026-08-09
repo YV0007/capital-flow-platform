@@ -2,16 +2,22 @@
 // Use case: researching a target, you meet an unfamiliar backer and need
 // "who is this and what does it signal" without leaving the flow.
 //
-// Everything rendered here is payload-sourced or derived strictly from tracked
-// flows. The canonical summary (background / decision logic / track record /
-// strategy) comes from the engine: a `profile` object on the node wins, then
-// the allocatorProfiles.json sidecar. Whatever the backend hasn't delivered
-// yet renders as an honest "no data" state — never estimated, never invented.
+// DATA OWNERSHIP: the narrative and the track record are the ENGINE's, shipped
+// in capitalMap.json → allocators[<name>] as `profile` + `track_record`. The
+// dashboard has zero latitude over them: no editing, no recomputing, no
+// filling gaps by hand. `allocatorProfiles.json` survives only as a fallback
+// for allocators the engine has not profiled yet. Whatever is missing renders
+// as an honest "no data" state and is reported back as an engine coverage gap.
+//
+// Track-record rows carry `provisional` and `source_url` per row — both are
+// always surfaced: provisional rows are visibly flagged, and the source is one
+// tap away on every single row.
 
-import { X, ChevronLeft, AlertTriangle, ExternalLink, ArrowUpRight, BookOpen, TrendingUp, Compass, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, AlertTriangle, ExternalLink, ArrowUpRight, BookOpen, TrendingUp, Compass, ChevronRight, Crosshair } from 'lucide-react';
 import { fmtUSD } from './format.js';
 import {
-  SECTOR_META, CLASS_META, TIER_META, confidenceBand,
+  SECTOR_META, CLASS_META, TIER_META, THEME_META, confidenceBand, sectorLabel,
+  metricLabel, formatTrackValue, SOURCE_TIER_LABEL,
 } from '../../../data/capitalMap.js';
 import allocatorProfiles from '../../../data/allocatorProfiles.json';
 
@@ -24,15 +30,42 @@ export default function AllocatorDeepDive({
   if (!node) return null;
   const cls = CLASS_META[node.cls];
   const tier = node.tier ? TIER_META[node.tier] : null;
-  // Engine-emitted profile on the node wins; sidecar file is the fallback.
-  const profile = node.profile || allocatorProfiles[node.id] || null;
-  const track = Array.isArray(profile?.track_record) ? profile.track_record : [];
-  const ytd = profile?.ytd || null;
-  const strategy = profile?.strategy || null;
 
-  // ── Derived from tracked flows (real payload data, no interpretation) ──
+  // Engine record wins. The sidecar is normalised into the same shape so the
+  // render path below never has to care which one it got.
+  const legacy = allocatorProfiles[node.id] || null;
+  const profile = node.engineProfile || (legacy ? {
+    background: legacy.background,
+    latest_investments_summary: legacy.latest_summary,
+    strategy: legacy.strategy?.text,
+    strategy_source_url: legacy.strategy?.source?.url,
+  } : null);
+
+  // Engine rows are the truth; the sidecar's older shape is mapped onto them.
+  const track = node.trackRecord?.length ? node.trackRecord
+    : (legacy?.track_record || []).map(r => ({
+        fiscal_year: r.fiscal_year, metric: 'reported_return_pct', value: r.return_pct,
+        unit: 'pct', provisional: false, source_url: r.source?.url, notes: r.note,
+      }));
+
+  // Group by metric so "Stock total return" and "Fund IRR" never interleave.
+  const byMetric = [];
+  track.forEach(r => {
+    let g = byMetric.find(x => x.metric === r.metric);
+    if (!g) { g = { metric: r.metric, rows: [] }; byMetric.push(g); }
+    g.rows.push(r);
+  });
+  byMetric.forEach(g => g.rows.sort((a, b) => String(a.fiscal_year).localeCompare(String(b.fiscal_year))));
+
+  // ── Derived from tracked flows (payload facts, no interpretation) ──────
   const disclosed = outbound.filter(f => f.disclosed);
   const recent = [...outbound].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 6);
+  // The engine ships its own per-sector rollup; prefer it over our own sum.
+  const engineSectors = node.engineSectors
+    ? Object.entries(node.engineSectors)
+        .map(([key, s]) => [key, { deals: s.deals, amount: s.capital_usd || 0 }])
+        .sort((a, b) => b[1].amount - a[1].amount).slice(0, 3)
+    : null;
   const bySector = new Map();
   outbound.forEach(f => {
     if (!f.sector) return;
@@ -40,9 +73,12 @@ export default function AllocatorDeepDive({
     s.amount += f.amountUSD; s.deals += 1;
     bySector.set(f.sector, s);
   });
-  const topSectors = [...bySector.entries()]
-    .sort((a, b) => b[1].amount - a[1].amount || b[1].deals - a[1].deals)
-    .slice(0, 3);
+  const topSectors = engineSectors || [...bySector.entries()]
+    .sort((a, b) => b[1].amount - a[1].amount || b[1].deals - a[1].deals).slice(0, 3);
+
+  const thesis = node.thesisShares
+    ? Object.entries(node.thesisShares).sort((a, b) => b[1] - a[1]).slice(0, 4)
+    : [];
 
   return (
     <aside style={{
@@ -80,6 +116,7 @@ export default function AllocatorDeepDive({
               {cls?.label || node.cls}
               {tier ? <> · <span style={{ color: tier.color }}>{tier.label}</span></> : null}
               {node.countryLabel ? <> · {node.countryLabel}</> : null}
+              {profile?.as_of ? <> · researched {profile.as_of}</> : null}
             </div>
           </div>
           <button onClick={onClose} title="Close"
@@ -97,9 +134,14 @@ export default function AllocatorDeepDive({
         {/* ── Background / context ── */}
         <DiveSection icon={<BookOpen size={11} color="#8E9BE6" />} title="Background · focus, thesis, style">
           {(profile?.background || node.description) ? (
-            <p style={{ margin: 0, fontSize: 12.5, color: '#c4c4cb', lineHeight: 1.65 }}>
-              {profile?.background || node.description}
-            </p>
+            <>
+              <p style={{ margin: 0, fontSize: 12.5, color: '#c4c4cb', lineHeight: 1.65 }}>
+                {profile?.background || node.description}
+              </p>
+              {profile?.focus && <Trait label="Focus" text={profile.focus} />}
+              {profile?.style && <Trait label="Style" text={profile.style} />}
+              {profile?.thesis && <Trait label="Thesis" text={profile.thesis} />}
+            </>
           ) : (
             <NoData what="background summary" />
           )}
@@ -107,29 +149,30 @@ export default function AllocatorDeepDive({
 
         {/* ── Latest investments · decision logic ── */}
         <DiveSection icon={<ArrowUpRight size={11} color="#F59E0B" />} title="Latest investments · decision logic">
-          {profile?.latest_summary && (
+          {profile?.latest_investments_summary && (
             <p style={{ margin: '0 0 10px', fontSize: 12.5, color: '#c4c4cb', lineHeight: 1.65 }}>
-              {profile.latest_summary}
+              {profile.latest_investments_summary}
             </p>
           )}
           {outbound.length > 0 ? (
             <>
-              {/* Composed strictly from tracked flows — counts, sums, sectors. */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 10 }}>
-                <MiniStat label="Tracked deals" value={String(outbound.length)} />
+                <MiniStat label="Tracked deals" value={String(outbound.length)}
+                  sub={node.confirmedDeals != null ? `${node.confirmedDeals} confirmed` : null} />
                 <MiniStat label="Disclosed capital" value={disclosed.length ? fmtUSD(node.totalOutflow) : '—'}
                   sub={disclosed.length < outbound.length ? `${outbound.length - disclosed.length} undisclosed` : null} />
                 <MiniStat label="Last activity" value={node.last_activity || '—'} />
               </div>
+
               {topSectors.length > 0 && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
                   {topSectors.map(([key, s]) => (
                     <span key={key} style={{
                       display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 9px',
                       background: '#141418', border: `1px solid ${(SECTOR_META[key]?.color || '#3f3f46')}44`, borderRadius: 6,
                       fontSize: 10, fontFamily: MONO, color: SECTOR_META[key]?.color || '#a1a1aa', fontWeight: 700,
                     }}>
-                      {SECTOR_META[key]?.label || key}
+                      {sectorLabel(key)}
                       <span style={{ color: '#71717a', fontWeight: 600 }}>
                         {s.deals} deal{s.deals === 1 ? '' : 's'}{s.amount > 0 ? ` · ${fmtUSD(s.amount)}` : ''}
                       </span>
@@ -137,6 +180,25 @@ export default function AllocatorDeepDive({
                   ))}
                 </div>
               )}
+
+              {/* Engine's own thesis split for this allocator. */}
+              {thesis.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 12 }}>
+                  {thesis.map(([key, share]) => (
+                    <span key={key} title="The engine's share of this allocator's confirmed events per canonical theme."
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 8px',
+                        background: '#0F0F13', border: '1px solid #1e1e23', borderRadius: 5,
+                        fontSize: 9.5, fontFamily: MONO, color: '#a1a1aa', cursor: 'help',
+                      }}>
+                      <span style={{ width: 6, height: 6, borderRadius: 2, background: THEME_META[key]?.color || '#52525b' }} />
+                      {THEME_META[key]?.label || key}
+                      <span style={{ color: '#e4e4e7', fontWeight: 700 }}>{Math.round(share * 100)}%</span>
+                    </span>
+                  ))}
+                </div>
+              )}
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {recent.map(f => {
                   const tgt = nodeById.get(f.targetId);
@@ -172,43 +234,70 @@ export default function AllocatorDeepDive({
                 })}
               </div>
             </>
-          ) : !profile?.latest_summary && <NoData what="tracked investments" />}
+          ) : !profile?.latest_investments_summary && <NoData what="tracked investments" />}
         </DiveSection>
 
         {/* ── Track record ── */}
-        <DiveSection icon={<TrendingUp size={11} color="#34D399" />} title="Track record · returns by fiscal year">
-          {(track.length > 0 || ytd) ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              {track.map((r, i) => (
-                <TrackRow key={i} period={r.fiscal_year} value={r.return_pct} note={r.note} source={r.source} />
+        <DiveSection icon={<TrendingUp size={11} color="#34D399" />} title="Track record · by fiscal year">
+          {byMetric.length > 0 ? (
+            <>
+              {byMetric.map(g => (
+                <div key={g.metric} style={{ marginBottom: 12 }}>
+                  <div style={{
+                    fontSize: 9, color: '#8b8b95', fontFamily: MONO, fontWeight: 700,
+                    textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5,
+                  }}>
+                    {metricLabel(g.metric)}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    {g.rows.map((r, i) => <TrackRow key={i} row={r} />)}
+                  </div>
+                </div>
               ))}
-              {ytd && (
-                <TrackRow period={`YTD${ytd.as_of ? ` · as of ${ytd.as_of}` : ''}`}
-                  value={ytd.return_pct} note={ytd.note} source={ytd.source} provisional />
+              {profile?.track_record_note && (
+                <div style={{ fontSize: 9.5, color: '#6b6b74', fontFamily: MONO, lineHeight: 1.6, marginTop: -4 }}>
+                  {profile.track_record_note}
+                </div>
               )}
-            </div>
+            </>
           ) : (
             <NoData what="track-record figures"
-              detail="Returns must arrive from the backend payload with a source — they are never estimated dashboard-side. Backend request logged in allocatorProfiles.json." />
+              detail="The engine ships track record per allocator with a source on every row; this one is not covered yet. Reported as a coverage gap rather than filled in here." />
           )}
         </DiveSection>
 
         {/* ── Strategy ── */}
         <DiveSection icon={<Compass size={11} color="#5FB6D2" />} title="Strategy · source-attributed">
-          {strategy?.text ? (
+          {profile?.strategy ? (
             <>
-              <p style={{ margin: 0, fontSize: 12.5, color: '#c4c4cb', lineHeight: 1.65 }}>{strategy.text}</p>
-              {strategy.source?.url && <SourceLink source={strategy.source} style={{ marginTop: 10 }} />}
+              <p style={{ margin: 0, fontSize: 12.5, color: '#c4c4cb', lineHeight: 1.65 }}>{profile.strategy}</p>
+              {profile.strategy_source_url && (
+                <SourceLink url={profile.strategy_source_url} label="Strategy source" style={{ marginTop: 10 }} />
+              )}
             </>
           ) : (
             <NoData what="stated strategy" />
           )}
         </DiveSection>
 
+        {/* ── Everything the engine cited for this allocator ── */}
+        {Array.isArray(profile?.sources) && profile.sources.length > 0 && (
+          <DiveSection icon={<Crosshair size={11} color="#94A3B8" />} title={`Sources · ${profile.sources.length}`}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {profile.sources.map((s, i) => {
+                const url = typeof s === 'string' ? s : s.url;
+                const label = typeof s === 'string' ? hostOf(s) : (s.label || hostOf(s.url));
+                return url ? <SourceLink key={i} url={url} label={label} compact /> : null;
+              })}
+            </div>
+          </DiveSection>
+        )}
+
         {/* Provenance footer */}
         <div style={{ marginTop: 4, fontSize: 9, color: '#4a4a53', fontFamily: MONO, lineHeight: 1.6 }}>
-          Background, track record and strategy come from the engine payload (or its sidecar file) with sources attached.
-          Deal rows above are the engine's tracked flows, rendered as-is. Nothing on this screen is interpolated.
+          Background, track record and strategy are delivered by the Capital Flow engine and rendered as-is —
+          never edited, recomputed or gap-filled here. Deal rows above are the engine's tracked flows.
+          Provisional rows are unaudited: treat them as indicative until the fiscal year closes.
         </div>
       </div>
     </aside>
@@ -231,6 +320,19 @@ function DiveSection({ icon, title, children }) {
   );
 }
 
+// One labelled trait line (focus / style / thesis) under the background text.
+function Trait({ label, text }) {
+  return (
+    <div style={{ display: 'flex', gap: 9, marginTop: 9 }}>
+      <span style={{
+        fontSize: 8.5, color: '#5b5b64', fontFamily: MONO, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.1em', width: 46, flexShrink: 0, paddingTop: 3,
+      }}>{label}</span>
+      <span style={{ fontSize: 11.5, color: '#a9a9b2', lineHeight: 1.6 }}>{text}</span>
+    </div>
+  );
+}
+
 function MiniStat({ label, value, sub }) {
   return (
     <div style={{ padding: '8px 10px', background: '#0F0F13', border: '1px solid #1e1e23', borderRadius: 8 }}>
@@ -241,40 +343,65 @@ function MiniStat({ label, value, sub }) {
   );
 }
 
-function TrackRow({ period, value, note, source, provisional }) {
-  const has = typeof value === 'number';
-  const color = !has ? '#71717a' : value >= 0 ? '#34D399' : '#F87171';
+// One track-record row. Provisional rows are visibly marked and the source is
+// always one tap away — both are engine-supplied per row, never inferred.
+function TrackRow({ row }) {
+  const value = formatTrackValue(row);
+  const positive = typeof row.value === 'number' && row.value >= 0;
+  const isPct = row.unit === 'pct';
+  const color = value == null ? '#71717a' : !isPct ? '#e4e4e7' : positive ? '#34D399' : '#F87171';
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px',
       background: '#0F0F13', borderRadius: 8,
-      border: provisional ? '1px dashed #7a5c1e' : '1px solid #1e1e23',
+      border: row.provisional ? '1px dashed #7a5c1e' : '1px solid #1e1e23',
     }}>
-      <span style={{ fontSize: 10, color: '#a1a1aa', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>{period}</span>
-      {provisional && (
-        <span title="Provisional — unaudited year-to-date figure. Treat with caution until the fiscal year closes."
+      <span style={{ fontSize: 10, color: '#a1a1aa', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>
+        {row.fiscal_year}
+      </span>
+      {row.scope && (
+        <span title="Which vehicle or segment this row covers"
+          style={{
+            padding: '1px 6px', borderRadius: 4, background: '#17171c', border: '1px solid #26262c',
+            fontSize: 8.5, color: '#a1a1aa', fontFamily: MONO, fontWeight: 700, flexShrink: 0, cursor: 'help',
+          }}>
+          {row.scope}
+        </span>
+      )}
+      {row.provisional && (
+        <span title="Provisional — unaudited figure. Indicative until the fiscal year closes and an audited source lands."
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 6px',
             background: '#FBBF2414', border: '1px solid #FBBF2440', borderRadius: 4,
             fontSize: 8, color: '#FBBF24', fontFamily: MONO, fontWeight: 700,
             textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help', flexShrink: 0,
           }}>
-          <AlertTriangle size={9} /> Provisional · unaudited
+          <AlertTriangle size={9} /> Provisional
         </span>
       )}
       <span style={{ flex: 1 }} />
-      {note && <span style={{ fontSize: 9, color: '#52525b', fontFamily: MONO }}>{note}</span>}
-      {source?.url && <SourceLink source={source} compact />}
-      <span style={{ fontSize: 12.5, fontWeight: 700, color, fontFamily: MONO, flexShrink: 0 }}>
-        {has ? `${value > 0 ? '+' : ''}${value}%` : 'no data'}
+      {row.notes && (
+        <span title={row.notes}
+          style={{ fontSize: 9, color: '#52525b', fontFamily: MONO, cursor: 'help', flexShrink: 0 }}>
+          note
+        </span>
+      )}
+      {row.source_url && (
+        <SourceLink url={row.source_url}
+          label={row.source_tier ? `T${row.source_tier}` : 'src'}
+          title={SOURCE_TIER_LABEL[row.source_tier]}
+          compact />
+      )}
+      <span style={{ fontSize: 12.5, fontWeight: 700, color, fontFamily: MONO, flexShrink: 0, minWidth: 58, textAlign: 'right' }}>
+        {value ?? 'no data'}
       </span>
     </div>
   );
 }
 
-function SourceLink({ source, compact, style }) {
+function SourceLink({ url, label, title, compact, style }) {
   return (
-    <a href={source.url} target="_blank" rel="noopener noreferrer" title={source.url}
+    <a href={url} target="_blank" rel="noopener noreferrer" title={title ? `${title} — ${url}` : url}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 5,
         padding: compact ? '2px 7px' : '5px 10px', background: '#141418',
@@ -284,9 +411,13 @@ function SourceLink({ source, compact, style }) {
       }}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#3f9bd6')}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#26262c')}>
-      {source.label || 'Source'} <ExternalLink size={compact ? 8 : 10} style={{ opacity: 0.6 }} />
+      {label || 'Source'} <ExternalLink size={compact ? 8 : 10} style={{ opacity: 0.6 }} />
     </a>
   );
+}
+
+function hostOf(url) {
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'Source'; }
 }
 
 // Honest empty state — §6: never fabricate or interpolate a missing value.

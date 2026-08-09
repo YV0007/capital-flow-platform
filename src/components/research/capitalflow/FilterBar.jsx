@@ -6,6 +6,7 @@
 import { X, RotateCcw, Zap } from 'lucide-react';
 import {
   SECTOR_META, CLASS_META, TIER_META, FAMILY_META, STATUS_META, NETWORK_META,
+  sectorLabel,
 } from '../../../data/capitalMap.js';
 import { fmtUSD } from './format.js';
 import { RECENCY_OPTIONS, cutoffDate } from './views.js';
@@ -142,7 +143,7 @@ export default function FilterDrawer({
                   title={`${s.deals} deals · ${fmtUSD(s.capital)}${s.lit ? ' · signal firing' : ''}`}
                   onClick={() => onToggleSector(k)}>
                   {s.lit && <span style={{ color: '#FBBF24', marginRight: -1 }}>◆</span>}
-                  {meta.label || k}
+                  {sectorLabel(k)}
                 </Chip>
               );
             })}

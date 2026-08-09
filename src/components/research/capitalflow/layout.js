@@ -16,7 +16,7 @@
 // entirely from whatever is in the file.
 // ══════════════════════════════════════════════════════════════════════════
 
-import { SECTOR_META, CLASS_META } from '../../../data/capitalMap.js';
+import { SECTOR_META, CLASS_META, sectorLabel } from '../../../data/capitalMap.js';
 import { shortLabel, fmtUSD } from './format.js';
 
 const GOLDEN = 2.399963229728653;
@@ -236,7 +236,7 @@ export function applyMoleculeLayout(nodes, sectors = {}, links = []) {
     regions.push({
       type: 'sector', key: k, cx, cy, r: cellR[k] + 32,
       color: META[k]?.color || '#9aa3b2',
-      label: (META[k]?.label || (k === '_none' ? 'Unsectored' : k)).toUpperCase(),
+      label: (k === '_none' ? 'Unsectored' : sectorLabel(k)).toUpperCase(),
       stats: `IN ${fmtUSD(cap)}`,
       lit: !!(grp && grp.lit), signals: grp?.signals || [],
       count: cellMem[k].length,

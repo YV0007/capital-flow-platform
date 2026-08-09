@@ -11,9 +11,11 @@
 // within each subsection; a row click jumps to the map with the entity open.
 
 import { useMemo, useState, useCallback } from 'react';
-import { ArrowUp, ArrowDown, ChevronDown, ChevronRight } from 'lucide-react';
+import { ArrowUp, ArrowDown, ChevronDown, ChevronRight, ShieldCheck, ShieldAlert } from 'lucide-react';
 import { fmtUSD } from './format.js';
-import { SECTOR_META, TIER_META } from '../../../data/capitalMap.js';
+import {
+  SECTOR_META, TIER_META, THEME_META, AGGREGATES, AUDIT, sectorLabel,
+} from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
 
 const MONO = 'ui-monospace, monospace';
@@ -52,6 +54,164 @@ const ROLES = [
   },
 ];
 
+// ── Cycle summary ────────────────────────────────────────────────────────
+// `aggregates` (what led this cycle) and `audit` (the engine's verdict on its
+// own delivery) are payload-owned. Every number is shown exactly as shipped,
+// with the engine's `basis` string as the explanation — we never recompute a
+// share or re-rank a leader, because then the figure would no longer be the
+// engine's and the provenance claim would be false.
+function CycleSummary() {
+  if (!AGGREGATES && !AUDIT) return null;
+  const top = AGGREGATES?.top_sector;
+  const co = AGGREGATES?.top_company;
+  const shares = AGGREGATES?.thesis_shares;
+  const byCap = shares?.by_capital
+    ? Object.entries(shares.by_capital).sort((a, b) => b[1] - a[1]).slice(0, 5)
+    : [];
+
+  return (
+    <div style={{
+      border: '1px solid #1e1e23', borderRadius: 12, padding: '13px 16px', marginBottom: 16,
+      background: '#0b0c10',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 11 }}>
+        <span style={{
+          fontSize: 9, color: '#6b6b74', fontFamily: MONO, fontWeight: 700,
+          textTransform: 'uppercase', letterSpacing: '0.12em',
+        }}>
+          This cycle
+        </span>
+        <span style={{ flex: 1 }} />
+        {AUDIT && <AuditBadge audit={AUDIT} />}
+      </div>
+
+      <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap' }}>
+        {top?.top && (
+          <Lead label="Leading sector"
+            value={top.top.sector ? sectorLabel(top.top.sector) : '—'}
+            color={SECTOR_META[top.top.sector]?.color || '#a1a1aa'}
+            detail={[
+              top.top.capital_usd ? fmtUSD(top.top.capital_usd) : null,
+              top.top.deals ? `${top.top.deals} deals` : null,
+              top.top.allocators ? `${top.top.allocators} allocators` : null,
+            ].filter(Boolean).join(' · ')}
+            runnersUp={(top.ranked || []).slice(1, 4).map(r => ({
+              name: sectorLabel(r.sector),
+              color: SECTOR_META[r.sector]?.color,
+              tail: r.capital_usd ? fmtUSD(r.capital_usd) : `${r.deals} deals`,
+            }))}
+            basis={top.basis} />
+        )}
+        {co?.top && (
+          <Lead label="Most-backed company"
+            value={co.top.target || '—'} color="#e4e4e7"
+            detail={[
+              co.top.investors ? `${co.top.investors} allocators` : null,
+              co.top.capital_usd ? fmtUSD(co.top.capital_usd) : null,
+            ].filter(Boolean).join(' · ')}
+            runnersUp={(co.ranked || []).slice(1, 4).map(r => ({
+              name: r.target,
+              color: SECTOR_META[(r.sectors || [])[0]]?.color,
+              tail: r.investors ? `${r.investors} alloc.` : null,
+            }))}
+            basis={co.basis} />
+        )}
+      </div>
+
+      {byCap.length > 0 && (
+        <div style={{ marginTop: 12 }}>
+          <div title={shares.basis || undefined}
+            style={{
+              fontSize: 8.5, color: '#52525b', fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6,
+              cursor: shares.basis ? 'help' : 'default',
+            }}>
+            Where the capital sits · by theme
+          </div>
+          <div style={{ display: 'flex', height: 6, borderRadius: 3, overflow: 'hidden', background: '#15161b' }}>
+            {byCap.map(([k, v]) => (
+              <span key={k} title={`${THEME_META[k]?.label || k} — ${Math.round(v * 100)}% of tracked capital`}
+                style={{ width: `${v * 100}%`, background: THEME_META[k]?.color || '#3f3f46' }} />
+            ))}
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 7 }}>
+            {byCap.map(([k, v]) => (
+              <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 9.5, color: '#8b8b95', fontFamily: MONO }}>
+                <span style={{ width: 6, height: 6, borderRadius: 2, background: THEME_META[k]?.color || '#3f3f46' }} />
+                {THEME_META[k]?.label || k}
+                <span style={{ color: '#e4e4e7', fontWeight: 700 }}>{Math.round(v * 100)}%</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
+  return (
+    <div style={{ minWidth: 0, maxWidth: 430 }}>
+      <div style={{ fontSize: 8.5, color: '#52525b', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+        {label}
+      </div>
+      <div style={{ fontSize: 14, fontWeight: 700, color, marginTop: 3, lineHeight: 1.3 }}>
+        {value}
+      </div>
+      {detail && (
+        <div style={{ fontSize: 10, color: '#8b8b95', fontFamily: MONO, marginTop: 2 }}>{detail}</div>
+      )}
+      {runnersUp.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 6 }}>
+          {runnersUp.map((r, i) => (
+            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9, color: '#6b6b74', fontFamily: MONO }}>
+              <span style={{ width: 5, height: 5, borderRadius: 2, background: r.color || '#3f3f46' }} />
+              <span style={{ maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.name}</span>
+              {r.tail && <span style={{ color: '#4a4a53' }}>{r.tail}</span>}
+            </span>
+          ))}
+        </div>
+      )}
+      {basis && (
+        <div style={{ fontSize: 8.5, color: '#4a4a53', fontFamily: MONO, marginTop: 5, lineHeight: 1.5 }}>
+          {basis}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// The engine audits its own delivery; surfacing the verdict is the point of
+// §6 — trust is the product, so a failing or warning run must be visible.
+function AuditBadge({ audit }) {
+  const ok = audit.passed && !audit.error_count;
+  const warn = (audit.warning_count || 0) > 0;
+  const color = !ok ? '#F87171' : warn ? '#FBBF24' : '#34D399';
+  const Icon = ok && !warn ? ShieldCheck : ShieldAlert;
+  const stats = audit.stats || {};
+  const title = [
+    `Engine audit for ${audit.week || audit.generated}: ${ok ? 'passed' : 'FAILED'}`,
+    audit.checked ? `checked ${audit.checked.events ?? '?'} events · ${audit.checked.track_records ?? '?'} track rows · ${audit.checked.profiles ?? '?'} profiles` : null,
+    stats.source_url_coverage != null ? `source-URL coverage ${Math.round(stats.source_url_coverage * 100)}%` : null,
+    stats.provisional_track_rows != null ? `${stats.provisional_track_rows} provisional track rows` : null,
+    stats.estimated_amounts != null ? `${stats.estimated_amounts} estimated amounts` : null,
+    warn ? `${audit.warning_count} warning(s): ${(audit.warnings || []).slice(0, 4).join(' · ')}` : null,
+  ].filter(Boolean).join('\n');
+
+  return (
+    <span title={title} style={{
+      display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 9px',
+      background: color + '12', border: `1px solid ${color}38`, borderRadius: 6,
+      fontSize: 9, color, fontFamily: MONO, fontWeight: 700,
+      textTransform: 'uppercase', letterSpacing: '0.07em', cursor: 'help',
+    }}>
+      <Icon size={11} />
+      Engine audit {ok ? 'passed' : 'failed'}
+      {warn ? ` · ${audit.warning_count} warn` : ''}
+    </span>
+  );
+}
+
 function statusOf(n) {
   if (n.stale) return { label: 'Cooled', color: '#94A3B8', title: 'No activity in 180 days — kept in memory, de-emphasised.' };
   if (n.watchOnly) return { label: 'Watch', color: '#71717a', title: 'Candidate flows only — unconfirmed.' };
@@ -61,7 +221,7 @@ function statusOf(n) {
 const COLS = [
   { key: 'name',    label: 'Entity',         sort: (n) => n.name.toLowerCase() },
   { key: 'tier',    label: 'Tier',           sort: (n) => (n.tier === 'core' ? 0 : n.tier === 'key' ? 1 : n.tier === 'watch' ? 2 : 3) },
-  { key: 'sector',  label: 'Sector',         sort: (n) => SECTOR_META[n.sector]?.label || n.sector || '~' },
+  { key: 'sector',  label: 'Sector',         sort: (n) => (n.sector ? sectorLabel(n.sector) : '~') },
   { key: 'deals',   label: 'Deals',          sort: (n) => n.deals, num: true },
   { key: 'capital', label: 'Capital',        sort: (n) => n.capital, num: true },
   { key: 'last',    label: 'Last activity',  sort: (n) => n.last_activity || '', num: true },
@@ -160,6 +320,10 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
       background: '#08090C', overflowY: 'auto',
     }}>
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '18px 24px 60px' }}>
+        {/* Cycle summary — the engine's own read on this delivery. Rendered
+            verbatim, including each figure's `basis`; never recomputed. */}
+        <CycleSummary />
+
         {/* Scope line + role chips */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
           <span style={{ fontSize: 10.5, color: '#71717a', fontFamily: MONO }}>

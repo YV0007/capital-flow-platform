@@ -3,7 +3,7 @@
 // goes, how much, in what form, at what confidence. The graph stays live
 // underneath.
 
-import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, FileText } from 'lucide-react';
+import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, FileText, Newspaper } from 'lucide-react';
 import { fmtUSD } from './format.js';
 import {
   SECTOR_META, CLASS_META, TIER_META, NETWORK_META, confidenceBand,
@@ -240,7 +240,14 @@ function ProfileBlock({ node }) {
         <div style={{ marginTop: 8, fontSize: 9, color: '#4a4a53', fontFamily: MONO, lineHeight: 1.55 }}>
           {hasProfile
             ? 'No official site on file — private office / no public web presence. We search rather than guess a URL.'
-            : 'Reference not yet added for this entity.'}
+            : 'No reference in the payload for this entity yet — an engine-side coverage gap, not something we fill in by hand.'}
+        </div>
+      )}
+
+      {/* When the engine researched this entity, stamp the date it did so. */}
+      {node.referenceAsOf && (
+        <div style={{ marginTop: 8, fontSize: 9, color: '#4a4a53', fontFamily: MONO }}>
+          Researched by the engine · {node.referenceAsOf}
         </div>
       )}
     </div>
@@ -249,11 +256,16 @@ function ProfileBlock({ node }) {
 
 function LinkChip({ link }) {
   const Icon = link.kind === 'website' ? Globe
+    : link.kind === 'read_more' ? Newspaper
     : link.kind === 'linkedin' ? Linkedin
     : link.kind === 'firm' ? Building2
     : link.kind === 'search' ? Search
     : ExternalLink;
-  const label = link.label || (link.kind === 'x' ? 'X / social' : link.kind === 'website' ? 'Website' : 'Link');
+  // `read_more` carries the publication name as its label — show it as such so
+  // the chip reads "Reuters", not a bare "Link".
+  const label = link.label || (link.kind === 'x' ? 'X / social'
+    : link.kind === 'website' ? 'Website'
+    : link.kind === 'read_more' ? 'Read more' : 'Link');
   return (
     <a href={link.url} target="_blank" rel="noopener noreferrer" title={link.url}
       style={{

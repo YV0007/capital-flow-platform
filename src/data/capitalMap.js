@@ -35,41 +35,94 @@ import flowNotes from './flowNotes.json';
 // Monochromatic COOL palette — one family (blue · indigo · cyan · teal ·
 // slate). Sectors are told apart by brightness/saturation, not rainbow hue,
 // so the map reads calm and institutional rather than candy-bright.
+//
+// Keys mirror `config/rules.yaml § sectors` in the engine repo — that list is
+// the canonical taxonomy; this map only adds a display label, a colour and a
+// one-line "what this bucket is". `blurb` is rendered in the cluster report so
+// a sector name never has to be guessed at from a slug.
 export const SECTOR_META = {
-  'ai-labs':            { label: 'AI Labs',            color: '#8E9BE6', order: 0 },
-  'ai-diversified':     { label: 'AI Diversified',     color: '#AEB8EE', order: 1 },
-  'ai-data-platform':   { label: 'AI Data Platform',   color: '#6F93DE', order: 2 },
-  'ai-applications':    { label: 'AI Applications',    color: '#9DB6EA', order: 3 },
-  'ai-services-rollup': { label: 'AI Services',        color: '#5FB6D2', order: 4 },
-  'ai-compute':         { label: 'AI Compute',         color: '#5A93DE', order: 5 },
-  'semiconductors':     { label: 'Semiconductors',     color: '#7079DE', order: 6 },
-  'fab-equipment':      { label: 'Fab Equipment',      color: '#93A0BC', order: 7 },
-  'cloud-hyperscale':   { label: 'Cloud / Hyperscale', color: '#4FA6E0', order: 8 },
-  'neocloud':           { label: 'Neoclouds',          color: '#45C0D0', order: 9 },
-  'datacenters':        { label: 'Datacenters',        color: '#6389C4', order: 10 },
-  'power-energy':       { label: 'Power & Energy',     color: '#49C2AE', order: 11 },
-  'nuclear':            { label: 'Nuclear',            color: '#5ACAD4', order: 12 },
-  'networking':         { label: 'Networking',         color: '#58ABCB', order: 13 },
-  'robotics':           { label: 'Robotics',           color: '#8088D6', order: 14 },
-  'defense-tech':       { label: 'Defense Tech',       color: '#6E7E9A', order: 15 },
+  'ai-labs':            { label: 'AI Labs',            color: '#8E9BE6', order: 0,
+                          blurb: 'Frontier model builders — the labs training the largest models.' },
+  'ai-applications':    { label: 'AI Applications',    color: '#9DB6EA', order: 1,
+                          blurb: 'The application layer — vertical and enterprise software built on top of models.' },
+  'ai-data':            { label: 'Data Platforms',     color: '#6F93DE', order: 2,
+                          blurb: 'Data platforms and labelling that feed models — the training-data supply chain.' },
+  'ai-compute':         { label: 'AI Compute',         color: '#5A93DE', order: 3,
+                          blurb: 'GPUs and custom accelerator silicon — the compute the models run on.' },
+  'semiconductors':     { label: 'Semiconductors',     color: '#7079DE', order: 4,
+                          blurb: 'Broader chips and foundry capacity behind the accelerators.' },
+  'fab-equipment':      { label: 'Fab Equipment',      color: '#93A0BC', order: 5,
+                          blurb: 'Litho, etch, deposition and packaging tools — what builds the fabs.' },
+  'cloud-hyperscale':   { label: 'Cloud / Hyperscale', color: '#4FA6E0', order: 6,
+                          blurb: 'Hyperscaler compute capacity sold as cloud.' },
+  'neocloud':           { label: 'Neoclouds',          color: '#45C0D0', order: 7,
+                          blurb: 'GPU landlords — vendor-financed compute rented by the hour.' },
+  'datacenters':        { label: 'Datacenters',        color: '#6389C4', order: 8,
+                          blurb: 'The physical buildings and campuses: land, shells, operators.' },
+  'networking':         { label: 'Networking',         color: '#58ABCB', order: 9,
+                          blurb: 'Optical interconnect and photonics — moving data between chips.' },
+  'power-energy':       { label: 'Power & Energy',     color: '#49C2AE', order: 10,
+                          blurb: 'Turbines, grid gear and cooling — the electricity the buildout needs.' },
+  'nuclear':            { label: 'Nuclear',            color: '#5ACAD4', order: 11,
+                          blurb: 'SMRs, fusion and uranium — the long-dated power bet.' },
+  'robotics':           { label: 'Robotics',           color: '#8088D6', order: 12,
+                          blurb: 'Embodiment — humanoids, autonomy and physical AI.' },
+  'defense-tech':       { label: 'Defense Tech',       color: '#6E7E9A', order: 13,
+                          blurb: 'Defence outside the prime-contractor route.' },
+  // ── Outside the AI buildout. Sovereigns and alt managers allocate here too
+  // and it is real capital, so it is tracked — held in quieter slate tones so
+  // the ring still reads as "AI stack first".
+  'gaming':             { label: 'Gaming',             color: '#8A8FA6', order: 14,
+                          blurb: 'Games and interactive entertainment. Outside the AI buildout.' },
+  'ev-automotive':      { label: 'Electric Vehicles',  color: '#7F93A8', order: 15,
+                          blurb: 'EV makers and automotive. Outside the AI buildout.' },
+  'private-credit':     { label: 'Private Credit',     color: '#8F98A8', order: 16,
+                          blurb: 'Direct lending and credit platforms. Outside the AI buildout.' },
+  'diversified-pe':     { label: 'Private Equity',     color: '#98A0AE', order: 17,
+                          blurb: 'General private-equity and strategic stakes with no single sector. Outside the AI buildout.' },
 };
+
+/**
+ * Display label for a sector key. Falls back to a de-slugged title case, so a
+ * sector the engine adds before this file knows about it renders as
+ * "Space Infrastructure", never "SPACE-INFRASTRUCTURE".
+ */
+export function sectorLabel(key) {
+  if (!key) return 'Unsectored';
+  const m = SECTOR_META[key];
+  if (m) return m.label;
+  return String(key)
+    .split(/[-_]/)
+    .map(w => (w.length <= 2 ? w.toUpperCase() : w[0].toUpperCase() + w.slice(1)))
+    .join(' ');
+}
 
 // ── Entity class — allocator classes deploy capital, target classes receive
 // it. Drives node colour (allocators), on-canvas block shape, and the class
 // filter. `side` = which band the node lives in (source vs sink).
 export const CLASS_META = {
   // allocators (deploy) — cool monochromatic family
-  corporate:    { label: 'Corporate',        color: '#5AA9CF', shape: 'capsule', side: 'allocator' },
-  vc:           { label: 'Venture',          color: '#8E9BE6', shape: 'capsule', side: 'allocator' },
-  alt_manager:  { label: 'Alt Manager',      color: '#93A0BC', shape: 'capsule', side: 'allocator' },
-  sovereign:    { label: 'Sovereign',        color: '#49C2AE', shape: 'capsule', side: 'allocator' },
-  individual:   { label: 'Individual',       color: '#9A8FD2', shape: 'capsule', side: 'allocator' },
+  corporate:    { label: 'Corporate',        color: '#5AA9CF', shape: 'capsule', side: 'allocator',
+                  blurb: 'Operating companies investing off their own balance sheet — strategic, not financial-return-first.' },
+  vc:           { label: 'Venture',          color: '#8E9BE6', shape: 'capsule', side: 'allocator',
+                  blurb: 'Venture and growth funds deploying LP money into private rounds.' },
+  alt_manager:  { label: 'Alt Manager',      color: '#93A0BC', shape: 'capsule', side: 'allocator',
+                  blurb: 'Private-equity, infrastructure and credit managers — the biggest single tickets, mostly into hard assets.' },
+  sovereign:    { label: 'Sovereign',        color: '#49C2AE', shape: 'capsule', side: 'allocator',
+                  blurb: 'State funds and government programmes. Long-horizon, policy-driven, price-insensitive.' },
+  individual:   { label: 'Individual',       color: '#9A8FD2', shape: 'capsule', side: 'allocator',
+                  blurb: 'Named people writing personal cheques — small tickets, high signal value.' },
   // targets (receive)
-  private:      { label: 'Private co.',      color: '#9D8FD8', shape: 'company', side: 'target' },
-  public:       { label: 'Public co.',       color: '#62B5CC', shape: 'company', side: 'target' },
-  fund:         { label: 'Fund',             color: '#C9985F', shape: 'capsule', side: 'target' },
-  project:      { label: 'Project',          color: '#C99B72', shape: 'asset',   side: 'target' },
-  asset:        { label: 'Asset',            color: '#98A2AE', shape: 'asset',   side: 'target' },
+  private:      { label: 'Private co.',      color: '#9D8FD8', shape: 'company', side: 'target',
+                  blurb: 'Operating companies still private.' },
+  public:       { label: 'Public co.',       color: '#62B5CC', shape: 'company', side: 'target',
+                  blurb: 'Listed companies — the tradeable read-through.' },
+  fund:         { label: 'Fund',             color: '#C9985F', shape: 'capsule', side: 'target',
+                  blurb: 'Fund and SPV vehicles raising capital, not operating businesses.' },
+  project:      { label: 'Project',          color: '#C99B72', shape: 'asset',   side: 'target',
+                  blurb: 'Named build-outs and programmes rather than companies.' },
+  asset:        { label: 'Asset',            color: '#98A2AE', shape: 'asset',   side: 'target',
+                  blurb: 'Physical assets changing hands.' },
 };
 
 // ── Event type → edge family + colour. One colour per family; drives edge
@@ -209,8 +262,8 @@ export const SECTOR_TO_THEME = {
   'robotics': 'robotics_embodiment',
   'defense-tech': 'defense_ai',
   'ai-applications': 'ai_applications', 'ai-data': 'ai_applications',
-  'ai-data-platform': 'ai_applications', 'ai-services-rollup': 'ai_applications',
-  'ai-diversified': 'ai_applications',
+  // gaming · ev-automotive · private-credit · diversified-pe sit outside the AI
+  // buildout and deliberately carry no theme.
 };
 
 // ── Display names for the ISO-2 country codes the engine emits. Presentation
@@ -249,6 +302,43 @@ export const META = {
   confidenceThreshold: typeof raw.confidence_threshold === 'number' ? raw.confidence_threshold : 60,
   totals: raw.totals || { nodes: (raw.nodes || []).length, flows: (raw.flows || []).length, sectors: Object.keys(raw.sectors || {}).length },
 };
+
+// ── Payload-level blocks the engine owns outright. Rendered as-is; the `basis`
+// strings explain how each number was derived and must never be recomputed or
+// paraphrased dashboard-side.
+export const AGGREGATES = raw.aggregates || null;   // top_sector · top_company · thesis_shares
+export const AUDIT = raw.audit || null;             // the engine's verdict on this delivery
+
+// ── Track-record metric names → display labels. Presentation only; an unknown
+// metric falls back to its own key de-snaked rather than being dropped.
+export const METRIC_LABEL = {
+  stock_total_return_pct: 'Stock total return',
+  fund_irr_pct: 'Fund IRR',
+  fund_net_return_pct: 'Fund net return',
+  fund_gross_return_pct: 'Fund gross return',
+  reported_return_pct: 'Reported return',
+  aum_usd_bn: 'AUM',
+};
+export function metricLabel(key) {
+  return METRIC_LABEL[key] || String(key || '').replace(/_/g, ' ').replace(/\bpct\b/, '').trim() || 'Metric';
+}
+
+/** A track-record row's value rendered with its unit. Never guesses a unit. */
+export function formatTrackValue(row) {
+  if (row == null || typeof row.value !== 'number') return null;
+  if (row.unit === 'pct') return `${row.value > 0 ? '+' : ''}${row.value}%`;
+  if (row.unit === 'usd_bn') return fmtCompactUSD(row.value * 1e9);
+  return `${row.value}${row.unit ? ` ${row.unit}` : ''}`;
+}
+
+// Local compact USD so the adapter stays free of component imports.
+function fmtCompactUSD(v) {
+  const a = Math.abs(v);
+  if (a >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
+  if (a >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
+  if (a >= 1e6) return `$${(v / 1e6).toFixed(0)}M`;
+  return `$${v}`;
+}
 
 export const DISCLAIMER =
   'Generated by the Capital Flow engine from public filings, official releases and press reporting. ' +
@@ -357,16 +447,28 @@ export function buildGraph(data = raw) {
       ...(flagUrl ? [flagUrl] : []),
       ...(localLogo ? [localLogo] : []),
     ];
+    // The engine's canonical allocator record, keyed by the bare name behind
+    // the `alloc:` prefix. This is the source of truth for allocator narrative
+    // and track record — the dashboard sidecar is only a legacy fallback.
+    const engineAlloc = isAllocator ? (data.allocators || {})[n.id.replace(/^alloc:/, '')] || null : null;
     return {
       ...n,
       name: displayName,
       description,
       links,
       profileType,
+      referenceAsOf: n.reference_as_of || null,
       country,
       countryLabel,
       flagUrl,
       logoUrls,
+      // Engine-owned allocator record (null for targets, and for allocators the
+      // engine has not profiled yet).
+      engineProfile: engineAlloc?.profile || null,
+      trackRecord: Array.isArray(engineAlloc?.track_record) ? engineAlloc.track_record : [],
+      engineSectors: engineAlloc?.sectors || null,
+      thesisShares: engineAlloc?.thesis_shares || null,
+      confirmedDeals: typeof engineAlloc?.confirmed_deals === 'number' ? engineAlloc.confirmed_deals : null,
       monogram: monogramOf(displayName),
       searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(displayName)}`,
       // FlowGraph role encoding: 'player' deploys · 'target' receives.
@@ -463,7 +565,7 @@ export function buildGraph(data = raw) {
       key,
       ...s,
       lit: Array.isArray(s.signals) && s.signals.length > 0,
-      label: SECTOR_META[key]?.label || key,
+      label: sectorLabel(key),
       color: SECTOR_META[key]?.color || '#71717a',
     };
   });
