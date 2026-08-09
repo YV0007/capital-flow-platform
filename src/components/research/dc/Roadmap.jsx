@@ -468,7 +468,7 @@ function searchDC(query) {
         if (`${it.l || ''} ${it.v || ''} ${it.n || ''}`.toLowerCase().includes(s)) { score += 2; consider(0, `${it.v ? it.v + ' – ' : ''}${it.l || ''}`, '__hero__'); }
       }
     }
-    if (score > 0 && best) results.push({ id, label: node.label, color: DC_BUCKETS[node.bucket]?.color || '#a1a1aa', score, snippet: best.snippet, target: best.target });
+    if (score > 0 && best) results.push({ id, label: node.label, color: DC_BUCKETS[node.bucket]?.color || 'var(--hm-text3)', score, snippet: best.snippet, target: best.target });
   }
   results.sort((a, b) => b.score - a.score);
   return results.slice(0, 8);
@@ -480,7 +480,7 @@ function highlightTerm(text, query) {
   const s = String(query || '').trim();
   if (!s) return plain;
   const parts = plain.split(new RegExp('(' + s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig'));
-  return parts.map((p, i) => p.toLowerCase() === s.toLowerCase() ? <b key={i} style={{ color: '#fafafa' }}>{p}</b> : <span key={i}>{p}</span>);
+  return parts.map((p, i) => p.toLowerCase() === s.toLowerCase() ? <b key={i} style={{ color: 'var(--hm-text)' }}>{p}</b> : <span key={i}>{p}</span>);
 }
 
 function SearchBar({ query, setQuery, results, onPick }) {
@@ -488,20 +488,20 @@ function SearchBar({ query, setQuery, results, onPick }) {
     <div style={{ maxWidth: 430, margin: '18px auto 0', padding: '0 24px', position: 'relative', textAlign: 'left' }}>
       <input value={query} onChange={e => setQuery(e.target.value)}
         placeholder="Поиск по разделу – например, HBM или охлаждение"
-        style={{ width: '100%', boxSizing: 'border-box', background: '#121214', border: '1px solid #2a2a30', borderRadius: 13, color: '#fafafa', font: 'inherit', fontSize: 12.5, padding: '8px 15px', outline: 'none' }}
-        onFocus={e => e.currentTarget.style.borderColor = '#52525b'} onBlur={e => e.currentTarget.style.borderColor = '#2a2a30'} />
+        style={{ width: '100%', boxSizing: 'border-box', background: 'var(--hm-tile)', border: '1px solid var(--hm-border5)', borderRadius: 13, color: 'var(--hm-text)', font: 'inherit', fontSize: 12.5, padding: '8px 15px', outline: 'none' }}
+        onFocus={e => e.currentTarget.style.borderColor = 'var(--hm-text6)'} onBlur={e => e.currentTarget.style.borderColor = 'var(--hm-border5)'} />
       {query.trim().length >= 2 && (
-        <div style={{ position: 'absolute', left: 24, right: 24, marginTop: 7, background: '#0f0f11', border: '1px solid #26262c', borderRadius: 13, overflow: 'hidden', zIndex: 40, boxShadow: '0 12px 40px rgba(0,0,0,.6)' }}>
+        <div style={{ position: 'absolute', left: 24, right: 24, marginTop: 7, background: 'var(--hm-panel)', border: '1px solid var(--hm-border4)', borderRadius: 13, overflow: 'hidden', zIndex: 40, boxShadow: '0 12px 40px rgba(0,0,0,.6)' }}>
           {results.length === 0 ? (
-            <div style={{ padding: '12px 15px', color: '#71717a', fontSize: 12.5 }}>Ничего не найдено в разделе.</div>
+            <div style={{ padding: '12px 15px', color: 'var(--hm-text5)', fontSize: 12.5 }}>Ничего не найдено в разделе.</div>
           ) : results.map(r => (
             <div key={r.id} onClick={() => onPick(r.id, r.target)}
               style={{ padding: '10px 14px', cursor: 'pointer', borderTop: '1px solid #1a1a1e', display: 'flex', gap: 10, alignItems: 'flex-start' }}
               onMouseEnter={e => e.currentTarget.style.background = '#17171b'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
               <span style={{ marginTop: 4, width: 7, height: 7, borderRadius: 2, background: r.color, flex: 'none' }} />
               <div style={{ minWidth: 0, flex: 1 }}>
-                <div style={{ fontSize: 12.5, color: '#fafafa', fontWeight: 700 }}>{r.label}</div>
-                <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.5, marginTop: 2, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{highlightTerm(r.snippet, query)}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--hm-text)', fontWeight: 700 }}>{r.label}</div>
+                <div style={{ fontSize: 11.5, color: 'var(--hm-text3)', lineHeight: 1.5, marginTop: 2, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{highlightTerm(r.snippet, query)}</div>
               </div>
               <span style={{ color: r.color, fontSize: 14, flex: 'none' }}>→</span>
             </div>
@@ -588,7 +588,7 @@ export default function Roadmap() {
           AI-ИНФРАСТРУКТУРА · ЦЕПОЧКА ПОСТАВОК
         </div>
         <div style={{
-          fontSize: 30, color: '#fafafa', fontWeight: 700,
+          fontSize: 30, color: 'var(--hm-text)', fontWeight: 700,
           letterSpacing: '-0.02em', lineHeight: 1.15,
           margin: '0 auto 12px', maxWidth: 780,
         }}>
@@ -596,7 +596,7 @@ export default function Roadmap() {
           <span style={{ color: '#ec4899' }}>готового ИИ для бизнеса</span>.
         </div>
         <div style={{
-          fontSize: 13.5, color: '#a1a1aa', lineHeight: 1.65,
+          fontSize: 13.5, color: 'var(--hm-text3)', lineHeight: 1.65,
           maxWidth: 640, margin: '0 auto',
         }}>
           {Object.keys(NODES).length} {plural(Object.keys(NODES).length, 'подсектор', 'подсектора', 'подсекторов')} ·{' '}
@@ -631,7 +631,7 @@ export default function Roadmap() {
                 position: 'absolute',
                 left: PAD_X_LEFT - 24, right: PAD_X_RIGHT - 24,
                 top: y, height: 1,
-                background: 'linear-gradient(to right, transparent, rgba(63,63,70,0.35), transparent)',
+                background: 'linear-gradient(to right, transparent, var(--hm-border2), transparent)',
                 pointerEvents: 'none',
               }} />
               <div style={{
@@ -639,14 +639,14 @@ export default function Roadmap() {
                 textAlign: 'right', pointerEvents: 'none',
               }}>
                 <div style={{
-                  fontSize: 9, color: '#52525b',
+                  fontSize: 9, color: 'var(--hm-text6)',
                   fontFamily: 'ui-monospace,monospace',
                   letterSpacing: '0.16em', fontWeight: 700,
                 }}>
                   {String(i + 1).padStart(2, '0')} · {L.label}
                 </div>
                 <div style={{
-                  fontSize: 9, color: '#3f3f46',
+                  fontSize: 9, color: 'var(--hm-rank)',
                   fontFamily: 'ui-monospace,monospace',
                   marginTop: 2, fontStyle: 'italic',
                 }}>
@@ -679,7 +679,7 @@ export default function Roadmap() {
             const isLive = activeSet && (activeSet.has(from) && activeSet.has(to));
             const isDim  = activeSet && !isLive;
             const bucketDef = DC_BUCKETS[a.bucket];
-            const stroke = bucketDef?.color || '#52525b';
+            const stroke = bucketDef?.color || 'var(--hm-text6)';
 
             return (
               <path
@@ -702,7 +702,7 @@ export default function Roadmap() {
             const isSelected = selected === n.id;
             const isHovered  = hovered  === n.id;
             const bucket = DC_BUCKETS[n.bucket];
-            const c = bucket?.color || '#52525b';
+            const c = bucket?.color || 'var(--hm-text6)';
             const tag = BUCKET_TAGS[n.bucket] || '';
             const companyCount = DC_COMPANIES.filter(co =>
               co.sector === n.sector ||
@@ -711,7 +711,7 @@ export default function Roadmap() {
             // Tint strengths step up by state. Base nodes get a soft tinted
             // background so same-bucket nodes pop as a group at a glance.
             const baseTint   = isSelected ? '2e' : isHovered ? '1f' : '14';
-            const baseBorder = isSelected ? c          : isHovered ? c + 'cc' : c + '66';
+            const baseBorder = isSelected ? c          : isHovered ? `color-mix(in srgb, ${c} 80%, transparent)` : `color-mix(in srgb, ${c} 40%, transparent)`;
             const stripeW    = isSelected ? 6 : isHovered ? 5 : 4;
 
             return (
@@ -724,7 +724,7 @@ export default function Roadmap() {
                   position: 'absolute',
                   left: n.x - n.w/2, top: n.y - n.h/2,
                   width: n.w, height: n.h,
-                  background: `linear-gradient(135deg, ${c}${baseTint} 0%, #18181b 80%)`,
+                  background: `linear-gradient(135deg, ${c}${baseTint} 0%, var(--hm-panel) 80%)`,
                   border: `1px solid ${baseBorder}`,
                   borderRadius: n.big ? 11 : 9,
                   padding: `0 10px 0 ${stripeW + 9}px`,
@@ -733,12 +733,12 @@ export default function Roadmap() {
                   transform: isSelected ? 'scale(1.06)' : isHovered ? 'scale(1.03)' : 'scale(1)',
                   transition: 'all 200ms cubic-bezier(0.4,0,0.2,1)',
                   boxShadow: isSelected
-                    ? `0 0 0 4px ${c}33, 0 10px 28px rgba(0,0,0,0.55), inset 0 0 0 1px ${c}55`
+                    ? `0 0 0 4px color-mix(in srgb, ${c} 20%, transparent), 0 10px 28px rgba(0,0,0,0.55), inset 0 0 0 1px color-mix(in srgb, ${c} 33%, transparent)`
                     : isHovered
-                      ? `0 6px 20px ${c}55`
+                      ? `0 6px 20px color-mix(in srgb, ${c} 33%, transparent)`
                       : `0 2px 8px rgba(0,0,0,0.35)`,
                   display: 'flex', alignItems: 'center', gap: 10,
-                  color: '#fafafa', font: 'inherit', textAlign: 'left',
+                  color: 'var(--hm-text)', font: 'inherit', textAlign: 'left',
                   zIndex: isSelected ? 4 : isHovered ? 3 : 2,
                   overflow: 'hidden',
                 }}
@@ -749,7 +749,7 @@ export default function Roadmap() {
                   left: 0, top: 0, bottom: 0,
                   width: stripeW,
                   background: c,
-                  boxShadow: `${stripeW}px 0 12px ${c}66`,
+                  boxShadow: `${stripeW}px 0 12px color-mix(in srgb, ${c} 40%, transparent)`,
                   transition: 'width 200ms',
                 }} />
 
@@ -758,7 +758,7 @@ export default function Roadmap() {
                   <div style={{
                     fontSize: n.big ? 13 : 11.5,
                     fontWeight: n.big ? 700 : 600,
-                    color: '#fafafa',
+                    color: 'var(--hm-text)',
                     lineHeight: 1.15,
                     letterSpacing: n.big ? '0.04em' : '0',
                     textTransform: n.big ? 'uppercase' : 'none',
@@ -768,7 +768,7 @@ export default function Roadmap() {
                   </div>
                   {companyCount > 0 && (
                     <div style={{
-                      fontSize: 9, color: '#a1a1aa',
+                      fontSize: 9, color: 'var(--hm-text3)',
                       fontFamily: 'ui-monospace,monospace',
                       letterSpacing: '0.05em', marginTop: 2,
                     }}>
@@ -782,8 +782,8 @@ export default function Roadmap() {
                   fontSize: 7.5, fontWeight: 800,
                   letterSpacing: '0.02em',
                   color: c,
-                  background: `${c}22`,
-                  border: `1px solid ${c}55`,
+                  background: `color-mix(in srgb, ${c} 13%, transparent)`,
+                  border: `1px solid color-mix(in srgb, ${c} 33%, transparent)`,
                   padding: '2px 4px',
                   borderRadius: 3,
                   lineHeight: 1,
@@ -831,13 +831,13 @@ export default function Roadmap() {
       <div style={{
         margin: '40px auto 8px', maxWidth: CANVAS_W,
         padding: '14px 18px',
-        background: '#0d0d0e',
-        border: '1px solid #27272a',
+        background: 'var(--hm-bg2)',
+        border: '1px solid var(--hm-border5)',
         borderRadius: 10,
         display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center',
       }}>
         <div style={{
-          fontSize: 9.5, color: '#71717a',
+          fontSize: 9.5, color: 'var(--hm-text5)',
           fontFamily: 'ui-monospace,monospace',
           letterSpacing: '0.16em', fontWeight: 700, marginRight: 4,
         }}>
@@ -853,23 +853,23 @@ export default function Roadmap() {
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 padding: '6px 11px 6px 9px',
-                background: active ? `${def.color}22` : 'rgba(255,255,255,0.02)',
-                border: `1px solid ${active ? def.color : def.color + '40'}`,
+                background: active ? `color-mix(in srgb, ${def.color} 13%, transparent)` : 'var(--hm-surface)',
+                border: `1px solid ${active ? def.color : `color-mix(in srgb, ${def.color} 25%, transparent)`}`,
                 borderRadius: 999,
                 cursor: 'pointer',
                 opacity: dim ? 0.45 : 1,
-                color: '#fafafa', font: 'inherit',
+                color: 'var(--hm-text)', font: 'inherit',
                 transition: 'all 160ms',
               }}
-              onMouseEnter={e => { if (!active) e.currentTarget.style.background = `${def.color}14`; }}
-              onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
+              onMouseEnter={e => { if (!active) e.currentTarget.style.background = `color-mix(in srgb, ${def.color} 8%, transparent)`; }}
+              onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'var(--hm-surface)'; }}
             >
               <span style={{
                 width: 9, height: 9, borderRadius: '50%',
                 background: def.color,
-                boxShadow: `0 0 8px ${def.color}88`,
+                boxShadow: `0 0 8px color-mix(in srgb, ${def.color} 53%, transparent)`,
               }} />
-              <span style={{ fontSize: 11, color: '#e4e4e7', fontWeight: active ? 700 : 500 }}>
+              <span style={{ fontSize: 11, color: 'var(--hm-text2)', fontWeight: active ? 700 : 500 }}>
                 {BUCKET_RU[name] || name}
               </span>
               <span style={{
@@ -877,8 +877,8 @@ export default function Roadmap() {
                 fontFamily: 'ui-monospace,monospace',
                 letterSpacing: '0.08em',
                 color: def.color,
-                background: `${def.color}22`,
-                border: `1px solid ${def.color}55`,
+                background: `color-mix(in srgb, ${def.color} 13%, transparent)`,
+                border: `1px solid color-mix(in srgb, ${def.color} 33%, transparent)`,
                 padding: '1.5px 4px',
                 borderRadius: 3,
               }}>
@@ -893,15 +893,15 @@ export default function Roadmap() {
             style={{
               padding: '6px 12px',
               background: 'transparent',
-              border: '1px solid #3f3f46',
+              border: '1px solid var(--hm-rank)',
               borderRadius: 999,
-              fontSize: 10.5, color: '#a1a1aa',
+              fontSize: 10.5, color: 'var(--hm-text3)',
               fontFamily: 'ui-monospace,monospace',
               letterSpacing: '0.08em', fontWeight: 700,
               cursor: 'pointer', font: 'inherit',
             }}
-            onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
-            onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--hm-text)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'var(--hm-text3)'}
           >
             СБРОС
           </button>
@@ -918,7 +918,7 @@ export default function Roadmap() {
 // chain neighbour chips, then companies grouped by conviction.
 // ──────────────────────────────────────────────────────────────────────────
 function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies, upstream, downstream, onClose, onJump, onOpenDetail }) {
-  const c = bucket?.color || '#a1a1aa';
+  const c = bucket?.color || 'var(--hm-text3)';
 
   // Sort companies by conviction tier so the strongest names come first.
   const order = { 'High': 0, 'Med-High': 1, 'Medium': 2, 'Low-Med': 3, 'Low': 4 };
@@ -933,8 +933,8 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
       background: 'rgba(10,10,11,0.97)',
       backdropFilter: 'blur(4px)',
       WebkitBackdropFilter: 'blur(4px)',
-      borderLeft: `1px solid ${c}55`,
-      boxShadow: `-32px 0 60px rgba(0,0,0,0.65), -1px 0 0 ${c}33`,
+      borderLeft: `1px solid color-mix(in srgb, ${c} 33%, transparent)`,
+      boxShadow: `-32px 0 60px rgba(0,0,0,0.65), -1px 0 0 color-mix(in srgb, ${c} 20%, transparent)`,
       zIndex: 10,
       overflowY: 'auto',
       animation: 'inspector-slide 200ms cubic-bezier(0.4,0,0.2,1)',
@@ -949,7 +949,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
       {/* Header – bucket-tinted */}
       <div style={{
         padding: '22px 24px 20px',
-        background: `linear-gradient(180deg, ${c}1a 0%, transparent 100%)`,
+        background: `linear-gradient(180deg, color-mix(in srgb, ${c} 10%, transparent) 0%, transparent 100%)`,
         borderBottom: `1px solid ${c}26`,
         position: 'relative',
       }}>
@@ -958,13 +958,13 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
           style={{
             position: 'absolute', top: 14, right: 14,
             width: 26, height: 26, borderRadius: '50%',
-            background: 'rgba(255,255,255,0.05)', border: `1px solid ${c}55`,
-            color: '#fafafa', fontSize: 14, cursor: 'pointer',
+            background: 'var(--hm-chip2)', border: `1px solid color-mix(in srgb, ${c} 33%, transparent)`,
+            color: 'var(--hm-text)', fontSize: 14, cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             font: 'inherit', transition: 'all 140ms',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = c + '33'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+          onMouseEnter={e => { e.currentTarget.style.background = `color-mix(in srgb, ${c} 20%, transparent)`; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'var(--hm-chip2)'; }}
         >×</button>
 
         <div style={{
@@ -977,13 +977,13 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
         </div>
 
         <div style={{
-          fontSize: 22, color: '#fafafa', fontWeight: 700,
+          fontSize: 22, color: 'var(--hm-text)', fontWeight: 700,
           letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: 4,
         }}>
           {node.label}
         </div>
         <div style={{
-          fontSize: 11.5, color: '#a1a1aa',
+          fontSize: 11.5, color: 'var(--hm-text3)',
           fontFamily: 'ui-monospace,monospace',
           letterSpacing: '0.04em',
         }}>
@@ -999,7 +999,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
             <div key={i} style={{
               flex: 1, height: 4,
               borderRadius: 2,
-              background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23',
+              background: i === layerIdx ? c : i < layerIdx ? `color-mix(in srgb, ${c} 33%, transparent)` : 'var(--hm-border4)',
               transition: 'background 160ms',
             }} />
           ))}
@@ -1014,15 +1014,15 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
             width: '100%',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             padding: '12px 16px',
-            background: `linear-gradient(135deg, ${c}26 0%, ${c}12 100%)`,
-            border: `1px solid ${c}66`,
+            background: `linear-gradient(135deg, ${c}26 0%, color-mix(in srgb, ${c} 7%, transparent) 100%)`,
+            border: `1px solid color-mix(in srgb, ${c} 40%, transparent)`,
             borderRadius: 9,
             cursor: 'pointer', font: 'inherit',
-            color: '#fafafa',
+            color: 'var(--hm-text)',
             transition: 'all 160ms',
           }}
           onMouseEnter={e => { e.currentTarget.style.background = `linear-gradient(135deg, ${c}3a 0%, ${c}1e 100%)`; e.currentTarget.style.borderColor = c; }}
-          onMouseLeave={e => { e.currentTarget.style.background = `linear-gradient(135deg, ${c}26 0%, ${c}12 100%)`; e.currentTarget.style.borderColor = `${c}66`; }}
+          onMouseLeave={e => { e.currentTarget.style.background = `linear-gradient(135deg, ${c}26 0%, color-mix(in srgb, ${c} 7%, transparent) 100%)`; e.currentTarget.style.borderColor = `color-mix(in srgb, ${c} 40%, transparent)`; }}
         >
           <span style={{
             fontSize: 11.5, fontWeight: 700, letterSpacing: '0.04em',
@@ -1035,7 +1035,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
       {NODE_INTEL[node.id] && (
         <div style={{
           padding: '18px 24px 16px',
-          borderBottom: '1px solid #18181b',
+          borderBottom: '1px solid var(--hm-hair)',
         }}>
           <div style={{
             fontSize: 9, color: c,
@@ -1043,7 +1043,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
             letterSpacing: '0.16em', fontWeight: 700,
             marginBottom: 9,
           }}>ЧТО ЭТО</div>
-          <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.75 }}>
+          <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.75 }}>
             {NODE_INTEL[node.id]}
           </div>
         </div>
@@ -1053,7 +1053,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
       {NODE_ROLE[node.id] && (
         <div style={{
           padding: '18px 24px 16px',
-          borderBottom: '1px solid #18181b',
+          borderBottom: '1px solid var(--hm-hair)',
         }}>
           <div style={{
             fontSize: 9, color: c,
@@ -1061,7 +1061,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
             letterSpacing: '0.16em', fontWeight: 700,
             marginBottom: 9,
           }}>РОЛЬ В ЦЕПОЧКЕ</div>
-          <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.75 }}>
+          <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.75 }}>
             {NODE_ROLE[node.id]}
           </div>
         </div>
@@ -1071,7 +1071,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
       {(upstream.length > 0 || downstream.length > 0) && (
         <div style={{ padding: '4px 24px 18px' }}>
           <div style={{
-            fontSize: 10.5, color: '#71717a', fontStyle: 'italic',
+            fontSize: 10.5, color: 'var(--hm-text5)', fontStyle: 'italic',
             lineHeight: 1.5, marginBottom: 12,
           }}>
             Нажмите на блок ниже, чтобы перейти к его карточке.
@@ -1079,7 +1079,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
           {upstream.length > 0 && (
             <div style={{ marginBottom: 14 }}>
               <div style={{
-                fontSize: 9, color: '#a1a1aa',
+                fontSize: 9, color: 'var(--hm-text3)',
                 fontFamily: 'ui-monospace,monospace',
                 letterSpacing: '0.14em', fontWeight: 700,
                 marginBottom: 8,
@@ -1094,7 +1094,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
           {downstream.length > 0 && (
             <div>
               <div style={{
-                fontSize: 9, color: '#a1a1aa',
+                fontSize: 9, color: 'var(--hm-text3)',
                 fontFamily: 'ui-monospace,monospace',
                 letterSpacing: '0.14em', fontWeight: 700,
                 marginBottom: 8,
@@ -1110,7 +1110,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
       )}
 
       {/* Companies */}
-      <div style={{ padding: '14px 24px 28px', borderTop: '1px solid #18181b' }}>
+      <div style={{ padding: '14px 24px 28px', borderTop: '1px solid var(--hm-hair)' }}>
         <div style={{
           fontSize: 9, color: c,
           fontFamily: 'ui-monospace,monospace',
@@ -1118,12 +1118,12 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
           marginBottom: 6,
         }}>КЛЮЧЕВЫЕ ИГРОКИ</div>
         <div style={{
-          fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 14,
+          fontSize: 10.5, color: 'var(--hm-text5)', lineHeight: 1.55, marginBottom: 14,
         }}>
           Заметные компании этого звена – как примеры, кто им занимается, а не список для покупки.
         </div>
         {sortedCompanies.length === 0 ? (
-          <div style={{ fontSize: 11.5, color: '#52525b', fontStyle: 'italic' }}>
+          <div style={{ fontSize: 11.5, color: 'var(--hm-text6)', fontStyle: 'italic' }}>
             Здесь нет отдельных имён – это переходный узел цепочки.
           </div>
         ) : (
@@ -1131,30 +1131,30 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
             {sortedCompanies.map(co => {
               return (
                 <div key={co.company} style={{
-                  background: '#131316',
-                  border: '1px solid #27272a',
+                  background: 'var(--hm-tile)',
+                  border: '1px solid var(--hm-border5)',
                   borderLeft: `3px solid ${c}`,
                   borderRadius: 6, padding: '10px 12px',
                 }}>
-                  <div style={{ fontSize: 12.5, color: '#fafafa', fontWeight: 600 }}>{co.company}</div>
+                  <div style={{ fontSize: 12.5, color: 'var(--hm-text)', fontWeight: 600 }}>{co.company}</div>
                   <div style={{
-                    fontSize: 10.5, color: '#a1a1aa',
+                    fontSize: 10.5, color: 'var(--hm-text3)',
                     fontFamily: 'ui-monospace,monospace',
                     marginTop: 4, display: 'flex', gap: 8, flexWrap: 'wrap',
                   }}>
                     <span>{co.ticker}</span>
-                    <span style={{ color: '#3f3f46' }}>·</span>
+                    <span style={{ color: 'var(--hm-rank)' }}>·</span>
                     <span style={{ color: co.ppr === 'Pub' ? '#10b981' : '#a78bfa' }}>
                       {co.ppr === 'Pub' ? 'ПУБЛИЧНАЯ' : 'ЧАСТНАЯ'}
                     </span>
-                    <span style={{ color: '#3f3f46' }}>·</span>
+                    <span style={{ color: 'var(--hm-rank)' }}>·</span>
                     <span>{co.geo}</span>
                   </div>
                   {co.note && (
                     <div style={{
-                      fontSize: 11, color: '#c4c4cc', lineHeight: 1.6,
+                      fontSize: 11, color: 'var(--hm-text2)', lineHeight: 1.6,
                       marginTop: 8, paddingTop: 8,
-                      borderTop: '1px solid #1f1f23',
+                      borderTop: '1px solid var(--hm-border4)',
                     }}>
                       {co.note}
                     </div>
@@ -1171,13 +1171,13 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
 
 function ChainPill({ node, onClick }) {
   const bucket = DC_BUCKETS[node.bucket];
-  const c = bucket?.color || '#a1a1aa';
+  const c = bucket?.color || 'var(--hm-text3)';
   return (
     <button
       onClick={onClick}
       style={{
-        background: 'rgba(255,255,255,0.02)',
-        border: `1px solid ${c}55`,
+        background: 'var(--hm-surface)',
+        border: `1px solid color-mix(in srgb, ${c} 33%, transparent)`,
         borderRadius: 999,
         padding: '5px 11px 5px 9px',
         display: 'inline-flex', alignItems: 'center', gap: 6,
@@ -1185,11 +1185,11 @@ function ChainPill({ node, onClick }) {
         font: 'inherit',
         transition: 'all 140ms',
       }}
-      onMouseEnter={e => { e.currentTarget.style.background = c + '20'; e.currentTarget.style.borderColor = c; }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; e.currentTarget.style.borderColor = `${c}55`; }}
+      onMouseEnter={e => { e.currentTarget.style.background = `color-mix(in srgb, ${c} 13%, transparent)`; e.currentTarget.style.borderColor = c; }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'var(--hm-surface)'; e.currentTarget.style.borderColor = `color-mix(in srgb, ${c} 33%, transparent)`; }}
     >
       <span style={{ width: 6, height: 6, borderRadius: '50%', background: c }} />
-      <span style={{ fontSize: 11, color: '#e4e4e7' }}>{node.label}</span>
+      <span style={{ fontSize: 11, color: 'var(--hm-text2)' }}>{node.label}</span>
     </button>
   );
 }
@@ -1206,13 +1206,13 @@ function ChainPill({ node, onClick }) {
 // ─ Shared styles ──────────────────────────────────────────────────────────
 const thCell     = { padding: '4px 14px 8px 0', fontWeight: 700, whiteSpace: 'nowrap' };
 const tdCell     = { padding: '11px 14px 11px 0', verticalAlign: 'top' };
-const cardBg     = { background: '#0d0d0e', border: '1px solid #1f1f23', borderRadius: 12 };
-const miniCard   = { background: 'rgba(255,255,255,0.02)', border: '1px solid #27272a', borderRadius: 9, padding: '12px 14px' };
-const miniKicker = { fontSize: 9, color: '#71717a', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 };
-const miniBody   = { fontSize: 12, color: '#c4c4cc', lineHeight: 1.6 };
-const thRow      = { color: '#71717a', textAlign: 'left', fontFamily: 'ui-monospace,monospace', fontSize: 9.5, letterSpacing: '0.1em' };
+const cardBg     = { background: 'var(--hm-bg2)', border: '1px solid var(--hm-border4)', borderRadius: 12 };
+const miniCard   = { background: 'var(--hm-surface)', border: '1px solid var(--hm-border5)', borderRadius: 9, padding: '12px 14px' };
+const miniKicker = { fontSize: 9, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 };
+const miniBody   = { fontSize: 12, color: 'var(--hm-text2)', lineHeight: 1.6 };
+const thRow      = { color: 'var(--hm-text5)', textAlign: 'left', fontFamily: 'ui-monospace,monospace', fontSize: 9.5, letterSpacing: '0.1em' };
 
-function trendGlyph(t) { return t === 'up' ? { s: '▲', c: '#10b981' } : t === 'down' ? { s: '▼', c: '#ef4444' } : { s: '▬', c: '#a1a1aa' }; }
+function trendGlyph(t) { return t === 'up' ? { s: '▲', c: '#10b981' } : t === 'down' ? { s: '▼', c: '#ef4444' } : { s: '▬', c: 'var(--hm-text3)' }; }
 
 function Paragraphs({ text, style }) {
   return String(text).split(/\n{2,}/).map((p, i) => <p key={i} style={{ margin: i === 0 ? 0 : '12px 0 0', ...style }}>{p}</p>);
@@ -1220,7 +1220,7 @@ function Paragraphs({ text, style }) {
 
 function Src({ children }) {
   if (!children) return null;
-  return <span style={{ fontSize: 9.5, color: '#52525b', fontFamily: 'ui-monospace,monospace', marginLeft: 6, whiteSpace: 'nowrap' }}>· {children}</span>;
+  return <span style={{ fontSize: 9.5, color: 'var(--hm-text6)', fontFamily: 'ui-monospace,monospace', marginLeft: 6, whiteSpace: 'nowrap' }}>· {children}</span>;
 }
 
 // Titled section with an anchor id for the jump-nav. `takeaway` renders a
@@ -1228,15 +1228,15 @@ function Src({ children }) {
 function Block({ id, accent, kicker, lead, takeaway, children }) {
   return (
     <section id={id} style={{ scrollMarginTop: 12, marginBottom: 20 }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14, borderBottom: '1px solid #1f1f23', paddingBottom: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14, borderBottom: '1px solid var(--hm-border4)', paddingBottom: 10 }}>
         <div style={{ fontSize: 10.5, color: accent, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>{kicker}</div>
-        {lead && <div style={{ marginLeft: 'auto', fontSize: 11, color: '#a1a1aa', textAlign: 'right' }}>{lead}</div>}
+        {lead && <div style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--hm-text3)', textAlign: 'right' }}>{lead}</div>}
       </div>
       {children}
       {takeaway && (
-        <div style={{ marginTop: 14, padding: '13px 16px', background: `${accent}10`, borderLeft: `3px solid ${accent}`, borderRadius: '0 9px 9px 0' }}>
+        <div style={{ marginTop: 14, padding: '13px 16px', background: `color-mix(in srgb, ${accent} 6%, transparent)`, borderLeft: `3px solid ${accent}`, borderRadius: '0 9px 9px 0' }}>
           <div style={{ fontSize: 9, color: accent, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 }}>ВЫВОД ДЛЯ ИНВЕСТОРА</div>
-          <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.65 }}>{takeaway}</div>
+          <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{takeaway}</div>
         </div>
       )}
     </section>
@@ -1247,18 +1247,18 @@ function StatCard({ label, value, note, accent, src }) {
   return (
     <div style={miniCard}>
       <div style={miniKicker}>{label}</div>
-      <div style={{ fontSize: 22, fontWeight: 800, color: accent || '#fafafa', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{value}</div>
-      {note && <div style={{ fontSize: 11, color: '#a1a1aa', marginTop: 5, lineHeight: 1.5 }}>{note}<Src>{src}</Src></div>}
+      <div style={{ fontSize: 22, fontWeight: 800, color: accent || 'var(--hm-text)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{value}</div>
+      {note && <div style={{ fontSize: 11, color: 'var(--hm-text3)', marginTop: 5, lineHeight: 1.5 }}>{note}<Src>{src}</Src></div>}
     </div>
   );
 }
 
 function MetaCell({ label, value }) {
-  return <div style={miniCard}><div style={miniKicker}>{label}</div><div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.55 }}>{value}</div></div>;
+  return <div style={miniCard}><div style={miniKicker}>{label}</div><div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.55 }}>{value}</div></div>;
 }
 
 function Badge({ text, col }) {
-  return <span style={{ fontSize: 10.5, fontWeight: 700, color: col, background: `${col}18`, border: `1px solid ${col}44`, borderRadius: 5, padding: '2px 8px', whiteSpace: 'nowrap' }}>{text}</span>;
+  return <span style={{ fontSize: 10.5, fontWeight: 700, color: col, background: `color-mix(in srgb, ${col} 9%, transparent)`, border: `1px solid color-mix(in srgb, ${col} 27%, transparent)`, borderRadius: 5, padding: '2px 8px', whiteSpace: 'nowrap' }}>{text}</span>;
 }
 
 function ScoreBar({ label, value, accent }) {
@@ -1266,10 +1266,10 @@ function ScoreBar({ label, value, accent }) {
   const col = n >= 7 ? '#10b981' : n >= 5 ? '#f59e0b' : '#ef4444';
   return (
     <div style={{ marginBottom: 9 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#a1a1aa', marginBottom: 4 }}>
-        <span>{label}</span><span style={{ color: '#e4e4e7', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{value}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--hm-text3)', marginBottom: 4 }}>
+        <span>{label}</span><span style={{ color: 'var(--hm-text2)', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{value}</span>
       </div>
-      <div style={{ height: 6, borderRadius: 3, background: '#1f1f23', overflow: 'hidden' }}>
+      <div style={{ height: 6, borderRadius: 3, background: 'var(--hm-border4)', overflow: 'hidden' }}>
         <div style={{ width: pct + '%', height: '100%', background: col, borderRadius: 3 }} />
       </div>
     </div>
@@ -1280,10 +1280,10 @@ function PurePlay({ v, c }) {
   const n = Number(v) || 0;
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-      <div style={{ width: 44, height: 6, background: '#1f1f23', borderRadius: 3, overflow: 'hidden' }}>
+      <div style={{ width: 44, height: 6, background: 'var(--hm-border4)', borderRadius: 3, overflow: 'hidden' }}>
         <div style={{ width: (Math.max(0, Math.min(10, n)) * 10) + '%', height: '100%', background: c }} />
       </div>
-      <span style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{v}</span>
+      <span style={{ fontSize: 10.5, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace' }}>{v}</span>
     </div>
   );
 }
@@ -1307,20 +1307,20 @@ const VERDICT_DIMS = {
 function VerdictHero({ v, c, asOf }) {
   const subs = v.subScores ? Object.entries(v.subScores) : [];
   const score = v.score != null ? Number(v.score) : (subs.length ? Math.round(subs.reduce((a, [, x]) => a + Number(x), 0) / subs.length) : null);
-  const scoreCol = score == null ? '#a1a1aa' : score >= 7 ? '#10b981' : score >= 5 ? '#f59e0b' : '#ef4444';
+  const scoreCol = score == null ? 'var(--hm-text3)' : score >= 7 ? '#10b981' : score >= 5 ? '#f59e0b' : '#ef4444';
   const scoreWord = score == null ? '' : score >= 7 ? 'Привлекательно' : score >= 5 ? 'Средне' : 'Слабо';
   return (
-    <div style={{ background: `linear-gradient(180deg, ${c}1c 0%, #0d0d0e 65%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 28px', marginBottom: 16 }}>
+    <div style={{ background: `linear-gradient(180deg, color-mix(in srgb, ${c} 11%, transparent) 0%, var(--hm-bg2) 65%)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 16, padding: '26px 28px', marginBottom: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6, flexWrap: 'wrap', gap: 8 }}>
         <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>ВЕРДИКТ · ИНВЕСТ-ОЦЕНКА</div>
-        {asOf && <div style={{ fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>данные на {asOf}</div>}
+        {asOf && <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace' }}>данные на {asOf}</div>}
       </div>
-      <div style={{ fontSize: 10.5, color: '#52525b', marginBottom: 18 }}>Каждая метрика – 1–10, где выше = лучше для инвестора. Общий балл – среднее по четырём.</div>
+      <div style={{ fontSize: 10.5, color: 'var(--hm-text6)', marginBottom: 18 }}>Каждая метрика – 1–10, где выше = лучше для инвестора. Общий балл – среднее по четырём.</div>
       <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap', alignItems: 'flex-start' }}>
         {score != null && (
           <div style={{ textAlign: 'center', minWidth: 120 }}>
             <div style={{ fontSize: 60, fontWeight: 800, color: scoreCol, lineHeight: 1, letterSpacing: '-0.04em' }}>{score}</div>
-            <div style={{ fontSize: 10, color: '#71717a', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>ИЗ 10</div>
+            <div style={{ fontSize: 10, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>ИЗ 10</div>
             {scoreWord && <div style={{ fontSize: 11, color: scoreCol, fontWeight: 700, marginTop: 8 }}>{scoreWord}</div>}
           </div>
         )}
@@ -1333,22 +1333,22 @@ function VerdictHero({ v, c, asOf }) {
             return (
               <div key={k} style={{ marginBottom: 15 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 10 }}>
-                  <span style={{ fontSize: 12.5, color: '#e4e4e7', fontWeight: 600 }}>{dim.label}</span>
+                  <span style={{ fontSize: 12.5, color: 'var(--hm-text2)', fontWeight: 600 }}>{dim.label}</span>
                   <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 7, whiteSpace: 'nowrap' }}>
                     <span style={{ fontSize: 9.5, color: col, fontFamily: 'ui-monospace,monospace', fontWeight: 700, letterSpacing: '0.04em' }}>{word}</span>
-                    <span style={{ fontSize: 14, color: '#fafafa', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{val}<span style={{ color: '#52525b', fontSize: 11 }}>/10</span></span>
+                    <span style={{ fontSize: 14, color: 'var(--hm-text)', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{val}<span style={{ color: 'var(--hm-text6)', fontSize: 11 }}>/10</span></span>
                   </span>
                 </div>
-                <div style={{ height: 6, borderRadius: 3, background: '#1f1f23', overflow: 'hidden', margin: '6px 0 5px' }}>
+                <div style={{ height: 6, borderRadius: 3, background: 'var(--hm-border4)', overflow: 'hidden', margin: '6px 0 5px' }}>
                   <div style={{ width: (Math.max(0, Math.min(10, n)) * 10) + '%', height: '100%', background: col, borderRadius: 3 }} />
                 </div>
-                {dim.desc && <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.5 }}>{dim.desc}</div>}
+                {dim.desc && <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', lineHeight: 1.5 }}>{dim.desc}</div>}
               </div>
             );
           })}
         </div>
       </div>
-      {v.summary && <div style={{ marginTop: 10, fontSize: 13, color: '#d4d4d8', lineHeight: 1.65 }}>{v.summary}</div>}
+      {v.summary && <div style={{ marginTop: 10, fontSize: 13, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{v.summary}</div>}
       {(v.horizon || v.sizing) && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 12, marginTop: 16 }}>
           {v.horizon && <MetaCell label="ГОРИЗОНТ" value={v.horizon} />}
@@ -1362,9 +1362,9 @@ function VerdictHero({ v, c, asOf }) {
 // ─ Plain-language orientation – "what is this, in two sentences" – shown first ─
 function WhatIsItBlock({ text, c }) {
   return (
-    <div style={{ background: `${c}0c`, border: `1px solid ${c}33`, borderRadius: 14, padding: '18px 22px', marginBottom: 16 }}>
+    <div style={{ background: `${c}0c`, border: `1px solid color-mix(in srgb, ${c} 20%, transparent)`, borderRadius: 14, padding: '18px 22px', marginBottom: 16 }}>
       <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 9 }}>ЧТО ЭТО ТАКОЕ · КОРОТКО</div>
-      <div style={{ fontSize: 14.5, color: '#e4e4e7', lineHeight: 1.72 }}><Paragraphs text={text} /></div>
+      <div style={{ fontSize: 14.5, color: 'var(--hm-text2)', lineHeight: 1.72 }}><Paragraphs text={text} /></div>
     </div>
   );
 }
@@ -1373,7 +1373,7 @@ function Tldr({ items, c }) {
   return (
     <div style={{ ...cardBg, padding: '18px 22px', marginBottom: 16, borderLeft: `3px solid ${c}` }}>
       <div style={{ ...miniKicker, marginBottom: 10 }}>КОРОТКО · ГЛАВНОЕ</div>
-      <ul style={{ margin: 0, paddingLeft: 18, color: '#d4d4d8', fontSize: 13.5, lineHeight: 1.7 }}>
+      <ul style={{ margin: 0, paddingLeft: 18, color: 'var(--hm-text2)', fontSize: 13.5, lineHeight: 1.7 }}>
         {items.map((t, i) => <li key={i} style={{ marginBottom: 6 }}>{t}</li>)}
       </ul>
     </div>
@@ -1386,9 +1386,9 @@ function SectionNav({ items, c }) {
       {items.map(it => (
         <button key={it.id}
           onClick={() => { const el = document.getElementById(it.id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-          style={{ fontSize: 11, color: '#c4c4cc', background: 'rgba(255,255,255,0.02)', border: '1px solid #27272a', borderRadius: 999, padding: '5px 12px', cursor: 'pointer', font: 'inherit', transition: 'all 140ms' }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = c; e.currentTarget.style.color = '#fafafa'; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = '#27272a'; e.currentTarget.style.color = '#c4c4cc'; }}>
+          style={{ fontSize: 11, color: 'var(--hm-text2)', background: 'var(--hm-surface)', border: '1px solid var(--hm-border5)', borderRadius: 999, padding: '5px 12px', cursor: 'pointer', font: 'inherit', transition: 'all 140ms' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = c; e.currentTarget.style.color = 'var(--hm-text)'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--hm-border5)'; e.currentTarget.style.color = 'var(--hm-text2)'; }}>
           {it.label}
         </button>
       ))}
@@ -1403,10 +1403,10 @@ function TamChart({ rows, c }) {
     <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, height: 160, padding: '8px 4px 0' }}>
       {rows.map((r, i) => (
         <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%' }}>
-          <div style={{ fontSize: 11, color: '#e4e4e7', fontWeight: 700, marginBottom: 6 }}>{r.label || ('$' + r.value + 'B')}</div>
-          <div style={{ width: '100%', maxWidth: 54, height: Math.max(4, (Number(r.value) / max) * 112) + 'px', background: `linear-gradient(180deg, ${c} 0%, ${c}66 100%)`, borderRadius: '5px 5px 0 0' }} />
-          <div style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 8 }}>{r.year}</div>
-          {r.source && <div style={{ fontSize: 8.5, color: '#52525b', marginTop: 2 }}>{r.source}</div>}
+          <div style={{ fontSize: 11, color: 'var(--hm-text2)', fontWeight: 700, marginBottom: 6 }}>{r.label || ('$' + r.value + 'B')}</div>
+          <div style={{ width: '100%', maxWidth: 54, height: Math.max(4, (Number(r.value) / max) * 112) + 'px', background: `linear-gradient(180deg, ${c} 0%, color-mix(in srgb, ${c} 40%, transparent) 100%)`, borderRadius: '5px 5px 0 0' }} />
+          <div style={{ fontSize: 10.5, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', marginTop: 8 }}>{r.year}</div>
+          {r.source && <div style={{ fontSize: 8.5, color: 'var(--hm-text6)', marginTop: 2 }}>{r.source}</div>}
         </div>
       ))}
     </div>
@@ -1442,10 +1442,10 @@ function ValueCaptureBlock({ d, c }) {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
             <thead><tr style={thRow}><th style={thCell}>СЛОЙ ЦЕПОЧКИ</th><th style={thCell}>МАРЖА</th><th style={thCell}>ИСТОЧНИК</th></tr></thead>
             <tbody>{d.margins.map((m, i) => (
-              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600 }}>{m.layer}</td>
-                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7' }}>{m.margin}</td>
-                <td style={{ ...tdCell, color: '#71717a', fontSize: 10.5 }}>{m.source}</td>
+              <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+                <td style={{ ...tdCell, color: 'var(--hm-text)', fontWeight: 600 }}>{m.layer}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text2)' }}>{m.margin}</td>
+                <td style={{ ...tdCell, color: 'var(--hm-text5)', fontSize: 10.5 }}>{m.source}</td>
               </tr>))}</tbody>
           </table>
         </div>
@@ -1464,7 +1464,7 @@ function CompetitionBlock({ d, c }) {
   const traj = d.shareTrajectory || [];
   const isPlayerFmt = traj.length > 0 && ('player' in traj[0]);
   const cols = (traj.length > 0 && !isPlayerFmt) ? Object.keys(traj[0]).filter(k => k !== 'period' && k !== 'source') : [];
-  const dirCol = s => /↑|раст[её]т|рост|усил/i.test(s || '') ? '#10b981' : /↓|паден|сниж|слабе/i.test(s || '') ? '#ef4444' : '#a1a1aa';
+  const dirCol = s => /↑|раст[её]т|рост|усил/i.test(s || '') ? '#10b981' : /↓|паден|сниж|слабе/i.test(s || '') ? '#ef4444' : 'var(--hm-text3)';
   return (
     <Block id="competition" takeaway={d.takeaway} accent={c} kicker="03 · КОНКУРЕНТНАЯ СТРУКТУРА" lead={d.concentration}>
       {traj.length > 0 && (
@@ -1474,11 +1474,11 @@ function CompetitionBlock({ d, c }) {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 460 }}>
               <thead><tr style={thRow}><th style={thCell}>ИГРОК</th><th style={thCell}>ДОЛЯ</th><th style={thCell}>ТРЕНД</th><th style={thCell}>КУДА ДВИЖЕТСЯ</th></tr></thead>
               <tbody>{traj.map((row, i) => (
-                <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                  <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600, whiteSpace: 'nowrap' }}>{row.player}</td>
-                  <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7', whiteSpace: 'nowrap' }}>{row.now}</td>
+                <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+                  <td style={{ ...tdCell, color: 'var(--hm-text)', fontWeight: 600, whiteSpace: 'nowrap' }}>{row.player}</td>
+                  <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text2)', whiteSpace: 'nowrap' }}>{row.now}</td>
                   <td style={{ ...tdCell, color: dirCol(row.direction), fontSize: 14, fontWeight: 700 }}>{row.direction}</td>
-                  <td style={{ ...tdCell, color: '#c4c4cc' }}>{row.detail}</td>
+                  <td style={{ ...tdCell, color: 'var(--hm-text2)' }}>{row.detail}</td>
                 </tr>))}</tbody>
             </table>
           ) : (
@@ -1487,9 +1487,9 @@ function CompetitionBlock({ d, c }) {
               <tbody>{traj.map((row, i) => {
                 const last = i === traj.length - 1;
                 return (
-                  <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                    <td style={{ ...tdCell, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{row.period}</td>
-                    {cols.map(k => <td key={k} style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: last ? '#fafafa' : '#c4c4cc', fontWeight: last ? 700 : 400 }}>{row[k]}</td>)}
+                  <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+                    <td style={{ ...tdCell, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace' }}>{row.period}</td>
+                    {cols.map(k => <td key={k} style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: last ? 'var(--hm-text)' : 'var(--hm-text2)', fontWeight: last ? 700 : 400 }}>{row[k]}</td>)}
                   </tr>);
               })}</tbody>
             </table>
@@ -1501,11 +1501,11 @@ function CompetitionBlock({ d, c }) {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
             <thead><tr style={thRow}><th style={thCell}>ИГРОК</th><th style={thCell}>ДОЛЯ</th><th style={thCell}>ТРЕНД</th><th style={thCell}>ТЕХ / КВАЛИФИКАЦИЯ</th></tr></thead>
             <tbody>{d.players.map((p, i) => { const g = trendGlyph(p.trend); return (
-              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                <td style={tdCell}><span style={{ color: '#fafafa', fontWeight: 600 }}>{p.name}</span>{p.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 3, lineHeight: 1.5 }}>{p.note}</div>}</td>
-                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7', whiteSpace: 'nowrap' }}>{p.share}</td>
+              <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+                <td style={tdCell}><span style={{ color: 'var(--hm-text)', fontWeight: 600 }}>{p.name}</span>{p.note && <div style={{ fontSize: 10.5, color: 'var(--hm-text3)', marginTop: 3, lineHeight: 1.5 }}>{p.note}</div>}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text2)', whiteSpace: 'nowrap' }}>{p.share}</td>
                 <td style={tdCell}><span style={{ color: g.c, fontSize: 13 }}>{g.s}</span></td>
-                <td style={{ ...tdCell, color: '#c4c4cc' }}>{p.tech}</td>
+                <td style={{ ...tdCell, color: 'var(--hm-text2)' }}>{p.tech}</td>
               </tr>); })}</tbody>
           </table>
         </div>
@@ -1538,9 +1538,9 @@ function DemandBlock({ d, c }) {
           <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
             {d.soldOut.map((s, i) => (
               <div key={i} style={{ flex: '1 1 90px', minWidth: 90 }}>
-                <div style={{ height: 8, background: '#1f1f23', borderRadius: 4, overflow: 'hidden' }}><div style={{ width: Math.min(100, s.pct) + '%', height: '100%', background: c }} /></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontSize: 11 }}><span style={{ color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{s.year}</span><span style={{ color: '#e4e4e7', fontWeight: 700 }}>{s.pct}%</span></div>
-                {s.note && <div style={{ fontSize: 9.5, color: '#71717a', marginTop: 3, lineHeight: 1.4 }}>{s.note}</div>}
+                <div style={{ height: 8, background: 'var(--hm-border4)', borderRadius: 4, overflow: 'hidden' }}><div style={{ width: Math.min(100, s.pct) + '%', height: '100%', background: c }} /></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontSize: 11 }}><span style={{ color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace' }}>{s.year}</span><span style={{ color: 'var(--hm-text2)', fontWeight: 700 }}>{s.pct}%</span></div>
+                {s.note && <div style={{ fontSize: 9.5, color: 'var(--hm-text5)', marginTop: 3, lineHeight: 1.4 }}>{s.note}</div>}
               </div>
             ))}
           </div>
@@ -1558,7 +1558,7 @@ function DemandBlock({ d, c }) {
 
 // ─ Block 5 – Supply / balance (the key cyclical output) ────────────────────
 function SupplyBlock({ d, c }) {
-  const sm = { deficit: { t: 'Дефицит', col: '#10b981' }, tight: { t: 'Напряжённо', col: '#22d3ee' }, balanced: { t: 'Баланс', col: '#a1a1aa' }, surplus: { t: 'Профицит', col: '#ef4444' }, unknown: { t: 'Неясно', col: '#52525b' } };
+  const sm = { deficit: { t: 'Дефицит', col: '#10b981' }, tight: { t: 'Напряжённо', col: '#22d3ee' }, balanced: { t: 'Баланс', col: 'var(--hm-text3)' }, surplus: { t: 'Профицит', col: '#ef4444' }, unknown: { t: 'Неясно', col: 'var(--hm-text6)' } };
   const hasBalance = d.balance?.length > 0 && !d.balance.every(b => b.state === 'unknown');
   const hasAnything = hasBalance || d.leadTime || d.utilization || d.crowdingOut || d.capacityAdds?.length > 0;
   if (!hasAnything && !d.takeaway) return null;
@@ -1568,13 +1568,13 @@ function SupplyBlock({ d, c }) {
         <div style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {d.balance.map((b, i) => { const st = sm[b.state] || sm.unknown; return (
-              <div key={i} style={{ flex: '1 1 120px', minWidth: 120, background: `${st.col}12`, border: `1px solid ${st.col}44`, borderRadius: 10, padding: '14px' }}>
-                <div style={{ fontSize: 11, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace' }}>{b.year}</div>
+              <div key={i} style={{ flex: '1 1 120px', minWidth: 120, background: `color-mix(in srgb, ${st.col} 7%, transparent)`, border: `1px solid color-mix(in srgb, ${st.col} 27%, transparent)`, borderRadius: 10, padding: '14px' }}>
+                <div style={{ fontSize: 11, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace' }}>{b.year}</div>
                 <div style={{ fontSize: 15, fontWeight: 700, color: st.col, marginTop: 4 }}>{st.t}</div>
-                {b.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 4, lineHeight: 1.4 }}>{b.note}</div>}
+                {b.note && <div style={{ fontSize: 10.5, color: 'var(--hm-text3)', marginTop: 4, lineHeight: 1.4 }}>{b.note}</div>}
               </div>); })}
           </div>
-          <div style={{ fontSize: 10, color: '#52525b', marginTop: 8, fontStyle: 'italic' }}>Дефицит = ценовая власть у производителя; профицит = падение цен.</div>
+          <div style={{ fontSize: 10, color: 'var(--hm-text6)', marginTop: 8, fontStyle: 'italic' }}>Дефицит = ценовая власть у производителя; профицит = падение цен.</div>
         </div>
       )}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
@@ -1586,7 +1586,7 @@ function SupplyBlock({ d, c }) {
         <div style={{ marginTop: 14 }}>
           <div style={miniKicker}>АНОНСИРОВАННЫЕ РАСШИРЕНИЯ</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
-            {d.capacityAdds.map((a, i) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 12, color: '#d4d4d8', lineHeight: 1.5, flexWrap: 'wrap' }}><span style={{ color: '#fafafa', fontWeight: 600, minWidth: 110 }}>{a.player}</span><span style={{ color: '#c4c4cc', flex: 1 }}>{a.detail}</span></div>)}
+            {d.capacityAdds.map((a, i) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 12, color: 'var(--hm-text2)', lineHeight: 1.5, flexWrap: 'wrap' }}><span style={{ color: 'var(--hm-text)', fontWeight: 600, minWidth: 110 }}>{a.player}</span><span style={{ color: 'var(--hm-text2)', flex: 1 }}>{a.detail}</span></div>)}
           </div>
         </div>
       )}
@@ -1607,7 +1607,7 @@ function UnitEconBlock({ d, c }) {
         <div style={{ marginTop: 14 }}>
           <div style={miniKicker}>СКОЛЬКО ЧИПОВ ВЫХОДИТ БЕЗ БРАКА – ГЛАВНЫЙ РЫЧАГ ПРИБЫЛИ</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginTop: 8 }}>
-            {d.yields.map((y, i) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 12, color: '#d4d4d8', flexWrap: 'wrap' }}><span style={{ color: '#fafafa', fontWeight: 600, minWidth: 220 }}>{y.label}</span><span style={{ color: '#c4c4cc', flex: 1 }}>{y.value}</span></div>)}
+            {d.yields.map((y, i) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 12, color: 'var(--hm-text2)', flexWrap: 'wrap' }}><span style={{ color: 'var(--hm-text)', fontWeight: 600, minWidth: 220 }}>{y.label}</span><span style={{ color: 'var(--hm-text2)', flex: 1 }}>{y.value}</span></div>)}
           </div>
         </div>
       )}
@@ -1624,10 +1624,10 @@ function RoadmapBlock({ d, c }) {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 520 }}>
             <thead><tr style={thRow}><th style={thCell}>ПОКОЛЕНИЕ</th><th style={thCell}>MASS PROD.</th><th style={thCell}>ЧТО МЕНЯЕТСЯ / КТО ВЫИГРЫВАЕТ</th></tr></thead>
             <tbody>{d.generations.map((r, i) => (
-              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                <td style={{ ...tdCell, color: '#fafafa', fontWeight: 700, whiteSpace: 'nowrap' }}>{r.gen}{r.spec && <div style={{ fontSize: 9.5, color: '#71717a', fontWeight: 400, marginTop: 2 }}>{r.spec}</div>}</td>
-                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7', whiteSpace: 'nowrap' }}>{r.mp}</td>
-                <td style={{ ...tdCell, color: '#c4c4cc' }}>{r.note}</td>
+              <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+                <td style={{ ...tdCell, color: 'var(--hm-text)', fontWeight: 700, whiteSpace: 'nowrap' }}>{r.gen}{r.spec && <div style={{ fontSize: 9.5, color: 'var(--hm-text5)', fontWeight: 400, marginTop: 2 }}>{r.spec}</div>}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text2)', whiteSpace: 'nowrap' }}>{r.mp}</td>
+                <td style={{ ...tdCell, color: 'var(--hm-text2)' }}>{r.note}</td>
               </tr>))}</tbody>
           </table>
         </div>
@@ -1639,12 +1639,12 @@ function RoadmapBlock({ d, c }) {
             {d.disruption.map((x, i) => (
               <div key={i} style={{ ...miniCard, padding: '14px 16px' }}>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
-                  <span style={{ color: '#fafafa', fontWeight: 700, fontSize: 13 }}>{x.tech}</span>
+                  <span style={{ color: 'var(--hm-text)', fontWeight: 700, fontSize: 13 }}>{x.tech}</span>
                   <Badge text={x.verdict} col={x.tone === 'risk' ? '#ef4444' : x.tone === 'watch' ? '#f59e0b' : '#10b981'} />
                 </div>
-                <div style={{ fontSize: 12.5, color: '#c4c4cc', lineHeight: 1.65 }}>{x.detail}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{x.detail}</div>
                 {x.angle && (
-                  <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>
+                  <div style={{ fontSize: 11.5, color: 'var(--hm-text3)', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid var(--hm-border4)' }}>
                     <span style={{ color: c, fontWeight: 700 }}>Для инвестора: </span>{x.angle}
                   </div>
                 )}
@@ -1667,9 +1667,9 @@ function DependenciesBlock({ d, c }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
             {d.upstream.map((u, i) => (
               <div key={i} style={{ ...miniCard, padding: '12px 14px' }}>
-                <div style={{ color: '#fafafa', fontWeight: 600, fontSize: 12.5, marginBottom: 5 }}>{u.item}</div>
-                <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55 }}>
-                  {u.supplier && <><span style={{ color: '#71717a' }}>Поставщик: </span><span style={{ color: c, fontWeight: 600 }}>{u.supplier}</span>{u.note ? ' – ' : ''}</>}
+                <div style={{ color: 'var(--hm-text)', fontWeight: 600, fontSize: 12.5, marginBottom: 5 }}>{u.item}</div>
+                <div style={{ fontSize: 11.5, color: 'var(--hm-text3)', lineHeight: 1.55 }}>
+                  {u.supplier && <><span style={{ color: 'var(--hm-text5)' }}>Поставщик: </span><span style={{ color: c, fontWeight: 600 }}>{u.supplier}</span>{u.note ? ' – ' : ''}</>}
                   {u.note}
                 </div>
               </div>
@@ -1687,18 +1687,18 @@ function DependenciesBlock({ d, c }) {
 
 // ─ Block 9 – Risk register (heat) ──────────────────────────────────────────
 function RiskMatrixBlock({ rows, c }) {
-  const lvl = x => { const s = (x || '').toLowerCase(); return s.includes('выс') ? '#ef4444' : s.includes('сред') ? '#f59e0b' : s.includes('низ') ? '#10b981' : '#a1a1aa'; };
+  const lvl = x => { const s = (x || '').toLowerCase(); return s.includes('выс') ? '#ef4444' : s.includes('сред') ? '#f59e0b' : s.includes('низ') ? '#10b981' : 'var(--hm-text3)'; };
   return (
     <Block id="risks" accent={c} kicker="10 · РИСКИ · ВЕРОЯТНОСТЬ × ПОСЛЕДСТВИЯ">
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 560 }}>
           <thead><tr style={thRow}><th style={thCell}>РИСК</th><th style={thCell}>ВЕРОЯТ.</th><th style={thCell}>ПОСЛЕДСТВИЯ</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
           <tbody>{rows.map((r, i) => (
-            <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-              <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600, whiteSpace: 'nowrap' }}>{r.risk}</td>
+            <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+              <td style={{ ...tdCell, color: 'var(--hm-text)', fontWeight: 600, whiteSpace: 'nowrap' }}>{r.risk}</td>
               <td style={tdCell}><Badge text={r.prob} col={lvl(r.prob)} /></td>
               <td style={tdCell}><Badge text={r.impact} col={lvl(r.impact)} /></td>
-              <td style={{ ...tdCell, color: '#c4c4cc' }}>{r.note}</td>
+              <td style={{ ...tdCell, color: 'var(--hm-text2)' }}>{r.note}</td>
             </tr>))}</tbody>
         </table>
       </div>
@@ -1710,20 +1710,20 @@ function RiskMatrixBlock({ rows, c }) {
 function UniverseBlock({ rows, c }) {
   return (
     <Block id="universe" accent={c} kicker="11 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ">
-      <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 12 }}>
+      <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', lineHeight: 1.55, marginBottom: 12 }}>
         «Чистота ставки» (1–10) – насколько выручка компании зависит именно от этого звена: 10 = почти вся, 1 = крошечная доля большого бизнеса.
       </div>
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 640 }}>
           <thead><tr style={thRow}><th style={thCell}>КОМПАНИЯ</th><th style={thCell}>ТИКЕР</th><th style={thCell}>КАП.</th><th style={thCell}>ЭКСПОЗИЦИЯ</th><th style={thCell}>ЧИСТОТА СТАВКИ</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
           <tbody>{rows.map((r, i) => (
-            <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-              <td style={tdCell}><span style={{ color: '#fafafa', fontWeight: 600 }}>{r.company}</span>{r.note && <div style={{ fontSize: 10.5, color: '#a1a1aa', marginTop: 3, lineHeight: 1.5 }}>{r.note}</div>}</td>
-              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#a1a1aa', whiteSpace: 'nowrap' }}>{r.ticker}</td>
-              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#c4c4cc', whiteSpace: 'nowrap' }}>{r.mcap || '–'}</td>
-              <td style={{ ...tdCell, color: '#c4c4cc' }}>{r.exposure}</td>
+            <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+              <td style={tdCell}><span style={{ color: 'var(--hm-text)', fontWeight: 600 }}>{r.company}</span>{r.note && <div style={{ fontSize: 10.5, color: 'var(--hm-text3)', marginTop: 3, lineHeight: 1.5 }}>{r.note}</div>}</td>
+              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text3)', whiteSpace: 'nowrap' }}>{r.ticker}</td>
+              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text2)', whiteSpace: 'nowrap' }}>{r.mcap || '–'}</td>
+              <td style={{ ...tdCell, color: 'var(--hm-text2)' }}>{r.exposure}</td>
               <td style={tdCell}>{r.pureplay != null && <PurePlay v={r.pureplay} c={c} />}</td>
-              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#c4c4cc' }}>{r.valuation || '–'}</td>
+              <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text2)' }}>{r.valuation || '–'}</td>
             </tr>))}</tbody>
         </table>
       </div>
@@ -1738,7 +1738,7 @@ function ProfileBlock({ title, color, children }) {
   return (
     <div style={{ marginTop: 16 }}>
       <div style={{ fontSize: 9.5, color, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>{title}</div>
-      <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.75, marginTop: 6 }}>{children}</div>
+      <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.75, marginTop: 6 }}>{children}</div>
     </div>
   );
 }
@@ -1750,26 +1750,26 @@ function CompanyProfileModal({ profile, c, onClose, onJump }) {
   const jump = id => { onClose(); if (onJump) onJump(id); };
   return (
     <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(0,0,0,.62)', backdropFilter: 'blur(2px)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '40px 18px', overflowY: 'auto' }}>
-      <div onClick={e => e.stopPropagation()} style={{ maxWidth: 640, width: '100%', background: '#0f0f11', border: `1px solid ${c}44`, borderRadius: 16, padding: '24px 26px 28px', boxShadow: '0 24px 80px rgba(0,0,0,.72)' }}>
+      <div onClick={e => e.stopPropagation()} style={{ maxWidth: 640, width: '100%', background: 'var(--hm-panel)', border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 16, padding: '24px 26px 28px', boxShadow: '0 24px 80px rgba(0,0,0,.72)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
           <div>
-            <div style={{ fontSize: 20, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.2 }}>{profile.company}</div>
-            <div style={{ fontSize: 11.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>{profile.ticker}</div>
+            <div style={{ fontSize: 20, color: 'var(--hm-text)', fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.2 }}>{profile.company}</div>
+            <div style={{ fontSize: 11.5, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>{profile.ticker}</div>
           </div>
-          <button onClick={onClose} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#a1a1aa', fontSize: 24, lineHeight: 1, padding: 0 }} aria-label="Закрыть">×</button>
+          <button onClick={onClose} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--hm-text3)', fontSize: 24, lineHeight: 1, padding: 0 }} aria-label="Закрыть">×</button>
         </div>
         {profile.website && (
           <a href={profile.website} target="_blank" rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 13, fontSize: 12, color: c, textDecoration: 'none', border: `1px solid ${c}55`, borderRadius: 8, padding: '6px 12px', fontWeight: 600 }}>↗ Открыть сайт компании</a>
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 13, fontSize: 12, color: c, textDecoration: 'none', border: `1px solid color-mix(in srgb, ${c} 33%, transparent)`, borderRadius: 8, padding: '6px 12px', fontWeight: 600 }}>↗ Открыть сайт компании</a>
         )}
-        {profile.tagline && <div style={{ fontSize: 14, color: '#fafafa', fontWeight: 600, lineHeight: 1.55, marginTop: 16 }}>{profile.tagline}</div>}
-        {profile.overview && <div style={{ fontSize: 12.5, color: '#d4d4d8', lineHeight: 1.8, marginTop: 12 }}><RichText text={profile.overview} c={c} onJump={jump} /></div>}
+        {profile.tagline && <div style={{ fontSize: 14, color: 'var(--hm-text)', fontWeight: 600, lineHeight: 1.55, marginTop: 16 }}>{profile.tagline}</div>}
+        {profile.overview && <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.8, marginTop: 12 }}><RichText text={profile.overview} c={c} onJump={jump} /></div>}
         {fin.length > 0 && (
           <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(fin.length, 3)},1fr)`, gap: 8, marginTop: 16 }}>
             {fin.map((f, i) => (
-              <div key={i} style={{ background: '#151517', border: '1px solid #26262c', borderRadius: 10, padding: '10px 12px' }}>
-                <div style={{ fontSize: 15, color: '#fafafa', fontWeight: 700 }}>{f.v}</div>
-                <div style={{ fontSize: 10, color: '#a1a1aa', marginTop: 3, lineHeight: 1.3 }}>{f.l}</div>
+              <div key={i} style={{ background: '#151517', border: '1px solid var(--hm-border4)', borderRadius: 10, padding: '10px 12px' }}>
+                <div style={{ fontSize: 15, color: 'var(--hm-text)', fontWeight: 700 }}>{f.v}</div>
+                <div style={{ fontSize: 10, color: 'var(--hm-text3)', marginTop: 3, lineHeight: 1.3 }}>{f.l}</div>
               </div>
             ))}
           </div>
@@ -1779,21 +1779,21 @@ function CompanyProfileModal({ profile, c, onClose, onJump }) {
         {profile.moat?.length > 0 && (
           <div style={{ marginTop: 16 }}>
             <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>БАРЬЕР</div>
-            <ul style={{ margin: '8px 0 0', paddingLeft: 18, color: '#d4d4d8', fontSize: 12.5, lineHeight: 1.7 }}>{profile.moat.map((m, i) => <li key={i} style={{ marginBottom: 3 }}>{m}</li>)}</ul>
+            <ul style={{ margin: '8px 0 0', paddingLeft: 18, color: 'var(--hm-text2)', fontSize: 12.5, lineHeight: 1.7 }}>{profile.moat.map((m, i) => <li key={i} style={{ marginBottom: 3 }}>{m}</li>)}</ul>
           </div>
         )}
         {profile.risk && <ProfileBlock title="ГЛАВНЫЙ РИСК" color="#ef4444">{profile.risk}</ProfileBlock>}
         {profile.verdict && (
-          <div style={{ marginTop: 18, padding: '14px 16px', background: `${c}12`, border: `1px solid ${c}33`, borderRadius: 12 }}>
+          <div style={{ marginTop: 18, padding: '14px 16px', background: `color-mix(in srgb, ${c} 7%, transparent)`, border: `1px solid color-mix(in srgb, ${c} 20%, transparent)`, borderRadius: 12 }}>
             <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>ВЕРДИКТ</div>
-            <div style={{ fontSize: 13, color: '#fafafa', lineHeight: 1.65, marginTop: 6 }}>{profile.verdict}</div>
+            <div style={{ fontSize: 13, color: 'var(--hm-text)', lineHeight: 1.65, marginTop: 6 }}>{profile.verdict}</div>
           </div>
         )}
         {(profile.related || []).some(id => NODES[id]) && (
           <div style={{ marginTop: 16, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {profile.related.map(id => NODES[id] && (
               <span key={id} onClick={() => jump(id)}
-                style={{ fontSize: 11.5, color: c, cursor: 'pointer', border: `1px solid ${c}44`, borderRadius: 7, padding: '4px 9px' }}>→ {NODES[id].label}</span>
+                style={{ fontSize: 11.5, color: c, cursor: 'pointer', border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 7, padding: '4px 9px' }}>→ {NODES[id].label}</span>
             ))}
           </div>
         )}
@@ -1811,43 +1811,43 @@ function PicksBlock({ groups, c, takeaway, onJump }) {
         return (
           <div key={gi} style={{ marginBottom: gi < groups.length - 1 ? 24 : 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginBottom: 6 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#fafafa' }}>{g.group}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--hm-text)' }}>{g.group}</span>
               {g.badge && <Badge text={g.badge} col={gc} />}
             </div>
-            {g.note && <div style={{ fontSize: 11.5, color: '#71717a', lineHeight: 1.6, marginBottom: 12 }}>{g.note}</div>}
+            {g.note && <div style={{ fontSize: 11.5, color: 'var(--hm-text5)', lineHeight: 1.6, marginBottom: 12 }}>{g.note}</div>}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(290px,1fr))', gap: 10 }}>
               {g.rows.map((r, i) => {
                 const prof = DC_PROFILES[r.ticker];
                 return (
                 <div key={i} style={{ ...miniCard, padding: '14px 16px', borderLeft: `3px solid ${gc}` }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'baseline', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: 13, color: '#fafafa', fontWeight: 700 }}>{r.company}</span>
-                    <span style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', whiteSpace: 'nowrap' }}>{r.ticker}</span>
+                    <span style={{ fontSize: 13, color: 'var(--hm-text)', fontWeight: 700 }}>{r.company}</span>
+                    <span style={{ fontSize: 10.5, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', whiteSpace: 'nowrap' }}>{r.ticker}</span>
                   </div>
                   {(r.mcap || r.exposure) && (
-                    <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 4, fontFamily: 'ui-monospace,monospace' }}>
+                    <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', marginTop: 4, fontFamily: 'ui-monospace,monospace' }}>
                       {[r.mcap, r.exposure].filter(Boolean).join(' · ')}
                     </div>
                   )}
-                  {r.why && <div style={{ fontSize: 12, color: '#c4c4cc', lineHeight: 1.6, marginTop: 8 }}>{r.why}</div>}
+                  {r.why && <div style={{ fontSize: 12, color: 'var(--hm-text2)', lineHeight: 1.6, marginTop: 8 }}>{r.why}</div>}
                   {r.priced && (
-                    <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>
+                    <div style={{ fontSize: 11.5, color: 'var(--hm-text3)', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid var(--hm-border4)' }}>
                       <span style={{ color: '#f59e0b', fontWeight: 700 }}>Уже в цене: </span>{r.priced}
                     </div>
                   )}
                   {r.risk && (
-                    <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>
+                    <div style={{ fontSize: 11.5, color: 'var(--hm-text3)', lineHeight: 1.55, marginTop: 8, paddingTop: 8, borderTop: '1px solid var(--hm-border4)' }}>
                       <span style={{ color: '#ef4444', fontWeight: 700 }}>Риск: </span>{r.risk}
                     </div>
                   )}
                   {prof && (
-                    <div style={{ display: 'flex', gap: 8, marginTop: 11, paddingTop: 11, borderTop: '1px solid #1f1f23', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: 8, marginTop: 11, paddingTop: 11, borderTop: '1px solid var(--hm-border4)', flexWrap: 'wrap' }}>
                       <button onClick={() => setOpenTicker(r.ticker)}
-                        style={{ background: `${gc}1a`, border: `1px solid ${gc}55`, borderRadius: 7, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 11, fontWeight: 600, padding: '4px 10px' }}
-                        onMouseEnter={e => e.currentTarget.style.background = `${gc}33`} onMouseLeave={e => e.currentTarget.style.background = `${gc}1a`}>Подробнее о компании →</button>
+                        style={{ background: `color-mix(in srgb, ${gc} 10%, transparent)`, border: `1px solid color-mix(in srgb, ${gc} 33%, transparent)`, borderRadius: 7, cursor: 'pointer', color: 'var(--hm-text)', font: 'inherit', fontSize: 11, fontWeight: 600, padding: '4px 10px' }}
+                        onMouseEnter={e => e.currentTarget.style.background = `color-mix(in srgb, ${gc} 20%, transparent)`} onMouseLeave={e => e.currentTarget.style.background = `color-mix(in srgb, ${gc} 10%, transparent)`}>Подробнее о компании →</button>
                       {prof.website && (
                         <a href={prof.website} target="_blank" rel="noopener noreferrer"
-                          style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11, color: '#a1a1aa', textDecoration: 'none', border: '1px solid #2a2a30', borderRadius: 7, padding: '4px 9px' }}>↗ Сайт</a>
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11, color: 'var(--hm-text3)', textDecoration: 'none', border: '1px solid var(--hm-border5)', borderRadius: 7, padding: '4px 9px' }}>↗ Сайт</a>
                       )}
                     </div>
                   )}
@@ -1876,11 +1876,11 @@ function MonitoringBlock({ d, c }) {
       {d.metrics?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
           {typeof d.metrics[0] === 'string' ? (
-            <ul style={{ margin: 0, paddingLeft: 16, color: '#d4d4d8', fontSize: 12.5, lineHeight: 1.7 }}>{d.metrics.map((m, i) => <li key={i} style={{ marginBottom: 4 }}>{m}</li>)}</ul>
+            <ul style={{ margin: 0, paddingLeft: 16, color: 'var(--hm-text2)', fontSize: 12.5, lineHeight: 1.7 }}>{d.metrics.map((m, i) => <li key={i} style={{ marginBottom: 4 }}>{m}</li>)}</ul>
           ) : (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
               <thead><tr style={thRow}><th style={thCell}>МЕТРИКА</th><th style={thCell}>ИСТОЧНИК / ЧАСТОТА</th></tr></thead>
-              <tbody>{d.metrics.map((m, i) => <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}><td style={{ ...tdCell, color: '#e4e4e7' }}>{m.metric}</td><td style={{ ...tdCell, color: '#a1a1aa' }}>{m.source}</td></tr>)}</tbody>
+              <tbody>{d.metrics.map((m, i) => <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}><td style={{ ...tdCell, color: 'var(--hm-text2)' }}>{m.metric}</td><td style={{ ...tdCell, color: 'var(--hm-text3)' }}>{m.source}</td></tr>)}</tbody>
             </table>
           )}
         </div>
@@ -1888,16 +1888,16 @@ function MonitoringBlock({ d, c }) {
       {ladderCols.length > 0 ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 10 }}>
           {ladderCols.map(col => (
-            <div key={col.key} style={{ background: `${col.col}0c`, border: `1px solid ${col.col}30`, borderRadius: 10, padding: '13px 15px' }}>
+            <div key={col.key} style={{ background: `${col.col}0c`, border: `1px solid color-mix(in srgb, ${col.col} 19%, transparent)`, borderRadius: 10, padding: '13px 15px' }}>
               <div style={{ fontSize: 9, color: col.col, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.12em', fontWeight: 700, marginBottom: 9 }}>{col.title}</div>
-              <ul style={{ margin: 0, paddingLeft: 15, color: '#d4d4d8', fontSize: 11.5, lineHeight: 1.6 }}>{ladder[col.key].map((x, i) => <li key={i} style={{ marginBottom: 5 }}>{x}</li>)}</ul>
+              <ul style={{ margin: 0, paddingLeft: 15, color: 'var(--hm-text2)', fontSize: 11.5, lineHeight: 1.6 }}>{ladder[col.key].map((x, i) => <li key={i} style={{ marginBottom: 5 }}>{x}</li>)}</ul>
             </div>
           ))}
         </div>
       ) : d.canary?.length > 0 && (
         <div style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 10, padding: '14px 16px' }}>
           <div style={{ fontSize: 9, color: '#ef4444', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 8 }}>ПЕРВЫЕ СИГНАЛЫ, ЧТО ТЕЗИС ЛОМАЕТСЯ – ПОРА ВЫХОДИТЬ</div>
-          <ul style={{ margin: 0, paddingLeft: 16, color: '#d4d4d8', fontSize: 12.5, lineHeight: 1.7 }}>{d.canary.map((x, i) => <li key={i} style={{ marginBottom: 4 }}>{x}</li>)}</ul>
+          <ul style={{ margin: 0, paddingLeft: 16, color: 'var(--hm-text2)', fontSize: 12.5, lineHeight: 1.7 }}>{d.canary.map((x, i) => <li key={i} style={{ marginBottom: 4 }}>{x}</li>)}</ul>
         </div>
       )}
     </Block>
@@ -1907,7 +1907,7 @@ function MonitoringBlock({ d, c }) {
 // ─ Block 12 – Scenarios (bull / bear) ──────────────────────────────────────
 function BullBear({ v, c }) {
   const Col = ({ title, items, color }) => (
-    <div style={{ background: `${color}0c`, border: `1px solid ${color}30`, borderRadius: 10, padding: '16px 18px' }}>
+    <div style={{ background: `${color}0c`, border: `1px solid color-mix(in srgb, ${color} 19%, transparent)`, borderRadius: 10, padding: '16px 18px' }}>
       <div style={{ fontSize: 9.5, color, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 12 }}>{title}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {items.map((it, i) => {
@@ -1915,8 +1915,8 @@ function BullBear({ v, c }) {
           const confirm = typeof it === 'string' ? null : it.confirm;
           return (
             <div key={i}>
-              <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.55, fontWeight: 600 }}>{point}</div>
-              {confirm && <div style={{ fontSize: 11, color: '#a1a1aa', lineHeight: 1.5, marginTop: 4 }}><span style={{ color, fontWeight: 700 }}>Подтвердить: </span>{confirm}</div>}
+              <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.55, fontWeight: 600 }}>{point}</div>
+              {confirm && <div style={{ fontSize: 11, color: 'var(--hm-text3)', lineHeight: 1.5, marginTop: 4 }}><span style={{ color, fontWeight: 700 }}>Подтвердить: </span>{confirm}</div>}
             </div>
           );
         })}
@@ -1936,39 +1936,39 @@ function BullBear({ v, c }) {
 // ─ NodeDetail – assembles the memo ─────────────────────────────────────────
 // Dated "recent developments" block – current debate / news, verdict per story.
 function UpdateBlock({ d, c, news }) {
-  const toneCol = t => ({ calm: '#10b981', positive: '#10b981', watch: '#f59e0b', mixed: '#f59e0b', negative: '#ef4444' }[t] || '#a1a1aa');
+  const toneCol = t => ({ calm: '#10b981', positive: '#10b981', watch: '#f59e0b', mixed: '#f59e0b', negative: '#ef4444' }[t] || 'var(--hm-text3)');
   return (
     <Block id="update" accent={c} kicker="СВЕЖИЙ РАЗБОР · ЧТО ПРОИСХОДИТ И НОВОСТИ" lead={d.asOf}>
-      {d.headline && <div style={{ fontSize: 15.5, color: '#fafafa', fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>{d.headline}</div>}
-      {d.summary && <div style={{ fontSize: 13, color: '#c4c4cc', lineHeight: 1.7, marginBottom: 14 }}>{d.summary}</div>}
+      {d.headline && <div style={{ fontSize: 15.5, color: 'var(--hm-text)', fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>{d.headline}</div>}
+      {d.summary && <div style={{ fontSize: 13, color: 'var(--hm-text2)', lineHeight: 1.7, marginBottom: 14 }}>{d.summary}</div>}
       {d.stories?.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {d.stories.map((s, i) => (
             <div key={i} style={{ ...miniCard, padding: '14px 16px' }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
-                <span style={{ fontSize: 9.5, color: s.date ? '#71717a' : '#52525b', fontFamily: 'ui-monospace,monospace', fontWeight: 700 }}>{s.date || String(i + 1).padStart(2, '0')}</span>
+                <span style={{ fontSize: 9.5, color: s.date ? 'var(--hm-text5)' : 'var(--hm-text6)', fontFamily: 'ui-monospace,monospace', fontWeight: 700 }}>{s.date || String(i + 1).padStart(2, '0')}</span>
                 {s.source && <span style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', fontWeight: 700 }}>{s.source}</span>}
-                <span style={{ color: '#fafafa', fontWeight: 700, fontSize: 13 }}>{s.title}</span>
+                <span style={{ color: 'var(--hm-text)', fontWeight: 700, fontSize: 13 }}>{s.title}</span>
                 {s.verdict && <Badge text={s.verdict} col={toneCol(s.tone)} />}
               </div>
-              <div style={{ fontSize: 12.5, color: '#c4c4cc', lineHeight: 1.65 }}>{s.detail}</div>
+              <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{s.detail}</div>
             </div>
           ))}
         </div>
       )}
       {news?.length > 0 && !(d.stories?.length > 0) && (
-        <div style={{ marginTop: 16, paddingTop: 14, borderTop: '1px solid #1f1f23' }}>
+        <div style={{ marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--hm-border4)' }}>
           <div style={{ ...miniKicker, marginBottom: 4 }}>ЛЕНТА · ДАТЫ И ИСТОЧНИКИ</div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {news.map((n, i) => (
-              <div key={i} style={{ padding: '12px 0', borderTop: i ? '1px solid #1f1f23' : 'none', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+              <div key={i} style={{ padding: '12px 0', borderTop: i ? '1px solid var(--hm-border4)' : 'none', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                 <div style={{ minWidth: 92 }}>
-                  <div style={{ fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>{n.date}</div>
+                  <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace' }}>{n.date}</div>
                   {n.source && <div style={{ fontSize: 9.5, color: c, marginTop: 4, fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{n.source}</div>}
                 </div>
                 <div style={{ flex: 1, minWidth: 240 }}>
-                  <div style={{ fontSize: 13, color: '#fafafa', fontWeight: 600, lineHeight: 1.4, marginBottom: n.blurb ? 4 : 0 }}>{n.title}</div>
-                  {n.blurb && <div style={{ fontSize: 11.5, color: '#a1a1aa', lineHeight: 1.55 }}>{n.blurb}</div>}
+                  <div style={{ fontSize: 13, color: 'var(--hm-text)', fontWeight: 600, lineHeight: 1.4, marginBottom: n.blurb ? 4 : 0 }}>{n.title}</div>
+                  {n.blurb && <div style={{ fontSize: 11.5, color: 'var(--hm-text3)', lineHeight: 1.55 }}>{n.blurb}</div>}
                 </div>
               </div>
             ))}
@@ -1976,9 +1976,9 @@ function UpdateBlock({ d, c, news }) {
         </div>
       )}
       {d.bottomLine && (
-        <div style={{ marginTop: 14, padding: '14px 16px', background: `${c}10`, borderLeft: `3px solid ${c}`, borderRadius: '0 9px 9px 0' }}>
+        <div style={{ marginTop: 14, padding: '14px 16px', background: `color-mix(in srgb, ${c} 6%, transparent)`, borderLeft: `3px solid ${c}`, borderRadius: '0 9px 9px 0' }}>
           <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 }}>ИТОГ</div>
-          <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.7 }}>{d.bottomLine}</div>
+          <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.7 }}>{d.bottomLine}</div>
         </div>
       )}
     </Block>
@@ -1991,14 +1991,14 @@ function NewsBlock({ items, c }) {
     <Block id="news" accent={c} kicker="НОВОСТИ ЗВЕНА">
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {items.map((n, i) => (
-          <div key={i} style={{ padding: '14px 0', borderTop: i ? '1px solid #1f1f23' : 'none', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+          <div key={i} style={{ padding: '14px 0', borderTop: i ? '1px solid var(--hm-border4)' : 'none', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
             <div style={{ minWidth: 92 }}>
-              <div style={{ fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>{n.date}</div>
+              <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace' }}>{n.date}</div>
               {n.source && <div style={{ fontSize: 9.5, color: c, marginTop: 4, fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{n.source}</div>}
             </div>
             <div style={{ flex: 1, minWidth: 240 }}>
-              <div style={{ fontSize: 13.5, color: '#fafafa', fontWeight: 600, lineHeight: 1.4, marginBottom: n.blurb ? 5 : 0 }}>{n.title}</div>
-              {n.blurb && <div style={{ fontSize: 12, color: '#a1a1aa', lineHeight: 1.6 }}>{n.blurb}</div>}
+              <div style={{ fontSize: 13.5, color: 'var(--hm-text)', fontWeight: 600, lineHeight: 1.4, marginBottom: n.blurb ? 5 : 0 }}>{n.title}</div>
+              {n.blurb && <div style={{ fontSize: 12, color: 'var(--hm-text3)', lineHeight: 1.6 }}>{n.blurb}</div>}
             </div>
           </div>
         ))}
@@ -2016,22 +2016,22 @@ function MentalModelBlock({ d, c }) {
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: d.framework || d.revenueFormula ? 16 : 0 }}>
           {chain.map((s, i) => (
             <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 12.5, fontWeight: 700, color: '#e4e4e7', background: `${c}12`, border: `1px solid ${c}3a`, borderRadius: 8, padding: '8px 12px', lineHeight: 1.35 }}>{s}</span>
+              <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--hm-text2)', background: `color-mix(in srgb, ${c} 7%, transparent)`, border: `1px solid ${c}3a`, borderRadius: 8, padding: '8px 12px', lineHeight: 1.35 }}>{s}</span>
               {i < chain.length - 1 && <span style={{ color: c, fontSize: 16, fontWeight: 700 }}>→</span>}
             </span>
           ))}
         </div>
       )}
       {d.framework && (
-        <div style={{ padding: '13px 16px', background: `${c}10`, borderLeft: `3px solid ${c}`, borderRadius: '0 9px 9px 0', marginBottom: d.revenueFormula || d.drivers?.length ? 14 : 0 }}>
+        <div style={{ padding: '13px 16px', background: `color-mix(in srgb, ${c} 6%, transparent)`, borderLeft: `3px solid ${c}`, borderRadius: '0 9px 9px 0', marginBottom: d.revenueFormula || d.drivers?.length ? 14 : 0 }}>
           <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 6 }}>ЧТО ЗАПОМНИТЬ</div>
-          <div style={{ fontSize: 13.5, color: '#fafafa', lineHeight: 1.65, fontWeight: 600 }}>{d.framework}</div>
+          <div style={{ fontSize: 13.5, color: 'var(--hm-text)', lineHeight: 1.65, fontWeight: 600 }}>{d.framework}</div>
         </div>
       )}
       {d.revenueFormula && (
         <div style={{ ...cardBg, padding: '14px 18px', marginBottom: d.drivers?.length ? 12 : 0 }}>
           <div style={{ ...miniKicker, marginBottom: 7 }}>ИЗ ЧЕГО СКЛАДЫВАЕТСЯ ВЫРУЧКА</div>
-          <div style={{ fontSize: 13.5, color: '#e4e4e7', fontFamily: 'ui-monospace,monospace', lineHeight: 1.6 }}>{d.revenueFormula}</div>
+          <div style={{ fontSize: 13.5, color: 'var(--hm-text2)', fontFamily: 'ui-monospace,monospace', lineHeight: 1.6 }}>{d.revenueFormula}</div>
         </div>
       )}
       {d.drivers?.length > 0 && (
@@ -2039,8 +2039,8 @@ function MentalModelBlock({ d, c }) {
           {d.drivers.map((v, i) => (
             <div key={i} style={miniCard}>
               <div style={{ display: 'flex', gap: 8, alignItems: 'baseline', flexWrap: 'wrap', marginBottom: 5 }}>
-                <span style={{ fontSize: 12.5, color: '#fafafa', fontWeight: 700 }}>{v.var}</span>
-                {v.weight && <Badge text={v.weight} col={/главн|ключ/i.test(v.weight) ? '#10b981' : '#a1a1aa'} />}
+                <span style={{ fontSize: 12.5, color: 'var(--hm-text)', fontWeight: 700 }}>{v.var}</span>
+                {v.weight && <Badge text={v.weight} col={/главн|ключ/i.test(v.weight) ? '#10b981' : 'var(--hm-text3)'} />}
               </div>
               <div style={miniBody}>{v.note}</div>
             </div>
@@ -2056,13 +2056,13 @@ function ProblemsBlock({ d, c }) {
   const items = d.items || [];
   return (
     <Block id="problems" takeaway={d.takeaway} accent={c} kicker="ГЛАВНАЯ ПРОБЛЕМА ОТРАСЛИ · КТО ЛУЧШЕ ВСЕХ ЕЁ РЕШАЕТ">
-      {d.intro && <div style={{ fontSize: 13, color: '#c4c4cc', lineHeight: 1.7, marginBottom: 14 }}>{d.intro}</div>}
+      {d.intro && <div style={{ fontSize: 13, color: 'var(--hm-text2)', lineHeight: 1.7, marginBottom: 14 }}>{d.intro}</div>}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {items.map((it, i) => (
           <div key={i} style={{ ...cardBg, padding: '16px 18px', borderLeft: '3px solid #ef4444' }}>
             <div style={{ display: 'flex', gap: 10, alignItems: 'baseline', marginBottom: 12, flexWrap: 'wrap' }}>
               <span style={{ fontSize: 9.5, color: '#ef4444', fontFamily: 'ui-monospace,monospace', fontWeight: 700, letterSpacing: '0.12em', whiteSpace: 'nowrap' }}>{items.length === 1 ? 'ГЛАВНОЕ ОГРАНИЧЕНИЕ ОТРАСЛИ' : `ПРОБЛЕМА ${String(i + 1).padStart(2, '0')}`}</span>
-              <span style={{ fontSize: 13.5, color: '#fafafa', fontWeight: 700, lineHeight: 1.45 }}>{it.problem}</span>
+              <span style={{ fontSize: 13.5, color: 'var(--hm-text)', fontWeight: 700, lineHeight: 1.45 }}>{it.problem}</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 12 }}>
               {it.solution && <div><div style={{ ...miniKicker, color: '#22d3ee', marginBottom: 5 }}>КАК ПЛАНИРУЮТ РЕШАТЬ</div><div style={miniBody}>{it.solution}</div></div>}
@@ -2082,7 +2082,7 @@ function MoatBreakdownBlock({ d, c }) {
   const trendWord = t => t === 'up' ? 'крепнет' : t === 'down' ? 'слабеет' : 'стабильно';
   return (
     <Block id="moat" takeaway={d.takeaway} accent={c} kicker="04 · ИЗ ЧЕГО СОСТОИТ ЗАЩИТА">
-      <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 14 }}>
+      <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', lineHeight: 1.55, marginBottom: 14 }}>
         Один балл «рва» ничего не говорит. Разбираем защиту по составляющим: где 9–10 – почти неприступно, где ниже – уязвимо. Стрелка – крепнет источник преимущества или слабеет.
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -2093,13 +2093,13 @@ function MoatBreakdownBlock({ d, c }) {
           return (
             <div key={i} style={{ ...miniCard, padding: '13px 16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 10, marginBottom: 7, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 13, color: '#fafafa', fontWeight: 700 }}>{m.factor}</span>
+                <span style={{ fontSize: 13, color: 'var(--hm-text)', fontWeight: 700 }}>{m.factor}</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, whiteSpace: 'nowrap' }}>
                   <span style={{ color: g.c, fontSize: 11, fontFamily: 'ui-monospace,monospace' }}>{g.s} {trendWord(m.trend)}</span>
-                  <span style={{ fontSize: 14, color: '#fafafa', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{m.score}<span style={{ color: '#52525b', fontSize: 11 }}>/10</span></span>
+                  <span style={{ fontSize: 14, color: 'var(--hm-text)', fontWeight: 700, fontFamily: 'ui-monospace,monospace' }}>{m.score}<span style={{ color: 'var(--hm-text6)', fontSize: 11 }}>/10</span></span>
                 </span>
               </div>
-              <div style={{ height: 6, borderRadius: 3, background: '#1f1f23', overflow: 'hidden', marginBottom: 8 }}>
+              <div style={{ height: 6, borderRadius: 3, background: 'var(--hm-border4)', overflow: 'hidden', marginBottom: 8 }}>
                 <div style={{ width: (Math.max(0, Math.min(10, n)) * 10) + '%', height: '100%', background: col, borderRadius: 3 }} />
               </div>
               {m.note && <div style={miniBody}>{m.note}</div>}
@@ -2120,21 +2120,21 @@ function ExpectationsBlock({ d, c }) {
       {d.impliedGrowth && (
         <div style={{ ...cardBg, padding: '14px 18px', marginBottom: 14 }}>
           <div style={{ ...miniKicker, marginBottom: 6 }}>КАКОЙ РОСТ УЖЕ ЗАЛОЖЕН В ЦЕНУ</div>
-          <div style={{ fontSize: 13.5, color: '#e4e4e7', lineHeight: 1.65 }}>{d.impliedGrowth}</div>
+          <div style={{ fontSize: 13.5, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{d.impliedGrowth}</div>
         </div>
       )}
       {(d.marketBelieves || d.weThink) && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 12, marginBottom: 14 }}>
           {d.marketBelieves && (
-            <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #27272a', borderRadius: 10, padding: '14px 16px' }}>
+            <div style={{ background: 'var(--hm-surface)', border: '1px solid var(--hm-border5)', borderRadius: 10, padding: '14px 16px' }}>
               <div style={{ ...miniKicker, marginBottom: 7 }}>РЫНОК СЧИТАЕТ</div>
-              <div style={{ fontSize: 12.5, color: '#c4c4cc', lineHeight: 1.65 }}>{d.marketBelieves}</div>
+              <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{d.marketBelieves}</div>
             </div>
           )}
           {d.weThink && (
             <div style={{ background: `${c}0c`, border: `1px solid ${c}3a`, borderRadius: 10, padding: '14px 16px' }}>
               <div style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 7 }}>НАШ ВЗГЛЯД · В ЧЁМ РАСХОЖДЕНИЕ</div>
-              <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.65 }}>{d.weThink}</div>
+              <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{d.weThink}</div>
             </div>
           )}
         </div>
@@ -2144,19 +2144,19 @@ function ExpectationsBlock({ d, c }) {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 420 }}>
             <thead><tr style={thRow}><th style={thCell}>МЕТРИКА</th><th style={thCell}>СЕЙЧАС</th><th style={thCell}>ИСТОРИЯ / НОРМА</th><th style={thCell}>ЧТО ЭТО ЗНАЧИТ</th></tr></thead>
             <tbody>{d.metrics.map((m, i) => (
-              <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>
-                <td style={{ ...tdCell, color: '#fafafa', fontWeight: 600 }}>{m.label}</td>
-                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#e4e4e7' }}>{m.now}</td>
-                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: '#a1a1aa' }}>{m.history}</td>
-                <td style={{ ...tdCell, color: '#c4c4cc' }}>{m.note}</td>
+              <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+                <td style={{ ...tdCell, color: 'var(--hm-text)', fontWeight: 600 }}>{m.label}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text2)' }}>{m.now}</td>
+                <td style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text3)' }}>{m.history}</td>
+                <td style={{ ...tdCell, color: 'var(--hm-text2)' }}>{m.note}</td>
               </tr>))}</tbody>
           </table>
         </div>
       )}
       {d.verdict && (
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: `${vCol}12`, border: `1px solid ${vCol}44`, borderRadius: 10, padding: '10px 16px' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: `color-mix(in srgb, ${vCol} 7%, transparent)`, border: `1px solid color-mix(in srgb, ${vCol} 27%, transparent)`, borderRadius: 10, padding: '10px 16px' }}>
           <span style={{ fontSize: 9, color: vCol, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>ВЕРДИКТ ПО ЦЕНЕ</span>
-          <span style={{ fontSize: 14, color: '#fafafa', fontWeight: 700 }}>{d.verdict}</span>
+          <span style={{ fontSize: 14, color: 'var(--hm-text)', fontWeight: 700 }}>{d.verdict}</span>
         </div>
       )}
     </Block>
@@ -2174,7 +2174,7 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
     { key: 'ret', label: 'Доходность/год' },
   ];
   const Col = ({ title, items, color }) => (
-    <div style={{ background: `${color}0c`, border: `1px solid ${color}30`, borderRadius: 10, padding: '16px 18px' }}>
+    <div style={{ background: `${color}0c`, border: `1px solid color-mix(in srgb, ${color} 19%, transparent)`, borderRadius: 10, padding: '16px 18px' }}>
       <div style={{ fontSize: 9.5, color, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 12 }}>{title}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {items.map((it, i) => {
@@ -2182,8 +2182,8 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
           const confirm = typeof it === 'string' ? null : it.confirm;
           return (
             <div key={i}>
-              <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.55, fontWeight: 600 }}>{point}</div>
-              {confirm && <div style={{ fontSize: 11, color: '#a1a1aa', lineHeight: 1.5, marginTop: 4 }}><span style={{ color, fontWeight: 700 }}>Подтвердить: </span>{confirm}</div>}
+              <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.55, fontWeight: 600 }}>{point}</div>
+              {confirm && <div style={{ fontSize: 11, color: 'var(--hm-text3)', lineHeight: 1.5, marginTop: 4 }}><span style={{ color, fontWeight: 700 }}>Подтвердить: </span>{confirm}</div>}
             </div>
           );
         })}
@@ -2199,31 +2199,31 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
               <tr style={thRow}>
                 <th style={thCell}></th>
                 {cases.map((cs, i) => (
-                  <th key={i} style={{ ...thCell, color: cs.color || '#a1a1aa', fontSize: 12, textTransform: 'none', letterSpacing: 0 }}>
-                    {cs.name}{cs.prob ? <span style={{ color: '#52525b', fontWeight: 400 }}> · {cs.prob}</span> : null}
+                  <th key={i} style={{ ...thCell, color: cs.color || 'var(--hm-text3)', fontSize: 12, textTransform: 'none', letterSpacing: 0 }}>
+                    {cs.name}{cs.prob ? <span style={{ color: 'var(--hm-text6)', fontWeight: 400 }}> · {cs.prob}</span> : null}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {rows.filter(r => r.key !== 'prob').map(r => (
-                <tr key={r.key} style={{ borderTop: '1px solid #1f1f23' }}>
-                  <td style={{ ...tdCell, color: '#71717a', fontFamily: 'ui-monospace,monospace', fontSize: 10.5, whiteSpace: 'nowrap' }}>{r.label}</td>
+                <tr key={r.key} style={{ borderTop: '1px solid var(--hm-border4)' }}>
+                  <td style={{ ...tdCell, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', fontSize: 10.5, whiteSpace: 'nowrap' }}>{r.label}</td>
                   {cases.map((cs, i) => (
-                    <td key={i} style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: r.key === 'ret' ? (cs.color || '#e4e4e7') : '#d4d4d8', fontWeight: r.key === 'ret' ? 700 : 400 }}>{cs[r.key] || '–'}</td>
+                    <td key={i} style={{ ...tdCell, fontFamily: 'ui-monospace,monospace', color: r.key === 'ret' ? (cs.color || 'var(--hm-text2)') : 'var(--hm-text2)', fontWeight: r.key === 'ret' ? 700 : 400 }}>{cs[r.key] || '–'}</td>
                   ))}
                 </tr>
               ))}
-              <tr style={{ borderTop: '1px solid #1f1f23' }}>
-                <td style={{ ...tdCell, color: '#71717a', fontFamily: 'ui-monospace,monospace', fontSize: 10.5 }}>Драйвер</td>
-                {cases.map((cs, i) => <td key={i} style={{ ...tdCell, color: '#a1a1aa', fontSize: 11 }}>{cs.note || '–'}</td>)}
+              <tr style={{ borderTop: '1px solid var(--hm-border4)' }}>
+                <td style={{ ...tdCell, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', fontSize: 10.5 }}>Драйвер</td>
+                {cases.map((cs, i) => <td key={i} style={{ ...tdCell, color: 'var(--hm-text3)', fontSize: 11 }}>{cs.note || '–'}</td>)}
               </tr>
             </tbody>
           </table>
           {scenarios?.expectedReturn && (
-            <div style={{ marginTop: 12, display: 'inline-flex', alignItems: 'center', gap: 10, background: `${c}12`, border: `1px solid ${c}44`, borderRadius: 10, padding: '10px 16px' }}>
+            <div style={{ marginTop: 12, display: 'inline-flex', alignItems: 'center', gap: 10, background: `color-mix(in srgb, ${c} 7%, transparent)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 10, padding: '10px 16px' }}>
               <span style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>ВЗВЕШЕННАЯ ДОХОДНОСТЬ</span>
-              <span style={{ fontSize: 14, color: '#fafafa', fontWeight: 700 }}>{scenarios.expectedReturn}</span>
+              <span style={{ fontSize: 14, color: 'var(--hm-text)', fontWeight: 700 }}>{scenarios.expectedReturn}</span>
             </div>
           )}
         </div>
@@ -2247,18 +2247,18 @@ function ThesisHero({ bigIdea, c, highlight, originLabel, onBackOrigin }) {
   return (
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: 'relative', marginBottom: 8 }}>
       {highlight && <style>{`
-        @keyframes hero-glow-${cid} { 0%{box-shadow:0 0 0 0 transparent} 7%{box-shadow:0 0 0 2px ${c},0 0 28px ${c}55} 72%{box-shadow:0 0 0 2px ${c},0 0 28px ${c}55} 100%{box-shadow:0 0 0 0 transparent} }
+        @keyframes hero-glow-${cid} { 0%{box-shadow:0 0 0 0 transparent} 7%{box-shadow:0 0 0 2px ${c},0 0 28px color-mix(in srgb, ${c} 33%, transparent)} 72%{box-shadow:0 0 0 2px ${c},0 0 28px color-mix(in srgb, ${c} 33%, transparent)} 100%{box-shadow:0 0 0 0 transparent} }
         @keyframes hero-tint { 0%{opacity:0} 7%{opacity:.13} 72%{opacity:.13} 100%{opacity:0} }
       `}</style>}
       {highlight && originLabel && hover && (
         <button onClick={onBackOrigin}
-          style={{ position: 'absolute', top: -13, right: 6, zIndex: 3, background: '#18181b', border: `1px solid ${c}88`, borderRadius: 7, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 11, padding: '3px 9px', display: 'inline-flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap', boxShadow: '0 2px 12px rgba(0,0,0,.55)' }}>↩ Назад к «{originLabel}»</button>
+          style={{ position: 'absolute', top: -13, right: 6, zIndex: 3, background: 'var(--hm-panel)', border: `1px solid color-mix(in srgb, ${c} 53%, transparent)`, borderRadius: 7, cursor: 'pointer', color: 'var(--hm-text)', font: 'inherit', fontSize: 11, padding: '3px 9px', display: 'inline-flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap', boxShadow: '0 2px 12px rgba(0,0,0,.55)' }}>↩ Назад к «{originLabel}»</button>
       )}
-      <div style={{ position: 'relative', overflow: 'hidden', background: `linear-gradient(180deg, ${c}1e 0%, #0d0d0e 72%)`, border: `1px solid ${c}44`, borderRadius: 16, padding: '26px 30px', animation: highlight ? `hero-glow-${cid} 5200ms ease forwards` : undefined }}>
+      <div style={{ position: 'relative', overflow: 'hidden', background: `linear-gradient(180deg, ${c}1e 0%, var(--hm-bg2) 72%)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 16, padding: '26px 30px', animation: highlight ? `hero-glow-${cid} 5200ms ease forwards` : undefined }}>
         {highlight && <div style={{ position: 'absolute', inset: 0, background: c, borderRadius: 16, pointerEvents: 'none', zIndex: 0, animation: 'hero-tint 5200ms ease forwards' }} />}
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС</div>
-          <div style={{ fontSize: 19, color: '#fafafa', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
+          <div style={{ fontSize: 19, color: 'var(--hm-text)', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
         </div>
       </div>
     </div>
@@ -2276,11 +2276,11 @@ function RichText({ text, c, onJump }) {
       const label = (bits[1] || bits[0]).trim();
       const target = bits[2] ? bits[2].trim() : null; // optional: paragraph to land on in the destination
       if (/^https?:\/\//i.test(id)) return (
-        <a key={i} href={id} target="_blank" rel="noopener noreferrer" style={{ color: c, textDecoration: 'none', fontWeight: 600, borderBottom: `1px dotted ${c}88` }}
+        <a key={i} href={id} target="_blank" rel="noopener noreferrer" style={{ color: c, textDecoration: 'none', fontWeight: 600, borderBottom: `1px dotted color-mix(in srgb, ${c} 53%, transparent)` }}
           onMouseEnter={e => e.currentTarget.style.borderBottomStyle = 'solid'}
           onMouseLeave={e => e.currentTarget.style.borderBottomStyle = 'dotted'}>{label} ↗</a>);
       if (onJump && NODES[id]) return (
-        <span key={i} onClick={() => onJump(id, target)} style={{ color: c, cursor: 'pointer', fontWeight: 600, borderBottom: `1px dotted ${c}88` }}
+        <span key={i} onClick={() => onJump(id, target)} style={{ color: c, cursor: 'pointer', fontWeight: 600, borderBottom: `1px dotted color-mix(in srgb, ${c} 53%, transparent)` }}
           onMouseEnter={e => e.currentTarget.style.borderBottomStyle = 'solid'}
           onMouseLeave={e => e.currentTarget.style.borderBottomStyle = 'dotted'}>{label}</span>);
       return <span key={i}>{label}</span>;
@@ -2291,25 +2291,25 @@ function RichText({ text, c, onJump }) {
 
 function NarrativeEl({ el, c, onJump }) {
   const k = el.k;
-  if (k === 'h') return <h3 style={{ fontSize: 20, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.3, margin: '36px 0 14px' }}>{el.t}</h3>;
-  if (k === 'p') return <div style={{ fontSize: el.lead ? 15.5 : 14.5, color: el.lead ? '#fafafa' : '#d4d4d8', lineHeight: 1.85, margin: '0 0 17px', fontWeight: el.lead ? 600 : 400 }}><RichText text={el.t} c={c} onJump={onJump} /></div>;
+  if (k === 'h') return <h3 style={{ fontSize: 20, color: 'var(--hm-text)', fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.3, margin: '36px 0 14px' }}>{el.t}</h3>;
+  if (k === 'p') return <div style={{ fontSize: el.lead ? 15.5 : 14.5, color: el.lead ? 'var(--hm-text)' : 'var(--hm-text2)', lineHeight: 1.85, margin: '0 0 17px', fontWeight: el.lead ? 600 : 400 }}><RichText text={el.t} c={c} onJump={onJump} /></div>;
   if (k === 'quote') return (
     <div style={{ borderLeft: `3px solid ${c}`, background: `${c}0e`, borderRadius: '0 10px 10px 0', padding: '16px 20px', margin: '8px 0 22px' }}>
-      <div style={{ fontSize: 16, color: '#fafafa', lineHeight: 1.6, fontWeight: 600, fontStyle: 'italic' }}><RichText text={el.t} c={c} onJump={onJump} /></div>
+      <div style={{ fontSize: 16, color: 'var(--hm-text)', lineHeight: 1.6, fontWeight: 600, fontStyle: 'italic' }}><RichText text={el.t} c={c} onJump={onJump} /></div>
       {el.by && <div style={{ fontSize: 11, color: c, fontFamily: 'ui-monospace,monospace', marginTop: 8 }}>{el.by}</div>}
     </div>);
   if (k === 'note') return (
     <div style={{ ...miniCard, padding: '13px 16px', margin: '0 0 20px' }}>
       {el.label && <div style={{ ...miniKicker, marginBottom: 5 }}>{el.label}</div>}
-      <div style={{ fontSize: 12.5, color: '#a1a1aa', lineHeight: 1.65 }}><RichText text={el.t} c={c} onJump={onJump} /></div>
+      <div style={{ fontSize: 12.5, color: 'var(--hm-text3)', lineHeight: 1.65 }}><RichText text={el.t} c={c} onJump={onJump} /></div>
     </div>);
   if (k === 'stat') return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(155px,1fr))', gap: 12, margin: '6px 0 24px' }}>
       {el.items.map((s, i) => (
         <div key={i} style={{ ...cardBg, padding: '14px 16px' }}>
           <div style={{ fontSize: 22, fontWeight: 800, color: c, letterSpacing: '-0.02em', lineHeight: 1.1 }}>{s.v}</div>
-          <div style={{ fontSize: 11.5, color: '#e4e4e7', fontWeight: 600, marginTop: 5 }}>{s.l}</div>
-          {s.n && <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 4, lineHeight: 1.5 }}>{s.n}</div>}
+          <div style={{ fontSize: 11.5, color: 'var(--hm-text2)', fontWeight: 600, marginTop: 5 }}>{s.l}</div>
+          {s.n && <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', marginTop: 4, lineHeight: 1.5 }}>{s.n}</div>}
         </div>))}
     </div>);
   if (k === 'image') return (
@@ -2318,8 +2318,8 @@ function NarrativeEl({ el, c, onJump }) {
         <img src={el.src} alt={el.caption || ''} loading="lazy" style={{ width: '100%', maxHeight: 440, objectFit: 'cover', display: 'block' }} />
       </div>
       {(el.caption || el.credit) && (
-        <figcaption style={{ fontSize: 11, color: '#71717a', marginTop: 7, lineHeight: 1.55 }}>
-          {el.caption}{el.credit && <span style={{ color: '#52525b' }}> · {el.credit}</span>}
+        <figcaption style={{ fontSize: 11, color: 'var(--hm-text5)', marginTop: 7, lineHeight: 1.55 }}>
+          {el.caption}{el.credit && <span style={{ color: 'var(--hm-text6)' }}> · {el.credit}</span>}
         </figcaption>
       )}
     </figure>);
@@ -2336,11 +2336,11 @@ function NarrativeEl({ el, c, onJump }) {
         return (
           <div key={i} style={{ marginBottom: 11 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4, gap: 10 }}>
-              <span style={{ color: '#e4e4e7', fontWeight: 600 }}>{b.label}</span>
-              <span style={{ color: '#fafafa', fontFamily: 'ui-monospace,monospace', fontWeight: 700, whiteSpace: 'nowrap' }}>{b.display || (pct + '%')}</span>
+              <span style={{ color: 'var(--hm-text2)', fontWeight: 600 }}>{b.label}</span>
+              <span style={{ color: 'var(--hm-text)', fontFamily: 'ui-monospace,monospace', fontWeight: 700, whiteSpace: 'nowrap' }}>{b.display || (pct + '%')}</span>
             </div>
-            <div style={{ height: 7, borderRadius: 4, background: '#1f1f23', overflow: 'hidden' }}><div style={{ width: pct + '%', height: '100%', background: c, borderRadius: 4 }} /></div>
-            {b.note && <div style={{ fontSize: 10.5, color: '#71717a', marginTop: 4, lineHeight: 1.45 }}>{b.note}</div>}
+            <div style={{ height: 7, borderRadius: 4, background: 'var(--hm-border4)', overflow: 'hidden' }}><div style={{ width: pct + '%', height: '100%', background: c, borderRadius: 4 }} /></div>
+            {b.note && <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', marginTop: 4, lineHeight: 1.45 }}>{b.note}</div>}
           </div>);
       })}
     </div>);
@@ -2349,9 +2349,9 @@ function NarrativeEl({ el, c, onJump }) {
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5, minWidth: 420 }}>
         <thead><tr style={thRow}>{el.head.map((h, i) => <th key={i} style={thCell}>{h}</th>)}</tr></thead>
         <tbody>{el.rows.map((r, i) => (
-          <tr key={i} style={{ borderTop: '1px solid #1f1f23' }}>{r.map((cell, j) => <td key={j} style={{ ...tdCell, color: j === 0 ? '#fafafa' : '#c4c4cc', fontWeight: j === 0 ? 600 : 400 }}><RichText text={cell} c={c} onJump={onJump} /></td>)}</tr>))}</tbody>
+          <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>{r.map((cell, j) => <td key={j} style={{ ...tdCell, color: j === 0 ? 'var(--hm-text)' : 'var(--hm-text2)', fontWeight: j === 0 ? 600 : 400 }}><RichText text={cell} c={c} onJump={onJump} /></td>)}</tr>))}</tbody>
       </table>
-      {el.note && <div style={{ fontSize: 10.5, color: '#52525b', marginTop: 6 }}>{el.note}</div>}
+      {el.note && <div style={{ fontSize: 10.5, color: 'var(--hm-text6)', marginTop: 6 }}>{el.note}</div>}
     </div>);
   return null;
 }
@@ -2371,7 +2371,7 @@ function HighlightWrap({ on, c, originLabel, onBackOrigin, style, innerRef, chil
       }} />}
       {on && originLabel && hover && (
         <button onClick={onBackOrigin}
-          style={{ position: 'absolute', top: -13, right: 4, zIndex: 3, background: '#18181b', border: `1px solid ${c}88`, borderRadius: 7, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 11, padding: '3px 9px', display: 'inline-flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap', boxShadow: '0 2px 12px rgba(0,0,0,.55)' }}>
+          style={{ position: 'absolute', top: -13, right: 4, zIndex: 3, background: 'var(--hm-panel)', border: `1px solid color-mix(in srgb, ${c} 53%, transparent)`, borderRadius: 7, cursor: 'pointer', color: 'var(--hm-text)', font: 'inherit', fontSize: 11, padding: '3px 9px', display: 'inline-flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap', boxShadow: '0 2px 12px rgba(0,0,0,.55)' }}>
           ↩ Назад к «{originLabel}»</button>
       )}
       <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
@@ -2394,7 +2394,7 @@ function NarrativeView({ stream, c, onJump, highlightIdx, setElRef, originLabel,
 
 function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLabel, onBackOrigin }) {
   const bucket = DC_BUCKETS[node.bucket];
-  const c = bucket?.color || '#a1a1aa';
+  const c = bucket?.color || 'var(--hm-text3)';
   const layer = LAYERS[node.layer];
   const layerIdx = node.layer;
   const totalLayers = LAYERS.length;
@@ -2442,20 +2442,20 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
           @keyframes hl-settle { from { opacity: .42; } to { opacity: .16; } }
         `}</style>
         <button onClick={onBack}
-          style={{ marginTop: 8, marginBottom: 20, background: 'transparent', border: 'none', cursor: 'pointer', color: '#a1a1aa', font: 'inherit', fontSize: 12.5, padding: 0, display: 'inline-flex', alignItems: 'center', gap: 7 }}
-          onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
-          onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}>← Вернуться к цепочке</button>
+          style={{ marginTop: 8, marginBottom: 20, background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--hm-text3)', font: 'inherit', fontSize: 12.5, padding: 0, display: 'inline-flex', alignItems: 'center', gap: 7 }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--hm-text)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--hm-text3)'}>← Вернуться к цепочке</button>
         {originLabel && (
           <button onClick={onBackOrigin}
-            style={{ marginLeft: 14, marginBottom: 20, background: `${c}1f`, border: `1px solid ${c}66`, borderRadius: 8, cursor: 'pointer', color: '#fafafa', font: 'inherit', fontSize: 12.5, padding: '5px 12px', display: 'inline-flex', alignItems: 'center', gap: 6 }}
-            onMouseEnter={e => e.currentTarget.style.background = `${c}33`}
+            style={{ marginLeft: 14, marginBottom: 20, background: `${c}1f`, border: `1px solid color-mix(in srgb, ${c} 40%, transparent)`, borderRadius: 8, cursor: 'pointer', color: 'var(--hm-text)', font: 'inherit', fontSize: 12.5, padding: '5px 12px', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+            onMouseEnter={e => e.currentTarget.style.background = `color-mix(in srgb, ${c} 20%, transparent)`}
             onMouseLeave={e => e.currentTarget.style.background = `${c}1f`}>↩ Назад к «{originLabel}»</button>
         )}
-        <div style={{ background: `linear-gradient(180deg, ${c}18 0%, transparent 100%)`, border: `1px solid ${c}30`, borderRadius: 14, padding: '26px 28px 24px', marginBottom: 18 }}>
+        <div style={{ background: `linear-gradient(180deg, color-mix(in srgb, ${c} 9%, transparent) 0%, transparent 100%)`, border: `1px solid color-mix(in srgb, ${c} 19%, transparent)`, borderRadius: 14, padding: '26px 28px 24px', marginBottom: 18 }}>
           <div style={{ fontSize: 10, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.18em', fontWeight: 700, marginBottom: 10 }}>ЭТАП {String(layerIdx + 1).padStart(2, '0')} / {String(totalLayers).padStart(2, '0')} · {layer.label}</div>
-          <div style={{ fontSize: 30, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8 }}>{node.label}</div>
-          <div style={{ fontSize: 12, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket}</div>
-          <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23' }} />)}</div>
+          <div style={{ fontSize: 30, color: 'var(--hm-text)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8 }}>{node.label}</div>
+          <div style={{ fontSize: 12, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket}</div>
+          <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `color-mix(in srgb, ${c} 33%, transparent)` : 'var(--hm-border4)' }} />)}</div>
         </div>
         <ThesisHero bigIdea={detail.thesis.bigIdea} c={c} highlight={highlightKey === 'hero'} originLabel={originLabel} onBackOrigin={onBackOrigin} />
         <NarrativeView stream={detail.thesis.stream} c={c} onJump={onJump} highlightIdx={typeof highlightKey === 'number' ? highlightKey : -1} setElRef={(i, n) => { elRefs.current[i] = n; }} originLabel={originLabel} onBackOrigin={onBackOrigin} />
@@ -2496,16 +2496,16 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
       <style>{`@keyframes detail-fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }`}</style>
 
       <button onClick={onBack}
-        style={{ marginTop: 8, marginBottom: 20, background: 'transparent', border: 'none', cursor: 'pointer', color: '#a1a1aa', font: 'inherit', fontSize: 12.5, padding: 0, display: 'inline-flex', alignItems: 'center', gap: 7 }}
-        onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
-        onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}>← Вернуться к цепочке</button>
+        style={{ marginTop: 8, marginBottom: 20, background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--hm-text3)', font: 'inherit', fontSize: 12.5, padding: 0, display: 'inline-flex', alignItems: 'center', gap: 7 }}
+        onMouseEnter={e => e.currentTarget.style.color = 'var(--hm-text)'}
+        onMouseLeave={e => e.currentTarget.style.color = 'var(--hm-text3)'}>← Вернуться к цепочке</button>
 
       {/* Header */}
-      <div style={{ background: `linear-gradient(180deg, ${c}18 0%, transparent 100%)`, border: `1px solid ${c}30`, borderRadius: 14, padding: '26px 28px 24px', marginBottom: 18 }}>
+      <div style={{ background: `linear-gradient(180deg, color-mix(in srgb, ${c} 9%, transparent) 0%, transparent 100%)`, border: `1px solid color-mix(in srgb, ${c} 19%, transparent)`, borderRadius: 14, padding: '26px 28px 24px', marginBottom: 18 }}>
         <div style={{ fontSize: 10, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.18em', fontWeight: 700, marginBottom: 10 }}>ЭТАП {String(layerIdx + 1).padStart(2, '0')} / {String(totalLayers).padStart(2, '0')} · {layer.label}</div>
-        <div style={{ fontSize: 30, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8 }}>{node.label}</div>
-        <div style={{ fontSize: 12, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket} · {baseCompanies.length} {plural(baseCompanies.length, 'компания', 'компании', 'компаний')}</div>
-        <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `${c}55` : '#1f1f23' }} />)}</div>
+        <div style={{ fontSize: 30, color: 'var(--hm-text)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8 }}>{node.label}</div>
+        <div style={{ fontSize: 12, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket} · {baseCompanies.length} {plural(baseCompanies.length, 'компания', 'компании', 'компаний')}</div>
+        <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `color-mix(in srgb, ${c} 33%, transparent)` : 'var(--hm-border4)' }} />)}</div>
       </div>
 
       {detail?.whatIsIt && <WhatIsItBlock text={detail.whatIsIt} c={c} />}
@@ -2519,13 +2519,13 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
       {(detail?.intro || NODE_INTEL[node.id] || NODE_ROLE[node.id]) && (
         <Block id="about" accent={c} kicker="КАК УСТРОЕНО ЭТО ЗВЕНО">
           {detail?.intro ? (
-            <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>
+            <div style={{ fontSize: 14, color: 'var(--hm-text2)', lineHeight: 1.8 }}>
               <Paragraphs text={detail.intro} />
             </div>
           ) : (
             <>
-              {NODE_INTEL[node.id] && <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8, marginBottom: NODE_ROLE[node.id] ? 14 : 0 }}>{NODE_INTEL[node.id]}</div>}
-              {NODE_ROLE[node.id] && <div style={{ fontSize: 14, color: '#d4d4d8', lineHeight: 1.8 }}>{NODE_ROLE[node.id]}</div>}
+              {NODE_INTEL[node.id] && <div style={{ fontSize: 14, color: 'var(--hm-text2)', lineHeight: 1.8, marginBottom: NODE_ROLE[node.id] ? 14 : 0 }}>{NODE_INTEL[node.id]}</div>}
+              {NODE_ROLE[node.id] && <div style={{ fontSize: 14, color: 'var(--hm-text2)', lineHeight: 1.8 }}>{NODE_ROLE[node.id]}</div>}
             </>
           )}
         </Block>
@@ -2562,17 +2562,17 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
       {/* Base companies only when no investable-universe table */}
       {!detail?.universe?.length && !detail?.picks?.length && baseCompanies.length > 0 && (
         <Block id="players" accent={c} kicker="КЛЮЧЕВЫЕ ИГРОКИ">
-          <div style={{ fontSize: 10.5, color: '#71717a', lineHeight: 1.55, marginBottom: 14 }}>Заметные компании этого звена – как примеры, кто им занимается, а не список для покупки.</div>
+          <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', lineHeight: 1.55, marginBottom: 14 }}>Заметные компании этого звена – как примеры, кто им занимается, а не список для покупки.</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: 10 }}>
             {baseCompanies.map((co, i) => (
-              <div key={co.company + i} style={{ background: '#131316', border: '1px solid #27272a', borderLeft: `3px solid ${c}`, borderRadius: 8, padding: '12px 14px' }}>
-                <div style={{ fontSize: 13, color: '#fafafa', fontWeight: 600 }}>{co.company}</div>
-                <div style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 4, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  <span>{co.ticker}</span><span style={{ color: '#3f3f46' }}>·</span>
+              <div key={co.company + i} style={{ background: 'var(--hm-tile)', border: '1px solid var(--hm-border5)', borderLeft: `3px solid ${c}`, borderRadius: 8, padding: '12px 14px' }}>
+                <div style={{ fontSize: 13, color: 'var(--hm-text)', fontWeight: 600 }}>{co.company}</div>
+                <div style={{ fontSize: 10.5, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', marginTop: 4, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  <span>{co.ticker}</span><span style={{ color: 'var(--hm-rank)' }}>·</span>
                   <span style={{ color: co.ppr === 'Pub' ? '#10b981' : '#a78bfa' }}>{co.ppr === 'Pub' ? 'ПУБЛИЧНАЯ' : 'ЧАСТНАЯ'}</span>
-                  <span style={{ color: '#3f3f46' }}>·</span><span>{co.geo}</span>
+                  <span style={{ color: 'var(--hm-rank)' }}>·</span><span>{co.geo}</span>
                 </div>
-                {co.note && <div style={{ fontSize: 11.5, color: '#c4c4cc', lineHeight: 1.6, marginTop: 8, paddingTop: 8, borderTop: '1px solid #1f1f23' }}>{co.note}</div>}
+                {co.note && <div style={{ fontSize: 11.5, color: 'var(--hm-text2)', lineHeight: 1.6, marginTop: 8, paddingTop: 8, borderTop: '1px solid var(--hm-border4)' }}>{co.note}</div>}
               </div>
             ))}
           </div>
@@ -2581,9 +2581,9 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
 
       {/* Placeholder – only when node has no analytical data yet */}
       {!hasDeep && (
-        <div style={{ background: 'repeating-linear-gradient(135deg, #0d0d0e, #0d0d0e 12px, #0f0f11 12px, #0f0f11 24px)', border: `1px dashed ${c}44`, borderRadius: 12, padding: '26px 28px' }}>
+        <div style={{ background: 'repeating-linear-gradient(135deg, var(--hm-bg2), var(--hm-bg2) 12px, var(--hm-panel) 12px, var(--hm-panel) 24px)', border: `1px dashed color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 12, padding: '26px 28px' }}>
           <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ПОЛНЫЙ РАЗБОР · В РАБОТЕ</div>
-          <div style={{ fontSize: 13.5, color: '#c4c4cc', lineHeight: 1.7 }}>Здесь появится инвест-разбор этого звена: размер рынка, конкуренция, спрос/предложение, юнит-экономика, риски, инвест-вселенная и вердикт.</div>
+          <div style={{ fontSize: 13.5, color: 'var(--hm-text2)', lineHeight: 1.7 }}>Здесь появится инвест-разбор этого звена: размер рынка, конкуренция, спрос/предложение, юнит-экономика, риски, инвест-вселенная и вердикт.</div>
         </div>
       )}
     </div>

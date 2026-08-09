@@ -17,7 +17,7 @@ export default function ResearchDetail({ researchId, context, onBack }) {
   const r = RESEARCH_LIBRARY.find(x => x.id === researchId);
   if (!r) {
     return (
-      <div style={{ padding: 64, textAlign: 'center', color: '#a1a1aa' }}>
+      <div style={{ padding: 64, textAlign: 'center', color: 'var(--hm-text3)' }}>
         Research not found.
         <button onClick={onBack} style={{ display: 'block', margin: '20px auto', padding: '8px 16px', background: '#22D3EE', color: '#0a0a0a', border: 'none', borderRadius: 6, cursor: 'pointer' }}>
           ← Back to library
@@ -34,7 +34,7 @@ export default function ResearchDetail({ researchId, context, onBack }) {
   // navigation lives inside HoldingsV2's own sticky top bar.
   if (researchId === 'holdings') {
     return (
-      <div style={{ minHeight: 'calc(100vh - 80px)', background: '#0A0A0B' }}>
+      <div style={{ minHeight: 'calc(100vh - 80px)', background: 'var(--hm-bg)' }}>
         <HoldingsV2 onBack={onBack} />
       </div>
     );
@@ -42,26 +42,26 @@ export default function ResearchDetail({ researchId, context, onBack }) {
 
   const column = { maxWidth: 1344, margin: '0 auto', padding: '0 32px' };
   return (
-    <div style={{ minHeight: 'calc(100vh - 80px)', padding: '32px 0 96px', background: '#0A0A0B' }}>
+    <div style={{ minHeight: 'calc(100vh - 80px)', padding: '32px 0 96px', background: 'var(--hm-bg)' }}>
       <div style={column}>
         {/* Back link */}
         <button onClick={onBack}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: 'transparent', border: 'none', cursor: 'pointer',
-            color: '#71717a', fontSize: 12, fontFamily: 'ui-monospace,monospace',
+            color: 'var(--hm-text5)', fontSize: 12, fontFamily: 'ui-monospace,monospace',
             padding: '6px 0', marginBottom: 32,
             transition: 'color 120ms',
           }}
           onMouseEnter={(e) => e.currentTarget.style.color = r.accent}
-          onMouseLeave={(e) => e.currentTarget.style.color = '#71717a'}>
+          onMouseLeave={(e) => e.currentTarget.style.color = 'var(--hm-text5)'}>
           ← Back to research library
         </button>
 
         {/* Header */}
         <div style={{
           display: 'flex', alignItems: 'flex-start', gap: 28, marginBottom: 48,
-          paddingBottom: 32, borderBottom: '1px solid #27272a',
+          paddingBottom: 32, borderBottom: '1px solid var(--hm-border4)',
         }}>
           <div
             onClick={onBack}
@@ -81,16 +81,16 @@ export default function ResearchDetail({ researchId, context, onBack }) {
             <div style={{ fontSize: 10, color: r.accent, fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.14em', marginBottom: 8, fontWeight: 700 }}>
               {r.sector} · {r.dateCompleted}
             </div>
-            <div style={{ fontSize: 32, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 12 }}>
+            <div style={{ fontSize: 32, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 12 }}>
               {r.title}
             </div>
-            <div style={{ fontSize: 15, color: '#a1a1aa', lineHeight: 1.55, maxWidth: 760 }}>
+            <div style={{ fontSize: 15, color: 'var(--hm-text3)', lineHeight: 1.55, maxWidth: 760 }}>
               {r.subtitle}
             </div>
-            <div style={{ display: 'flex', gap: 18, marginTop: 18, fontSize: 11, fontFamily: 'ui-monospace,monospace', color: '#71717a' }}>
-              <span><span style={{ color: '#fafafa', fontWeight: 600 }}>{r.companyCount}</span> companies covered</span>
-              <span style={{ color: '#3f3f46' }}>·</span>
-              <span><span style={{ color: '#fafafa', fontWeight: 600 }}>{r.sectionCount}</span> sections</span>
+            <div style={{ display: 'flex', gap: 18, marginTop: 18, fontSize: 11, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text5)' }}>
+              <span><span style={{ color: 'var(--hm-text)', fontWeight: 600 }}>{r.companyCount}</span> companies covered</span>
+              <span style={{ color: 'var(--hm-rank)' }}>·</span>
+              <span><span style={{ color: 'var(--hm-text)', fontWeight: 600 }}>{r.sectionCount}</span> sections</span>
             </div>
           </div>
         </div>
@@ -106,8 +106,8 @@ export default function ResearchDetail({ researchId, context, onBack }) {
         ) : (
           <div style={{
             padding: '64px 32px', textAlign: 'center',
-            background: '#0a0a0a', border: '1px dashed #27272a', borderRadius: 10,
-            color: '#52525b', fontSize: 13, fontStyle: 'italic',
+            background: '#0a0a0a', border: '1px dashed var(--hm-border4)', borderRadius: 10,
+            color: 'var(--hm-text6)', fontSize: 13, fontStyle: 'italic',
           }}>
             Full report sections, company profiles, and supporting data will be added here.
           </div>

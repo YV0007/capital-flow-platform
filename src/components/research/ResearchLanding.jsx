@@ -10,17 +10,17 @@ export default function ResearchLanding({ onOpen }) {
     <div style={{
       minHeight: 'calc(100vh - 80px)',
       padding: '64px 32px',
-      background: 'radial-gradient(ellipse at top, rgba(34,211,238,0.04) 0%, transparent 60%), #09090b',
+      background: 'radial-gradient(ellipse at top, rgba(34,211,238,0.04) 0%, transparent 60%), var(--hm-bg)',
     }}>
       {/* Title block */}
       <div style={{ maxWidth: 1200, margin: '0 auto 56px auto', paddingLeft: 8 }}>
-        <div style={{ fontSize: 11, color: '#71717a', fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.16em', marginBottom: 12 }}>
+        <div style={{ fontSize: 11, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.16em', marginBottom: 12 }}>
           Research Library
         </div>
-        <div style={{ fontSize: 28, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
+        <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
           Sector reports
         </div>
-        <div style={{ fontSize: 14, color: '#a1a1aa', marginTop: 10, maxWidth: 640, lineHeight: 1.55 }}>
+        <div style={{ fontSize: 14, color: 'var(--hm-text3)', marginTop: 10, maxWidth: 640, lineHeight: 1.55 }}>
           Deep-dive research on specific sectors, technologies, and theses. Each report covers the dominant players, structural dynamics, and the open questions that determine who wins.
         </div>
       </div>
@@ -40,8 +40,8 @@ export default function ResearchLanding({ onOpen }) {
             style={{
               position: 'relative',
               display: 'flex', flexDirection: 'column',
-              background: 'linear-gradient(135deg, rgba(24,24,27,0.95) 0%, rgba(9,9,11,0.95) 100%)',
-              border: '1px solid #27272a',
+              background: 'linear-gradient(135deg, var(--hm-card-strong) 0%, var(--hm-surface) 100%)',
+              border: '1px solid var(--hm-border4)',
               borderRadius: 16,
               padding: 0,
               overflow: 'hidden',
@@ -54,12 +54,12 @@ export default function ResearchLanding({ onOpen }) {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
-              e.currentTarget.style.borderColor = r.accent + '60';
-              e.currentTarget.style.boxShadow = `0 20px 40px -12px ${r.accent}33, 0 0 0 1px ${r.accent}20`;
+              e.currentTarget.style.borderColor = `color-mix(in srgb, ${r.accent} 38%, transparent)`;
+              e.currentTarget.style.boxShadow = `0 20px 40px -12px color-mix(in srgb, ${r.accent} 20%, transparent), 0 0 0 1px color-mix(in srgb, ${r.accent} 13%, transparent)`;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0) scale(1)';
-              e.currentTarget.style.borderColor = '#27272a';
+              e.currentTarget.style.borderColor = 'var(--hm-border4)';
               e.currentTarget.style.boxShadow = 'none';
             }}>
             {/* Cover */}
@@ -71,7 +71,7 @@ export default function ResearchLanding({ onOpen }) {
                 padding: '4px 10px',
                 fontSize: 9, fontFamily: 'ui-monospace,monospace', fontWeight: 700,
                 color: r.accent, background: 'rgba(0,0,0,0.5)',
-                border: `1px solid ${r.accent}40`, borderRadius: 4,
+                border: `1px solid color-mix(in srgb, ${r.accent} 25%, transparent)`, borderRadius: 4,
                 textTransform: 'uppercase', letterSpacing: '0.1em',
                 backdropFilter: 'blur(4px)',
               }}>
@@ -81,15 +81,15 @@ export default function ResearchLanding({ onOpen }) {
 
             {/* Card body */}
             <div style={{ padding: '20px 22px 22px 22px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-              <div style={{ fontSize: 17, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em', lineHeight: 1.25, marginBottom: 10 }}>
+              <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.01em', lineHeight: 1.25, marginBottom: 10 }}>
                 {r.title}
               </div>
-              <div style={{ fontSize: 12, color: '#a1a1aa', lineHeight: 1.5, marginBottom: 16, minHeight: 54 }}>
+              <div style={{ fontSize: 12, color: 'var(--hm-text3)', lineHeight: 1.5, marginBottom: 16, minHeight: 54 }}>
                 {r.subtitle}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, fontSize: 10, fontFamily: 'ui-monospace,monospace', color: '#71717a', marginTop: 'auto' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, fontSize: 10, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text5)', marginTop: 'auto' }}>
                 <span>{r.companyCount} companies</span>
-                <span style={{ color: '#3f3f46' }}>·</span>
+                <span style={{ color: 'var(--hm-rank)' }}>·</span>
                 <span>{r.sectionCount} sections</span>
                 <span style={{ flex: 1 }}></span>
                 <span>{r.dateCompleted}</span>

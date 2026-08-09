@@ -95,7 +95,7 @@ const LIFECYCLE_STYLES = {
     ],
   },
   shutdown: {
-    accentOverride: '#71717a',
+    accentOverride: 'var(--hm-text5)',
     pillLabel: () => 'Закрыта',
     ribbonLabel: 'CLOSED',
     desaturate: true,
@@ -124,25 +124,25 @@ export default function TrackerLanding({ onOpen }) {
     <div style={{
       minHeight: 'calc(100vh - 80px)',
       padding: '64px 32px',
-      background: 'radial-gradient(ellipse at top, rgba(34,211,238,0.04) 0%, transparent 60%), #09090b',
+      background: 'radial-gradient(ellipse at top, rgba(34,211,238,0.04) 0%, transparent 60%), var(--hm-bg)',
     }}>
 
       {/* ── Page header with search ──────────────────────────────────── */}
       <header style={{ maxWidth: 1200, margin: '0 auto 48px auto', paddingLeft: 8 }}>
         <div style={{
-          fontSize: 11, color: '#71717a', fontFamily: 'ui-monospace,monospace',
+          fontSize: 11, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace',
           textTransform: 'uppercase', letterSpacing: '0.16em', marginBottom: 12,
         }}>
           Tracker
         </div>
         <div style={{
-          fontSize: 28, fontWeight: 700, color: '#fafafa',
+          fontSize: 28, fontWeight: 700, color: 'var(--hm-text)',
           letterSpacing: '-0.02em', lineHeight: 1.15,
         }}>
           Трекеры и портфолио
         </div>
         <div style={{
-          fontSize: 14, color: '#a1a1aa', marginTop: 10, maxWidth: 640, lineHeight: 1.55,
+          fontSize: 14, color: 'var(--hm-text3)', marginTop: 10, maxWidth: 640, lineHeight: 1.55,
         }}>
           Активный мониторинг прямых VC-позиций и наблюдаемых портфолио. Выберите трекер, чтобы открыть наблюдения, скоринг и синдикатные коммуникации.
         </div>
@@ -157,7 +157,7 @@ export default function TrackerLanding({ onOpen }) {
             style={{
               position: 'absolute', left: 14, top: '50%',
               transform: 'translateY(-50%)',
-              color: '#71717a', pointerEvents: 'none',
+              color: 'var(--hm-text5)', pointerEvents: 'none',
             }}
           />
           <input
@@ -169,16 +169,16 @@ export default function TrackerLanding({ onOpen }) {
               width: '100%',
               padding: '12px 16px 12px 40px',
               fontSize: 13.5,
-              background: '#18181b',
-              border: '1px solid #27272a',
+              background: 'var(--hm-panel)',
+              border: '1px solid var(--hm-border4)',
               borderRadius: 10,
-              color: '#fafafa',
+              color: 'var(--hm-text)',
               fontFamily: 'inherit',
               outline: 'none',
               transition: 'border-color 160ms',
             }}
-            onFocus={e => e.target.style.borderColor = '#3f3f46'}
-            onBlur={e => e.target.style.borderColor = '#27272a'}
+            onFocus={e => e.target.style.borderColor = 'var(--hm-rank)'}
+            onBlur={e => e.target.style.borderColor = 'var(--hm-border4)'}
           />
         </div>
       </header>
@@ -188,8 +188,8 @@ export default function TrackerLanding({ onOpen }) {
         <div style={{
           maxWidth: 1200, margin: '0 auto',
           padding: '60px 24px', textAlign: 'center',
-          color: '#71717a', fontSize: 14,
-          background: '#0d0d0e', border: '1px solid #18181b',
+          color: 'var(--hm-text5)', fontSize: 14,
+          background: 'var(--hm-bg2)', border: '1px solid var(--hm-border)',
           borderRadius: 12,
         }}>
           Ничего не найдено
@@ -239,8 +239,8 @@ function TrackerCard({ tracker, index, onOpen }) {
       onMouseLeave={() => setHover(false)}
       style={{
         position: 'relative',
-        background: 'linear-gradient(135deg, rgba(24,24,27,0.95), rgba(9,9,11,0.95))',
-        border: `1px solid ${hover ? accent + '60' : '#27272a'}`,
+        background: 'linear-gradient(135deg, var(--hm-card-strong), var(--hm-surface))',
+        border: `1px solid ${hover ? accent + '60' : 'var(--hm-border4)'}`,
         borderRadius: 16,
         padding: '22px 24px 20px',
         cursor: 'pointer',
@@ -301,9 +301,9 @@ function TrackerCard({ tracker, index, onOpen }) {
           // transparent backgrounds read cleanly; tinted gradient when we
           // fall back to monogram initials.
           background: showLogo
-            ? '#fafafa'
+            ? 'var(--hm-text)'
             : `linear-gradient(135deg, ${tracker.accent}26, ${tracker.accent}08)`,
-          border: `1px solid ${showLogo ? '#e4e4e7' : tracker.accent + '40'}`,
+          border: `1px solid ${showLogo ? 'var(--hm-text2)' : tracker.accent + '40'}`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0,
           overflow: 'hidden',
@@ -347,7 +347,7 @@ function TrackerCard({ tracker, index, onOpen }) {
           <ArrowUpRight
             size={14}
             style={{
-              color: hover ? accent : '#52525b',
+              color: hover ? accent : 'var(--hm-text6)',
               opacity: hover ? 1 : 0.6,
               transition: 'all 220ms',
               transform: hover ? 'translate(2px, -2px)' : 'none',
@@ -359,12 +359,12 @@ function TrackerCard({ tracker, index, onOpen }) {
       {/* Middle — name + subtitle */}
       <div>
         <div style={{
-          fontSize: 20, fontWeight: 700, color: '#fafafa',
+          fontSize: 20, fontWeight: 700, color: 'var(--hm-text)',
           letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: 6,
         }}>
           {tracker.name}
         </div>
-        <div style={{ fontSize: 13, color: '#a1a1aa', lineHeight: 1.5 }}>
+        <div style={{ fontSize: 13, color: 'var(--hm-text3)', lineHeight: 1.5 }}>
           {tracker.subtitle}
         </div>
       </div>
@@ -373,13 +373,13 @@ function TrackerCard({ tracker, index, onOpen }) {
       {stats && stats.length > 0 && (
         <div style={{
           marginTop: 'auto', paddingTop: 14,
-          borderTop: '1px solid #27272a',
+          borderTop: '1px solid var(--hm-border4)',
           display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12,
         }}>
           {stats.map((s, i) => (
             <div key={i}>
               <div style={{
-                fontSize: 9.5, color: '#71717a',
+                fontSize: 9.5, color: 'var(--hm-text5)',
                 fontFamily: 'ui-monospace,monospace',
                 letterSpacing: '0.08em', textTransform: 'uppercase',
                 marginBottom: 4,
@@ -387,7 +387,7 @@ function TrackerCard({ tracker, index, onOpen }) {
                 {s.label}
               </div>
               <div style={{
-                fontSize: 14, color: '#fafafa', fontWeight: 600,
+                fontSize: 14, color: 'var(--hm-text)', fontWeight: 600,
               }}>
                 {s.value}
               </div>

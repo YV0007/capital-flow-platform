@@ -83,7 +83,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
   const chip = (active, onClick, label, count) => (
     <button onClick={onClick} style={{
       padding: '6px 12px', borderRadius: 16, border: `1px solid ${active ? C.teal : C.line}`,
-      background: active ? `${C.teal}18` : 'transparent', color: active ? C.teal : C.inkSoft,
+      background: active ? `color-mix(in srgb, ${C.teal} 9%, transparent)` : 'transparent', color: active ? C.teal : C.inkSoft,
       cursor: 'pointer', fontSize: 12, fontFamily: 'var(--sans)', fontWeight: active ? 600 : 400,
       transition: 'all .15s',
       display: 'inline-flex', alignItems: 'center', gap: 6,
@@ -202,11 +202,11 @@ function Row({ C, row, i, isOpen, onToggle }) {
       <tr
         onClick={onToggle}
         style={{
-          background: isOpen ? `${stripeColor}10` : baseBg,
+          background: isOpen ? `color-mix(in srgb, ${stripeColor} 6%, transparent)` : baseBg,
           cursor: 'pointer',
           transition: 'background .12s',
         }}
-        onMouseEnter={(e) => { if (!isOpen) e.currentTarget.style.background = `${C.teal}14`; }}
+        onMouseEnter={(e) => { if (!isOpen) e.currentTarget.style.background = `color-mix(in srgb, ${C.teal} 8%, transparent)`; }}
         onMouseLeave={(e) => { if (!isOpen) e.currentTarget.style.background = baseBg; }}>
         {/* rating stripe */}
         <td style={{ width: 4, padding: 0, background: stripeColor, borderBottom: `1px solid ${C.line}` }} />
@@ -218,8 +218,8 @@ function Row({ C, row, i, isOpen, onToggle }) {
                 fontFamily: 'var(--mono)', fontSize: 9.5, fontWeight: 700,
                 letterSpacing: '.08em', textTransform: 'uppercase',
                 padding: '2px 6px', borderRadius: 3,
-                background: `${C.teal}22`, color: C.teal,
-                border: `1px solid ${C.teal}55`,
+                background: `color-mix(in srgb, ${C.teal} 13%, transparent)`, color: C.teal,
+                border: `1px solid color-mix(in srgb, ${C.teal} 33%, transparent)`,
               }}>TOP {row.topPickRank}</span>
             )}
           </span>
@@ -229,8 +229,8 @@ function Row({ C, row, i, isOpen, onToggle }) {
           <span style={{
             display: 'inline-block',
             padding: '3px 9px', borderRadius: 4,
-            background: `${C.teal}10`, color: C.inkSoft,
-            border: `1px solid ${C.teal}30`,
+            background: `color-mix(in srgb, ${C.teal} 6%, transparent)`, color: C.inkSoft,
+            border: `1px solid color-mix(in srgb, ${C.teal} 19%, transparent)`,
             fontSize: 10.5, fontFamily: 'var(--mono)', fontWeight: 500,
             letterSpacing: '.02em', whiteSpace: 'nowrap',
           }}>{row.sector || '—'}</span>
@@ -277,15 +277,15 @@ function Drawer({ C, row, stripeColor }) {
           <span style={{
             fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 700,
             padding: '3px 9px', borderRadius: 10,
-            background: `${C.teal}22`, color: C.teal,
-            border: `1px solid ${C.teal}55`,
+            background: `color-mix(in srgb, ${C.teal} 13%, transparent)`, color: C.teal,
+            border: `1px solid color-mix(in srgb, ${C.teal} 33%, transparent)`,
           }}>Top Pick · #{row.topPickRank} на {row.asset}</span>
         )}
         <span style={{
           fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 700,
           padding: '3px 9px', borderRadius: 10,
-          background: `${stripeColor}22`, color: stripeColor,
-          border: `1px solid ${stripeColor}55`,
+          background: `color-mix(in srgb, ${stripeColor} 13%, transparent)`, color: stripeColor,
+          border: `1px solid color-mix(in srgb, ${stripeColor} 33%, transparent)`,
         }}>{ratingLabel}</span>
         <span style={{ fontSize: 11, color: C.inkFaint, fontFamily: 'var(--mono)' }}>
           {row.ticker} · {row.asset}
@@ -318,8 +318,8 @@ function Drawer({ C, row, stripeColor }) {
         <div style={{
           fontSize: 12.5, color: C.ink, lineHeight: 1.6,
           padding: '12px 14px',
-          background: `${stripeColor}10`,
-          border: `1px solid ${stripeColor}33`,
+          background: `color-mix(in srgb, ${stripeColor} 6%, transparent)`,
+          border: `1px solid color-mix(in srgb, ${stripeColor} 20%, transparent)`,
           borderLeft: `3px solid ${stripeColor}`,
           borderRadius: 6,
         }}>

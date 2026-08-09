@@ -17,8 +17,9 @@ import FinancialDeep from './FinancialDeep.jsx';
 import ChangesDeep from './ChangesDeep.jsx';
 import SectionDeep from './SectionDeep.jsx';
 
-const { META, GROUPS, HOLDING_COMPANIES_ORDER, THEMES, companies: HOLD } = holdingsData;
-const C = THEMES.dark;
+const { META, GROUPS, HOLDING_COMPANIES_ORDER, companies: HOLD } = holdingsData;
+// Theme-reactive palette (CSS vars) — switches with the app-wide toggle.
+import { C } from './holdingsC.js';
 
 // ── load migrated v2 dossiers ──────────────────────────────────────────────
 const modules = import.meta.glob('../../data/holdings-v2/*.json', { eager: true });
@@ -56,7 +57,7 @@ function inline(text) {
     if (m.index > last) out.push(text.slice(last, m.index));
     if (m[1] != null) out.push(<strong key={k++} style={{ fontWeight: 600, color: C.ink }}>{m[1]}</strong>);
     else if (m[2] != null) out.push(<code key={k++} style={{ fontFamily: 'var(--mono)', fontSize: '.9em', background: C.track, padding: '1px 5px', borderRadius: 4, color: C.ink }}>{m[2]}</code>);
-    else if (m[3] != null) out.push(<a key={k++} href={m[4]} target="_blank" rel="noreferrer" style={{ color: C.teal, textDecoration: 'none', borderBottom: `1px solid ${C.teal}44` }}>{m[3]}</a>);
+    else if (m[3] != null) out.push(<a key={k++} href={m[4]} target="_blank" rel="noreferrer" style={{ color: C.teal, textDecoration: 'none', borderBottom: `1px solid color-mix(in srgb, ${C.teal} 27%, transparent)` }}>{m[3]}</a>);
     last = m.index + m[0].length;
   }
   if (last < text.length) out.push(text.slice(last));
@@ -241,7 +242,7 @@ function Sparkline({ points, periods, color, h = 60, interactive }) {
             <text x={PAD_L - 4} y={y(v) + 3} textAnchor="end" fill={C.inkFaint} fontSize="8" fontFamily="var(--mono)">${v}</text>
           </g>
         ))}
-        <path d={area} fill={color + '22'} />
+        <path d={area} fill={`color-mix(in srgb, ${color} 13%, transparent)`} />
         <path d={line} fill="none" stroke={color} strokeWidth="1.8" />
         <circle cx={x(points.length - 1)} cy={y(points[points.length - 1])} r="3" fill={color} />
         {hover !== null && (
@@ -322,7 +323,7 @@ function TopBets({ data }) {
               {b.fact && <div style={{ fontSize: 11.5, color: C.inkSoft, lineHeight: 1.5, marginBottom: 12 }}>{b.fact}</div>}
               {b.embodies && (
                 <div style={{ marginTop: 'auto', paddingTop: 10 }}>
-                  <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 600, letterSpacing: '.03em', color: c, background: c + '18', border: `1px solid ${c}44`, borderRadius: 6, padding: '3px 9px' }}>{b.embodies}</span>
+                  <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 600, letterSpacing: '.03em', color: c, background: `color-mix(in srgb, ${c} 9%, transparent)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 6, padding: '3px 9px' }}>{b.embodies}</span>
                 </div>
               )}
             </div>
@@ -353,7 +354,7 @@ function RecentMoves({ items }) {
                 <div style={{ fontSize: 9.5, padding: '2px 7px', borderRadius: 10, background: C.line, color: C.inkSoft, letterSpacing: '.06em', fontWeight: 600, textAlign: 'center', justifySelf: 'start' }}>{m.type.toUpperCase()}</div>
                 <div style={{ color: C.ink, display: 'flex', gap: 7, alignItems: 'center', flexWrap: 'wrap' }}>
                   <span>{m.title}</span>
-                  {m.ai && <span style={{ fontSize: 8.5, padding: '1px 6px', borderRadius: 8, background: C.violet + '22', color: C.violet, border: `1px solid ${C.violet}55`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
+                  {m.ai && <span style={{ fontSize: 8.5, padding: '1px 6px', borderRadius: 8, background: `color-mix(in srgb, ${C.violet} 13%, transparent)`, color: C.violet, border: `1px solid color-mix(in srgb, ${C.violet} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
                 </div>
                 <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.inkSoft, textAlign: 'right' }}>{m.value}</div>
                 <div style={{ textAlign: 'right', color: C.inkFaint, fontSize: 11 }}>{has ? (isOpen ? '▾' : '▸') : ''}</div>
@@ -406,7 +407,7 @@ function NewsBlock({ items }) {
               )}
               <div style={{ padding: '13px 15px', display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 8 }}>
-                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: m.color, background: m.color + '1A', border: `1px solid ${m.color}44`, borderRadius: 3, padding: '2px 7px' }}>{m.label}</span>
+                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: m.color, background: `color-mix(in srgb, ${m.color} 10%, transparent)`, border: `1px solid color-mix(in srgb, ${m.color} 27%, transparent)`, borderRadius: 3, padding: '2px 7px' }}>{m.label}</span>
                   <span style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: C.inkFaint }}>{n.date}</span>
                 </div>
                 <div style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, lineHeight: 1.32, marginBottom: 7 }}>{n.title}</div>
@@ -620,7 +621,7 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
                   <span style={{ fontSize: 11, color: C.inkFaint }}>{r.label}</span>
                 </div>
                 <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>
-                  {mPos >= 0 ? (<>{r.snippet.slice(0, mPos)}<span style={{ color: C.ink, fontWeight: 600, background: C.teal + '22', padding: '0 1px', borderRadius: 2 }}>{r.snippet.slice(mPos, mPos + query.length)}</span>{r.snippet.slice(mPos + query.length)}</>) : r.snippet}
+                  {mPos >= 0 ? (<>{r.snippet.slice(0, mPos)}<span style={{ color: C.ink, fontWeight: 600, background: `color-mix(in srgb, ${C.teal} 13%, transparent)`, padding: '0 1px', borderRadius: 2 }}>{r.snippet.slice(mPos, mPos + query.length)}</span>{r.snippet.slice(mPos + query.length)}</>) : r.snippet}
                 </div>
               </button>
             );
@@ -709,7 +710,7 @@ export default function HoldingsV2({ onBack }) {
       `}</style>
 
       {/* ── Top bar (sticky): company switcher + section dots ── */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 50, background: C.paper + 'F2', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.line}` }}>
+      <div style={{ position: 'sticky', top: 0, zIndex: 50, background: `color-mix(in srgb, ${C.paper} 95%, transparent)`, backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.line}` }}>
         <div onMouseLeave={() => setMenuOpen(null)} style={{ maxWidth: 'none', margin: '0 auto', padding: '0 40px', minHeight: 56, display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
           {onBack && (
             <button onClick={onBack} title="Назад к исследованиям" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, background: C.card, border: `1px solid ${C.line}`, borderRadius: 8, cursor: 'pointer', color: C.inkSoft, fontSize: 14, flexShrink: 0, transition: 'border-color .15s, color .15s' }}

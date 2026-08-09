@@ -6,7 +6,7 @@
 import { useState } from 'react';
 import holdingsData from '../../data/holdings.json';
 
-const C = holdingsData.THEMES.dark;
+import { C } from './holdingsC.js';
 
 const fmtNum = (val, fmt) => {
   if (val === null || val === undefined) return '–';
@@ -55,7 +55,7 @@ function MiniChart({ pts, color, unit }) {
             <text x={padL - 6} y={y(v) + 3} textAnchor="end" fontSize="9.5" fill={C.inkFaint} fontFamily="var(--mono)">{fmtY(v)}{unit === 'pct' ? '%' : ''}</text>
           </g>
         ))}
-        <path d={area} fill={color + '14'} />
+        <path d={area} fill={`color-mix(in srgb, ${color} 8%, transparent)`} />
         <path d={line} fill="none" stroke={color} strokeWidth="2" />
         {clean.map((p, i) => <circle key={i} cx={x(i)} cy={y(p.val)} r="2" fill={color} />)}
         {/* X-axis labels */}
@@ -137,7 +137,7 @@ export default function FinancialDeep({ data }) {
           <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 8 }}>
             {seriesOpts.map((o) => {
               const on = o.key === chartKey;
-              return <button key={o.key} onClick={() => setChartKey(o.key)} style={{ fontSize: 11, fontWeight: on ? 600 : 400, padding: '4px 10px', borderRadius: 13, border: `1px solid ${on ? C.teal : C.line}`, background: on ? C.teal + '18' : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{o.label}</button>;
+              return <button key={o.key} onClick={() => setChartKey(o.key)} style={{ fontSize: 11, fontWeight: on ? 600 : 400, padding: '4px 10px', borderRadius: 13, border: `1px solid ${on ? C.teal : C.line}`, background: on ? `color-mix(in srgb, ${C.teal} 9%, transparent)` : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{o.label}</button>;
             })}
           </div>
           <MiniChart pts={chartPts} color={C.teal} unit={chartRowObj?.fmt} />

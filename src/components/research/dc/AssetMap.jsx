@@ -12,11 +12,11 @@ const { DC_BUCKETS, DC_DOMAINS } = dcBucketsData;
 // Inline style helpers for the asset-map modal/zoom button
 const zbtn = {
   width: 28, height: 28, borderRadius: '50%', background: 'transparent', border: '1px solid transparent',
-  color: '#a1a1aa', cursor: 'pointer', fontFamily: 'ui-monospace,monospace', fontSize: 14, fontWeight: 700,
+  color: 'var(--hm-text3)', cursor: 'pointer', fontFamily: 'ui-monospace,monospace', fontSize: 14, fontWeight: 700,
   display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
 };
-const mLabel = { fontFamily: 'ui-monospace,monospace', fontSize: 9.5, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6, fontWeight: 700 };
-const mVal = { fontSize: 13.5, color: '#fafafa', fontWeight: 500 };
+const mLabel = { fontFamily: 'ui-monospace,monospace', fontSize: 9.5, color: 'var(--hm-text5)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6, fontWeight: 700 };
+const mVal = { fontSize: 13.5, color: 'var(--hm-text)', fontWeight: 500 };
 
 // Mirrors the dcBucketFor helper in DataCentersAI.jsx – duplicated here so AssetMap
 // is self-contained and we don't drag the whole report module into this leaf.
@@ -213,10 +213,10 @@ export default function AssetMap({ rows }) {
     };
 
     function clear() {
-      ctx.fillStyle = '#0d0d0e';
+      ctx.fillStyle = 'var(--hm-bg2)';
       ctx.fillRect(0,0,W,H);
       const g = ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.6);
-      g.addColorStop(0,'rgba(255,255,255,0.02)'); g.addColorStop(1,'rgba(0,0,0,0)');
+      g.addColorStop(0,'var(--hm-surface)'); g.addColorStop(1,'rgba(0,0,0,0)');
       ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
     }
 
@@ -239,7 +239,7 @@ export default function AssetMap({ rows }) {
 
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.font = '700 12px ui-monospace, "SF Mono", Menlo, monospace';
-        ctx.fillStyle = '#fafafa';
+        ctx.fillStyle = 'var(--hm-text)';
         if (l2) {
           ctx.fillText(l1, h.x, h.y - 7);
           ctx.fillText(l2, h.x, h.y + 7);
@@ -319,7 +319,7 @@ export default function AssetMap({ rows }) {
           ctx.font = `${lift ? '700' : '600'} 9.5px ui-monospace, "SF Mono", Menlo, monospace`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'top';
-          ctx.fillStyle = lift ? '#fafafa' : hexA('#d4d4d8', alpha);
+          ctx.fillStyle = lift ? 'var(--hm-text)' : hexA('var(--hm-text2)', alpha);
           ctx.fillText(n.short, n.x, n.y + r + 6);
         }
 
@@ -332,7 +332,7 @@ export default function AssetMap({ rows }) {
           const tw = ctx.measureText(n.data.company).width;
           ctx.fillStyle = 'rgba(10,10,10,0.8)';
           ctx.fillRect(n.x - tw/2 - 7, ly - 2, tw + 14, 18);
-          ctx.fillStyle = '#fafafa';
+          ctx.fillStyle = 'var(--hm-text)';
           ctx.fillText(n.data.company, n.x, ly);
         }
       }
@@ -440,13 +440,13 @@ export default function AssetMap({ rows }) {
 
   const RISKS = ['', 'Core', 'Growth', 'Aggressive'];
   const RISK_LABEL = { '': 'All', 'Core': 'Core', 'Growth': 'Growth', 'Aggressive': 'Aggressive' };
-  const RISK_ACTIVE_BG = { '': '#fafafa', 'Core': '#10b981', 'Growth': '#22d3ee', 'Aggressive': '#f59e0b' };
+  const RISK_ACTIVE_BG = { '': 'var(--hm-text)', 'Core': '#10b981', 'Growth': '#22d3ee', 'Aggressive': '#f59e0b' };
   const RISK_ACTIVE_FG = { '': '#0a0a0a', 'Core': '#07120d', 'Growth': '#04141a', 'Aggressive': '#1a1204' };
 
   const CONV_STYLE = {
     'High':     { color: '#10b981', bg: 'rgba(16,185,129,0.15)',  border: 'rgba(16,185,129,0.45)' },
     'Med-High': { color: '#34d399', bg: 'rgba(52,211,153,0.12)',  border: 'rgba(52,211,153,0.40)' },
-    'Medium':   { color: '#a1a1aa', bg: 'rgba(161,161,170,0.12)', border: 'rgba(161,161,170,0.35)' },
+    'Medium':   { color: 'var(--hm-text3)', bg: 'rgba(161,161,170,0.12)', border: 'rgba(161,161,170,0.35)' },
     'Low-Med':  { color: '#f59e0b', bg: 'rgba(245,158,11,0.12)',  border: 'rgba(245,158,11,0.40)' },
     'Low':      { color: '#ef4444', bg: 'rgba(239,68,68,0.12)',   border: 'rgba(239,68,68,0.40)' },
   };
@@ -460,7 +460,7 @@ export default function AssetMap({ rows }) {
   return (
     <div ref={wrapRef} style={{
       position: 'relative', width: '100%', height: HEIGHT,
-      background: '#0d0d0e', border: '1px solid #27272a', borderRadius: 10, overflow: 'hidden',
+      background: 'var(--hm-bg2)', border: '1px solid var(--hm-border5)', borderRadius: 10, overflow: 'hidden',
     }}>
       <canvas
         ref={canvasRef}
@@ -475,17 +475,17 @@ export default function AssetMap({ rows }) {
       {/* Risk filter + search (top-left overlay) */}
       <div style={{
         position: 'absolute', top: 14, left: 14, display: 'flex', alignItems: 'center', gap: 8,
-        background: 'rgba(15,15,16,0.72)', backdropFilter: 'blur(8px)',
-        border: '1px solid #27272a', borderRadius: 999, padding: '6px 8px 6px 14px',
+        background: 'var(--hm-solid)', backdropFilter: 'blur(8px)',
+        border: '1px solid var(--hm-border5)', borderRadius: 999, padding: '6px 8px 6px 14px',
       }}>
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Find…"
-          style={{ background: 'transparent', border: 'none', outline: 'none', color: '#fafafa', fontSize: 12, fontFamily: 'inherit', width: 110 }}
+          style={{ background: 'transparent', border: 'none', outline: 'none', color: 'var(--hm-text)', fontSize: 12, fontFamily: 'inherit', width: 110 }}
         />
-        <span style={{ width: 1, height: 16, background: '#27272a' }} />
-        <span style={{ fontSize: 8.5, color: '#52525b', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>RISK</span>
+        <span style={{ width: 1, height: 16, background: 'var(--hm-border5)' }} />
+        <span style={{ fontSize: 8.5, color: 'var(--hm-text6)', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>RISK</span>
         {RISKS.map(rk => {
           const active = riskFilter === rk;
           return (
@@ -493,9 +493,9 @@ export default function AssetMap({ rows }) {
               style={{
                 fontFamily: 'ui-monospace,monospace', fontSize: 9.5, fontWeight: 700, letterSpacing: '0.04em',
                 padding: '5px 10px', borderRadius: 999, cursor: 'pointer',
-                border: `1px solid ${active ? RISK_ACTIVE_BG[rk] : '#27272a'}`,
+                border: `1px solid ${active ? RISK_ACTIVE_BG[rk] : 'var(--hm-border5)'}`,
                 background: active ? RISK_ACTIVE_BG[rk] : 'transparent',
-                color: active ? RISK_ACTIVE_FG[rk] : '#a1a1aa', transition: 'all 140ms',
+                color: active ? RISK_ACTIVE_FG[rk] : 'var(--hm-text3)', transition: 'all 140ms',
               }}>
               {RISK_LABEL[rk]}
             </button>
@@ -507,11 +507,11 @@ export default function AssetMap({ rows }) {
       <div style={{
         position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,
-        background: 'rgba(15,15,16,0.72)', backdropFilter: 'blur(8px)',
-        border: '1px solid #27272a', borderRadius: 999, padding: '8px 6px',
+        background: 'var(--hm-solid)', backdropFilter: 'blur(8px)',
+        border: '1px solid var(--hm-border5)', borderRadius: 999, padding: '8px 6px',
       }}>
         <button onClick={() => zoomButton(1)} style={zbtn}>+</button>
-        <div style={{ fontFamily: 'ui-monospace,monospace', fontSize: 9, color: '#71717a', fontWeight: 700, padding: '2px 0' }}>{zoomPct}%</div>
+        <div style={{ fontFamily: 'ui-monospace,monospace', fontSize: 9, color: 'var(--hm-text5)', fontWeight: 700, padding: '2px 0' }}>{zoomPct}%</div>
         <button onClick={() => zoomButton(-1)} style={zbtn}>−</button>
         <button onClick={() => { const S = stateRef.current; if (S) S.fitView(); }} style={{ ...zbtn, fontSize: 12 }}>⊕</button>
       </div>
@@ -521,12 +521,12 @@ export default function AssetMap({ rows }) {
         <div style={{
           position: 'fixed', left: tooltip.x + 14, top: tooltip.y + 14, zIndex: 60,
           background: 'rgba(15,15,16,0.94)', backdropFilter: 'blur(10px)',
-          border: '1px solid #27272a', borderRadius: 6, padding: '8px 11px',
+          border: '1px solid var(--hm-border5)', borderRadius: 6, padding: '8px 11px',
           pointerEvents: 'none', boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
         }}>
-          <div style={{ fontSize: 12, color: '#fafafa', fontWeight: 600, marginBottom: 2 }}>{tooltip.company}</div>
-          <div style={{ fontSize: 9.5, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>{tooltip.ticker} · {tooltip.sector}</div>
-          <div style={{ fontSize: 8.5, color: '#52525b', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.1em', marginTop: 6, textTransform: 'uppercase' }}>Click for detail</div>
+          <div style={{ fontSize: 12, color: 'var(--hm-text)', fontWeight: 600, marginBottom: 2 }}>{tooltip.company}</div>
+          <div style={{ fontSize: 9.5, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace' }}>{tooltip.ticker} · {tooltip.sector}</div>
+          <div style={{ fontSize: 8.5, color: 'var(--hm-text6)', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.1em', marginTop: 6, textTransform: 'uppercase' }}>Click for detail</div>
         </div>
       )}
 
@@ -541,13 +541,13 @@ export default function AssetMap({ rows }) {
             position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
             width: 'min(420px, calc(100% - 40px))', zIndex: 80,
             background: 'linear-gradient(180deg, rgba(24,24,27,0.98), rgba(15,15,16,0.98))',
-            border: '1px solid #27272a', borderRadius: 14, overflow: 'hidden',
+            border: '1px solid var(--hm-border5)', borderRadius: 14, overflow: 'hidden',
             boxShadow: '0 30px 80px rgba(0,0,0,0.6)',
           }}>
             <div style={{ height: 3, background: selColor }} />
             <button onClick={closeModal} style={{
               position: 'absolute', top: 14, right: 14, width: 28, height: 28, borderRadius: '50%',
-              background: 'rgba(255,255,255,0.05)', border: '1px solid #27272a', color: '#a1a1aa',
+              background: 'var(--hm-chip2)', border: '1px solid var(--hm-border5)', color: 'var(--hm-text3)',
               cursor: 'pointer', fontSize: 16, lineHeight: 1,
             }}>×</button>
             <div style={{ padding: '24px 26px 22px' }}>
@@ -560,14 +560,14 @@ export default function AssetMap({ rows }) {
                 <span style={{ width: 7, height: 7, borderRadius: '50%', background: selColor }} />
                 {selBucket}
               </div>
-              <div style={{ fontSize: 26, fontWeight: 600, color: '#fafafa', letterSpacing: '-0.018em', lineHeight: 1.1, marginBottom: 4 }}>{sel.company}</div>
-              <div style={{ fontFamily: 'ui-monospace,monospace', fontSize: 12, color: '#71717a', marginBottom: 22 }}>{sel.ticker}</div>
+              <div style={{ fontSize: 26, fontWeight: 600, color: 'var(--hm-text)', letterSpacing: '-0.018em', lineHeight: 1.1, marginBottom: 4 }}>{sel.company}</div>
+              <div style={{ fontFamily: 'ui-monospace,monospace', fontSize: 12, color: 'var(--hm-text5)', marginBottom: 22 }}>{sel.ticker}</div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px 18px', marginBottom: 20 }}>
                 <div>
                   <div style={mLabel}>Conviction</div>
                   <span style={{ display: 'inline-block', padding: '3px 10px', fontFamily: 'ui-monospace,monospace', fontSize: 11, fontWeight: 700, borderRadius: 4, color: selConv.color, background: selConv.bg, border: `1px solid ${selConv.border}` }}>{sel.conviction}</span>
                 </div>
-                <div><div style={mLabel}>Risk Tier</div><div style={{ ...mVal, color: RISK_COLOR[sel.riskTier] || '#a1a1aa' }}>{sel.riskTier}</div></div>
+                <div><div style={mLabel}>Risk Tier</div><div style={{ ...mVal, color: RISK_COLOR[sel.riskTier] || 'var(--hm-text3)' }}>{sel.riskTier}</div></div>
                 <div><div style={mLabel}>Time horizon</div><div style={mVal}>{sel.horizon}</div></div>
                 <div><div style={mLabel}>Geography</div><div style={mVal}>{sel.geo}</div></div>
                 <div>
@@ -576,7 +576,7 @@ export default function AssetMap({ rows }) {
                 </div>
                 <div><div style={mLabel}>Sub-sector</div><div style={mVal}>{sel.sector}</div></div>
               </div>
-              <div style={{ padding: '14px 16px', background: 'rgba(255,255,255,0.025)', border: '1px solid #27272a', borderLeft: `2px solid ${selColor}`, borderRadius: 8, fontSize: 12, color: '#a1a1aa', lineHeight: 1.6 }}>
+              <div style={{ padding: '14px 16px', background: 'rgba(255,255,255,0.025)', border: '1px solid var(--hm-border5)', borderLeft: `2px solid ${selColor}`, borderRadius: 8, fontSize: 12, color: 'var(--hm-text3)', lineHeight: 1.6 }}>
                 <div style={{ fontFamily: 'ui-monospace,monospace', fontSize: 9, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 6, color: selColor }}>Why this bucket matters</div>
                 {selBucket ? DC_BUCKETS[selBucket].why : ''}
               </div>

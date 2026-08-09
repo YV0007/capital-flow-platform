@@ -13,7 +13,7 @@
 import { useState, useEffect, useRef } from 'react';
 import holdingsData from '../../data/holdings.json';
 
-const C = holdingsData.THEMES.dark;
+import { C } from './holdingsC.js';
 const PALETTE = [C.teal, C.blue, C.violet, C.gold, C.clay, '#5BA6E2', '#8FBF6A', '#C77DBB', '#6CC0C0', '#D6A24A'];
 
 // ── normalize either schema into one render shape ───────────────────────────
@@ -52,7 +52,7 @@ function normalize(data) {
     }));
   }
   const keyCompanies = blocks.flatMap((b) => b.groups.flatMap((g) => g.rows)).filter((r) => r.key);
-  return { summary: data.summary, composition, geo, themes, blocks, keyCompanies, layout: data.layout || 'default', allCompanies: data.allCompanies || null };
+  return { summary: data.summary, composition, geo, themes, blocks, keyCompanies, layout: data.layout || 'default' };
 }
 
 // ── flat full-portfolio table (Company / Asset Class / Industry / Region) ───
@@ -131,7 +131,7 @@ function CompanyRow({ r, open, onToggle, focused }) {
         <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 13.5, fontWeight: 500, color: C.ink, display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap' }}>
             {r.name}
-            {r.ai && <span style={{ fontSize: 8.5, padding: '1px 6px', borderRadius: 8, background: C.violet + '22', color: C.violet, border: `1px solid ${C.violet}55`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
+            {r.ai && <span style={{ fontSize: 8.5, padding: '1px 6px', borderRadius: 8, background: `color-mix(in srgb, ${C.violet} 13%, transparent)`, color: C.violet, border: `1px solid color-mix(in srgb, ${C.violet} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
           </div>
           {r.what && <div style={{ fontSize: 11.5, color: C.inkFaint, marginTop: 2, lineHeight: 1.45 }}>{r.what}</div>}
         </div>
@@ -141,8 +141,8 @@ function CompanyRow({ r, open, onToggle, focused }) {
         </div>
         <div style={{ fontSize: 11.5, color: C.inkSoft, textAlign: 'right' }}>{r.geography || '—'}</div>
         <div style={{ textAlign: 'right' }}>
-          {pending ? <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 8, background: C.clay + '22', color: C.clay, border: `1px solid ${C.clay}55`, fontWeight: 600 }}>PENDING</span>
-            : exiting ? <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 8, background: C.gold + '22', color: C.gold, border: `1px solid ${C.gold}55`, fontWeight: 600 }}>ВЫХОД</span>
+          {pending ? <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 8, background: `color-mix(in srgb, ${C.clay} 13%, transparent)`, color: C.clay, border: `1px solid color-mix(in srgb, ${C.clay} 33%, transparent)`, fontWeight: 600 }}>PENDING</span>
+            : exiting ? <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 8, background: `color-mix(in srgb, ${C.gold} 13%, transparent)`, color: C.gold, border: `1px solid color-mix(in srgb, ${C.gold} 33%, transparent)`, fontWeight: 600 }}>ВЫХОД</span>
             : <span style={{ fontSize: 11, color: C.inkFaint }}>{r.status || ''}</span>}
         </div>
         <div style={{ fontSize: 11, color: C.inkFaint, textAlign: 'right' }}>{r.detail ? (open ? '▾' : '▸') : ''}</div>
@@ -162,7 +162,7 @@ function CompanyRow({ r, open, onToggle, focused }) {
           )}
           {r.detail.summary && <p style={{ fontSize: 13, color: C.inkSoft, lineHeight: 1.65, margin: '0 0 8px' }}>{r.detail.summary}</p>}
           {r.detail.whyMatters && (
-            <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.55, padding: '8px 12px', background: C.teal + '10', border: `1px solid ${C.teal}33`, borderRadius: 7 }}>
+            <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.55, padding: '8px 12px', background: `color-mix(in srgb, ${C.teal} 6%, transparent)`, border: `1px solid color-mix(in srgb, ${C.teal} 20%, transparent)`, borderRadius: 7 }}>
               <span style={{ fontWeight: 600, color: C.teal }}>Почему важно. </span>{r.detail.whyMatters}
             </div>
           )}
@@ -462,7 +462,7 @@ function Holdings13F({ h, only }) {
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '78px 56px 1fr 92px', gap: 10, padding: '9px 16px', borderBottom: i < h.filings13DG.rows.length - 1 ? `1px solid ${C.lineSoft}` : 'none', alignItems: 'baseline' }}>
                 <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint }}>{r.date}</div>
                 <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{r.form}</div>
-                <div style={{ minWidth: 0, fontSize: 12.5, color: C.ink }}><span style={{ fontFamily: 'var(--mono)', color: C.inkSoft }}>{r.t}</span> {r.name}{closed && <span style={{ fontSize: 9, marginLeft: 6, padding: '1px 6px', borderRadius: 8, background: C.gold + '22', color: C.gold, border: `1px solid ${C.gold}55` }}>{r.status}</span>}</div>
+                <div style={{ minWidth: 0, fontSize: 12.5, color: C.ink }}><span style={{ fontFamily: 'var(--mono)', color: C.inkSoft }}>{r.t}</span> {r.name}{closed && <span style={{ fontSize: 9, marginLeft: 6, padding: '1px 6px', borderRadius: 8, background: `color-mix(in srgb, ${C.gold} 13%, transparent)`, color: C.gold, border: `1px solid color-mix(in srgb, ${C.gold} 33%, transparent)` }}>{r.status}</span>}</div>
                 <div style={{ textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 12, color: C.ink }}>{r.ownPct != null ? r.ownPct.toFixed(2) + '%' : (r.shares || '—')}</div>
               </div>
             );
@@ -478,7 +478,6 @@ export default function PortfolioDeep({ data, focus }) {
   const [tab, setTab] = useState('sector');
   const [search, setSearch] = useState('');
   const [keyOnly, setKeyOnly] = useState(false);
-  const [viewAll, setViewAll] = useState(false);
   const [mainTab, setMainTab] = useState('holdings');
   // default to the first sector that actually holds companies (some, e.g. asset
   // management, carry no named positions and would open to an empty pane)
@@ -546,7 +545,7 @@ export default function PortfolioDeep({ data, focus }) {
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20, borderBottom: `1px solid ${C.line}`, paddingBottom: 14 }}>
           {sections.map(([id, lab]) => {
             const on = mainTab === id;
-            return <button key={id} onClick={() => setMainTab(id)} style={{ fontSize: 13, fontWeight: on ? 600 : 500, padding: '7px 15px', borderRadius: 16, border: `1px solid ${on ? C.teal : C.line}`, background: on ? C.teal + '18' : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{lab}</button>;
+            return <button key={id} onClick={() => setMainTab(id)} style={{ fontSize: 13, fontWeight: on ? 600 : 500, padding: '7px 15px', borderRadius: 16, border: `1px solid ${on ? C.teal : C.line}`, background: on ? `color-mix(in srgb, ${C.teal} 9%, transparent)` : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{lab}</button>;
           })}
         </div>
       )}
@@ -560,7 +559,7 @@ export default function PortfolioDeep({ data, focus }) {
             <span style={{ fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkSoft, marginRight: 6 }}>Куда вложены деньги</span>
             {tabs.map(([id, lab]) => {
               const on = tab === id;
-              return <button key={id} onClick={() => setTab(id)} style={{ fontSize: 12, fontWeight: on ? 600 : 400, padding: '5px 13px', borderRadius: 14, border: `1px solid ${on ? C.teal : C.line}`, background: on ? C.teal + '18' : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{lab}</button>;
+              return <button key={id} onClick={() => setTab(id)} style={{ fontSize: 12, fontWeight: on ? 600 : 400, padding: '5px 13px', borderRadius: 14, border: `1px solid ${on ? C.teal : C.line}`, background: on ? `color-mix(in srgb, ${C.teal} 9%, transparent)` : 'transparent', color: on ? C.teal : C.inkSoft, cursor: 'pointer' }}>{lab}</button>;
             })}
           </div>
           <div style={{ fontSize: 12, color: C.inkFaint, marginBottom: 14, lineHeight: 1.4 }}>
@@ -605,18 +604,11 @@ export default function PortfolioDeep({ data, focus }) {
       {/* ── Filters ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск по компании…" style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, fontFamily: 'var(--sans)', width: 220, outline: 'none' }} />
-        {n.allCompanies && (
-          <button onClick={() => setViewAll(!viewAll)} style={{ fontSize: 12, padding: '6px 14px', borderRadius: 16, border: `1px solid ${viewAll ? C.teal : C.line}`, background: viewAll ? C.teal + '18' : 'transparent', color: viewAll ? C.teal : C.inkSoft, cursor: 'pointer' }}>
-            {viewAll ? '◂ По секторам' : `Все компании · ${n.allCompanies.length}`}
-          </button>
-        )}
-        {!viewAll && <span style={{ fontSize: 11.5, color: C.inkFaint, marginLeft: 'auto' }}>Сектор слева → компания → клик для деталей</span>}
+        <span style={{ fontSize: 11.5, color: C.inkFaint, marginLeft: 'auto' }}>Сектор слева → компания → клик для деталей</span>
       </div>
 
-      {/* ── Portfolio: allCompanies table OR master-detail ── */}
-      {viewAll && n.allCompanies ? (
-        <AllCompaniesTable companies={n.allCompanies} search={search} />
-      ) : (() => {
+      {/* ── Portfolio: master-detail ── */}
+      {(() => {
         const filtering = !!(search || keyOnly);
         const filtered = n.blocks.map((b) => filterBlock(b, search, keyOnly));
         let shown = active;

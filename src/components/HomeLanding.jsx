@@ -306,72 +306,9 @@ export default function HomeLanding({ onChoose, onOpenResearch, theme = 'dark' }
         </div>
       </div>
 
-      {/* ── Theme tokens + shared keyframes for the whole landing ──────── */}
+      {/* ── Shared keyframes for the landing (theme tokens live in
+             src/theme.css, keyed off <html data-theme>) ────────────────── */}
       <style>{`
-        .hm-root {
-          --hm-page-bg:
-            radial-gradient(1000px 520px at 18% -10%, rgba(56,189,248,0.07) 0%, transparent 60%),
-            radial-gradient(900px 480px at 85% 8%, rgba(47,217,196,0.05) 0%, transparent 60%),
-            #0A0A0B;
-          --hm-bg: #0A0A0B;
-          --hm-fade0: rgba(10,10,11,0);
-          --hm-text: #fafafa;
-          --hm-text2: #d4d4d8;
-          --hm-text3: #a1a1aa;
-          --hm-text4: #8b8b95;
-          --hm-text5: #71717a;
-          --hm-text6: #52525b;
-          --hm-rank: #3f3f46;
-          --hm-surface: rgba(255,255,255,0.015);
-          --hm-chip: rgba(255,255,255,0.03);
-          --hm-chip2: rgba(255,255,255,0.05);
-          --hm-card-strong: rgba(15,15,17,0.9);
-          --hm-solid: rgba(24,24,27,0.9);
-          --hm-hair: rgba(255,255,255,0.06);
-          --hm-border: rgba(255,255,255,0.07);
-          --hm-border2: rgba(255,255,255,0.09);
-          --hm-border3: rgba(255,255,255,0.10);
-          --hm-border4: rgba(255,255,255,0.12);
-          --hm-border5: rgba(255,255,255,0.14);
-          --hm-tile: #131316;
-          --hm-tile-border: rgba(255,255,255,0.08);
-          --hm-title-grad: linear-gradient(180deg, #fafafa 10%, #8b8b95 100%);
-          --hm-scroll: #27272a;
-          --hm-scroll2: #3f3f46;
-          --hm-wave-boost: 1;
-        }
-        .hm-root[data-theme="light"] {
-          --hm-page-bg:
-            radial-gradient(1000px 520px at 18% -10%, rgba(2,132,199,0.10) 0%, transparent 60%),
-            radial-gradient(900px 480px at 85% 8%, rgba(13,148,136,0.08) 0%, transparent 60%),
-            #F4F7FB;
-          --hm-bg: #F4F7FB;
-          --hm-fade0: rgba(244,247,251,0);
-          --hm-text: #0F172A;
-          --hm-text2: #334155;
-          --hm-text3: #475569;
-          --hm-text4: #5D6B80;
-          --hm-text5: #64748B;
-          --hm-text6: #94A3B8;
-          --hm-rank: #C3CEDB;
-          --hm-surface: #FFFFFF;
-          --hm-chip: #FFFFFF;
-          --hm-chip2: #EEF2F7;
-          --hm-card-strong: #FFFFFF;
-          --hm-solid: rgba(255,255,255,0.94);
-          --hm-hair: rgba(15,23,42,0.08);
-          --hm-border: rgba(15,23,42,0.10);
-          --hm-border2: rgba(15,23,42,0.12);
-          --hm-border3: rgba(15,23,42,0.14);
-          --hm-border4: rgba(15,23,42,0.18);
-          --hm-border5: rgba(15,23,42,0.22);
-          --hm-tile: #EDF1F7;
-          --hm-tile-border: rgba(15,23,42,0.10);
-          --hm-title-grad: linear-gradient(180deg, #0F172A 15%, #46628A 100%);
-          --hm-scroll: #CBD5E1;
-          --hm-scroll2: #94A3B8;
-          --hm-wave-boost: 1.7;
-        }
         @keyframes hmFloatIn {
           from { opacity: 0; transform: translateY(22px); }
           to   { opacity: 1; transform: translateY(0); }

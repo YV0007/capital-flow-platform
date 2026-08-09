@@ -1,0 +1,198 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   Global theme tokens — dark (default) + light, switched by the
+   `data-theme` attribute App keeps on <html>. Three token families:
+
+     --hm-*  neutrals born on the home landing; also used by the DC
+             supply-chain report and generic chrome
+     --h-*   the Holdings research family palette (HoldingsV2 + deeps),
+             mirroring the old THEMES.dark keys
+     --hp-*  Proxy report accents (amber-led variant of the same system)
+
+   Light is deliberately SHARP and COOL — white surfaces over an icy
+   blue-grey page, slate text, deepened accents. Never creamy.
+
+   The tracker section is Tailwind-classed (CDN); the light skin for it is
+   the override block at the bottom targeting the zinc utilities.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── home / generic neutrals ── */
+  --hm-page-bg:
+    radial-gradient(1000px 520px at 18% -10%, rgba(56,189,248,0.07) 0%, transparent 60%),
+    radial-gradient(900px 480px at 85% 8%, rgba(47,217,196,0.05) 0%, transparent 60%),
+    #0A0A0B;
+  --hm-bg: #0A0A0B;
+  --hm-bg2: #0d0d0e;
+  --hm-fade0: rgba(10,10,11,0);
+  --hm-text: #fafafa;
+  --hm-text2: #d4d4d8;
+  --hm-text3: #a1a1aa;
+  --hm-text4: #8b8b95;
+  --hm-text5: #71717a;
+  --hm-text6: #52525b;
+  --hm-rank: #3f3f46;
+  --hm-surface: rgba(255,255,255,0.015);
+  --hm-chip: rgba(255,255,255,0.03);
+  --hm-chip2: rgba(255,255,255,0.05);
+  --hm-card-strong: rgba(15,15,17,0.9);
+  --hm-solid: rgba(24,24,27,0.9);
+  --hm-panel: #18181b;
+  --hm-hair: rgba(255,255,255,0.06);
+  --hm-border: rgba(255,255,255,0.07);
+  --hm-border2: rgba(255,255,255,0.09);
+  --hm-border3: rgba(255,255,255,0.10);
+  --hm-border4: rgba(255,255,255,0.12);
+  --hm-border5: rgba(255,255,255,0.14);
+  --hm-tile: #131316;
+  --hm-tile-border: rgba(255,255,255,0.08);
+  --hm-title-grad: linear-gradient(180deg, #fafafa 10%, #8b8b95 100%);
+  --hm-scroll: #27272a;
+  --hm-scroll2: #3f3f46;
+  --hm-wave-boost: 1;
+
+  /* ── holdings research family (old THEMES.dark keys) ── */
+  --h-paper: #100F0D;
+  --h-card: #1A1916;
+  --h-cardAlt: #16201C;
+  --h-ink: #ECE9E1;
+  --h-inkSoft: #A39E92;
+  --h-inkFaint: #706B61;
+  --h-line: #2C2A25;
+  --h-lineSoft: #232220;
+  --h-track: #232220;
+  --h-violet: #7E76DB;
+  --h-teal: #46C29B;
+  --h-clay: #E08A5E;
+  --h-gold: #CBAA52;
+  --h-blue: #5BA6E2;
+  --h-unlisted: #33312B;
+
+  /* ── proxy report accents ── */
+  --hp-cardAlt: #22201B;
+  --hp-accent: #F59E0B;
+  --hp-violet: #A78BFA;
+  --hp-emerald: #46C29B;
+  --hp-rose: #EF6F6F;
+  --hp-unlisted: #33312B;
+}
+
+:root[data-theme="light"] {
+  --hm-page-bg:
+    radial-gradient(1000px 520px at 18% -10%, rgba(2,132,199,0.10) 0%, transparent 60%),
+    radial-gradient(900px 480px at 85% 8%, rgba(13,148,136,0.08) 0%, transparent 60%),
+    #F4F7FB;
+  --hm-bg: #F4F7FB;
+  --hm-bg2: #FFFFFF;
+  --hm-fade0: rgba(244,247,251,0);
+  --hm-text: #0F172A;
+  --hm-text2: #334155;
+  --hm-text3: #475569;
+  --hm-text4: #5D6B80;
+  --hm-text5: #64748B;
+  --hm-text6: #94A3B8;
+  --hm-rank: #C3CEDB;
+  --hm-surface: #FFFFFF;
+  --hm-chip: #FFFFFF;
+  --hm-chip2: #EEF2F7;
+  --hm-card-strong: #FFFFFF;
+  --hm-solid: rgba(255,255,255,0.94);
+  --hm-panel: #FFFFFF;
+  --hm-hair: rgba(15,23,42,0.08);
+  --hm-border: rgba(15,23,42,0.10);
+  --hm-border2: rgba(15,23,42,0.12);
+  --hm-border3: rgba(15,23,42,0.14);
+  --hm-border4: rgba(15,23,42,0.18);
+  --hm-border5: rgba(15,23,42,0.22);
+  --hm-tile: #EDF1F7;
+  --hm-tile-border: rgba(15,23,42,0.10);
+  --hm-title-grad: linear-gradient(180deg, #0F172A 15%, #46628A 100%);
+  --hm-scroll: #CBD5E1;
+  --hm-scroll2: #94A3B8;
+  --hm-wave-boost: 1.7;
+
+  --h-paper: #F4F7FB;
+  --h-card: #FFFFFF;
+  --h-cardAlt: #E9F2EE;
+  --h-ink: #101826;
+  --h-inkSoft: #4B5B72;
+  --h-inkFaint: #8B98AB;
+  --h-line: #DAE1EB;
+  --h-lineSoft: #E7ECF3;
+  --h-track: #E7ECF3;
+  --h-violet: #5B54C9;
+  --h-teal: #0C8F68;
+  --h-clay: #C25A28;
+  --h-gold: #9A7B1F;
+  --h-blue: #1F6FB0;
+  --h-unlisted: #D9DFE8;
+
+  --hp-cardAlt: #F0EDE5;
+  --hp-accent: #B45309;
+  --hp-violet: #7C5CE0;
+  --hp-emerald: #0C8F68;
+  --hp-rose: #D23B3B;
+  --hp-unlisted: #D9DFE8;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Light-mode override layer for the Tailwind-classed tracker section.
+   Maps the zinc dark utilities onto the icy light palette. !important is
+   required to beat the CDN-generated utilities.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="light"] .bg-zinc-950 { background-color: #F4F7FB !important; }
+[data-theme="light"] .bg-zinc-900 { background-color: #FFFFFF !important; }
+[data-theme="light"] .bg-zinc-800 { background-color: #E9EEF5 !important; }
+[data-theme="light"] .bg-zinc-700 { background-color: #DCE3ED !important; }
+[data-theme="light"] .bg-zinc-600 { background-color: #C6D0DD !important; }
+[data-theme="light"] .bg-zinc-500 { background-color: #A6B4C6 !important; }
+[data-theme="light"] .bg-zinc-400 { background-color: #8B98AB !important; }
+[data-theme="light"] .bg-zinc-950\/40 { background-color: rgba(15,23,42,0.04) !important; }
+
+[data-theme="light"] .hover\:bg-zinc-800:hover { background-color: #E2E8F0 !important; }
+[data-theme="light"] .hover\:bg-zinc-900\/60:hover { background-color: rgba(255,255,255,0.75) !important; }
+[data-theme="light"] .hover\:bg-zinc-950\/40:hover { background-color: rgba(15,23,42,0.05) !important; }
+[data-theme="light"] .hover\:bg-zinc-800\/40:hover { background-color: rgba(15,23,42,0.06) !important; }
+[data-theme="light"] .hover\:bg-zinc-800\/30:hover { background-color: rgba(15,23,42,0.05) !important; }
+
+[data-theme="light"] .text-zinc-50,
+[data-theme="light"] .text-zinc-100,
+[data-theme="light"] .text-zinc-200 { color: #0F172A !important; }
+[data-theme="light"] .text-zinc-300 { color: #334155 !important; }
+[data-theme="light"] .text-zinc-400 { color: #475569 !important; }
+[data-theme="light"] .text-zinc-500 { color: #64748B !important; }
+[data-theme="light"] .text-zinc-600 { color: #8B98AB !important; }
+[data-theme="light"] .text-zinc-700 { color: #A9B4C4 !important; }
+[data-theme="light"] .hover\:text-zinc-100:hover,
+[data-theme="light"] .hover\:text-zinc-200:hover { color: #0F172A !important; }
+[data-theme="light"] .hover\:text-zinc-300:hover { color: #334155 !important; }
+
+[data-theme="light"] .border-zinc-600 { border-color: rgba(15,23,42,0.25) !important; }
+[data-theme="light"] .border-zinc-700 { border-color: rgba(15,23,42,0.18) !important; }
+[data-theme="light"] .border-zinc-800 { border-color: rgba(15,23,42,0.12) !important; }
+[data-theme="light"] .border-zinc-900 { border-color: rgba(15,23,42,0.08) !important; }
+[data-theme="light"] .hover\:border-zinc-600:hover { border-color: rgba(15,23,42,0.30) !important; }
+[data-theme="light"] .hover\:border-zinc-700:hover { border-color: rgba(15,23,42,0.22) !important; }
+
+/* gradient utilities — retarget the Tailwind stop variables */
+[data-theme="light"] .from-zinc-900 { --tw-gradient-from: #FFFFFF !important; }
+[data-theme="light"] .from-zinc-950 { --tw-gradient-from: #F4F7FB !important; }
+[data-theme="light"] .to-zinc-900 { --tw-gradient-to: #FFFFFF !important; }
+[data-theme="light"] .to-zinc-950 { --tw-gradient-to: #F4F7FB !important; }
+[data-theme="light"] .to-zinc-700 { --tw-gradient-to: #DCE3ED !important; }
+/* via-* bakes its color into --tw-gradient-stops, so redefine the stops */
+[data-theme="light"] .via-zinc-900 { --tw-gradient-stops: var(--tw-gradient-from), #FFFFFF, var(--tw-gradient-to) !important; }
+[data-theme="light"] .via-zinc-950 { --tw-gradient-stops: var(--tw-gradient-from), #F4F7FB, var(--tw-gradient-to) !important; }
+[data-theme="light"] .via-violet-950\/40 { --tw-gradient-stops: var(--tw-gradient-from), rgba(139,92,246,0.10), var(--tw-gradient-to) !important; }
+[data-theme="light"] .via-sky-950\/40 { --tw-gradient-stops: var(--tw-gradient-from), rgba(14,165,233,0.10), var(--tw-gradient-to) !important; }
+[data-theme="light"] .via-rose-950\/40 { --tw-gradient-stops: var(--tw-gradient-from), rgba(244,63,94,0.10), var(--tw-gradient-to) !important; }
+[data-theme="light"] .via-fuchsia-950\/40 { --tw-gradient-stops: var(--tw-gradient-from), rgba(217,70,239,0.10), var(--tw-gradient-to) !important; }
+[data-theme="light"] .via-emerald-950\/40 { --tw-gradient-stops: var(--tw-gradient-from), rgba(16,185,129,0.10), var(--tw-gradient-to) !important; }
+[data-theme="light"] .via-cyan-950\/40 { --tw-gradient-stops: var(--tw-gradient-from), rgba(6,182,212,0.10), var(--tw-gradient-to) !important; }
+[data-theme="light"] .via-amber-950\/40 { --tw-gradient-stops: var(--tw-gradient-from), rgba(245,158,11,0.10), var(--tw-gradient-to) !important; }
+
+/* active tab tints — dark navy pools read wrong on white */
+[data-theme="light"] .bg-cyan-950\/30 { background-color: rgba(8,145,178,0.10) !important; }
+[data-theme="light"] .text-cyan-200 { color: #0E7490 !important; }
+[data-theme="light"] .bg-amber-950\/30 { background-color: rgba(217,119,6,0.10) !important; }
+[data-theme="light"] .text-amber-200 { color: #B45309 !important; }

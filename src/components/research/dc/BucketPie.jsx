@@ -67,16 +67,16 @@ export function BucketPie({ buckets, hovered, setHovered }) {
             <div style={{ fontSize: 32, fontWeight: 700, color: focus.color, fontFamily: 'ui-monospace,monospace', letterSpacing: '-0.02em', lineHeight: 1 }}>
               {focus.pct.toFixed(0)}%
             </div>
-            <div style={{ fontSize: 10, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', marginTop: 6 }}>
+            <div style={{ fontSize: 10, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', marginTop: 6 }}>
               {focus.count} {focus.count === 1 ? 'company' : 'companies'}
             </div>
           </>
         ) : (
           <>
-            <div style={{ fontSize: 36, fontWeight: 700, color: '#fafafa', fontFamily: 'ui-monospace,monospace', letterSpacing: '-0.02em', lineHeight: 1 }}>
+            <div style={{ fontSize: 36, fontWeight: 700, color: 'var(--hm-text)', fontFamily: 'ui-monospace,monospace', letterSpacing: '-0.02em', lineHeight: 1 }}>
               {total}
             </div>
-            <div style={{ fontSize: 10, color: '#71717a', fontFamily: 'ui-monospace,monospace', marginTop: 6, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+            <div style={{ fontSize: 10, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', marginTop: 6, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
               Companies
             </div>
           </>
@@ -94,8 +94,8 @@ export function BucketSidePanel({ buckets, hovered, setHovered }) {
     <div style={{ minHeight: 280, display: 'flex', flexDirection: 'column' }}>
       {focus ? (
         <div style={{
-          background: 'rgba(255,255,255,0.02)',
-          border: `1px solid ${focus.color}33`,
+          background: 'var(--hm-surface)',
+          border: `1px solid color-mix(in srgb, ${focus.color} 20%, transparent)`,
           borderLeft: `3px solid ${focus.color}`,
           borderRadius: 8, padding: '20px 22px',
           animation: 'dcFadeIn 200ms ease-out',
@@ -104,41 +104,41 @@ export function BucketSidePanel({ buckets, hovered, setHovered }) {
             fontSize: 10, color: focus.color, fontFamily: 'ui-monospace,monospace',
             letterSpacing: '0.14em', fontWeight: 700, marginBottom: 10,
           }}>SECTOR</div>
-          <div style={{ fontSize: 22, color: '#fafafa', fontWeight: 600, letterSpacing: '-0.01em', marginBottom: 18 }}>
+          <div style={{ fontSize: 22, color: 'var(--hm-text)', fontWeight: 600, letterSpacing: '-0.01em', marginBottom: 18 }}>
             {focus.name}
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
             <div>
-              <div style={{ fontSize: 9, color: '#71717a', fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>
+              <div style={{ fontSize: 9, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>
                 Share of coverage
               </div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
                 <span style={{ fontSize: 26, color: focus.color, fontWeight: 700, fontFamily: 'ui-monospace,monospace', letterSpacing: '-0.02em' }}>
                   {focus.pct.toFixed(1)}%
                 </span>
-                <span style={{ fontSize: 11, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>
+                <span style={{ fontSize: 11, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace' }}>
                   {focus.count} of 41
                 </span>
               </div>
             </div>
             <div>
-              <div style={{ fontSize: 9, color: '#71717a', fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>
+              <div style={{ fontSize: 9, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>
                 Top company
               </div>
-              <div style={{ fontSize: 16, color: '#fafafa', fontWeight: 600 }}>
+              <div style={{ fontSize: 16, color: 'var(--hm-text)', fontWeight: 600 }}>
                 {focus.topCompany}
               </div>
-              <div style={{ fontSize: 10.5, color: '#71717a', fontFamily: 'ui-monospace,monospace', marginTop: 2 }}>
+              <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', marginTop: 2 }}>
                 {focus.topTicker}
               </div>
             </div>
           </div>
 
           <div style={{
-            fontSize: 12, color: '#d4d4d8', lineHeight: 1.65,
+            fontSize: 12, color: 'var(--hm-text2)', lineHeight: 1.65,
             padding: '14px 16px', background: 'rgba(0,0,0,0.25)',
-            borderRadius: 6, borderLeft: `2px solid ${focus.color}55`,
+            borderRadius: 6, borderLeft: `2px solid color-mix(in srgb, ${focus.color} 33%, transparent)`,
           }}>
             {focus.why}
           </div>
@@ -146,7 +146,7 @@ export function BucketSidePanel({ buckets, hovered, setHovered }) {
       ) : (
         <div>
           <div style={{
-            fontSize: 11, color: '#71717a', fontFamily: 'ui-monospace,monospace',
+            fontSize: 11, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace',
             textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 14,
           }}>
             Hover a slice for detail · {buckets.length} buckets
@@ -161,16 +161,16 @@ export function BucketSidePanel({ buckets, hovered, setHovered }) {
                   gap: 12, alignItems: 'center',
                   padding: '8px 12px', borderRadius: 5,
                   background: 'rgba(255,255,255,0.015)',
-                  border: '1px solid #1f1f23',
+                  border: '1px solid var(--hm-border4)',
                   transition: 'all 140ms',
                   cursor: 'pointer',
                 }}>
                 <span style={{ width: 10, height: 10, borderRadius: 2, background: b.color }}></span>
-                <span style={{ fontSize: 12.5, color: '#e4e4e7' }}>{b.name}</span>
-                <span style={{ fontSize: 11, color: '#71717a', fontFamily: 'ui-monospace,monospace' }}>
+                <span style={{ fontSize: 12.5, color: 'var(--hm-text2)' }}>{b.name}</span>
+                <span style={{ fontSize: 11, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace' }}>
                   {b.count}
                 </span>
-                <span style={{ fontSize: 11, color: '#a1a1aa', fontFamily: 'ui-monospace,monospace', fontWeight: 600, minWidth: 46, textAlign: 'right' }}>
+                <span style={{ fontSize: 11, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', fontWeight: 600, minWidth: 46, textAlign: 'right' }}>
                   {b.pct.toFixed(1)}%
                 </span>
               </div>

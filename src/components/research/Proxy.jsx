@@ -22,25 +22,27 @@ import CircularBlock from './proxy/CircularBlock.jsx';
 // in the same "research-report" voice as Holdings. The accent (`teal` slot)
 // is rebound to the Proxy report's warm amber (#F59E0B) so all teal-coloured
 // affordances in shared component patterns pick up the new tone.
+// Theme-reactive palette — CSS vars from src/theme.css, so the report
+// follows the app-wide light/dark toggle. Accent rebound to amber for the
+// Proxy report (--hp-accent).
 export const C = {
-  paper:    '#100F0D',
-  card:     '#1A1916',
-  cardAlt:  '#22201B',
-  ink:      '#ECE9E1',
-  inkSoft:  '#A39E92',
-  inkFaint: '#706B61',
-  line:     '#2C2A25',
-  lineSoft: '#232220',
-  track:    '#232220',
-  // Accent rebound to amber for the Proxy report.
-  teal:     '#F59E0B',
-  violet:   '#A78BFA',
-  clay:     '#E08A5E',
-  gold:     '#CBAA52',
-  blue:     '#5BA6E2',
-  emerald:  '#46C29B',
-  rose:     '#EF6F6F',
-  unlisted: '#33312B',
+  paper:    'var(--h-paper)',
+  card:     'var(--h-card)',
+  cardAlt:  'var(--hp-cardAlt)',
+  ink:      'var(--h-ink)',
+  inkSoft:  'var(--h-inkSoft)',
+  inkFaint: 'var(--h-inkFaint)',
+  line:     'var(--h-line)',
+  lineSoft: 'var(--h-lineSoft)',
+  track:    'var(--h-track)',
+  teal:     'var(--hp-accent)',
+  violet:   'var(--hp-violet)',
+  clay:     'var(--h-clay)',
+  gold:     'var(--h-gold)',
+  blue:     'var(--h-blue)',
+  emerald:  'var(--hp-emerald)',
+  rose:     'var(--hp-rose)',
+  unlisted: 'var(--hp-unlisted)',
   isDark:   true,
 };
 

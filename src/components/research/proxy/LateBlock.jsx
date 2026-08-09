@@ -46,7 +46,7 @@ export default function LateBlock({ C, card, subLabel }) {
                 interval={0} angle={-30} textAnchor="end" height={56} />
               <YAxis stroke={C.inkFaint} tick={{ fill: C.inkFaint, fontSize: 11, fontFamily: 'var(--mono)' }}
                 tickFormatter={(v) => `${v > 0 ? '+' : ''}${v}%`} />
-              <Tooltip content={<CustomTooltip C={C} />} cursor={{ fill: `${C.teal}0a` }} />
+              <Tooltip content={<CustomTooltip C={C} />} cursor={{ fill: `color-mix(in srgb, ${C.teal} 4%, transparent)` }} />
               <ReferenceLine y={0} stroke={C.inkFaint} strokeWidth={1} />
               <Bar dataKey="ret" radius={[4, 4, 0, 0]}>
                 {data.map((r, i) => (
@@ -92,7 +92,7 @@ export default function LateBlock({ C, card, subLabel }) {
               <div style={{ flex: 1, fontSize: 13, color: C.ink, paddingTop: 2 }}>
                 {row.what}
                 <span style={{ marginLeft: 10, fontSize: 10.5, padding: '2px 8px', borderRadius: 10,
-                  background: i === arr.length - 1 ? `${C.rose}22` : i >= arr.length - 3 ? `${C.gold}22` : `${C.teal}22`,
+                  background: i === arr.length - 1 ? `color-mix(in srgb, ${C.rose} 13%, transparent)` : i >= arr.length - 3 ? `color-mix(in srgb, ${C.gold} 13%, transparent)` : `color-mix(in srgb, ${C.teal} 13%, transparent)`,
                   color:      i === arr.length - 1 ? C.rose : i >= arr.length - 3 ? C.gold : C.teal,
                   fontFamily: 'var(--mono)', letterSpacing: '.06em', textTransform: 'uppercase', fontWeight: 600,
                 }}>{row.tag}</span>

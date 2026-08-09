@@ -7,7 +7,7 @@
 import { useState, useContext, createContext } from 'react';
 import holdingsData from '../../data/holdings.json';
 
-const C = holdingsData.THEMES.dark;
+import { C } from './holdingsC.js';
 const col = (name) => C[name] || name || C.teal;
 const isNeg = (s) => typeof s === 'string' && /^[−-]/.test(s.trim());
 
@@ -23,7 +23,7 @@ function withLinks(text, links, openCompany) {
   const re = new RegExp('(' + escaped.join('|') + ')', 'g');
   return text.split(re).map((p, i) => map[p]
     ? <span key={i} onClick={() => openCompany(map[p])} title="Открыть в портфеле"
-        style={{ color: C.teal, cursor: 'pointer', borderBottom: `1px dashed ${C.teal}88`, fontWeight: 500 }}>{p}</span>
+        style={{ color: C.teal, cursor: 'pointer', borderBottom: `1px dashed color-mix(in srgb, ${C.teal} 53%, transparent)`, fontWeight: 500 }}>{p}</span>
     : p);
 }
 
@@ -114,7 +114,7 @@ function Cards({ b }) {
           <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderLeft: `3px solid ${col(c.color)}`, borderRadius: 10, padding: '14px 16px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap', marginBottom: c.value || c.desc ? 6 : 0 }}>
               <span style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, flex: 1 }}>{c.title}</span>
-              {c.badge && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: col(c.color) + '22', color: col(c.color), border: `1px solid ${col(c.color)}55`, fontWeight: 600, letterSpacing: '.06em' }}>{c.badge}</span>}
+              {c.badge && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: `color-mix(in srgb, ${col(c.color)} 13%, transparent)`, color: col(c.color), border: `1px solid color-mix(in srgb, ${col(c.color)} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>{c.badge}</span>}
             </div>
             {c.value && <div style={{ fontFamily: 'var(--mono)', fontSize: 17, fontWeight: 500, color: col(c.color), marginBottom: c.desc ? 6 : 0 }}>{c.value}</div>}
             {c.desc && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>{c.desc}</div>}
@@ -145,7 +145,7 @@ function Bets({ b }) {
               {/* header: sector + tag */}
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 12 }}>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, color: C.ink, flex: 1, lineHeight: 1.2 }}>{cardTitle}</span>
-                {cardBadge && <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: cc + '22', color: cc, border: `1px solid ${cc}55`, fontWeight: 600, letterSpacing: '.06em', flexShrink: 0 }}>{cardBadge}</span>}
+                {cardBadge && <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: `color-mix(in srgb, ${cc} 13%, transparent)`, color: cc, border: `1px solid color-mix(in srgb, ${cc} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em', flexShrink: 0 }}>{cardBadge}</span>}
               </div>
               {/* headline number + what it actually is */}
               <div style={{ marginBottom: 14, paddingBottom: 14, borderBottom: `1px solid ${C.lineSoft}` }}>
@@ -170,7 +170,7 @@ function Bets({ b }) {
               )}
               {/* management outlook / projection */}
               {(c.outlook || c.embodies) && (
-                <div style={{ background: cc + '10', border: `1px solid ${cc}33`, borderRadius: 8, padding: '10px 12px', marginBottom: c.quote ? 12 : 0 }}>
+                <div style={{ background: `color-mix(in srgb, ${cc} 6%, transparent)`, border: `1px solid color-mix(in srgb, ${cc} 20%, transparent)`, borderRadius: 8, padding: '10px 12px', marginBottom: c.quote ? 12 : 0 }}>
                   <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: cc, fontWeight: 600, marginBottom: 5 }}>{c.outlook ? 'Куда идёт — взгляд менеджмента' : 'Что воплощает'}</div>
                   <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.5 }}>{c.outlook || c.embodies}</div>
                 </div>
@@ -239,7 +239,7 @@ function Pie({ b }) {
         <div style={{ flex: '1 1 200px', minWidth: 180 }}>
           {b.items.map((it, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 6, marginBottom: 2,
-              background: hov === i ? C.line + '44' : 'transparent', cursor: 'pointer', transition: 'background .12s' }}
+              background: hov === i ? `color-mix(in srgb, ${C.line} 27%, transparent)` : 'transparent', cursor: 'pointer', transition: 'background .12s' }}
               onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}>
               <div style={{ width: 10, height: 10, borderRadius: 2, background: col(it.color), flexShrink: 0, transform: 'translateY(3px)' }} />
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -464,7 +464,7 @@ function Dumbbell({ b }) {
               </div>
               <div style={{ position: 'relative', height: 22 }}>
                 <div style={{ position: 'absolute', top: 10, left: 0, right: 0, height: 2, background: C.track }} />
-                <div style={{ position: 'absolute', top: 10, height: 2, background: c + '99', left: `${pct(Math.min(it.a, it.b))}%`, width: `${pct(Math.max(it.a, it.b)) - pct(Math.min(it.a, it.b))}%` }} />
+                <div style={{ position: 'absolute', top: 10, height: 2, background: `color-mix(in srgb, ${c} 60%, transparent)`, left: `${pct(Math.min(it.a, it.b))}%`, width: `${pct(Math.max(it.a, it.b)) - pct(Math.min(it.a, it.b))}%` }} />
                 <div style={{ position: 'absolute', top: 4, left: `${pct(it.a)}%`, transform: 'translateX(-50%)', width: 14, height: 14, borderRadius: '50%', background: C.paper, border: `2px solid ${C.inkFaint}` }} />
                 <div style={{ position: 'absolute', top: 4, left: `${pct(it.b)}%`, transform: 'translateX(-50%)', width: 14, height: 14, borderRadius: '50%', background: c, border: `2px solid ${c}` }} />
               </div>
@@ -537,7 +537,7 @@ function Lollipop({ b }) {
               <div style={{ flex: 1, position: 'relative', height: 8 }}>
                 <div style={{ position: 'absolute', top: 3, left: 0, right: 0, height: 2, background: C.track }} />
                 <div style={{ position: 'absolute', top: 3, left: 0, height: 2, background: c, width: `${(it.value / max) * 100}%`, borderRadius: 2 }} />
-                <div style={{ position: 'absolute', top: -2, left: `${(it.value / max) * 100}%`, transform: 'translateX(-50%)', width: 12, height: 12, borderRadius: '50%', background: c, boxShadow: on ? `0 0 0 4px ${c}33` : 'none' }} />
+                <div style={{ position: 'absolute', top: -2, left: `${(it.value / max) * 100}%`, transform: 'translateX(-50%)', width: 12, height: 12, borderRadius: '50%', background: c, boxShadow: on ? `0 0 0 4px color-mix(in srgb, ${c} 20%, transparent)` : 'none' }} />
               </div>
               <div style={{ width: 56, textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 13, fontWeight: 600, color: c }}>{it.display}</div>
             </div>
@@ -578,7 +578,7 @@ function Quadrant({ b }) {
             return (
               <div key={i} onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}
                 style={{ position: 'absolute', left: `${left}%`, top: `${top}%`, transform: 'translate(-50%,-50%)', cursor: 'pointer', textAlign: 'center', zIndex: on ? 5 : 1 }}>
-                <div style={{ width: it.primary ? 18 : 13, height: it.primary ? 18 : 13, borderRadius: '50%', background: c, opacity: on || it.primary ? 1 : 0.8, border: it.primary ? `2px solid ${C.ink}55` : 'none', margin: '0 auto', boxShadow: on ? `0 0 0 6px ${c}2e` : 'none', transition: 'box-shadow .15s' }} />
+                <div style={{ width: it.primary ? 18 : 13, height: it.primary ? 18 : 13, borderRadius: '50%', background: c, opacity: on || it.primary ? 1 : 0.8, border: it.primary ? `2px solid color-mix(in srgb, ${C.ink} 33%, transparent)` : 'none', margin: '0 auto', boxShadow: on ? `0 0 0 6px color-mix(in srgb, ${c} 18%, transparent)` : 'none', transition: 'box-shadow .15s' }} />
                 <div style={{ marginTop: 5, fontSize: 11.5, fontWeight: it.primary ? 700 : 500, color: on || it.primary ? C.ink : C.inkSoft, whiteSpace: 'nowrap' }}>{it.name}</div>
                 {on && it.note && (
                   <div style={{ position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)', marginTop: 4, width: 190, background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 7, padding: '7px 10px', zIndex: 6, pointerEvents: 'none', boxShadow: '0 6px 20px rgba(0,0,0,.4)' }}>
@@ -604,7 +604,7 @@ function Mix({ b }) {
         {b.items.map((co, i) => {
           const max = Math.max(...co.segments.map((s) => s.pct));
           return (
-            <div key={i} style={{ background: C.card, border: `1px solid ${co.primary ? col(co.color) + '66' : C.line}`, borderRadius: 10, padding: '14px 16px' }}>
+            <div key={i} style={{ background: C.card, border: `1px solid ${co.primary ? `color-mix(in srgb, ${col(co.color)} 40%, transparent)` : C.line}`, borderRadius: 10, padding: '14px 16px' }}>
               <div style={{ fontSize: 13.5, fontWeight: co.primary ? 700 : 600, color: C.ink, marginBottom: 10 }}>{co.name}</div>
               {co.segments.map((s, si) => (
                 <div key={si} style={{ marginBottom: si < co.segments.length - 1 ? 7 : 0 }}>
@@ -636,9 +636,9 @@ function Mix({ b }) {
 // the real "moat map". Optional catalysts strip highlights the unique edge.
 const POS_LEVELS = {
   lead:    { label: 'Лидер',   bg: C.teal,         fg: '#0b0b0c', bd: C.teal },
-  strong:  { label: 'Сильный', bg: C.teal + '2e',  fg: C.teal,    bd: C.teal + '55' },
+  strong:  { label: 'Сильный', bg: `color-mix(in srgb, ${C.teal} 18%, transparent)`,  fg: C.teal,    bd: `color-mix(in srgb, ${C.teal} 33%, transparent)` },
   present: { label: 'Есть',    bg: C.track,        fg: C.inkSoft, bd: C.line },
-  lag:     { label: 'Слабо',   bg: 'transparent',  fg: C.clay,    bd: C.clay + '55' },
+  lag:     { label: 'Слабо',   bg: 'transparent',  fg: C.clay,    bd: `color-mix(in srgb, ${C.clay} 33%, transparent)` },
 };
 function PosGrid({ b }) {
   const [hov, setHov] = useState(null);
@@ -657,7 +657,7 @@ function PosGrid({ b }) {
           <div style={{ display: 'grid', gridTemplateColumns: gridCols, background: C.cardAlt, borderBottom: `1px solid ${C.line}` }}>
             <div style={{ padding: '11px 14px', fontSize: 10, letterSpacing: '.05em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>Сегмент</div>
             {players.map((p, i) => (
-              <div key={i} style={{ padding: '11px 8px', textAlign: 'center', fontSize: 11.5, fontWeight: i === hl ? 700 : 500, color: i === hl ? C.teal : C.inkSoft, background: i === hl ? C.teal + '12' : 'transparent', borderLeft: `1px solid ${C.lineSoft}` }}>{p}</div>
+              <div key={i} style={{ padding: '11px 8px', textAlign: 'center', fontSize: 11.5, fontWeight: i === hl ? 700 : 500, color: i === hl ? C.teal : C.inkSoft, background: i === hl ? `color-mix(in srgb, ${C.teal} 7%, transparent)` : 'transparent', borderLeft: `1px solid ${C.lineSoft}` }}>{p}</div>
             ))}
           </div>
           {/* rows */}
@@ -672,7 +672,7 @@ function PosGrid({ b }) {
                 const key = ri + '-' + ci;
                 const on = hov === key;
                 return (
-                  <div key={ci} style={{ padding: '10px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4, borderLeft: `1px solid ${C.lineSoft}`, background: ci === hl ? C.teal + '08' : 'transparent', cursor: c.note ? 'pointer' : 'default', position: 'relative' }}
+                  <div key={ci} style={{ padding: '10px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4, borderLeft: `1px solid ${C.lineSoft}`, background: ci === hl ? `color-mix(in srgb, ${C.teal} 3%, transparent)` : 'transparent', cursor: c.note ? 'pointer' : 'default', position: 'relative' }}
                     onMouseEnter={() => setHov(key)} onMouseLeave={() => setHov(null)}>
                     <span style={{ fontSize: 10.5, fontWeight: 600, padding: '3px 9px', borderRadius: 11, background: lv.bg, color: lv.fg, border: `1px solid ${lv.bd}`, whiteSpace: 'nowrap' }}>{c.label || lv.label}</span>
                     {c.metric && <span style={{ fontSize: 9.5, color: C.inkFaint, textAlign: 'center', lineHeight: 1.2 }}>{c.metric}</span>}
@@ -734,7 +734,7 @@ function Moat({ b }) {
           return (
             <div key={i}
               onMouseEnter={() => setHov(key)} onMouseLeave={() => setHov(null)}
-              style={{ background: C.card, border: `1px solid ${on ? accent + '77' : C.line}`, borderRadius: 9, padding: '13px 15px', transition: 'border-color .15s' }}>
+              style={{ background: C.card, border: `1px solid ${on ? `color-mix(in srgb, ${accent} 47%, transparent)` : C.line}`, borderRadius: 9, padding: '13px 15px', transition: 'border-color .15s' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 6 }}>
                 <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, lineHeight: 1.35 }}>{it.title}</div>
                 {it.strength != null && (
@@ -746,7 +746,7 @@ function Moat({ b }) {
                 )}
               </div>
               <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: it.vs ? 9 : 0 }}>{it.body}</div>
-              {it.vs && <span style={{ fontSize: 10.5, fontFamily: 'var(--mono)', color: accent, background: accent + '18', border: `1px solid ${accent}33`, borderRadius: 5, padding: '2px 8px' }}>{it.vs}</span>}
+              {it.vs && <span style={{ fontSize: 10.5, fontFamily: 'var(--mono)', color: accent, background: `color-mix(in srgb, ${accent} 9%, transparent)`, border: `1px solid color-mix(in srgb, ${accent} 20%, transparent)`, borderRadius: 5, padding: '2px 8px' }}>{it.vs}</span>}
             </div>
           );
         })}
@@ -801,13 +801,13 @@ function RiskSplit({ b }) {
             return (
               <div key={i}
                 onMouseEnter={() => setHov(key)} onMouseLeave={() => setHov(null)}
-                style={{ background: C.card, border: `1px solid ${on ? lv.color + '77' : C.line}`, borderLeft: `3px solid ${lv.color}`, borderRadius: 9, padding: '12px 14px', transition: 'border-color .15s' }}>
+                style={{ background: C.card, border: `1px solid ${on ? `color-mix(in srgb, ${lv.color} 47%, transparent)` : C.line}`, borderLeft: `3px solid ${lv.color}`, borderRadius: 9, padding: '12px 14px', transition: 'border-color .15s' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, marginBottom: 5 }}>
                   <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, lineHeight: 1.35 }}>{it.label}</div>
                   {it.exposure && <div style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: C.ink, whiteSpace: 'nowrap', flexShrink: 0 }}>{it.exposure}</div>}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 6 }}>
-                  <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: lv.color + '22', color: lv.color, border: `1px solid ${lv.color}55`, fontWeight: 700, letterSpacing: '.06em' }}>{lv.label}</span>
+                  <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: `color-mix(in srgb, ${lv.color} 13%, transparent)`, color: lv.color, border: `1px solid color-mix(in srgb, ${lv.color} 33%, transparent)`, fontWeight: 700, letterSpacing: '.06em' }}>{lv.label}</span>
                   {it.sector && <span style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 10, background: C.track, color: C.inkSoft, border: `1px solid ${C.line}` }}>{it.sector}</span>}
                   {it.share && <span style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: C.inkFaint }}>{it.share}</span>}
                 </div>
@@ -851,7 +851,7 @@ function Scenarios({ b }) {
             <div key={i} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `3px solid ${c}`, borderRadius: 10, padding: '15px 16px', display: 'flex', flexDirection: 'column' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 8, marginBottom: 10 }}>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, color: C.ink }}>{s.name}</span>
-                {s.prob && <span style={{ fontFamily: 'var(--mono)', fontSize: 11, padding: '2px 8px', borderRadius: 10, background: c + '22', color: c, border: `1px solid ${c}55`, fontWeight: 600, whiteSpace: 'nowrap' }}>{s.prob}</span>}
+                {s.prob && <span style={{ fontFamily: 'var(--mono)', fontSize: 11, padding: '2px 8px', borderRadius: 10, background: `color-mix(in srgb, ${c} 13%, transparent)`, color: c, border: `1px solid color-mix(in srgb, ${c} 33%, transparent)`, fontWeight: 600, whiteSpace: 'nowrap' }}>{s.prob}</span>}
               </div>
               {s.value && (
                 <div style={{ marginBottom: 12, paddingBottom: 12, borderBottom: `1px solid ${C.lineSoft}` }}>
@@ -883,7 +883,7 @@ function Scenarios({ b }) {
                 </div>
               )}
               {s.action && (
-                <div style={{ marginTop: 10, background: c + '14', border: `1px solid ${c}44`, borderRadius: 7, padding: '9px 11px' }}>
+                <div style={{ marginTop: 10, background: `color-mix(in srgb, ${c} 8%, transparent)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 7, padding: '9px 11px' }}>
                   <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: c, fontWeight: 700, marginBottom: 3 }}>Решение</div>
                   <div style={{ fontSize: 12, color: C.ink, lineHeight: 1.5 }}>{s.action}</div>
                 </div>
@@ -905,7 +905,7 @@ function Heat({ b }) {
           const lv = LEVELS[r.level] || LEVELS.med;
           return (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '92px 1fr', gap: 14, padding: '13px 16px', borderTop: i ? `1px solid ${C.lineSoft}` : 'none', background: i % 2 ? C.card : 'transparent' }}>
-              <div><span style={{ fontSize: 9.5, padding: '3px 8px', borderRadius: 10, background: lv.color + '22', color: lv.color, border: `1px solid ${lv.color}55`, fontWeight: 600, letterSpacing: '.06em' }}>{lv.label}</span></div>
+              <div><span style={{ fontSize: 9.5, padding: '3px 8px', borderRadius: 10, background: `color-mix(in srgb, ${lv.color} 13%, transparent)`, color: lv.color, border: `1px solid color-mix(in srgb, ${lv.color} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>{lv.label}</span></div>
               <div style={{ minWidth: 0 }}>
                 <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, marginBottom: 3 }}>{r.label}</div>
                 {r.desc && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: r.trigger ? 5 : 0 }}>{r.desc}</div>}
@@ -929,7 +929,7 @@ function Timeline({ b }) {
           <div key={i} style={{ display: 'grid', gridTemplateColumns: '104px 1fr', gap: 14, padding: '12px 16px', borderTop: i ? `1px solid ${C.lineSoft}` : 'none', background: i % 2 ? C.card : 'transparent' }}>
             <div>
               <div style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.ink }}>{ev.date}</div>
-              {ev.badge && <div style={{ marginTop: 4, fontSize: 9, padding: '2px 7px', borderRadius: 10, background: col(ev.color) + '22', color: col(ev.color), border: `1px solid ${col(ev.color)}55`, fontWeight: 600, letterSpacing: '.05em', display: 'inline-block' }}>{ev.badge}</div>}
+              {ev.badge && <div style={{ marginTop: 4, fontSize: 9, padding: '2px 7px', borderRadius: 10, background: `color-mix(in srgb, ${col(ev.color)} 13%, transparent)`, color: col(ev.color), border: `1px solid color-mix(in srgb, ${col(ev.color)} 33%, transparent)`, fontWeight: 600, letterSpacing: '.05em', display: 'inline-block' }}>{ev.badge}</div>}
             </div>
             <div style={{ minWidth: 0 }}>
               <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, lineHeight: 1.35, marginBottom: ev.desc ? 3 : 0 }}>{ev.title}</div>
@@ -1089,7 +1089,7 @@ function MatrixCell({ it, cc }) {
   const [hover, setHover] = useState(false);
   return (
     <div
-      style={{ position: 'relative', fontSize: 11, lineHeight: 1.35, color: C.ink, background: hover ? cc + '28' : C.paper + 'AA', border: `1px solid ${cc}55`, borderLeft: `3px solid ${cc}`, borderRadius: 6, padding: '5px 8px', cursor: it.desc ? 'pointer' : 'default', transition: 'background .15s' }}
+      style={{ position: 'relative', fontSize: 11, lineHeight: 1.35, color: C.ink, background: hover ? `color-mix(in srgb, ${cc} 16%, transparent)` : `color-mix(in srgb, ${C.paper} 67%, transparent)`, border: `1px solid color-mix(in srgb, ${cc} 33%, transparent)`, borderLeft: `3px solid ${cc}`, borderRadius: 6, padding: '5px 8px', cursor: it.desc ? 'pointer' : 'default', transition: 'background .15s' }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -1126,7 +1126,7 @@ function Matrix({ b }) {
                 const cell = (b.items || []).filter((it) => it.px === ix && it.py === (Y.length - 1 - iy));
                 const cc = sevCol(ix, iy);
                 return (
-                  <div key={`c${iy}-${ix}`} style={{ minHeight: 74, borderRadius: 8, background: cc + '14', border: `1px solid ${cc}33`, padding: 7, display: 'flex', flexDirection: 'column', gap: 5 }}>
+                  <div key={`c${iy}-${ix}`} style={{ minHeight: 74, borderRadius: 8, background: `color-mix(in srgb, ${cc} 8%, transparent)`, border: `1px solid color-mix(in srgb, ${cc} 20%, transparent)`, padding: 7, display: 'flex', flexDirection: 'column', gap: 5 }}>
                     {cell.map((it, k) => <MatrixCell key={k} it={it} cc={cc} />)}
                   </div>
                 );
@@ -1135,9 +1135,9 @@ function Matrix({ b }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: `86px repeat(${X.length}, 1fr)`, gap: 6, marginTop: 8 }}>
           <div />
-          <div style={{ fontSize: 9.5, color: C.teal + 'BB', textAlign: 'center' }}>↙ меньше риск</div>
+          <div style={{ fontSize: 9.5, color: `color-mix(in srgb, ${C.teal} 73%, transparent)`, textAlign: 'center' }}>↙ меньше риск</div>
           <div />
-          <div style={{ fontSize: 9.5, color: C.clay + 'BB', textAlign: 'center' }}>↗ больше риск</div>
+          <div style={{ fontSize: 9.5, color: `color-mix(in srgb, ${C.clay} 73%, transparent)`, textAlign: 'center' }}>↗ больше риск</div>
         </div>
       </div>
     </div>
@@ -1159,7 +1159,7 @@ function RadarHeat({ b }) {
             const lv = LEVELS[r.level] || LEVELS.med;
             return (
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '92px 1fr', gap: 14, padding: '13px 16px', borderTop: i ? `1px solid ${C.lineSoft}` : 'none', background: i % 2 ? 'transparent' : C.card }}>
-                <div><span style={{ fontSize: 9.5, padding: '3px 8px', borderRadius: 10, background: lv.color + '22', color: lv.color, border: `1px solid ${lv.color}55`, fontWeight: 600, letterSpacing: '.06em' }}>{lv.label}</span></div>
+                <div><span style={{ fontSize: 9.5, padding: '3px 8px', borderRadius: 10, background: `color-mix(in srgb, ${lv.color} 13%, transparent)`, color: lv.color, border: `1px solid color-mix(in srgb, ${lv.color} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>{lv.label}</span></div>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink, marginBottom: 3 }}>{r.label}</div>
                   {r.desc && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: r.trigger ? 5 : 0 }}>{r.desc}</div>}
@@ -1207,7 +1207,7 @@ function Chains({ b }) {
                         <span style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>{s}</span>
                       </div>
                       {si < ch.steps.length - 1 && (
-                        <div style={{ marginLeft: 2.5, width: 1, height: 12, background: c + '55' }} />
+                        <div style={{ marginLeft: 2.5, width: 1, height: 12, background: `color-mix(in srgb, ${c} 33%, transparent)` }} />
                       )}
                     </div>
                   ))}

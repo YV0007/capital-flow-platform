@@ -7,7 +7,7 @@
 import { useMemo, useState } from 'react';
 import holdingsData from '../../data/holdings.json';
 
-const C = holdingsData.THEMES.dark;
+import { C } from './holdingsC.js';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Sankey — SVG, no library. Bars on both sides sized by total,
@@ -155,14 +155,14 @@ function TimelineItem({ ev, forward }) {
       <div style={{ position: 'absolute', left: -6, top: 20, width: 12, height: 12, borderRadius: 6, background: isHigh ? t.color : C.card, border: `2px solid ${t.color}` }} />
       <div style={{ paddingTop: 14 }}>
         <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{ev.date}</div>
-        <div style={{ marginTop: 6, fontSize: 9.5, padding: '2px 8px', borderRadius: 10, background: t.color + '22', color: t.color, border: `1px solid ${t.color}55`, fontWeight: 600, letterSpacing: '.06em', display: 'inline-block' }}>{t.label.toUpperCase()}</div>
+        <div style={{ marginTop: 6, fontSize: 9.5, padding: '2px 8px', borderRadius: 10, background: `color-mix(in srgb, ${t.color} 13%, transparent)`, color: t.color, border: `1px solid color-mix(in srgb, ${t.color} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em', display: 'inline-block' }}>{t.label.toUpperCase()}</div>
       </div>
       <div onClick={() => det && setOpen(!open)}
-        style={{ background: C.card, border: `1px solid ${open ? t.color + '66' : C.line}`, borderLeft: `3px solid ${isHigh ? t.color : C.line}`, borderRadius: 10, padding: '14px 16px', marginBottom: 12, cursor: det ? 'pointer' : 'default', transition: 'border-color .18s' }}>
+        style={{ background: C.card, border: `1px solid ${open ? `color-mix(in srgb, ${t.color} 40%, transparent)` : C.line}`, borderLeft: `3px solid ${isHigh ? t.color : C.line}`, borderRadius: 10, padding: '14px 16px', marginBottom: 12, cursor: det ? 'pointer' : 'default', transition: 'border-color .18s' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginBottom: 6 }}>
           <span style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, flex: 1, lineHeight: 1.3 }}>{ev.title}</span>
-          {ev.ai && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: C.violet + '22', color: C.violet, border: `1px solid ${C.violet}55`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
-          {forward && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: C.clay + '22', color: C.clay, border: `1px solid ${C.clay}55`, fontWeight: 600, letterSpacing: '.06em' }}>ОБЪЯВЛЕНО</span>}
+          {ev.ai && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: `color-mix(in srgb, ${C.violet} 13%, transparent)`, color: C.violet, border: `1px solid color-mix(in srgb, ${C.violet} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
+          {forward && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: `color-mix(in srgb, ${C.clay} 13%, transparent)`, color: C.clay, border: `1px solid color-mix(in srgb, ${C.clay} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>ОБЪЯВЛЕНО</span>}
           {det && <span style={{ fontSize: 11, color: open ? t.color : C.inkFaint, whiteSpace: 'nowrap' }}>{open ? '▾ свернуть' : '▸ подробнее'}</span>}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 20px', marginBottom: 10, fontSize: 12 }}>

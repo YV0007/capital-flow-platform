@@ -99,6 +99,11 @@ export default function App() {
       return next;
     });
   };
+  // The whole app themes off this attribute — theme.css defines the token
+  // sets on :root / :root[data-theme="light"].
+  useEffect(() => {
+    try { document.documentElement.dataset.theme = uiTheme; } catch {}
+  }, [uiTheme]);
   // Tracker landing page is shown when `trackerOpen` is false. Entering
   // tracker mode always lands here; clicking a card flips this true and
   // the existing company-tracker UI takes over.
@@ -401,12 +406,11 @@ export default function App() {
 
   // ─── Home / Research modes ───────────────────────────────────────
   if (mode === 'home') {
-    const light = uiTheme === 'light';
     return (
       <div style={{
         minHeight: '100vh',
-        background: light ? '#F4F7FB' : '#0A0A0B',
-        color: light ? '#0F172A' : '#e4e4e7',
+        background: 'var(--hm-bg)',
+        color: 'var(--hm-text)',
         transition: 'background 300ms',
       }}>
         <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
@@ -417,8 +421,8 @@ export default function App() {
 
   if (mode === 'research') {
     return (
-      <div style={{ minHeight: '100vh', background: '#0A0A0B', color: '#e4e4e7' }}>
-        <Header mode={mode} onChangeMode={updateMode} />
+      <div style={{ minHeight: '100vh', background: 'var(--hm-bg)', color: 'var(--hm-text)', transition: 'background 300ms' }}>
+        <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
         {activeResearchId
           ? <ResearchDetail
               researchId={activeResearchId}
@@ -434,8 +438,8 @@ export default function App() {
   // future tracker. Shown before any specific tracker is opened.
   if (!trackerOpen) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0A0A0B', color: '#e4e4e7' }}>
-        <Header mode={mode} onChangeMode={updateMode} />
+      <div style={{ minHeight: '100vh', background: 'var(--hm-bg)', color: 'var(--hm-text)', transition: 'background 300ms' }}>
+        <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
         <TrackerLanding onOpen={openTrackerFor} />
       </div>
     );
@@ -443,8 +447,8 @@ export default function App() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0A0A0B' }}>
-        <Header mode={mode} onChangeMode={updateMode} />
+      <div style={{ minHeight: '100vh', background: 'var(--hm-bg)' }}>
+        <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
         <div className="min-h-screen bg-zinc-950 text-zinc-400 flex items-center justify-center font-mono text-sm">
           <Activity className="w-4 h-4 animate-pulse mr-2" />Loading {company.name} monitoring dashboard…
         </div>
@@ -463,7 +467,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen text-zinc-200" style={{ background: '#0A0A0B' }}>
+    <div className="min-h-screen text-zinc-200" style={{ background: 'var(--hm-bg)' }}>
       {/* App-level focus modal — listens for window event from any Open button */}
       {appFocusedItem && (() => {
         const sev = severityFromImportance(appFocusedItem.importance);
@@ -501,8 +505,8 @@ export default function App() {
       <div
         className="sticky top-0 z-30"
         style={{
-          background: '#0A0A0B',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          background: 'var(--hm-bg)',
+          borderBottom: '1px solid var(--hm-hair)',
         }}>
         <div className="px-4 py-3 flex items-center justify-between gap-4">
           {/* Left: brand wordmark + back-to-landing + company switcher */}
@@ -517,7 +521,7 @@ export default function App() {
                 padding: '4px 6px 4px 0',
                 fontSize: 14,
                 fontWeight: 700,
-                color: '#fafafa',
+                color: 'var(--hm-text)',
                 letterSpacing: '-0.01em',
                 fontFamily: 'inherit',
               }}
@@ -532,18 +536,18 @@ export default function App() {
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 4,
                 background: 'transparent',
-                border: '1px solid #27272a',
+                border: '1px solid var(--hm-border4)',
                 borderRadius: 6,
                 cursor: 'pointer',
                 padding: '4px 9px 4px 6px',
                 fontSize: 11, fontWeight: 600,
-                color: '#a1a1aa',
+                color: 'var(--hm-text3)',
                 fontFamily: 'ui-monospace,monospace',
                 letterSpacing: '0.05em',
                 transition: 'all 140ms',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#fafafa'; e.currentTarget.style.borderColor = '#3f3f46'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#a1a1aa'; e.currentTarget.style.borderColor = '#27272a'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--hm-text)'; e.currentTarget.style.borderColor = 'var(--hm-rank)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--hm-text3)'; e.currentTarget.style.borderColor = 'var(--hm-scroll)'; }}
             >
               <ChevronLeft size={13} />
               Трекеры
@@ -604,8 +608,8 @@ export default function App() {
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
                   padding: '5px 12px',
-                  background: '#18181b',
-                  border: '1px solid #27272a',
+                  background: 'var(--hm-panel)',
+                  border: '1px solid var(--hm-border4)',
                   borderRadius: 6,
                   fontSize: 10,
                   fontFamily: 'ui-monospace,monospace',
@@ -616,10 +620,10 @@ export default function App() {
                   background: isLive ? '#10b981' : '#52525b',
                   boxShadow: isLive ? '0 0 6px rgba(16,185,129,0.6)' : 'none',
                 }}></span>
-                <span style={{ color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
+                <span style={{ color: 'var(--hm-text5)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
                   {scopeLabel}
                 </span>
-                <span style={{ color: '#d4d4d8', fontWeight: 600 }}>
+                <span style={{ color: 'var(--hm-text2)', fontWeight: 600 }}>
                   {dateText}
                 </span>
               </div>
@@ -632,8 +636,8 @@ export default function App() {
             aria-label="App mode"
             style={{
               display: 'inline-flex',
-              background: '#18181b',
-              border: '1px solid #27272a',
+              background: 'var(--hm-panel)',
+              border: '1px solid var(--hm-border4)',
               borderRadius: 8,
               padding: 3,
               gap: 2,
@@ -653,16 +657,16 @@ export default function App() {
                     fontWeight: 600,
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
-                    background: active ? '#27272a' : 'transparent',
-                    color: active ? '#fafafa' : '#71717a',
+                    background: active ? 'var(--hm-scroll)' : 'transparent',
+                    color: active ? 'var(--hm-text)' : 'var(--hm-text5)',
                     border: 'none',
                     borderRadius: 6,
                     cursor: 'pointer',
                     transition: 'all 160ms',
                     boxShadow: active ? '0 1px 2px rgba(0,0,0,0.4), inset 0 0 0 1px #3f3f46' : 'none',
                   }}
-                  onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = '#d4d4d8'; }}
-                  onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = '#71717a'; }}>
+                  onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = 'var(--hm-text2)'; }}
+                  onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'var(--hm-text5)'; }}>
                   {opt.label}
                 </button>
               );
@@ -672,7 +676,7 @@ export default function App() {
 
         {/* Tabs — hidden for directory-type companies (YC) */}
         {!company.isDirectory && (
-          <div className="flex overflow-x-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="flex overflow-x-auto" style={{ borderTop: '1px solid var(--hm-hair)' }}>
             {TABS.filter(t => !HIDDEN_TABS.has(t.id)).map(t => {
               const Icon = t.icon;
               const label = t.id === 'summary' ? company.name.toUpperCase() : t.label;

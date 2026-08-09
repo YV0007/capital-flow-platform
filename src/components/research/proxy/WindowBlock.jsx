@@ -53,7 +53,7 @@ function Row({ C, company, horizonDays }) {
         <div style={{
           position: 'absolute', top: 0, bottom: 0, left: 0,
           width: `${consumedPct}%`,
-          background: `linear-gradient(90deg, ${trackColor}22 0%, ${trackColor}44 100%)`,
+          background: `linear-gradient(90deg, color-mix(in srgb, ${trackColor} 13%, transparent) 0%, color-mix(in srgb, ${trackColor} 27%, transparent) 100%)`,
           borderRadius: '6px 0 0 6px',
         }} />
         {/* IPO маркер (точка на правом конце "съеденного") */}

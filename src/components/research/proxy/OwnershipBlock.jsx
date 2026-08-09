@@ -145,7 +145,7 @@ function Donut({ C, company }) {
                 display: 'flex', alignItems: 'center', gap: 8,
                 padding: '2px 6px', marginLeft: -6, marginRight: -6,
                 borderRadius: 4,
-                background: isActive ? `${tints[s.tint] || C.inkFaint}14` : 'transparent',
+                background: isActive ? `color-mix(in srgb, ${tints[s.tint] || C.inkFaint} 8%, transparent)` : 'transparent',
                 transition: 'background 120ms',
                 cursor: 'pointer',
               }}
@@ -188,7 +188,7 @@ function Top3List({ C, items }) {
             position: 'relative',
             padding: '9px 12px',
             background: `${accent}0C`,
-            border: `1px solid ${accent}40`,
+            border: `1px solid color-mix(in srgb, ${accent} 25%, transparent)`,
             borderLeft: `3px solid ${accent}`,
             borderRadius: 6,
             overflow: 'hidden',
