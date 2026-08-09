@@ -1,19 +1,21 @@
 // FilterDrawer — floating filter panel over the full-screen canvas.
-// Sector · Class · Tier select entities; Event · Status · Min flow select
+// Quick views apply a whole filter combination at once; below them, Sector ·
+// Class · Tier select entities and Event · Status · Recency · Min flow select
 // flows (semantics live in CapitalFlowMap; this component is presentational).
 
-import { X, RotateCcw } from 'lucide-react';
+import { X, RotateCcw, Zap } from 'lucide-react';
 import {
-  SECTOR_META, CLASS_META, TIER_META, FAMILY_META, STATUS_META, THEME_META, NETWORK_META,
+  SECTOR_META, CLASS_META, TIER_META, FAMILY_META, STATUS_META, NETWORK_META,
 } from '../../../data/capitalMap.js';
 import { fmtUSD } from './format.js';
+import { RECENCY_OPTIONS, cutoffDate } from './views.js';
 
 const MONO = 'ui-monospace, monospace';
 
 export default function FilterDrawer({
+  views = [], activeViewId, onApplyView,
   sectorsPresent,
   sectors, onToggleSector,
-  themesPresent, themesSel, onToggleTheme,
   classes, onToggleClass,
   tiers, onToggleTier,
   networksPresent, networksSel, onToggleNetwork,
@@ -21,13 +23,12 @@ export default function FilterDrawer({
   statuses, onToggleStatus,
   minAmount, onMinAmount, maxAmount,
   minConfidence, onMinConfidence, confidenceThreshold,
+  sinceDays, onSinceDays, generated,
   activeCount, onReset, onClose,
 }) {
   // Only offer the sectors that are actually in the file this cycle.
   const sectorKeys = Object.keys(sectorsPresent || {})
     .sort((a, b) => (SECTOR_META[a]?.order ?? 99) - (SECTOR_META[b]?.order ?? 99));
-  const themeKeys = Object.keys(themesPresent || {})
-    .sort((a, b) => (THEME_META[a]?.order ?? 99) - (THEME_META[b]?.order ?? 99));
   const allocClasses = Object.entries(CLASS_META).filter(([, v]) => v.side === 'allocator');
   const targetClasses = Object.entries(CLASS_META).filter(([, v]) => v.side === 'target');
 
@@ -74,6 +75,61 @@ export default function FilterDrawer({
       </div>
 
       <div style={{ padding: '12px 14px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {/* Quick views — a whole filter combination in one click */}
+        {views.length > 0 && (
+          <div>
+            <GroupLabel>Quick views · one-click combinations</GroupLabel>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+              {views.map(v => {
+                const on = v.id === activeViewId;
+                return (
+                  <button key={v.id} onClick={() => !v.disabled && onApplyView(v)}
+                    title={v.disabled ? v.blurb : `${v.blurb}${on ? '\n\nClick again to clear.' : ''}`}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 7, padding: '8px 10px',
+                      background: on ? hexA(v.color, 0.12) : '#12131a',
+                      border: `1px solid ${on ? hexA(v.color, 0.55) : '#22232b'}`,
+                      borderRadius: 8, textAlign: 'left',
+                      cursor: v.disabled ? 'not-allowed' : 'pointer',
+                      opacity: v.disabled ? 0.4 : 1,
+                      transition: 'all 130ms',
+                    }}
+                    onMouseEnter={(e) => { if (!on && !v.disabled) e.currentTarget.style.borderColor = '#3f3f46'; }}
+                    onMouseLeave={(e) => { if (!on) e.currentTarget.style.borderColor = '#22232b'; }}>
+                    <Zap size={11} style={{ flexShrink: 0, color: on ? v.color : '#52525b' }} />
+                    <span style={{
+                      fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
+                      color: on ? v.color : '#c4c4cb', whiteSpace: 'nowrap',
+                      overflow: 'hidden', textOverflow: 'ellipsis',
+                    }}>{v.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ marginTop: 7, fontSize: 9, color: '#4a4a53', fontFamily: MONO, lineHeight: 1.55 }}>
+              {activeViewId
+                ? views.find(v => v.id === activeViewId)?.blurb
+                : 'Each view replaces the filters below. Hover for what it selects; click an active view to clear it.'}
+            </div>
+          </div>
+        )}
+
+        {/* Recency — ages measured against the payload date, not today */}
+        <div>
+          <GroupLabel>Recency · flows{generated ? ` · as of ${generated}` : ''}</GroupLabel>
+          <ChipWrap>
+            {RECENCY_OPTIONS.map(o => (
+              <Chip key={o.days} on={(sinceDays || 0) === o.days} color="#38BDF8" square
+                title={o.days === 0
+                  ? 'Every flow in the file.'
+                  : `Flows dated on or after ${cutoffDate(generated, o.days) || '—'} — the last ${o.days} days of data.`}
+                onClick={() => onSinceDays(o.days)}>
+                {o.label}
+              </Chip>
+            ))}
+          </ChipWrap>
+        </div>
+
         {/* Sector */}
         <div>
           <GroupLabel>Sector · targets</GroupLabel>
@@ -92,27 +148,6 @@ export default function FilterDrawer({
             })}
           </ChipWrap>
         </div>
-
-        {/* Theme (second dimension) */}
-        {themeKeys.length > 0 && (
-          <div>
-            <GroupLabel>Theme · narrative</GroupLabel>
-            <ChipWrap>
-              {themeKeys.map(k => {
-                const t = themesPresent[k];
-                const meta = THEME_META[k] || {};
-                return (
-                  <Chip key={k} on={themesSel.has(k)} color={meta.color || '#71717a'}
-                    title={`${t.deals} deals · ${fmtUSD(t.capital)}${t.lit ? ' · signal firing' : ''}`}
-                    onClick={() => onToggleTheme(k)}>
-                    {t.lit && <span style={{ color: '#FBBF24', marginRight: -1 }}>◆</span>}
-                    {meta.label || k}
-                  </Chip>
-                );
-              })}
-            </ChipWrap>
-          </div>
-        )}
 
         {/* Class */}
         <div>
@@ -240,7 +275,7 @@ export default function FilterDrawer({
 
         <div style={{ fontSize: 9, color: '#5b5b64', fontFamily: MONO, lineHeight: 1.6, borderTop: '1px solid #1c1d23', paddingTop: 10 }}>
           Sector, class and tier pick <span style={{ color: '#a1a1aa' }}>entities</span> — their counterparties stay visible so you can follow the money.
-          Event, confidence and min size pick <span style={{ color: '#a1a1aa' }}>flows</span>.
+          Event, status, recency, confidence and min size pick <span style={{ color: '#a1a1aa' }}>flows</span>.
           Undisclosed-amount flows drop out once a minimum is set.
         </div>
       </div>

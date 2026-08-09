@@ -17,13 +17,23 @@ const pop = {
   animation: 'cfmDrop 140ms ease-out',
 };
 
+// Close on any click outside — including on the graph canvas. That last part
+// is why this listens in the CAPTURE phase: the force-graph canvas is wired to
+// d3-drag, which calls stopImmediatePropagation() on mousedown, so a normal
+// bubble-phase listener on document never hears a click on the map. Capture
+// runs document → target, so we see it first. Escape closes it too.
 function useOutsideClose(open, onClose) {
   const ref = useRef(null);
   useEffect(() => {
     if (!open) return;
-    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
-    document.addEventListener('mousedown', h);
-    return () => document.removeEventListener('mousedown', h);
+    const onDown = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('mousedown', onDown, true);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown, true);
+      document.removeEventListener('keydown', onKey);
+    };
   }, [open, onClose]);
   return ref;
 }
@@ -110,7 +120,7 @@ export function WatchlistSelector({ wl }) {
                   borderBottom: '1px solid #191a20', cursor: 'pointer',
                   background: on ? 'rgba(56,189,248,0.07)' : 'transparent',
                 }}
-                onClick={() => { wl.setActive(on ? null : l.id); }}
+                onClick={() => { wl.setActive(on ? null : l.id); setOpen(false); }}
                 onMouseEnter={(e) => { if (!on) e.currentTarget.style.background = '#181920'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = on ? 'rgba(56,189,248,0.07)' : 'transparent'; }}>
                 <span style={{ width: 12, flexShrink: 0, color: '#38BDF8' }}>{on ? <Check size={12} /> : null}</span>
@@ -128,7 +138,7 @@ export function WatchlistSelector({ wl }) {
               </div>
             );
           })}
-          <NewListRow onCreate={(name) => wl.createList(name)} />
+          <NewListRow onCreate={(name) => { wl.createList(name); setOpen(false); }} />
           {wl.activeId && (
             <button onClick={() => { wl.setActive(null); setOpen(false); }}
               style={{

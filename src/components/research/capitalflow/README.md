@@ -55,11 +55,22 @@ sectors{ <key>: { deals, capital, allocators, signals[] } }
   a `profile` object on the node (engine-emitted, wins) or
   `../../../data/allocatorProfiles.json` (payload sidecar); anything missing
   renders an honest "no data" state — never estimated dashboard-side.
-- `RosterTable.jsx` — the tracking roster: table view of the whole tracked
-  universe (Roster toggle in the top bar). Each row labels the entity and the
-  dimension monitored (investor deploying vs company/fund/project receiving);
-  sortable columns, kind chips, search-filtered, watchlist-aware. Row click
-  jumps to the map with the entity selected.
+- `EntityTable.jsx` — the **Table** view (top-bar toggle): the whole tracked
+  universe, organised rather than dumped. Two role sections — *Allocators ·
+  who deploys capital* and *Recipients · where the capital lands* — each split
+  into typed, collapsible subsections (sovereign · corporate · venture · alt
+  manager · individual / public co · private co · funds · projects · assets),
+  every subsection header carrying its own count and capital total, heaviest
+  first. Because the headers carry the type, there are no Class or "Tracked
+  as" columns. Obeys the same filters/quick views as the map — one universe,
+  two views. Row click jumps to the map with the entity selected.
+- `views.js` — **quick views**: pre-made filter combinations (Fresh batch ·
+  Mega tickets · Sovereign money · Smart money · Hard evidence · Signal
+  sectors · Private rounds · Physical buildout), each expressed purely in
+  existing filter dimensions. Applying one replaces the filter state; the
+  active view is derived by comparing state, never by a flag that can drift.
+  Also holds the recency options — ages are measured against the payload's
+  `generated` date, not wall clock, because the file is a snapshot.
 - `useWatchlists.js` + `WatchlistControl.jsx` — named, saved, cross-entity
   watchlists (localStorage `cfm:watchlists:v1`). Add/remove from the entity
   panel bookmark or a roster row; activating a list from the top-bar selector
@@ -70,10 +81,23 @@ sectors{ <key>: { deals, capital, allocators, signals[] } }
 - `Legend.jsx`, `format.js` — key + shared formatters.
 
 ### National affiliation (sovereign flags)
-Government / sovereign allocators render their country flag as the node icon
-(`public/flags/<cc>.png`, pre-fetched like logos) so national capital sources
-read instantly. `country` on a node (engine-emitted) wins; the curated
-fallback lives in `entityReference.json` (`country` + `countryLabel`).
+The engine emits ISO-2 `country` codes (uppercase) on any entity it can place;
+the adapter lowercases them to match `public/flags/<cc>.png`, and
+`entityReference.json` (`country` + `countryLabel`) is the curated fallback.
+
+**The flag is the node icon for `cls: sovereign` entities only** — state funds
+and government programmes. That is the point of the flag: spotting national
+capital at a glance. Every other entity keeps its brand mark (a US flag on
+NVIDIA says nothing and costs us the logo) and carries its country as
+metadata — a chip in the entity panel, a quiet code suffix in the table.
+Adding a country the payload uses means dropping a new `<cc>.png` into
+`public/flags/`; an unmapped display name falls back to the uppercase code.
+
+### No theme dimension
+Themes were a second grouping axis (group-by switch + filter row). Removed —
+sector is the one grouping dimension. The adapter still ingests the payload's
+`themes` block because theme-level **signals** feed the beneficiary read-through;
+nothing theme-shaped is rendered.
 
 ## Editorial layer (what the engine does NOT ship)
 The engine ships facts only. Two dashboard-side files carry interpretation and

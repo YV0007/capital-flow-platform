@@ -26,7 +26,7 @@
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
-  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, Eye, Layers, Target,
+  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, Eye,
   Table2, Share2,
 } from 'lucide-react';
 import FlowGraph from './FlowGraph.jsx';
@@ -34,9 +34,10 @@ import FilterDrawer from './FilterBar.jsx';
 import Legend from './Legend.jsx';
 import EntityPanel from './EntityPanel.jsx';
 import AllocatorDeepDive from './AllocatorDeepDive.jsx';
-import RosterTable from './RosterTable.jsx';
+import EntityTable from './EntityTable.jsx';
 import useWatchlists from './useWatchlists.js';
 import { WatchlistSelector } from './WatchlistControl.jsx';
+import { buildViews, viewKey, cutoffDate, EMPTY_VIEW } from './views.js';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD } from './format.js';
 import { applyMoleculeLayout } from './layout.js';
@@ -52,8 +53,7 @@ const PANEL_W = 380;   // must match EntityPanel's width
 export default function CapitalFlowMap({ onBack, initialFlowId }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
-  const [groupMode, setGroupMode] = useState('sector');      // 'sector' | 'theme' (v2 view switch)
-  const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links, { groupMode, themes: graph.themes }), [graph, groupMode]);
+  const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links), [graph]);
   const graphData = useMemo(() => ({ nodes: graph.nodes, links: graph.links }), [graph]);
   const adjacency = useMemo(() => buildAdjacency(graph.links), [graph]);
   const nodeById = useMemo(() => new Map(graph.nodes.map(n => [n.id, n])), [graph]);
@@ -68,13 +68,13 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [tiers, setTiers] = useState(() => new Set());       // entities (allocators)
   const [families, setFamilies] = useState(() => new Set()); // flows (event family)
   const [statuses, setStatuses] = useState(() => new Set()); // flows
-  const [themes, setThemes] = useState(() => new Set());     // entities (targets, by theme)
   const [networks, setNetworks] = useState(() => new Set()); // entities (allocators, by network)
   const [minAmount, setMinAmount] = useState(0);
   const [minConfidence, setMinConfidence] = useState(0);     // flows (v2 grade score)
+  const [sinceDays, setSinceDays] = useState(0);             // flows, aged against META.generated
   const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [view, setView] = useState('map');                   // 'map' | 'roster' (tracking table)
+  const [view, setView] = useState('map');                   // 'map' | 'table' (tracking universe)
 
   // ── Watchlists — saved subsets of the map (localStorage) ───────────────
   const wl = useWatchlists();
@@ -88,13 +88,14 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
-    const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0 || themes.size > 0 || networks.size > 0;
+    const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0 || networks.size > 0;
+    const cutoff = cutoffDate(META.generated, sinceDays);
     // Active watchlist narrows the universe first: only members can seed the
     // view (their direct counterparties still surface via the flows, so the
     // subset stays navigable vertex↔edge).
     const wlSet = activeList ? new Set(activeList.ids) : null;
     // Seed = nodes matching ANY active entity selection (OR-union) — robust to
-    // mixing target-only (sector/theme) and allocator-only (tier/network) dims.
+    // mixing target-only (sector) and allocator-only (tier/network) dims.
     const seed = new Set(
       graph.nodes.filter(n => {
         if (wlSet && !wlSet.has(n.id)) return false;
@@ -102,9 +103,8 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         const mSec = sectors.size && n.sector && sectors.has(n.sector);
         const mCls = classes.size && classes.has(n.cls);
         const mTier = tiers.size && n.tier && tiers.has(n.tier);
-        const mTheme = themes.size && n.themeKey && themes.has(n.themeKey);
         const mNet = networks.size && n.network && networks.has(n.network);
-        return mSec || mCls || mTier || mTheme || mNet;
+        return mSec || mCls || mTier || mNet;
       }).map(n => n.id)
     );
 
@@ -114,6 +114,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
       if (statuses.size && !statuses.has(l.status)) return;
       if (minAmount > 0 && l.amountUSD < minAmount) return;
       if (minConfidence > 0 && (l.confidence == null || l.confidence < minConfidence)) return;
+      if (cutoff && !(l.date && l.date >= cutoff)) return;
       if ((entityFilterOn || wlSet) && !seed.has(l.sourceId) && !seed.has(l.targetId)) return;
       links.add(l.id);
     });
@@ -137,7 +138,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     }
 
     return { matchedNodes: nodes, matchedLinks: links };
-  }, [graph, sectors, classes, tiers, families, statuses, themes, networks, minAmount, minConfidence, showWatch, nodeById, activeList]);
+  }, [graph, sectors, classes, tiers, families, statuses, networks, minAmount, minConfidence, sinceDays, showWatch, nodeById, activeList]);
 
   // ── Selection neighbourhood ────────────────────────────────────────────
   const { neighbourNodes, neighbourLinks } = useMemo(() => {
@@ -163,7 +164,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   // ── Handlers ───────────────────────────────────────────────────────────
   const focusEntity = useCallback((id) => {
     const node = nodeById.get(id);
-    setView('map');                 // a roster row lands you on the map, entity open
+    setView('map');                 // a table row lands you on the map, entity open
     setSelectedNodeId(id);
     setSelectedFlowId(null);
     setDeepDiveOpen(false);
@@ -221,18 +222,24 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialFlowId]);
 
-  const resetFilters = useCallback(() => {
-    setSectors(new Set());
-    setClasses(new Set());
-    setTiers(new Set());
-    setFamilies(new Set());
-    setStatuses(new Set());
-    setThemes(new Set());
-    setNetworks(new Set());
-    setMinAmount(0);
-    setMinConfidence(0);
-    setQuery('');
+  // One place that writes the whole filter state — reset and the quick views
+  // both go through it, so no dimension can be forgotten in one path.
+  const applyFilterState = useCallback((s) => {
+    setSectors(new Set(s.sectors || []));
+    setClasses(new Set(s.classes || []));
+    setTiers(new Set(s.tiers || []));
+    setFamilies(new Set(s.families || []));
+    setStatuses(new Set(s.statuses || []));
+    setNetworks(new Set(s.networks || []));
+    setMinAmount(s.minAmount || 0);
+    setMinConfidence(s.minConfidence || 0);
+    setSinceDays(s.sinceDays || 0);
   }, []);
+
+  const resetFilters = useCallback(() => {
+    applyFilterState(EMPTY_VIEW);
+    setQuery('');
+  }, [applyFilterState]);
 
   const toggleIn = (setter) => (value) => setter(prev => {
     const next = new Set(prev);
@@ -266,7 +273,24 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   }, [graph, matchedNodes, matchedLinks]);
 
   const activeFilterCount = sectors.size + classes.size + tiers.size + families.size + statuses.size
-    + themes.size + networks.size + (minAmount > 0 ? 1 : 0) + (minConfidence > 0 ? 1 : 0);
+    + networks.size + (minAmount > 0 ? 1 : 0) + (minConfidence > 0 ? 1 : 0) + (sinceDays > 0 ? 1 : 0);
+
+  // ── Quick views — pre-made filter combinations ─────────────────────────
+  // Which sectors are signalling comes from the payload, so the "Signal
+  // sectors" view follows each delivery instead of naming sectors by hand.
+  const views = useMemo(() => buildViews({
+    litSectors: Object.values(graph.sectors).filter(s => s.lit).map(s => s.key),
+    confidenceThreshold: graph.confidenceThreshold,
+  }), [graph]);
+  const currentKey = viewKey({
+    sectors: [...sectors], classes: [...classes], tiers: [...tiers],
+    families: [...families], statuses: [...statuses], networks: [...networks],
+    minAmount, minConfidence, sinceDays,
+  });
+  const activeViewId = views.find(v => viewKey(v.state) === currentKey)?.id || null;
+  const applyView = useCallback((v) => {
+    applyFilterState(activeViewId === v.id ? EMPTY_VIEW : v.state);
+  }, [applyFilterState, activeViewId]);
   const visibleTotal = useMemo(
     () => graph.links.reduce((s, l) => s + (matchedLinks.has(l.id) && l.disclosed ? l.amount : 0), 0),
     [graph, matchedLinks]
@@ -282,10 +306,13 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     : [];
   const searchRef = useRef(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  // Capture phase — the graph canvas swallows mousedown (d3-drag calls
+  // stopImmediatePropagation), so a bubble-phase listener never sees a click
+  // on the map and the dropdown would hang around.
   useEffect(() => {
     const h = (e) => { if (searchRef.current && !searchRef.current.contains(e.target)) setSearchOpen(false); };
-    document.addEventListener('mousedown', h);
-    return () => document.removeEventListener('mousedown', h);
+    document.addEventListener('mousedown', h, true);
+    return () => document.removeEventListener('mousedown', h, true);
   }, []);
 
   return (
@@ -384,7 +411,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
               if (e.key === 'Enter' && suggestions[0]) { focusEntity(suggestions[0].id); setSearchOpen(false); }
               if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
             }}
-            placeholder={view === 'roster' ? 'Filter the roster…' : 'Find an entity…'}
+            placeholder={view === 'table' ? 'Filter the table…' : 'Find an entity…'}
             style={{
               width: '100%', padding: '7px 26px 7px 27px',
               background: 'rgba(18,19,24,0.9)', border: '1px solid #26262e', borderRadius: 8,
@@ -427,27 +454,26 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
-          <TopBtn onClick={() => setView(v => (v === 'map' ? 'roster' : 'map'))}
-            label={view === 'map' ? 'Tracking roster — every tracked entity as a table' : 'Back to the map'}
-            active={view === 'roster'} wide>
+          <TopBtn onClick={() => { setView(v => (v === 'map' ? 'table' : 'map')); setDrawerOpen(false); }}
+            label={view === 'map' ? 'Table view — every tracked entity, grouped by role and type' : 'Back to the map'}
+            active={view === 'table'} wide>
             {view === 'map' ? <Table2 size={12} /> : <Share2 size={12} />}
-            {view === 'map' ? 'Roster' : 'Map'}
+            {view === 'map' ? 'Table' : 'Map'}
           </TopBtn>
           <WatchlistSelector wl={wl} />
+          {/* Filters drive both views — the table is the same universe as the map. */}
+          <TopBtn onClick={() => setDrawerOpen(o => !o)}
+            label="Filters and quick views" active={drawerOpen || activeFilterCount > 0} wide>
+            <SlidersHorizontal size={12} />
+            Filters{activeFilterCount ? ` · ${activeFilterCount}` : ''}
+          </TopBtn>
           {view === 'map' && (
             <>
-              <TopBtn onClick={() => setGroupMode(m => (m === 'sector' ? 'theme' : 'sector'))}
-                label="Group by sector or theme" active={groupMode === 'theme'} wide>
-                {groupMode === 'sector' ? <Target size={12} /> : <Layers size={12} />}
-                {groupMode === 'sector' ? 'Sectors' : 'Themes'}
-              </TopBtn>
-              <TopBtn onClick={() => setDrawerOpen(o => !o)} label="Filters" active={drawerOpen || activeFilterCount > 0} wide>
-                <SlidersHorizontal size={12} />
-                Filters{activeFilterCount ? ` · ${activeFilterCount}` : ''}
-              </TopBtn>
               {graph.stats.watchCount > 0 && (
-                <TopBtn onClick={() => setShowWatch(s => !s)} label="Show watch / unconfirmed entities" active={showWatch} wide>
-                  <Eye size={12} /> Watch{showWatch ? ` · ${graph.stats.watchCount}` : ''}
+                <TopBtn onClick={() => setShowWatch(s => !s)}
+                  label={`Unconfirmed leads — ${graph.stats.watchCount} entities whose only flows are candidates the engine has not confirmed against a source. Kept off the map by default; turn on to see what might be coming.`}
+                  active={showWatch} wide>
+                  <Eye size={12} /> Leads{showWatch ? ` · ${graph.stats.watchCount}` : ''}
                 </TopBtn>
               )}
               <TopBtn onClick={() => setShowLabels(s => !s)} label="Toggle labels" active={showLabels}>
@@ -469,10 +495,9 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
       {/* ── Filter drawer ───────────────────────────────────────────────── */}
       {drawerOpen && (
         <FilterDrawer
+          views={views} activeViewId={activeViewId} onApplyView={applyView}
           sectorsPresent={graph.sectors}
           sectors={sectors} onToggleSector={toggleIn(setSectors)}
-          themesPresent={graph.themes}
-          themesSel={themes} onToggleTheme={toggleIn(setThemes)}
           classes={classes} onToggleClass={toggleIn(setClasses)}
           tiers={tiers} onToggleTier={toggleIn(setTiers)}
           networksPresent={networksPresent}
@@ -482,17 +507,19 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           minAmount={minAmount} onMinAmount={setMinAmount} maxAmount={graph.maxAmount}
           minConfidence={minConfidence} onMinConfidence={setMinConfidence}
           confidenceThreshold={graph.confidenceThreshold}
+          sinceDays={sinceDays} onSinceDays={setSinceDays} generated={META.generated}
           activeCount={activeFilterCount}
           onReset={resetFilters}
           onClose={() => setDrawerOpen(false)}
         />
       )}
 
-      {/* ── Tracking roster — table view of the whole tracked universe ──── */}
-      {view === 'roster' && (
-        <RosterTable
+      {/* ── Table — the whole tracked universe, grouped by role and type ── */}
+      {view === 'table' && (
+        <EntityTable
           topInset={TOPBAR_H}
           nodes={graph.nodes}
+          matchedNodes={matchedNodes}
           query={query}
           activeList={activeList}
           wl={wl}

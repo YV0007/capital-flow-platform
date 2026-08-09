@@ -16,7 +16,7 @@
 // entirely from whatever is in the file.
 // ══════════════════════════════════════════════════════════════════════════
 
-import { SECTOR_META, CLASS_META, THEME_META } from '../../../data/capitalMap.js';
+import { SECTOR_META, CLASS_META } from '../../../data/capitalMap.js';
 import { shortLabel, fmtUSD } from './format.js';
 
 const GOLDEN = 2.399963229728653;
@@ -78,12 +78,11 @@ function relax(list, kx, ky, pad, iters) {
  * Pins every node into the capital-atom and returns the regions to paint
  * (one 'core' + one 'sector' cell each). Mutates the (memoised) node objects.
  */
-export function applyMoleculeLayout(nodes, sectors = {}, links = [], opts = {}) {
-  // Group targets by SECTOR (default) or THEME (the v2 view switch).
-  const mode = opts.groupMode === 'theme' ? 'theme' : 'sector';
-  const META = mode === 'theme' ? THEME_META : SECTOR_META;
-  const groupsData = mode === 'theme' ? (opts.themes || {}) : sectors;
-  const groupKeyOf = (t) => (mode === 'theme' ? t.themeKey : t.sector) || '_none';
+export function applyMoleculeLayout(nodes, sectors = {}, links = []) {
+  // Targets cluster by SECTOR — the one grouping dimension on the map.
+  const META = SECTOR_META;
+  const groupsData = sectors;
+  const groupKeyOf = (t) => t.sector || '_none';
 
   const maxCap = Math.max(1, ...nodes.map(n => n.capital || 0));
   nodes.forEach(n => sizeAtom(n, maxCap));
@@ -237,7 +236,7 @@ export function applyMoleculeLayout(nodes, sectors = {}, links = [], opts = {}) 
     regions.push({
       type: 'sector', key: k, cx, cy, r: cellR[k] + 32,
       color: META[k]?.color || '#9aa3b2',
-      label: (META[k]?.label || (k === '_none' ? (mode === 'theme' ? 'Untagged' : 'Unsectored') : k)).toUpperCase(),
+      label: (META[k]?.label || (k === '_none' ? 'Unsectored' : k)).toUpperCase(),
       stats: `IN ${fmtUSD(cap)}`,
       lit: !!(grp && grp.lit), signals: grp?.signals || [],
       count: cellMem[k].length,

@@ -213,6 +213,17 @@ export const SECTOR_TO_THEME = {
   'ai-diversified': 'ai_applications',
 };
 
+// ── Display names for the ISO-2 country codes the engine emits. Presentation
+// only — the code itself is the payload's, and an unmapped code falls back to
+// the uppercase code rather than being guessed at.
+export const COUNTRY_NAMES = {
+  us: 'United States', ca: 'Canada', gb: 'United Kingdom', ae: 'United Arab Emirates',
+  sa: 'Saudi Arabia', qa: 'Qatar', kw: 'Kuwait', kr: 'South Korea', jp: 'Japan',
+  cn: 'China', tw: 'Taiwan', sg: 'Singapore', in: 'India', il: 'Israel',
+  de: 'Germany', fr: 'France', nl: 'Netherlands', ch: 'Switzerland',
+  se: 'Sweden', no: 'Norway', au: 'Australia',
+};
+
 // ── Elite networks an individual allocator can belong to. Warm accents so a
 // networked node pops against the cool palette.
 export const NETWORK_META = {
@@ -325,18 +336,25 @@ export function buildGraph(data = raw) {
     const profileType = n.profile_type || ref?.type ||
       (isAllocator ? (n.cls === 'individual' ? 'person' : 'org')
                    : (n.cls === 'fund' ? 'fund' : n.cls === 'project' ? 'project' : 'org'));
-    // National affiliation (sovereign / government allocators). Engine-emitted
-    // fields win; the dashboard reference file is the curated fallback. When
-    // set, the country flag becomes the node icon (public/flags/<cc>.png) so
-    // national capital sources are instantly identifiable on the map.
-    const country = n.country || ref?.country || null;
-    const countryLabel = n.country_label || ref?.countryLabel || null;
+    // National affiliation. The engine emits ISO-2 codes (uppercase) for any
+    // entity it can place; the dashboard reference file is the curated
+    // fallback. Lowercased because the flag files are (public/flags/<cc>.png).
+    const rawCountry = n.country || ref?.country || null;
+    const country = rawCountry ? String(rawCountry).toLowerCase() : null;
+    const countryLabel = n.country_label || ref?.countryLabel
+      || COUNTRY_NAMES[country] || (country ? country.toUpperCase() : null);
+    // Flag-AS-ICON is reserved for SOVEREIGN entities — state funds and
+    // government programmes — because that is the whole point of the flag:
+    // spotting national capital at a glance. Everyone else keeps their brand
+    // mark (a US flag on NVIDIA says nothing and costs us the logo) and
+    // carries the country as metadata in the panel instead.
+    const flagUrl = country && n.cls === 'sovereign' ? `/flags/${country}.png` : null;
     // Real brand logo / founder photo, pre-fetched into public/logos/ by
     // scripts/fetch_logos.py (reliable, offline, no runtime DNS). Monogram
     // tile is the fallback for the entities without one.
     const localLogo = logoManifest[n.id];
     const logoUrls = [
-      ...(country ? [`/flags/${country}.png`] : []),
+      ...(flagUrl ? [flagUrl] : []),
       ...(localLogo ? [localLogo] : []),
     ];
     return {
@@ -347,6 +365,7 @@ export function buildGraph(data = raw) {
       profileType,
       country,
       countryLabel,
+      flagUrl,
       logoUrls,
       monogram: monogramOf(displayName),
       searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(displayName)}`,

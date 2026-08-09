@@ -1,0 +1,340 @@
+// Table view — the complete tracking universe, organised rather than dumped.
+//
+// Two role sections (who deploys capital · who receives it), each split into
+// typed subsections (sovereign · corporate · venture … / public co · private
+// co · funds · projects · assets). Every subsection header carries its own
+// count and capital total, and collapses, so the question "who are we actually
+// tracking, and as what?" is answerable by scanning headers alone.
+//
+// Because the group headers carry the type, the old Class and "Tracked as"
+// columns are gone — they repeated the header on every row. Sorting applies
+// within each subsection; a row click jumps to the map with the entity open.
+
+import { useMemo, useState, useCallback } from 'react';
+import { ArrowUp, ArrowDown, ChevronDown, ChevronRight } from 'lucide-react';
+import { fmtUSD } from './format.js';
+import { SECTOR_META, TIER_META } from '../../../data/capitalMap.js';
+import { WatchlistMenu } from './WatchlistControl.jsx';
+
+const MONO = 'ui-monospace, monospace';
+
+// ── Section model ────────────────────────────────────────────────────────
+// Role = the dimension monitored. Subsection = what kind of entity it is.
+// Both derive 1:1 from the payload's `kind` + `cls` — nothing is inferred.
+const ROLES = [
+  {
+    key: 'allocator',
+    label: 'Allocators',
+    tagline: 'who deploys capital',
+    accent: '#C2A36B',
+    capitalWord: 'deployed',
+    groups: [
+      { cls: 'sovereign',   label: 'Sovereign & government', blurb: 'State funds and government programmes — national capital.' },
+      { cls: 'corporate',   label: 'Corporate',              blurb: 'Operating companies investing off their own balance sheet.' },
+      { cls: 'vc',          label: 'Venture',                blurb: 'Venture and growth firms deploying fund capital.' },
+      { cls: 'alt_manager', label: 'Alternative managers',   blurb: 'Infrastructure, credit and private-equity allocators.' },
+      { cls: 'individual',  label: 'Individuals',            blurb: 'Angels, founders and family offices investing personally.' },
+    ],
+  },
+  {
+    key: 'target',
+    label: 'Recipients',
+    tagline: 'where the capital lands',
+    accent: '#82B98D',
+    capitalWord: 'received',
+    groups: [
+      { cls: 'public',  label: 'Public companies',    blurb: 'Listed names — the tradeable read-through on private flows.' },
+      { cls: 'private', label: 'Private companies',   blurb: 'Venture and growth-stage companies raising capital.' },
+      { cls: 'fund',    label: 'Funds & vehicles',    blurb: 'Funds, SPVs and JVs raised to deploy onward.' },
+      { cls: 'project', label: 'Projects & buildout', blurb: 'Named physical builds — data centers, plants, fabs.' },
+      { cls: 'asset',   label: 'Assets',              blurb: 'Individual assets and positions taken.' },
+    ],
+  },
+];
+
+function statusOf(n) {
+  if (n.stale) return { label: 'Cooled', color: '#94A3B8', title: 'No activity in 180 days — kept in memory, de-emphasised.' };
+  if (n.watchOnly) return { label: 'Watch', color: '#71717a', title: 'Candidate flows only — unconfirmed.' };
+  return { label: 'Active', color: '#34D399', title: 'Confirmed activity in the current window.' };
+}
+
+const COLS = [
+  { key: 'name',    label: 'Entity',         sort: (n) => n.name.toLowerCase() },
+  { key: 'tier',    label: 'Tier',           sort: (n) => (n.tier === 'core' ? 0 : n.tier === 'key' ? 1 : n.tier === 'watch' ? 2 : 3) },
+  { key: 'sector',  label: 'Sector',         sort: (n) => SECTOR_META[n.sector]?.label || n.sector || '~' },
+  { key: 'deals',   label: 'Deals',          sort: (n) => n.deals, num: true },
+  { key: 'capital', label: 'Capital',        sort: (n) => n.capital, num: true },
+  { key: 'last',    label: 'Last activity',  sort: (n) => n.last_activity || '', num: true },
+  { key: 'status',  label: 'Status',         sort: (n) => (n.stale ? 2 : n.watchOnly ? 1 : 0) },
+];
+
+export default function EntityTable({ nodes, matchedNodes, query, activeList, wl, onOpenEntity, topInset = 0 }) {
+  const [kind, setKind] = useState('all');            // all | allocator | target
+  const [sortKey, setSortKey] = useState('capital');
+  const [sortDir, setSortDir] = useState(-1);         // -1 desc · 1 asc
+  const [collapsed, setCollapsed] = useState(() => new Set());
+
+  const toggleGroup = useCallback((id) => {
+    setCollapsed(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }, []);
+
+  // Filter once, then bucket into role → subsection. A class the payload uses
+  // but this file doesn't name still gets a section (keyed "other"), so a new
+  // engine class can never silently vanish from the table.
+  const { sections, shown } = useMemo(() => {
+    const q = (query || '').trim().toLowerCase();
+    const member = activeList ? new Set(activeList.ids) : null;
+    const col = COLS.find(c => c.key === sortKey) || COLS[4];
+
+    // The table is the same universe as the map, not a second one: whatever
+    // the filters and quick views select applies here too.
+    const rows = nodes.filter(n =>
+      (!matchedNodes || matchedNodes.has(n.id))
+      && (kind === 'all' || n.kind === kind)
+      && (!member || member.has(n.id))
+      && (!q || n.name.toLowerCase().includes(q) || n.label.toLowerCase().includes(q))
+    );
+    const cmp = (a, b) => {
+      const va = col.sort(a), vb = col.sort(b);
+      return (va < vb ? -1 : va > vb ? 1 : 0) * sortDir;
+    };
+
+    const out = ROLES
+      .filter(role => kind === 'all' || kind === role.key)
+      .map(role => {
+        const mine = rows.filter(n => n.kind === role.key);
+        const named = new Set(role.groups.map(g => g.cls));
+        const groups = role.groups
+          .map(g => ({ ...g, id: `${role.key}:${g.cls}`, rows: mine.filter(n => n.cls === g.cls).sort(cmp) }))
+          .filter(g => g.rows.length > 0);
+        const leftovers = mine.filter(n => !named.has(n.cls));
+        if (leftovers.length) {
+          groups.push({
+            cls: 'other', id: `${role.key}:other`, label: 'Other',
+            blurb: 'Entity classes the engine emitted that this view has no section for yet.',
+            rows: leftovers.sort(cmp),
+          });
+        }
+        // Data-driven order: the heaviest subsection leads.
+        groups.sort((a, b) =>
+          b.rows.reduce((s, n) => s + n.capital, 0) - a.rows.reduce((s, n) => s + n.capital, 0));
+        return {
+          ...role,
+          groups,
+          count: mine.length,
+          capital: mine.reduce((s, n) => s + n.capital, 0),
+        };
+      })
+      .filter(role => role.count > 0);
+
+    return { sections: out, shown: rows.length };
+  }, [nodes, query, kind, activeList, sortKey, sortDir]);
+
+  const header = (c) => {
+    const on = sortKey === c.key;
+    return (
+      <th key={c.key}
+        onClick={() => { on ? setSortDir(d => -d) : (setSortKey(c.key), setSortDir(c.num ? -1 : 1)); }}
+        style={{
+          position: 'sticky', top: 0, zIndex: 3, background: '#0b0c10',
+          padding: '10px 14px', textAlign: c.num ? 'right' : 'left',
+          fontSize: 9, color: on ? '#38BDF8' : '#6b6b74', fontFamily: MONO, fontWeight: 700,
+          textTransform: 'uppercase', letterSpacing: '0.1em', cursor: 'pointer',
+          borderBottom: '1px solid #1e1e23', whiteSpace: 'nowrap', userSelect: 'none',
+        }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+          {c.label}
+          {on && (sortDir === 1 ? <ArrowUp size={10} /> : <ArrowDown size={10} />)}
+        </span>
+      </th>
+    );
+  };
+
+  return (
+    <div style={{
+      position: 'absolute', left: 0, right: 0, bottom: 0, top: topInset, zIndex: 20,
+      background: '#08090C', overflowY: 'auto',
+    }}>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: '18px 24px 60px' }}>
+        {/* Scope line + role chips */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 10.5, color: '#71717a', fontFamily: MONO }}>
+            {shown} of {nodes.length} tracked entit{shown === 1 ? 'y' : 'ies'} in view
+            {activeList ? <> · watchlist <span style={{ color: '#38BDF8', fontWeight: 700 }}>{activeList.name}</span></> : null}
+            {query ? <> · matching “{query}”</> : null}
+          </span>
+          <span style={{ flex: 1 }} />
+          {[['all', 'Everything'], ['allocator', 'Allocators'], ['target', 'Recipients']].map(([k, label]) => (
+            <button key={k} onClick={() => setKind(k)}
+              style={{
+                padding: '5px 11px', borderRadius: 7, cursor: 'pointer',
+                background: kind === k ? 'rgba(56,189,248,0.1)' : '#121318',
+                border: `1px solid ${kind === k ? 'rgba(56,189,248,0.38)' : '#26262e'}`,
+                color: kind === k ? '#38BDF8' : '#a1a1aa',
+                fontSize: 10, fontFamily: MONO, fontWeight: 600,
+                textTransform: 'uppercase', letterSpacing: '0.07em',
+              }}>
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {sections.map(role => (
+          <section key={role.key} style={{ marginBottom: 30 }}>
+            {/* Role banner — the dimension monitored */}
+            <div style={{
+              display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap',
+              padding: '0 2px 9px', marginBottom: 10, borderBottom: `1px solid ${role.accent}33`,
+            }}>
+              <span style={{
+                fontSize: 12.5, fontWeight: 700, color: role.accent, fontFamily: MONO,
+                textTransform: 'uppercase', letterSpacing: '0.12em',
+              }}>
+                {role.label}
+              </span>
+              <span style={{ fontSize: 10.5, color: '#6b6b74', fontFamily: MONO }}>{role.tagline}</span>
+              <span style={{ flex: 1 }} />
+              <span style={{ fontSize: 10, color: '#71717a', fontFamily: MONO }}>
+                {role.count} entit{role.count === 1 ? 'y' : 'ies'}
+                <span style={{ color: '#3f3f46' }}> · </span>
+                <span style={{ color: '#a1a1aa', fontWeight: 700 }}>{fmtUSD(role.capital)}</span> {role.capitalWord}
+              </span>
+            </div>
+
+            <div style={{ border: '1px solid #1e1e23', borderRadius: 12, overflow: 'hidden' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead><tr>{COLS.map(header)}<th style={{
+                  position: 'sticky', top: 0, zIndex: 3, background: '#0b0c10',
+                  borderBottom: '1px solid #1e1e23', width: 40,
+                }} /></tr></thead>
+
+                {role.groups.map(g => {
+                  const shut = collapsed.has(g.id);
+                  const gCapital = g.rows.reduce((s, n) => s + n.capital, 0);
+                  return (
+                    <tbody key={g.id}>
+                      {/* Subsection header — what this bucket is, and how big */}
+                      <tr onClick={() => toggleGroup(g.id)}
+                        title={shut ? 'Expand' : 'Collapse'}
+                        style={{ cursor: 'pointer', background: '#0c0d12' }}>
+                        <td colSpan={COLS.length + 1} style={{ padding: '9px 14px', borderBottom: '1px solid #17181d', borderTop: '1px solid #17181d' }}>
+                          <span style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                            <span style={{ color: '#52525b', display: 'inline-flex', flexShrink: 0 }}>
+                              {shut ? <ChevronRight size={12} /> : <ChevronDown size={12} />}
+                            </span>
+                            <span style={{
+                              fontSize: 10.5, fontWeight: 700, color: '#d4d4d8', fontFamily: MONO,
+                              textTransform: 'uppercase', letterSpacing: '0.08em',
+                            }}>{g.label}</span>
+                            <span style={{
+                              fontSize: 9.5, color: '#52525b', fontFamily: MONO,
+                              padding: '1px 6px', border: '1px solid #26262c', borderRadius: 4,
+                            }}>{g.rows.length}</span>
+                            <span style={{ fontSize: 10, color: '#4a4a53', fontFamily: MONO }}>{g.blurb}</span>
+                            <span style={{ flex: 1 }} />
+                            <span style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>
+                              {gCapital > 0 ? fmtUSD(gCapital) : '—'}
+                            </span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      {!shut && g.rows.map(n => {
+                        const st = statusOf(n);
+                        const tier = n.tier ? TIER_META[n.tier] : null;
+                        const sec = n.sector ? SECTOR_META[n.sector] : null;
+                        return (
+                          <tr key={n.id}
+                            onClick={() => onOpenEntity(n.id)}
+                            title={`Open ${n.name} on the map`}
+                            style={{ cursor: 'pointer', borderBottom: '1px solid #15161b' }}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = '#0e0f14')}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+                            {/* Entity */}
+                            <td style={{ padding: '9px 14px 9px 32px', minWidth: 200 }}>
+                              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <span style={{ width: 8, height: 8, borderRadius: '50%', background: n.color, flexShrink: 0 }} />
+                                <span style={{ fontSize: 12, fontWeight: 600, color: '#e4e4e7' }}>{n.name}</span>
+                                {/* Country reads as a quiet suffix — the flag icon itself is
+                                    reserved for sovereigns, on the map. */}
+                                {n.country && (
+                                  <span title={n.countryLabel || n.country.toUpperCase()}
+                                    style={{ fontSize: 9, color: '#52525b', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em', cursor: 'help' }}>
+                                    {n.country.toUpperCase()}
+                                  </span>
+                                )}
+                              </span>
+                            </td>
+                            {/* Tier */}
+                            <td style={{ padding: '9px 14px', whiteSpace: 'nowrap' }}>
+                              {tier
+                                ? <span title={tier.blurb} style={{ fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: tier.color, cursor: 'help' }}>
+                                    {tier.short} {tier.stars}
+                                  </span>
+                                : <span style={{ color: '#3f3f46', fontSize: 10 }}>—</span>}
+                            </td>
+                            {/* Sector */}
+                            <td style={{ padding: '9px 14px', whiteSpace: 'nowrap' }}>
+                              {sec
+                                ? <span style={{ fontSize: 10, fontFamily: MONO, color: sec.color }}>{sec.label}</span>
+                                : <span style={{ color: '#3f3f46', fontSize: 10 }}>—</span>}
+                            </td>
+                            {/* Deals */}
+                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 11, fontFamily: MONO, color: '#a1a1aa' }}>
+                              {n.deals}
+                            </td>
+                            {/* Capital — 0 with deals on file = undisclosed, not zero */}
+                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 11.5, fontFamily: MONO, fontWeight: 700, color: n.capital > 0 ? '#fafafa' : '#52525b' }}>
+                              {n.capital > 0 ? fmtUSD(n.capital) : n.degree > 0 ? 'undisclosed' : '$0'}
+                            </td>
+                            {/* Last activity */}
+                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 10, fontFamily: MONO, color: '#71717a', whiteSpace: 'nowrap' }}>
+                              {n.last_activity || '—'}
+                            </td>
+                            {/* Status */}
+                            <td style={{ padding: '9px 14px', whiteSpace: 'nowrap' }}>
+                              <span title={st.title} style={{
+                                display: 'inline-flex', alignItems: 'center', gap: 5,
+                                fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: st.color, cursor: 'help',
+                              }}>
+                                <span style={{ width: 6, height: 6, borderRadius: '50%', background: st.color }} />
+                                {st.label}
+                              </span>
+                            </td>
+                            {/* Watchlist bookmark */}
+                            <td style={{ padding: '9px 10px' }} onClick={(e) => e.stopPropagation()}>
+                              <WatchlistMenu wl={wl} entityId={n.id} size={13} />
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  );
+                })}
+              </table>
+            </div>
+          </section>
+        ))}
+
+        {sections.length === 0 && (
+          <div style={{
+            padding: '28px 16px', textAlign: 'center', fontSize: 11, color: '#52525b', fontFamily: MONO,
+            border: '1px solid #1e1e23', borderRadius: 12,
+          }}>
+            Nothing matches — clear the search{activeList ? ' or deactivate the watchlist' : ''}.
+          </div>
+        )}
+
+        <div style={{ marginTop: 12, fontSize: 9, color: '#4a4a53', fontFamily: MONO, lineHeight: 1.6 }}>
+          The tracking universe as delivered by the engine payload — every entity with at least one tracked flow,
+          filed under the role and type the payload assigns it. “Watch” rows carry only unconfirmed candidate flows;
+          “Cooled” rows have been idle 180 days. Click a section header to fold it, a row to open the entity on the map.
+        </div>
+      </div>
+    </div>
+  );
+}
