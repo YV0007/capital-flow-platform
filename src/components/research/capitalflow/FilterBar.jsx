@@ -37,39 +37,39 @@ export default function FilterDrawer({
     <div style={{
       position: 'absolute', top: 58, right: 16, zIndex: 32,
       width: 'min(440px, calc(100vw - 32px))',
-      background: 'rgba(13,14,19,0.97)',
-      border: '1px solid #26262e', borderRadius: 12,
+      background: 'var(--cf-panel)',
+      border: '1px solid var(--cf-border)', borderRadius: 12,
       backdropFilter: 'blur(12px)',
-      boxShadow: '0 24px 60px -16px rgba(0,0,0,0.9)',
+      boxShadow: '0 24px 60px -16px var(--cf-shadow)',
       animation: 'cfmDrop 160ms ease-out',
       maxHeight: 'calc(100vh - 180px)', overflowY: 'auto',
     }}>
       {/* Header */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '11px 14px', borderBottom: '1px solid #1c1d23',
-        position: 'sticky', top: 0, background: 'rgba(13,14,19,0.97)', zIndex: 1,
+        padding: '11px 14px', borderBottom: '1px solid var(--cf-border-soft)',
+        position: 'sticky', top: 0, background: 'var(--cf-panel)', zIndex: 1,
       }}>
-        <span style={{ fontSize: 10, color: '#d4d4d8', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-          Filters
+        <span style={{ fontSize: 10, color: 'var(--cf-text2)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+          Фильтры
         </span>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <button onClick={onReset} disabled={activeCount === 0}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 4,
               padding: '4px 8px', background: 'transparent',
-              border: `1px solid ${activeCount ? '#3f3f46' : '#1c1d23'}`, borderRadius: 6,
-              color: activeCount ? '#d4d4d8' : '#3f3f46',
+              border: `1px solid ${activeCount ? 'var(--cf-text9)' : 'var(--cf-border-soft)'}`, borderRadius: 6,
+              color: activeCount ? 'var(--cf-text2)' : 'var(--cf-text9)',
               fontSize: 9, fontFamily: MONO, fontWeight: 600,
               textTransform: 'uppercase', letterSpacing: '0.07em',
               cursor: activeCount ? 'pointer' : 'default',
             }}>
-            <RotateCcw size={10} /> Reset
+            <RotateCcw size={10} /> Сброс
           </button>
           <button onClick={onClose}
-            style={{ background: 'none', border: 'none', color: '#52525b', cursor: 'pointer', padding: 2, lineHeight: 0 }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#d4d4d8')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = '#52525b')}>
+            style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 2, lineHeight: 0 }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
             <X size={14} />
           </button>
         </div>
@@ -79,51 +79,51 @@ export default function FilterDrawer({
         {/* Quick views — a whole filter combination in one click */}
         {views.length > 0 && (
           <div>
-            <GroupLabel>Quick views · one-click combinations</GroupLabel>
+            <GroupLabel>Быстрые виды · готовые комбинации</GroupLabel>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
               {views.map(v => {
                 const on = v.id === activeViewId;
                 return (
                   <button key={v.id} onClick={() => !v.disabled && onApplyView(v)}
-                    title={v.disabled ? v.blurb : `${v.blurb}${on ? '\n\nClick again to clear.' : ''}`}
+                    title={v.disabled ? v.blurb : `${v.blurb}${on ? '\n\nПовторный клик снимает.' : ''}`}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 7, padding: '8px 10px',
-                      background: on ? hexA(v.color, 0.12) : '#12131a',
-                      border: `1px solid ${on ? hexA(v.color, 0.55) : '#22232b'}`,
+                      background: on ? hexA(v.color, 0.12) : 'var(--cf-surface2)',
+                      border: `1px solid ${on ? hexA(v.color, 0.55) : 'var(--cf-border)'}`,
                       borderRadius: 8, textAlign: 'left',
                       cursor: v.disabled ? 'not-allowed' : 'pointer',
                       opacity: v.disabled ? 0.4 : 1,
                       transition: 'all 130ms',
                     }}
-                    onMouseEnter={(e) => { if (!on && !v.disabled) e.currentTarget.style.borderColor = '#3f3f46'; }}
-                    onMouseLeave={(e) => { if (!on) e.currentTarget.style.borderColor = '#22232b'; }}>
-                    <Zap size={11} style={{ flexShrink: 0, color: on ? v.color : '#52525b' }} />
+                    onMouseEnter={(e) => { if (!on && !v.disabled) e.currentTarget.style.borderColor = 'var(--cf-text9)'; }}
+                    onMouseLeave={(e) => { if (!on) e.currentTarget.style.borderColor = 'var(--cf-border)'; }}>
+                    <Zap size={11} style={{ flexShrink: 0, color: on ? v.color : 'var(--cf-text7)' }} />
                     <span style={{
                       fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
-                      color: on ? v.color : '#c4c4cb', whiteSpace: 'nowrap',
+                      color: on ? v.color : 'var(--cf-text2)', whiteSpace: 'nowrap',
                       overflow: 'hidden', textOverflow: 'ellipsis',
                     }}>{v.label}</span>
                   </button>
                 );
               })}
             </div>
-            <div style={{ marginTop: 7, fontSize: 9, color: '#4a4a53', fontFamily: MONO, lineHeight: 1.55 }}>
+            <div style={{ marginTop: 7, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.55 }}>
               {activeViewId
                 ? views.find(v => v.id === activeViewId)?.blurb
-                : 'Each view replaces the filters below. Hover for what it selects; click an active view to clear it.'}
+                : 'Каждый вид заменяет фильтры ниже. Наведите, чтобы узнать, что он выбирает; клик по активному виду снимает его.'}
             </div>
           </div>
         )}
 
         {/* Recency — ages measured against the payload date, not today */}
         <div>
-          <GroupLabel>Recency · flows{generated ? ` · as of ${generated}` : ''}</GroupLabel>
+          <GroupLabel>Свежесть · потоки{generated ? ` · на ${generated}` : ''}</GroupLabel>
           <ChipWrap>
             {RECENCY_OPTIONS.map(o => (
-              <Chip key={o.days} on={(sinceDays || 0) === o.days} color="#38BDF8" square
+              <Chip key={o.days} on={(sinceDays || 0) === o.days} color="var(--cf-accent)" square
                 title={o.days === 0
-                  ? 'Every flow in the file.'
-                  : `Flows dated on or after ${cutoffDate(generated, o.days) || '—'} — the last ${o.days} days of data.`}
+                  ? 'Все потоки в файле.'
+                  : `Потоки с датой от ${cutoffDate(generated, o.days) || '—'} — последние ${o.days} дней данных.`}
                 onClick={() => onSinceDays(o.days)}>
                 {o.label}
               </Chip>
@@ -133,16 +133,16 @@ export default function FilterDrawer({
 
         {/* Sector */}
         <div>
-          <GroupLabel>Sector · targets</GroupLabel>
+          <GroupLabel>Сектор · получатели</GroupLabel>
           <ChipWrap>
             {sectorKeys.map(k => {
               const s = sectorsPresent[k];
               const meta = SECTOR_META[k] || {};
               return (
-                <Chip key={k} on={sectors.has(k)} color={meta.color || '#71717a'}
-                  title={`${s.deals} deals · ${fmtUSD(s.capital)}${s.lit ? ' · signal firing' : ''}`}
+                <Chip key={k} on={sectors.has(k)} color={meta.color || 'var(--cf-text5)'}
+                  title={`Сделок: ${s.deals} · ${fmtUSD(s.capital)}${s.lit ? ' · сигнал' : ''}`}
                   onClick={() => onToggleSector(k)}>
-                  {s.lit && <span style={{ color: '#FBBF24', marginRight: -1 }}>◆</span>}
+                  {s.lit && <span style={{ color: 'var(--cf-warn)', marginRight: -1 }}>◆</span>}
                   {sectorLabel(k)}
                 </Chip>
               );
@@ -152,20 +152,20 @@ export default function FilterDrawer({
 
         {/* Class */}
         <div>
-          <GroupLabel>Allocator class · entities</GroupLabel>
+          <GroupLabel>Класс инвестора</GroupLabel>
           <ChipWrap>
             {allocClasses.map(([k, v]) => (
               <Chip key={k} on={classes.has(k)} color={v.color} onClick={() => onToggleClass(k)}>
-                {v.label}
+                {v.zone || v.label}
               </Chip>
             ))}
           </ChipWrap>
           <div style={{ height: 8 }} />
-          <GroupLabel>Target class · entities</GroupLabel>
+          <GroupLabel>Класс получателя</GroupLabel>
           <ChipWrap>
             {targetClasses.map(([k, v]) => (
               <Chip key={k} on={classes.has(k)} color={v.color} square onClick={() => onToggleClass(k)}>
-                {v.label}
+                {v.zone || v.label}
               </Chip>
             ))}
           </ChipWrap>
@@ -173,7 +173,7 @@ export default function FilterDrawer({
 
         {/* Tier */}
         <div>
-          <GroupLabel>Allocator tier · entities</GroupLabel>
+          <GroupLabel>Уровень инвестора</GroupLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {Object.entries(TIER_META).map(([k, t]) => {
               const on = tiers.has(k);
@@ -182,13 +182,13 @@ export default function FilterDrawer({
                   style={{
                     display: 'flex', alignItems: 'center', gap: 9,
                     padding: '7px 10px',
-                    background: on ? hexA(t.color, 0.1) : '#12131a',
-                    border: `1px solid ${on ? hexA(t.color, 0.5) : '#22232b'}`,
+                    background: on ? hexA(t.color, 0.1) : 'var(--cf-surface2)',
+                    border: `1px solid ${on ? hexA(t.color, 0.5) : 'var(--cf-border)'}`,
                     borderRadius: 8, cursor: 'pointer', textAlign: 'left',
                     transition: 'all 130ms',
                   }}>
                   <span style={{ fontSize: 9, color: t.color, fontFamily: MONO, fontWeight: 800, width: 40, flexShrink: 0 }}>{t.short}</span>
-                  <span style={{ fontSize: 11.5, color: on ? '#fafafa' : '#c4c4cb', fontWeight: 600, flex: 1 }}>{t.label}</span>
+                  <span style={{ fontSize: 11.5, color: on ? 'var(--cf-text0)' : 'var(--cf-text2)', fontWeight: 600, flex: 1 }}>{t.label}</span>
                   <span style={{ fontSize: 9, color: t.color, letterSpacing: 1 }}>{t.stars}</span>
                 </button>
               );
@@ -199,7 +199,7 @@ export default function FilterDrawer({
         {/* Network */}
         {networksPresent && networksPresent.length > 0 && (
           <div>
-            <GroupLabel>Network · elite allocators</GroupLabel>
+            <GroupLabel>Сеть · элитные круги</GroupLabel>
             <ChipWrap>
               {networksPresent.map(k => {
                 const v = NETWORK_META[k] || { label: k, color: '#F5B942' };
@@ -215,7 +215,7 @@ export default function FilterDrawer({
 
         {/* Event family */}
         <div>
-          <GroupLabel>Event type · flows</GroupLabel>
+          <GroupLabel>Тип события · потоки</GroupLabel>
           <ChipWrap>
             {Object.entries(FAMILY_META).map(([k, v]) => (
               <Chip key={k} on={families.has(k)} color={v.color} square onClick={() => onToggleFamily(k)}>
@@ -227,7 +227,7 @@ export default function FilterDrawer({
 
         {/* Status */}
         <div>
-          <GroupLabel>Status · flows</GroupLabel>
+          <GroupLabel>Статус · потоки</GroupLabel>
           <ChipWrap>
             {Object.entries(STATUS_META).map(([k, v]) => (
               <Chip key={k} on={statuses.has(k)} color={v.color} title={v.blurb} onClick={() => onToggleStatus(k)}>
@@ -239,45 +239,45 @@ export default function FilterDrawer({
 
         {/* Confidence score (v2 grade) */}
         <div>
-          <GroupLabel>Minimum confidence{confidenceThreshold != null ? ` · engine floor ${confidenceThreshold}` : ''}</GroupLabel>
+          <GroupLabel>Минимальная надёжность{confidenceThreshold != null ? ` · порог движка ${confidenceThreshold}` : ''}</GroupLabel>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <input
               type="range" min={0} max={100} step={5} value={minConfidence || 0}
               onChange={(e) => onMinConfidence(+e.target.value)}
-              style={{ flex: 1, accentColor: '#34D399', height: 3, cursor: 'pointer' }}
+              style={{ flex: 1, accentColor: 'var(--cf-good)', height: 3, cursor: 'pointer' }}
             />
             <span style={{
               fontSize: 11, fontFamily: MONO, fontWeight: 700,
-              color: minConfidence > 0 ? '#34D399' : '#52525b', minWidth: 52, textAlign: 'right',
+              color: minConfidence > 0 ? 'var(--cf-good)' : 'var(--cf-text7)', minWidth: 52, textAlign: 'right',
             }}>
-              {minConfidence > 0 ? `≥ ${minConfidence}` : 'all'}
+              {minConfidence > 0 ? `≥ ${minConfidence}` : 'все'}
             </span>
           </div>
         </div>
 
         {/* Min amount */}
         <div>
-          <GroupLabel>Minimum flow size</GroupLabel>
+          <GroupLabel>Минимальный размер потока</GroupLabel>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <input
               type="range" min={0} max={100} value={amountToSlider(minAmount, maxAmount)}
               onChange={(e) => onMinAmount(sliderToAmount(+e.target.value, maxAmount))}
-              style={{ flex: 1, accentColor: '#38BDF8', height: 3, cursor: 'pointer' }}
+              style={{ flex: 1, accentColor: 'var(--cf-accent)', height: 3, cursor: 'pointer' }}
             />
             <span style={{
               fontSize: 11, fontFamily: MONO, fontWeight: 700,
-              color: minAmount > 0 ? '#38BDF8' : '#52525b',
+              color: minAmount > 0 ? 'var(--cf-accent)' : 'var(--cf-text7)',
               minWidth: 52, textAlign: 'right',
             }}>
-              {minAmount > 0 ? `≥ ${fmtUSD(minAmount)}` : 'all'}
+              {minAmount > 0 ? `≥ ${fmtUSD(minAmount)}` : 'все'}
             </span>
           </div>
         </div>
 
-        <div style={{ fontSize: 9, color: '#5b5b64', fontFamily: MONO, lineHeight: 1.6, borderTop: '1px solid #1c1d23', paddingTop: 10 }}>
-          Sector, class and tier pick <span style={{ color: '#a1a1aa' }}>entities</span> — their counterparties stay visible so you can follow the money.
-          Event, status, recency, confidence and min size pick <span style={{ color: '#a1a1aa' }}>flows</span>.
-          Undisclosed-amount flows drop out once a minimum is set.
+        <div style={{ fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, lineHeight: 1.6, borderTop: '1px solid var(--cf-border-soft)', paddingTop: 10 }}>
+          Сектор, класс и уровень выбирают <span style={{ color: 'var(--cf-text3)' }}>объекты</span> — их контрагенты остаются видны, чтобы можно было проследить деньги.
+          Событие, статус, свежесть, надёжность и минимальная сумма выбирают <span style={{ color: 'var(--cf-text3)' }}>потоки</span>.
+          Потоки без раскрытой суммы выпадают, как только задан минимум.
         </div>
       </div>
     </div>
@@ -287,7 +287,7 @@ export default function FilterDrawer({
 function GroupLabel({ children }) {
   return (
     <div style={{
-      fontSize: 8.5, color: '#5b5b64', fontFamily: MONO, fontWeight: 700,
+      fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
       textTransform: 'uppercase', letterSpacing: '0.13em', marginBottom: 7,
     }}>{children}</div>
   );
@@ -303,16 +303,16 @@ function Chip({ children, on, color, title, square, onClick }) {
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 5,
         padding: '4px 9px',
-        background: on ? hexA(color, 0.13) : '#12131a',
-        border: `1px solid ${on ? hexA(color, 0.55) : '#22232b'}`,
+        background: on ? hexA(color, 0.13) : 'var(--cf-surface2)',
+        border: `1px solid ${on ? hexA(color, 0.55) : 'var(--cf-border)'}`,
         borderRadius: 20,
-        color: on ? color : '#8b8b93',
+        color: on ? color : 'var(--cf-text4)',
         fontSize: 10, fontFamily: MONO, fontWeight: 600,
         cursor: 'pointer', whiteSpace: 'nowrap',
         transition: 'all 130ms',
       }}
-      onMouseEnter={(e) => { if (!on) { e.currentTarget.style.borderColor = '#3f3f46'; e.currentTarget.style.color = '#d4d4d8'; } }}
-      onMouseLeave={(e) => { if (!on) { e.currentTarget.style.borderColor = '#22232b'; e.currentTarget.style.color = '#8b8b93'; } }}>
+      onMouseEnter={(e) => { if (!on) { e.currentTarget.style.borderColor = 'var(--cf-text9)'; e.currentTarget.style.color = 'var(--cf-text2)'; } }}
+      onMouseLeave={(e) => { if (!on) { e.currentTarget.style.borderColor = 'var(--cf-border)'; e.currentTarget.style.color = 'var(--cf-text4)'; } }}>
       <span style={{
         width: 6, height: 6, flexShrink: 0,
         borderRadius: square ? 2 : '50%',

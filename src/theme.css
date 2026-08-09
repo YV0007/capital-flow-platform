@@ -74,6 +74,54 @@
   --hp-emerald: #46C29B;
   --hp-rose: #EF6F6F;
   --hp-unlisted: #33312B;
+
+  /* ── Capital Flow Map (--cf-*) ──────────────────────────────────────────
+     The map is a full-screen canvas plus floating panels, so it needs its own
+     surface ramp rather than borrowing the home neutrals. Text steps run
+     0 (brightest/darkest) → 9 (faintest) and mirror the zinc scale the section
+     was built in. The CANVAS cannot read CSS variables — FlowGraph keeps a
+     matching JS copy in capitalflow/canvasTheme.js; change both together. */
+  --cf-canvas: #08090C;          /* map background */
+  --cf-surface0: #0b0c10;        /* table header / cycle summary */
+  --cf-surface1: #0F0F13;        /* cards, rows */
+  --cf-surface2: #141418;        /* chips, buttons */
+  --cf-surface3: #17171c;        /* raised chip / selected row */
+  --cf-hover: #181920;
+  --cf-panel: rgba(10,10,12,0.985);   /* side panels */
+  --cf-popover: #101116;
+  --cf-topbar: rgba(18,19,24,0.9);
+  --cf-border: #26262c;
+  --cf-border-soft: #1e1e23;
+  --cf-border-hair: #17181d;
+  --cf-border-strong: #3f3f46;
+  --cf-border-dashed: #33343c;
+  --cf-text0: #fafafa;
+  --cf-text1: #e4e4e7;
+  --cf-text2: #d4d4d8;
+  --cf-text3: #a1a1aa;
+  --cf-text4: #8b8b95;
+  --cf-text5: #71717a;
+  --cf-text6: #6b6b74;
+  --cf-text7: #52525b;
+  --cf-text8: #4a4a53;
+  --cf-text9: #3f3f46;
+  --cf-accent: #38BDF8;
+  --cf-accent-bg: rgba(56,189,248,0.10);
+  --cf-accent-bd: rgba(56,189,248,0.38);
+  --cf-good: #34D399;
+  --cf-warn: #FBBF24;
+  --cf-warn-bg: rgba(251,191,36,0.08);
+  --cf-warn-bd: rgba(251,191,36,0.25);
+  --cf-bad: #F87171;
+  --cf-muted: #94A3B8;
+  --cf-link: #8fb3cf;
+  --cf-link-hover: #3f9bd6;
+  --cf-gold: #C2A36B;
+  --cf-green2: #82B98D;
+  --cf-shadow: rgba(0,0,0,0.9);
+  --cf-shadow-soft: rgba(0,0,0,0.45);
+  --cf-scrim: linear-gradient(180deg, rgba(8,9,12,0.96) 0%, rgba(8,9,12,0.92) 70%, rgba(8,9,12,0) 100%);
+  --cf-scrim-up: linear-gradient(0deg, rgba(8,9,12,0.85) 0%, rgba(8,9,12,0) 100%);
 }
 
 :root[data-theme="light"] {
@@ -132,6 +180,53 @@
   --hp-emerald: #0C8F68;
   --hp-rose: #D23B3B;
   --hp-unlisted: #D9DFE8;
+
+  /* ── Capital Flow Map, light ────────────────────────────────────────────
+     White floating surfaces over the icy page, slate text. The accents are
+     DEEPENED rather than reused: #38BDF8 / #34D399 / #FBBF24 are legible on
+     near-black and vanish on white, so each drops to its dark-on-light twin.
+     Keep in sync with capitalflow/canvasTheme.js. */
+  --cf-canvas: #F4F7FB;
+  --cf-surface0: #FFFFFF;
+  --cf-surface1: #F1F5F9;
+  --cf-surface2: #FFFFFF;
+  --cf-surface3: #E8EEF6;
+  --cf-hover: #EEF2F7;
+  --cf-panel: rgba(255,255,255,0.985);
+  --cf-popover: #FFFFFF;
+  --cf-topbar: rgba(255,255,255,0.92);
+  --cf-border: rgba(15,23,42,0.13);
+  --cf-border-soft: rgba(15,23,42,0.09);
+  --cf-border-hair: rgba(15,23,42,0.06);
+  --cf-border-strong: rgba(15,23,42,0.26);
+  --cf-border-dashed: rgba(15,23,42,0.22);
+  --cf-text0: #0F172A;
+  --cf-text1: #1E293B;
+  --cf-text2: #334155;
+  --cf-text3: #475569;
+  --cf-text4: #566579;
+  --cf-text5: #64748B;
+  --cf-text6: #6B7A8F;
+  --cf-text7: #8C9AAD;
+  --cf-text8: #A3AFC0;
+  --cf-text9: #C3CEDB;
+  --cf-accent: #0284C7;
+  --cf-accent-bg: rgba(2,132,199,0.10);
+  --cf-accent-bd: rgba(2,132,199,0.40);
+  --cf-good: #0C8F68;
+  --cf-warn: #B45309;
+  --cf-warn-bg: rgba(180,83,9,0.09);
+  --cf-warn-bd: rgba(180,83,9,0.30);
+  --cf-bad: #D23B3B;
+  --cf-muted: #64748B;
+  --cf-link: #1F6FB0;
+  --cf-link-hover: #0284C7;
+  --cf-gold: #8A6D2F;
+  --cf-green2: #2F7D53;
+  --cf-shadow: rgba(15,23,42,0.18);
+  --cf-shadow-soft: rgba(15,23,42,0.10);
+  --cf-scrim: linear-gradient(180deg, rgba(244,247,251,0.96) 0%, rgba(244,247,251,0.92) 70%, rgba(244,247,251,0) 100%);
+  --cf-scrim-up: linear-gradient(0deg, rgba(244,247,251,0.88) 0%, rgba(244,247,251,0) 100%);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

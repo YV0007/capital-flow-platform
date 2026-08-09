@@ -111,7 +111,8 @@ export function buildSectorReport(sectorKey, { nodes, links, nodeById, generated
   // Who funds it — by allocator class, then by name.
   const byClass = groupBy(flows, f => nodeById.get(f.sourceId)?.cls).map(g => ({
     ...g,
-    label: CLASS_META[g.key]?.label || g.key,
+    label: CLASS_META[g.key]?.zone || CLASS_META[g.key]?.label || g.key,
+    money: CLASS_META[g.key]?.money || null,
     color: CLASS_META[g.key]?.color || '#71717a',
     blurb: CLASS_META[g.key]?.blurb || null,
     allocators: new Set(g.flows.map(f => f.sourceId)).size,
@@ -252,7 +253,7 @@ export function buildClassReport(classKey, { nodes, links, nodeById, generated }
   return {
     kind: 'class',
     key: classKey,
-    label: meta.label || classKey,
+    label: meta.zone || meta.label || classKey,
     color: meta.color || '#71717a',
     blurb: meta.blurb || null,
     head,
@@ -281,11 +282,20 @@ export function buildClassReport(classKey, { nodes, links, nodeById, generated }
 const pct = (x) => `${Math.round(x * 100)}%`;
 const usd = (v) => {
   const a = Math.abs(v);
-  if (a >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
-  if (a >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (a >= 1e6) return `$${(v / 1e6).toFixed(0)}M`;
+  if (a >= 1e12) return `$${(v / 1e12).toFixed(2)} трлн`;
+  if (a >= 1e9) return `$${(v / 1e9).toFixed(1)} млрд`;
+  if (a >= 1e6) return `$${(v / 1e6).toFixed(0)} млн`;
   return `$${Math.round(v)}`;
 };
+// Russian plural: ru(3, 'сделка','сделки','сделок') → 'сделки'.
+const ru = (n, one, few, many) => {
+  const a = Math.abs(Math.round(n)), d = a % 10, dd = a % 100;
+  if (dd >= 11 && dd <= 14) return many;
+  if (d === 1) return one;
+  if (d >= 2 && d <= 4) return few;
+  return many;
+};
+const deals = (n) => `${n} ${ru(n, 'сделка', 'сделки', 'сделок')}`;
 
 function composeSectorRead({ label, head, byClass, byAllocator, mom, vehicles, sub, newEntrants }) {
   const out = [];
@@ -294,50 +304,50 @@ function composeSectorRead({ label, head, byClass, byAllocator, mom, vehicles, s
     const dealShare = d.deals / head.deals;
     const capShare = head.capital ? d.capital / head.capital : null;
     out.push(
-      `${d.label} money dominates ${label}: ${d.deals} of ${head.deals} confirmed deals (${pct(dealShare)})` +
-      (capShare != null ? ` and ${pct(capShare)} of the disclosed dollars` : '') + '.'
+      `В секторе «${label}» доминируют ${d.money || d.label.toLowerCase()}: ${d.deals} из ${head.deals} подтверждённых сделок (${pct(dealShare)})` +
+      (capShare != null ? ` и ${pct(capShare)} раскрытых денег` : '') + '.'
     );
   }
   if (byAllocator.length >= 3 && head.capital) {
     const t3 = byAllocator.slice(0, 3).reduce((s, a) => s + a.capital, 0) / head.capital;
-    out.push(`It is concentrated — the top three allocators account for ${pct(t3)} of the capital.`);
+    out.push(`Сектор концентрированный — на тройку крупнейших инвесторов приходится ${pct(t3)} капитала.`);
   }
   if (mom && (mom.recentDeals || mom.priorDeals)) {
-    const dir = mom.recentDeals > mom.priorDeals ? 'accelerating'
-      : mom.recentDeals < mom.priorDeals ? 'cooling' : 'flat';
+    const dir = mom.recentDeals > mom.priorDeals ? 'растёт'
+      : mom.recentDeals < mom.priorDeals ? 'остывает' : 'держится ровно';
     out.push(
-      `Activity is ${dir}: ${mom.recentDeals} deals worth ${usd(mom.recentCapital)} in the last ${mom.windowDays} days, ` +
-      `against ${mom.priorDeals} worth ${usd(mom.priorCapital)} in the ${mom.windowDays} before.`
+      `Активность ${dir}: ${deals(mom.recentDeals)} на ${usd(mom.recentCapital)} за последние ${mom.windowDays} дней ` +
+      `против ${mom.priorDeals} на ${usd(mom.priorCapital)} в предыдущие ${mom.windowDays}.`
     );
   }
   const fundRow = vehicles.find(v => v.key === 'fund');
   const totalRecipients = vehicles.reduce((s, v) => s + v.count, 0);
   if (fundRow && totalRecipients && fundRow.count / totalRecipients >= 0.35) {
     out.push(
-      `Read the headline carefully: ${fundRow.count} of ${totalRecipients} recipients here are fund or SPV vehicles, ` +
-      `not operating companies — that is capital raised to invest, not capital reaching a business.`
+      `Читайте заголовок внимательно: ${fundRow.count} из ${totalRecipients} получателей здесь — фонды и SPV, ` +
+      `а не операционные компании. Это деньги, собранные чтобы инвестировать, а не деньги, дошедшие до бизнеса.`
     );
   }
   const topSub = sub.rows.find(r => r.key);
   if (topSub && sub.coverage.classified) {
     out.push(
-      `Within the operating companies, the heaviest sub-trend is ${topSub.label.toLowerCase()} ` +
-      `(${topSub.count} ${topSub.count === 1 ? 'company' : 'companies'}${topSub.capital ? `, ${usd(topSub.capital)}` : ''}) — ` +
-      `derived from ${sub.coverage.classified} of ${sub.coverage.total} companies that carry a description in the payload.`
+      `Среди операционных компаний самый заметный подсектор — «${topSub.label}» ` +
+      `(${topSub.count} ${ru(topSub.count, 'компания', 'компании', 'компаний')}${topSub.capital ? `, ${usd(topSub.capital)}` : ''}). ` +
+      `Определено по описаниям ${sub.coverage.classified} из ${sub.coverage.total} компаний в данных.`
     );
   }
   if (newEntrants.length) {
     out.push(
-      `Allocators with no tracked deal here before this window: ` +
+      `Инвесторы, у которых раньше не было отслеженных сделок в этом секторе: ` +
       `${newEntrants.slice(0, 4).map(n => n.name).join(', ')}` +
-      `${newEntrants.length > 4 ? ` and ${newEntrants.length - 4} more` : ''}.`
+      `${newEntrants.length > 4 ? ` и ещё ${newEntrants.length - 4}` : ''}.`
     );
   }
   if (head.candidateDeals) {
     out.push(
-      `${head.candidateDeals} further ${head.candidateDeals === 1 ? 'flow is' : 'flows are'} still unconfirmed` +
-      (head.candidateCapital ? ` (${usd(head.candidateCapital)} claimed)` : '') +
-      ' and are excluded from every number above.'
+      `Ещё ${head.candidateDeals} ${ru(head.candidateDeals, 'поток', 'потока', 'потоков')} не ${head.candidateDeals === 1 ? 'подтверждён' : 'подтверждены'}` +
+      (head.candidateCapital ? ` (заявлено ${usd(head.candidateCapital)})` : '') +
+      ' — они не входят ни в одну цифру выше.'
     );
   }
   return out;
@@ -348,41 +358,41 @@ function composeClassRead({ label, head, bySector, byAllocator, mom, topShare, t
   if (bySector.length && head.capital) {
     const d = bySector[0];
     out.push(
-      `${label} capital concentrates in ${d.label}: ${usd(d.capital)} across ${d.deals} ` +
-      `${d.deals === 1 ? 'deal' : 'deals'} (${pct(d.capital / head.capital)} of everything this class deployed).`
+      `Капитал класса «${label}» концентрируется в секторе «${d.label}»: ${usd(d.capital)} в ${d.deals} ` +
+      `${ru(d.deals, 'сделке', 'сделках', 'сделках')} — ${pct(d.capital / head.capital)} всего, что вложил класс.`
     );
     if (bySector.length > 1) {
-      out.push(`Next: ${bySector.slice(1, 4).map(s => `${s.label} ${usd(s.capital)}`).join(' · ')}.`);
+      out.push(`Следом: ${bySector.slice(1, 4).map(s => `«${s.label}» ${usd(s.capital)}`).join(' · ')}.`);
     }
   }
   if (topShare != null && byAllocator.length) {
     out.push(
-      `${byAllocator[0].node?.name || 'The largest allocator'} alone is ${pct(topShare)} of the class` +
-      (top3Share != null ? `, and the top three are ${pct(top3Share)}` : '') +
-      ` — so "${label}" here is really a handful of balance sheets.`
+      `${byAllocator[0].node?.name || 'Крупнейший инвестор'} в одиночку даёт ${pct(topShare)} класса` +
+      (top3Share != null ? `, а тройка крупнейших — ${pct(top3Share)}` : '') +
+      ` — по сути, «${label}» здесь — это несколько балансов.`
     );
   }
   if (mom && (mom.recentDeals || mom.priorDeals)) {
-    const dir = mom.recentDeals > mom.priorDeals ? 'stepping up'
-      : mom.recentDeals < mom.priorDeals ? 'slowing' : 'holding steady';
+    const dir = mom.recentDeals > mom.priorDeals ? 'набирают темп'
+      : mom.recentDeals < mom.priorDeals ? 'замедляются' : 'держат темп';
     out.push(
-      `They are ${dir}: ${mom.recentDeals} deals worth ${usd(mom.recentCapital)} in the last ${mom.windowDays} days ` +
-      `vs ${mom.priorDeals} worth ${usd(mom.priorCapital)} before that.`
+      `Они ${dir}: ${deals(mom.recentDeals)} на ${usd(mom.recentCapital)} за последние ${mom.windowDays} дней ` +
+      `против ${mom.priorDeals} на ${usd(mom.priorCapital)} ранее.`
     );
   }
   if (newSectors.length) {
     out.push(
-      `Sectors this class had no tracked deal in before this window: ` +
-      `${newSectors.map(sectorLabel).join(', ')} — watch these for follow-on. ` +
-      `(Measured inside the payload's own history, which is short.)`
+      `Секторы, где у класса раньше не было отслеженных сделок: ` +
+      `${newSectors.map(sectorLabel).join(', ')} — следите за продолжением. ` +
+      `(Оценка в пределах короткой истории самих данных.)`
     );
   }
   const fundRow = vehicles.find(v => v.key === 'fund');
   if (fundRow && fundRow.count >= 3) {
-    out.push(`${fundRow.count} of the recipients are the class's own fund/SPV vehicles rather than operating companies.`);
+    out.push(`${fundRow.count} получателей — собственные фонды и SPV этого класса, а не операционные компании.`);
   }
   if (head.undisclosedDeals) {
-    out.push(`${head.undisclosedDeals} confirmed ${head.undisclosedDeals === 1 ? 'deal carries' : 'deals carry'} no disclosed amount, so the dollar figures understate the true activity.`);
+    out.push(`У ${head.undisclosedDeals} подтверждённых ${ru(head.undisclosedDeals, 'сделки', 'сделок', 'сделок')} сумма не раскрыта, поэтому долларовые цифры занижают реальную активность.`);
   }
   return out;
 }

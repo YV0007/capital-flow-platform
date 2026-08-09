@@ -33,15 +33,15 @@ export default function EntityPanel({
   return (
     <aside style={{
       position: 'absolute', top: topInset, right: 0, bottom: 0, width: W, zIndex: 25,
-      background: 'rgba(10,10,12,0.985)',
-      borderLeft: '1px solid #24242a',
+      background: 'var(--cf-panel)',
+      borderLeft: '1px solid var(--cf-border)',
       backdropFilter: 'blur(10px)',
-      boxShadow: '-24px 0 60px -20px rgba(0,0,0,0.9)',
+      boxShadow: '-24px 0 60px -20px var(--cf-shadow)',
       display: 'flex', flexDirection: 'column',
       animation: 'cfmSlide 220ms cubic-bezier(0.2,0.8,0.2,1)',
     }}>
       {/* Header */}
-      <div style={{ padding: '16px 16px 14px', borderBottom: '1px solid #1c1c21', flexShrink: 0 }}>
+      <div style={{ padding: '16px 16px 14px', borderBottom: '1px solid var(--cf-border-soft)', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
           <span style={{
             width: 10, height: 10, borderRadius: '50%', background: node.color,
@@ -49,18 +49,18 @@ export default function EntityPanel({
             boxShadow: `0 0 12px ${node.color}80`,
           }} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 17, fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em', lineHeight: 1.25 }}>
+            <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.25 }}>
               {node.name}
             </div>
-            <div style={{ fontSize: 10, color: '#71717a', fontFamily: MONO, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div style={{ fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               {cls?.label || node.cls}{sec ? ` · ${sec.label}` : ''}
             </div>
           </div>
           {wl && <WatchlistMenu wl={wl} entityId={node.id} />}
           <button onClick={onClose} title="Close panel"
-            style={{ background: 'none', border: 'none', color: '#52525b', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#d4d4d8')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = '#52525b')}>
+            style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
             <X size={16} />
           </button>
         </div>
@@ -68,8 +68,8 @@ export default function EntityPanel({
         <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
           <span style={{
             display: 'inline-block', padding: '3px 8px',
-            background: '#16161a', border: '1px solid #26262c', borderRadius: 5,
-            fontSize: 9, color: '#a1a1aa', fontFamily: MONO, fontWeight: 600,
+            background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)', borderRadius: 5,
+            fontSize: 9, color: 'var(--cf-text3)', fontFamily: MONO, fontWeight: 600,
             textTransform: 'uppercase', letterSpacing: '0.08em',
           }}>{role}</span>
           {tier && (
@@ -83,8 +83,8 @@ export default function EntityPanel({
           {node.country && (
             <span title={`National capital source — ${node.countryLabel || node.country.toUpperCase()}`} style={{
               display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 8px',
-              background: '#16161a', border: '1px solid #26262c', borderRadius: 5,
-              fontSize: 9, color: '#a1a1aa', fontFamily: MONO, fontWeight: 700,
+              background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)', borderRadius: 5,
+              fontSize: 9, color: 'var(--cf-text3)', fontFamily: MONO, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
             }}>
               <img src={`/flags/${node.country}.png`} alt="" style={{ width: 14, height: 'auto', borderRadius: 2, display: 'block' }} />
@@ -103,16 +103,16 @@ export default function EntityPanel({
           {node.stale && (
             <span title="No activity in 180 days — cooled off, kept in memory." style={{
               display: 'inline-block', padding: '3px 8px',
-              background: '#16161a', border: '1px dashed #33343c', borderRadius: 5,
-              fontSize: 9, color: '#94A3B8', fontFamily: MONO, fontWeight: 700,
+              background: 'var(--cf-surface2)', border: '1px dashed var(--cf-border-dashed)', borderRadius: 5,
+              fontSize: 9, color: 'var(--cf-muted)', fontFamily: MONO, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
             }}>Cooled · 180d idle</span>
           )}
           {node.watchOnly && (
             <span title="Only candidate (unconfirmed) flows so far — kept off the main map by default." style={{
               display: 'inline-block', padding: '3px 8px',
-              background: '#16161a', border: '1px dashed #33343c', borderRadius: 5,
-              fontSize: 9, color: '#71717a', fontFamily: MONO, fontWeight: 600,
+              background: 'var(--cf-surface2)', border: '1px dashed var(--cf-border-dashed)', borderRadius: 5,
+              fontSize: 9, color: 'var(--cf-text5)', fontFamily: MONO, fontWeight: 600,
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
             }}>Watch · unconfirmed</span>
           )}
@@ -132,13 +132,13 @@ export default function EntityPanel({
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
               width: '100%', padding: '9px 12px', marginBottom: 14,
-              background: 'rgba(56,189,248,0.07)', border: '1px solid rgba(56,189,248,0.3)',
-              borderRadius: 9, color: '#38BDF8', fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
+              background: 'var(--cf-accent-bg)', border: '1px solid var(--cf-accent-bd)',
+              borderRadius: 9, color: 'var(--cf-accent)', fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer',
               transition: 'all 130ms',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(56,189,248,0.13)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(56,189,248,0.07)'; }}>
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--cf-accent-bg)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--cf-accent-bg)'; }}>
             Detailed breakdown <ChevronRight size={12} />
           </button>
         )}
@@ -150,27 +150,27 @@ export default function EntityPanel({
             label="Capital"
             value={node.capital > 0 ? fmtUSD(node.capital) : node.degree > 0 ? '—' : '$0'}
             sub={node.capital > 0 ? (isAllocator ? 'deployed' : 'received') : node.degree > 0 ? 'amounts undisclosed' : 'nothing tracked'}
-            color={node.capital > 0 ? (isAllocator ? '#C2A36B' : '#82B98D') : '#71717a'}
+            color={node.capital > 0 ? (isAllocator ? 'var(--cf-gold)' : 'var(--cf-green2)') : 'var(--cf-text5)'}
           />
-          <Stat label="Deals" value={String(node.deals)} sub={`${node.degree} flow${node.degree === 1 ? '' : 's'} tracked`} color="#e4e4e7" />
+          <Stat label="Deals" value={String(node.deals)} sub={`${node.degree} flow${node.degree === 1 ? '' : 's'} tracked`} color="var(--cf-text1)" />
         </div>
 
         {/* Activity window */}
         <div style={{
           display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16,
-          padding: '8px 11px', background: '#0F0F13', border: '1px solid #1e1e23', borderRadius: 9,
+          padding: '8px 11px', background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 9,
           fontSize: 10, fontFamily: MONO,
         }}>
-          <span style={{ color: '#52525b' }}>ACTIVE</span>
-          <span style={{ color: '#a1a1aa' }}>{node.first_seen}</span>
-          <span style={{ color: '#3f3f46' }}>→</span>
-          <span style={{ color: '#a1a1aa' }}>{node.last_activity}</span>
+          <span style={{ color: 'var(--cf-text7)' }}>ACTIVE</span>
+          <span style={{ color: 'var(--cf-text3)' }}>{node.first_seen}</span>
+          <span style={{ color: 'var(--cf-text9)' }}>→</span>
+          <span style={{ color: 'var(--cf-text3)' }}>{node.last_activity}</span>
         </div>
 
         {inbound.length > 0 && (
           <Section title={`Who invests here · ${totalOrNull(inbound, node.totalInflow)}`}
             hint="Click a name to open it. Click the deal icon for the write-up."
-            icon={<ArrowDownLeft size={11} color="#34D399" />}>
+            icon={<ArrowDownLeft size={11} color="var(--cf-good)" />}>
             <FlowList
               flows={inbound} counterpartyKey="sourceId"
               nodeById={nodeById} selectedFlowId={selectedFlowId}
@@ -192,7 +192,7 @@ export default function EntityPanel({
         )}
 
         {inbound.length === 0 && outbound.length === 0 && (
-          <div style={{ fontSize: 11, color: '#52525b', fontFamily: MONO, fontStyle: 'italic' }}>
+          <div style={{ fontSize: 11, color: 'var(--cf-text7)', fontFamily: MONO, fontStyle: 'italic' }}>
             No flows recorded yet for this entity.
           </div>
         )}
@@ -211,10 +211,10 @@ function ProfileBlock({ node }) {
   return (
     <div style={{
       marginBottom: 16, padding: '11px 12px',
-      background: '#0F0F13', border: '1px solid #1e1e23', borderRadius: 10,
+      background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 10,
     }}>
       <div style={{
-        fontSize: 8.5, color: '#6b6b74', fontFamily: MONO, fontWeight: 700,
+        fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 7,
       }}>
         {node.profileType === 'person' ? 'Who this is'
@@ -222,7 +222,7 @@ function ProfileBlock({ node }) {
           : node.profileType === 'fund' ? 'About this fund' : 'About'}
       </div>
 
-      <div style={{ fontSize: 12.5, color: node.description ? '#c4c4cb' : '#6b6b74', lineHeight: 1.6, fontStyle: node.description ? 'normal' : 'italic' }}>
+      <div style={{ fontSize: 12.5, color: node.description ? 'var(--cf-text2)' : 'var(--cf-text6)', lineHeight: 1.6, fontStyle: node.description ? 'normal' : 'italic' }}>
         {node.description || 'No profile on file yet — use search below to look it up.'}
       </div>
 
@@ -237,7 +237,7 @@ function ProfileBlock({ node }) {
           link a URL we hold on file — private offices and stealth companies
           usually have none, and a guessed URL is worse than no URL. */}
       {links.length === 0 && (
-        <div style={{ marginTop: 8, fontSize: 9, color: '#4a4a53', fontFamily: MONO, lineHeight: 1.55 }}>
+        <div style={{ marginTop: 8, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.55 }}>
           {hasProfile
             ? 'No official site on file — private office / no public web presence. We search rather than guess a URL.'
             : 'No reference in the payload for this entity yet — an engine-side coverage gap, not something we fill in by hand.'}
@@ -246,7 +246,7 @@ function ProfileBlock({ node }) {
 
       {/* When the engine researched this entity, stamp the date it did so. */}
       {node.referenceAsOf && (
-        <div style={{ marginTop: 8, fontSize: 9, color: '#4a4a53', fontFamily: MONO }}>
+        <div style={{ marginTop: 8, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO }}>
           Researched by the engine · {node.referenceAsOf}
         </div>
       )}
@@ -270,13 +270,13 @@ function LinkChip({ link }) {
     <a href={link.url} target="_blank" rel="noopener noreferrer" title={link.url}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
-        padding: '5px 10px', background: '#141418',
-        border: '1px solid #26262c', borderRadius: 7,
-        color: '#c4c4cb', fontSize: 10.5, fontFamily: MONO, fontWeight: 600,
+        padding: '5px 10px', background: 'var(--cf-surface2)',
+        border: '1px solid var(--cf-border)', borderRadius: 7,
+        color: 'var(--cf-text2)', fontSize: 10.5, fontFamily: MONO, fontWeight: 600,
         textDecoration: 'none', cursor: 'pointer', maxWidth: '100%',
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#3f9bd6'; e.currentTarget.style.color = '#e4e4e7'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#26262c'; e.currentTarget.style.color = '#c4c4cb'; }}>
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--cf-link-hover)'; e.currentTarget.style.color = 'var(--cf-text1)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--cf-border)'; e.currentTarget.style.color = 'var(--cf-text2)'; }}>
       <Icon size={12} style={{ flexShrink: 0, opacity: 0.85 }} />
       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
       {link.kind !== 'search' && <ExternalLink size={10} style={{ flexShrink: 0, opacity: 0.5 }} />}
@@ -302,13 +302,13 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
             title={cp ? `Open ${cp.name}` : ''}
             style={{
               position: 'relative', padding: '8px 10px', borderRadius: 8,
-              background: on ? '#17171c' : '#0F0F13',
-              border: `1px solid ${on ? f.color + '66' : '#1e1e23'}`,
+              background: on ? 'var(--cf-surface3)' : 'var(--cf-surface1)',
+              border: `1px solid ${on ? f.color + '66' : 'var(--cf-border-soft)'}`,
               cursor: cp ? 'pointer' : 'default', overflow: 'hidden',
               transition: 'border-color 130ms, background 130ms',
             }}
-            onMouseEnter={(e) => { if (!on) e.currentTarget.style.borderColor = '#33333a'; }}
-            onMouseLeave={(e) => { if (!on) e.currentTarget.style.borderColor = '#1e1e23'; }}>
+            onMouseEnter={(e) => { if (!on) e.currentTarget.style.borderColor = 'var(--cf-border-strong)'; }}
+            onMouseLeave={(e) => { if (!on) e.currentTarget.style.borderColor = 'var(--cf-border-soft)'; }}>
             {/* share bar */}
             <span style={{
               position: 'absolute', left: 0, top: 0, bottom: 0,
@@ -318,15 +318,15 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
             }} />
             <div style={{ position: 'relative', display: 'flex', alignItems: 'baseline', gap: 6 }}>
               <span style={{
-                fontSize: 12, fontWeight: 600, color: '#e4e4e7',
+                fontSize: 12, fontWeight: 600, color: 'var(--cf-text1)',
                 overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                 minWidth: 0,
               }}>
                 {cp ? cp.name : f[counterpartyKey]}
               </span>
-              <ChevronRight size={11} color="#52525b" style={{ flexShrink: 0, alignSelf: 'center' }} />
+              <ChevronRight size={11} color="var(--cf-text7)" style={{ flexShrink: 0, alignSelf: 'center' }} />
               <span style={{ flex: 1 }} />
-              <span style={{ fontSize: 12, fontWeight: 700, color: f.disclosed ? '#fafafa' : '#71717a', fontFamily: MONO, flexShrink: 0 }}>
+              <span style={{ fontSize: 12, fontWeight: 700, color: f.disclosed ? 'var(--cf-text0)' : 'var(--cf-text5)', fontFamily: MONO, flexShrink: 0 }}>
                 {f.disclosed ? fmtUSD(f.amount) : '—'}
               </span>
             </div>
@@ -336,16 +336,16 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
               marginTop: 5, fontSize: 9.5, fontFamily: MONO,
             }}>
               <span style={{ width: 6, height: 6, borderRadius: 2, background: f.color, flexShrink: 0 }} />
-              <span style={{ color: '#a1a1aa' }}>{f.eventLabel}</span>
-              <span style={{ color: '#3f3f46' }}>·</span>
-              <span style={{ color: '#71717a' }}>{f.date}</span>
+              <span style={{ color: 'var(--cf-text3)' }}>{f.eventLabel}</span>
+              <span style={{ color: 'var(--cf-text9)' }}>·</span>
+              <span style={{ color: 'var(--cf-text5)' }}>{f.date}</span>
               <span style={{ flex: 1 }} />
 
               {/* confidence as a meter, not a code */}
               {f.confidence != null && (
                 <span title={`${band.label} — ${f.confidence}/100. Open the deal card for the full source breakdown.`}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 5, cursor: 'help' }}>
-                  <span style={{ width: 26, height: 3, borderRadius: 2, background: '#232329', overflow: 'hidden' }}>
+                  <span style={{ width: 26, height: 3, borderRadius: 2, background: 'var(--cf-border-soft)', overflow: 'hidden' }}>
                     <span style={{ display: 'block', height: '100%', width: `${f.confidence}%`, background: band.color }} />
                   </span>
                   <span style={{ color: band.color, fontWeight: 700 }}>{f.confidence}</span>
@@ -358,12 +358,12 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
                 style={{
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   width: 20, height: 20, borderRadius: 5, flexShrink: 0,
-                  background: on ? f.color + '22' : '#17171c',
-                  border: `1px solid ${on ? f.color + '66' : '#26262c'}`,
-                  color: on ? f.color : '#6b6b74', cursor: 'pointer', padding: 0,
+                  background: on ? f.color + '22' : 'var(--cf-surface3)',
+                  border: `1px solid ${on ? f.color + '66' : 'var(--cf-border)'}`,
+                  color: on ? f.color : 'var(--cf-text6)', cursor: 'pointer', padding: 0,
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = '#e4e4e7'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = on ? f.color : '#6b6b74'; }}>
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text1)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = on ? f.color : 'var(--cf-text6)'; }}>
                 <FileText size={11} />
               </button>
             </div>
@@ -379,13 +379,13 @@ function Section({ title, icon, hint, children }) {
     <div style={{ marginBottom: 18 }}>
       <div style={{
         display: 'flex', alignItems: 'center', gap: 6, marginBottom: hint ? 4 : 8,
-        fontSize: 9, color: '#6b6b74', fontFamily: MONO, fontWeight: 700,
+        fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.12em',
       }}>
         {icon}{title}
       </div>
       {hint && (
-        <div style={{ fontSize: 9, color: '#4a4a53', fontFamily: MONO, marginBottom: 8, lineHeight: 1.5 }}>
+        <div style={{ fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, marginBottom: 8, lineHeight: 1.5 }}>
           {hint}
         </div>
       )}
@@ -397,16 +397,16 @@ function Section({ title, icon, hint, children }) {
 function Stat({ label, value, sub, color }) {
   return (
     <div style={{
-      padding: '9px 11px', background: '#0F0F13',
-      border: '1px solid #1e1e23', borderRadius: 9,
+      padding: '9px 11px', background: 'var(--cf-surface1)',
+      border: '1px solid var(--cf-border-soft)', borderRadius: 9,
     }}>
-      <div style={{ fontSize: 8.5, color: '#52525b', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+      <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         {label}
       </div>
       <div style={{ fontSize: 17, fontWeight: 700, color, fontFamily: MONO, marginTop: 4, letterSpacing: '-0.01em' }}>
         {value}
       </div>
-      <div style={{ fontSize: 9, color: '#52525b', fontFamily: MONO, marginTop: 2 }}>{sub}</div>
+      <div style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, marginTop: 2 }}>{sub}</div>
     </div>
   );
 }

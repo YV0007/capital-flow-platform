@@ -22,9 +22,9 @@
 // zero inference. Matters because a fund/SPV raising money is not a company
 // raising money, and the two get summed into the same sector total.
 export const VEHICLE_META = {
-  company: { label: 'Operating companies', blurb: 'Real businesses raising capital.', color: '#9D8FD8' },
-  fund:    { label: 'Fund & SPV vehicles', blurb: 'Funds and SPVs raising capital — not operating businesses. Mostly Form D filings.', color: '#C9985F' },
-  project: { label: 'Projects & assets',   blurb: 'Named build-outs, programmes and physical assets rather than companies.', color: '#C99B72' },
+  company: { label: 'Операционные компании', blurb: 'Реальный бизнес, привлекающий капитал.', color: '#9D8FD8' },
+  fund:    { label: 'Фонды и SPV', blurb: 'Фонды и SPV, привлекающие деньги, чтобы инвестировать дальше, — не операционный бизнес. В основном заявки Form D.', color: '#C9985F' },
+  project: { label: 'Проекты и активы',   blurb: 'Именованные стройки, программы и физические активы, а не компании.', color: '#C99B72' },
 };
 
 export function vehicleOf(node) {
@@ -36,22 +36,22 @@ export function vehicleOf(node) {
 // ── Thematic sub-sectors. Deliberately few and broad: a dozen buckets a
 // reader can hold in their head beat forty that each hold one company.
 export const SUBSECTOR_META = {
-  bio_health:      { label: 'Bio & health',            color: '#5FB0A8' },
-  defense:         { label: 'Defence & national security', color: '#6E7E9A' },
-  security:        { label: 'Cyber security',          color: '#E0857A' },
-  robotics:        { label: 'Robotics & embodiment',   color: '#8088D6' },
-  energy_power:    { label: 'Energy & power',          color: '#49C2AE' },
-  compute_infra:   { label: 'Compute & infrastructure', color: '#5A93DE' },
-  frontier_models: { label: 'Frontier model research', color: '#8E9BE6' },
-  data_platform:   { label: 'Data & analytics platforms', color: '#6F93DE' },
-  devtools:        { label: 'Developer tools',         color: '#7C8FD0' },
-  fintech:         { label: 'Finance & fintech',       color: '#45C0D0' },
-  industrial:      { label: 'Industrial & supply chain', color: '#C9985F' },
-  legal_gov:       { label: 'Legal, policy & government', color: '#93A0BC' },
-  media_creative:  { label: 'Media & creative',        color: '#B98FD0' },
-  science:         { label: 'Science & materials',     color: '#58ABCB' },
-  consumer_edu:    { label: 'Consumer & education',    color: '#9DB6EA' },
-  agents:          { label: 'Agents & automation',     color: '#AEB8EE' },
+  bio_health:      { label: 'Биотех и медицина',       color: '#5FB0A8' },
+  defense:         { label: 'Оборона и нацбезопасность', color: '#6E7E9A' },
+  security:        { label: 'Кибербезопасность',       color: '#E0857A' },
+  robotics:        { label: 'Робототехника',           color: '#8088D6' },
+  energy_power:    { label: 'Энергетика',              color: '#49C2AE' },
+  compute_infra:   { label: 'Вычисления и инфраструктура', color: '#5A93DE' },
+  frontier_models: { label: 'Разработка AI-моделей',   color: '#8E9BE6' },
+  data_platform:   { label: 'Данные и аналитика',      color: '#6F93DE' },
+  devtools:        { label: 'Инструменты разработчиков', color: '#7C8FD0' },
+  fintech:         { label: 'Финансы и финтех',        color: '#45C0D0' },
+  industrial:      { label: 'Промышленность и логистика', color: '#C9985F' },
+  legal_gov:       { label: 'Право, политика, госсектор', color: '#93A0BC' },
+  media_creative:  { label: 'Медиа и креатив',         color: '#B98FD0' },
+  science:         { label: 'Наука и материалы',       color: '#58ABCB' },
+  consumer_edu:    { label: 'Потребительский сектор и образование', color: '#9DB6EA' },
+  agents:          { label: 'AI-агенты и автоматизация', color: '#AEB8EE' },
 };
 
 // Ordered rules — FIRST MATCH WINS, so specific before generic.
@@ -114,7 +114,7 @@ export function subsectorOf(node) {
       if (re.test(name)) return { key, ...SUBSECTOR_META[key], basis: 'name' };
     }
   }
-  return { key: null, label: 'Unclassified', color: '#52525b', basis: null };
+  return { key: null, label: 'Без категории', color: '#52525b', basis: null };
 }
 
 /**

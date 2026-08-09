@@ -41,45 +41,45 @@ import flowNotes from './flowNotes.json';
 // one-line "what this bucket is". `blurb` is rendered in the cluster report so
 // a sector name never has to be guessed at from a slug.
 export const SECTOR_META = {
-  'ai-labs':            { label: 'AI Labs',            color: '#8E9BE6', order: 0,
-                          blurb: 'Frontier model builders — the labs training the largest models.' },
-  'ai-applications':    { label: 'AI Applications',    color: '#9DB6EA', order: 1,
-                          blurb: 'The application layer — vertical and enterprise software built on top of models.' },
-  'ai-data':            { label: 'Data Platforms',     color: '#6F93DE', order: 2,
-                          blurb: 'Data platforms and labelling that feed models — the training-data supply chain.' },
-  'ai-compute':         { label: 'AI Compute',         color: '#5A93DE', order: 3,
-                          blurb: 'GPUs and custom accelerator silicon — the compute the models run on.' },
-  'semiconductors':     { label: 'Semiconductors',     color: '#7079DE', order: 4,
-                          blurb: 'Broader chips and foundry capacity behind the accelerators.' },
-  'fab-equipment':      { label: 'Fab Equipment',      color: '#93A0BC', order: 5,
-                          blurb: 'Litho, etch, deposition and packaging tools — what builds the fabs.' },
-  'cloud-hyperscale':   { label: 'Cloud / Hyperscale', color: '#4FA6E0', order: 6,
-                          blurb: 'Hyperscaler compute capacity sold as cloud.' },
-  'neocloud':           { label: 'Neoclouds',          color: '#45C0D0', order: 7,
-                          blurb: 'GPU landlords — vendor-financed compute rented by the hour.' },
-  'datacenters':        { label: 'Datacenters',        color: '#6389C4', order: 8,
-                          blurb: 'The physical buildings and campuses: land, shells, operators.' },
-  'networking':         { label: 'Networking',         color: '#58ABCB', order: 9,
-                          blurb: 'Optical interconnect and photonics — moving data between chips.' },
-  'power-energy':       { label: 'Power & Energy',     color: '#49C2AE', order: 10,
-                          blurb: 'Turbines, grid gear and cooling — the electricity the buildout needs.' },
-  'nuclear':            { label: 'Nuclear',            color: '#5ACAD4', order: 11,
-                          blurb: 'SMRs, fusion and uranium — the long-dated power bet.' },
-  'robotics':           { label: 'Robotics',           color: '#8088D6', order: 12,
-                          blurb: 'Embodiment — humanoids, autonomy and physical AI.' },
-  'defense-tech':       { label: 'Defense Tech',       color: '#6E7E9A', order: 13,
-                          blurb: 'Defence outside the prime-contractor route.' },
+  'ai-labs':            { label: 'AI-лаборатории',     color: '#8E9BE6', order: 0,
+                          blurb: 'Разработчики передовых моделей — лаборатории, обучающие крупнейшие модели.' },
+  'ai-applications':    { label: 'AI-приложения',      color: '#9DB6EA', order: 1,
+                          blurb: 'Прикладной слой — отраслевой и корпоративный софт, построенный поверх моделей.' },
+  'ai-data':            { label: 'Платформы данных',   color: '#6F93DE', order: 2,
+                          blurb: 'Платформы данных и разметка, которые кормят модели, — цепочка поставки обучающих данных.' },
+  'ai-compute':         { label: 'AI-вычисления',      color: '#5A93DE', order: 3,
+                          blurb: 'GPU и специализированные ускорители — вычисления, на которых работают модели.' },
+  'semiconductors':     { label: 'Полупроводники',     color: '#7079DE', order: 4,
+                          blurb: 'Чипы в широком смысле и мощности контрактных фабрик за спиной ускорителей.' },
+  'fab-equipment':      { label: 'Оборудование для чипов', color: '#93A0BC', order: 5,
+                          blurb: 'Литография, травление, напыление и корпусирование — то, чем строят фабрики.' },
+  'cloud-hyperscale':   { label: 'Облака',             color: '#4FA6E0', order: 6,
+                          blurb: 'Вычислительные мощности гиперскейлеров, продаваемые как облако.' },
+  'neocloud':           { label: 'GPU-облака',         color: '#45C0D0', order: 7,
+                          blurb: '«Арендодатели GPU» — вычисления в аренду по часам, часто на деньги вендоров.' },
+  'datacenters':        { label: 'Дата-центры',        color: '#6389C4', order: 8,
+                          blurb: 'Физические здания и кампусы: земля, корпуса, операторы.' },
+  'networking':         { label: 'Сети',               color: '#58ABCB', order: 9,
+                          blurb: 'Оптические соединения и фотоника — перенос данных между чипами.' },
+  'power-energy':       { label: 'Энергетика',         color: '#49C2AE', order: 10,
+                          blurb: 'Турбины, сетевое оборудование и охлаждение — электричество для всей стройки.' },
+  'nuclear':            { label: 'Атомная энергетика', color: '#5ACAD4', order: 11,
+                          blurb: 'Малые реакторы, термояд и уран — длинная ставка на энергию.' },
+  'robotics':           { label: 'Робототехника',      color: '#8088D6', order: 12,
+                          blurb: 'AI в физическом мире — гуманоиды, автономность, роботы.' },
+  'defense-tech':       { label: 'Оборонные технологии', color: '#6E7E9A', order: 13,
+                          blurb: 'Оборонка в обход традиционных генподрядчиков.' },
   // ── Outside the AI buildout. Sovereigns and alt managers allocate here too
   // and it is real capital, so it is tracked — held in quieter slate tones so
   // the ring still reads as "AI stack first".
-  'gaming':             { label: 'Gaming',             color: '#8A8FA6', order: 14,
-                          blurb: 'Games and interactive entertainment. Outside the AI buildout.' },
-  'ev-automotive':      { label: 'Electric Vehicles',  color: '#7F93A8', order: 15,
-                          blurb: 'EV makers and automotive. Outside the AI buildout.' },
-  'private-credit':     { label: 'Private Credit',     color: '#8F98A8', order: 16,
-                          blurb: 'Direct lending and credit platforms. Outside the AI buildout.' },
-  'diversified-pe':     { label: 'Private Equity',     color: '#98A0AE', order: 17,
-                          blurb: 'General private-equity and strategic stakes with no single sector. Outside the AI buildout.' },
+  'gaming':             { label: 'Игры',               color: '#8A8FA6', order: 14,
+                          blurb: 'Игры и интерактивные развлечения. Вне AI-тематики.' },
+  'ev-automotive':      { label: 'Электромобили',      color: '#7F93A8', order: 15,
+                          blurb: 'Производители электромобилей и автопром. Вне AI-тематики.' },
+  'private-credit':     { label: 'Частный кредит',     color: '#8F98A8', order: 16,
+                          blurb: 'Прямое кредитование и кредитные платформы. Вне AI-тематики.' },
+  'diversified-pe':     { label: 'Private equity',     color: '#98A0AE', order: 17,
+                          blurb: 'Классический private equity и стратегические доли без единого сектора. Вне AI-тематики.' },
 };
 
 /**
@@ -88,7 +88,7 @@ export const SECTOR_META = {
  * "Space Infrastructure", never "SPACE-INFRASTRUCTURE".
  */
 export function sectorLabel(key) {
-  if (!key) return 'Unsectored';
+  if (!key) return 'Без сектора';
   const m = SECTOR_META[key];
   if (m) return m.label;
   return String(key)
@@ -102,98 +102,108 @@ export function sectorLabel(key) {
 // filter. `side` = which band the node lives in (source vs sink).
 export const CLASS_META = {
   // allocators (deploy) — cool monochromatic family
-  corporate:    { label: 'Corporate',        color: '#5AA9CF', shape: 'capsule', side: 'allocator',
-                  blurb: 'Operating companies investing off their own balance sheet — strategic, not financial-return-first.' },
-  vc:           { label: 'Venture',          color: '#8E9BE6', shape: 'capsule', side: 'allocator',
-                  blurb: 'Venture and growth funds deploying LP money into private rounds.' },
-  alt_manager:  { label: 'Alt Manager',      color: '#93A0BC', shape: 'capsule', side: 'allocator',
-                  blurb: 'Private-equity, infrastructure and credit managers — the biggest single tickets, mostly into hard assets.' },
-  sovereign:    { label: 'Sovereign',        color: '#49C2AE', shape: 'capsule', side: 'allocator',
-                  blurb: 'State funds and government programmes. Long-horizon, policy-driven, price-insensitive.' },
-  individual:   { label: 'Individual',       color: '#9A8FD2', shape: 'capsule', side: 'allocator',
-                  blurb: 'Named people writing personal cheques — small tickets, high signal value.' },
+  corporate:    { label: 'Корпорация',       zone: 'Корпорации', money: 'корпоративные деньги',
+                  color: '#5AA9CF', shape: 'capsule', side: 'allocator',
+                  blurb: 'Операционные компании, инвестирующие с собственного баланса, — стратегия важнее финансовой доходности.' },
+  vc:           { label: 'Венчурный фонд',   zone: 'Венчурные фонды', money: 'венчурные деньги',
+                  color: '#8E9BE6', shape: 'capsule', side: 'allocator',
+                  blurb: 'Венчурные фонды и фонды роста, вкладывающие деньги LP в частные раунды.' },
+  alt_manager:  { label: 'Управляющий активами', zone: 'Управляющие активами', money: 'деньги управляющих активами',
+                  color: '#93A0BC', shape: 'capsule', side: 'allocator',
+                  blurb: 'Private-equity, инфраструктурные и кредитные управляющие — самые крупные разовые чеки, в основном в реальные активы.' },
+  sovereign:    { label: 'Госфонд',          zone: 'Госфонды', money: 'государственные деньги',
+                  color: '#49C2AE', shape: 'capsule', side: 'allocator',
+                  blurb: 'Государственные фонды и программы. Длинный горизонт, политические мотивы, нечувствительность к цене.' },
+  individual:   { label: 'Частное лицо',     zone: 'Частные лица', money: 'личные деньги',
+                  color: '#9A8FD2', shape: 'capsule', side: 'allocator',
+                  blurb: 'Конкретные люди, инвестирующие лично, — чеки небольшие, но сигнал сильный.' },
   // targets (receive)
-  private:      { label: 'Private co.',      color: '#9D8FD8', shape: 'company', side: 'target',
-                  blurb: 'Operating companies still private.' },
-  public:       { label: 'Public co.',       color: '#62B5CC', shape: 'company', side: 'target',
-                  blurb: 'Listed companies — the tradeable read-through.' },
-  fund:         { label: 'Fund',             color: '#C9985F', shape: 'capsule', side: 'target',
-                  blurb: 'Fund and SPV vehicles raising capital, not operating businesses.' },
-  project:      { label: 'Project',          color: '#C99B72', shape: 'asset',   side: 'target',
-                  blurb: 'Named build-outs and programmes rather than companies.' },
-  asset:        { label: 'Asset',            color: '#98A2AE', shape: 'asset',   side: 'target',
-                  blurb: 'Physical assets changing hands.' },
+  private:      { label: 'Частная компания', zone: 'Частные компании',
+                  color: '#9D8FD8', shape: 'company', side: 'target',
+                  blurb: 'Операционные компании, пока не вышедшие на биржу.' },
+  public:       { label: 'Публичная компания', zone: 'Публичные компании',
+                  color: '#62B5CC', shape: 'company', side: 'target',
+                  blurb: 'Компании на бирже — вывод, который можно отыграть покупкой акций.' },
+  fund:         { label: 'Фонд',             zone: 'Фонды',
+                  color: '#C9985F', shape: 'capsule', side: 'target',
+                  blurb: 'Фонды и SPV, привлекающие капитал, — не операционный бизнес.' },
+  project:      { label: 'Проект',           zone: 'Проекты',
+                  color: '#C99B72', shape: 'asset',   side: 'target',
+                  blurb: 'Именованные стройки и программы, а не компании.' },
+  asset:        { label: 'Актив',            zone: 'Активы',
+                  color: '#98A2AE', shape: 'asset',   side: 'target',
+                  blurb: 'Физические активы, меняющие владельца.' },
 };
 
 // ── Event type → edge family + colour. One colour per family; drives edge
 // colour, the legend, and the event-type filter.
 export const EVENT_TYPE_META = {
-  equity:               { label: 'Equity',            family: 'equity',      color: '#7C8FD0' },
-  minority_stake:       { label: 'Minority stake',    family: 'equity',      color: '#7C8FD0' },
-  funding_round:        { label: 'Funding round',     family: 'equity',      color: '#7C8FD0' },
-  corporate_investment: { label: 'Corp. investment',  family: 'equity',      color: '#7C8FD0' },
-  follow_on:            { label: 'Follow-on',          family: 'equity',      color: '#7C8FD0' },
-  project_finance:      { label: 'Project finance',   family: 'debt',        color: '#8496B4' },
-  acquisition:          { label: 'Acquisition',       family: 'acquisition', color: '#9A88C0' },
-  fund_launch:          { label: 'Fund launch',       family: 'fund',        color: '#5FB0A8' },
+  equity:               { label: 'Доля',              family: 'equity',      color: '#7C8FD0' },
+  minority_stake:       { label: 'Миноритарная доля', family: 'equity',      color: '#7C8FD0' },
+  funding_round:        { label: 'Раунд',             family: 'equity',      color: '#7C8FD0' },
+  corporate_investment: { label: 'Корп. инвестиция',  family: 'equity',      color: '#7C8FD0' },
+  follow_on:            { label: 'Повторный чек',     family: 'equity',      color: '#7C8FD0' },
+  project_finance:      { label: 'Проектное финансирование', family: 'debt',        color: '#8496B4' },
+  acquisition:          { label: 'Поглощение',        family: 'acquisition', color: '#9A88C0' },
+  fund_launch:          { label: 'Запуск фонда',      family: 'fund',        color: '#5FB0A8' },
   spv:                  { label: 'SPV',               family: 'fund',        color: '#5FB0A8' },
-  grant:                { label: 'Grant',             family: 'grant',       color: '#8391A8' },
-  sovereign_investment: { label: 'Sovereign invest.', family: 'sovereign',   color: '#6C9ACB' },
+  grant:                { label: 'Грант',             family: 'grant',       color: '#8391A8' },
+  sovereign_investment: { label: 'Госинвестиция',     family: 'sovereign',   color: '#6C9ACB' },
 };
 
 // The distinct families, for a compact legend (colour is shared within a family).
 export const FAMILY_META = {
-  equity:      { label: 'Equity / rounds',    color: '#7C8FD0' },
-  debt:        { label: 'Project finance',    color: '#8496B4' },
-  acquisition: { label: 'Acquisition',        color: '#9A88C0' },
-  fund:        { label: 'Fund / SPV',         color: '#5FB0A8' },
-  grant:       { label: 'Grant',              color: '#8391A8' },
-  sovereign:   { label: 'Sovereign',          color: '#6C9ACB' },
+  equity:      { label: 'Доли и раунды',      color: '#7C8FD0' },
+  debt:        { label: 'Проектное финансирование', color: '#8496B4' },
+  acquisition: { label: 'Поглощения',         color: '#9A88C0' },
+  fund:        { label: 'Фонды и SPV',        color: '#5FB0A8' },
+  grant:       { label: 'Гранты',             color: '#8391A8' },
+  sovereign:   { label: 'Госкапитал',         color: '#6C9ACB' },
 };
 
 // ── Confidence — the engine's `status`. Drives edge dashing + the chip.
 // verified = Tier-1 confirmed (solid, strongest) · verified_alpha = strong,
 // no primary source yet (short dash) · candidate = a lead (long dash).
 export const STATUS_META = {
-  verified:       { label: 'Verified',       short: 'VERIFIED', color: '#34D399', dash: null,     blurb: 'Tier-1 confirmed against a primary source.' },
-  verified_alpha: { label: 'Verified α',     short: 'ALPHA',    color: '#FBBF24', dash: [7, 4],   blurb: 'Strong, but no primary source confirmed yet.' },
-  candidate:      { label: 'Candidate',      short: 'CANDIDATE',color: '#94A3B8', dash: [2, 5],   blurb: 'An unconfirmed lead. Kept off the main map by default.' },
+  verified:       { label: 'Подтверждено',   short: 'ПОДТВ.',   color: '#34D399', dash: null,     blurb: 'Подтверждено первоисточником (уровень 1).' },
+  verified_alpha: { label: 'Подтверждено α', short: 'АЛЬФА',    color: '#FBBF24', dash: [7, 4],   blurb: 'Сильный сигнал, но первоисточник его пока не подтвердил.' },
+  candidate:      { label: 'Кандидат',       short: 'КАНДИДАТ', color: '#94A3B8', dash: [2, 5],   blurb: 'Неподтверждённая наводка. По умолчанию скрыта с основной карты.' },
 };
 
 // ── Allocator tier — importance weighting from the engine.
 export const TIER_META = {
-  core:  { short: 'CORE',  stars: '★★★★', label: 'Core allocator', color: '#FDE047',
-           blurb: 'A defining node of its network — the deepest-conviction repeat allocators.' },
-  key:   { short: 'KEY',   stars: '★★★',  label: 'Key allocator', color: '#FBBF24',
-           blurb: 'Decides where billions go. Strongest predictor of where capital moves next.' },
-  watch: { short: 'WATCH', stars: '★★',   label: 'Watchlist',     color: '#C084FC',
-           blurb: 'On the tracked universe; a secondary-weight allocator.' },
+  core:  { short: 'ЯДРО',  stars: '★★★★', label: 'Основной инвестор', color: '#FDE047',
+           blurb: 'Определяющий узел своей сети — инвесторы с самой глубокой убеждённостью, ставящие снова и снова.' },
+  key:   { short: 'КЛЮЧ',  stars: '★★★',  label: 'Ключевой инвестор', color: '#FBBF24',
+           blurb: 'Решает, куда пойдут миллиарды. Лучший предиктор того, куда капитал двинется дальше.' },
+  watch: { short: 'НАБЛ.', stars: '★★',   label: 'Под наблюдением', color: '#C084FC',
+           blurb: 'В отслеживаемой вселенной; инвестор второго эшелона.' },
 };
 
 // Source-tier (1..5) of a flow — 1 = SEC/official filing.
 export const SOURCE_TIER_LABEL = {
-  1: 'Tier 1 · SEC / official',
-  2: 'Tier 2 · company PR',
-  3: 'Tier 3 · reputable press',
-  4: 'Tier 4 · secondary press',
-  5: 'Tier 5 · single source',
+  1: 'Уровень 1 · SEC / официальный документ',
+  2: 'Уровень 2 · пресс-релиз компании',
+  3: 'Уровень 3 · авторитетная пресса',
+  4: 'Уровень 4 · вторичная пресса',
+  5: 'Уровень 5 · единственный источник',
 };
 
 // ── Confidence grade (Admiralty-style): letter = source reliability, digit =
 // information credibility. Used for tooltips + the legend key.
 export const GRADE_LETTER = {
-  A: 'Primary / official source (SEC, IR, gov)',
-  B: 'Top data platform',
-  C: 'Quality press',
-  D: 'Specialist / analyst',
-  E: 'Social / rumor',
+  A: 'Первоисточник (SEC, IR, госорганы)',
+  B: 'Ведущая платформа данных',
+  C: 'Качественная пресса',
+  D: 'Отраслевой аналитик',
+  E: 'Соцсети / слухи',
 };
 export const GRADE_DIGIT = {
-  1: 'Confirmed by a primary source',
-  2: 'Two+ independent sources agree',
-  3: 'Single credible source',
-  4: 'Uncorroborated',
-  5: 'Doubtful',
+  1: 'Подтверждено первоисточником',
+  2: 'Сходятся два и более независимых источника',
+  3: 'Один надёжный источник',
+  4: 'Без подтверждения',
+  5: 'Сомнительно',
 };
 export function gradeBlurb(grade) {
   if (!grade || grade.length < 2) return '';
@@ -203,11 +213,11 @@ export function gradeBlurb(grade) {
 // Confidence band — plain-English label for the 0-100 score, so a number is
 // never shown on its own.
 export function confidenceBand(c) {
-  if (c == null) return { label: 'Not scored', color: '#94A3B8' };
-  if (c >= 85) return { label: 'High confidence', color: '#34D399' };
-  if (c >= 60) return { label: 'Solid confidence', color: '#FBBF24' };
-  if (c >= 40) return { label: 'Thin confidence', color: '#94A3B8' };
-  return { label: 'Weak confidence', color: '#8b8b95' };
+  if (c == null) return { label: 'Не оценено', color: '#94A3B8' };
+  if (c >= 85) return { label: 'Высокая надёжность', color: '#34D399' };
+  if (c >= 60) return { label: 'Хорошая надёжность', color: '#FBBF24' };
+  if (c >= 40) return { label: 'Слабая надёжность', color: '#94A3B8' };
+  return { label: 'Низкая надёжность', color: '#8b8b95' };
 }
 
 // ── Deal context ────────────────────────────────────────────────────────
@@ -230,26 +240,25 @@ export function composeRead(flow, srcNode, tgtNode) {
   const et = EVENT_TYPE_META[flow.event_type];
   const sec = flow.sector ? SECTOR_META[flow.sector] : null;
   const what = tgtNode?.description ? ` ${tgtNode.description}` : '';
-  const where = sec ? ` It sits in ${sec.label}, ` +
-    `${sec.order <= 5 ? 'the model-and-compute end of the stack' : sec.order <= 10 ? 'the physical infrastructure layer' : 'the power and hardware layer'} of the AI buildout.` : '';
-  return `${src} — ${(et?.label || flow.event_type || 'flow').toLowerCase()} into ${tgt}.${what}${where}`
-    + ' No written read on file for this deal yet.';
+  const where = sec ? ` Сектор — «${sec.label}».` : '';
+  return `${src} — ${(et?.label || flow.event_type || 'поток').toLowerCase()} в ${tgt}.${what}${where}`
+    + ' Письменного разбора этой сделки пока нет.';
 }
 
 // ── Themes — a SECOND dimension, orthogonal to sectors (which narrative a
 // deal belongs to). 10 canonical themes. Flows don't carry a theme, so a
 // target's theme is derived from its sector (SECTOR_TO_THEME below).
 export const THEME_META = {
-  frontier_ai:         { label: 'Frontier AI',        color: '#8E9BE6', order: 0 },
-  ai_infrastructure:   { label: 'AI Infrastructure',  color: '#5A93DE', order: 1 },
-  ai_applications:     { label: 'AI Applications',    color: '#9DB6EA', order: 2 },
-  energy_for_ai:       { label: 'Energy for AI',      color: '#49C2AE', order: 3 },
-  defense_ai:          { label: 'Defense AI',         color: '#6E7E9A', order: 4 },
-  robotics_embodiment: { label: 'Robotics',           color: '#8088D6', order: 5 },
-  sovereign_ai:        { label: 'Sovereign AI',       color: '#58ABCB', order: 6 },
-  biotech_ai:          { label: 'Biotech AI',         color: '#5FB0A8', order: 7 },
-  space:               { label: 'Space',              color: '#7079DE', order: 8 },
-  crypto_ai:           { label: 'Crypto AI',          color: '#45C0D0', order: 9 },
+  frontier_ai:         { label: 'Передовой AI',       color: '#8E9BE6', order: 0 },
+  ai_infrastructure:   { label: 'AI-инфраструктура',  color: '#5A93DE', order: 1 },
+  ai_applications:     { label: 'AI-приложения',      color: '#9DB6EA', order: 2 },
+  energy_for_ai:       { label: 'Энергия для AI',     color: '#49C2AE', order: 3 },
+  defense_ai:          { label: 'Оборонный AI',       color: '#6E7E9A', order: 4 },
+  robotics_embodiment: { label: 'Робототехника',      color: '#8088D6', order: 5 },
+  sovereign_ai:        { label: 'Государственный AI', color: '#58ABCB', order: 6 },
+  biotech_ai:          { label: 'Биотех и AI',        color: '#5FB0A8', order: 7 },
+  space:               { label: 'Космос',             color: '#7079DE', order: 8 },
+  crypto_ai:           { label: 'Крипто и AI',        color: '#45C0D0', order: 9 },
 };
 
 export const SECTOR_TO_THEME = {
@@ -281,20 +290,20 @@ export const COUNTRY_NAMES = {
 // networked node pops against the cool palette.
 export const NETWORK_META = {
   paypal_mafia:     { label: 'PayPal Mafia',      color: '#F5B942' },
-  thiel_extended:   { label: 'Thiel Extended',    color: '#E8975E' },
+  thiel_extended:   { label: 'Круг Тиля',         color: '#E8975E' },
   thiel_fellowship: { label: 'Thiel Fellowship',  color: '#D98CA8' },
 };
 
 // ── Signal rule labels — rendered so users know WHY a group lit up.
 export const RULE_META = {
-  sector_swarm:                { label: 'Sector swarm',        blurb: 'Several key allocators piled into one sector in a short window.' },
-  theme_swarm:                 { label: 'Theme swarm',         blurb: 'Key allocators converged on one cross-sector narrative.' },
-  smart_money_follow:          { label: 'Smart-money follow',  blurb: 'A key allocator led; others followed shortly after.' },
-  beneficiary_concentration:   { label: 'Beneficiary',         blurb: 'Multiple private flows point at one public ticker — the actionable read-through.' },
-  stealth_accumulation:        { label: 'Stealth accumulation',blurb: 'Repeated stakes quietly building in one target.' },
-  repeat_conviction:           { label: 'Repeat conviction',   blurb: 'The same network keeps re-backing a target.' },
-  network_convergence:         { label: 'Network convergence', blurb: 'A tracked network is converging on one target.' },
-  defense_network_convergence: { label: 'Defense convergence', blurb: 'A defence-linked network is converging.' },
+  sector_swarm:                { label: 'Наплыв в сектор',     blurb: 'Несколько ключевых инвесторов вошли в один сектор за короткое окно.' },
+  theme_swarm:                 { label: 'Наплыв в тему',       blurb: 'Ключевые инвесторы сошлись на одном сквозном нарративе.' },
+  smart_money_follow:          { label: 'Умные деньги ведут',  blurb: 'Ключевой инвестор вошёл первым; за ним быстро последовали другие.' },
+  beneficiary_concentration:   { label: 'Бенефициар',          blurb: 'Несколько частных потоков указывают на один публичный тикер — вывод, который можно отыграть.' },
+  stealth_accumulation:        { label: 'Тихое накопление',    blurb: 'Повторные доли незаметно накапливаются в одной компании.' },
+  repeat_conviction:           { label: 'Повторная ставка',    blurb: 'Одна и та же сеть снова и снова поддерживает одну компанию.' },
+  network_convergence:         { label: 'Схождение сети',      blurb: 'Отслеживаемая сеть сходится на одной компании.' },
+  defense_network_convergence: { label: 'Оборонное схождение', blurb: 'Сеть, связанная с обороной, сходится на одной цели.' },
 };
 
 export const META = {
@@ -312,15 +321,15 @@ export const AUDIT = raw.audit || null;             // the engine's verdict on t
 // ── Track-record metric names → display labels. Presentation only; an unknown
 // metric falls back to its own key de-snaked rather than being dropped.
 export const METRIC_LABEL = {
-  stock_total_return_pct: 'Stock total return',
-  fund_irr_pct: 'Fund IRR',
-  fund_net_return_pct: 'Fund net return',
-  fund_gross_return_pct: 'Fund gross return',
-  reported_return_pct: 'Reported return',
-  aum_usd_bn: 'AUM',
+  stock_total_return_pct: 'Полная доходность акции',
+  fund_irr_pct: 'IRR фонда',
+  fund_net_return_pct: 'Чистая доходность фонда',
+  fund_gross_return_pct: 'Валовая доходность фонда',
+  reported_return_pct: 'Заявленная доходность',
+  aum_usd_bn: 'Активы под управлением',
 };
 export function metricLabel(key) {
-  return METRIC_LABEL[key] || String(key || '').replace(/_/g, ' ').replace(/\bpct\b/, '').trim() || 'Metric';
+  return METRIC_LABEL[key] || String(key || '').replace(/_/g, ' ').replace(/\bpct\b/, '').trim() || 'Метрика';
 }
 
 /** A track-record row's value rendered with its unit. Never guesses a unit. */
@@ -334,16 +343,16 @@ export function formatTrackValue(row) {
 // Local compact USD so the adapter stays free of component imports.
 function fmtCompactUSD(v) {
   const a = Math.abs(v);
-  if (a >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
-  if (a >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (a >= 1e6) return `$${(v / 1e6).toFixed(0)}M`;
+  if (a >= 1e12) return `$${(v / 1e12).toFixed(2)} трлн`;
+  if (a >= 1e9) return `$${(v / 1e9).toFixed(1)} млрд`;
+  if (a >= 1e6) return `$${(v / 1e6).toFixed(0)} млн`;
   return `$${v}`;
 }
 
 export const DISCLAIMER =
-  'Generated by the Capital Flow engine from public filings, official releases and press reporting. ' +
-  'Statuses (verified / verified α / candidate) are the engine\'s own confidence marks and are rendered as-is — never overridden. ' +
-  'Amounts are as disclosed; some flows are undisclosed. Not investment advice.';
+  'Сформировано движком Capital Flow на основе публичных отчётностей, официальных релизов и прессы. ' +
+  'Статусы (подтверждено / подтверждено α / кандидат) — собственные оценки движка, отображаются как есть и никогда не переопределяются. ' +
+  'Суммы — как раскрыто; у части потоков сумма не раскрыта. Не является инвестиционной рекомендацией.';
 
 // Root domain from a URL (drops www.), or null if unparseable.
 function domainOf(url) {

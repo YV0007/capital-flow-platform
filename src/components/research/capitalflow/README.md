@@ -118,6 +118,32 @@ sectors{ <key>: { deals, capital, allocators, signals[] } }
   the moment the engine ships them, and says "no source link in payload"
   until then rather than guessing one. *(Backend request.)*
 - `Legend.jsx`, `format.js` — key + shared formatters.
+- `canvasTheme.js` — light/dark for the section. See below.
+
+## Light + dark
+The section follows the app-wide `data-theme` attribute. Two layers, because
+the map is half DOM and half canvas:
+
+- **DOM** (panels, table, drawer, cards) uses the `--cf-*` variables defined in
+  `src/theme.css`. Components carry no literal neutral hex — a surface is
+  `var(--cf-surface1)`, a border `var(--cf-border)`, text `var(--cf-text3)`,
+  and the whole section reskins from the stylesheet alone.
+- **CANVAS** (`FlowGraph`) cannot read CSS variables, so `canvasTheme.js` keeps
+  a JS mirror of the same palette (`canvasTokens(mode)`) plus `useThemeMode()`,
+  which watches the `data-theme` attribute and re-memoises the painters so the
+  canvas repaints on a theme flip with no reload. **`src/theme.css § --cf-*`
+  and `canvasTokens` are the same palette written twice — change both.**
+
+**The semantic palette is derived, not duplicated.** Sector / class / event
+colours live in `capitalMap.js` as data, tuned for a near-black canvas; on
+white the brighter ones vanish. Rather than maintain a second palette that
+would drift the moment the engine adds a sector, `tone(color, mode)` darkens
+only what is measurably too light (luminance over a ceiling), mixing toward
+deep slate in proportion to the overshoot. Hue identity and the relative order
+of the palette survive, and a brand-new sector colour is handled automatically.
+Anything that feeds `hexA()` or the canvas must stay a hex literal —
+`views.js`, `clusterStats.js` and `subsectors.js` therefore keep hex and are
+toned at render time, not tokenised.
 
 ### National affiliation (sovereign flags)
 The engine emits ISO-2 `country` codes (uppercase) on any entity it can place;

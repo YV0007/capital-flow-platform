@@ -225,8 +225,8 @@ export function applyMoleculeLayout(nodes, sectors = {}, links = []) {
     regions.push({
       type: 'source', key: c, cx, cy, r: classR[c] + 24,
       color: CLASS_META[c]?.color || '#9aa3b2',
-      label: (CLASS_META[c]?.label || c).toUpperCase(),
-      stats: `OUT ${fmtUSD(cap)}`,
+      label: (CLASS_META[c]?.zone || CLASS_META[c]?.label || c).toUpperCase(),
+      stats: `ВЛОЖЕНО ${fmtUSD(cap)}`,
     });
   });
   present.forEach(k => {
@@ -236,8 +236,8 @@ export function applyMoleculeLayout(nodes, sectors = {}, links = []) {
     regions.push({
       type: 'sector', key: k, cx, cy, r: cellR[k] + 32,
       color: META[k]?.color || '#9aa3b2',
-      label: (k === '_none' ? 'Unsectored' : sectorLabel(k)).toUpperCase(),
-      stats: `IN ${fmtUSD(cap)}`,
+      label: (k === '_none' ? 'Без сектора' : sectorLabel(k)).toUpperCase(),
+      stats: `ПОЛУЧЕНО ${fmtUSD(cap)}`,
       lit: !!(grp && grp.lit), signals: grp?.signals || [],
       count: cellMem[k].length,
     });

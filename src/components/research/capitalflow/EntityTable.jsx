@@ -28,7 +28,7 @@ const ROLES = [
     key: 'allocator',
     label: 'Allocators',
     tagline: 'who deploys capital',
-    accent: '#C2A36B',
+    accent: 'var(--cf-gold)',
     capitalWord: 'deployed',
     groups: [
       { cls: 'sovereign',   label: 'Sovereign & government', blurb: 'State funds and government programmes — national capital.' },
@@ -42,7 +42,7 @@ const ROLES = [
     key: 'target',
     label: 'Recipients',
     tagline: 'where the capital lands',
-    accent: '#82B98D',
+    accent: 'var(--cf-green2)',
     capitalWord: 'received',
     groups: [
       { cls: 'public',  label: 'Public companies',    blurb: 'Listed names — the tradeable read-through on private flows.' },
@@ -71,12 +71,12 @@ function CycleSummary() {
 
   return (
     <div style={{
-      border: '1px solid #1e1e23', borderRadius: 12, padding: '13px 16px', marginBottom: 16,
-      background: '#0b0c10',
+      border: '1px solid var(--cf-border-soft)', borderRadius: 12, padding: '13px 16px', marginBottom: 16,
+      background: 'var(--cf-surface0)',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 11 }}>
         <span style={{
-          fontSize: 9, color: '#6b6b74', fontFamily: MONO, fontWeight: 700,
+          fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
         }}>
           This cycle
@@ -89,7 +89,7 @@ function CycleSummary() {
         {top?.top && (
           <Lead label="Leading sector"
             value={top.top.sector ? sectorLabel(top.top.sector) : '—'}
-            color={SECTOR_META[top.top.sector]?.color || '#a1a1aa'}
+            color={SECTOR_META[top.top.sector]?.color || 'var(--cf-text3)'}
             detail={[
               top.top.capital_usd ? fmtUSD(top.top.capital_usd) : null,
               top.top.deals ? `${top.top.deals} deals` : null,
@@ -104,7 +104,7 @@ function CycleSummary() {
         )}
         {co?.top && (
           <Lead label="Most-backed company"
-            value={co.top.target || '—'} color="#e4e4e7"
+            value={co.top.target || '—'} color="var(--cf-text1)"
             detail={[
               co.top.investors ? `${co.top.investors} allocators` : null,
               co.top.capital_usd ? fmtUSD(co.top.capital_usd) : null,
@@ -122,24 +122,24 @@ function CycleSummary() {
         <div style={{ marginTop: 12 }}>
           <div title={shares.basis || undefined}
             style={{
-              fontSize: 8.5, color: '#52525b', fontFamily: MONO, fontWeight: 700,
+              fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6,
               cursor: shares.basis ? 'help' : 'default',
             }}>
             Where the capital sits · by theme
           </div>
-          <div style={{ display: 'flex', height: 6, borderRadius: 3, overflow: 'hidden', background: '#15161b' }}>
+          <div style={{ display: 'flex', height: 6, borderRadius: 3, overflow: 'hidden', background: 'var(--cf-border-hair)' }}>
             {byCap.map(([k, v]) => (
               <span key={k} title={`${THEME_META[k]?.label || k} — ${Math.round(v * 100)}% of tracked capital`}
-                style={{ width: `${v * 100}%`, background: THEME_META[k]?.color || '#3f3f46' }} />
+                style={{ width: `${v * 100}%`, background: THEME_META[k]?.color || 'var(--cf-text9)' }} />
             ))}
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 7 }}>
             {byCap.map(([k, v]) => (
-              <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 9.5, color: '#8b8b95', fontFamily: MONO }}>
-                <span style={{ width: 6, height: 6, borderRadius: 2, background: THEME_META[k]?.color || '#3f3f46' }} />
+              <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 9.5, color: 'var(--cf-text4)', fontFamily: MONO }}>
+                <span style={{ width: 6, height: 6, borderRadius: 2, background: THEME_META[k]?.color || 'var(--cf-text9)' }} />
                 {THEME_META[k]?.label || k}
-                <span style={{ color: '#e4e4e7', fontWeight: 700 }}>{Math.round(v * 100)}%</span>
+                <span style={{ color: 'var(--cf-text1)', fontWeight: 700 }}>{Math.round(v * 100)}%</span>
               </span>
             ))}
           </div>
@@ -152,28 +152,28 @@ function CycleSummary() {
 function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
   return (
     <div style={{ minWidth: 0, maxWidth: 430 }}>
-      <div style={{ fontSize: 8.5, color: '#52525b', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+      <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         {label}
       </div>
       <div style={{ fontSize: 14, fontWeight: 700, color, marginTop: 3, lineHeight: 1.3 }}>
         {value}
       </div>
       {detail && (
-        <div style={{ fontSize: 10, color: '#8b8b95', fontFamily: MONO, marginTop: 2 }}>{detail}</div>
+        <div style={{ fontSize: 10, color: 'var(--cf-text4)', fontFamily: MONO, marginTop: 2 }}>{detail}</div>
       )}
       {runnersUp.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 6 }}>
           {runnersUp.map((r, i) => (
-            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9, color: '#6b6b74', fontFamily: MONO }}>
-              <span style={{ width: 5, height: 5, borderRadius: 2, background: r.color || '#3f3f46' }} />
+            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO }}>
+              <span style={{ width: 5, height: 5, borderRadius: 2, background: r.color || 'var(--cf-text9)' }} />
               <span style={{ maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.name}</span>
-              {r.tail && <span style={{ color: '#4a4a53' }}>{r.tail}</span>}
+              {r.tail && <span style={{ color: 'var(--cf-text8)' }}>{r.tail}</span>}
             </span>
           ))}
         </div>
       )}
       {basis && (
-        <div style={{ fontSize: 8.5, color: '#4a4a53', fontFamily: MONO, marginTop: 5, lineHeight: 1.5 }}>
+        <div style={{ fontSize: 8.5, color: 'var(--cf-text8)', fontFamily: MONO, marginTop: 5, lineHeight: 1.5 }}>
           {basis}
         </div>
       )}
@@ -186,7 +186,7 @@ function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
 function AuditBadge({ audit }) {
   const ok = audit.passed && !audit.error_count;
   const warn = (audit.warning_count || 0) > 0;
-  const color = !ok ? '#F87171' : warn ? '#FBBF24' : '#34D399';
+  const color = !ok ? 'var(--cf-bad)' : warn ? 'var(--cf-warn)' : 'var(--cf-good)';
   const Icon = ok && !warn ? ShieldCheck : ShieldAlert;
   const stats = audit.stats || {};
   const title = [
@@ -213,9 +213,9 @@ function AuditBadge({ audit }) {
 }
 
 function statusOf(n) {
-  if (n.stale) return { label: 'Cooled', color: '#94A3B8', title: 'No activity in 180 days — kept in memory, de-emphasised.' };
-  if (n.watchOnly) return { label: 'Watch', color: '#71717a', title: 'Candidate flows only — unconfirmed.' };
-  return { label: 'Active', color: '#34D399', title: 'Confirmed activity in the current window.' };
+  if (n.stale) return { label: 'Cooled', color: 'var(--cf-muted)', title: 'No activity in 180 days — kept in memory, de-emphasised.' };
+  if (n.watchOnly) return { label: 'Watch', color: 'var(--cf-text5)', title: 'Candidate flows only — unconfirmed.' };
+  return { label: 'Active', color: 'var(--cf-good)', title: 'Confirmed activity in the current window.' };
 }
 
 const COLS = [
@@ -300,11 +300,11 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
       <th key={c.key}
         onClick={() => { on ? setSortDir(d => -d) : (setSortKey(c.key), setSortDir(c.num ? -1 : 1)); }}
         style={{
-          position: 'sticky', top: 0, zIndex: 3, background: '#0b0c10',
+          position: 'sticky', top: 0, zIndex: 3, background: 'var(--cf-surface0)',
           padding: '10px 14px', textAlign: c.num ? 'right' : 'left',
-          fontSize: 9, color: on ? '#38BDF8' : '#6b6b74', fontFamily: MONO, fontWeight: 700,
+          fontSize: 9, color: on ? 'var(--cf-accent)' : 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.1em', cursor: 'pointer',
-          borderBottom: '1px solid #1e1e23', whiteSpace: 'nowrap', userSelect: 'none',
+          borderBottom: '1px solid var(--cf-border-soft)', whiteSpace: 'nowrap', userSelect: 'none',
         }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
           {c.label}
@@ -317,7 +317,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
   return (
     <div style={{
       position: 'absolute', left: 0, right: 0, bottom: 0, top: topInset, zIndex: 20,
-      background: '#08090C', overflowY: 'auto',
+      background: 'var(--cf-canvas)', overflowY: 'auto',
     }}>
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '18px 24px 60px' }}>
         {/* Cycle summary — the engine's own read on this delivery. Rendered
@@ -326,9 +326,9 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
 
         {/* Scope line + role chips */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
-          <span style={{ fontSize: 10.5, color: '#71717a', fontFamily: MONO }}>
+          <span style={{ fontSize: 10.5, color: 'var(--cf-text5)', fontFamily: MONO }}>
             {shown} of {nodes.length} tracked entit{shown === 1 ? 'y' : 'ies'} in view
-            {activeList ? <> · watchlist <span style={{ color: '#38BDF8', fontWeight: 700 }}>{activeList.name}</span></> : null}
+            {activeList ? <> · watchlist <span style={{ color: 'var(--cf-accent)', fontWeight: 700 }}>{activeList.name}</span></> : null}
             {query ? <> · matching “{query}”</> : null}
           </span>
           <span style={{ flex: 1 }} />
@@ -336,9 +336,9 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
             <button key={k} onClick={() => setKind(k)}
               style={{
                 padding: '5px 11px', borderRadius: 7, cursor: 'pointer',
-                background: kind === k ? 'rgba(56,189,248,0.1)' : '#121318',
-                border: `1px solid ${kind === k ? 'rgba(56,189,248,0.38)' : '#26262e'}`,
-                color: kind === k ? '#38BDF8' : '#a1a1aa',
+                background: kind === k ? 'var(--cf-accent-bg)' : 'var(--cf-surface2)',
+                border: `1px solid ${kind === k ? 'var(--cf-accent-bd)' : 'var(--cf-border)'}`,
+                color: kind === k ? 'var(--cf-accent)' : 'var(--cf-text3)',
                 fontSize: 10, fontFamily: MONO, fontWeight: 600,
                 textTransform: 'uppercase', letterSpacing: '0.07em',
               }}>
@@ -360,20 +360,20 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
               }}>
                 {role.label}
               </span>
-              <span style={{ fontSize: 10.5, color: '#6b6b74', fontFamily: MONO }}>{role.tagline}</span>
+              <span style={{ fontSize: 10.5, color: 'var(--cf-text6)', fontFamily: MONO }}>{role.tagline}</span>
               <span style={{ flex: 1 }} />
-              <span style={{ fontSize: 10, color: '#71717a', fontFamily: MONO }}>
+              <span style={{ fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO }}>
                 {role.count} entit{role.count === 1 ? 'y' : 'ies'}
-                <span style={{ color: '#3f3f46' }}> · </span>
-                <span style={{ color: '#a1a1aa', fontWeight: 700 }}>{fmtUSD(role.capital)}</span> {role.capitalWord}
+                <span style={{ color: 'var(--cf-text9)' }}> · </span>
+                <span style={{ color: 'var(--cf-text3)', fontWeight: 700 }}>{fmtUSD(role.capital)}</span> {role.capitalWord}
               </span>
             </div>
 
-            <div style={{ border: '1px solid #1e1e23', borderRadius: 12, overflow: 'hidden' }}>
+            <div style={{ border: '1px solid var(--cf-border-soft)', borderRadius: 12, overflow: 'hidden' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead><tr>{COLS.map(header)}<th style={{
-                  position: 'sticky', top: 0, zIndex: 3, background: '#0b0c10',
-                  borderBottom: '1px solid #1e1e23', width: 40,
+                  position: 'sticky', top: 0, zIndex: 3, background: 'var(--cf-surface0)',
+                  borderBottom: '1px solid var(--cf-border-soft)', width: 40,
                 }} /></tr></thead>
 
                 {role.groups.map(g => {
@@ -384,23 +384,23 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                       {/* Subsection header — what this bucket is, and how big */}
                       <tr onClick={() => toggleGroup(g.id)}
                         title={shut ? 'Expand' : 'Collapse'}
-                        style={{ cursor: 'pointer', background: '#0c0d12' }}>
-                        <td colSpan={COLS.length + 1} style={{ padding: '9px 14px', borderBottom: '1px solid #17181d', borderTop: '1px solid #17181d' }}>
+                        style={{ cursor: 'pointer', background: 'var(--cf-surface0)' }}>
+                        <td colSpan={COLS.length + 1} style={{ padding: '9px 14px', borderBottom: '1px solid var(--cf-border-hair)', borderTop: '1px solid var(--cf-border-hair)' }}>
                           <span style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                            <span style={{ color: '#52525b', display: 'inline-flex', flexShrink: 0 }}>
+                            <span style={{ color: 'var(--cf-text7)', display: 'inline-flex', flexShrink: 0 }}>
                               {shut ? <ChevronRight size={12} /> : <ChevronDown size={12} />}
                             </span>
                             <span style={{
-                              fontSize: 10.5, fontWeight: 700, color: '#d4d4d8', fontFamily: MONO,
+                              fontSize: 10.5, fontWeight: 700, color: 'var(--cf-text2)', fontFamily: MONO,
                               textTransform: 'uppercase', letterSpacing: '0.08em',
                             }}>{g.label}</span>
                             <span style={{
-                              fontSize: 9.5, color: '#52525b', fontFamily: MONO,
-                              padding: '1px 6px', border: '1px solid #26262c', borderRadius: 4,
+                              fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO,
+                              padding: '1px 6px', border: '1px solid var(--cf-border)', borderRadius: 4,
                             }}>{g.rows.length}</span>
-                            <span style={{ fontSize: 10, color: '#4a4a53', fontFamily: MONO }}>{g.blurb}</span>
+                            <span style={{ fontSize: 10, color: 'var(--cf-text8)', fontFamily: MONO }}>{g.blurb}</span>
                             <span style={{ flex: 1 }} />
-                            <span style={{ fontSize: 10.5, color: '#a1a1aa', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>
+                            <span style={{ fontSize: 10.5, color: 'var(--cf-text3)', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>
                               {gCapital > 0 ? fmtUSD(gCapital) : '—'}
                             </span>
                           </span>
@@ -415,19 +415,19 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                           <tr key={n.id}
                             onClick={() => onOpenEntity(n.id)}
                             title={`Open ${n.name} on the map`}
-                            style={{ cursor: 'pointer', borderBottom: '1px solid #15161b' }}
-                            onMouseEnter={(e) => (e.currentTarget.style.background = '#0e0f14')}
+                            style={{ cursor: 'pointer', borderBottom: '1px solid var(--cf-border-hair)' }}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-surface1)')}
                             onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
                             {/* Entity */}
                             <td style={{ padding: '9px 14px 9px 32px', minWidth: 200 }}>
                               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                 <span style={{ width: 8, height: 8, borderRadius: '50%', background: n.color, flexShrink: 0 }} />
-                                <span style={{ fontSize: 12, fontWeight: 600, color: '#e4e4e7' }}>{n.name}</span>
+                                <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--cf-text1)' }}>{n.name}</span>
                                 {/* Country reads as a quiet suffix — the flag icon itself is
                                     reserved for sovereigns, on the map. */}
                                 {n.country && (
                                   <span title={n.countryLabel || n.country.toUpperCase()}
-                                    style={{ fontSize: 9, color: '#52525b', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em', cursor: 'help' }}>
+                                    style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em', cursor: 'help' }}>
                                     {n.country.toUpperCase()}
                                   </span>
                                 )}
@@ -439,24 +439,24 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                                 ? <span title={tier.blurb} style={{ fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: tier.color, cursor: 'help' }}>
                                     {tier.short} {tier.stars}
                                   </span>
-                                : <span style={{ color: '#3f3f46', fontSize: 10 }}>—</span>}
+                                : <span style={{ color: 'var(--cf-text9)', fontSize: 10 }}>—</span>}
                             </td>
                             {/* Sector */}
                             <td style={{ padding: '9px 14px', whiteSpace: 'nowrap' }}>
                               {sec
                                 ? <span style={{ fontSize: 10, fontFamily: MONO, color: sec.color }}>{sec.label}</span>
-                                : <span style={{ color: '#3f3f46', fontSize: 10 }}>—</span>}
+                                : <span style={{ color: 'var(--cf-text9)', fontSize: 10 }}>—</span>}
                             </td>
                             {/* Deals */}
-                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 11, fontFamily: MONO, color: '#a1a1aa' }}>
+                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 11, fontFamily: MONO, color: 'var(--cf-text3)' }}>
                               {n.deals}
                             </td>
                             {/* Capital — 0 with deals on file = undisclosed, not zero */}
-                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 11.5, fontFamily: MONO, fontWeight: 700, color: n.capital > 0 ? '#fafafa' : '#52525b' }}>
+                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 11.5, fontFamily: MONO, fontWeight: 700, color: n.capital > 0 ? 'var(--cf-text0)' : 'var(--cf-text7)' }}>
                               {n.capital > 0 ? fmtUSD(n.capital) : n.degree > 0 ? 'undisclosed' : '$0'}
                             </td>
                             {/* Last activity */}
-                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 10, fontFamily: MONO, color: '#71717a', whiteSpace: 'nowrap' }}>
+                            <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 10, fontFamily: MONO, color: 'var(--cf-text5)', whiteSpace: 'nowrap' }}>
                               {n.last_activity || '—'}
                             </td>
                             {/* Status */}
@@ -486,14 +486,14 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
 
         {sections.length === 0 && (
           <div style={{
-            padding: '28px 16px', textAlign: 'center', fontSize: 11, color: '#52525b', fontFamily: MONO,
-            border: '1px solid #1e1e23', borderRadius: 12,
+            padding: '28px 16px', textAlign: 'center', fontSize: 11, color: 'var(--cf-text7)', fontFamily: MONO,
+            border: '1px solid var(--cf-border-soft)', borderRadius: 12,
           }}>
             Nothing matches — clear the search{activeList ? ' or deactivate the watchlist' : ''}.
           </div>
         )}
 
-        <div style={{ marginTop: 12, fontSize: 9, color: '#4a4a53', fontFamily: MONO, lineHeight: 1.6 }}>
+        <div style={{ marginTop: 12, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.6 }}>
           The tracking universe as delivered by the engine payload — every entity with at least one tracked flow,
           filed under the role and type the payload assigns it. “Watch” rows carry only unconfirmed candidate flows;
           “Cooled” rows have been idle 180 days. Click a section header to fold it, a row to open the entity on the map.

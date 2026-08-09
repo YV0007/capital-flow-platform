@@ -18,8 +18,11 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { fmtUSD, linkWidth } from './format.js';
 import { SECTOR_META, CLASS_META, TIER_META, STATUS_META, NETWORK_META } from '../../../data/capitalMap.js';
+import { useThemeMode, canvasTokens, tone } from './canvasTheme.js';
 
-const BG = '#08090C';
+// Surfaces come from canvasTheme (a JS mirror of the --cf-* CSS variables,
+// which a canvas cannot read). `tone()` adapts the SEMANTIC palette — sector
+// and class colours are tuned for near-black and need darkening on white.
 
 export default function FlowGraph({
   graphData,
@@ -31,6 +34,8 @@ export default function FlowGraph({
   showLabels,
   fgRef,
 }) {
+  const mode = useThemeMode();
+  const T = canvasTokens(mode);
   const wrapRef = useRef(null);
   // Which cluster title the pointer is over. A ref, not state: the canvas
   // already repaints every frame for the particles, so the painter picks the
@@ -137,6 +142,11 @@ export default function FlowGraph({
     fg.d3Force('link', null);
   }, [fgRef, graphData]);
 
+  // Theme flip → repaint. The painters are memoised on `mode`, so new painter
+  // identities already reach the graph; this nudges it to redraw immediately
+  // instead of waiting for the next interaction on an idle (static) canvas.
+  useEffect(() => { fgRef.current?.refresh?.(); }, [mode, fgRef]);
+
   const hasSelection = !!selectedNodeId || !!selectedLinkId;
 
   const nodeLit = useCallback((n) => {
@@ -164,11 +174,12 @@ export default function FlowGraph({
 
       // Soft glow POOL — a zone, not a bordered circle. Radial fade to nothing.
       const glowR = r.r * 1.45;
-      const baseA = source ? 0.085 : (lit ? 0.16 : 0.075);
+      const rc = tone(r.color, mode);
+      const baseA = source ? T.regionSource : (lit ? T.regionLit : T.regionTarget);
       const g = ctx.createRadialGradient(r.cx, r.cy, r.r * 0.12, r.cx, r.cy, glowR);
-      g.addColorStop(0, hexA(r.color, baseA));
-      g.addColorStop(0.65, hexA(r.color, baseA * 0.4));
-      g.addColorStop(1, hexA(r.color, 0));
+      g.addColorStop(0, hexA(rc, baseA));
+      g.addColorStop(0.65, hexA(rc, baseA * 0.4));
+      g.addColorStop(1, hexA(rc, 0));
       ctx.beginPath();
       ctx.arc(r.cx, r.cy, glowR, 0, 2 * Math.PI);
       ctx.fillStyle = g;
@@ -179,7 +190,7 @@ export default function FlowGraph({
         ctx.beginPath();
         ctx.arc(r.cx, r.cy, r.r + 4, 0, 2 * Math.PI);
         ctx.lineWidth = 1.6;
-        ctx.strokeStyle = hexA(r.color, 0.5);
+        ctx.strokeStyle = hexA(rc, 0.5);
         ctx.stroke();
       }
 
@@ -192,7 +203,7 @@ export default function FlowGraph({
       const size = source ? 19 : 25;
       ctx.font = `700 ${size}px ui-monospace, monospace`;
       const hot = hoverRegionRef.current === r.key;
-      ctx.fillStyle = hexA(r.color, hot ? 1 : source ? 0.85 : lit ? 0.96 : 0.72);
+      ctx.fillStyle = hexA(rc, hot ? 1 : source ? 0.85 : lit ? 0.96 : 0.72);
       const title = lit ? `◆ ${r.label}` : r.label;
       const ty = r.cy - r.r - 12;
       ctx.fillText(title, r.cx, ty);
@@ -211,18 +222,18 @@ export default function FlowGraph({
         ctx.moveTo(r.cx - w / 2, ty + 4);
         ctx.lineTo(r.cx + w / 2, ty + 4);
         ctx.lineWidth = 1.5;
-        ctx.strokeStyle = hexA(r.color, 0.8);
+        ctx.strokeStyle = hexA(rc, 0.8);
         ctx.stroke();
       }
 
       if (r.stats) {
         ctx.textBaseline = 'top';
         ctx.font = `600 ${source ? 13 : 17}px ui-monospace, monospace`;
-        ctx.fillStyle = hexA(r.color, 0.4);
+        ctx.fillStyle = hexA(rc, mode === 'light' ? 0.85 : 0.4);
         ctx.fillText(r.stats, r.cx, r.cy + r.r + 8);
       }
     });
-  }, [regions]);
+  }, [regions, mode, T]);
 
   // ── Cluster titles are clickable ──────────────────────────────────────
   // The title's hit box is written by paintRegions each frame in GRAPH
@@ -294,7 +305,8 @@ export default function FlowGraph({
     const hovered = node.id === hoverNodeId;
     const dim = node.stale ? 0.4 : node.watchOnly ? 0.72 : 1;
     const alpha = lit ? dim : 0.06;
-    const col = node.color;
+    const col = tone(node.color, mode);
+    const tc = col;
     const R = node.r || 12;
     const cx = node.x, cy = node.y;
     const S = R * 1.85;              // tile side
@@ -317,18 +329,18 @@ export default function FlowGraph({
     // cheap flat drop shadow (an offset dark tile) — no shadowBlur, so it stays
     // fast even while the flow particles keep the canvas repainting.
     roundRect(ctx, x + R * 0.06 + 1, y + R * 0.16 + 1, S, S, corner);
-    ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    ctx.fillStyle = T.tileShadow;
     ctx.fill();
     // tile base
     roundRect(ctx, x, y, S, S, corner);
-    ctx.fillStyle = '#0e0f14';
+    ctx.fillStyle = T.nodeTile;
     ctx.fill();
 
     const logo = getLogo(node);
     if (logo && logo.ok && logo.img && logo.img.naturalWidth) {
       // light plate so dark logos read, then the logo contained with padding
       roundRect(ctx, x, y, S, S, corner);
-      ctx.fillStyle = '#f4f5f7'; ctx.fill();
+      ctx.fillStyle = T.logoPlate; ctx.fill();
       ctx.save();
       roundRect(ctx, x, y, S, S, corner); ctx.clip();
       const pad = S * 0.15;
@@ -349,8 +361,8 @@ export default function FlowGraph({
     } else {
       // monogram tile: domain-colour gradient + initials
       const g = ctx.createLinearGradient(x, y, x + S, y + S);
-      g.addColorStop(0, mix(col, '#ffffff', 0.22));
-      g.addColorStop(1, mix(col, '#05060a', 0.45));
+      g.addColorStop(0, mix(tc, '#ffffff', mode === 'light' ? 0.06 : 0.22));
+      g.addColorStop(1, mix(tc, '#05060a', mode === 'light' ? 0.30 : 0.45));
       roundRect(ctx, x, y, S, S, corner); ctx.fillStyle = g; ctx.fill();
       ctx.fillStyle = 'rgba(255,255,255,0.92)';
       ctx.font = `800 ${S * 0.4}px -apple-system, "Segoe UI", sans-serif`;
@@ -360,7 +372,7 @@ export default function FlowGraph({
 
     // networked allocator → warm outer bracket ring (elite-network member)
     if (node.network) {
-      const nc = NETWORK_META[node.network]?.color || '#F5B942';
+      const nc = tone(NETWORK_META[node.network]?.color || '#F5B942', mode);
       roundRect(ctx, x - 4, y - 4, S + 8, S + 8, corner + 4);
       ctx.lineWidth = 2;
       ctx.strokeStyle = hexA(nc, hovered || selected ? 1 : 0.85);
@@ -371,7 +383,7 @@ export default function FlowGraph({
     // everyone; rank is carried by the pips below, not by the rim.
     roundRect(ctx, x, y, S, S, corner);
     ctx.lineWidth = selected ? 2.4 : 1.4;
-    ctx.strokeStyle = selected ? '#ffffff' : hexA(col, hovered ? 1 : 0.72);
+    ctx.strokeStyle = selected ? T.selectRing : hexA(col, hovered ? 1 : 0.72);
     if (node.stale || node.watchOnly) ctx.setLineDash([3, 3]);
     ctx.stroke();
     ctx.setLineDash([]);
@@ -383,7 +395,7 @@ export default function FlowGraph({
       const totalW = rank * pipW + (rank - 1) * gap;
       let px = cx - totalW / 2;
       const py = y + S + Math.max(3, S * 0.075);
-      ctx.fillStyle = hexA('#D6DAE4', selected || hovered ? 0.95 : 0.55);
+      ctx.fillStyle = hexA(T.rankPip, selected || hovered ? 0.95 : 0.55);
       for (let i = 0; i < rank; i++) {
         roundRect(ctx, px, py, pipW, pipH, pipH / 2);
         ctx.fill();
@@ -399,7 +411,7 @@ export default function FlowGraph({
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
       const big = node.atomTier <= 1;
       ctx.font = `${big ? 700 : 600} ${Math.max(11, R * 0.62)}px -apple-system, "Segoe UI", sans-serif`;
-      ctx.fillStyle = selected || hovered ? '#ffffff' : hexA('#e6e8ee', big ? 0.96 : 0.78);
+      ctx.fillStyle = selected || hovered ? T.labelStrong : hexA(T.label, big ? 0.96 : 0.78);
       // Name only — the capital figure used to sit under it, but it was
       // unreadable at map contrast and duplicated the panel. Amounts live in
       // the hover card and the entity panel.
@@ -407,7 +419,7 @@ export default function FlowGraph({
     }
 
     ctx.restore();
-  }, [nodeLit, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick]);
+  }, [nodeLit, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick, mode, T]);
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
     const S = (node.r || 12) * 1.85, half = S / 2;
@@ -419,17 +431,19 @@ export default function FlowGraph({
   // ── Link styling ───────────────────────────────────────────────────────
   const linkColor = useCallback((l) => {
     const lit = linkLit(l);
-    if (!lit) return hexA('#3f3f46', 0.06);
-    if (l.id === selectedLinkId) return '#fafafa';
+    if (!lit) return hexA(T.linkDim, T.linkDimAlpha);
+    if (l.id === selectedLinkId) return T.labelStrong;
     // All bonds are SOLID; confidence (0–100 grade score) drives opacity so
     // high-confidence flows read stronger. Falls back to status when absent.
     const conf = typeof l.confidence === 'number'
       ? 0.3 + 0.7 * (l.confidence / 100)
       : (l.status === 'verified' ? 1 : l.status === 'verified_alpha' ? 0.7 : 0.46);
-    const a = (0.36 + 0.55 * Math.sqrt(l.amountShare || 0)) * conf;
-    if (l.id === hoverLinkId) return hexA(l.color, Math.min(1, a + 0.45));
-    return hexA(l.color, hasSelection ? Math.min(1, a + 0.3) : a);
-  }, [linkLit, selectedLinkId, hoverLinkId, hasSelection]);
+    const base = mode === 'light' ? 0.55 : 0.36;
+    const a = (base + 0.55 * Math.sqrt(l.amountShare || 0)) * conf;
+    const lc = tone(l.color, mode);
+    if (l.id === hoverLinkId) return hexA(lc, Math.min(1, a + 0.45));
+    return hexA(lc, hasSelection ? Math.min(1, a + 0.3) : a);
+  }, [linkLit, selectedLinkId, hoverLinkId, hasSelection, mode, T]);
 
   const linkW = useCallback((l) => {
     // Restrained widths — importance reads through opacity + flow, not girth.
@@ -456,49 +470,49 @@ export default function FlowGraph({
     const t = n.tier ? TIER_META[n.tier] : null;
     const role = n.type === 'player' ? 'Allocator · deploys' : 'Target · receives';
     const side = n.type === 'player'
-      ? `<span style="color:#71717a">Capital out</span><span style="color:#C2A36B;text-align:right">${fmtUSD(n.totalOutflow)}</span>`
-      : `<span style="color:#71717a">Capital in</span><span style="color:#82B98D;text-align:right">${fmtUSD(n.totalInflow)}</span>`;
-    return tip(`
+      ? `<span style="color:${T.tipText4}">Capital out</span><span style="color:${tone("#C2A36B", mode)};text-align:right">${fmtUSD(n.totalOutflow)}</span>`
+      : `<span style="color:${T.tipText4}">Capital in</span><span style="color:${tone("#82B98D", mode)};text-align:right">${fmtUSD(n.totalInflow)}</span>`;
+    return tip(T, `
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:5px">
-        <span style="font-weight:700;font-size:12.5px;color:#fafafa">${esc(n.name)}</span>
-        ${t ? `<span style="color:${t.color};font-size:9px;font-weight:700">${t.short} ${t.stars}</span>` : ''}
-        ${n.stale ? '<span style="color:#94A3B8;font-size:9px;font-weight:700">COOLED</span>' : ''}
+        <span style="font-weight:700;font-size:12.5px;color:${T.tipText}">${esc(n.name)}</span>
+        ${t ? `<span style="color:${tone(t.color, mode)};font-size:9px;font-weight:700">${t.short} ${t.stars}</span>` : ''}
+        ${n.stale ? '<span style="color:${T.tipText4};font-size:9px;font-weight:700">COOLED</span>' : ''}
       </div>
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
-        <span style="width:7px;height:7px;border-radius:50%;background:${n.color}"></span>
-        <span style="color:#a1a1aa">${esc(cls?.label || n.cls)}</span>
-        ${sec ? `<span style="color:#3f3f46">·</span><span style="color:#71717a">${esc(sec.label)}</span>` : ''}
-        <span style="color:#3f3f46">·</span>
-        <span style="color:#71717a">${esc(role)}</span>
+        <span style="width:7px;height:7px;border-radius:50%;background:${tone(n.color, mode)}"></span>
+        <span style="color:${T.tipText3}">${esc(cls?.label || n.cls)}</span>
+        ${sec ? `<span style="color:${T.tipRule}">·</span><span style="color:${T.tipText4}">${esc(sec.label)}</span>` : ''}
+        <span style="color:${T.tipRule}">·</span>
+        <span style="color:${T.tipText4}">${esc(role)}</span>
       </div>
       <div style="display:grid;grid-template-columns:auto auto;gap:2px 14px">
-        <span style="color:#71717a">Capital</span><span style="color:#e4e4e7;text-align:right">${fmtUSD(n.capital)}</span>
+        <span style="color:${T.tipText4}">Capital</span><span style="color:${T.tipText2};text-align:right">${fmtUSD(n.capital)}</span>
         ${side}
-        <span style="color:#71717a">Deals</span><span style="color:#a1a1aa;text-align:right">${n.deals}</span>
-        <span style="color:#71717a">Last activity</span><span style="color:#a1a1aa;text-align:right">${esc(n.last_activity || '—')}</span>
+        <span style="color:${T.tipText4}">Deals</span><span style="color:${T.tipText3};text-align:right">${n.deals}</span>
+        <span style="color:${T.tipText4}">Last activity</span><span style="color:${T.tipText3};text-align:right">${esc(n.last_activity || '—')}</span>
       </div>
-      <div style="margin-top:7px;color:#52525b;font-size:9px">Click → full breakdown panel</div>
+      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Click → full breakdown panel</div>
     `);
-  }, []);
+  }, [mode, T]);
 
   const linkTooltip = useCallback((l) => {
     const s = typeof l.source === 'object' ? l.source.name : l.sourceId;
     const t = typeof l.target === 'object' ? l.target.name : l.targetId;
     const st = STATUS_META[l.status] || {};
-    return tip(`
-      <div style="font-weight:700;font-size:12.5px;color:#fafafa;margin-bottom:4px">${l.disclosed ? fmtUSD(l.amount) : 'Undisclosed'}</div>
-      <div style="color:#d4d4d8;margin-bottom:5px">${esc(s)} <span style="color:${l.color}">→</span> ${esc(t)}</div>
+    return tip(T, `
+      <div style="font-weight:700;font-size:12.5px;color:${T.tipText};margin-bottom:4px">${l.disclosed ? fmtUSD(l.amount) : 'Undisclosed'}</div>
+      <div style="color:${T.tipText2};margin-bottom:5px">${esc(s)} <span style="color:${tone(l.color, mode)}">→</span> ${esc(t)}</div>
       <div style="display:flex;gap:6px;align-items:center">
-        <span style="width:7px;height:7px;border-radius:2px;background:${l.color}"></span>
-        <span style="color:#a1a1aa">${esc(l.eventLabel)}</span>
-        <span style="color:#3f3f46">·</span>
+        <span style="width:7px;height:7px;border-radius:2px;background:${tone(l.color, mode)}"></span>
+        <span style="color:${T.tipText3}">${esc(l.eventLabel)}</span>
+        <span style="color:${T.tipRule}">·</span>
         <span style="color:${st.color || '#71717a'}">${esc(st.short || l.status)}</span>
-        <span style="color:#3f3f46">·</span>
-        <span style="color:#71717a">${esc(l.date)}</span>
+        <span style="color:${T.tipRule}">·</span>
+        <span style="color:${T.tipText4}">${esc(l.date)}</span>
       </div>
-      <div style="margin-top:7px;color:#52525b;font-size:9px">Click → deal detail</div>
+      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Click → deal detail</div>
     `);
-  }, []);
+  }, [mode, T]);
 
   return (
     <div ref={wrapRef} style={{ position: 'absolute', inset: 0 }}
@@ -509,7 +523,7 @@ export default function FlowGraph({
           width={size.w}
           height={size.h}
           graphData={graphData}
-          backgroundColor={BG}
+          backgroundColor={T.bg}
           onRenderFramePre={paintRegions}
           nodeCanvasObject={paintNode}
           nodePointerAreaPaint={paintPointerArea}
@@ -523,7 +537,7 @@ export default function FlowGraph({
           linkDirectionalParticles={particles}
           linkDirectionalParticleWidth={(l) => 1.6 + 3 * Math.sqrt(l.amountShare || 0)}
           linkDirectionalParticleSpeed={(l) => 0.003 + 0.005 * (l.amountShare || 0)}
-          linkDirectionalParticleColor={(l) => l.color}
+          linkDirectionalParticleColor={(l) => tone(l.color, mode)}
           onNodeClick={(n) => onNodeClick(n.id)}
           onLinkClick={(l) => onLinkClick(l.id)}
           onBackgroundClick={handleBackground}
@@ -572,10 +586,10 @@ function esc(s) {
   return String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 }
 
-function tip(inner) {
+function tip(T, inner) {
   return `<div style="
     font-family:ui-monospace,monospace;font-size:10.5px;line-height:1.45;
-    background:#101116;border:1px solid #26262e;border-radius:8px;
+    background:${T.tipBg};border:1px solid ${T.tipBorder};border-radius:8px;
     padding:10px 12px;max-width:270px;
-    box-shadow:0 12px 32px -8px rgba(0,0,0,0.85);">${inner}</div>`;
+    box-shadow:0 12px 32px -8px ${T.tipShadow};">${inner}</div>`;
 }

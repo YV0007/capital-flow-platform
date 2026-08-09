@@ -35,7 +35,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
   if (!flow) return null;
 
   const et = EVENT_TYPE_META[flow.event_type] || { label: flow.event_type };
-  const stat = STATUS_META[flow.status] || { label: flow.status, color: '#71717a' };
+  const stat = STATUS_META[flow.status] || { label: flow.status, color: 'var(--cf-text5)' };
   const sec = flow.sector ? SECTOR_META[flow.sector] : null;
   const src = sourceNode?.name || flow.sourceId?.replace(/^alloc:/, '');
   const tgt = targetNode?.name || flow.targetId?.replace(/^target:/, '');
@@ -61,11 +61,11 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
       position: 'absolute', left: `calc(50% - ${rightInset / 2}px)`, bottom: 16,
       transform: 'translateX(-50%)',
       zIndex: 20, width: `min(600px, calc(100% - ${rightInset + 60}px))`, minWidth: 320,
-      background: 'rgba(12,12,15,0.97)',
+      background: 'var(--cf-panel)',
       border: `1px solid ${flow.color}44`,
       borderRadius: 12,
       backdropFilter: 'blur(10px)',
-      boxShadow: `0 24px 60px -18px rgba(0,0,0,0.95), 0 0 0 1px ${flow.color}18`,
+      boxShadow: `0 24px 60px -18px var(--cf-shadow), 0 0 0 1px ${flow.color}18`,
       animation: 'cfmRise 200ms cubic-bezier(0.2,0.8,0.2,1)',
       transition: 'left 220ms cubic-bezier(0.2,0.8,0.2,1), width 220ms cubic-bezier(0.2,0.8,0.2,1)',
     }}>
@@ -75,7 +75,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         padding: '13px 14px 12px',
       }}>
         <div style={{
-          fontSize: 22, fontWeight: 700, color: flow.disclosed ? '#fafafa' : '#71717a',
+          fontSize: 22, fontWeight: 700, color: flow.disclosed ? 'var(--cf-text0)' : 'var(--cf-text5)',
           letterSpacing: '-0.02em', fontFamily: MONO, flexShrink: 0, lineHeight: 1,
         }}>
           {flow.disclosed ? fmtUSD(flow.amount) : 'Undisclosed'}
@@ -88,9 +88,9 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         </div>
 
         <button onClick={onClose} title="Close"
-          style={{ background: 'none', border: 'none', color: '#52525b', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = '#d4d4d8')}
-          onMouseLeave={(e) => (e.currentTarget.style.color = '#52525b')}>
+          style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
           <X size={15} />
         </button>
       </div>
@@ -109,45 +109,45 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
       </div>
 
       {/* ── How much we trust it ───────────────────────────────────────── */}
-      <div style={{ padding: '11px 14px 12px', borderTop: '1px solid #1c1c21' }}>
+      <div style={{ padding: '11px 14px 12px', borderTop: '1px solid var(--cf-border-soft)' }}>
         {flow.confidence != null ? (
           <>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{
-                fontSize: 8.5, color: '#52525b', fontFamily: MONO, fontWeight: 700,
+                fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
                 textTransform: 'uppercase', letterSpacing: '0.12em', flexShrink: 0,
               }}>
                 Confidence
               </span>
-              <span style={{ flex: 1, height: 4, borderRadius: 3, background: '#1c1c21', overflow: 'hidden', minWidth: 40 }}>
+              <span style={{ flex: 1, height: 4, borderRadius: 3, background: 'var(--cf-border-soft)', overflow: 'hidden', minWidth: 40 }}>
                 <span style={{ display: 'block', height: '100%', width: `${flow.confidence}%`, background: band.color, borderRadius: 3 }} />
               </span>
               <span title={band.label} style={{ fontSize: 13, fontWeight: 700, color: band.color, fontFamily: MONO, flexShrink: 0, cursor: 'help' }}>
-                {flow.confidence}<span style={{ color: '#52525b', fontSize: 10 }}>/100</span>
+                {flow.confidence}<span style={{ color: 'var(--cf-text7)', fontSize: 10 }}>/100</span>
               </span>
             </div>
 
             {/* Grade + status decoded, one line — no bare codes anywhere. */}
-            <div style={{ marginTop: 7, fontSize: 11, color: '#8b8b95', fontFamily: MONO, lineHeight: 1.6 }}>
+            <div style={{ marginTop: 7, fontSize: 11, color: 'var(--cf-text4)', fontFamily: MONO, lineHeight: 1.6 }}>
               {gradeBits.map((t, i) => (
                 <span key={i}>
-                  {i > 0 && <span style={{ color: '#3f3f46' }}> · </span>}
+                  {i > 0 && <span style={{ color: 'var(--cf-text9)' }}> · </span>}
                   {t}
                 </span>
               ))}
-              {gradeBits.length > 0 && <span style={{ color: '#3f3f46' }}> · </span>}
+              {gradeBits.length > 0 && <span style={{ color: 'var(--cf-text9)' }}> · </span>}
               <span title={stat.blurb} style={{ color: stat.color, cursor: 'help' }}>{stat.label}</span>
             </div>
           </>
         ) : (
-          <div style={{ fontSize: 11, color: '#6b6b74', fontFamily: MONO, fontStyle: 'italic' }}>
+          <div style={{ fontSize: 11, color: 'var(--cf-text6)', fontFamily: MONO, fontStyle: 'italic' }}>
             Not scored by the engine — treat as unweighted.
           </div>
         )}
 
         {/* Where it came from + the link, when the payload carries one. */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 9 }}>
-          <span style={{ fontSize: 10.5, color: '#71717a', fontFamily: MONO }}>
+          <span style={{ fontSize: 10.5, color: 'var(--cf-text5)', fontFamily: MONO }}>
             {SOURCE_TIER_LABEL[flow.sourceTier] || `Source tier ${flow.sourceTier}`}
           </span>
           <span style={{ flex: 1 }} />
@@ -156,19 +156,19 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
                 <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" title={l.url}
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 5,
-                    padding: '3px 9px', background: '#141418',
-                    border: '1px solid #26262c', borderRadius: 6,
-                    color: '#8fb3cf', fontSize: 10, fontFamily: MONO, fontWeight: 600,
+                    padding: '3px 9px', background: 'var(--cf-surface2)',
+                    border: '1px solid var(--cf-border)', borderRadius: 6,
+                    color: 'var(--cf-link)', fontSize: 10, fontFamily: MONO, fontWeight: 600,
                     textDecoration: 'none', flexShrink: 0,
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#3f9bd6')}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#26262c')}>
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cf-link-hover)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border)')}>
                   {l.label || 'Source'} <ExternalLink size={9} style={{ opacity: 0.6 }} />
                 </a>
               ))
             : (
               <span title="The engine grades each flow's sourcing but does not yet emit the source URLs. Shown as missing rather than guessed."
-                style={{ fontSize: 10, color: '#4a4a53', fontFamily: MONO, cursor: 'help' }}>
+                style={{ fontSize: 10, color: 'var(--cf-text8)', fontFamily: MONO, cursor: 'help' }}>
                 no source link in payload
               </span>
             )}
@@ -176,20 +176,20 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
       </div>
 
       {/* ── Our read — commentary, so it stays folded by default ───────── */}
-      <div style={{ borderTop: '1px solid #1c1c21' }}>
+      <div style={{ borderTop: '1px solid var(--cf-border-soft)' }}>
         <button onClick={() => setReadOpen(o => !o)}
           title={readOpen ? 'Hide our read' : 'Our written read on why this capital moved'}
           style={{
             display: 'flex', alignItems: 'center', gap: 7, width: '100%',
             padding: '9px 14px', background: 'transparent', border: 'none',
             cursor: 'pointer', textAlign: 'left',
-            color: readOpen ? '#d4d4d8' : '#8b8b95',
+            color: readOpen ? 'var(--cf-text2)' : 'var(--cf-text4)',
             fontSize: 10, fontFamily: MONO, fontWeight: 700,
             textTransform: 'uppercase', letterSpacing: '0.1em',
             borderRadius: '0 0 12px 12px',
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = '#d4d4d8')}
-          onMouseLeave={(e) => (e.currentTarget.style.color = readOpen ? '#d4d4d8' : '#8b8b95')}>
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = readOpen ? 'var(--cf-text2)' : 'var(--cf-text4)')}>
           {readOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
           The read
           {note?.angle && !readOpen && (
@@ -213,18 +213,18 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
             )}
             <div style={{
               position: 'relative', padding: '11px 13px 11px 15px',
-              background: '#0E0F13', borderRadius: 9, border: '1px solid #1c1d23', overflow: 'hidden',
+              background: 'var(--cf-surface1)', borderRadius: 9, border: '1px solid var(--cf-border-soft)', overflow: 'hidden',
             }}>
               <span style={{
                 position: 'absolute', left: 0, top: 0, bottom: 0, width: 2,
                 background: `linear-gradient(180deg, ${flow.color}, ${flow.color}22)`,
               }} />
-              <div style={{ fontSize: 12.5, color: note ? '#d7d7dd' : '#8b8b95', lineHeight: 1.68 }}>
+              <div style={{ fontSize: 12.5, color: note ? '#d7d7dd' : 'var(--cf-text4)', lineHeight: 1.68 }}>
                 {note ? note.read : composeRead(flow, sourceNode, targetNode)}
               </div>
               <div style={{
                 display: 'flex', alignItems: 'center', gap: 5, marginTop: 9,
-                fontSize: 8.5, color: '#4a4a53', fontFamily: MONO, letterSpacing: '0.06em', textTransform: 'uppercase',
+                fontSize: 8.5, color: 'var(--cf-text8)', fontFamily: MONO, letterSpacing: '0.06em', textTransform: 'uppercase',
               }}>
                 <Quote size={9} /> Our framing · not from the engine, not a quote
               </div>
@@ -239,20 +239,20 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
 function EntityChip({ node, fallback, onClick }) {
   const name = node?.name || fallback;
   if (!name) return null;
-  const color = node?.color || '#71717a';
+  const color = node?.color || 'var(--cf-text5)';
   return (
     <button onClick={() => node && onClick(node.id)} title={node ? `Open ${node.name}` : ''}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
-        padding: '4px 9px', background: '#141418',
-        border: '1px solid #26262c', borderRadius: 7,
+        padding: '4px 9px', background: 'var(--cf-surface2)',
+        border: '1px solid var(--cf-border)', borderRadius: 7,
         cursor: node ? 'pointer' : 'default', minWidth: 0, maxWidth: 190,
       }}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = color + '80')}
-      onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#26262c')}>
+      onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border)')}>
       <span style={{ width: 7, height: 7, borderRadius: '50%', background: color, flexShrink: 0 }} />
       <span style={{
-        fontSize: 11.5, color: '#e4e4e7', fontWeight: 600,
+        fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600,
         overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
       }}>{name}</span>
     </button>

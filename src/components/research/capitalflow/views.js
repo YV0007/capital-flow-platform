@@ -19,60 +19,60 @@ export function buildViews({ litSectors = [], confidenceThreshold = 60 } = {}) {
   return [
     {
       id: 'fresh',
-      label: 'Fresh batch',
-      blurb: 'Everything the engine has picked up in the last 14 days — this cycle\'s new money.',
+      label: 'Свежее',
+      blurb: 'Всё, что движок собрал за последние 14 дней, — новые деньги этого цикла.',
       color: '#38BDF8',
       state: { ...EMPTY_VIEW, sinceDays: 14 },
     },
     {
       id: 'mega',
-      label: 'Mega tickets',
-      blurb: 'Disclosed flows of $5B and up — where the balance-sheet-scale capital went.',
+      label: 'Мега-чеки',
+      blurb: 'Раскрытые потоки от $5 млрд — куда пошёл капитал масштаба целых балансов.',
       color: '#C2A36B',
       state: { ...EMPTY_VIEW, minAmount: 5e9 },
     },
     {
       id: 'sovereign',
-      label: 'Sovereign money',
-      blurb: 'State funds and government programmes only — national capital and who it backs.',
+      label: 'Госденьги',
+      blurb: 'Только государственные фонды и программы — национальный капитал и кого он поддерживает.',
       color: '#49C2AE',
       state: { ...EMPTY_VIEW, classes: ['sovereign'] },
     },
     {
       id: 'smart',
-      label: 'Smart money',
-      blurb: 'Core and key-tier allocators — the repeat deciders whose moves lead the rest.',
+      label: 'Умные деньги',
+      blurb: 'Инвесторы уровней «ядро» и «ключ» — повторные игроки, за которыми идут остальные.',
       color: '#FBBF24',
       state: { ...EMPTY_VIEW, tiers: ['core', 'key'] },
     },
     {
       id: 'hard',
-      label: 'Hard evidence',
-      blurb: 'Tier-1 verified flows scoring 85+ only. The subset you could act on without re-checking.',
+      label: 'Твёрдые факты',
+      blurb: 'Только подтверждённые потоки уровня 1 с оценкой 85+. То, на что можно опираться без перепроверки.',
       color: '#34D399',
       state: { ...EMPTY_VIEW, statuses: ['verified'], minConfidence: 85 },
     },
     {
       id: 'signals',
-      label: 'Signal sectors',
+      label: 'Секторы с сигналом',
       blurb: litSectors.length
-        ? 'The sectors with a signal rule firing this cycle — the engine\'s own alpha.'
-        : 'No sector is signalling in this delivery.',
+        ? 'Секторы, где в этом цикле сработало правило, — собственная альфа движка.'
+        : 'В этой выгрузке ни один сектор не сигналит.',
       color: '#F59E0B',
       disabled: litSectors.length === 0,
       state: { ...EMPTY_VIEW, sectors: [...litSectors] },
     },
     {
       id: 'private',
-      label: 'Private rounds',
-      blurb: 'Equity and funding rounds into private companies — the venture layer, minus infrastructure.',
+      label: 'Частные раунды',
+      blurb: 'Доли и раунды в частные компании — венчурный слой без инфраструктуры.',
       color: '#9D8FD8',
       state: { ...EMPTY_VIEW, classes: ['private'], families: ['equity'] },
     },
     {
       id: 'buildout',
-      label: 'Physical buildout',
-      blurb: 'Project finance behind data centers, plants and fabs — the capex that has to be poured.',
+      label: 'Физическая стройка',
+      blurb: 'Проектное финансирование дата-центров, станций и фабрик — capex, который придётся залить в бетон.',
       color: '#C99B72',
       state: { ...EMPTY_VIEW, classes: ['project'], families: ['debt'] },
     },
@@ -94,11 +94,11 @@ export function viewKey(state) {
 // `generated` date, not today's — the file is a snapshot, and "last 14 days"
 // has to mean 14 days of DATA, not 14 days of wall clock.
 export const RECENCY_OPTIONS = [
-  { days: 0, label: 'All' },
-  { days: 7, label: '7d' },
-  { days: 14, label: '14d' },
-  { days: 30, label: '30d' },
-  { days: 90, label: '90d' },
+  { days: 0, label: 'Все' },
+  { days: 7, label: '7 дн' },
+  { days: 14, label: '14 дн' },
+  { days: 30, label: '30 дн' },
+  { days: 90, label: '90 дн' },
 ];
 
 /** ISO date `generated` minus `days`, as an ISO string. Null when days ≤ 0. */
