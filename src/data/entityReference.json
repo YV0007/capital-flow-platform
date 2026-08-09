@@ -404,8 +404,7 @@
         "label": "thriveholdings.com",
         "url": "https://thriveholdings.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Atoms": {
     "type": "org",
@@ -443,8 +442,7 @@
         "label": "panthalassa.com",
         "url": "https://panthalassa.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Flourish": {
     "type": "org",
@@ -543,44 +541,40 @@
     "links": [
       {
         "kind": "website",
-        "label": "mgx.com",
-        "url": "https://mgx.com"
+        "label": "mgx.ae",
+        "url": "https://www.mgx.ae"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:US Government": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "usgovernment.com",
-        "url": "https://usgovernment.com"
+        "label": "usa.gov",
+        "url": "https://www.usa.gov"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Electronic Arts": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "electronicarts.com",
-        "url": "https://electronicarts.com"
+        "label": "ea.com",
+        "url": "https://www.ea.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:Amazon": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "amazon.io",
-        "url": "https://amazon.io"
+        "label": "aboutamazon.com",
+        "url": "https://www.aboutamazon.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:KKR": {
     "type": "org",
@@ -590,19 +584,17 @@
         "label": "kkr.com",
         "url": "https://kkr.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:OpenAI Group PBC": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "openaigrouppbc.com",
-        "url": "https://openaigrouppbc.com"
+        "label": "openai.com",
+        "url": "https://openai.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:Anthropic": {
     "type": "org",
@@ -612,8 +604,7 @@
         "label": "anthropic.com",
         "url": "https://anthropic.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:Mubadala": {
     "type": "org",
@@ -623,8 +614,7 @@
         "label": "mubadala.com",
         "url": "https://mubadala.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Anthropic": {
     "type": "org",
@@ -634,8 +624,7 @@
         "label": "anthropic.com",
         "url": "https://anthropic.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:Azora": {
     "type": "org",
@@ -645,63 +634,58 @@
         "label": "azora.com",
         "url": "https://azora.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Hadrian": {
     "type": "org",
+    "description": "Hadrian — defense-tech manufacturer building AI-automated precision factories (Opus platform) to reindustrialize the US defense industrial base.",
     "links": [
       {
         "kind": "website",
-        "label": "hadrian.com",
-        "url": "https://hadrian.com"
+        "label": "hadrian.co",
+        "url": "https://hadrian.co"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Base Power": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "basepower.com",
-        "url": "https://basepower.com"
+        "label": "basepowercompany.com",
+        "url": "https://www.basepowercompany.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Aypa Power": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "aypapower.com",
-        "url": "https://aypapower.com"
+        "label": "aypa.com",
+        "url": "https://www.aypa.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:Microsoft": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "microsoft.ai",
-        "url": "https://microsoft.ai"
+        "label": "microsoft.com",
+        "url": "https://www.microsoft.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Microsoft Frontier Company": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "microsoftfrontiercompany.com",
-        "url": "https://microsoftfrontiercompany.com"
+        "label": "microsoft.com",
+        "url": "https://blogs.microsoft.com/blog/2026/07/02/microsoft-frontier-company-ai-engineering-that-amplifies-and-protects-your-intelligence/"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:Founders Fund": {
     "type": "org",
@@ -711,8 +695,7 @@
         "label": "foundersfund.com",
         "url": "https://foundersfund.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Chai Discovery": {
     "type": "org",
@@ -722,8 +705,7 @@
         "label": "chaidiscovery.com",
         "url": "https://chaidiscovery.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:Greenoaks": {
     "type": "org",
@@ -733,19 +715,17 @@
         "label": "greenoaks.com",
         "url": "https://greenoaks.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:GlobalFoundries": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "globalfoundries.com",
-        "url": "https://globalfoundries.com"
+        "label": "gf.com",
+        "url": "https://gf.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Glow": {
     "type": "org",
@@ -755,19 +735,17 @@
         "label": "glow.io",
         "url": "https://glow.io"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:HappyRobot": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "happyrobot.com",
-        "url": "https://happyrobot.com"
+        "label": "happyrobot.ai",
+        "url": "https://www.happyrobot.ai"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:State Affairs": {
     "type": "org",
@@ -777,52 +755,47 @@
         "label": "stateaffairs.com",
         "url": "https://stateaffairs.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Neo Security": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "neosecurity.co",
-        "url": "https://neosecurity.co"
+        "label": "neo.ai",
+        "url": "https://www.neo.ai"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Extropic": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "extropic.com",
-        "url": "https://extropic.com"
+        "label": "extropic.ai",
+        "url": "https://extropic.ai"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Convex": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "convex.com",
-        "url": "https://convex.com"
+        "label": "convex.dev",
+        "url": "https://www.convex.dev"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:P-1 AI": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "p1.ai",
-        "url": "https://p1.ai"
+        "label": "p-1.ai",
+        "url": "https://p-1.ai"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Aeluma": {
     "type": "org",
@@ -832,8 +805,7 @@
         "label": "aeluma.com",
         "url": "https://aeluma.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Ambrook": {
     "type": "org",
@@ -843,41 +815,37 @@
         "label": "ambrook.com",
         "url": "https://ambrook.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Ellis": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "ellis.com",
-        "url": "https://ellis.com"
+        "label": "ellis.ai",
+        "url": "https://ellis.ai"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Summit Ridge Energy": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "summitridgeenergy.com",
-        "url": "https://summitridgeenergy.com"
+        "label": "srenergy.com",
+        "url": "https://srenergy.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:Alphabet": {
     "type": "org",
     "links": [
       {
         "kind": "website",
-        "label": "alphabet.com",
-        "url": "https://alphabet.com"
+        "label": "abc.xyz",
+        "url": "https://abc.xyz"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Proxima Fusion": {
     "type": "org",
@@ -887,8 +855,7 @@
         "label": "proximafusion.com",
         "url": "https://proximafusion.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Mistral AI": {
     "type": "org",
@@ -898,19 +865,17 @@
         "label": "mistral.ai",
         "url": "https://mistral.ai"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "alloc:David Sacks": {
     "type": "org",
     "links": [
       {
-        "kind": "website",
-        "label": "davidsacks.co",
-        "url": "https://davidsacks.co"
+        "kind": "x",
+        "label": "@DavidSacks",
+        "url": "https://x.com/DavidSacks"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:SkillBench": {
     "type": "org",
@@ -931,8 +896,7 @@
         "label": "patrickcollison.com",
         "url": "https://patrickcollison.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Radical Numerics": {
     "type": "org",
@@ -942,8 +906,7 @@
         "label": "radicalnumerics.ai",
         "url": "https://radicalnumerics.ai"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Gravis Robotics AG": {
     "type": "org",
@@ -953,8 +916,7 @@
         "label": "gravisrobotics.com",
         "url": "https://gravisrobotics.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Craft Ventures V, LP": {
     "type": "org",
@@ -964,8 +926,7 @@
         "label": "craftventures.com",
         "url": "https://craftventures.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:NAVER Corporation": {
     "type": "org",
@@ -975,8 +936,7 @@
         "label": "naver.com",
         "url": "https://naver.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Nebius Group N.V.": {
     "type": "org",
@@ -986,8 +946,7 @@
         "label": "nebius.com",
         "url": "https://nebius.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   },
   "target:Volta Infra Holdings": {
     "type": "org",
@@ -997,7 +956,6 @@
         "label": "voltainfra.com",
         "url": "https://voltainfra.com"
       }
-    ],
-    "auto_resolved": true
+    ]
   }
 }
