@@ -42,10 +42,8 @@ export function ruPlural(n, [one, few, many]) {
 
 const SECTOR_RU = {
   'ai-labs': 'AI-лаборатории',
-  'ai-diversified': 'Диверсифицированный AI',
-  'ai-data-platform': 'Платформы данных',
+  'ai-data': 'Платформы данных',
   'ai-applications': 'AI-приложения',
-  'ai-services-rollup': 'AI-сервисы',
   'ai-compute': 'AI-вычисления',
   'semiconductors': 'Полупроводники',
   'fab-equipment': 'Оборудование для чипов',
@@ -58,6 +56,9 @@ const SECTOR_RU = {
   'robotics': 'Робототехника',
   'defense-tech': 'Оборонные технологии',
   'gaming': 'Игры',
+  'ev-automotive': 'Электромобили',
+  'private-credit': 'Частный кредит',
+  'diversified-pe': 'Private equity',
 };
 
 const CLASS_RU = {

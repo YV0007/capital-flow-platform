@@ -35,6 +35,8 @@ import Legend from './Legend.jsx';
 import EntityPanel from './EntityPanel.jsx';
 import AllocatorDeepDive from './AllocatorDeepDive.jsx';
 import EntityTable from './EntityTable.jsx';
+import ClusterReport from './ClusterReport.jsx';
+import { buildSectorReport, buildClassReport } from './clusterStats.js';
 import useWatchlists from './useWatchlists.js';
 import { WatchlistSelector } from './WatchlistControl.jsx';
 import { buildViews, viewKey, cutoffDate, EMPTY_VIEW } from './views.js';
@@ -85,6 +87,9 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [selectedFlowId, setSelectedFlowId] = useState(null);
   const [showLabels, setShowLabels] = useState(true);
   const [deepDiveOpen, setDeepDiveOpen] = useState(false);   // allocator breakdown over the panel
+  // Cluster report — opened by clicking a cluster TITLE on the canvas.
+  // { type: 'sector' | 'source', key } — 'source' is an allocator-class island.
+  const [cluster, setCluster] = useState(null);
 
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
@@ -168,6 +173,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     setSelectedNodeId(id);
     setSelectedFlowId(null);
     setDeepDiveOpen(false);
+    setCluster(null);
     const fg = fgRef.current;
     if (fg && node && node.x != null) {
       fg.centerAt(node.x + 120, node.y, 600);   // nudge left of the side panel
@@ -178,17 +184,34 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const handleNodeClick = useCallback((id) => {
     setSelectedFlowId(null);
     setDeepDiveOpen(false);
+    setCluster(null);
     setSelectedNodeId(prev => (prev === id ? null : id));
   }, []);
 
   const handleLinkClick = useCallback((id) => {
+    setCluster(null);
     setSelectedFlowId(prev => (prev === id ? null : id));
+  }, []);
+
+  // A cluster title on the canvas → that cluster's report. Entity/flow
+  // selection steps aside so only one panel is ever open.
+  //
+  // Deliberately NOT a toggle. The canvas fires its click through two paths
+  // (DOM capture + force-graph's own deferred handler) and a toggle turns any
+  // stray second call into an instant close; "always open, close with × or
+  // Esc" is both robust and the less surprising behaviour.
+  const handleRegionClick = useCallback((type, key) => {
+    setSelectedNodeId(null);
+    setSelectedFlowId(null);
+    setDeepDiveOpen(false);
+    setCluster({ type, key });
   }, []);
 
   const clearSelection = useCallback(() => {
     setSelectedNodeId(null);
     setSelectedFlowId(null);
     setDeepDiveOpen(false);
+    setCluster(null);
   }, []);
 
   const resetView = useCallback(() => { fgRef.current?.zoomToFit(700, 80); }, []);
@@ -260,6 +283,20 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const selectedNode = selectedNodeId ? nodeById.get(selectedNodeId) : null;
   const selectedFlow = selectedFlowId ? linkById.get(selectedFlowId) : null;
   const adj = selectedNodeId ? adjacency.get(selectedNodeId) : null;
+
+  // Cluster report. Computed over the WHOLE tracked universe, not the current
+  // filter state: the report describes the sector/class as tracked, so it does
+  // not silently change meaning when a filter is on.
+  const clusterReport = useMemo(() => {
+    if (!cluster) return null;
+    const ctx = {
+      nodes: graph.nodes, links: graph.links, nodeById,
+      generated: META.generated, sectors: graph.sectors,
+    };
+    return cluster.type === 'sector'
+      ? buildSectorReport(cluster.key, ctx)
+      : buildClassReport(cluster.key, ctx);
+  }, [cluster, graph, nodeById]);
 
   const legendCounts = useMemo(() => {
     const sector = {}, cls = {}, family = {};
@@ -345,6 +382,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           onNodeClick={handleNodeClick}
           onLinkClick={handleLinkClick}
           onBackgroundClick={clearSelection}
+          onRegionClick={handleRegionClick}
           showLabels={showLabels}
         />
       </div>
@@ -592,6 +630,15 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           onOpenEntity={focusEntity}
           onBack={() => setDeepDiveOpen(false)}
           onClose={() => { setDeepDiveOpen(false); setSelectedNodeId(null); }}
+        />
+      )}
+
+      {view === 'map' && clusterReport && (
+        <ClusterReport
+          topInset={TOPBAR_H}
+          report={clusterReport}
+          onOpenEntity={focusEntity}
+          onClose={() => setCluster(null)}
         />
       )}
     </div>

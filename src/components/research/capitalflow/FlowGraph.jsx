@@ -27,11 +27,17 @@ export default function FlowGraph({
   matchedNodes, matchedLinks,
   selectedNodeId, selectedLinkId,
   neighbourNodes, neighbourLinks,
-  onNodeClick, onLinkClick, onBackgroundClick,
+  onNodeClick, onLinkClick, onBackgroundClick, onRegionClick,
   showLabels,
   fgRef,
 }) {
   const wrapRef = useRef(null);
+  // Which cluster title the pointer is over. A ref, not state: the canvas
+  // already repaints every frame for the particles, so the painter picks the
+  // change up without a React render on every mousemove.
+  const hoverRegionRef = useRef(null);
+  // When a cluster-title click was last handled — see handleBackground.
+  const handledAtRef = useRef(0);
   const fittedRef = useRef(false);
   const lastResizeRef = useRef(typeof performance !== 'undefined' ? performance.now() : 0);
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -146,7 +152,12 @@ export default function FlowGraph({
   }, [matchedLinks, neighbourLinks, hasSelection]);
 
   // ── Source-class clusters (inner) + sector cells (outer) ───────────────
-  const paintRegions = useCallback((ctx) => {
+  const paintRegions = useCallback((ctx, globalScale) => {
+    // Hit-box padding is specified in SCREEN pixels and converted to graph
+    // units, so the title stays comfortably clickable when the map is zoomed
+    // out and the text is only a few pixels tall.
+    const padX = 10 / (globalScale || 1);
+    const padY = 9 / (globalScale || 1);
     regions.forEach(r => {
       const lit = r.lit;
       const source = r.type === 'source';
@@ -172,16 +183,36 @@ export default function FlowGraph({
         ctx.stroke();
       }
 
+      // Cluster TITLE — the only text on the canvas, and the entry point to the
+      // cluster report. Fired-signal detail used to be printed underneath it;
+      // that (and every other stat) now lives in the report instead, so the map
+      // stays a map. A lit cluster keeps the ◆ mark and nothing more.
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
-      ctx.font = `700 ${source ? 19 : 25}px ui-monospace, monospace`;
-      ctx.fillStyle = hexA(r.color, source ? 0.85 : lit ? 0.96 : 0.72);
-      ctx.fillText(r.label, r.cx, r.cy - r.r - 12);
+      const size = source ? 19 : 25;
+      ctx.font = `700 ${size}px ui-monospace, monospace`;
+      const hot = hoverRegionRef.current === r.key;
+      ctx.fillStyle = hexA(r.color, hot ? 1 : source ? 0.85 : lit ? 0.96 : 0.72);
+      const title = lit ? `◆ ${r.label}` : r.label;
+      const ty = r.cy - r.r - 12;
+      ctx.fillText(title, r.cx, ty);
 
-      if (lit) {
-        ctx.font = '700 14px ui-monospace, monospace';
-        ctx.fillStyle = hexA(r.color, 0.9);
-        ctx.fillText(`◆ ${r.signals?.[0]?.theme || 'signal'}`.toUpperCase(), r.cx, r.cy - r.r - 38);
+      // Hit box for the title, refreshed every frame so it tracks pan/zoom for
+      // free (the canvas is already repainting for the flow particles).
+      const w = ctx.measureText(title).width;
+      r._hit = {
+        x0: r.cx - w / 2 - padX, x1: r.cx + w / 2 + padX,
+        y0: ty - size - padY, y1: ty + padY,
+      };
+
+      // Hover affordance — an underline, so a title reads as clickable.
+      if (hot) {
+        ctx.beginPath();
+        ctx.moveTo(r.cx - w / 2, ty + 4);
+        ctx.lineTo(r.cx + w / 2, ty + 4);
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = hexA(r.color, 0.8);
+        ctx.stroke();
       }
 
       if (r.stats) {
@@ -192,6 +223,65 @@ export default function FlowGraph({
       }
     });
   }, [regions]);
+
+  // ── Cluster titles are clickable ──────────────────────────────────────
+  // The title's hit box is written by paintRegions each frame in GRAPH
+  // coordinates, so it follows pan and zoom without any bookkeeping here.
+  const regionAt = useCallback((ev) => {
+    const fg = fgRef.current;
+    if (!fg || !ev || typeof fg.screen2GraphCoords !== 'function') return null;
+    const rect = wrapRef.current?.getBoundingClientRect();
+    const sx = rect ? ev.clientX - rect.left : ev.offsetX;
+    const sy = rect ? ev.clientY - rect.top : ev.offsetY;
+    if (!Number.isFinite(sx) || !Number.isFinite(sy)) return null;
+    const p = fg.screen2GraphCoords(sx, sy);
+    if (!p) return null;
+    return regions.find(r => r._hit
+      && p.x >= r._hit.x0 && p.x <= r._hit.x1
+      && p.y >= r._hit.y0 && p.y <= r._hit.y1) || null;
+  }, [regions, fgRef]);
+
+  const handleMove = useCallback((ev) => {
+    if (!onRegionClick) return;
+    const hit = regionAt(ev);
+    const key = hit ? hit.key : null;
+    if (hoverRegionRef.current !== key) {
+      hoverRegionRef.current = key;
+      const canvas = wrapRef.current?.querySelector('canvas');
+      if (canvas) canvas.style.cursor = key ? 'pointer' : '';
+      fgRef.current?.refresh?.();
+    }
+  }, [regionAt, onRegionClick, fgRef]);
+
+  // Titles sit outside the cluster circles but flow edges cross that space, and
+  // an edge under the cursor would otherwise win the click. Catching it in the
+  // CAPTURE phase gets the title in first; the canvas never sees the event.
+  const handleClickCapture = useCallback((ev) => {
+    if (!onRegionClick) return;
+    const hit = regionAt(ev);
+    if (!hit) return;
+    ev.stopPropagation();
+    ev.preventDefault();
+    handledAtRef.current = performance.now();
+    onRegionClick(hit.type, hit.key);
+  }, [regionAt, onRegionClick]);
+
+  // Belt and braces: if the capture handler ever misses (touch, synthetic
+  // event), a background click on a title still opens its report.
+  //
+  // force-graph fires its own click a frame after pointerup, on a DIFFERENT
+  // event object, so stopping the DOM event above does not stop this one. The
+  // timestamp guard is what keeps a single physical click from firing
+  // onRegionClick twice — which, since the parent treats a repeat click as
+  // "close", would open and immediately close the report.
+  const handleBackground = useCallback((ev) => {
+    if (performance.now() - handledAtRef.current < 500) return;
+    if (onRegionClick) {
+      const hit = regionAt(ev);
+      if (hit) { onRegionClick(hit.type, hit.key); return; }
+    }
+    onBackgroundClick?.();
+  }, [regionAt, onRegionClick, onBackgroundClick]);
 
   // ── Node painter — brand-logo "app-icon" tile ─────────────────────────
   //   logo   = the real company mark (Clearbit) · monogram tile fallback
@@ -411,7 +501,8 @@ export default function FlowGraph({
   }, []);
 
   return (
-    <div ref={wrapRef} style={{ position: 'absolute', inset: 0 }}>
+    <div ref={wrapRef} style={{ position: 'absolute', inset: 0 }}
+      onMouseMove={handleMove} onClickCapture={handleClickCapture}>
       {size.w > 0 && (
         <ForceGraph2D
           ref={fgRef}
@@ -435,7 +526,7 @@ export default function FlowGraph({
           linkDirectionalParticleColor={(l) => l.color}
           onNodeClick={(n) => onNodeClick(n.id)}
           onLinkClick={(l) => onLinkClick(l.id)}
-          onBackgroundClick={onBackgroundClick}
+          onBackgroundClick={handleBackground}
           onNodeHover={(n) => setHoverNodeId(n ? n.id : null)}
           onLinkHover={(l) => setHoverLinkId(l ? l.id : null)}
           onNodeDragEnd={(n) => { n.fx = n.x; n.fy = n.y; }}

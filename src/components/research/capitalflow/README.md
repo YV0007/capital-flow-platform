@@ -42,11 +42,39 @@ sectors{ <key>: { deals, capital, allocators, signals[] } }
   sectors get a highlighted frame. Positions pinned (`fx`/`fy`), no simulation.
 - `FlowGraph.jsx` — the canvas (react-force-graph-2d). Node = labelled block
   sized by `capital`, coloured by sector (targets) / class (allocators); edge
-  colour = event family, dash = confidence, arrow = direction.
+  colour = event family, dash = confidence, arrow = direction. **Cluster titles
+  are clickable** — they hit-test against a box the region painter writes each
+  frame in graph coordinates (so it tracks pan/zoom), with padding specified in
+  screen pixels so a zoomed-out title stays easy to hit. The click is caught in
+  the DOM capture phase so a flow edge crossing the title never steals it.
+  Nothing but the title and the one total is printed on the canvas: fired
+  signals used to shout a second line under each title and now live in the
+  cluster report instead. A signalling cluster keeps a `◆` on its title.
 - `CapitalFlowMap.jsx` — the section shell: top bar (generated stamp + live
   stats), filters, watch toggle, legend, selection panels.
 - `FilterBar.jsx` — sector · class · tier (entities) + event · confidence ·
   min-size (flows).
+- `ClusterReport.jsx` + `clusterStats.js` — the **cluster report**, opened by
+  clicking a cluster title. One component covers both kinds of cluster: a
+  **sector** cell (where capital lands) and an **allocator class** island (who
+  deploys it). It answers, in order and then stops: how big and how it ranks ·
+  who dominates it, by kind of money then by name · where it actually lands ·
+  which way it is moving (last 30d vs the 30d before) · the fired signals · a
+  derived read. A disclosure adds the deeper breakdown. Basis rules live in
+  `clusterStats.js` and are surfaced in the panel: **confirmed flows only**
+  (verified + verified α, matching the engine's own `aggregates.basis`),
+  candidates reported separately, undisclosed amounts contributing $0, windows
+  measured against the payload's `generated` date. Nothing is estimated. The
+  report is computed over the whole tracked universe, not the current filter
+  state, so it cannot silently change meaning when a filter is on.
+- `subsectors.js` — **derived dashboard-side.** Two axes under a sector:
+  *vehicle type* (operating company / fund & SPV / project & asset — structural,
+  straight off the payload's `cls`, 100% coverage) and *sub-sector* (bio,
+  security, energy, compute…), inferred from the entity description by ordered,
+  high-precision phrase rules. Tuned for precision over coverage: an entity
+  whose text does not clearly name its business is left **Unclassified**, and
+  every breakdown states the classified fraction. **The engine does not emit a
+  sub-sector field** — when it does, delete this module. *(Backend request.)*
 - `EntityPanel.jsx` — per-entity breakdown (who invests / where money goes).
 - `AllocatorDeepDive.jsx` — the "Detailed breakdown" view, **allocators only**:
   background/thesis, latest-investments decision logic (derived strictly from
@@ -176,6 +204,7 @@ in the same commit. `run_week.py --no-logos` skips it.
   `candidate`-only nodes are "watch / unconfirmed" — off the map behind the
   **Watch** toggle.
 - **Emphasis:** node size ∝ `capital`; key-tier allocators marked; sectors
-  with a fired signal get a bright frame + `◆ signal` badge.
+  with a fired signal get a bright frame + a `◆` on the title. The signal's own
+  text is in the cluster report, not on the canvas.
 - **Staleness:** `stale: true` → de-emphasised (dashed, faded), never deleted
   on sight. The map is cumulative memory.
