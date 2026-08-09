@@ -325,17 +325,29 @@ export function buildGraph(data = raw) {
     const profileType = n.profile_type || ref?.type ||
       (isAllocator ? (n.cls === 'individual' ? 'person' : 'org')
                    : (n.cls === 'fund' ? 'fund' : n.cls === 'project' ? 'project' : 'org'));
+    // National affiliation (sovereign / government allocators). Engine-emitted
+    // fields win; the dashboard reference file is the curated fallback. When
+    // set, the country flag becomes the node icon (public/flags/<cc>.png) so
+    // national capital sources are instantly identifiable on the map.
+    const country = n.country || ref?.country || null;
+    const countryLabel = n.country_label || ref?.countryLabel || null;
     // Real brand logo / founder photo, pre-fetched into public/logos/ by
     // scripts/fetch_logos.py (reliable, offline, no runtime DNS). Monogram
     // tile is the fallback for the entities without one.
     const localLogo = logoManifest[n.id];
+    const logoUrls = [
+      ...(country ? [`/flags/${country}.png`] : []),
+      ...(localLogo ? [localLogo] : []),
+    ];
     return {
       ...n,
       name: displayName,
       description,
       links,
       profileType,
-      logoUrls: localLogo ? [localLogo] : [],
+      country,
+      countryLabel,
+      logoUrls,
       monogram: monogramOf(displayName),
       searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(displayName)}`,
       // FlowGraph role encoding: 'player' deploys · 'target' receives.

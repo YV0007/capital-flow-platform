@@ -78,6 +78,17 @@ export default function EntityPanel({
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
             }}>{tier.short} · {tier.label} <span style={{ letterSpacing: 1 }}>{tier.stars}</span></span>
           )}
+          {node.country && (
+            <span title={`National capital source — ${node.countryLabel || node.country.toUpperCase()}`} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 8px',
+              background: '#16161a', border: '1px solid #26262c', borderRadius: 5,
+              fontSize: 9, color: '#a1a1aa', fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
+            }}>
+              <img src={`/flags/${node.country}.png`} alt="" style={{ width: 14, height: 'auto', borderRadius: 2, display: 'block' }} />
+              {node.countryLabel || node.country.toUpperCase()}
+            </span>
+          )}
           {node.network && (
             <span title={`Member of the ${NETWORK_META[node.network]?.label || node.network} network`} style={{
               display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 8px',

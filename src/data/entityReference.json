@@ -538,6 +538,8 @@
   },
   "alloc:MGX": {
     "type": "org",
+    "country": "ae",
+    "countryLabel": "United Arab Emirates",
     "links": [
       {
         "kind": "website",
@@ -548,11 +550,37 @@
   },
   "alloc:US Government": {
     "type": "org",
+    "country": "us",
+    "countryLabel": "United States",
     "links": [
       {
         "kind": "website",
         "label": "usa.gov",
         "url": "https://www.usa.gov"
+      }
+    ]
+  },
+  "alloc:Saudi PIF": {
+    "type": "org",
+    "country": "sa",
+    "countryLabel": "Saudi Arabia",
+    "links": [
+      {
+        "kind": "website",
+        "label": "pif.gov.sa",
+        "url": "https://www.pif.gov.sa"
+      }
+    ]
+  },
+  "alloc:Korea Investment Corporation": {
+    "type": "org",
+    "country": "kr",
+    "countryLabel": "South Korea",
+    "links": [
+      {
+        "kind": "website",
+        "label": "kic.kr",
+        "url": "https://www.kic.kr"
       }
     ]
   },
@@ -608,6 +636,8 @@
   },
   "alloc:Mubadala": {
     "type": "org",
+    "country": "ae",
+    "countryLabel": "United Arab Emirates",
     "links": [
       {
         "kind": "website",
