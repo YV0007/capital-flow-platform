@@ -287,6 +287,22 @@ function FundPortfolioBlock({ node, nodeById, onOpenEntity, onFundHoldings }) {
       }}>
         <Briefcase size={11} color="var(--cf-gold)" /> Портфель фонда
         {total > 0 && <span style={{ color: 'var(--cf-text4)' }}>· {total}</span>}
+        {node.portfolio_url && (
+          <>
+            <span style={{ flex: 1 }} />
+            <a href={node.portfolio_url} target="_blank" rel="noopener noreferrer"
+              title={`Страница портфеля фонда — ${node.portfolio_url}`}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 4,
+                color: 'var(--cf-link)', textDecoration: 'none', letterSpacing: 0, textTransform: 'none',
+                fontWeight: 600,
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-link-hover)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-link)')}>
+              Страница портфеля <ExternalLink size={9} />
+            </a>
+          </>
+        )}
       </div>
 
       {top.length > 0 ? (

@@ -100,6 +100,20 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
 
       {/* Body */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px 18px 32px' }}>
+        {/* Direct link to the fund's own portfolio page (engine-supplied). */}
+        {node.portfolio_url && (
+          <a href={node.portfolio_url} target="_blank" rel="noopener noreferrer" title={node.portfolio_url}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 7, marginBottom: 14,
+              padding: '7px 11px', background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)',
+              borderRadius: 8, color: 'var(--cf-link)', fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
+              textDecoration: 'none',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cf-link-hover)')}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border)')}>
+            <Briefcase size={12} /> Страница портфеля фонда <ExternalLink size={11} style={{ opacity: 0.6 }} />
+          </a>
+        )}
         {holdings.length === 0 ? (
           <NoData />
         ) : (
