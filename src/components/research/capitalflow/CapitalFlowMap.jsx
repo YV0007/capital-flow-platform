@@ -45,9 +45,17 @@ import { buildViews, viewKey, cutoffDate, EMPTY_VIEW } from './views.js';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD, plural } from './format.js';
 import { applyMoleculeLayout } from './layout.js';
-import { buildGraph, buildAdjacency, META } from '../../../data/capitalMap.js';
+import { buildGraph, buildAdjacency, META, PROMOTION_QUEUE } from '../../../data/capitalMap.js';
+import PromotionQueue, { promoShouldOpen } from './PromotionQueue.jsx';
 
 const MONO = 'ui-monospace, monospace';
+
+// ── Trailing time window (Feature 1) ────────────────────────────────────────
+// Engine-owned view policy. The map defaults to a trailing window instead of all
+// history; the user widens it. Nothing is deleted — only hidden.
+const VIEW_DEFAULTS = META.viewDefaults || { default_window_days: 30, windows: [7, 30, 90, null], keep_active_signal: true };
+const DEFAULT_WINDOW = VIEW_DEFAULTS.default_window_days || 30;
+const KEEP_ACTIVE_SIGNAL = VIEW_DEFAULTS.keep_active_signal !== false;
 const BG = 'var(--cf-canvas)';
 // Height reserved by the top overlay bar. Every floating surface (right panel,
 // filter drawer) starts below it so nothing ever sits under the controls.
@@ -58,7 +66,6 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
   const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links), [graph]);
-  const graphData = useMemo(() => ({ nodes: graph.nodes, links: graph.links }), [graph]);
   // Pristine layout snapshot, taken right after applyMoleculeLayout pins fx/fy.
   // Dragging overwrites a node's fx/fy (onNodeDragEnd), so this is the only copy
   // of "where things belong" — reset restores it. Captured by value, so later
@@ -84,7 +91,8 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [networks, setNetworks] = useState(() => new Set()); // entities (allocators, by network)
   const [minAmount, setMinAmount] = useState(0);
   const [minConfidence, setMinConfidence] = useState(0);     // flows (v2 grade score)
-  const [sinceDays, setSinceDays] = useState(0);             // flows, aged against META.generated
+  const [sinceDays, setSinceDays] = useState(DEFAULT_WINDOW); // trailing window (0 = all-time), aged via flow.age_days
+  const [promoOpen, setPromoOpen] = useState(() => promoShouldOpen(PROMOTION_QUEUE, META.generated));
   const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [view, setView] = useState('map');                   // 'map' | 'table' (tracking universe)
@@ -111,7 +119,6 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
     const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0 || networks.size > 0;
-    const cutoff = cutoffDate(META.generated, sinceDays);
     // Active watchlist narrows the universe first: only members can seed the
     // view (their direct counterparties still surface via the flows, so the
     // subset stays navigable vertex↔edge).
@@ -136,7 +143,11 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
       if (statuses.size && !statuses.has(l.status)) return;
       if (minAmount > 0 && l.amountUSD < minAmount) return;
       if (minConfidence > 0 && (l.confidence == null || l.confidence < minConfidence)) return;
-      if (cutoff && !(l.date && l.date >= cutoff)) return;
+      // Trailing window: keep a flow inside the window OR, by rule, one tied to a
+      // signal firing this cycle (the keep-alive). window 0 = all-time.
+      if (sinceDays > 0
+        && !(l.age_days != null && l.age_days <= sinceDays)
+        && !(KEEP_ACTIVE_SIGNAL && l.active_signal)) return;
       if ((entityFilterOn || wlSet) && !seed.has(l.sourceId) && !seed.has(l.targetId)) return;
       links.add(l.id);
     });
@@ -161,6 +172,47 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
     return { matchedNodes: nodes, matchedLinks: links };
   }, [graph, sectors, classes, tiers, families, statuses, networks, minAmount, minConfidence, sinceDays, showWatch, nodeById, activeList]);
+
+  // ── Time window = the HARD scope of the view ─────────────────────────────
+  // Out-of-window flows/nodes are REMOVED from the canvas entirely (not faded);
+  // only sector/entity filters fade. So the window rebuilds graphData itself: a
+  // flow survives if it's inside the window OR (by rule) tied to a live signal.
+  // window 0 = all-time. Watch-only nodes still obey the Наводки toggle.
+  const windowLinkSet = useMemo(() => {
+    const s = new Set();
+    graph.links.forEach(l => {
+      if (sinceDays > 0
+        && !(l.age_days != null && l.age_days <= sinceDays)
+        && !(KEEP_ACTIVE_SIGNAL && l.active_signal)) return;
+      if (!showWatch) {
+        const sN = nodeById.get(l.sourceId), tN = nodeById.get(l.targetId);
+        if ((sN && sN.watchOnly) || (tN && tN.watchOnly)) return;
+      }
+      s.add(l.id);
+    });
+    return s;
+  }, [graph, sinceDays, showWatch, nodeById]);
+  const windowNodeSet = useMemo(() => {
+    const s = new Set();
+    graph.links.forEach(l => { if (windowLinkSet.has(l.id)) { s.add(l.sourceId); s.add(l.targetId); } });
+    return s;
+  }, [graph, windowLinkSet]);
+  // Only nodes/links inside the window ever reach the canvas — hard removal.
+  const graphData = useMemo(() => ({
+    nodes: graph.nodes.filter(n => windowNodeSet.has(n.id)),
+    links: graph.links.filter(l => windowLinkSet.has(l.id)),
+  }), [graph, windowNodeSet, windowLinkSet]);
+  // Cluster glows/labels for sectors & classes that have any in-window node —
+  // an empty cluster disappears with its flows instead of lingering as a ghost.
+  const windowRegions = useMemo(() => {
+    const keys = new Set();
+    graph.nodes.forEach(n => {
+      if (!windowNodeSet.has(n.id)) return;
+      if (n.sector) keys.add(n.sector);
+      if (n.cls) keys.add(n.cls);
+    });
+    return regions.filter(r => keys.has(r.key));
+  }, [regions, graph, windowNodeSet]);
 
   // ── Selection neighbourhood ────────────────────────────────────────────
   const { neighbourNodes, neighbourLinks } = useMemo(() => {
@@ -289,6 +341,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
   const resetFilters = useCallback(() => {
     applyFilterState(EMPTY_VIEW);
+    setSinceDays(DEFAULT_WINDOW);   // reset returns to the default trailing window, not all-time
     setQuery('');
   }, [applyFilterState]);
 
@@ -355,8 +408,11 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     return { sector, cls, family };
   }, [graph, matchedNodes, matchedLinks]);
 
+  // The trailing window is a primary view control with its own toggle, so it
+  // only counts as a "filter" when narrowed off the default (never at 30d/all).
   const activeFilterCount = sectors.size + classes.size + tiers.size + families.size + statuses.size
-    + networks.size + (minAmount > 0 ? 1 : 0) + (minConfidence > 0 ? 1 : 0) + (sinceDays > 0 ? 1 : 0);
+    + networks.size + (minAmount > 0 ? 1 : 0) + (minConfidence > 0 ? 1 : 0)
+    + (sinceDays !== DEFAULT_WINDOW ? 1 : 0);
 
   // ── Quick views — pre-made filter combinations ─────────────────────────
   // Which sectors are signalling comes from the payload, so the "Signal
@@ -431,7 +487,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         <FlowGraph
           fgRef={fgRef}
           graphData={graphData}
-          regions={regions}
+          regions={windowRegions}
           matchedNodes={matchedNodes}
           matchedLinks={matchedLinks}
           selectedNodeId={selectedNodeId}
@@ -735,6 +791,16 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           onOpenEntity={focusEntity}
           onOpenReceivers={openSectorReceivers}
           onClose={() => setCluster(null)}
+        />
+      )}
+
+      {/* Monday promotion pop-up — renders the engine's promotion_queue and
+          exports decisions.json; never promotes/hides anyone dashboard-side. */}
+      {promoOpen && (
+        <PromotionQueue
+          queue={PROMOTION_QUEUE}
+          generated={META.generated}
+          onClose={() => setPromoOpen(false)}
         />
       )}
     </div>

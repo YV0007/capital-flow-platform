@@ -93,12 +93,14 @@ export function viewKey(state) {
 // Flow-recency options for the drawer. Ages are measured against the payload's
 // `generated` date, not today's — the file is a snapshot, and "last 14 days"
 // has to mean 14 days of DATA, not 14 days of wall clock.
+// Trailing-window options, aligned to the engine's view_defaults.windows
+// ([7,30,90,null]). This is the map's recency control — it lives in the filter
+// drawer; the map defaults to 30 days. 0 = all history.
 export const RECENCY_OPTIONS = [
-  { days: 0, label: 'Все' },
   { days: 7, label: '7 дн' },
-  { days: 14, label: '14 дн' },
   { days: 30, label: '30 дн' },
   { days: 90, label: '90 дн' },
+  { days: 0, label: 'Всё' },
 ];
 
 /** ISO date `generated` minus `days`, as an ISO string. Null when days ≤ 0. */

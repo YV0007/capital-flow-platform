@@ -323,7 +323,15 @@ export const META = {
   generated: raw.generated,
   confidenceThreshold: typeof raw.confidence_threshold === 'number' ? raw.confidence_threshold : 60,
   totals: raw.totals || { nodes: (raw.nodes || []).length, flows: (raw.flows || []).length, sectors: Object.keys(raw.sectors || {}).length },
+  // Engine-owned view policy: the default trailing window, the offered windows,
+  // and whether flows tied to a live signal stay visible past the window.
+  viewDefaults: raw.view_defaults || { default_window_days: 30, windows: [7, 30, 90, null], keep_active_signal: true },
 };
+
+// Co-investors the engine has discovered but NEVER auto-adds — the user decides.
+// The dashboard renders this queue and captures the choice; the engine owns who
+// is actually tracked (see PromotionQueue + the exported decisions.json).
+export const PROMOTION_QUEUE = Array.isArray(raw.promotion_queue) ? raw.promotion_queue : [];
 
 // ── Payload-level blocks the engine owns outright. Rendered as-is; the `basis`
 // strings explain how each number was derived and must never be recomputed or
