@@ -77,6 +77,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [view, setView] = useState('map');                   // 'map' | 'table' (tracking universe)
+  const [tableKind, setTableKind] = useState('all');         // table role chip: all | allocator | target
 
   // ── Watchlists — saved subsets of the map (localStorage) ───────────────
   const wl = useWatchlists();
@@ -262,6 +263,18 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const resetFilters = useCallback(() => {
     applyFilterState(EMPTY_VIEW);
     setQuery('');
+  }, [applyFilterState]);
+
+  // From a sector report: land on the table filtered to that sector, showing
+  // the receivers — the full set of companies/projects/funds pulling capital in,
+  // grouped by type. Reuses the shared filter, so map and table stay in sync.
+  const openSectorReceivers = useCallback((sectorKey) => {
+    applyFilterState({ sectors: [sectorKey] });
+    setQuery('');
+    setTableKind('target');
+    setCluster(null);
+    setView('table');
+    setDrawerOpen(false);
   }, [applyFilterState]);
 
   const toggleIn = (setter) => (value) => setter(prev => {
@@ -561,6 +574,8 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           query={query}
           activeList={activeList}
           wl={wl}
+          kind={tableKind}
+          onKind={setTableKind}
           onOpenEntity={focusEntity}
         />
       )}
@@ -638,6 +653,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           topInset={TOPBAR_H}
           report={clusterReport}
           onOpenEntity={focusEntity}
+          onOpenReceivers={openSectorReceivers}
           onClose={() => setCluster(null)}
         />
       )}

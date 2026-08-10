@@ -23,7 +23,7 @@
 import { useState } from 'react';
 import {
   X, ChevronDown, ChevronRight, TrendingUp, TrendingDown, Minus,
-  ArrowUpRight, Sparkles,
+  ArrowUpRight, Sparkles, Table2,
 } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
 import { STATUS_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
@@ -33,7 +33,7 @@ export const REPORT_W = 430;
 
 const pct = (x) => (x == null ? null : `${Math.round(x * 100)}%`);
 
-export default function ClusterReport({ report, onOpenEntity, onClose, topInset = 0 }) {
+export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, onClose, topInset = 0 }) {
   const [deep, setDeep] = useState(false);
   if (!report) return null;
 
@@ -133,6 +133,26 @@ export default function ClusterReport({ report, onOpenEntity, onClose, topInset 
             </div>
           )}
         </div>
+
+        {/* Expand → full list of every recipient in this sector, in the table.
+            The panel only shows the top few; this opens the whole set, grouped
+            by company / fund / project / asset, filtered to this sector. */}
+        {isSector && onOpenReceivers && report.recipients > 0 && (
+          <button onClick={() => onOpenReceivers(report.key)}
+            title={`Открыть таблицу со всеми получателями сектора «${report.label}»`}
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+              width: '100%', padding: '10px 12px', marginTop: 10,
+              background: 'var(--cf-accent-bg)', border: '1px solid rgba(56,189,248,0.28)',
+              borderRadius: 9, color: 'var(--cf-accent)',
+              fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer',
+            }}>
+            <Table2 size={12} />
+            Все получатели · {report.recipients}
+            <ArrowUpRight size={12} />
+          </button>
+        )}
 
         {/* 2 · Who dominates */}
         <Section title={isSector ? 'Кто вкладывает' : 'Куда идут деньги'} />

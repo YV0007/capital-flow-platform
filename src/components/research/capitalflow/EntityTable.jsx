@@ -192,8 +192,7 @@ const COLS = [
   { key: 'status',  label: 'Статус',         sort: (n) => (n.stale ? 2 : n.watchOnly ? 1 : 0) },
 ];
 
-export default function EntityTable({ nodes, matchedNodes, query, activeList, wl, onOpenEntity, topInset = 0 }) {
-  const [kind, setKind] = useState('all');            // all | allocator | target
+export default function EntityTable({ nodes, matchedNodes, query, activeList, wl, onOpenEntity, kind = 'all', onKind, topInset = 0 }) {
   const [sortKey, setSortKey] = useState('capital');
   const [sortDir, setSortDir] = useState(-1);         // -1 desc · 1 asc
   const [collapsed, setCollapsed] = useState(() => new Set());
@@ -297,7 +296,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
           </span>
           <span style={{ flex: 1 }} />
           {[['all', 'Все'], ['allocator', 'Инвесторы'], ['target', 'Получатели']].map(([k, label]) => (
-            <button key={k} onClick={() => setKind(k)}
+            <button key={k} onClick={() => onKind?.(k)}
               style={{
                 padding: '5px 11px', borderRadius: 7, cursor: 'pointer',
                 background: kind === k ? 'var(--cf-accent-bg)' : 'var(--cf-surface2)',
