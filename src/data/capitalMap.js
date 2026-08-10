@@ -226,17 +226,24 @@ export function confidenceBand(c) {
 }
 
 // ── Deal context ────────────────────────────────────────────────────────
-// The engine ships facts, never interpretation. `flowNotes.json` is where the
-// interpretation lives (hand-written, dashboard-side). Anything the file
-// doesn't cover falls back to a composed line built strictly from what we
-// already know about the two entities — no invented facts.
-// Resolution order: a read the ENGINE wrote at research time wins (the research
-// agents know the deal best and cover every new flow), then the hand-written
-// dashboard file, then null -> composeRead().
+// The engine ships facts, never interpretation. The "read" is the DASHBOARD's
+// to write — from the payload only, never the web (every fact is already in the
+// flow + its joined nodes). `flowNotes.json` is the generated+cached store,
+// keyed by the engine's STABLE `flow.id`: a read is generated once per id and
+// only regenerated when the id changes (a genuinely new/changed deal), so
+// unchanged deals are never re-worded.
+//
+// Resolution order: (1) a `read` the engine itself wrote wins if it ever ships
+// one; (2) the cached read for this flow.id; (3) a legacy hand note keyed by
+// "source=>target" (pre-id-cache entries); (4) null → composeRead(), a grounded
+// line built strictly from known facts. The UI always labels a non-engine read
+// as "наша трактовка · не данные движка" — true precisely because we wrote it.
 export function flowNote(flow) {
   if (flow.read) return { angle: flow.angle || null, read: flow.read, from: 'engine' };
-  const n = flowNotes[`${flow.source}=>${flow.target}`];
-  return n ? { ...n, from: 'dashboard' } : null;
+  const byId = flow.id ? flowNotes[flow.id] : null;
+  if (byId) return { ...byId, from: 'dashboard' };
+  const legacy = flowNotes[`${flow.source}=>${flow.target}`];
+  return legacy ? { ...legacy, from: 'dashboard' } : null;
 }
 
 export function composeRead(flow, srcNode, tgtNode) {
