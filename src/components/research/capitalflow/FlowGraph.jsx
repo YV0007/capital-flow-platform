@@ -522,31 +522,36 @@ export default function FlowGraph({
   const nodeTooltip = useCallback((n) => {
     const cls = CLASS_META[n.cls];
     const sec = n.sector ? SECTOR_META[n.sector] : null;
-    const t = n.tier ? TIER_META[n.tier] : null;
-    const role = n.type === 'player' ? 'Инвестор · вкладывает' : 'Получатель · привлекает';
-    const side = n.type === 'player'
-      ? `<span style="color:${T.tipText4}">Вложено</span><span style="color:${tone("#C2A36B", mode)};text-align:right">${fmtUSD(n.totalOutflow)}</span>`
-      : `<span style="color:${T.tipText4}">Получено</span><span style="color:${tone("#82B98D", mode)};text-align:right">${fmtUSD(n.totalInflow)}</span>`;
+    const isPlayer = n.type === 'player';
+    // The new classification — the one bit worth surfacing on hover.
+    const pivot = isPlayer
+      ? (n.playerRank === 'core' ? 'Ключевой инвестор' : n.playerRank === 'key' ? 'Инвестор на контроле' : null)
+      : (n.dealRank === 'flagged' ? 'Интересная сделка' : n.dealRank === 'emerging' ? 'Зарождается' : null);
+    const sideLabel = isPlayer ? 'Вложено' : 'Получено';
+    const sideVal = isPlayer ? n.totalOutflow : n.totalInflow;
+    const sideColor = isPlayer ? tone('#C2A36B', mode) : tone('#82B98D', mode);
+    const row = (k, v, vc) => `<span style="color:${T.tipText4}">${k}</span><span style="color:${vc};text-align:right">${v}</span>`;
     return tip(T, `
-      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:5px">
-        <span style="font-weight:700;font-size:12.5px;color:${T.tipText}">${esc(n.name)}</span>
-        ${t ? `<span style="color:${tone(t.color, mode)};font-size:9px;font-weight:700">${t.short} ${t.stars}</span>` : ''}
-        ${n.stale ? '<span style="color:${T.tipText4};font-size:9px;font-weight:700">ОСТЫЛ</span>' : ''}
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:${pivot ? 6 : 9}px">
+        <span style="font-weight:700;font-size:12px;color:${T.tipText};letter-spacing:-0.01em">${esc(n.name)}</span>
+        ${n.stale ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">ОСТЫЛ</span>` : ''}
       </div>
-      <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
-        <span style="width:7px;height:7px;border-radius:50%;background:${tone(n.color, mode)}"></span>
+      ${pivot ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:9px">
+        <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
+        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">${pivot}</span>
+      </div>` : ''}
+      <div style="display:flex;gap:6px;align-items:center;margin-bottom:9px">
+        <span style="width:7px;height:7px;border-radius:2px;background:${tone(n.color, mode)};flex:none"></span>
         <span style="color:${T.tipText3}">${esc(cls?.label || n.cls)}</span>
         ${sec ? `<span style="color:${T.tipRule}">·</span><span style="color:${T.tipText4}">${esc(sec.label)}</span>` : ''}
-        <span style="color:${T.tipRule}">·</span>
-        <span style="color:${T.tipText4}">${esc(role)}</span>
       </div>
-      <div style="display:grid;grid-template-columns:auto auto;gap:2px 14px">
-        <span style="color:${T.tipText4}">Капитал</span><span style="color:${T.tipText2};text-align:right">${fmtUSD(n.capital)}</span>
-        ${side}
-        <span style="color:${T.tipText4}">Сделки</span><span style="color:${T.tipText3};text-align:right">${n.deals}</span>
-        <span style="color:${T.tipText4}">Активность</span><span style="color:${T.tipText3};text-align:right">${esc(n.last_activity || '—')}</span>
+      <div style="border-top:1px solid ${T.tipBorder};padding-top:9px;display:grid;grid-template-columns:auto 1fr;gap:5px 16px">
+        ${row('Капитал', fmtUSD(n.capital), T.tipText2)}
+        ${row(sideLabel, fmtUSD(sideVal), sideColor)}
+        ${row('Сделки', n.deals, T.tipText3)}
+        ${row('Активность', esc(n.last_activity || '—'), T.tipText3)}
       </div>
-      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Клик → панель разбора</div>
+      <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">Клик → панель разбора</div>
     `);
   }, [mode, T]);
 
