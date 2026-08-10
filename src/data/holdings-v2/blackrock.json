@@ -3,7 +3,7 @@
  "name": "BlackRock",
  "ticker": "BLK",
  "type": "asset manager",
- "asOf": "23.07.2026",
+ "asOf": "10.08.2026",
  "tagline": "BlackRock — крупнейший в мире asset manager ($13.89 трлн AUM): доход — комиссии с управляемых активов, экономику делают iShares ETF (44% base fees) и высокомаржинальные private markets после GIP/HPS/Preqin. Решение hold/add/cut держится на конверсии рекордных притоков ($744 млрд LTM) в base/performance fees при as-adjusted марже >45%; акция при этом у 52-недельного минимума и ниже исторической forward P/E.",
  "kpis": [
   {
@@ -2689,6 +2689,38 @@
   ]
  },
  "news": [
+  {
+   "date": "03.08.2026",
+   "type": "announcement",
+   "title": "BlackRock расширяет токенизированные фонды денежного рынка",
+   "text": "BlackRock запустила ончейн-версию фонда Select Treasury Based Liquidity Fund (BSTBL) на блокчейне Ethereum, а также новый фонд BRSRV с ежедневным реинвестированием, ориентированный на резервы стейблкоинов. Оба фонда рассчитаны на соответствие требованиям к резервным активам эмитентов платёжных стейблкоинов в рамках закона GENIUS Act. Финансовый директор Мартин Смолл отметил, что BlackRock управляет $60 млрд резервов для Circle и стремится стать основным управляющим резервами стейблкоинов в отрасли. Ранее запущенный токенизированный фонд BUIDL держит около $2,5 млрд активов.",
+   "image": null,
+   "url": "https://www.coindesk.com/business/2026/08/03/blackrock-expands-tokenized-cash-with-new-blockchain-based-money-market-offerings"
+  },
+  {
+   "date": "28.07.2026",
+   "type": "announcement",
+   "title": "Meta и BlackRock создают СП по ЦОД в Эль-Пасо на $14 млрд",
+   "text": "Meta и BlackRock объявили о совместном предприятии (joint venture) для строительства дата-центра в Эль-Пасо, штат Техас, с ориентировочной стоимостью около $14 млрд и мощностью 1 гигаватт для AI-инфраструктуры Meta. Фонды под управлением BlackRock получат 80% в проекте, Meta сохранит 20% и останется единственным арендатором комплекса. Meta вносит землю и незавершённые объекты примерно на $2,3 млрд, BlackRock — около $4,9 млрд деньгами, часть инвестиций финансируется за счёт $12,5 млрд долга. Первые мощности планируется ввести в 2028 году.",
+   "image": null,
+   "url": "https://www.prnewswire.com/news-releases/meta-announces-new-strategic-venture-with-blackrock-to-develop-data-center-in-el-paso-302836040.html"
+  },
+  {
+   "date": "22.07.2026",
+   "type": "dividend",
+   "title": "BlackRock объявила квартальный дивиденд $5,73 на акцию",
+   "text": "Совет директоров BlackRock объявил квартальный денежный дивиденд (quarterly cash dividend) в размере $5,73 на обыкновенную акцию. Выплата состоится 22 сентября 2026 года акционерам, зафиксированным в реестре на закрытие торгов 8 сентября 2026 года. Это выше дивиденда $5,21, выплачивавшегося годом ранее.",
+   "image": null,
+   "url": "https://ir.blackrock.com/news-and-events/press-releases/press-releases-details/2026/BlackRock-Declares-Quarterly-Dividend-of-5-73-on-Common-Stock/default.aspx"
+  },
+  {
+   "date": "21.07.2026",
+   "type": "news",
+   "title": "Консорциум с GIP BlackRock закрыл сделку по Aligned Data Centers на $40 млрд",
+   "text": "Партнёрство AIP, эмиратская MGX и Global Infrastructure Partners (GIP) в составе BlackRock завершили приобретение 100% Aligned Data Centers при стоимости предприятия около $40 млрд — одна из крупнейших частных инвестиций в цифровую инфраструктуру и рекордная M&A-сделка в сегменте дата-центров. Портфель Aligned охватывает 51 кампус и более 6,4 ГВт действующих и планируемых мощностей. После закрытия консорциум дополнительно выделил $5 млрд на расширение компании.",
+   "image": null,
+   "url": "https://aligneddc.com/press-release/aip-mgx-and-blackrocks-gip-close-acquisition-of-aligned-data-centers/"
+  },
   {
    "date": "15.07.2026",
    "type": "news",

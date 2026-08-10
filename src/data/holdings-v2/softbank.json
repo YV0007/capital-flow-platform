@@ -3,7 +3,7 @@
  "name": "SoftBank Group",
  "ticker": "9984.T · SFTBY",
  "type": "vision-fund holdco",
- "asOf": "26.07.2026",
+ "asOf": "10.08.2026",
  "tagline": "SBG — инвестиционный холдинг, чья equity value of holdings на ~76% сосредоточена в Arm (¥19.15T, консолидирован) и Vision Fund 2 (¥17.19T, внутри доминирует OpenAI); акция торгуется с дисконтом ~49% к raw NAV/share ¥7,029, а возможный перенос OpenAI IPO на 2027 — live-катализатор, склоняющий решение к hold до прояснения сроков IPO и рефинанса $40B bridge loan.",
  "kpis": [
   {
@@ -2996,6 +2996,30 @@
   ]
  },
  "news": [
+  {
+   "date": "06.08.2026",
+   "type": "news",
+   "title": "SoftBank за Q1 FY2026: рекордная стоимость чистых активов ¥72,3 трлн",
+   "text": "6 августа SoftBank Group отчиталась за первый квартал 2026 финансового года (апрель–июнь). Стоимость чистых активов (NAV, net asset value — активы за вычетом обязательств) достигла рекордных ¥72,3 трлн (около $445 млрд) на 30 июня благодаря росту доли в Arm. Чистая прибыль составила ¥347,3 млрд против ¥421,8 млрд годом ранее. Накопленная прибыль фондов Vision Fund достигла $47,3 млрд (SVF1 — $26,6 млрд, SVF2 — $21,3 млрд).",
+   "image": null,
+   "url": "https://www.investing.com/news/company-news/softbank-q1-fy2026-slides-record-nav-amid-massive-ai-bets-93CH-4840504"
+  },
+  {
+   "date": "03.07.2026",
+   "type": "news",
+   "title": "SoftBank возобновила переговоры о кредите $10 млрд под залог доли в OpenAI",
+   "text": "По данным Reuters, SoftBank возобновила переговоры с консорциумом кредиторов о маржинальном кредите (margin loan — заём под залог активов) на $10 млрд, обеспеченном её долей в OpenAI. Ранее переговоры буксовали из-за сложности оценки частной компании. Чтобы успокоить банки, SoftBank предложила гарантию погашения — право регресса к самой группе, если акции OpenAI подешевеют.",
+   "image": null,
+   "url": "https://www.manilatimes.net/2026/07/03/business/foreign-business/softbank-renews-talks-for-10-billion-loan-against-openai-stake-adds-concessions/2377720"
+  },
+  {
+   "date": "01.07.2026",
+   "type": "announcement",
+   "title": "SoftBank внесла второй транш $10 млрд в OpenAI через Vision Fund 2",
+   "text": "1 июля SoftBank Group исполнила второй транш дополнительных инвестиций в OpenAI на $10,0 млрд (¥1 627,3 млрд) через фонд SoftBank Vision Fund 2. Это часть общего пакета follow-on инвестиций (дополнительных вложений) на $30,0 млрд. Для финансирования группа привлекла $10,0 млрд по бридж-кредиту (bridge facility — промежуточное финансирование). Третий транш на $10,0 млрд запланирован на 1 октября 2026 года.",
+   "image": null,
+   "url": "https://group.softbank/en/news/press/20260701"
+  },
   {
    "date": "15.05.2026",
    "type": "announcement",

@@ -3,7 +3,7 @@
  "name": "Brookfield",
  "ticker": "BN / BAM",
  "type": "asset manager",
- "asOf": "28.06.2026",
+ "asOf": "10.08.2026",
  "tagline": "BN — материнская холдинговая компания: доля в BAM плюс накопленная прибыль фондов дают ~59% стоимости активов; рынок держит её с ~35% дисконтом к оценке менеджмента ($66.37 vs ~$43).",
  "about": "Глобальный alt-asset manager: ~$1 трлн под управлением + реальные активы на $175 млрд на балансе.",
  "summary": "Brookfield Corporation (BN) — крупнейший в мире владелец реальной инфраструктуры. Управляет ~$1 трлн через фонды и владеет активами на $175 млрд: электростанции, порты, дата-центры, недвижимость, трубопроводы. 250 000 сотрудников управляют активами напрямую — это оператор, не просто фонд. Комиссии $3.1 млрд/год (+18%). Главные ставки: AI-инфраструктура ($200 млрд pipeline), ядерная энергия (Westinghouse), частный кредит (Oaktree). Торгуется с ~35% дисконтом к оценке менеджмента.",
@@ -3285,6 +3285,38 @@
   }
  ],
  "news": [
+  {
+   "date": "05.08.2026",
+   "type": "news",
+   "title": "Brookfield: рекордный II квартал 2026 — привлечено $77 млрд",
+   "text": "Brookfield Asset Management (BAM) отчиталась о рекордном II квартале: привлечено $77 млрд за квартал и $98 млрд с начала года. Комиссионный доход (fee-related earnings, FRE) вырос на 20% г/г до $808 млн ($0,50 на акцию), распределяемая прибыль (distributable earnings, DE) — на 15% до $707 млн ($0,44 на акцию). Чистая прибыль составила $1,17 млрд, комиссионный капитал (fee-bearing capital) достиг $672 млрд (+19% г/г). Менеджмент подтвердил, что 2026 год станет рекордным.",
+   "image": null,
+   "url": "https://www.globenewswire.com/news-release/2026/08/05/3339313/0/en/brookfield-asset-management-announces-record-second-quarter-results.html"
+  },
+  {
+   "date": "05.08.2026",
+   "type": "dividend",
+   "title": "Brookfield объявила квартальный дивиденд $0,5025 на акцию",
+   "text": "Вместе с отчётностью за II квартал совет директоров BAM объявил квартальный дивиденд в размере $0,5025 на акцию. Выплата назначена на 29 сентября 2026 года. Дивиденд подкреплён ростом распределяемой прибыли на 15% г/г до $707 млн.",
+   "image": null,
+   "url": "https://www.globenewswire.com/news-release/2026/08/05/3339313/0/en/brookfield-asset-management-announces-record-second-quarter-results.html"
+  },
+  {
+   "date": "27.07.2026",
+   "type": "news",
+   "title": "Brookfield вложит до $9 млрд в ИИ-дата-центр в Южной Корее",
+   "text": "Brookfield совместно с NVIDIA и корейской Naver объявила о расширении ИИ-фабрики на гиперскейл-площадке GAK Sejong в Седжоне. Brookfield обязалась инвестировать до $9 млрд (необязывающий term sheet), NVIDIA вложит около $1 млрд в Naver. Мощность площадки планируется нарастить с 55 до 200 мегаватт к 2028 году на платформе NVIDIA DSX, с прицелом Naver на 1 гигаватт ИИ-инфраструктуры.",
+   "image": null,
+   "url": "https://www.globenewswire.com/news-release/2026/07/27/3333489/0/en/naver-nvidia-and-brookfield-to-expand-korea-s-national-ai-factory-infrastructure-buildout.html"
+  },
+  {
+   "date": "06.07.2026",
+   "type": "announcement",
+   "title": "Csquare (Brookfield) выходит на IPO с привлечением до $1,35 млрд",
+   "text": "Дата-центровая компания Csquare Inc., поддерживаемая Brookfield Corp., начала IPO в США с целью привлечь до $1,35 млрд. Предлагается 50 млн акций по $23–27; верхняя граница диапазона соответствует оценке около $4,18 млрд. Brookfield сохранит голосующий контроль над компанией. Это первый крупный тест публичного спроса на дата-центры на фоне ИИ-бума.",
+   "image": null,
+   "url": "https://www.infrastructureinvestor.com/brookfields-csquare-tests-public-appetite-for-data-centres-with-1-35bn-ipo/"
+  },
   {
    "date": "05.07.2026",
    "type": "news",

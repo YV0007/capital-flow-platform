@@ -3,7 +3,7 @@
  "name": "Fairfax Financial",
  "ticker": "FFH.TO",
  "type": "true holdco",
- "asOf": "23.07.2026",
+ "asOf": "10.08.2026",
  "tagline": "Канадский страховой холдинг (страхование имущества и ответственности и перестрахование) с долгосрочным портфелем value-инвестиций; 2025 — рекордный год (net earnings $4.77B, combined ratio 93.0%, BVPS $1,260.19), но акция переоценилась с дисконта к book (0.74x в 2021) до премии ~1.4–1.5x USD — основной re-rating уже позади, при key-person риске (Watsa, 75 лет) и ускорившемся buyback.",
  "kpis": [
   {
@@ -2328,6 +2328,22 @@
   }
  ],
  "news": [
+  {
+   "date": "30.07.2026",
+   "type": "news",
+   "title": "Fairfax: прибыль во II квартале 2026 — $1,39 млрд, рост балансовой стоимости",
+   "text": "Fairfax Financial отчиталась за II квартал 2026: чистая прибыль составила $1 392,7 млн ($63,38 на разводнённую акцию). Балансовая стоимость на акцию (book value per share) достигла $1 304,39 на 30.06.2026 против $1 260,19 на конец 2025 года — рост 4,8% с поправкой на дивиденд $15 на акцию. Комбинированный коэффициент (combined ratio) составил 93,1%, андеррайтинговая прибыль — $458,6 млн. Валовые премии (gross premiums written) выросли на 4,1% до $9 633,9 млн. За квартал компания выкупила 680 307 акций на $1 089,3 млн.",
+   "image": null,
+   "url": "https://www.theglobeandmail.com/investing/markets/markets-news/GlobeNewswire/3562750/fairfax-financial-holdings-limited-financial-results-for-the-second-quarter/"
+  },
+  {
+   "date": "15.06.2026",
+   "type": "announcement",
+   "title": "Fairfax покупает винодела Andrew Peller за $397 млн",
+   "text": "Fairfax Financial договорилась о приобретении канадского производителя вина Andrew Peller Limited. Сделка оценивает компанию примерно в $397 млн по капиталу (equity value) и $579 млн по стоимости предприятия (enterprise value). Держателям неголосующих акций класса A предложено $8,00 за акцию (премия 41% к цене закрытия), голосующих акций класса B — $12,00 за акцию. Закрытие ожидается в III квартале 2026 года. Сделку поддерживает эффект тарифов: провинциальные алкогольные регуляторы прекратили импорт вина из США.",
+   "image": null,
+   "url": "https://www.insurancebusinessmag.com/ca/news/mergers-acquisitions/fairfax-financial-takes-andrew-peller-private-in-397-million-deal-579012.aspx"
+  },
   {
    "date": "29.05.2026",
    "type": "news",

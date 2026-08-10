@@ -3,7 +3,7 @@
  "name": "Pershing Square",
  "ticker": "PSH LN / PSHD LN",
  "type": "true holdco / closed-end fund",
- "asOf": "27.07.2026",
+ "asOf": "10.08.2026",
  "tagline": "Концентрированный активистский хедж-фонд Билла Экмана с бессрочным капиталом: 11 позиций, NAV $74/акц., цена $49 — устойчивый дисконт ~34%.",
  "kpis": [
   {
@@ -1933,6 +1933,14 @@
   ]
  },
  "news": [
+  {
+   "date": "31.07.2026",
+   "type": "news",
+   "title": "СЧА Pershing Square Holdings на конец июля: −9,2% с начала года",
+   "text": "Pershing Square Holdings (PSH LN) отчиталась о стоимости чистых активов (NAV) $77,10 на акцию (£57,21) по состоянию на 31 июля 2026 года. Доходность с начала года (year-to-date) составила −9,2% чистыми, оставаясь в отрицательной зоне при сохранении дисконта котировок к NAV. Неделей ранее, на 14 июля, NAV равнялась $77,06 при доходности −9,3%.",
+   "image": null,
+   "url": "https://pershingsquareholdings.com/performance/nav/"
+  },
   {
    "title": "IPO PSUS рухнуло на 18% в первый день",
    "source": "Bloomberg",
