@@ -326,6 +326,9 @@ export default function FlowGraph({
   //   labels reveal by zoom, ranked by importance (see node.labelScale)
   const paintNode = useCallback((node, ctx, globalScale) => {
     const lit = nodeLit(node);
+    // Under an active filter, out-of-filter nodes are removed entirely (not just
+    // dimmed) so the filtered view stays clean instead of a faint mess.
+    if (hasFilter && !matchedNodes.has(node.id)) return;
     const selected = node.id === selectedNodeId;
     const hovered = node.id === hoverNodeId;
     const dim = node.stale ? 0.4 : node.watchOnly ? 0.72 : 1;
@@ -457,18 +460,22 @@ export default function FlowGraph({
     }
 
     ctx.restore();
-  }, [nodeLit, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick, mode, T, hasFilter]);
+  }, [nodeLit, matchedNodes, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick, mode, T, hasFilter]);
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
+    // Hidden-by-filter nodes get no hit area — no ghost hovers on empty space.
+    if (hasFilter && !matchedNodes.has(node.id)) return;
     const S = (node.r || 12) * 1.85, half = S / 2;
     ctx.fillStyle = colour;
     roundRect(ctx, node.x - half, node.y - half, S, S, S * 0.26);
     ctx.fill();
-  }, []);
+  }, [hasFilter, matchedNodes]);
 
   // ── Link styling ───────────────────────────────────────────────────────
   const linkColor = useCallback((l) => {
     const lit = linkLit(l);
+    // Under an active filter, hide out-of-filter edges entirely.
+    if (hasFilter && !matchedLinks.has(l.id)) return 'rgba(0,0,0,0)';
     if (!lit) return hexA(T.linkDim, T.linkDimAlpha * (hasFilter ? 0.5 : 1));
     if (l.id === selectedLinkId) return T.labelStrong;
     // All bonds are SOLID; confidence (0–100 grade score) drives opacity so
@@ -481,15 +488,17 @@ export default function FlowGraph({
     const lc = tone(l.color, mode);
     if (l.id === hoverLinkId) return hexA(lc, Math.min(1, a + 0.45));
     return hexA(lc, hasSelection ? Math.min(1, a + 0.3) : a);
-  }, [linkLit, selectedLinkId, hoverLinkId, hasSelection, mode, T, hasFilter]);
+  }, [linkLit, matchedLinks, selectedLinkId, hoverLinkId, hasSelection, mode, T, hasFilter]);
 
   const linkW = useCallback((l) => {
+    // Zero width for edges hidden by a filter — no hairline residue.
+    if (hasFilter && !matchedLinks.has(l.id)) return 0;
     // Restrained widths — importance reads through opacity + flow, not girth.
     const w = 0.6 + 2.8 * Math.sqrt(l.amountShare || 0);
     if (l.id === selectedLinkId) return w + 1.6;
     if (l.id === hoverLinkId) return w + 1;
     return w;
-  }, [selectedLinkId, hoverLinkId]);
+  }, [selectedLinkId, hoverLinkId, hasFilter, matchedLinks]);
 
   const particles = useCallback((l) => {
     // Motion only on focus (selection / neighbourhood) — the map stays calm and
