@@ -289,19 +289,26 @@ function LinkChip({ link }) {
 // (the primary intent — "who did they back? show me that company"). The deal
 // write-up is a separate, explicit button so the two never fight each other.
 //
-// When the flows span 2+ sectors, they are BUCKETED by sector so you can read
-// at a glance where this allocator actually puts its capital. The sub-headers
-// are deliberately quiet — a small sector dot, a muted small-caps label and a
-// thin rule — never loud titles. A single-sector list (or a target's inbound,
-// which is all one sector) renders flat, with no headers.
+// The flows are BUCKETED so you can read the shape of the money at a glance,
+// and the axis depends on which way the flows point:
+//   · OUTBOUND (an allocator's money going out) → by SECTOR — where it lands.
+//   · INBOUND  (money coming into a target)     → by allocator CLASS — what
+//     KIND of capital backs it (venture vs sovereign vs corporate…).
+// Sub-headers are deliberately quiet — a small dot, a muted small-caps label
+// and a thin rule — never loud titles. A single-bucket list renders flat.
 function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFlow, onOpenEntity }) {
   const max = Math.max(...flows.map(f => f.amountUSD), 1);
+  const inbound = counterpartyKey === 'sourceId';
 
-  // Bucket by sector. `_none` collects flows the payload left unsectored so
-  // they are never silently dropped.
+  // Group key: the backer's class for inbound, the deal's sector for outbound.
+  // `_none` collects anything the payload leaves unlabelled — never dropped.
+  const keyOf = (f) => {
+    if (inbound) return nodeById.get(f.sourceId)?.cls || '_none';
+    return f.sector || '_none';
+  };
   const buckets = new Map();
   flows.forEach(f => {
-    const key = f.sector || '_none';
+    const key = keyOf(f);
     if (!buckets.has(key)) buckets.set(key, []);
     buckets.get(key).push(f);
   });
@@ -392,11 +399,18 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
 
   // Heaviest sector first, unsectored last. Within a group, flows keep the
   // amount order they arrived in (already sorted by the adjacency builder).
+  // Resolve each bucket's label + dot colour on the correct axis: allocator
+  // class (with its plural `zone` name) for inbound, sector for outbound.
+  const labelFor = (key) => {
+    if (key === '_none') return { label: inbound ? 'Прочие' : 'Без сектора', color: 'var(--cf-text7)' };
+    if (inbound) { const m = CLASS_META[key]; return { label: m?.zone || m?.label || key, color: m?.color || 'var(--cf-text7)' }; }
+    const m = SECTOR_META[key]; return { label: sectorLabel(key), color: m?.color || 'var(--cf-text7)' };
+  };
   const order = [...buckets.entries()]
     .map(([key, list]) => {
       const disclosed = list.some(f => f.disclosed);
       const total = list.reduce((s, f) => s + f.amountUSD, 0);
-      return { key, list, disclosed, total };
+      return { key, list, disclosed, total, ...labelFor(key) };
     })
     .sort((a, b) => (a.key === '_none') - (b.key === '_none') || b.total - a.total);
 
@@ -404,8 +418,8 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
     <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       {order.map((g, gi) => (
         <div key={g.key} style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-          <SectorHeader
-            sectorKey={g.key} count={g.list.length}
+          <GroupHeader
+            label={g.label} color={g.color} count={g.list.length}
             total={g.disclosed ? fmtUSD(g.total) : null} first={gi === 0}
           />
           {g.list.map(renderRow)}
@@ -415,13 +429,12 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
   );
 }
 
-// Quiet sector divider inside a flow list — a small sector dot, a muted
-// small-caps label and a hairline rule. Intentionally understated (не броский):
-// it categorises without competing with the rows or the section title.
-function SectorHeader({ sectorKey, count, total, first }) {
-  const meta = sectorKey === '_none' ? null : SECTOR_META[sectorKey];
-  const label = sectorKey === '_none' ? 'Без сектора' : sectorLabel(sectorKey);
-  const dot = meta?.color || 'var(--cf-text7)';
+// Quiet divider inside a flow list — a small coloured dot, a muted small-caps
+// label and a hairline rule. Intentionally understated (не броский): it
+// categorises (by sector, or by allocator class) without competing with the
+// rows or the section title.
+function GroupHeader({ label, color, count, total, first }) {
+  const dot = color || 'var(--cf-text7)';
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 7,
