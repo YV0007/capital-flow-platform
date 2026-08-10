@@ -155,7 +155,9 @@ function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
       <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         {label}
       </div>
-      <div style={{ fontSize: 14, fontWeight: 700, color, marginTop: 3, lineHeight: 1.3 }}>
+      {/* Basis kept as a hover tooltip, not printed — it was visual clutter. */}
+      <div title={basis || undefined}
+        style={{ fontSize: 14, fontWeight: 700, color, marginTop: 3, lineHeight: 1.3, cursor: basis ? 'help' : 'default' }}>
         {value}
       </div>
       {detail && (
@@ -170,11 +172,6 @@ function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
               {r.tail && <span style={{ color: 'var(--cf-text8)' }}>{r.tail}</span>}
             </span>
           ))}
-        </div>
-      )}
-      {basis && (
-        <div style={{ fontSize: 8.5, color: 'var(--cf-text8)', fontFamily: MONO, marginTop: 5, lineHeight: 1.5 }}>
-          {basis}
         </div>
       )}
     </div>
