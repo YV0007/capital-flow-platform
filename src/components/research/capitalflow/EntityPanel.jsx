@@ -3,11 +3,12 @@
 // goes, how much, in what form, at what confidence. The graph stays live
 // underneath.
 
-import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, FileText, Newspaper } from 'lucide-react';
+import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, FileText, Newspaper, Briefcase } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
 import {
   SECTOR_META, CLASS_META, TIER_META, NETWORK_META, confidenceBand, sectorLabel,
 } from '../../../data/capitalMap.js';
+import { subsectorLabel } from './subsectors.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
 
 const MONO = 'ui-monospace, monospace';
@@ -21,7 +22,7 @@ function totalOrNull(flows, total) {
 
 export default function EntityPanel({
   node, inbound, outbound, nodeById,
-  selectedFlowId, onSelectFlow, onOpenEntity, onClose, onDeepDive, wl, topInset = 0,
+  selectedFlowId, onSelectFlow, onOpenEntity, onClose, onDeepDive, onFundHoldings, wl, topInset = 0,
 }) {
   if (!node) return null;
   const cls = CLASS_META[node.cls];
@@ -143,6 +144,13 @@ export default function EntityPanel({
           </button>
         )}
 
+        {/* Fund portfolio — funds only: the top holdings + a button to the full
+            portfolio. Following smart money means seeing the exact companies. */}
+        {(node.cls === 'fund' || (node.holdings && node.holdings.length > 0)) && (
+          <FundPortfolioBlock node={node} nodeById={nodeById}
+            onOpenEntity={onOpenEntity} onFundHoldings={onFundHoldings} />
+        )}
+
         {/* Totals */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
           {/* capital 0 with deals on file = every amount undisclosed, not zero */}
@@ -249,6 +257,86 @@ function ProfileBlock({ node }) {
         <div style={{ marginTop: 8, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO }}>
           Исследовано движком · {node.referenceAsOf}
         </div>
+      )}
+    </div>
+  );
+}
+
+// ── Fund portfolio (funds only) ─────────────────────────────────────────
+// The map shows LP money flowing INTO a fund; this shows where the fund
+// deploys it — the exact companies, so smart money can be followed to names.
+// Top 5 here; the full portfolio (top 25 + all) is behind the button.
+// Holdings are ENGINE-owned facts (`node.holdings[]`); a fund without them
+// shows an honest gap, never a hand-filled list.
+function FundPortfolioBlock({ node, nodeById, onOpenEntity, onFundHoldings }) {
+  const holdings = Array.isArray(node.holdings) ? node.holdings : [];
+  const total = node.holdings_count || holdings.length;
+  const top = holdings.slice(0, 5);
+  const idByName = new Map();
+  nodeById?.forEach((n) => idByName.set((n.name || n.label || '').toLowerCase(), n.id));
+
+  return (
+    <div style={{
+      marginBottom: 16, padding: '11px 12px',
+      background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 10,
+    }}>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 6, marginBottom: 9,
+        fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.12em',
+      }}>
+        <Briefcase size={11} color="var(--cf-gold)" /> Портфель фонда
+        {total > 0 && <span style={{ color: 'var(--cf-text4)' }}>· {total}</span>}
+      </div>
+
+      {top.length > 0 ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {top.map((h, i) => {
+            const sec = h.sector ? SECTOR_META[h.sector] : null;
+            const openId = idByName.get(String(h.name || '').toLowerCase());
+            return (
+              <div key={i}
+                onClick={() => openId && onOpenEntity(openId)}
+                title={openId ? `Открыть ${h.name}` : (h.note || '')}
+                style={{
+                  display: 'flex', alignItems: 'baseline', gap: 6, padding: '5px 8px', borderRadius: 6,
+                  background: 'var(--cf-surface2)', border: '1px solid var(--cf-border-soft)',
+                  cursor: openId ? 'pointer' : 'default',
+                }}
+                onMouseEnter={(e) => { if (openId) e.currentTarget.style.borderColor = 'var(--cf-border-strong)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--cf-border-soft)'; }}>
+                <span style={{ width: 5, height: 5, borderRadius: 2, background: sec?.color || 'var(--cf-text7)', flexShrink: 0, alignSelf: 'center' }} />
+                <span style={{ fontSize: 11.5, fontWeight: 600, color: 'var(--cf-text1)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
+                  {h.name}
+                </span>
+                <span style={{ flex: 1 }} />
+                {h.subsector && (
+                  <span style={{ fontSize: 8.5, color: sec?.color || 'var(--cf-text5)', fontFamily: MONO, whiteSpace: 'nowrap', flexShrink: 0 }}>
+                    {subsectorLabel(h.subsector)}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', fontFamily: MONO, lineHeight: 1.55, fontStyle: 'italic' }}>
+          Список компаний фонда движок пока не прислал — появится в данных, отобразим здесь.
+        </div>
+      )}
+
+      {onFundHoldings && (
+        <button onClick={() => onFundHoldings(node.id)}
+          title="Полный портфель фонда — все компании"
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+            width: '100%', padding: '8px 12px', marginTop: 10,
+            background: 'var(--cf-accent-bg)', border: '1px solid var(--cf-accent-bd)',
+            borderRadius: 8, color: 'var(--cf-accent)', fontSize: 10, fontFamily: MONO, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer',
+          }}>
+          {total > 5 ? `Все компании фонда · ${total}` : 'Детальный портфель'} <ChevronRight size={12} />
+        </button>
       )}
     </div>
   );

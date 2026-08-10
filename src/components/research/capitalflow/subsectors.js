@@ -29,9 +29,11 @@ export function vehicleOf(node) {
 }
 
 // De-slug an engine subsector key into a readable label, keeping the acronyms
-// the engine uses in caps ("hyperscale-ai" → "Hyperscale AI").
+// the engine uses in caps ("hyperscale-ai" → "Hyperscale AI"). Exported so the
+// fund-portfolio view can label a holding's subsector the same way.
 const CAPS = new Set(['ai', 'gpu', 'spv', 'jv', 'doe', 'apac', 'us', 'ev', 'cpo', 'asic', 'dc', 'jpm', 'gw']);
-function deslug(key) {
+export function subsectorLabel(key) {
+  if (!key) return '';
   return String(key).split(/[-_]/).map(w => {
     const lw = w.toLowerCase();
     if (CAPS.has(lw)) return w.toUpperCase();
@@ -39,6 +41,7 @@ function deslug(key) {
     return w ? w[0].toUpperCase() + w.slice(1) : w;
   }).join(' ');
 }
+const deslug = subsectorLabel;
 
 // Stable muted colour from the key — distinguishable rows without a maintained
 // palette. Hash → hue, fixed low saturation / mid lightness (cool, calm).

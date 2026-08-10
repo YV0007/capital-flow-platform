@@ -34,6 +34,7 @@ import FilterDrawer from './FilterBar.jsx';
 import Legend from './Legend.jsx';
 import EntityPanel from './EntityPanel.jsx';
 import AllocatorDeepDive from './AllocatorDeepDive.jsx';
+import FundHoldings from './FundHoldings.jsx';
 import EntityTable from './EntityTable.jsx';
 import ClusterReport from './ClusterReport.jsx';
 import { buildSectorReport, buildClassReport } from './clusterStats.js';
@@ -78,6 +79,10 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [view, setView] = useState('map');                   // 'map' | 'table' (tracking universe)
   const [tableKind, setTableKind] = useState('all');         // table role chip: all | allocator | target
+  // Filter key auto-applied by the sector report's "all receivers" button. If
+  // the filter is still exactly this on the way back to the map, it was never
+  // the user's — so we drop it. A user-set filter (key differs) is kept.
+  const autoFilterKeyRef = useRef(null);
 
   // ── Watchlists — saved subsets of the map (localStorage) ───────────────
   const wl = useWatchlists();
@@ -88,6 +93,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [selectedFlowId, setSelectedFlowId] = useState(null);
   const [showLabels, setShowLabels] = useState(true);
   const [deepDiveOpen, setDeepDiveOpen] = useState(false);   // allocator breakdown over the panel
+  const [fundHoldingsOpen, setFundHoldingsOpen] = useState(false);  // fund portfolio over the panel
   // Cluster report — opened by clicking a cluster TITLE on the canvas.
   // { type: 'sector' | 'source', key } — 'source' is an allocator-class island.
   const [cluster, setCluster] = useState(null);
@@ -173,7 +179,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     setView('map');                 // a table row lands you on the map, entity open
     setSelectedNodeId(id);
     setSelectedFlowId(null);
-    setDeepDiveOpen(false);
+    setDeepDiveOpen(false); setFundHoldingsOpen(false);
     setCluster(null);
     const fg = fgRef.current;
     if (fg && node && node.x != null) {
@@ -184,7 +190,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
   const handleNodeClick = useCallback((id) => {
     setSelectedFlowId(null);
-    setDeepDiveOpen(false);
+    setDeepDiveOpen(false); setFundHoldingsOpen(false);
     setCluster(null);
     setSelectedNodeId(prev => (prev === id ? null : id));
   }, []);
@@ -204,14 +210,14 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const handleRegionClick = useCallback((type, key) => {
     setSelectedNodeId(null);
     setSelectedFlowId(null);
-    setDeepDiveOpen(false);
+    setDeepDiveOpen(false); setFundHoldingsOpen(false);
     setCluster({ type, key });
   }, []);
 
   const clearSelection = useCallback(() => {
     setSelectedNodeId(null);
     setSelectedFlowId(null);
-    setDeepDiveOpen(false);
+    setDeepDiveOpen(false); setFundHoldingsOpen(false);
     setCluster(null);
   }, []);
 
@@ -269,7 +275,13 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   // the receivers — the full set of companies/projects/funds pulling capital in,
   // grouped by type. Reuses the shared filter, so map and table stay in sync.
   const openSectorReceivers = useCallback((sectorKey) => {
-    applyFilterState({ sectors: [sectorKey] });
+    const state = { sectors: [sectorKey] };
+    applyFilterState(state);
+    // Remember exactly what we applied — if it's untouched on exit, we drop it.
+    autoFilterKeyRef.current = viewKey({
+      sectors: [sectorKey], classes: [], tiers: [], families: [], statuses: [],
+      networks: [], minAmount: 0, minConfidence: 0, sinceDays: 0,
+    });
     setQuery('');
     setTableKind('target');
     setCluster(null);
@@ -338,6 +350,19 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     minAmount, minConfidence, sinceDays,
   });
   const activeViewId = views.find(v => viewKey(v.state) === currentKey)?.id || null;
+
+  // Leave the table for the map. Drop the filter only if it's still the exact
+  // one the "all receivers" button applied (i.e. the user never touched it);
+  // any filter the user set or changed themselves survives the transition.
+  const exitToMap = () => {
+    if (autoFilterKeyRef.current != null && autoFilterKeyRef.current === currentKey) {
+      applyFilterState(EMPTY_VIEW);
+      setQuery('');
+    }
+    autoFilterKeyRef.current = null;
+    setDrawerOpen(false);
+    setView('map');
+  };
   const applyView = useCallback((v) => {
     applyFilterState(activeViewId === v.id ? EMPTY_VIEW : v.state);
   }, [applyFilterState, activeViewId]);
@@ -413,7 +438,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, pointerEvents: 'auto', minWidth: 0 }}>
           {/* In the table, Назад steps back to the map (the intuitive "up one
               level"); on the map it leaves for the research library. */}
-          <button onClick={() => (view === 'table' ? setView('map') : onBack())}
+          <button onClick={() => (view === 'table' ? exitToMap() : onBack())}
             title={view === 'table' ? 'Назад к карте' : 'К библиотеке исследований'}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 3,
@@ -508,7 +533,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
-          <TopBtn onClick={() => { setView(v => (v === 'map' ? 'table' : 'map')); setDrawerOpen(false); }}
+          <TopBtn onClick={() => (view === 'map' ? (setView('table'), setDrawerOpen(false)) : exitToMap())}
             label={view === 'map' ? 'Таблица — вся отслеживаемая вселенная, по ролям и типам' : 'Назад к карте'}
             active={view === 'table'} wide>
             {view === 'map' ? <Table2 size={12} /> : <Share2 size={12} />}
@@ -623,7 +648,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         />
       )}
 
-      {view === 'map' && selectedNode && !deepDiveOpen && (
+      {view === 'map' && selectedNode && !deepDiveOpen && !fundHoldingsOpen && (
         <EntityPanel
           topInset={TOPBAR_H}
           node={selectedNode}
@@ -634,6 +659,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           onSelectFlow={(id) => setSelectedFlowId(prev => (prev === id ? null : id))}
           onOpenEntity={focusEntity}
           onDeepDive={selectedNode.kind === 'allocator' ? () => setDeepDiveOpen(true) : null}
+          onFundHoldings={() => setFundHoldingsOpen(true)}
           wl={wl}
           onClose={() => setSelectedNodeId(null)}
         />
@@ -647,7 +673,18 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           nodeById={nodeById}
           onOpenEntity={focusEntity}
           onBack={() => setDeepDiveOpen(false)}
-          onClose={() => { setDeepDiveOpen(false); setSelectedNodeId(null); }}
+          onClose={() => { setDeepDiveOpen(false); setFundHoldingsOpen(false); setSelectedNodeId(null); }}
+        />
+      )}
+
+      {view === 'map' && selectedNode && fundHoldingsOpen && (
+        <FundHoldings
+          topInset={TOPBAR_H}
+          node={selectedNode}
+          nodeById={nodeById}
+          onOpenEntity={focusEntity}
+          onBack={() => setFundHoldingsOpen(false)}
+          onClose={() => { setFundHoldingsOpen(false); setSelectedNodeId(null); }}
         />
       )}
 
