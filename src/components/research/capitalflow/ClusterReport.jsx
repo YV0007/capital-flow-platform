@@ -299,9 +299,9 @@ export default function ClusterReport({ report, onOpenEntity, onClose, topInset 
               </div>
             ))}
 
-            {/* Sub-sector split — derived, with its coverage stated */}
+            {/* Sub-sector split — from the engine's per-deal subsector field */}
             <Section title="Подсекторы внутри кластера"
-              note="Определено на стороне дашборда по описаниям компаний — движок пока не присылает подсектор" />
+              note="Подсектор присылает движок по каждой сделке — показан как есть, без догадок" />
             {report.breakdown.operatingCount === 0 ? (
               <Empty>Операционных компаний здесь нет — все получатели это фонды, проекты или активы.</Empty>
             ) : (
@@ -311,10 +311,9 @@ export default function ClusterReport({ report, onOpenEntity, onClose, topInset 
                   background: 'var(--cf-surface1)', border: '1px dashed var(--cf-border)',
                   fontSize: 10, color: 'var(--cf-muted)', fontFamily: MONO, lineHeight: 1.55,
                 }}>
-                  Категория определена у {report.breakdown.coverage.classified} из {report.breakdown.coverage.total} операционных компаний
-                  {report.breakdown.coverage.weak ? ` (${report.breakdown.coverage.weak} — только по названию)` : ''}.
+                  Подсектор из данных движка у {report.breakdown.coverage.classified} из {report.breakdown.coverage.total} операционных компаний.
                   {report.breakdown.coverage.classified < report.breakdown.coverage.total &&
-                    ' Остальные без описания в данных — оставлены без категории, а не угаданы.'}
+                    ' У остальных подсектор в данных не указан — оставлены без категории.'}
                 </div>
                 {report.breakdown.subsectors.map(s => (
                   <div key={s.key || '_none'} style={{ marginBottom: 9 }}>

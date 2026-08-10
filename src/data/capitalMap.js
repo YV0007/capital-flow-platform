@@ -546,6 +546,10 @@ export function buildGraph(data = raw) {
     const tgt = nodeById.get(f.target);
     src.outflowCount += 1; src.totalOutflow += amt;
     tgt.inflowCount += 1;  tgt.totalInflow += amt;
+    // Engine sub-sector (per-flow slug). A target's sub-sector is the one on
+    // its largest inbound flow — the deal that most defines what it is. Engine-
+    // owned; no dashboard guessing (retires the keyword classifier).
+    if (f.subsector && amt >= (tgt._ssAmt ?? -1)) { tgt.subsector = f.subsector; tgt._ssAmt = amt; }
     if (f.status === 'verified' || f.status === 'verified_alpha') {
       src.confirmed = true; tgt.confirmed = true;
     }
