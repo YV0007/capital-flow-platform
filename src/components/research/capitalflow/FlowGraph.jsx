@@ -198,11 +198,12 @@ export default function FlowGraph({
     regions.forEach(r => {
       const lit = r.lit;
       const source = r.type === 'source';
-      // Under a filter, a region with no matched node inside is pushed back so
-      // the in-filter clusters stand out. `fA` fades the glow, `tA` the labels.
+      // Under a filter, a region with no matched node inside is REMOVED entirely
+      // (glow + label + hit box) — only in-filter categories remain on the map.
       const faded = !!activeRegionKeys && !activeRegionKeys.has(r.key);
-      const fA = faded ? 0.45 : 1;
-      const tA = faded ? 0.5 : 1;
+      if (faded) { r._hit = null; return; }
+      const fA = 1;
+      const tA = 1;
 
       // Soft glow POOL — a zone, not a bordered circle. Radial fade to nothing.
       const glowR = r.r * 1.45;
