@@ -174,7 +174,7 @@ export function buildSectorReport(sectorKey, { nodes, links, nodeById, generated
     label: sectorLabel(sectorKey),
     color: meta.color || '#71717a',
     blurb: meta.blurb || null,
-    outsideAiStack: ['gaming', 'ev-automotive', 'private-credit', 'diversified-pe'].includes(sectorKey),
+    outsideAiStack: ['ev-automotive', 'private-credit', 'diversified-pe'].includes(sectorKey),
     head,
     disclosedTotal,
     allocators: new Set(flows.filter(isConfirmed).map(f => f.sourceId)).size,

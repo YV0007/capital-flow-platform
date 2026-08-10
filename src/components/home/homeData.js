@@ -55,7 +55,7 @@ const SECTOR_RU = {
   'networking': 'Сети',
   'robotics': 'Робототехника',
   'defense-tech': 'Оборонные технологии',
-  'gaming': 'Игры',
+  'cybersecurity': 'Кибербезопасность',
   'ev-automotive': 'Электромобили',
   'private-credit': 'Частный кредит',
   'diversified-pe': 'Private equity',
@@ -150,7 +150,7 @@ const weekStart = (() => {
 const weekFlows = graph.links.filter((l) => l.date && l.date >= weekStart);
 
 // Sector meta with a safe fallback — the engine occasionally ships a sector
-// outside the canonical AI set (e.g. "gaming"); style it neutrally.
+// this map doesn't know yet; style it neutrally.
 export function sectorMetaOf(key) {
   const label = SECTOR_RU[key] || String(key || 'Прочее')
     .split('-')

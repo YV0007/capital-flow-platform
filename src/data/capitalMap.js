@@ -75,11 +75,11 @@ export const SECTOR_META = {
                           blurb: 'AI в физическом мире — гуманоиды, автономность, роботы.' },
   'defense-tech':       { label: 'Оборонные технологии', color: '#6E7E9A', order: 13,
                           blurb: 'Оборонка в обход традиционных генподрядчиков.' },
+  'cybersecurity':      { label: 'Кибербезопасность',  color: '#A46FD6', order: 14,
+                          blurb: 'Защита моделей, данных и инфраструктуры AI — киберпериметр стека.' },
   // ── Outside the AI buildout. Sovereigns and alt managers allocate here too
   // and it is real capital, so it is tracked — held in quieter slate tones so
   // the ring still reads as "AI stack first".
-  'gaming':             { label: 'Игры',               color: '#8A8FA6', order: 14,
-                          blurb: 'Игры и интерактивные развлечения. Вне AI-тематики.' },
   'ev-automotive':      { label: 'Электромобили',      color: '#7F93A8', order: 15,
                           blurb: 'Производители электромобилей и автопром. Вне AI-тематики.' },
   'private-credit':     { label: 'Частный кредит',     color: '#8F98A8', order: 16,
@@ -272,6 +272,7 @@ export const THEME_META = {
   biotech_ai:          { label: 'Биотех и AI',        color: '#5FB0A8', order: 7 },
   space:               { label: 'Космос',             color: '#7079DE', order: 8 },
   crypto_ai:           { label: 'Крипто и AI',        color: '#45C0D0', order: 9 },
+  cyber_security:      { label: 'Кибербезопасность',  color: '#A46FD6', order: 10 },
 };
 
 export const SECTOR_TO_THEME = {
@@ -283,8 +284,9 @@ export const SECTOR_TO_THEME = {
   'power-energy': 'energy_for_ai', 'nuclear': 'energy_for_ai',
   'robotics': 'robotics_embodiment',
   'defense-tech': 'defense_ai',
+  'cybersecurity': 'cyber_security',
   'ai-applications': 'ai_applications', 'ai-data': 'ai_applications',
-  // gaming · ev-automotive · private-credit · diversified-pe sit outside the AI
+  // ev-automotive · private-credit · diversified-pe sit outside the AI
   // buildout and deliberately carry no theme.
 };
 
