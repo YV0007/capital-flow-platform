@@ -14,7 +14,7 @@
 //   · dimmed = filtered out or outside the selected neighbourhood
 // ══════════════════════════════════════════════════════════════════════════
 
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { fmtUSD, linkWidth } from './format.js';
 import { SECTOR_META, CLASS_META, TIER_META, STATUS_META, NETWORK_META } from '../../../data/capitalMap.js';
@@ -149,6 +149,26 @@ export default function FlowGraph({
 
   const hasSelection = !!selectedNodeId || !!selectedLinkId;
 
+  // A FILTER is active when the matched set is a strict subset of all nodes.
+  // Click-selection does NOT shrink matchedNodes, so this cleanly isolates the
+  // "filter" case — where we push the unmatched rest further back so the
+  // in-filter companies read cleanly.
+  const hasFilter = matchedNodes.size < graphData.nodes.length;
+
+  // Region keys (sector for targets · class for allocators) that still hold at
+  // least one matched node. Regions with none get faded under a filter. null =
+  // no filter → nothing extra-dimmed (the default look is untouched).
+  const activeRegionKeys = useMemo(() => {
+    if (!hasFilter) return null;
+    const keys = new Set();
+    graphData.nodes.forEach((n) => {
+      if (!matchedNodes.has(n.id)) return;
+      if (n.sector) keys.add(n.sector);
+      if (n.cls) keys.add(n.cls);
+    });
+    return keys;
+  }, [hasFilter, graphData, matchedNodes]);
+
   const nodeLit = useCallback((n) => {
     if (!matchedNodes.has(n.id)) return false;
     if (!hasSelection) return true;
@@ -171,11 +191,16 @@ export default function FlowGraph({
     regions.forEach(r => {
       const lit = r.lit;
       const source = r.type === 'source';
+      // Under a filter, a region with no matched node inside is pushed back so
+      // the in-filter clusters stand out. `fA` fades the glow, `tA` the labels.
+      const faded = !!activeRegionKeys && !activeRegionKeys.has(r.key);
+      const fA = faded ? 0.45 : 1;
+      const tA = faded ? 0.5 : 1;
 
       // Soft glow POOL — a zone, not a bordered circle. Radial fade to nothing.
       const glowR = r.r * 1.45;
       const rc = tone(r.color, mode);
-      const baseA = source ? T.regionSource : (lit ? T.regionLit : T.regionTarget);
+      const baseA = (source ? T.regionSource : (lit ? T.regionLit : T.regionTarget)) * fA;
       const g = ctx.createRadialGradient(r.cx, r.cy, r.r * 0.12, r.cx, r.cy, glowR);
       g.addColorStop(0, hexA(rc, baseA));
       g.addColorStop(0.65, hexA(rc, baseA * 0.4));
@@ -190,7 +215,7 @@ export default function FlowGraph({
         ctx.beginPath();
         ctx.arc(r.cx, r.cy, r.r + 4, 0, 2 * Math.PI);
         ctx.lineWidth = 1.6;
-        ctx.strokeStyle = hexA(rc, 0.5);
+        ctx.strokeStyle = hexA(rc, 0.5 * tA);
         ctx.stroke();
       }
 
@@ -203,7 +228,7 @@ export default function FlowGraph({
       const size = source ? 19 : 25;
       ctx.font = `700 ${size}px ui-monospace, monospace`;
       const hot = hoverRegionRef.current === r.key;
-      ctx.fillStyle = hexA(rc, hot ? 1 : source ? 0.85 : lit ? 0.96 : 0.72);
+      ctx.fillStyle = hexA(rc, hot ? 1 : (source ? 0.85 : lit ? 0.96 : 0.72) * tA);
       const title = lit ? `◆ ${r.label}` : r.label;
       const ty = r.cy - r.r - 12;
       ctx.fillText(title, r.cx, ty);
@@ -229,11 +254,11 @@ export default function FlowGraph({
       if (r.stats) {
         ctx.textBaseline = 'top';
         ctx.font = `600 ${source ? 13 : 17}px ui-monospace, monospace`;
-        ctx.fillStyle = hexA(rc, mode === 'light' ? 0.85 : 0.4);
+        ctx.fillStyle = hexA(rc, (mode === 'light' ? 0.85 : 0.4) * tA);
         ctx.fillText(r.stats, r.cx, r.cy + r.r + 8);
       }
     });
-  }, [regions, mode, T]);
+  }, [regions, mode, T, activeRegionKeys]);
 
   // ── Cluster titles are clickable ──────────────────────────────────────
   // The title's hit box is written by paintRegions each frame in GRAPH
@@ -304,7 +329,9 @@ export default function FlowGraph({
     const selected = node.id === selectedNodeId;
     const hovered = node.id === hoverNodeId;
     const dim = node.stale ? 0.4 : node.watchOnly ? 0.72 : 1;
-    const alpha = lit ? dim : 0.06;
+    // Filtered-out nodes fade further under an active filter so the matched
+    // companies carry the frame.
+    const alpha = lit ? dim : (hasFilter ? 0.03 : 0.06);
     const col = tone(node.color, mode);
     const tc = col;
     const R = node.r || 12;
@@ -419,7 +446,7 @@ export default function FlowGraph({
     }
 
     ctx.restore();
-  }, [nodeLit, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick, mode, T]);
+  }, [nodeLit, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick, mode, T, hasFilter]);
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
     const S = (node.r || 12) * 1.85, half = S / 2;
@@ -431,7 +458,7 @@ export default function FlowGraph({
   // ── Link styling ───────────────────────────────────────────────────────
   const linkColor = useCallback((l) => {
     const lit = linkLit(l);
-    if (!lit) return hexA(T.linkDim, T.linkDimAlpha);
+    if (!lit) return hexA(T.linkDim, T.linkDimAlpha * (hasFilter ? 0.5 : 1));
     if (l.id === selectedLinkId) return T.labelStrong;
     // All bonds are SOLID; confidence (0–100 grade score) drives opacity so
     // high-confidence flows read stronger. Falls back to status when absent.
@@ -443,7 +470,7 @@ export default function FlowGraph({
     const lc = tone(l.color, mode);
     if (l.id === hoverLinkId) return hexA(lc, Math.min(1, a + 0.45));
     return hexA(lc, hasSelection ? Math.min(1, a + 0.3) : a);
-  }, [linkLit, selectedLinkId, hoverLinkId, hasSelection, mode, T]);
+  }, [linkLit, selectedLinkId, hoverLinkId, hasSelection, mode, T, hasFilter]);
 
   const linkW = useCallback((l) => {
     // Restrained widths — importance reads through opacity + flow, not girth.
