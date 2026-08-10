@@ -72,7 +72,14 @@ function mergeDeliveries(prev, cur) {
   (prev.flows || []).forEach(f => flows.set(flowKey(f), f));
   (cur.flows || []).forEach(f => flows.set(flowKey(f), f));   // current wins on dup
 
-  return { ...cur, nodes: [...nodes.values()], flows: [...flows.values()] };
+  // `allocators` is ENTITY-canonical (per-allocator profile + track record),
+  // not a cycle aggregate — so it must be UNIONED, not replaced, or a merged
+  // node whose profile only lived in the archive would lose its deep-dive.
+  // Current wins per key. Cycle-level blocks (aggregates/audit/sectors/themes/
+  // totals) stay `cur`'s on purpose — "this cycle" means this cycle.
+  const allocators = { ...(prev.allocators || {}), ...(cur.allocators || {}) };
+
+  return { ...cur, allocators, nodes: [...nodes.values()], flows: [...flows.values()] };
 }
 
 // Everything downstream reads `raw`. It is the merged map; META/AGGREGATES/
