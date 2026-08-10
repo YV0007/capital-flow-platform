@@ -24,10 +24,60 @@
 //   sectors{ <key>: { deals, capital, allocators, signals[] } }
 // ══════════════════════════════════════════════════════════════════════════
 
-import raw from './capitalMap.json';
+import delivery from './capitalMap.json';
+import archive from './capitalMap.archive.json';
 import entityRef from './entityReference.json';
 import logoManifest from './logoManifest.json';
 import flowNotes from './flowNotes.json';
+
+// ══════════════════════════════════════════════════════════════════════════
+// STOPGAP: cumulative merge (dashboard-side, TEMPORARY)
+//
+// The engine used to ship the cumulative "memory" map every cycle. As of the
+// 2026-W33 delivery it began shipping only that WEEK'S DELTA — 26 flows, none
+// of which overlapped the prior 128 — so the map collapsed from 147 nodes to
+// 36. Until cumulative delivery is restored engine-side, we union an archived
+// snapshot of the last cumulative map with each new delivery so the graph does
+// not lose its history.
+//
+// Rules (deliberately simple — the real expiry/appearance policy is TBD):
+//   · flows  — unioned by (source→target · date · event_type); a flow present
+//              in both keeps the CURRENT record.
+//   · nodes  — unioned by id; for a shared id we keep whichever record carries
+//              the larger tracked capital, so a cumulative node is never shrunk
+//              to its one-week delta.
+//   · cycle-level blocks (generated, totals, aggregates, audit, sectors,
+//              themes, confidence_threshold) come from the CURRENT delivery as
+//              is — "this cycle" must mean this cycle.
+//
+// To ROLL FORWARD before the next delivery, fold the current delivery into the
+// archive (union) so nothing is lost; or, once the engine ships cumulative
+// again, delete this block, the archive file and the two imports above.
+// ══════════════════════════════════════════════════════════════════════════
+function mergeDeliveries(prev, cur) {
+  if (!prev || !Array.isArray(prev.nodes) || !Array.isArray(prev.flows)) return cur;
+  const flowKey = (f) => `${f.source}=>${f.target}@${f.date}#${f.event_type}`;
+
+  const nodes = new Map();
+  (prev.nodes || []).forEach(n => nodes.set(n.id, n));
+  (cur.nodes || []).forEach(n => {
+    const old = nodes.get(n.id);
+    if (!old) { nodes.set(n.id, n); return; }
+    // Merge fields, but let the record with the larger capital win on conflict
+    // so a cumulative node never shrinks to its weekly delta.
+    nodes.set(n.id, (n.capital || 0) >= (old.capital || 0) ? { ...old, ...n } : { ...n, ...old });
+  });
+
+  const flows = new Map();
+  (prev.flows || []).forEach(f => flows.set(flowKey(f), f));
+  (cur.flows || []).forEach(f => flows.set(flowKey(f), f));   // current wins on dup
+
+  return { ...cur, nodes: [...nodes.values()], flows: [...flows.values()] };
+}
+
+// Everything downstream reads `raw`. It is the merged map; META/AGGREGATES/
+// AUDIT below still pull the CYCLE-level blocks straight from `delivery`.
+const raw = mergeDeliveries(archive, delivery);
 
 // ── Sector cluster zones. `order` walks the AI value chain — software →
 // compute → chips → cloud → datacenters → power → physical/defense — so the
@@ -307,9 +357,11 @@ export const RULE_META = {
 };
 
 export const META = {
-  generated: raw.generated,
-  confidenceThreshold: typeof raw.confidence_threshold === 'number' ? raw.confidence_threshold : 60,
-  totals: raw.totals || { nodes: (raw.nodes || []).length, flows: (raw.flows || []).length, sectors: Object.keys(raw.sectors || {}).length },
+  // `generated`/`confidence_threshold` are the CURRENT cycle's (delivery-level);
+  // `totals` counts the MERGED map so the header matches what is on screen.
+  generated: delivery.generated,
+  confidenceThreshold: typeof delivery.confidence_threshold === 'number' ? delivery.confidence_threshold : 60,
+  totals: { nodes: (raw.nodes || []).length, flows: (raw.flows || []).length, sectors: Object.keys(raw.sectors || {}).length },
 };
 
 // ── Payload-level blocks the engine owns outright. Rendered as-is; the `basis`
