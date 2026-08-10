@@ -43,9 +43,11 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
   const note = flow.note;
   const age = ageDays(flow.date, META.generated);
 
-  // Source links arrive from the engine when it has them (a `sources` array or
-  // a single `url`). We never synthesise one — an unsourced flow says so.
+  // Source link from the engine. Every verified flow now ships `source_url`
+  // (the payload's canonical field); a `sources[]` array is honoured too for
+  // forward-compat. We never synthesise one — an unsourced flow says so.
   const links = Array.isArray(flow.sources) ? flow.sources.filter(s => s && s.url)
+    : flow.source_url ? [{ url: flow.source_url, label: hostLabel(flow.source_url) }]
     : flow.url ? [{ url: flow.url, label: 'Источник' }] : [];
 
   // The grade decoded into plain English, joined with the status — one line
@@ -234,6 +236,12 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
       </div>
     </div>
   );
+}
+
+// Bare host as the link label ("aligneddc.com") — the publication/domain reads
+// better than a generic "Источник" and hints at the source's tier at a glance.
+function hostLabel(url) {
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'Источник'; }
 }
 
 function EntityChip({ node, fallback, onClick }) {

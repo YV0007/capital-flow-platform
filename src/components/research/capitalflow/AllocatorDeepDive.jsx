@@ -19,7 +19,6 @@ import {
   SECTOR_META, CLASS_META, TIER_META, THEME_META, confidenceBand, sectorLabel,
   metricLabel, formatTrackValue, SOURCE_TIER_LABEL,
 } from '../../../data/capitalMap.js';
-import allocatorProfiles from '../../../data/allocatorProfiles.json';
 
 const MONO = 'ui-monospace, monospace';
 const W = 560;
@@ -31,22 +30,11 @@ export default function AllocatorDeepDive({
   const cls = CLASS_META[node.cls];
   const tier = node.tier ? TIER_META[node.tier] : null;
 
-  // Engine record wins. The sidecar is normalised into the same shape so the
-  // render path below never has to care which one it got.
-  const legacy = allocatorProfiles[node.id] || null;
-  const profile = node.engineProfile || (legacy ? {
-    background: legacy.background,
-    latest_investments_summary: legacy.latest_summary,
-    strategy: legacy.strategy?.text,
-    strategy_source_url: legacy.strategy?.source?.url,
-  } : null);
-
-  // Engine rows are the truth; the sidecar's older shape is mapped onto them.
-  const track = node.trackRecord?.length ? node.trackRecord
-    : (legacy?.track_record || []).map(r => ({
-        fiscal_year: r.fiscal_year, metric: 'reported_return_pct', value: r.return_pct,
-        unit: 'pct', provisional: false, source_url: r.source?.url, notes: r.note,
-      }));
+  // Engine-owned: profile + track record come straight from capitalMap.json →
+  // allocators[<name>]. There is no dashboard fallback — a missing profile is
+  // an engine coverage gap, shown honestly, never hand-filled.
+  const profile = node.engineProfile || null;
+  const track = node.trackRecord?.length ? node.trackRecord : [];
 
   // Group by metric so "Stock total return" and "Fund IRR" never interleave.
   const byMetric = [];
