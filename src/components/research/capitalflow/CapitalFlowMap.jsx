@@ -697,6 +697,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           selectedFlowId={selectedFlowId}
           onSelectFlow={(id) => setSelectedFlowId(prev => (prev === id ? null : id))}
           onOpenEntity={focusEntity}
+          filterSectors={sectors}
           onDeepDive={selectedNode.kind === 'allocator' ? () => setDeepDiveOpen(true) : null}
           onFundHoldings={() => setFundHoldingsOpen(true)}
           wl={wl}
