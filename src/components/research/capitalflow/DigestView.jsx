@@ -8,7 +8,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useMemo, useState } from 'react';
-import { ArrowUpRight, Sparkles, TrendingUp } from 'lucide-react';
+import { ArrowUpRight, Sparkles, TrendingUp, TrendingDown } from 'lucide-react';
 import { buildDigest } from './digest.js';
 import { fmtUSD, plural } from './format.js';
 import { SECTOR_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
@@ -79,6 +79,10 @@ export default function DigestView({ nodes, links, generated, sectors, onOpenEnt
                 hint="уникальных источников в окне" />
               <Stat label="Получателей" value={String(block.uniqueBeneficiaries)}
                 hint="уникальных получателей в окне" />
+              {block.concentration && (
+                <Stat label="Концентрация" value={`топ-3: ${Math.round(block.concentration.top3Share * 100)}%`}
+                  hint={`половина в ${block.concentration.dealsToHalf} ${plural(block.concentration.dealsToHalf, ['сделке', 'сделках', 'сделках'])} · ${block.concentration.mood}`} />
+              )}
             </div>
 
             {/* Narrative */}
@@ -92,6 +96,29 @@ export default function DigestView({ nodes, links, generated, sectors, onOpenEnt
                 </p>
               ))}
             </div>
+
+            {/* Insight row — sector rotation + who's driving */}
+            {(block.rotation || block.classMix.length > 0) && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20, marginBottom: 20 }}>
+                {block.rotation && (
+                  <div style={{ padding: '13px 15px', borderRadius: 10, background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)' }}>
+                    <SectionLabel>Куда смещается фокус</SectionLabel>
+                    <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', marginTop: -5, marginBottom: 11 }}>Сдвиг доли секторов против прошлого окна</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                      <RotCol dir="up" rows={block.rotation.gained} />
+                      <RotCol dir="down" rows={block.rotation.lost} />
+                    </div>
+                  </div>
+                )}
+                {block.classMix.length > 0 && (
+                  <div style={{ padding: '13px 15px', borderRadius: 10, background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)' }}>
+                    <SectionLabel>Кто двигает капитал</SectionLabel>
+                    <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', marginTop: -5, marginBottom: 11 }}>Класс инвестора — доля притока окна</div>
+                    <ClassMixBar rows={block.classMix} />
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Three lists */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20, marginBottom: 8 }}>
@@ -209,6 +236,52 @@ function List({ title, note, children }) {
         {note && <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', marginTop: 3 }}>{note}</div>}
       </div>
       {children}
+    </div>
+  );
+}
+
+function RotCol({ dir, rows }) {
+  const up = dir === 'up';
+  const color = up ? 'var(--cf-good)' : 'var(--cf-bad)';
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 8 }}>
+        {up ? <TrendingUp size={12} color={color} /> : <TrendingDown size={12} color={color} />}
+        <span style={{ fontSize: 9.5, color, fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+          {up ? 'Набирают' : 'Теряют'}
+        </span>
+      </div>
+      {rows.length ? rows.map(r => (
+        <div key={r.key} style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 6 }}>
+          <span style={{ width: 7, height: 7, borderRadius: 2, background: r.color, flexShrink: 0 }} />
+          <span style={{ fontSize: 11.5, color: 'var(--cf-text2)', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.label}</span>
+          <span style={{ fontSize: 10.5, color, fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>
+            {r.deltaPP > 0 ? '+' : '−'}{Math.abs(Math.round(r.deltaPP))} п.п.
+          </span>
+        </div>
+      )) : <span style={{ fontSize: 10.5, color: 'var(--cf-text7)', fontFamily: MONO }}>—</span>}
+    </div>
+  );
+}
+
+function ClassMixBar({ rows }) {
+  return (
+    <div>
+      <div style={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden', background: 'var(--cf-border-hair)' }}>
+        {rows.map(r => (
+          <span key={r.cls} title={`${r.label} — ${Math.round(r.share * 100)}%`}
+            style={{ width: `${r.share * 100}%`, background: r.color }} />
+        ))}
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 10 }}>
+        {rows.map(r => (
+          <span key={r.cls} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 10, color: 'var(--cf-text4)', fontFamily: MONO }}>
+            <span style={{ width: 6, height: 6, borderRadius: 2, background: r.color }} />
+            {r.label}
+            <span style={{ color: 'var(--cf-text1)', fontWeight: 700 }}>{Math.round(r.share * 100)}%</span>
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

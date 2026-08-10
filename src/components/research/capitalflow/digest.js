@@ -11,7 +11,7 @@
 // candidate flows are counted separately and never folded into a $ headline.
 // ══════════════════════════════════════════════════════════════════════════
 
-import { sectorLabel } from '../../../data/capitalMap.js';
+import { sectorLabel, SECTOR_META, CLASS_META } from '../../../data/capitalMap.js';
 import { fmtUSD, plural } from './format.js';
 
 const isConfirmed = (l) => l.status === 'verified' || l.status === 'verified_alpha';
@@ -141,6 +141,79 @@ function deltaPhrase(cur, prev, unit) {
 
 const names = (rows, n = 3) => rows.slice(0, n).map(r => r.node?.name).filter(Boolean);
 
+// Share of confirmed-disclosed capital per sector — full map, for rotation.
+function sectorShareMap(flows) {
+  const m = new Map();
+  let total = 0;
+  flows.filter(f => isConfirmed(f) && f.disclosed).forEach(f => {
+    const k = f.sector || '_none';
+    m.set(k, (m.get(k) || 0) + f.amountUSD);
+    total += f.amountUSD;
+  });
+  const shares = new Map();
+  m.forEach((capital, k) => shares.set(k, { capital, share: total ? capital / total : 0 }));
+  return { shares, total };
+}
+
+// Where the money is rotating vs the window before: sectors that gained or lost
+// share, in percentage points. Needs a prior window; noise under ±1pp is dropped.
+function sectorRotation(cur, prior) {
+  if (!prior || !cur.total || !prior.total) return null;
+  const keys = new Set([...cur.shares.keys(), ...prior.shares.keys()]);
+  const rows = [];
+  keys.forEach(k => {
+    const c = cur.shares.get(k)?.share || 0;
+    const p = prior.shares.get(k)?.share || 0;
+    const deltaPP = (c - p) * 100;
+    if (Math.abs(deltaPP) < 1) return;
+    rows.push({
+      key: k, deltaPP, curShare: c,
+      label: k === '_none' ? 'Без сектора' : sectorLabel(k),
+      color: SECTOR_META[k]?.color || '#71717a',
+    });
+  });
+  const gained = rows.filter(r => r.deltaPP > 0).sort((a, b) => b.deltaPP - a.deltaPP).slice(0, 3);
+  const lost = rows.filter(r => r.deltaPP < 0).sort((a, b) => a.deltaPP - b.deltaPP).slice(0, 3);
+  return (gained.length || lost.length) ? { gained, lost } : null;
+}
+
+// Which kind of money is driving the window — allocator class mix.
+function classMix(flows, nodeById) {
+  const m = new Map();
+  let total = 0;
+  flows.filter(f => isConfirmed(f) && f.disclosed).forEach(f => {
+    const cls = nodeById.get(f.sourceId)?.cls;
+    if (!cls) return;
+    m.set(cls, (m.get(cls) || 0) + f.amountUSD);
+    total += f.amountUSD;
+  });
+  return {
+    total,
+    rows: [...m.entries()]
+      .map(([cls, capital]) => ({
+        cls, capital, share: total ? capital / total : 0,
+        label: CLASS_META[cls]?.zone || CLASS_META[cls]?.label || cls,
+        color: CLASS_META[cls]?.color || '#71717a',
+      }))
+      .sort((a, b) => b.capital - a.capital),
+  };
+}
+
+// How top-heavy the window is: what share the biggest deals carry, and how few
+// deals it takes to reach half the capital.
+function concentration(flows) {
+  const d = flows.filter(f => isConfirmed(f) && f.disclosed)
+    .map(f => f.amountUSD).sort((a, b) => b - a);
+  const total = d.reduce((s, x) => s + x, 0);
+  if (!total || d.length < 2) return null;
+  const top3 = d.slice(0, 3).reduce((s, x) => s + x, 0);
+  let acc = 0, half = 0;
+  for (const x of d) { acc += x; half += 1; if (acc >= total * 0.5) break; }
+  const top3Share = top3 / total;
+  const mood = top3Share >= 0.6 ? 'сконцентрирован' : top3Share <= 0.35 ? 'распределён широко' : 'умеренно распределён';
+  return { top3Share, dealsToHalf: half, dealCount: d.length, mood };
+}
+
 // Build one window block.
 function buildBlock({ flows, prior, allLinks, nodeById, gen, id, title, sub, unit }) {
   const head = totals(flows);
@@ -154,6 +227,10 @@ function buildBlock({ flows, prior, allLinks, nodeById, gen, id, title, sub, uni
   const priorSectors = prior ? topSectors(prior) : { rows: [] };
   const biggest = biggestDeal(flows, nodeById);
   const entrants = prior ? newEntrants(flows, allLinks, nodeById) : [];
+  const rotation = sectorRotation(sectorShareMap(flows), prior ? sectorShareMap(prior) : null);
+  const mix = classMix(flows, nodeById);
+  const priorMix = prior ? classMix(prior, nodeById) : null;
+  const conc = concentration(flows);
 
   const read = [];
   if (head.deals || head.capital) {
@@ -167,7 +244,28 @@ function buildBlock({ flows, prior, allLinks, nodeById, gen, id, title, sub, uni
     if (inv.length) read.push(`Крупнейшие источники — ${inv.join(', ')}.`);
     const ben = names(beneficiaries);
     if (ben.length) read.push(`Больше всего получили ${ben.join(', ')}.`);
-    if (unit) { const s = sectorShift(sectors, priorSectors); if (s) read.push(s); }
+    if (mix.rows.length) {
+      const lead = mix.rows[0];
+      const priorLead = priorMix?.rows.find(r => r.cls === lead.cls);
+      const dp = priorLead ? Math.round((lead.share - priorLead.share) * 100) : null;
+      const tail = dp != null && Math.abs(dp) >= 3 ? ` (${dp > 0 ? '+' : ''}${dp} п.п. к прошлому окну)` : '';
+      read.push(`Двигают в основном ${lead.label.toLowerCase()} — ${pct(lead.share)} притока${tail}.`);
+    }
+    if (rotation) {
+      const g = rotation.gained.map(r => `«${r.label}»`).join(', ');
+      const l = rotation.lost.map(r => `«${r.label}»`).join(', ');
+      if (g && l) read.push(`Фокус смещается в ${g} и уходит из ${l}.`);
+      else if (g) read.push(`Фокус смещается в ${g}.`);
+      else if (l) read.push(`Капитал уходит из ${l}.`);
+    } else if (unit) {
+      const s = sectorShift(sectors, priorSectors); if (s) read.push(s);
+    }
+    if (conc) {
+      read.push(
+        `Капитал ${conc.mood}: топ-3 сделки — ${pct(conc.top3Share)}, ` +
+        `половина в ${conc.dealsToHalf} ${plural(conc.dealsToHalf, ['сделке', 'сделках', 'сделках'])}.`
+      );
+    }
     if (biggest) {
       read.push(
         `Крупнейшая сделка — ${biggest.source?.name || '—'} → ` +
@@ -189,6 +287,7 @@ function buildBlock({ flows, prior, allLinks, nodeById, gen, id, title, sub, uni
     id, title, sub, head, uniqueInvestors, uniqueBeneficiaries,
     investors, beneficiaries,
     sectors: sectors.rows, biggest, newEntrants: entrants, read,
+    rotation, classMix: mix.rows, concentration: conc,
     empty: !head.deals && !head.candidateDeals,
   };
 }
