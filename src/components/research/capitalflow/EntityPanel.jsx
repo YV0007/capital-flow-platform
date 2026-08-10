@@ -6,7 +6,7 @@
 import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, FileText, Newspaper } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
 import {
-  SECTOR_META, CLASS_META, TIER_META, NETWORK_META, confidenceBand,
+  SECTOR_META, CLASS_META, TIER_META, NETWORK_META, confidenceBand, sectorLabel,
 } from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
 
@@ -288,88 +288,156 @@ function LinkChip({ link }) {
 // The ROW is the counterparty: clicking it walks the panel over to that entity
 // (the primary intent — "who did they back? show me that company"). The deal
 // write-up is a separate, explicit button so the two never fight each other.
+//
+// When the flows span 2+ sectors, they are BUCKETED by sector so you can read
+// at a glance where this allocator actually puts its capital. The sub-headers
+// are deliberately quiet — a small sector dot, a muted small-caps label and a
+// thin rule — never loud titles. A single-sector list (or a target's inbound,
+// which is all one sector) renders flat, with no headers.
 function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFlow, onOpenEntity }) {
   const max = Math.max(...flows.map(f => f.amountUSD), 1);
+
+  // Bucket by sector. `_none` collects flows the payload left unsectored so
+  // they are never silently dropped.
+  const buckets = new Map();
+  flows.forEach(f => {
+    const key = f.sector || '_none';
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(f);
+  });
+  const grouped = buckets.size > 1;
+
+  const renderRow = (f) => {
+    const cp = nodeById.get(f[counterpartyKey]);
+    const on = f.id === selectedFlowId;
+    const band = confidenceBand(f.confidence);
+    return (
+      <div key={f.id}
+        onClick={() => cp && onOpenEntity(cp.id)}
+        title={cp ? `Открыть ${cp.name}` : ''}
+        style={{
+          position: 'relative', padding: '8px 10px', borderRadius: 8,
+          background: on ? 'var(--cf-surface3)' : 'var(--cf-surface1)',
+          border: `1px solid ${on ? f.color + '66' : 'var(--cf-border-soft)'}`,
+          cursor: cp ? 'pointer' : 'default', overflow: 'hidden',
+          transition: 'border-color 130ms, background 130ms',
+        }}
+        onMouseEnter={(e) => { if (!on) e.currentTarget.style.borderColor = 'var(--cf-border-strong)'; }}
+        onMouseLeave={(e) => { if (!on) e.currentTarget.style.borderColor = 'var(--cf-border-soft)'; }}>
+        {/* share bar */}
+        <span style={{
+          position: 'absolute', left: 0, top: 0, bottom: 0,
+          width: `${(f.amountUSD / max) * 100}%`,
+          background: `linear-gradient(90deg, ${f.color}1f, ${f.color}05)`,
+          pointerEvents: 'none',
+        }} />
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'baseline', gap: 6 }}>
+          <span style={{
+            fontSize: 12, fontWeight: 600, color: 'var(--cf-text1)',
+            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            minWidth: 0,
+          }}>
+            {cp ? cp.name : f[counterpartyKey]}
+          </span>
+          <ChevronRight size={11} color="var(--cf-text7)" style={{ flexShrink: 0, alignSelf: 'center' }} />
+          <span style={{ flex: 1 }} />
+          <span style={{ fontSize: 12, fontWeight: 700, color: f.disclosed ? 'var(--cf-text0)' : 'var(--cf-text5)', fontFamily: MONO, flexShrink: 0 }}>
+            {f.disclosed ? fmtUSD(f.amount) : '—'}
+          </span>
+        </div>
+
+        <div style={{
+          position: 'relative', display: 'flex', alignItems: 'center', gap: 6,
+          marginTop: 5, fontSize: 9.5, fontFamily: MONO,
+        }}>
+          <span style={{ width: 6, height: 6, borderRadius: 2, background: f.color, flexShrink: 0 }} />
+          <span style={{ color: 'var(--cf-text3)' }}>{f.eventLabel}</span>
+          <span style={{ color: 'var(--cf-text9)' }}>·</span>
+          <span style={{ color: 'var(--cf-text5)' }}>{f.date}</span>
+          <span style={{ flex: 1 }} />
+
+          {/* confidence as a meter, not a code */}
+          {f.confidence != null && (
+            <span title={`${band.label} — ${f.confidence}/100. Откройте карточку сделки, чтобы увидеть источники.`}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 5, cursor: 'help' }}>
+              <span style={{ width: 26, height: 3, borderRadius: 2, background: 'var(--cf-border-soft)', overflow: 'hidden' }}>
+                <span style={{ display: 'block', height: '100%', width: `${f.confidence}%`, background: band.color }} />
+              </span>
+              <span style={{ color: band.color, fontWeight: 700 }}>{f.confidence}</span>
+            </span>
+          )}
+
+          <button
+            onClick={(e) => { e.stopPropagation(); onSelectFlow(f.id); }}
+            title={on ? 'Скрыть разбор сделки' : 'Открыть разбор сделки'}
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: 20, height: 20, borderRadius: 5, flexShrink: 0,
+              background: on ? f.color + '22' : 'var(--cf-surface3)',
+              border: `1px solid ${on ? f.color + '66' : 'var(--cf-border)'}`,
+              color: on ? f.color : 'var(--cf-text6)', cursor: 'pointer', padding: 0,
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text1)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = on ? f.color : 'var(--cf-text6)'; }}>
+            <FileText size={11} />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  if (!grouped) {
+    return <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>{flows.map(renderRow)}</div>;
+  }
+
+  // Heaviest sector first, unsectored last. Within a group, flows keep the
+  // amount order they arrived in (already sorted by the adjacency builder).
+  const order = [...buckets.entries()]
+    .map(([key, list]) => {
+      const disclosed = list.some(f => f.disclosed);
+      const total = list.reduce((s, f) => s + f.amountUSD, 0);
+      return { key, list, disclosed, total };
+    })
+    .sort((a, b) => (a.key === '_none') - (b.key === '_none') || b.total - a.total);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      {flows.map(f => {
-        const cp = nodeById.get(f[counterpartyKey]);
-        const on = f.id === selectedFlowId;
-        const band = confidenceBand(f.confidence);
-        return (
-          <div key={f.id}
-            onClick={() => cp && onOpenEntity(cp.id)}
-            title={cp ? `Открыть ${cp.name}` : ''}
-            style={{
-              position: 'relative', padding: '8px 10px', borderRadius: 8,
-              background: on ? 'var(--cf-surface3)' : 'var(--cf-surface1)',
-              border: `1px solid ${on ? f.color + '66' : 'var(--cf-border-soft)'}`,
-              cursor: cp ? 'pointer' : 'default', overflow: 'hidden',
-              transition: 'border-color 130ms, background 130ms',
-            }}
-            onMouseEnter={(e) => { if (!on) e.currentTarget.style.borderColor = 'var(--cf-border-strong)'; }}
-            onMouseLeave={(e) => { if (!on) e.currentTarget.style.borderColor = 'var(--cf-border-soft)'; }}>
-            {/* share bar */}
-            <span style={{
-              position: 'absolute', left: 0, top: 0, bottom: 0,
-              width: `${(f.amountUSD / max) * 100}%`,
-              background: `linear-gradient(90deg, ${f.color}1f, ${f.color}05)`,
-              pointerEvents: 'none',
-            }} />
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'baseline', gap: 6 }}>
-              <span style={{
-                fontSize: 12, fontWeight: 600, color: 'var(--cf-text1)',
-                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                minWidth: 0,
-              }}>
-                {cp ? cp.name : f[counterpartyKey]}
-              </span>
-              <ChevronRight size={11} color="var(--cf-text7)" style={{ flexShrink: 0, alignSelf: 'center' }} />
-              <span style={{ flex: 1 }} />
-              <span style={{ fontSize: 12, fontWeight: 700, color: f.disclosed ? 'var(--cf-text0)' : 'var(--cf-text5)', fontFamily: MONO, flexShrink: 0 }}>
-                {f.disclosed ? fmtUSD(f.amount) : '—'}
-              </span>
-            </div>
+      {order.map((g, gi) => (
+        <div key={g.key} style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+          <SectorHeader
+            sectorKey={g.key} count={g.list.length}
+            total={g.disclosed ? fmtUSD(g.total) : null} first={gi === 0}
+          />
+          {g.list.map(renderRow)}
+        </div>
+      ))}
+    </div>
+  );
+}
 
-            <div style={{
-              position: 'relative', display: 'flex', alignItems: 'center', gap: 6,
-              marginTop: 5, fontSize: 9.5, fontFamily: MONO,
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: 2, background: f.color, flexShrink: 0 }} />
-              <span style={{ color: 'var(--cf-text3)' }}>{f.eventLabel}</span>
-              <span style={{ color: 'var(--cf-text9)' }}>·</span>
-              <span style={{ color: 'var(--cf-text5)' }}>{f.date}</span>
-              <span style={{ flex: 1 }} />
-
-              {/* confidence as a meter, not a code */}
-              {f.confidence != null && (
-                <span title={`${band.label} — ${f.confidence}/100. Откройте карточку сделки, чтобы увидеть источники.`}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 5, cursor: 'help' }}>
-                  <span style={{ width: 26, height: 3, borderRadius: 2, background: 'var(--cf-border-soft)', overflow: 'hidden' }}>
-                    <span style={{ display: 'block', height: '100%', width: `${f.confidence}%`, background: band.color }} />
-                  </span>
-                  <span style={{ color: band.color, fontWeight: 700 }}>{f.confidence}</span>
-                </span>
-              )}
-
-              <button
-                onClick={(e) => { e.stopPropagation(); onSelectFlow(f.id); }}
-                title={on ? 'Скрыть разбор сделки' : 'Открыть разбор сделки'}
-                style={{
-                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                  width: 20, height: 20, borderRadius: 5, flexShrink: 0,
-                  background: on ? f.color + '22' : 'var(--cf-surface3)',
-                  border: `1px solid ${on ? f.color + '66' : 'var(--cf-border)'}`,
-                  color: on ? f.color : 'var(--cf-text6)', cursor: 'pointer', padding: 0,
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text1)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = on ? f.color : 'var(--cf-text6)'; }}>
-                <FileText size={11} />
-              </button>
-            </div>
-          </div>
-        );
-      })}
+// Quiet sector divider inside a flow list — a small sector dot, a muted
+// small-caps label and a hairline rule. Intentionally understated (не броский):
+// it categorises without competing with the rows or the section title.
+function SectorHeader({ sectorKey, count, total, first }) {
+  const meta = sectorKey === '_none' ? null : SECTOR_META[sectorKey];
+  const label = sectorKey === '_none' ? 'Без сектора' : sectorLabel(sectorKey);
+  const dot = meta?.color || 'var(--cf-text7)';
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 7,
+      margin: first ? '0 2px 1px' : '9px 2px 1px',
+    }}>
+      <span style={{ width: 5, height: 5, borderRadius: 1.5, background: dot, opacity: 0.85, flexShrink: 0 }} />
+      <span style={{
+        fontSize: 8.5, color: 'var(--cf-text4)', fontFamily: MONO, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.09em', whiteSpace: 'nowrap',
+      }}>
+        {label}
+      </span>
+      <span style={{ flex: 1, height: 1, background: 'var(--cf-border-soft)', minWidth: 8 }} />
+      <span style={{ fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 600, whiteSpace: 'nowrap' }}>
+        {count}{total ? ` · ${total}` : ''}
+      </span>
     </div>
   );
 }

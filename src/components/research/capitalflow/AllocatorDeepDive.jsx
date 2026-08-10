@@ -83,7 +83,7 @@ export default function AllocatorDeepDive({
   return (
     <aside style={{
       position: 'absolute', top: topInset, right: 0, bottom: 0, width: W, maxWidth: '92vw', zIndex: 26,
-      background: 'rgba(10,10,12,0.99)',
+      background: 'var(--cf-panel)',
       borderLeft: '1px solid var(--cf-border)',
       backdropFilter: 'blur(10px)',
       boxShadow: '-24px 0 60px -20px var(--cf-shadow)',

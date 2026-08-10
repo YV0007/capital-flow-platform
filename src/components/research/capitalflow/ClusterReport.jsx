@@ -23,11 +23,10 @@
 import { useState } from 'react';
 import {
   X, ChevronDown, ChevronRight, TrendingUp, TrendingDown, Minus,
-  ArrowUpRight, Sparkles, Info,
+  ArrowUpRight, Sparkles,
 } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
-import { STATUS_META, RULE_META, sectorLabel, basisLabel } from '../../../data/capitalMap.js';
-import { engineSectorRank } from './clusterStats.js';
+import { STATUS_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 export const REPORT_W = 430;
@@ -40,7 +39,6 @@ export default function ClusterReport({ report, onOpenEntity, onClose, topInset 
 
   const isSector = report.kind === 'sector';
   const mix = isSector ? report.byClass : report.bySector;
-  const engineRank = isSector ? engineSectorRank(report.key) : null;
   const h = report.head;
 
   return (
@@ -135,18 +133,6 @@ export default function ClusterReport({ report, onOpenEntity, onClose, topInset 
             </div>
           )}
         </div>
-
-        {/* Engine's own ranking, when it covers this sector. Shown rather than
-            reconciled: if it disagrees with ours, that is worth seeing. */}
-        {engineRank && (
-          <div title={basisLabel(engineRank.basis) || undefined} style={{
-            marginTop: 7, fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO,
-            display: 'flex', alignItems: 'center', gap: 5, cursor: engineRank.basis ? 'help' : 'default',
-          }}>
-            <Info size={10} />
-            Рейтинг движка за цикл: #{engineRank.position} из {engineRank.of} · {fmtUSD(engineRank.row.capital_usd)} · {engineRank.row.deals} {plural(engineRank.row.deals, ['сделка', 'сделки', 'сделок'])}
-          </div>
-        )}
 
         {/* 2 · Who dominates */}
         <Section title={isSector ? 'Кто вкладывает' : 'Куда идут деньги'} />
