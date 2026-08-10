@@ -347,20 +347,19 @@ export default function FlowGraph({
     ctx.save();
     ctx.globalAlpha = alpha;
 
-    // Pivotal highlight bloom — the block itself shines (not an outline). Gold =
-    // interesting deal (target: flagged/emerging), red = player to track
-    // (allocator: core/key). Intensity encodes rank. Drawn behind everything.
-    const glowColor = node.type === 'target'
-      ? (node.dealRank === 'flagged' || node.dealRank === 'emerging' ? T.dealGlow : null)
-      : (node.playerRank === 'core' || node.playerRank === 'key' ? T.playerGlow : null);
-    const glowStrength = node.dealRank === 'flagged' || node.playerRank === 'core' ? 1
-      : node.dealRank === 'emerging' || node.playerRank === 'key' ? 0.5 : 0;
-    if (lit && glowColor && glowStrength) {
-      const gr = S * (0.95 + 0.6 * glowStrength);
-      const g = ctx.createRadialGradient(cx, cy, R * 0.25, cx, cy, gr);
-      g.addColorStop(0, hexA(glowColor, 0.6 * glowStrength));
-      g.addColorStop(0.45, hexA(glowColor, 0.24 * glowStrength));
-      g.addColorStop(1, hexA(glowColor, 0));
+    // Pivotal RED bloom — the classified node's block glows red (both investors
+    // and receivers), bright enough to pop on the busy map. Drawn behind the
+    // tile so the logo stays clean. Top tier (core / flagged) strongest.
+    const pivotal = node.type === 'target'
+      ? (node.dealRank === 'flagged' || node.dealRank === 'emerging')
+      : (node.playerRank === 'core' || node.playerRank === 'key');
+    if (lit && pivotal) {
+      const strength = (node.dealRank === 'flagged' || node.playerRank === 'core') ? 1 : 0.62;
+      const gr = S * (1.05 + 0.7 * strength);
+      const g = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, gr);
+      g.addColorStop(0, hexA(T.pivotGlow, 0.9 * strength));
+      g.addColorStop(0.4, hexA(T.pivotGlow, 0.42 * strength));
+      g.addColorStop(1, hexA(T.pivotGlow, 0));
       ctx.fillStyle = g;
       ctx.beginPath(); ctx.arc(cx, cy, gr, 0, 2 * Math.PI); ctx.fill();
     }
@@ -479,19 +478,6 @@ export default function FlowGraph({
       : (l.status === 'verified' ? 1 : l.status === 'verified_alpha' ? 0.7 : 0.46);
     const base = mode === 'light' ? 0.55 : 0.36;
     const a = (base + 0.55 * Math.sqrt(l.amountShare || 0)) * conf;
-
-    // Interesting-deal inflows glow gold — trace the money into a classified
-    // deal. Only inbound lines of a flagged/emerging target; intensity by rank.
-    const tgt = typeof l.target === 'object' ? l.target : null;
-    const dr = tgt?.dealRank;
-    if (dr === 'flagged' || dr === 'emerging') {
-      const gc = tone(T.dealLine, mode);
-      const s = dr === 'flagged' ? 1 : 0.5;
-      const ga = ((mode === 'light' ? 0.5 : 0.42) + 0.4 * Math.sqrt(l.amountShare || 0)) * (0.55 + 0.45 * s) * (0.7 + 0.3 * conf);
-      if (l.id === hoverLinkId) return hexA(gc, Math.min(1, ga + 0.4));
-      return hexA(gc, hasSelection ? Math.min(1, ga + 0.25) : ga);
-    }
-
     const lc = tone(l.color, mode);
     if (l.id === hoverLinkId) return hexA(lc, Math.min(1, a + 0.45));
     return hexA(lc, hasSelection ? Math.min(1, a + 0.3) : a);
