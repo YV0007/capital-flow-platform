@@ -28,6 +28,7 @@ import raw from './capitalMap.json';
 import entityRef from './entityReference.json';
 import logoManifest from './logoManifest.json';
 import flowNotes from './flowNotes.json';
+import { classifyGraph } from '../components/research/capitalflow/classification.js';
 
 // Pure consumer: `raw` is the engine's delivery, rendered as-is. The engine
 // ships the FULL cumulative map every cycle (a 2026-W33 delta regression that
@@ -637,6 +638,20 @@ export function buildGraph(data = raw) {
   collect(sectors, 'sector');
   collect(themes, 'theme');
 
+  // Mark targets sitting under a beneficiary-concentration read (a public
+  // ticker private capital points at) — the deal 'actionable path' factor uses
+  // it. Approximate: match on the target's theme/sector.
+  const benefThemes = new Set(beneficiaries.map(b => b.theme).filter(Boolean));
+  nodes.forEach(n => {
+    if (n.type === 'target') n.beneficiaryLinked = benefThemes.has(n.themeKey) || benefThemes.has(n.sector);
+  });
+
+  // Two-rank highlight classification (see classification.js). Mutates nodes:
+  // playerScore/playerRank/playerParts (allocators) + dealScore/dealRank/
+  // dealParts (targets). Players are scored before deals (deals read player
+  // scores for backer-quality; players never read deals — no cycle).
+  const classification = classifyGraph({ nodes, links, generated: data.generated });
+
   const disclosedTotal = links.reduce((acc, l) => acc + (l.disclosed ? l.amount : 0), 0);
   const confVals = links.map(l => l.confidence).filter(c => typeof c === 'number');
   const stats = {
@@ -655,6 +670,7 @@ export function buildGraph(data = raw) {
     aboveThresholdFlows: confVals.filter(c => c >= threshold).length,
     totalTracked: disclosedTotal,
     disclosedShare: links.length ? links.filter(l => l.disclosed).length / links.length : 0,
+    ...classification,   // corePlayers, keyPlayers, flaggedDeals, emergingDeals
   };
 
   return {

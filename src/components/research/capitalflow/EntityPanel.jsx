@@ -23,6 +23,7 @@ function totalOrNull(flows, total) {
 export default function EntityPanel({
   node, inbound, outbound, nodeById,
   selectedFlowId, onSelectFlow, onOpenEntity, onClose, onDeepDive, onFundHoldings, wl, topInset = 0,
+  filterSectors,
 }) {
   if (!node) return null;
   const cls = CLASS_META[node.cls];
@@ -175,6 +176,8 @@ export default function EntityPanel({
           <span style={{ color: 'var(--cf-text3)' }}>{node.last_activity}</span>
         </div>
 
+        {(node.playerParts || node.dealParts) && <ClassificationBlock node={node} />}
+
         {inbound.length > 0 && (
           <Section title={`Кто инвестирует сюда · ${totalOrNull(inbound, node.totalInflow)}`}
             hint="Клик по имени открывает объект. Клик по иконке — разбор сделки."
@@ -195,6 +198,7 @@ export default function EntityPanel({
               flows={outbound} counterpartyKey="targetId"
               nodeById={nodeById} selectedFlowId={selectedFlowId}
               onSelectFlow={onSelectFlow} onOpenEntity={onOpenEntity}
+              filterSectors={filterSectors}
             />
           </Section>
         )}
@@ -400,7 +404,7 @@ function LinkChip({ link }) {
 //     KIND of capital backs it (venture vs sovereign vs corporate…).
 // Sub-headers are deliberately quiet — a small dot, a muted small-caps label
 // and a thin rule — never loud titles. A single-bucket list renders flat.
-function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFlow, onOpenEntity }) {
+function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFlow, onOpenEntity, filterSectors }) {
   const max = Math.max(...flows.map(f => f.amountUSD), 1);
   const inbound = counterpartyKey === 'sourceId';
 
@@ -525,6 +529,7 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
           <GroupHeader
             label={g.label} color={g.color} count={g.list.length}
             total={g.disclosed ? fmtUSD(g.total) : null} first={gi === 0}
+            highlight={!inbound && g.key !== '_none' && !!filterSectors && filterSectors.has(g.key)}
           />
           {g.list.map(renderRow)}
         </div>
@@ -537,22 +542,38 @@ function FlowList({ flows, counterpartyKey, nodeById, selectedFlowId, onSelectFl
 // label and a hairline rule. Intentionally understated (не броский): it
 // categorises (by sector, or by allocator class) without competing with the
 // rows or the section title.
-function GroupHeader({ label, color, count, total, first }) {
+function GroupHeader({ label, color, count, total, first, highlight }) {
   const dot = color || 'var(--cf-text7)';
+  // When this sector is the one the map is currently filtered on, lift the
+  // header out of its quiet default: tint it in the sector colour and flag it
+  // «в фильтре», so — after picking an allocator — the deals that fall inside
+  // the active filter are unmissable.
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 7,
       margin: first ? '0 2px 1px' : '9px 2px 1px',
+      ...(highlight ? {
+        padding: '3px 7px', borderRadius: 6,
+        background: dot + '14', border: `1px solid ${dot}44`,
+      } : null),
     }}>
-      <span style={{ width: 5, height: 5, borderRadius: 1.5, background: dot, opacity: 0.85, flexShrink: 0 }} />
+      <span style={{ width: highlight ? 6 : 5, height: highlight ? 6 : 5, borderRadius: 1.5, background: dot, opacity: highlight ? 1 : 0.85, flexShrink: 0 }} />
       <span style={{
-        fontSize: 8.5, color: 'var(--cf-text4)', fontFamily: MONO, fontWeight: 700,
+        fontSize: 8.5, color: highlight ? dot : 'var(--cf-text4)', fontFamily: MONO, fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.09em', whiteSpace: 'nowrap',
       }}>
         {label}
       </span>
-      <span style={{ flex: 1, height: 1, background: 'var(--cf-border-soft)', minWidth: 8 }} />
-      <span style={{ fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 600, whiteSpace: 'nowrap' }}>
+      {highlight && (
+        <span style={{
+          fontSize: 7.5, color: dot, fontFamily: MONO, fontWeight: 700,
+          letterSpacing: '0.08em', opacity: 0.85, whiteSpace: 'nowrap',
+        }}>
+          • В ФИЛЬТРЕ
+        </span>
+      )}
+      <span style={{ flex: 1, height: 1, background: highlight ? dot + '3a' : 'var(--cf-border-soft)', minWidth: 8 }} />
+      <span style={{ fontSize: 8.5, color: highlight ? dot : 'var(--cf-text6)', fontFamily: MONO, fontWeight: 600, whiteSpace: 'nowrap' }}>
         {count}{total ? ` · ${total}` : ''}
       </span>
     </div>
@@ -595,3 +616,86 @@ function Stat({ label, value, sub, color }) {
     </div>
   );
 }
+
+// ── Classification block — WHY this node is (or isn't) highlighted. The
+// inspection + tuning surface for the two-rank framework (classification.js).
+// Players and targets render different factor sets. Pending factors (dark
+// until the engine ships deeper data) are shown greyed, never faked as strong.
+const PLAYER_RANKS = {
+  core:  { label: 'Ядро — ключевой инвестор', color: 'var(--cf-gold)' },
+  key:   { label: 'Ключевой — стоит следить',  color: 'var(--cf-warn)' },
+  watch: { label: 'Наблюдение',                color: 'var(--cf-text5)' },
+};
+const DEAL_RANKS = {
+  flagged:  { label: 'Флаг — интересная сделка', color: 'var(--cf-gold)' },
+  emerging: { label: 'Зарождается',              color: 'var(--cf-warn)' },
+};
+const PLAYER_FACTORS = [
+  ['bellwether', 'Ведёт за собой'],
+  ['leadTime', 'Опережает толпу'],
+  ['focus', 'Фокус / отбор'],
+  ['repeat', 'Повторная ставка'],
+  ['overlap', 'Можно отыграть'],
+  ['trackRecord', 'Доказанный результат'],
+];
+const DEAL_FACTORS = [
+  ['convergence', 'Схождение капитала'],
+  ['early', 'Поймано рано'],
+  ['backerQuality', 'Качество инвесторов'],
+  ['independence', 'Независимость'],
+  ['actionable', 'Как отыграть'],
+];
+
+function ClassificationBlock({ node }) {
+  const isPlayer = !!node.playerParts;
+  const parts = isPlayer ? node.playerParts : node.dealParts;
+  const score = isPlayer ? node.playerScore : node.dealScore;
+  const rank = isPlayer ? node.playerRank : node.dealRank;
+  const meta = (isPlayer ? PLAYER_RANKS : DEAL_RANKS)[rank] || { label: 'В отслеживании', color: 'var(--cf-text6)' };
+  const factors = isPlayer ? PLAYER_FACTORS : DEAL_FACTORS;
+  const kicker = isPlayer ? 'Инвестор для отслеживания' : 'Сделка · где искать возможность';
+
+  return (
+    <div style={{
+      marginBottom: 16, padding: '11px 12px', background: 'var(--cf-surface1)',
+      border: '1px solid var(--cf-border-soft)', borderRadius: 10,
+    }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 2 }}>
+        <span style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{kicker}</span>
+        <span style={{ fontSize: 15, fontWeight: 700, color: meta.color, fontFamily: MONO }}>{score != null ? Math.round(score) : '—'}</span>
+      </div>
+      <div style={{ fontSize: 11, fontWeight: 600, color: meta.color, marginBottom: 9 }}>{meta.label}</div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {factors.map(([key, label]) => (
+          <FactorBar key={key} label={label} value={parts[key]} />
+        ))}
+      </div>
+
+      <div style={{ marginTop: 9, fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, lineHeight: 1.5 }}>
+        {isPlayer
+          ? 'Не по размеру капитала — по отбору, повторным ставкам и результату.'
+          : 'Не по размеру сделки — по раннему схождению умных денег.'}
+        {parts.pending?.length ? ' Серым — ждёт данных движка.' : ''}
+      </div>
+    </div>
+  );
+}
+
+function FactorBar({ label, value }) {
+  const pending = value == null;
+  const pct = pending ? 0 : Math.round(clamp01v(value) * 100);
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <span style={{ flex: '0 0 108px', fontSize: 9.5, color: pending ? 'var(--cf-text8)' : 'var(--cf-text4)', fontFamily: MONO }}>{label}</span>
+      <span style={{ position: 'relative', flex: 1, height: 4, borderRadius: 2, background: 'var(--cf-surface3)', overflow: 'hidden' }}>
+        {!pending && <span style={{ position: 'absolute', inset: 0, width: `${pct}%`, borderRadius: 2, background: pct >= 66 ? 'var(--cf-good)' : pct >= 33 ? 'var(--cf-warn)' : 'var(--cf-text6)' }} />}
+      </span>
+      <span style={{ flex: '0 0 30px', textAlign: 'right', fontSize: 9, color: pending ? 'var(--cf-text8)' : 'var(--cf-text5)', fontFamily: MONO }}>
+        {pending ? '—' : pct}
+      </span>
+    </div>
+  );
+}
+
+function clamp01v(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
