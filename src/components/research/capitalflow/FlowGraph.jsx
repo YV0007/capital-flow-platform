@@ -645,8 +645,9 @@ function esc(s) {
 
 function tip(T, inner) {
   return `<div style="
-    font-family:ui-monospace,monospace;font-size:10.5px;line-height:1.45;
-    background:${T.tipBg};border:1px solid ${T.tipBorder};border-radius:8px;
-    padding:10px 12px;max-width:270px;
-    box-shadow:0 12px 32px -8px ${T.tipShadow};">${inner}</div>`;
+    font-family:ui-monospace,monospace;font-size:10px;line-height:1.5;
+    letter-spacing:0.01em;-webkit-font-smoothing:antialiased;
+    background:${T.tipBg};border:1px solid ${T.tipBorder};border-radius:12px;
+    padding:10px 12px;max-width:246px;
+    box-shadow:0 1px 2px ${T.tipShadowSoft},0 16px 36px -12px ${T.tipShadow};">${inner}</div>`;
 }

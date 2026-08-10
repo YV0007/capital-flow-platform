@@ -107,7 +107,8 @@ const DARK = {
   tipText3: '#a1a1aa',
   tipText4: '#71717a',
   tipRule: '#3f3f46',
-  tipShadow: 'rgba(0,0,0,0.85)',
+  tipShadow: 'rgba(0,0,0,0.6)',
+  tipShadowSoft: 'rgba(0,0,0,0.45)',
 };
 
 const LIGHT = {
@@ -134,7 +135,8 @@ const LIGHT = {
   tipText3: '#475569',
   tipText4: '#64748B',
   tipRule: '#C3CEDB',
-  tipShadow: 'rgba(15,23,42,0.18)',
+  tipShadow: 'rgba(15,23,42,0.16)',
+  tipShadowSoft: 'rgba(15,23,42,0.08)',
 };
 
 export function canvasTokens(mode) {

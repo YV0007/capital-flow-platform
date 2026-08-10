@@ -291,3 +291,16 @@
 [data-theme="light"] .text-cyan-200 { color: #0E7490 !important; }
 [data-theme="light"] .bg-amber-950\/30 { background-color: rgba(217,119,6,0.10) !important; }
 [data-theme="light"] .text-amber-200 { color: #B45309 !important; }
+
+/* Capital Flow hover card — strip react-force-graph's default `.graph-tooltip`
+   chrome (a dark translucent box with padding) so our own card is the ONLY
+   visible surface. Positioning is force-graph's; we only reset the skin. */
+.graph-tooltip {
+  background: transparent !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  font: inherit !important;
+}
