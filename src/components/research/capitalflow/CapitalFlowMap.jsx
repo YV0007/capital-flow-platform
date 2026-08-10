@@ -59,6 +59,15 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const graph = useMemo(() => buildGraph(), []);
   const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links), [graph]);
   const graphData = useMemo(() => ({ nodes: graph.nodes, links: graph.links }), [graph]);
+  // Pristine layout snapshot, taken right after applyMoleculeLayout pins fx/fy.
+  // Dragging overwrites a node's fx/fy (onNodeDragEnd), so this is the only copy
+  // of "where things belong" — reset restores it. Captured by value, so later
+  // drags never mutate it. Depends on `regions` to run AFTER the layout pass.
+  const homePositions = useMemo(() => {
+    const m = new Map();
+    graph.nodes.forEach(n => m.set(n.id, { x: n.fx, y: n.fy }));
+    return m;
+  }, [graph, regions]);
   const adjacency = useMemo(() => buildAdjacency(graph.links), [graph]);
   const nodeById = useMemo(() => new Map(graph.nodes.map(n => [n.id, n])), [graph]);
   const linkById = useMemo(() => new Map(graph.links.map(l => [l.id, l])), [graph]);
@@ -222,7 +231,18 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
     setCluster(null);
   }, []);
 
-  const resetView = useCallback(() => { fgRef.current?.zoomToFit(700, 80); }, []);
+  // Reset = snap every node back to its pristine layout spot (undo any dragging),
+  // then re-frame the whole map. So "if I make a mess, one click puts it back."
+  const resetView = useCallback(() => {
+    const fg = fgRef.current;
+    if (!fg) return;
+    graph.nodes.forEach(n => {
+      const p = homePositions.get(n.id);
+      if (p) { n.fx = p.x; n.fy = p.y; n.x = p.x; n.y = p.y; }
+    });
+    fg.refresh?.();
+    fg.zoomToFit(700, 80);
+  }, [graph, homePositions]);
 
   // Deep-link (e.g. a flow row on the home landing): open with that flow
   // pre-selected — the detail card shows immediately — then glide the camera
