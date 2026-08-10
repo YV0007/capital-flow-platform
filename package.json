@@ -8,7 +8,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "logos": "python3 scripts/fetch_logos.py",
-    "logos:all": "python3 scripts/fetch_logos.py --all"
+    "logos:all": "python3 scripts/fetch_logos.py --all",
+    "reads:stats": "node scripts/generate_reads.mjs stats",
+    "reads:briefs": "node scripts/generate_reads.mjs briefs",
+    "reads:save": "node scripts/generate_reads.mjs save"
   },
   "dependencies": {
     "lucide-react": "^0.396.0",
