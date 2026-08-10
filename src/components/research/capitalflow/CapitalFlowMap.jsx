@@ -449,7 +449,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
               if (e.key === 'Enter' && suggestions[0]) { focusEntity(suggestions[0].id); setSearchOpen(false); }
               if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
             }}
-            placeholder={view === 'table' ? 'Фильтр по таблице…' : 'Найти на карте…'}
+            placeholder={view === 'table' ? 'Поиск по таблице…' : 'Найти на карте…'}
             style={{
               width: '100%', padding: '7px 26px 7px 27px',
               background: 'var(--cf-topbar)', border: '1px solid var(--cf-border)', borderRadius: 8,

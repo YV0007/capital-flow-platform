@@ -11,10 +11,10 @@
 // within each subsection; a row click jumps to the map with the entity open.
 
 import { useMemo, useState, useCallback } from 'react';
-import { ArrowUp, ArrowDown, ChevronDown, ChevronRight, ShieldCheck, ShieldAlert } from 'lucide-react';
+import { ArrowUp, ArrowDown, ChevronDown, ChevronRight } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
 import {
-  SECTOR_META, TIER_META, THEME_META, AGGREGATES, AUDIT, sectorLabel, basisLabel,
+  SECTOR_META, TIER_META, THEME_META, AGGREGATES, sectorLabel, basisLabel,
 } from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
 
@@ -61,7 +61,7 @@ const ROLES = [
 // share or re-rank a leader, because then the figure would no longer be the
 // engine's and the provenance claim would be false.
 function CycleSummary() {
-  if (!AGGREGATES && !AUDIT) return null;
+  if (!AGGREGATES) return null;
   const top = AGGREGATES?.top_sector;
   const co = AGGREGATES?.top_company;
   const shares = AGGREGATES?.thesis_shares;
@@ -74,15 +74,13 @@ function CycleSummary() {
       border: '1px solid var(--cf-border-soft)', borderRadius: 12, padding: '13px 16px', marginBottom: 16,
       background: 'var(--cf-surface0)',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 11 }}>
+      <div style={{ marginBottom: 11 }}>
         <span style={{
           fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
         }}>
           Этот цикл
         </span>
-        <span style={{ flex: 1 }} />
-        {AUDIT && <AuditBadge audit={AUDIT} />}
       </div>
 
       <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap' }}>
@@ -175,37 +173,6 @@ function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
         </div>
       )}
     </div>
-  );
-}
-
-// The engine audits its own delivery; surfacing the verdict is the point of
-// §6 — trust is the product, so a failing or warning run must be visible.
-function AuditBadge({ audit }) {
-  const ok = audit.passed && !audit.error_count;
-  const warn = (audit.warning_count || 0) > 0;
-  const color = !ok ? 'var(--cf-bad)' : warn ? 'var(--cf-warn)' : 'var(--cf-good)';
-  const Icon = ok && !warn ? ShieldCheck : ShieldAlert;
-  const stats = audit.stats || {};
-  const title = [
-    `Аудит движка за ${audit.week || audit.generated}: ${ok ? 'пройден' : 'ПРОВАЛЕН'}`,
-    audit.checked ? `проверено: ${audit.checked.events ?? '?'} событий · ${audit.checked.track_records ?? '?'} строк трек-рекорда · ${audit.checked.profiles ?? '?'} профилей` : null,
-    stats.source_url_coverage != null ? `покрытие ссылками на источники ${Math.round(stats.source_url_coverage * 100)}%` : null,
-    stats.provisional_track_rows != null ? `${stats.provisional_track_rows} предварительных строк` : null,
-    stats.estimated_amounts != null ? `${stats.estimated_amounts} оценочных сумм` : null,
-    warn ? `предупреждений: ${audit.warning_count} — ${(audit.warnings || []).slice(0, 4).join(' · ')}` : null,
-  ].filter(Boolean).join('\n');
-
-  return (
-    <span title={title} style={{
-      display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 9px',
-      background: color + '12', border: `1px solid ${color}38`, borderRadius: 6,
-      fontSize: 9, color, fontFamily: MONO, fontWeight: 700,
-      textTransform: 'uppercase', letterSpacing: '0.07em', cursor: 'help',
-    }}>
-      <Icon size={11} />
-      Аудит движка {ok ? 'пройден' : 'провален'}
-      {warn ? ` · ${audit.warning_count} предупр.` : ''}
-    </span>
   );
 }
 
