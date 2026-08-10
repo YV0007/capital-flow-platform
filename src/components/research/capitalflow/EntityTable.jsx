@@ -256,7 +256,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
       .filter(role => role.count > 0);
 
     return { sections: out, shown: rows.length };
-  }, [nodes, query, kind, activeList, sortKey, sortDir]);
+  }, [nodes, matchedNodes, query, kind, activeList, sortKey, sortDir]);
 
   const header = (c) => {
     const on = sortKey === c.key;
