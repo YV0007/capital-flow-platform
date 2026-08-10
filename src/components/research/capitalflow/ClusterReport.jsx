@@ -97,8 +97,8 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
         {/* 1 · How big */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           <Stat label={isSector ? 'Привлечено' : 'Вложено'}
-            value={h.capital ? fmtUSD(h.capital) : '—'}
-            hint="Подтверждённые потоки с раскрытой суммой." big />
+            value={report.disclosedTotal ? fmtUSD(report.disclosedTotal) : (h.capital ? fmtUSD(h.capital) : '—')}
+            hint="Весь раскрытый капитал, включая неподтверждённые потоки." big />
           <Stat label="Подтверждённые сделки" value={String(h.deals)}
             hint={h.undisclosedDeals ? `${h.undisclosedDeals} без раскрытой суммы` : 'Все суммы раскрыты'} big />
           <Stat label={isSector ? 'Инвесторы' : 'Активные имена'}
@@ -126,10 +126,14 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
               {h.largest && <> · крупнейший {fmtUSD(h.largest.amountUSD)}</>}
             </div>
           )}
-          {!!h.candidateDeals && (
-            <div style={{ color: 'var(--cf-muted)', marginTop: 3 }}>
-              + {h.candidateDeals} {plural(h.candidateDeals, ['неподтверждённый поток', 'неподтверждённых потока', 'неподтверждённых потоков'])}
-              {h.candidateCapital ? ` (заявлено ${fmtUSD(h.candidateCapital)})` : ''} — не входят в цифры выше.
+          {(h.capital > 0 || h.candidateDeals > 0) && (
+            <div style={{ color: 'var(--cf-text5)', marginTop: 3 }}>
+              Подтверждено <b style={{ color: 'var(--cf-text3)' }}>{fmtUSD(h.capital)}</b> · {h.deals} {plural(h.deals, ['сделка', 'сделки', 'сделок'])}
+              {h.candidateDeals ? (
+                <span style={{ color: 'var(--cf-muted)' }}>
+                  {' · '}кандидаты {h.candidateCapital ? fmtUSD(h.candidateCapital) : '—'} ({h.candidateDeals} {plural(h.candidateDeals, ['поток', 'потока', 'потоков'])})
+                </span>
+              ) : null}
             </div>
           )}
         </div>

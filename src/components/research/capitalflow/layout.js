@@ -217,6 +217,10 @@ export function applyMoleculeLayout(nodes, sectors = {}, links = []) {
   });
 
   // ── Regions to paint ─────────────────────────────────────────────────────
+  // Bubble totals sum node.capital — the engine's authoritative per-entity
+  // figure, all disclosed capital regardless of confirmation. This is the
+  // app-wide "raскрыто" convention (top bar, filter chips, table all agree);
+  // the report reconciles to it in its headline.
   const regions = [];
   classesPresent.forEach(c => {
     const ang = classAngleOf[c];

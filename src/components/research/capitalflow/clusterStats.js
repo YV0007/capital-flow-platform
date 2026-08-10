@@ -107,6 +107,11 @@ export function buildSectorReport(sectorKey, { nodes, links, nodeById, generated
   const meta = SECTOR_META[sectorKey] || {};
   const head = rollup(flows);
   const mom = momentum(flows, generated);
+  // All-disclosed total, summed exactly like the map bubble (node.capital over
+  // the sector's recipients) so the report headline matches the canvas figure.
+  const disclosedTotal = nodes
+    .filter(n => n.sector === sectorKey)
+    .reduce((s, n) => s + (n.capital || 0), 0);
 
   // Who funds it — by allocator class, then by name.
   const byClass = groupBy(flows, f => nodeById.get(f.sourceId)?.cls).map(g => ({
@@ -171,6 +176,7 @@ export function buildSectorReport(sectorKey, { nodes, links, nodeById, generated
     blurb: meta.blurb || null,
     outsideAiStack: ['gaming', 'ev-automotive', 'private-credit', 'diversified-pe'].includes(sectorKey),
     head,
+    disclosedTotal,
     allocators: new Set(flows.filter(isConfirmed).map(f => f.sourceId)).size,
     recipients: byRecipient.length,
     rank: position >= 0 ? { position: position + 1, of: allSectors.length } : null,
@@ -197,6 +203,9 @@ export function buildClassReport(classKey, { nodes, links, nodeById, generated }
   const meta = CLASS_META[classKey] || {};
   const head = rollup(flows);
   const mom = momentum(flows, generated);
+  // All-disclosed total, summed like the map island (node.capital over the
+  // class's members) so the report headline matches the canvas figure.
+  const disclosedTotal = members.reduce((s, n) => s + (n.capital || 0), 0);
 
   const bySector = groupBy(flows, f => f.sector).map(g => ({
     ...g,
@@ -257,6 +266,7 @@ export function buildClassReport(classKey, { nodes, links, nodeById, generated }
     color: meta.color || '#71717a',
     blurb: meta.blurb || null,
     head,
+    disclosedTotal,
     memberCount: members.length,
     activeCount: byAllocator.length,
     recipients: byRecipient.length,
