@@ -411,7 +411,10 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
       }}>
         {/* Back + title + stats */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, pointerEvents: 'auto', minWidth: 0 }}>
-          <button onClick={onBack} title="К библиотеке исследований"
+          {/* In the table, Назад steps back to the map (the intuitive "up one
+              level"); on the map it leaves for the research library. */}
+          <button onClick={() => (view === 'table' ? setView('map') : onBack())}
+            title={view === 'table' ? 'Назад к карте' : 'К библиотеке исследований'}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 3,
               padding: '6px 10px 6px 6px',
@@ -420,7 +423,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text0)'; e.currentTarget.style.borderColor = 'var(--cf-text9)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--cf-text3)'; e.currentTarget.style.borderColor = 'var(--cf-border)'; }}>
-            <ChevronLeft size={13} /> Назад
+            <ChevronLeft size={13} /> {view === 'table' ? 'К карте' : 'Назад'}
           </button>
           <div style={{ minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
