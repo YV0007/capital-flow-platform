@@ -1,0 +1,275 @@
+// ══════════════════════════════════════════════════════════════════════════
+// DigestView — the Flow Digest section (third view, next to Карта / Таблица).
+//
+// A briefing on the whole map: a week, a month, and the entire tracked stack.
+// You should be able to read one block and know what moved, who led, and where
+// the money went — without touching the graph. All numbers come from digest.js
+// (pure, payload-derived); this file only lays them out.
+// ══════════════════════════════════════════════════════════════════════════
+
+import { useMemo, useState } from 'react';
+import { ArrowUpRight, Sparkles, TrendingUp } from 'lucide-react';
+import { buildDigest } from './digest.js';
+import { fmtUSD, plural } from './format.js';
+import { SECTOR_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
+
+const MONO = 'ui-monospace, monospace';
+
+export default function DigestView({ nodes, links, generated, sectors, onOpenEntity, topInset = 0 }) {
+  const digest = useMemo(
+    () => buildDigest({ nodes, links, generated, sectors }),
+    [nodes, links, generated, sectors]
+  );
+  const [tab, setTab] = useState('week');
+  const block = digest.blocks.find(b => b.id === tab) || digest.blocks[0];
+  const isAll = block.id === 'all';
+
+  return (
+    <div style={{
+      position: 'absolute', left: 0, right: 0, bottom: 0, top: topInset, zIndex: 20,
+      background: 'var(--cf-canvas)', overflowY: 'auto',
+    }}>
+      <div style={{ maxWidth: 1120, margin: '0 auto', padding: '18px 24px 60px' }}>
+
+        {/* Heading + window tabs */}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
+          <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em' }}>
+            Сводка по потокам
+          </span>
+          <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            на {generated}
+          </span>
+        </div>
+        <div style={{ fontSize: 11, color: 'var(--cf-text5)', fontFamily: MONO, marginBottom: 16 }}>
+          Что произошло в потоках капитала — коротко, чтобы понять картину с одного экрана.
+        </div>
+
+        <div style={{ display: 'flex', gap: 8, marginBottom: 18, flexWrap: 'wrap' }}>
+          {digest.blocks.map(b => (
+            <button key={b.id} onClick={() => setTab(b.id)}
+              style={{
+                padding: '7px 14px', borderRadius: 8, cursor: 'pointer',
+                background: tab === b.id ? 'var(--cf-accent-bg)' : 'var(--cf-surface2)',
+                border: `1px solid ${tab === b.id ? 'var(--cf-accent-bd)' : 'var(--cf-border)'}`,
+                color: tab === b.id ? 'var(--cf-accent)' : 'var(--cf-text3)',
+                fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.07em',
+              }}>
+              {b.title}
+            </button>
+          ))}
+        </div>
+
+        {/* Sub + narrative */}
+        <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
+          {block.sub}
+        </div>
+
+        {block.empty ? (
+          <Empty>За это окно подтверждённых потоков нет — попробуйте месяц или всю карту.</Empty>
+        ) : (
+          <>
+            {/* Headline stats */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8, marginBottom: 14 }}>
+              <Stat label="Раскрытый приток" value={block.head.capital ? fmtUSD(block.head.capital) : '—'}
+                hint="Подтверждённые потоки с раскрытой суммой" big />
+              <Stat label="Подтверждённые сделки" value={String(block.head.deals)}
+                hint={block.head.candidateDeals ? `+ ${block.head.candidateDeals} кандидатов` : 'все подтверждены'} />
+              <Stat label="Инвесторов" value={String(block.uniqueInvestors)}
+                hint="уникальных источников в окне" />
+              <Stat label="Получателей" value={String(block.uniqueBeneficiaries)}
+                hint="уникальных получателей в окне" />
+            </div>
+
+            {/* Narrative */}
+            <div style={{
+              padding: '13px 15px', marginBottom: 20, borderRadius: 10,
+              background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)',
+            }}>
+              {block.read.map((line, i) => (
+                <p key={i} style={{ margin: i ? '7px 0 0' : 0, fontSize: 12.5, color: i === 0 ? 'var(--cf-text1)' : 'var(--cf-text3)', lineHeight: 1.6 }}>
+                  {line}
+                </p>
+              ))}
+            </div>
+
+            {/* Three lists */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20, marginBottom: 8 }}>
+              <List title="Топ инвесторов по размеру" note="По раскрытому подтверждённому капиталу">
+                {block.investors.length
+                  ? block.investors.map((r, i) => (
+                      <NameRow key={r.key} rank={i + 1} node={r.node}
+                        main={r.capital ? fmtUSD(r.capital) : 'не раскрыто'}
+                        sub={`${r.deals} ${plural(r.deals, ['сделка', 'сделки', 'сделок'])}`}
+                        onClick={() => r.node && onOpenEntity(r.node.id)} />
+                    ))
+                  : <Empty>Нет данных.</Empty>}
+              </List>
+
+              <List title="Топ получателей" note="Куда пришло больше всего">
+                {block.beneficiaries.length
+                  ? block.beneficiaries.map((r, i) => (
+                      <NameRow key={r.key} rank={i + 1} node={r.node}
+                        main={r.capital ? fmtUSD(r.capital) : 'не раскрыто'}
+                        sub={`${r.deals} ${plural(r.deals, ['сделка', 'сделки', 'сделок'])}`}
+                        onClick={() => r.node && onOpenEntity(r.node.id)} />
+                    ))
+                  : <Empty>Нет данных.</Empty>}
+              </List>
+
+              <List title="Топ секторов по притоку" note="Доля раскрытого притока окна">
+                {block.sectors.length
+                  ? block.sectors.map(s => (
+                      <SectorBar key={s.key}
+                        label={s.key === '_none' ? 'Без сектора' : sectorLabel(s.key)}
+                        color={SECTOR_META[s.key]?.color || 'var(--cf-text9)'}
+                        share={s.share} right={fmtUSD(s.capital)} />
+                    ))
+                  : <Empty>Нет данных.</Empty>}
+              </List>
+            </div>
+
+            {/* New entrants */}
+            {block.newEntrants.length > 0 && (
+              <div style={{ marginTop: 14 }}>
+                <SectionLabel>Впервые на карте</SectionLabel>
+                <div style={{ fontSize: 11.5, color: 'var(--cf-text3)', lineHeight: 1.7 }}>
+                  {block.newEntrants.map((n, i) => (
+                    <span key={n.id}>
+                      {i > 0 && ' · '}
+                      <button onClick={() => onOpenEntity(n.id)} style={linkBtn}>{n.name}</button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Signals — whole-map view only */}
+            {isAll && digest.signals.length > 0 && (
+              <div style={{ marginTop: 22 }}>
+                <SectionLabel>Сработавшие сигналы · этот цикл</SectionLabel>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 8 }}>
+                  {digest.signals.slice(0, 8).map((s, i) => {
+                    const rule = RULE_META[s.rule];
+                    return (
+                      <div key={i} style={{
+                        padding: '9px 11px', borderRadius: 8,
+                        background: 'var(--cf-warn-bg)', border: '1px solid var(--cf-warn-bd)',
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <Sparkles size={11} color="var(--cf-warn)" />
+                          <span style={{ fontSize: 9.5, color: 'var(--cf-warn)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                            {rule?.label || s.rule}
+                          </span>
+                          <span style={{ marginLeft: 'auto', fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO }}>
+                            {s.sector === '_none' ? '' : sectorLabel(s.sector)}
+                          </span>
+                        </div>
+                        {s.theme && <div style={{ fontSize: 11, color: 'var(--cf-text2)', marginTop: 5, lineHeight: 1.5 }}>{s.theme}</div>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        <div style={{ marginTop: 26, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.6 }}>
+          Окна отсчитываются от даты выгрузки ({generated}) по датам самих потоков. Долларовые рейтинги —
+          по подтверждённым потокам с раскрытой суммой; кандидаты считаются отдельно. Только приток —
+          оттоки и динамика между циклами появятся, когда их начнёт присылать движок.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── bits ─────────────────────────────────────────────────────────────────
+const linkBtn = {
+  background: 'none', border: 'none', padding: 0, margin: 0,
+  color: 'var(--cf-text2)', fontSize: 'inherit', fontFamily: 'inherit',
+  cursor: 'pointer', textDecoration: 'underline', textDecorationColor: 'var(--cf-text9)',
+};
+
+function SectionLabel({ children }) {
+  return (
+    <div style={{
+      fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
+      textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 9,
+    }}>{children}</div>
+  );
+}
+
+function List({ title, note, children }) {
+  return (
+    <div>
+      <div style={{ marginBottom: 9 }}>
+        <div style={{ fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{title}</div>
+        {note && <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', marginTop: 3 }}>{note}</div>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function Stat({ label, value, hint, big }) {
+  return (
+    <div title={hint} style={{
+      padding: '9px 11px', background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)',
+      borderRadius: 8, cursor: hint ? 'help' : 'default',
+    }}>
+      <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em' }}>{label}</div>
+      <div style={{ fontSize: big ? 17 : 15, fontWeight: 700, color: 'var(--cf-text0)', marginTop: 3, letterSpacing: '-0.01em' }}>{value}</div>
+      {hint && <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', marginTop: 2, lineHeight: 1.4 }}>{hint}</div>}
+    </div>
+  );
+}
+
+function SectorBar({ label, color, share, right }) {
+  const w = Math.max(2, Math.min(100, (share || 0) * 100));
+  return (
+    <div style={{ marginBottom: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 3 }}>
+        <span style={{ fontSize: 11.5, color: 'var(--cf-text2)', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+        <span style={{ fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO, flexShrink: 0 }}>{right} · {Math.round((share || 0) * 100)}%</span>
+      </div>
+      <div style={{ height: 4, background: 'var(--cf-surface3)', borderRadius: 3, overflow: 'hidden' }}>
+        <div style={{ width: `${w}%`, height: '100%', background: color, opacity: 0.75, borderRadius: 3 }} />
+      </div>
+    </div>
+  );
+}
+
+function NameRow({ rank, node, main, sub, onClick }) {
+  if (!node) return null;
+  return (
+    <button onClick={onClick} title={`Открыть ${node.name}`}
+      style={{
+        display: 'flex', alignItems: 'center', gap: 10, width: '100%',
+        padding: '8px 10px', marginBottom: 5, textAlign: 'left',
+        background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 8,
+        cursor: 'pointer', transition: 'border-color 130ms',
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border-dashed)')}
+      onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border-soft)')}>
+      <span style={{ fontSize: 10, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, width: 12, flexShrink: 0 }}>{rank}</span>
+      <span style={{ width: 7, height: 7, borderRadius: 2, background: node.color, flexShrink: 0 }} />
+      <span style={{ flex: 1, minWidth: 0 }}>
+        <span style={{ display: 'block', fontSize: 12.5, color: 'var(--cf-text1)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{node.name}</span>
+        <span style={{ display: 'block', fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2 }}>{sub}</span>
+      </span>
+      <span style={{ fontSize: 12, color: 'var(--cf-text0)', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>{main}</span>
+      <ArrowUpRight size={11} color="var(--cf-text9)" style={{ flexShrink: 0 }} />
+    </button>
+  );
+}
+
+function Empty({ children }) {
+  return (
+    <div style={{
+      padding: '10px 12px', background: 'var(--cf-surface1)', border: '1px dashed var(--cf-border)',
+      borderRadius: 8, fontSize: 11, color: 'var(--cf-text5)', lineHeight: 1.5,
+    }}>{children}</div>
+  );
+}

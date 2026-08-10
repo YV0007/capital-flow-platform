@@ -27,7 +27,7 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
   ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, Eye,
-  Table2, Share2,
+  Table2, Share2, FileText,
 } from 'lucide-react';
 import FlowGraph from './FlowGraph.jsx';
 import FilterDrawer from './FilterBar.jsx';
@@ -36,6 +36,7 @@ import EntityPanel from './EntityPanel.jsx';
 import AllocatorDeepDive from './AllocatorDeepDive.jsx';
 import FundHoldings from './FundHoldings.jsx';
 import EntityTable from './EntityTable.jsx';
+import DigestView from './DigestView.jsx';
 import ClusterReport from './ClusterReport.jsx';
 import { buildSectorReport, buildClassReport } from './clusterStats.js';
 import useWatchlists from './useWatchlists.js';
@@ -438,8 +439,8 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, pointerEvents: 'auto', minWidth: 0 }}>
           {/* In the table, Назад steps back to the map (the intuitive "up one
               level"); on the map it leaves for the research library. */}
-          <button onClick={() => (view === 'table' ? exitToMap() : onBack())}
-            title={view === 'table' ? 'Назад к карте' : 'К библиотеке исследований'}
+          <button onClick={() => (view !== 'map' ? exitToMap() : onBack())}
+            title={view !== 'map' ? 'Назад к карте' : 'К библиотеке исследований'}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 3,
               padding: '6px 10px 6px 6px',
@@ -448,7 +449,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text0)'; e.currentTarget.style.borderColor = 'var(--cf-text9)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--cf-text3)'; e.currentTarget.style.borderColor = 'var(--cf-border)'; }}>
-            <ChevronLeft size={13} /> {view === 'table' ? 'К карте' : 'Назад'}
+            <ChevronLeft size={13} /> {view !== 'map' ? 'К карте' : 'Назад'}
           </button>
           <div style={{ minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
@@ -533,11 +534,17 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
 
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
-          <TopBtn onClick={() => (view === 'map' ? (setView('table'), setDrawerOpen(false)) : exitToMap())}
-            label={view === 'map' ? 'Таблица — вся отслеживаемая вселенная, по ролям и типам' : 'Назад к карте'}
+          <TopBtn onClick={() => (view === 'table' ? exitToMap() : (setView('table'), setDrawerOpen(false)))}
+            label={view === 'table' ? 'Назад к карте' : 'Таблица — вся отслеживаемая вселенная, по ролям и типам'}
             active={view === 'table'} wide>
-            {view === 'map' ? <Table2 size={12} /> : <Share2 size={12} />}
-            {view === 'map' ? 'Таблица' : 'Карта'}
+            {view === 'table' ? <Share2 size={12} /> : <Table2 size={12} />}
+            {view === 'table' ? 'Карта' : 'Таблица'}
+          </TopBtn>
+          <TopBtn onClick={() => (view === 'digest' ? exitToMap() : (setView('digest'), setDrawerOpen(false)))}
+            label={view === 'digest' ? 'Назад к карте' : 'Сводка — недельный, месячный и общий обзор потоков'}
+            active={view === 'digest'} wide>
+            {view === 'digest' ? <Share2 size={12} /> : <FileText size={12} />}
+            {view === 'digest' ? 'Карта' : 'Сводка'}
           </TopBtn>
           <WatchlistSelector wl={wl} />
           {/* Filters drive both views — the table is the same universe as the map. */}
@@ -604,6 +611,18 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           wl={wl}
           kind={tableKind}
           onKind={setTableKind}
+          onOpenEntity={focusEntity}
+        />
+      )}
+
+      {/* ── Digest — weekly / monthly / whole-map flow briefing ─────────────── */}
+      {view === 'digest' && (
+        <DigestView
+          topInset={TOPBAR_H}
+          nodes={graph.nodes}
+          links={graph.links}
+          generated={META.generated}
+          sectors={graph.sectors}
           onOpenEntity={focusEntity}
         />
       )}

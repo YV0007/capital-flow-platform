@@ -1,0 +1,231 @@
+// ══════════════════════════════════════════════════════════════════════════
+// digest.js — the Flow Digest builders.
+//
+// Turns the current map into time-windowed briefings — a week, a month, and
+// the whole map — computed purely from each flow's `date`, anchored at
+// META.generated. No history, no backend: everything here is derived from the
+// single payload that is already loaded.
+//
+// Same money basis as the cluster reports (clusterStats.js): dollar rankings
+// use confirmed (verified / verified_alpha) flows with a disclosed amount;
+// candidate flows are counted separately and never folded into a $ headline.
+// ══════════════════════════════════════════════════════════════════════════
+
+import { sectorLabel } from '../../../data/capitalMap.js';
+import { fmtUSD, plural } from './format.js';
+
+const isConfirmed = (l) => l.status === 'verified' || l.status === 'verified_alpha';
+
+function daysBefore(iso, days) {
+  const d = new Date(`${iso}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return null;
+  d.setUTCDate(d.getUTCDate() - days);
+  return d.toISOString().slice(0, 10);
+}
+
+const pct = (x) => (x == null ? null : `${Math.round(x * 100)}%`);
+
+// Flows whose date sits in (gen − fromDays, gen − toDays].
+function windowFlows(links, gen, fromDays, toDays = 0) {
+  const from = daysBefore(gen, fromDays);
+  const to = toDays ? daysBefore(gen, toDays) : gen;
+  if (!from) return [];
+  return links.filter(l => l.date && l.date > from && l.date <= to);
+}
+
+// Group flows by a key, sum confirmed-disclosed capital, return sorted rows.
+function topBy(flows, keyOf, nodeById, limit = 5) {
+  const m = new Map();
+  flows.filter(isConfirmed).forEach(f => {
+    const k = keyOf(f);
+    if (k == null) return;
+    if (!m.has(k)) m.set(k, { key: k, capital: 0, deals: 0 });
+    const g = m.get(k);
+    if (f.disclosed) g.capital += f.amountUSD;
+    g.deals += 1;
+  });
+  return [...m.values()]
+    .map(g => ({ ...g, node: nodeById.get(g.key) }))
+    .sort((a, b) => b.capital - a.capital || b.deals - a.deals)
+    .slice(0, limit);
+}
+
+function topSectors(flows, limit = 5) {
+  const m = new Map();
+  let total = 0;
+  flows.filter(f => isConfirmed(f) && f.disclosed).forEach(f => {
+    const k = f.sector || '_none';
+    m.set(k, (m.get(k) || 0) + f.amountUSD);
+    total += f.amountUSD;
+  });
+  return {
+    total,
+    rows: [...m.entries()]
+      .map(([key, capital]) => ({ key, capital, share: total ? capital / total : 0 }))
+      .sort((a, b) => b.capital - a.capital)
+      .slice(0, limit),
+  };
+}
+
+// Confirmed-disclosed sum + counts for a set of flows.
+function totals(flows) {
+  const confirmed = flows.filter(isConfirmed);
+  const disclosed = confirmed.filter(f => f.disclosed);
+  const candidates = flows.filter(f => !isConfirmed(f));
+  return {
+    capital: disclosed.reduce((s, f) => s + f.amountUSD, 0),
+    deals: confirmed.length,
+    candidateDeals: candidates.length,
+    candidateCapital: candidates.filter(f => f.disclosed).reduce((s, f) => s + f.amountUSD, 0),
+  };
+}
+
+// The single biggest confirmed-disclosed flow in the set.
+function biggestDeal(flows, nodeById) {
+  const d = flows.filter(f => isConfirmed(f) && f.disclosed);
+  if (!d.length) return null;
+  const f = d.reduce((a, b) => (b.amountUSD > a.amountUSD ? b : a));
+  return {
+    amount: f.amountUSD,
+    source: nodeById.get(f.sourceId),
+    target: nodeById.get(f.targetId),
+    sector: f.sector,
+  };
+}
+
+// Sources whose FIRST confirmed flow anywhere lands inside this window — money
+// that was not on the map before it.
+function newEntrants(windowSet, allLinks, nodeById, limit = 6) {
+  const first = new Map();
+  allLinks.filter(isConfirmed).forEach(f => {
+    const prev = first.get(f.sourceId);
+    if (!prev || (f.date && f.date < prev)) first.set(f.sourceId, f.date);
+  });
+  const inWin = new Set(windowSet.map(f => f.date && f.date));
+  const winDates = windowSet.map(f => f.date).filter(Boolean);
+  const lo = winDates.length ? winDates.reduce((a, b) => (a < b ? a : b)) : null;
+  const hi = winDates.length ? winDates.reduce((a, b) => (a > b ? a : b)) : null;
+  if (!lo) return [];
+  const ids = new Set(windowSet.map(f => f.sourceId));
+  return [...ids]
+    .filter(id => { const d = first.get(id); return d && d >= lo && d <= hi; })
+    .map(id => nodeById.get(id))
+    .filter(Boolean)
+    .sort((a, b) => (b.capital || 0) - (a.capital || 0))
+    .slice(0, limit);
+}
+
+// Which sector layer the money moved toward vs the window before it. Returns a
+// short phrase or null when there's nothing worth calling out.
+function sectorShift(cur, prev) {
+  const top = cur.rows[0];
+  if (!top) return null;
+  const prevTop = prev.rows[0];
+  const topLabel = top.key === '_none' ? 'без сектора' : sectorLabel(top.key);
+  if (!prevTop || prevTop.key === top.key) {
+    return `Лидирует «${topLabel}» — ${pct(top.share)} недельного притока.`;
+  }
+  const prevLabel = prevTop.key === '_none' ? 'без сектора' : sectorLabel(prevTop.key);
+  return `Фокус сместился в «${topLabel}» — до этого вёл «${prevLabel}».`;
+}
+
+function deltaPhrase(cur, prev, unit) {
+  if (!prev || !prev.capital) return null;
+  if (!cur.capital) return `против ${fmtUSD(prev.capital)} ${unit} ранее`;
+  const d = (cur.capital - prev.capital) / prev.capital;
+  if (Math.abs(d) < 0.05) return `примерно столько же, сколько ${unit} ранее`;
+  return d > 0
+    ? `на ${pct(d)} больше, чем ${unit} ранее`
+    : `на ${pct(-d)} меньше, чем ${unit} ранее`;
+}
+
+const names = (rows, n = 3) => rows.slice(0, n).map(r => r.node?.name).filter(Boolean);
+
+// Build one window block.
+function buildBlock({ flows, prior, allLinks, nodeById, gen, id, title, sub, unit }) {
+  const head = totals(flows);
+  const priorHead = prior ? totals(prior) : null;
+  const confirmedFlows = flows.filter(isConfirmed);
+  const uniqueInvestors = new Set(confirmedFlows.map(f => f.sourceId)).size;
+  const uniqueBeneficiaries = new Set(confirmedFlows.map(f => f.targetId)).size;
+  const investors = topBy(flows, f => f.sourceId, nodeById);
+  const beneficiaries = topBy(flows, f => f.targetId, nodeById);
+  const sectors = topSectors(flows);
+  const priorSectors = prior ? topSectors(prior) : { rows: [] };
+  const biggest = biggestDeal(flows, nodeById);
+  const entrants = prior ? newEntrants(flows, allLinks, nodeById) : [];
+
+  const read = [];
+  if (head.deals || head.capital) {
+    const delta = unit ? deltaPhrase(head, priorHead, unit) : null;
+    read.push(
+      `${title}: раскрыто ${fmtUSD(head.capital)} в ${head.deals} ` +
+      `${plural(head.deals, ['сделке', 'сделках', 'сделках'])}` +
+      `${delta ? ` — ${delta}` : ''}.`
+    );
+    const inv = names(investors);
+    if (inv.length) read.push(`Крупнейшие источники — ${inv.join(', ')}.`);
+    const ben = names(beneficiaries);
+    if (ben.length) read.push(`Больше всего получили ${ben.join(', ')}.`);
+    if (unit) { const s = sectorShift(sectors, priorSectors); if (s) read.push(s); }
+    if (biggest) {
+      read.push(
+        `Крупнейшая сделка — ${biggest.source?.name || '—'} → ` +
+        `${biggest.target?.name || '—'} на ${fmtUSD(biggest.amount)}.`
+      );
+    }
+    if (head.candidateDeals) {
+      read.push(
+        `Плюс ${head.candidateDeals} ` +
+        `${plural(head.candidateDeals, ['неподтверждённый поток', 'неподтверждённых потока', 'неподтверждённых потоков'])}` +
+        `${head.candidateCapital ? ` на ${fmtUSD(head.candidateCapital)}` : ''} — ещё без подтверждения.`
+      );
+    }
+  } else {
+    read.push(`${title}: подтверждённых потоков с раскрытой суммой нет.`);
+  }
+
+  return {
+    id, title, sub, head, uniqueInvestors, uniqueBeneficiaries,
+    investors, beneficiaries,
+    sectors: sectors.rows, biggest, newEntrants: entrants, read,
+    empty: !head.deals && !head.candidateDeals,
+  };
+}
+
+// ── Public entry ───────────────────────────────────────────────────────────
+export function buildDigest({ nodes, links, generated, sectors }) {
+  const nodeById = new Map(nodes.map(n => [n.id, n]));
+
+  const week = windowFlows(links, generated, 7);
+  const priorWeek = windowFlows(links, generated, 14, 7);
+  const month = windowFlows(links, generated, 30);
+  const priorMonth = windowFlows(links, generated, 60, 30);
+
+  const blocks = [
+    buildBlock({ flows: week, prior: priorWeek, allLinks: links, nodeById, gen: generated,
+      id: 'week', title: 'За неделю', sub: `Последние 7 дней до ${generated}`, unit: 'неделей' }),
+    buildBlock({ flows: month, prior: priorMonth, allLinks: links, nodeById, gen: generated,
+      id: 'month', title: 'За месяц', sub: `Последние 30 дней до ${generated}`, unit: 'месяцем' }),
+    buildBlock({ flows: links, prior: null, allLinks: links, nodeById, gen: generated,
+      id: 'all', title: 'Вся карта', sub: 'Весь отслеживаемый стек на текущий цикл', unit: null }),
+  ];
+
+  // Fired signals — this cycle, from the sector blocks. Surfaced on the
+  // whole-map view; they are not dated, so they belong to the cycle, not a week.
+  // The same signal can be attached to more than one sector block, so dedupe
+  // on rule + theme.
+  const signals = [];
+  const seenSignal = new Set();
+  Object.entries(sectors || {}).forEach(([key, s]) => {
+    (s.signals || []).forEach(sig => {
+      const k = `${sig.rule}|${sig.theme}`;
+      if (seenSignal.has(k)) return;
+      seenSignal.add(k);
+      signals.push({ sector: key, ...sig });
+    });
+  });
+  signals.sort((a, b) => (b.strength || 0) - (a.strength || 0));
+
+  return { generated, blocks, signals };
+}
