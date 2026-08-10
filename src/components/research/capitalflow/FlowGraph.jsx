@@ -181,6 +181,13 @@ export default function FlowGraph({
     return neighbourLinks.has(l.id);
   }, [matchedLinks, neighbourLinks, hasSelection]);
 
+  // Under an active filter, out-of-filter nodes/edges are removed from the
+  // render ENTIRELY (line, arrow, particles, hit area) — not just dimmed — so
+  // the filtered view is clean. force-graph skips anything visibility returns
+  // false for. No filter → everything visible (default look untouched).
+  const nodeVisible = useCallback((n) => !(hasFilter && !matchedNodes.has(n.id)), [hasFilter, matchedNodes]);
+  const linkVisible = useCallback((l) => !(hasFilter && !matchedLinks.has(l.id)), [hasFilter, matchedLinks]);
+
   // ── Source-class clusters (inner) + sector cells (outer) ───────────────
   const paintRegions = useCallback((ctx, globalScale) => {
     // Hit-box padding is specified in SCREEN pixels and converted to graph
@@ -574,6 +581,8 @@ export default function FlowGraph({
           onRenderFramePre={paintRegions}
           nodeCanvasObject={paintNode}
           nodePointerAreaPaint={paintPointerArea}
+          nodeVisibility={nodeVisible}
+          linkVisibility={linkVisible}
           nodeLabel={nodeTooltip}
           linkLabel={linkTooltip}
           linkColor={linkColor}
