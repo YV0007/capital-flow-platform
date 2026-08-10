@@ -250,6 +250,18 @@ def domain_of(url):
         return None
 
 
+def clean_domain(d):
+    """Normalise a domain that may arrive bare ('nvidia.com') or as a URL."""
+    if not d:
+        return None
+    d = str(d).strip()
+    if "://" in d:
+        d = domain_of(d) or ""
+    d = d.split("/", 1)[0]
+    d = d[4:] if d.startswith("www.") else d
+    return d or None
+
+
 def x_handle(url):
     try:
         return (urlparse(url).path or "").strip("/").split("/")[0] or None
@@ -330,15 +342,21 @@ def entities():
     out = []
     for n in nodes:
         meta = ref.get(n["id"]) or {}
+        # Node links win over the reference's, then merge the rest — mirrors what
+        # the app does at capitalMap.js:463 (engine emit is the fresher source).
+        node_links = n.get("links") or []
+        merged = node_links + [l for l in (meta.get("links") or []) if l not in node_links]
         out.append({"id": n["id"], "name": n.get("label") or n["id"],
-                    "sector": n.get("sector"), "links": meta.get("links") or [],
+                    "sector": n.get("sector"), "links": merged,
+                    "domain": n.get("domain"),   # engine's researched, authoritative site
                     "ref": meta})
     # reference-only entities (curated but not on this cycle's map) still refresh
     seen = {e["id"] for e in out}
     for nid, meta in ref.items():
         if nid != "_note" and nid not in seen:
             out.append({"id": nid, "name": meta.get("label") or nid.split(":", 1)[-1],
-                        "sector": None, "links": meta.get("links") or [], "ref": meta})
+                        "sector": None, "links": meta.get("links") or [],
+                        "domain": None, "ref": meta})
     return out
 
 
@@ -396,9 +414,13 @@ def main():
             if h:
                 urls.append(f"https://unavatar.io/x/{h}?fallback=false")
 
-        # No link on file — resolve one from the name, and only trust a verified page.
+        # No link on file — resolve one, trusting only a verified page. The
+        # engine's own `domain` (authoritative) is tried FIRST, then name-guesses.
+        # It is still run through page_is, so a wrong emit can't sneak a bad logo in.
         if not domains:
-            for cand in guess_domains(name):
+            node_domain = clean_domain(e.get("domain"))
+            candidates = ([node_domain] if node_domain else []) + guess_domains(name)
+            for cand in dict.fromkeys(candidates):
                 got = get_page(cand)
                 if not got:
                     continue

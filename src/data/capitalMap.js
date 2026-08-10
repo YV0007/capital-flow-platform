@@ -481,9 +481,17 @@ export function buildGraph(data = raw) {
     // scripts/fetch_logos.py (reliable, offline, no runtime DNS). Monogram
     // tile is the fallback for the entities without one.
     const localLogo = logoManifest[n.id];
+    // Runtime favicon/unavatar fallback from the entity's own domain + links,
+    // for anything the offline batch (fetch_logos.py) hasn't produced a file for
+    // yet. The engine now emits a clean `domain` on most nodes — fold it in as a
+    // website link so a monogram only ever shows when NOTHING resolves.
+    const logoLinks = n.domain
+      ? [{ kind: 'website', url: /^https?:\/\//.test(n.domain) ? n.domain : `https://${n.domain}` }, ...links]
+      : links;
     const logoUrls = [
       ...(flagUrl ? [flagUrl] : []),
       ...(localLogo ? [localLogo] : []),
+      ...buildLogoUrls(logoLinks),
     ];
     // The engine's canonical allocator record, keyed by the bare name behind
     // the `alloc:` prefix. This is the source of truth for allocator narrative
