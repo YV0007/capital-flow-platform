@@ -17,7 +17,7 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { fmtUSD, linkWidth } from './format.js';
-import { SECTOR_META, CLASS_META, TIER_META, STATUS_META, NETWORK_META } from '../../../data/capitalMap.js';
+import { SECTOR_META, CLASS_META, TIER_META, STATUS_META } from '../../../data/capitalMap.js';
 import { useThemeMode, canvasTokens, tone } from './canvasTheme.js';
 
 // Surfaces come from canvasTheme (a JS mirror of the --cf-* CSS variables,
@@ -347,6 +347,24 @@ export default function FlowGraph({
     ctx.save();
     ctx.globalAlpha = alpha;
 
+    // Pivotal highlight bloom — the block itself shines (not an outline). Gold =
+    // interesting deal (target: flagged/emerging), red = player to track
+    // (allocator: core/key). Intensity encodes rank. Drawn behind everything.
+    const glowColor = node.type === 'target'
+      ? (node.dealRank === 'flagged' || node.dealRank === 'emerging' ? T.dealGlow : null)
+      : (node.playerRank === 'core' || node.playerRank === 'key' ? T.playerGlow : null);
+    const glowStrength = node.dealRank === 'flagged' || node.playerRank === 'core' ? 1
+      : node.dealRank === 'emerging' || node.playerRank === 'key' ? 0.5 : 0;
+    if (lit && glowColor && glowStrength) {
+      const gr = S * (0.95 + 0.6 * glowStrength);
+      const g = ctx.createRadialGradient(cx, cy, R * 0.25, cx, cy, gr);
+      g.addColorStop(0, hexA(glowColor, 0.6 * glowStrength));
+      g.addColorStop(0.45, hexA(glowColor, 0.24 * glowStrength));
+      g.addColorStop(1, hexA(glowColor, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, cy, gr, 0, 2 * Math.PI); ctx.fill();
+    }
+
     // selection / hover glow
     if (lit && (selected || hovered)) {
       roundRect(ctx, x - 5, y - 5, S + 10, S + 10, corner + 4);
@@ -397,14 +415,8 @@ export default function FlowGraph({
       ctx.fillText(node.monogram || '?', cx, cy + S * 0.02);
     }
 
-    // networked allocator → warm outer bracket ring (elite-network member)
-    if (node.network) {
-      const nc = tone(NETWORK_META[node.network]?.color || '#F5B942', mode);
-      roundRect(ctx, x - 4, y - 4, S + 8, S + 8, corner + 4);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = hexA(nc, hovered || selected ? 1 : 0.85);
-      ctx.stroke();
-    }
+    // (network ring retired — the elite-network bracket read as a warning and
+    // is superseded by the pivotal blooms. Network still shows in the panel.)
 
     // accent rim = domain colour (keeps the colour encoding). One weight for
     // everyone; rank is carried by the pips below, not by the rim.
@@ -467,6 +479,19 @@ export default function FlowGraph({
       : (l.status === 'verified' ? 1 : l.status === 'verified_alpha' ? 0.7 : 0.46);
     const base = mode === 'light' ? 0.55 : 0.36;
     const a = (base + 0.55 * Math.sqrt(l.amountShare || 0)) * conf;
+
+    // Interesting-deal inflows glow gold — trace the money into a classified
+    // deal. Only inbound lines of a flagged/emerging target; intensity by rank.
+    const tgt = typeof l.target === 'object' ? l.target : null;
+    const dr = tgt?.dealRank;
+    if (dr === 'flagged' || dr === 'emerging') {
+      const gc = tone(T.dealLine, mode);
+      const s = dr === 'flagged' ? 1 : 0.5;
+      const ga = ((mode === 'light' ? 0.5 : 0.42) + 0.4 * Math.sqrt(l.amountShare || 0)) * (0.55 + 0.45 * s) * (0.7 + 0.3 * conf);
+      if (l.id === hoverLinkId) return hexA(gc, Math.min(1, ga + 0.4));
+      return hexA(gc, hasSelection ? Math.min(1, ga + 0.25) : ga);
+    }
+
     const lc = tone(l.color, mode);
     if (l.id === hoverLinkId) return hexA(lc, Math.min(1, a + 0.45));
     return hexA(lc, hasSelection ? Math.min(1, a + 0.3) : a);

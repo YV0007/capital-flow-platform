@@ -92,6 +92,11 @@ const DARK = {
   labelStrong: '#ffffff',
   selectRing: '#ffffff',
   rankPip: '#D6DAE4',
+  // Highlight blooms for the two invented ranks. Gold = interesting deal
+  // (target), red = player to track (allocator); the block itself shines.
+  dealGlow: '#F5B942',
+  dealLine: '#FFCF4D',
+  playerGlow: '#EE5A63',
   linkDim: '#3f3f46',
   linkDimAlpha: 0.06,
   regionSource: 0.085,          // glow alpha, allocator island
@@ -116,6 +121,10 @@ const LIGHT = {
   labelStrong: '#0F172A',
   selectRing: '#0F172A',
   rankPip: '#64748B',
+  // Deeper/saturated so the blooms read on a white page.
+  dealGlow: '#C77F16',
+  dealLine: '#B9791A',
+  playerGlow: '#CE343E',
   linkDim: '#94A3B8',
   linkDimAlpha: 0.13,
   // Glows must work harder on a light page or the clusters vanish.
