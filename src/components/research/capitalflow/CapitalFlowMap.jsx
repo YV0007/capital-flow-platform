@@ -89,6 +89,9 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
   const [families, setFamilies] = useState(() => new Set()); // flows (event family)
   const [statuses, setStatuses] = useState(() => new Set()); // flows
   const [networks, setNetworks] = useState(() => new Set()); // entities (allocators, by network)
+  // Explicit entity-id seed set from a lens (Quick view) — overrides the
+  // category dimensions above when set. null = use sectors/classes/tiers/networks.
+  const [nodeIdFilter, setNodeIdFilter] = useState(null);
   const [minAmount, setMinAmount] = useState(0);
   const [minConfidence, setMinConfidence] = useState(0);     // flows (v2 grade score)
   const [sinceDays, setSinceDays] = useState(DEFAULT_WINDOW); // trailing window (0 = all-time), aged via flow.age_days
@@ -118,24 +121,30 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
 
   // ── Matching ───────────────────────────────────────────────────────────
   const { matchedNodes, matchedLinks } = useMemo(() => {
-    const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0 || networks.size > 0;
+    const entityFilterOn = sectors.size > 0 || classes.size > 0 || tiers.size > 0 || networks.size > 0 || !!nodeIdFilter;
     // Active watchlist narrows the universe first: only members can seed the
     // view (their direct counterparties still surface via the flows, so the
     // subset stays navigable vertex↔edge).
     const wlSet = activeList ? new Set(activeList.ids) : null;
-    // Seed = nodes matching ANY active entity selection (OR-union) — robust to
-    // mixing target-only (sector) and allocator-only (tier/network) dims.
-    const seed = new Set(
-      graph.nodes.filter(n => {
-        if (wlSet && !wlSet.has(n.id)) return false;
-        if (!entityFilterOn) return true;
-        const mSec = sectors.size && n.sector && sectors.has(n.sector);
-        const mCls = classes.size && classes.has(n.cls);
-        const mTier = tiers.size && n.tier && tiers.has(n.tier);
-        const mNet = networks.size && n.network && networks.has(n.network);
-        return mSec || mCls || mTier || mNet;
-      }).map(n => n.id)
-    );
+    // A lens (Quick view) seeds an EXPLICIT set of entities directly — it
+    // overrides the category dimensions below rather than combining with them,
+    // since a lens already picked exactly who belongs (see views.js).
+    const seed = nodeIdFilter
+      ? new Set([...nodeIdFilter].filter(id => !wlSet || wlSet.has(id)))
+      : new Set(
+          // Seed = nodes matching ANY active entity selection (OR-union) —
+          // robust to mixing target-only (sector) and allocator-only
+          // (tier/network) dims.
+          graph.nodes.filter(n => {
+            if (wlSet && !wlSet.has(n.id)) return false;
+            if (!entityFilterOn) return true;
+            const mSec = sectors.size && n.sector && sectors.has(n.sector);
+            const mCls = classes.size && classes.has(n.cls);
+            const mTier = tiers.size && n.tier && tiers.has(n.tier);
+            const mNet = networks.size && n.network && networks.has(n.network);
+            return mSec || mCls || mTier || mNet;
+          }).map(n => n.id)
+        );
 
     const links = new Set();
     graph.links.forEach(l => {
@@ -171,7 +180,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
     }
 
     return { matchedNodes: nodes, matchedLinks: links };
-  }, [graph, sectors, classes, tiers, families, statuses, networks, minAmount, minConfidence, sinceDays, showWatch, nodeById, activeList]);
+  }, [graph, sectors, classes, tiers, families, statuses, networks, nodeIdFilter, minAmount, minConfidence, sinceDays, showWatch, nodeById, activeList]);
 
   // ── Time window = the HARD scope of the view ─────────────────────────────
   // Out-of-window flows/nodes are REMOVED from the canvas entirely (not faded);
@@ -334,6 +343,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
     setFamilies(new Set(s.families || []));
     setStatuses(new Set(s.statuses || []));
     setNetworks(new Set(s.networks || []));
+    setNodeIdFilter(s.nodeIds ? new Set(s.nodeIds) : null);
     setMinAmount(s.minAmount || 0);
     setMinConfidence(s.minConfidence || 0);
     setSinceDays(s.sinceDays || 0);
@@ -414,17 +424,18 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
     + networks.size + (minAmount > 0 ? 1 : 0) + (minConfidence > 0 ? 1 : 0)
     + (sinceDays !== DEFAULT_WINDOW ? 1 : 0);
 
-  // ── Quick views — pre-made filter combinations ─────────────────────────
-  // Which sectors are signalling comes from the payload, so the "Signal
-  // sectors" view follows each delivery instead of naming sectors by hand.
-  const views = useMemo(() => buildViews({
-    litSectors: Object.values(graph.sectors).filter(s => s.lit).map(s => s.key),
+  // ── Quick views — lenses computed from the live graph ───────────────────
+  // Each lens is a predicate over classification/signals/trends already on
+  // `graph` — recomputes fresh every load, so membership rotates with the
+  // data automatically (see views.js for why).
+  const views = useMemo(() => buildViews(graph, {
     confidenceThreshold: graph.confidenceThreshold,
   }), [graph]);
   const currentKey = viewKey({
     sectors: [...sectors], classes: [...classes], tiers: [...tiers],
     families: [...families], statuses: [...statuses], networks: [...networks],
     minAmount, minConfidence, sinceDays,
+    nodeIds: nodeIdFilter ? [...nodeIdFilter] : null,
   });
   const activeViewId = views.find(v => viewKey(v.state) === currentKey)?.id || null;
 

@@ -1,81 +1,129 @@
-// Quick views — pre-made filter combinations, so the common questions are one
-// click instead of six chips. Each view is just a full filter state; applying
-// one REPLACES the current filters (no half-applied hybrids), and clicking the
-// active view clears back to everything.
+// Quick views — LENSES, not raw filter shortcuts. Each one is a mental model a
+// sophisticated capital-flow watcher actually uses ("who's moving before the
+// crowd", "what's quietly building"), not a blunt single-dimension threshold.
+// Applying one REPLACES the current filters; clicking the active view clears
+// back to everything.
 //
-// Nothing here invents data: every view is expressed purely in the filter
-// dimensions the payload already carries (class, tier, status, confidence,
-// amount, date, signalling sector).
+// Nothing here invents data: every lens is a PREDICATE over fields the engine
+// or classification.js already computed (playerRank/dealRank, fired signals +
+// their entity_id/evidence, trend clusters) — never a hand-picked static
+// number. That's what keeps them current for free: a predicate re-evaluates
+// from the live payload on every load, so as flows rotate week to week the
+// lens's membership rotates with it automatically. No separate schedule, no
+// stale snapshot to refresh — the same reason classification.js needs none.
+//
+// A lens resolves to an explicit `nodeIds` seed (specific named entities) —
+// existing filter dimensions (sector/class/tier) can't express "the targets
+// behind this fired signal" or "this week's proven trend", only categories.
 
-// Empty filter state — the shape every view fills in.
+// Empty filter state — the shape every view fills in. `nodeIds: null` means
+// "use the category dimensions below" (unset); a Set/array means "this exact
+// set of entities IS the seed", overriding sector/class/tier/network entirely.
 export const EMPTY_VIEW = {
   sectors: [], classes: [], tiers: [], families: [], statuses: [], networks: [],
-  minAmount: 0, minConfidence: 0, sinceDays: 0,
+  minAmount: 0, minConfidence: 0, sinceDays: 0, nodeIds: null,
 };
 
-// `litSectors` is passed in because which sectors are signalling changes with
-// every engine delivery — the view stays data-driven rather than hard-coded.
-export function buildViews({ litSectors = [], confidenceThreshold = 60 } = {}) {
+// Collect entity_id values off every fired signal matching `rule`, across both
+// sector and theme signal lists (a signal can appear in both dimensions).
+function entityIdsForRule(graph, rule) {
+  const ids = new Set();
+  const scan = (obj) => Object.values(obj).forEach(g =>
+    (g.signals || []).forEach(s => { if (s.rule === rule && s.entity_id) ids.add(s.entity_id); }));
+  scan(graph.sectors); scan(graph.themes);
+  return ids;
+}
+
+// Sectors where `rule` fired at least once — used when a rule has no single
+// entity anchor (sector_swarm, smart_money_follow: the pattern is sector-wide,
+// not one company).
+function sectorsForRule(graph, rule) {
+  const keys = new Set();
+  Object.entries(graph.sectors).forEach(([key, g]) =>
+    (g.signals || []).some(s => s.rule === rule) && keys.add(key));
+  return keys;
+}
+
+export function buildViews(graph, { confidenceThreshold = 60 } = {}) {
+  const nameToId = new Map(graph.nodes.map(n => [n.name, n.id]));
+  const byId = new Map(graph.nodes.map(n => [n.id, n]));
+  const asArray = (set) => [...set];
+
+  // 1 — smart money enters first: sectors where smart_money_follow fired,
+  // narrowed to the core/key players actually in it plus the targets already
+  // flagged/emerging there — not the whole sector.
+  const smartSectors = sectorsForRule(graph, 'smart_money_follow');
+  const smartMoneyIds = new Set(graph.nodes.filter(n =>
+    smartSectors.has(n.sector) && (
+      (n.type === 'player' && (n.playerRank === 'core' || n.playerRank === 'key')) ||
+      (n.type === 'target' && (n.dealRank === 'flagged' || n.dealRank === 'emerging'))
+    )).map(n => n.id));
+
+  // 2 — building conviction: players repeatedly doubling down (classification
+  // factor, always available regardless of whether repeat_conviction fired).
+  const convictionIds = new Set(graph.nodes.filter(n =>
+    n.type === 'player' && (n.playerParts?.repeat ?? 0) >= 0.5).map(n => n.id));
+
+  // 3 — emerging: dealRank is already exactly this.
+  const emergingIds = new Set(graph.nodes.filter(n => n.dealRank === 'emerging').map(n => n.id));
+
+  // 4 — core only (narrower than the old "core+key" blend).
+  const coreIds = new Set(graph.nodes.filter(n => n.playerRank === 'core').map(n => n.id));
+
+  // 5 — stealth accumulation: the exact companies a fired signal named.
+  const stealthIds = entityIdsForRule(graph, 'stealth_accumulation');
+
+  // 6 — public read-through: the exact public tickers a fired signal named.
+  const beneficiaryIds = entityIdsForRule(graph, 'beneficiary_concentration');
+
+  // 7 — elite network convergence: members of a network whose sector just lit
+  // up via network_convergence / defense_network_convergence.
+  const networkSectors = new Set([
+    ...sectorsForRule(graph, 'network_convergence'),
+    ...sectorsForRule(graph, 'defense_network_convergence'),
+  ]);
+  const networkConvergeIds = new Set(graph.nodes.filter(n =>
+    n.network && networkSectors.has(n.sector)).map(n => n.id));
+
+  // 8 — trend of the week: the named allocators behind this window's top,
+  // already-qualified clusters (resolved by name since evidence isn't
+  // id-shaped yet — see CAPITAL-FLOW-TREND-NARRATIVE-FOLLOWUP.md).
+  const weekTrends = graph.trends?.week || [];
+  const trendIds = new Set(
+    weekTrends.flatMap(t => (t.allocators || []).map(name => nameToId.get(name)).filter(Boolean))
+  );
+
+  const lens = (id, label, blurb, color, ids, extra = {}) => ({
+    id, label, blurb: ids.size ? blurb : `Пока пусто в этой выгрузке — ${blurb[0].toLowerCase()}${blurb.slice(1)}`,
+    color, disabled: ids.size === 0,
+    state: { ...EMPTY_VIEW, nodeIds: asArray(ids), ...extra },
+  });
+
   return [
-    {
-      id: 'fresh',
-      label: 'Свежее',
-      blurb: 'Всё, что движок собрал за последние 14 дней, — новые деньги этого цикла.',
-      color: '#38BDF8',
-      state: { ...EMPTY_VIEW, sinceDays: 14 },
-    },
-    {
-      id: 'mega',
-      label: 'Мега-чеки',
-      blurb: 'Раскрытые потоки от $5 млрд — куда пошёл капитал масштаба целых балансов.',
-      color: '#C2A36B',
-      state: { ...EMPTY_VIEW, minAmount: 5e9 },
-    },
-    {
-      id: 'sovereign',
-      label: 'Госденьги',
-      blurb: 'Только государственные фонды и программы — национальный капитал и кого он поддерживает.',
-      color: '#49C2AE',
-      state: { ...EMPTY_VIEW, classes: ['sovereign'] },
-    },
-    {
-      id: 'smart',
-      label: 'Умные деньги',
-      blurb: 'Инвесторы уровней «ядро» и «ключ» — повторные игроки, за которыми идут остальные.',
-      color: '#FBBF24',
-      state: { ...EMPTY_VIEW, tiers: ['core', 'key'] },
-    },
-    {
-      id: 'hard',
-      label: 'Твёрдые факты',
-      blurb: 'Только подтверждённые потоки уровня 1 с оценкой 85+. То, на что можно опираться без перепроверки.',
-      color: '#34D399',
-      state: { ...EMPTY_VIEW, statuses: ['verified'], minConfidence: 85 },
-    },
-    {
-      id: 'signals',
-      label: 'Секторы с сигналом',
-      blurb: litSectors.length
-        ? 'Секторы, где в этом цикле сработало правило, — собственная альфа движка.'
-        : 'В этой выгрузке ни один сектор не сигналит.',
-      color: '#F59E0B',
-      disabled: litSectors.length === 0,
-      state: { ...EMPTY_VIEW, sectors: [...litSectors] },
-    },
-    {
-      id: 'private',
-      label: 'Частные раунды',
-      blurb: 'Доли и раунды в частные компании — венчурный слой без инфраструктуры.',
-      color: '#9D8FD8',
-      state: { ...EMPTY_VIEW, classes: ['private'], families: ['equity'] },
-    },
-    {
-      id: 'buildout',
-      label: 'Физическая стройка',
-      blurb: 'Проектное финансирование дата-центров, станций и фабрик — capex, который придётся залить в бетон.',
-      color: '#C99B72',
-      state: { ...EMPTY_VIEW, classes: ['project'], families: ['debt'] },
-    },
+    lens('smart-first', 'Умные деньги входят первыми',
+      'Ключевые инвесторы вошли первыми в сектор — за ними быстро последовали другие.',
+      '#FBBF24', smartMoneyIds),
+    lens('conviction', 'Растущая убеждённость',
+      'Инвесторы, которые снова и снова докладывают в свои же ставки — не разовый чек.',
+      '#F59E0B', convictionIds),
+    lens('emerging', 'Зарождается',
+      'Раннее и независимое схождение умных денег — ещё не консенсус.',
+      '#5ACAD4', emergingIds),
+    lens('core', 'Ядро — самые убеждённые',
+      'Только «ядро»: определяющие узлы своей сети, самые повторные инвесторы.',
+      '#F0505A', coreIds),
+    lens('stealth', 'Тихое накопление',
+      'Компании, куда повторные доли незаметно накапливаются, — ещё до того как это стало очевидно.',
+      '#C084FC', stealthIds),
+    lens('beneficiary', 'Публичный след',
+      'Публичные тикеры, на которые указывают несколько частных потоков, — то, что реально можно купить.',
+      '#82B98D', beneficiaryIds),
+    lens('network', 'Сеть сходится',
+      'Отслеживаемая сеть (PayPal Mafia, круг Тиля) сходится на одном секторе.',
+      '#E8975E', networkConvergeIds),
+    lens('trend', 'Тренд недели',
+      'Именные инвесторы за проверенными кластерами этого окна — самая синтезированная линза.',
+      '#8E9BE6', trendIds, { sinceDays: 30 }),
   ];
 }
 
@@ -87,6 +135,7 @@ export function viewKey(state) {
     s(state.sectors), s(state.classes), s(state.tiers),
     s(state.families), s(state.statuses), s(state.networks),
     state.minAmount || 0, state.minConfidence || 0, state.sinceDays || 0,
+    state.nodeIds ? s(state.nodeIds) : '',
   ].join('|');
 }
 
