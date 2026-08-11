@@ -13,7 +13,7 @@ import CapitalFlowMap from './capitalflow/CapitalFlowMap.jsx';
 
 const RESEARCH_LIBRARY = researchLibrary;
 
-export default function ResearchDetail({ researchId, context, onBack }) {
+export default function ResearchDetail({ researchId, context, onBack, onOpenResearch }) {
   const r = RESEARCH_LIBRARY.find(x => x.id === researchId);
   if (!r) {
     return (
@@ -28,7 +28,7 @@ export default function ResearchDetail({ researchId, context, onBack }) {
   // Capital Flow Map is a full-screen canvas — no research header, no column;
   // all navigation lives in its own floating top bar.
   if (researchId === 'capital-flow-map') {
-    return <CapitalFlowMap onBack={onBack} initialFlowId={context?.flowId} />;
+    return <CapitalFlowMap onBack={onBack} initialFlowId={context?.flowId} onOpenResearch={onOpenResearch} />;
   }
   // Holdings (Bloomberg IA) renders full-bleed with no research header —
   // navigation lives inside HoldingsV2's own sticky top bar.
@@ -100,7 +100,7 @@ export default function ResearchDetail({ researchId, context, onBack }) {
       {/* Report body */}
       <div style={column}>
         {researchId === 'data-centers-ai' ? (
-          <DataCentersAI />
+          <DataCentersAI context={context} />
         ) : researchId === 'proxy' ? (
           <Proxy />
         ) : (

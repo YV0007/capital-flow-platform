@@ -427,6 +427,7 @@ export default function App() {
           ? <ResearchDetail
               researchId={activeResearchId}
               context={researchContext}
+              onOpenResearch={openResearchPage}
               onBack={() => { setActiveResearchId(null); setResearchContext(null); }} />
           : <ResearchLanding onOpen={(id) => setActiveResearchId(id)} />}
       </div>

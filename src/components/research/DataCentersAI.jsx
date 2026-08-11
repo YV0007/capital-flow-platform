@@ -9,6 +9,8 @@
 import React from 'react';
 import Roadmap from './dc/Roadmap.jsx';
 
-export default function DataCentersAI() {
-  return <Roadmap />;
+export default function DataCentersAI({ context = null }) {
+  // Deep-link: a Capital Flow sector report can open this page focused on a
+  // specific supply-chain block (e.g. nuclear → the "Атомная энергия" node).
+  return <Roadmap initialNode={context?.blockId || null} />;
 }

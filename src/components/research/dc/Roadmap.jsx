@@ -512,8 +512,8 @@ function SearchBar({ query, setQuery, results, onPick }) {
   );
 }
 
-export default function Roadmap() {
-  const [selected, setSelected] = useState(null);
+export default function Roadmap({ initialNode = null }) {
+  const [selected, setSelected] = useState(() => (initialNode && NODES[initialNode] ? initialNode : null));
   const [hovered,  setHovered]  = useState(null);
   const [bucketFilter, setBucketFilter] = useState(null);
   const [detailNode, setDetailNode] = useState(null);
@@ -822,6 +822,7 @@ export default function Roadmap() {
             onClose={() => setSelected(null)}
             onJump={(id) => setSelected(id)}
             onOpenDetail={(id) => { setNavStack([]); setJumpTarget(null); setScrollRestore(null); setDetailNode(id); }}
+            scrollOnMount={!!initialNode && selected === initialNode}
           />
         )}
 
@@ -917,8 +918,18 @@ export default function Roadmap() {
 // Redesigned: bucket-tinted header, compact chain-position widget,
 // chain neighbour chips, then companies grouped by conviction.
 // ──────────────────────────────────────────────────────────────────────────
-function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies, upstream, downstream, onClose, onJump, onOpenDetail }) {
+function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies, upstream, downstream, onClose, onJump, onOpenDetail, scrollOnMount }) {
   const c = bucket?.color || 'var(--hm-text3)';
+  // On a deep-link (opened from a Capital Flow sector report), bring the panel
+  // into view — the chain sits below the hero, so otherwise it lands off-screen.
+  const rootRef = useRef(null);
+  useEffect(() => {
+    if (scrollOnMount && rootRef.current) {
+      rootRef.current.scrollIntoView({ behavior: 'auto', block: 'nearest' });
+    }
+    // one-shot on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Sort companies by conviction tier so the strongest names come first.
   const order = { 'High': 0, 'Med-High': 1, 'Medium': 2, 'Low-Med': 3, 'Low': 4 };
@@ -926,7 +937,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
     (a, b) => (order[a.conviction] ?? 9) - (order[b.conviction] ?? 9));
 
   return (
-    <div style={{
+    <div ref={rootRef} style={{
       position: 'absolute',
       top: 0, right: 0, bottom: 0,
       width: 400, maxWidth: '92%',
