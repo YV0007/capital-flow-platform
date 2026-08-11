@@ -18,6 +18,7 @@ import {
   SECTOR_META, CLASS_META, sectorLabel,
 } from '../../../data/capitalMap.js';
 import { subsectorLabel } from './subsectors.js';
+import { humanizeSourceUrl } from './format.js';
 
 const MONO = 'ui-monospace, monospace';
 const W = 560;
@@ -199,7 +200,7 @@ function HoldingRow({ h, openId, onOpenEntity }) {
           </span>
         )}
         {h.source_url && (
-          <a href={h.source_url} target="_blank" rel="noopener noreferrer" title={h.source_url}
+          <a href={humanizeSourceUrl(h.source_url)} target="_blank" rel="noopener noreferrer" title={humanizeSourceUrl(h.source_url)}
             onClick={(e) => e.stopPropagation()}
             style={{ color: 'var(--cf-link)', lineHeight: 0, flexShrink: 0 }}>
             <ExternalLink size={11} />

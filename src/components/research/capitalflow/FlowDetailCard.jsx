@@ -12,7 +12,7 @@
 
 import { useState } from 'react';
 import { X, ArrowRight, ChevronDown, ChevronRight, ExternalLink, Quote } from 'lucide-react';
-import { fmtUSD } from './format.js';
+import { fmtUSD, humanizeSourceUrl } from './format.js';
 import {
   EVENT_TYPE_META, STATUS_META, SOURCE_TIER_LABEL, SECTOR_META,
   GRADE_LETTER, GRADE_DIGIT, confidenceBand, composeRead, META,
@@ -46,9 +46,9 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
   // Source link from the engine. Every verified flow now ships `source_url`
   // (the payload's canonical field); a `sources[]` array is honoured too for
   // forward-compat. We never synthesise one — an unsourced flow says so.
-  const links = Array.isArray(flow.sources) ? flow.sources.filter(s => s && s.url)
-    : flow.source_url ? [{ url: flow.source_url, label: hostLabel(flow.source_url) }]
-    : flow.url ? [{ url: flow.url, label: 'Источник' }] : [];
+  const links = Array.isArray(flow.sources) ? flow.sources.filter(s => s && s.url).map(s => ({ ...s, url: humanizeSourceUrl(s.url) }))
+    : flow.source_url ? [{ url: humanizeSourceUrl(flow.source_url), label: hostLabel(humanizeSourceUrl(flow.source_url)) }]
+    : flow.url ? [{ url: humanizeSourceUrl(flow.url), label: 'Источник' }] : [];
 
   // The grade decoded into plain English, joined with the status — one line
   // that carries what used to be two boxes.

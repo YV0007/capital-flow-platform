@@ -45,3 +45,23 @@ export function plural(n, [one, few, many]) {
 export function shortLabel(name, max = 22) {
   return name.length > max ? name.slice(0, max - 1) + '…' : name;
 }
+
+/**
+ * The engine occasionally ships `source_url` pointed at EDGAR's full-text-
+ * search JSON API (efts.sec.gov/LATEST/search-index?...) instead of the
+ * human-facing results page — clicking it dumps raw JSON, not a filing. Same
+ * query params, different (human) front end, so this is a lossless rewrite:
+ *   https://efts.sec.gov/LATEST/search-index?q=X&forms=Y
+ *   → https://www.sec.gov/edgar/search/#/q=X&forms=Y
+ * Anything else passes through untouched.
+ */
+export function humanizeSourceUrl(url) {
+  if (typeof url !== 'string') return url;
+  try {
+    const u = new URL(url);
+    if (u.hostname !== 'efts.sec.gov' || !u.pathname.startsWith('/LATEST/search-index')) return url;
+    return `https://www.sec.gov/edgar/search/#/${u.search.replace(/^\?/, '')}`;
+  } catch {
+    return url;
+  }
+}

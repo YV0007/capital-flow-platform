@@ -14,7 +14,7 @@
 // tap away on every single row.
 
 import { X, ChevronLeft, AlertTriangle, ExternalLink, ArrowUpRight, BookOpen, TrendingUp, Compass, ChevronRight, Crosshair } from 'lucide-react';
-import { fmtUSD, plural } from './format.js';
+import { fmtUSD, plural, humanizeSourceUrl } from './format.js';
 import {
   SECTOR_META, CLASS_META, TIER_META, THEME_META, confidenceBand, sectorLabel,
   metricLabel, formatTrackValue, SOURCE_TIER_LABEL,
@@ -387,7 +387,8 @@ function TrackRow({ row }) {
   );
 }
 
-function SourceLink({ url, label, title, compact, style }) {
+function SourceLink({ url: rawUrl, label, title, compact, style }) {
+  const url = humanizeSourceUrl(rawUrl);
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" title={title ? `${title} — ${url}` : url}
       style={{
