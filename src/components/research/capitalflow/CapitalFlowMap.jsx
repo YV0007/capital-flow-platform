@@ -92,7 +92,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
   const [minAmount, setMinAmount] = useState(0);
   const [minConfidence, setMinConfidence] = useState(0);     // flows (v2 grade score)
   const [sinceDays, setSinceDays] = useState(DEFAULT_WINDOW); // trailing window (0 = all-time), aged via flow.age_days
-  const [promoOpen, setPromoOpen] = useState(() => promoShouldOpen(PROMOTION_QUEUE, META.generated));
+  const [promoOpen, setPromoOpen] = useState(() => promoShouldOpen(PROMOTION_QUEUE));
   const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [view, setView] = useState('map');                   // 'map' | 'table' (tracking universe)
@@ -799,7 +799,6 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
       {promoOpen && (
         <PromotionQueue
           queue={PROMOTION_QUEUE}
-          generated={META.generated}
           onClose={() => setPromoOpen(false)}
         />
       )}

@@ -10,9 +10,10 @@
 // The dashboard is static — it NEVER promotes or hides anyone itself. It only
 // renders the queue and hands back the choice; the engine owns who is tracked.
 //
-// Gating: shows once per new delivery. `promoShouldOpen` checks a localStorage
-// "reviewed" key tied to the payload's `generated` date; "Позже" snoozes it for
-// the session only, so it reappears when the next delivery lands.
+// Gating: shows at most ONCE PER ISO WEEK — the weekly flow-review cadence — via
+// a localStorage week key, regardless of how often the map is redeployed. Both
+// deciding and "Позже" mark the week done; it returns next week with a rotated
+// slice of candidates (a week-seeded shuffle of the salient pool).
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useMemo, useState } from 'react';
@@ -20,9 +21,28 @@ import { X, Download, Copy, Check, Users } from 'lucide-react';
 
 const MONO = 'ui-monospace, monospace';
 
-const REVIEWED_KEY = 'cf:promo-reviewed';   // = `generated` once a decision is exported
-const SNOOZE_KEY = 'cf:promo-snooze';       // session-only "later" flag
+const WEEK_KEY = 'cf:promo-week';           // ISO week already surfaced this cycle
 const DECISIONS_KEY = 'cf:promo-decisions'; // last exported decisions block
+
+// ISO-8601 week label, e.g. "2026-W33". The review is a WEEKLY ritual tied to
+// the weekly flow refresh — gating on the week (not the delivery date) keeps the
+// pop-up to once a week even if the map is redeployed midweek.
+function isoWeekKey(date = new Date()) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const day = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const week = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
+}
+export function currentWeekKey() { return isoWeekKey(); }
+
+// Deterministic per-week shuffle — each week surfaces a DIFFERENT slice of the
+// salient pool (stable within a week, varies across weeks). Seeded PRNG, never
+// Math.random, or the list would reshuffle on every render / Yes-No click.
+function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function seededShuffle(list, seed) { const r = mulberry32(seed); const a = [...list]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 const CLASS_RU = {
   corporate: 'Корпорация', vc: 'Венчурный фонд', alt_manager: 'Управляющий активами',
@@ -31,12 +51,13 @@ const CLASS_RU = {
 };
 const classLabel = (c) => CLASS_RU[c] || c || '—';
 
-// Should the pop-up auto-open? Once per new delivery, unless snoozed this session.
-export function promoShouldOpen(queue, generated) {
-  if (!Array.isArray(queue) || !queue.length || !generated) return false;
+// Should the pop-up auto-open? At most once per ISO week (the weekly flow-review
+// cadence), and only when the engine shipped candidates. Marked seen once the
+// user acts or dismisses — it returns next week with a rotated set.
+export function promoShouldOpen(queue) {
+  if (!Array.isArray(queue) || !queue.length) return false;
   try {
-    if (localStorage.getItem(REVIEWED_KEY) === generated) return false;
-    if (sessionStorage.getItem(SNOOZE_KEY) === generated) return false;
+    if (localStorage.getItem(WEEK_KEY) === currentWeekKey()) return false;
   } catch { /* storage blocked — just show it */ }
   return true;
 }
@@ -83,15 +104,19 @@ function YesNo({ value, onChange }) {
 // never dismissed; they simply return with the next delivery.
 const MAX_SHOWN = 12;
 
-export default function PromotionQueue({ queue, generated, onClose }) {
+export default function PromotionQueue({ queue, onClose }) {
   const [picks, setPicks] = useState({});     // candidate_id → 'yes' | 'no'
   const [copied, setCopied] = useState(false);
 
+  // Rank by salience (co-investments with already-tracked players), keep the most
+  // notable POOL, then surface a DIFFERENT weekly slice of it — so the review
+  // doesn't show the same faces every week. Shown set re-sorted by score for a
+  // tidy list; undecided candidates simply return in a later week.
   const ranked = useMemo(() => {
     const score = (i) => (i.seen_with?.length || 0) * 100 + (i.times_seen || 0);
-    return [...queue]
-      .sort((a, b) => score(b) - score(a) || String(a.name || '').localeCompare(b.name || ''))
-      .slice(0, MAX_SHOWN);
+    const byScore = [...queue].sort((a, b) => score(b) - score(a) || String(a.name || '').localeCompare(b.name || ''));
+    const pool = byScore.slice(0, Math.min(byScore.length, MAX_SHOWN * 2 + 6));
+    return seededShuffle(pool, hashStr(currentWeekKey())).slice(0, MAX_SHOWN).sort((a, b) => score(b) - score(a));
   }, [queue]);
   const hiddenCount = Math.max(0, queue.length - ranked.length);
 
@@ -110,13 +135,13 @@ export default function PromotionQueue({ queue, generated, onClose }) {
     return { promote, dismiss };
   };
 
-  // Persist the decision + mark this delivery reviewed (won't auto-open again
-  // until a new `generated` lands).
+  // Persist the decision + mark this week reviewed (won't auto-open again until
+  // next ISO week).
   const commit = () => {
     const decisions = buildDecisions();
     try {
       localStorage.setItem(DECISIONS_KEY, JSON.stringify(decisions));
-      localStorage.setItem(REVIEWED_KEY, generated);
+      localStorage.setItem(WEEK_KEY, currentWeekKey());
     } catch { /* ignore */ }
     return decisions;
   };
@@ -140,9 +165,9 @@ export default function PromotionQueue({ queue, generated, onClose }) {
     } catch { /* clipboard blocked — the download button still works */ }
   };
 
-  // "Позже" — close without deciding; reappears on the next delivery.
+  // "Позже" — close without deciding; won't renag until next week (rotated set).
   const later = () => {
-    try { sessionStorage.setItem(SNOOZE_KEY, generated); } catch { /* ignore */ }
+    try { localStorage.setItem(WEEK_KEY, currentWeekKey()); } catch { /* ignore */ }
     onClose();
   };
 
