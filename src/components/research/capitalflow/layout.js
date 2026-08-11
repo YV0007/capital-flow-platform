@@ -33,6 +33,15 @@ function sizeAtom(n, maxCap) {
   const share = Math.sqrt((n.capital || 0) / maxCap);
   n.r = 10 + 34 * share;
   n.atomTier = share > 0.6 ? 0 : share > 0.3 ? 1 : share > 0.12 ? 2 : 3;
+  // Landmark consortiums (e.g. the $500B NVIDIA AI-infra financing platform) carry
+  // no disclosed amount, so `capital` is 0 and they'd render tiny — but they are
+  // among the largest deals on the map by design. Size them near the top and give
+  // the label high priority. (Durable fix: engine `announced_size` → true scaling,
+  // see CAPITAL-FLOW-CONSORTIUM-SIGNAL-RULE.md.)
+  if (n.landmark) {
+    n.r = Math.max(n.r, 40);
+    n.atomTier = Math.min(n.atomTier, 1);
+  }
   n.atomLabel = shortLabel(n.name, 22);
   // Label priority: bigger capital + higher allocator tier show their tag at
   // lower zoom; everything else only reveals as you zoom into its section.
