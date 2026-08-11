@@ -202,11 +202,6 @@ export default function DigestView({ nodes, links, generated, sectors, onOpenEnt
           </>
         )}
 
-        <div style={{ marginTop: 26, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.6 }}>
-          Окна отсчитываются от даты выгрузки ({generated}) по датам самих потоков. Долларовые рейтинги —
-          по подтверждённым потокам с раскрытой суммой; кандидаты считаются отдельно. Только приток —
-          оттоки и динамика между циклами появятся, когда их начнёт присылать движок.
-        </div>
       </div>
     </div>
   );
