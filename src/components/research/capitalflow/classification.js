@@ -157,13 +157,55 @@ export function classifyGraph({ nodes, links, generated }) {
 
   classifyPlayers({ nodes, byId, outBySrc, inByTgt, now });
   classifyDeals({ nodes, byId, inByTgt, now });
+  // Landmark consortiums (e.g. the NVIDIA AI-infra financing platform): several
+  // top institutions co-launch ONE vehicle, but the flows are still candidate /
+  // unconfirmed, so the confirmed-only deal classifier above scores them null and
+  // they render flat. Give them the same red cloud, off the FULL ledger.
+  classifyConsortiums({ nodes, links, byId });
 
   return {
     corePlayers: nodes.filter(n => n.playerRank === 'core').length,
     keyPlayers: nodes.filter(n => n.playerRank === 'key').length,
     flaggedDeals: nodes.filter(n => n.dealRank === 'flagged').length,
     emergingDeals: nodes.filter(n => n.dealRank === 'emerging').length,
+    landmarkDeals: nodes.filter(n => n.landmark).length,
   };
+}
+
+// ── LANDMARK CONSORTIUMS ────────────────────────────────────────────────────
+// A deterministic gap-filler, NOT an engine signal: a target that several
+// distinct institutions co-back gets the pivotal red cloud even when its flows
+// are unconfirmed announcements — the case the confirmed-only classifier misses.
+// Gap-only: never touches a deal the classifier already ranked or the engine
+// already signalled. The interpretation ("landmark / smart money") stays the
+// engine's; we only count distinct institutional backers (an aggregate we own).
+const INSTITUTIONAL = new Set(['alt_manager', 'corporate', 'sovereign', 'vc', 'fund']);
+function classifyConsortiums({ nodes, links, byId }) {
+  const backersByTgt = new Map();   // target id → Set of distinct source ids (FULL ledger)
+  const engineLit = new Set();      // targets with an engine active_signal on any inbound flow
+  for (const l of links) {
+    if (!backersByTgt.has(l.targetId)) backersByTgt.set(l.targetId, new Set());
+    backersByTgt.get(l.targetId).add(l.sourceId);
+    if (l.active_signal) engineLit.add(l.targetId);
+  }
+  for (const t of nodes) {
+    if (t.type !== 'target') continue;
+    if (t.dealRank) continue;                              // classifier already ranked it
+    if (Array.isArray(t.signals) && t.signals.length) continue;  // engine signalled the entity
+    if (engineLit.has(t.id)) continue;                    // engine lit one of its flows
+    const backerIds = backersByTgt.get(t.id);
+    if (!backerIds) continue;
+    let inst = 0;
+    for (const sid of backerIds) {
+      const s = byId.get(sid);
+      if (s && INSTITUTIONAL.has(s.cls)) inst += 1;
+    }
+    if (inst >= 4) {
+      t.dealRank = inst >= 5 ? 'flagged' : 'emerging';
+      t.dealParts = { ...(t.dealParts || {}), consortium: inst };
+      t.landmark = true;
+    }
+  }
 }
 
 // ── RANK 2 · PLAYERS WORTH FOLLOWING ────────────────────────────────────────

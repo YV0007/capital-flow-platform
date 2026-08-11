@@ -186,6 +186,33 @@ export default function EntityPanel({
           <EntitySignalsBlock signals={node.signals} onOpenEntity={onOpenEntity} />
         )}
 
+        {/* Landmark consortium — a dashboard heuristic (deterministic count of
+            distinct institutional backers), NOT an engine signal. Explains the
+            red cloud when the engine hasn't (yet) flagged this convergence. */}
+        {node.landmark && node.dealParts?.consortium >= 4 && (
+          <div style={{
+            marginBottom: 14, padding: '11px 12px', borderRadius: 10,
+            background: 'rgba(248,113,113,0.10)',
+            border: '1px solid rgba(248,113,113,0.42)',
+          }}>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 6, fontSize: 9,
+              color: '#F87171', fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.1em',
+            }}>
+              <Sparkles size={11} /> Схождение сети
+            </div>
+            <div style={{ fontSize: 11.5, color: 'var(--cf-text2)', lineHeight: 1.5, marginTop: 6 }}>
+              На эту сделку сошлись <b style={{ color: 'var(--cf-text0)' }}>{node.dealParts.consortium}</b>{' '}
+              {plural(node.dealParts.consortium, ['крупный институциональный инвестор', 'крупных институциональных инвестора', 'крупных институциональных инвесторов'])} —
+              редкая концентрация капитала.
+            </div>
+            <div style={{ fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, marginTop: 6, letterSpacing: '0.02em' }}>
+              наша эвристика · не сигнал движка
+            </div>
+          </div>
+        )}
+
         {inbound.length > 0 && (
           <Section title={`Кто инвестирует сюда · ${totalOrNull(inbound, node.totalInflow)}`}
             hint="Клик по имени открывает объект. Клик по иконке — разбор сделки."

@@ -171,11 +171,14 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
 
     // Inclusion rule: candidate-only ("watch") nodes stay off the main map
     // unless the user opts in — then drop them and any link that touches them.
+    // Exception: landmark consortiums (many institutions co-backing one vehicle)
+    // are too important to hide even while still unconfirmed — they stay in.
     if (!showWatch) {
-      graph.nodes.forEach(n => { if (n.watchOnly) nodes.delete(n.id); });
+      graph.nodes.forEach(n => { if (n.watchOnly && !n.landmark) nodes.delete(n.id); });
       graph.links.forEach(l => {
         const s = nodeById.get(l.sourceId), t = nodeById.get(l.targetId);
-        if ((s && s.watchOnly) || (t && t.watchOnly)) links.delete(l.id);
+        const drop = (n) => n && n.watchOnly && !n.landmark;
+        if (drop(s) || drop(t)) links.delete(l.id);
       });
     }
 
@@ -195,7 +198,8 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
         && !(KEEP_ACTIVE_SIGNAL && l.active_signal)) return;
       if (!showWatch) {
         const sN = nodeById.get(l.sourceId), tN = nodeById.get(l.targetId);
-        if ((sN && sN.watchOnly) || (tN && tN.watchOnly)) return;
+        const hide = (n) => n && n.watchOnly && !n.landmark;   // landmark consortiums stay in
+        if (hide(sN) || hide(tN)) return;
       }
       s.add(l.id);
     });
