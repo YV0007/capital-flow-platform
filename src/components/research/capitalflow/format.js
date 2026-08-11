@@ -47,6 +47,25 @@ export function shortLabel(name, max = 22) {
 }
 
 /**
+ * Signal descriptions ship as one composed sentence from the engine
+ * (`"energy_for_ai: 7 key allocators converge (30d)"`) — for sector/theme-wide
+ * rules it leads with the raw slug, not a human label. Swap a recognized
+ * leading `slug:` for its display label from the same meta tables already used
+ * elsewhere (SECTOR_META/THEME_META), leaving everything else untouched. Rules
+ * that lead with an entity name instead (beneficiary_concentration,
+ * stealth_accumulation — e.g. "TSM (Taiwan Semiconductor): ...", "Cathedral:
+ * ...") never match a real slug key, so they pass through unchanged.
+ */
+export function formatSignalText(text, sectorMeta = {}, themeMeta = {}) {
+  if (typeof text !== 'string') return text;
+  const m = text.match(/^([a-z0-9_-]+):/i);
+  if (!m) return text;
+  const slug = m[1];
+  const label = sectorMeta[slug]?.label || themeMeta[slug]?.label;
+  return label ? label + text.slice(slug.length) : text;
+}
+
+/**
  * The engine occasionally ships `source_url` pointed at EDGAR's full-text-
  * search JSON API (efts.sec.gov/LATEST/search-index?...) instead of the
  * human-facing results page — clicking it dumps raw JSON, not a filing. Same

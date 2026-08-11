@@ -10,12 +10,12 @@
 import { useMemo, useState } from 'react';
 import { ArrowUpRight, Sparkles, TrendingUp, TrendingDown } from 'lucide-react';
 import { buildDigest } from './digest.js';
-import { fmtUSD, plural } from './format.js';
-import { SECTOR_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
+import { fmtUSD, plural, formatSignalText } from './format.js';
+import { SECTOR_META, THEME_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 
-export default function DigestView({ nodes, links, generated, sectors, onOpenEntity, topInset = 0 }) {
+export default function DigestView({ nodes, links, generated, sectors, trends, onOpenEntity, topInset = 0 }) {
   const digest = useMemo(
     () => buildDigest({ nodes, links, generated, sectors }),
     [nodes, links, generated, sectors]
@@ -23,6 +23,11 @@ export default function DigestView({ nodes, links, generated, sectors, onOpenEnt
   const [tab, setTab] = useState('week');
   const block = digest.blocks.find(b => b.id === tab) || digest.blocks[0];
   const isAll = block.id === 'all';
+  const windowTrends = trends?.[block.id] || [];
+  // Fallback lookup for trend.allocators (plain display-name strings) when the
+  // engine's evidence doesn't resolve to real ids — still lets a name open its
+  // entity panel instead of rendering as inert text.
+  const nodeByName = useMemo(() => new Map(nodes.map(n => [n.name, n])), [nodes]);
 
   return (
     <div style={{
@@ -96,6 +101,24 @@ export default function DigestView({ nodes, links, generated, sectors, onOpenEnt
                 </p>
               ))}
             </div>
+
+            {/* Trends — the engine's grounded narrative synthesis for this
+                window (not yet shipped; empty until it is). Deeper than the
+                arithmetic read above: a named "why", cited allocators, real
+                numbers — not just "capital moved toward X sector". */}
+            {windowTrends.length > 0 && (
+              <div style={{ marginBottom: 20 }}>
+                <SectionLabel>Тренды окна</SectionLabel>
+                <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', marginTop: -5, marginBottom: 11 }}>
+                  Разбор движка — что стоит за цифрами, не только куда сместился приток
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {windowTrends.map((t, i) => (
+                    <TrendCard key={i} trend={t} onOpenEntity={onOpenEntity} nodeByName={nodeByName} />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Insight row — sector rotation + who's driving */}
             {(block.rotation || block.classMix.length > 0) && (
@@ -192,7 +215,11 @@ export default function DigestView({ nodes, links, generated, sectors, onOpenEnt
                             {s.sector === '_none' ? '' : sectorLabel(s.sector)}
                           </span>
                         </div>
-                        {s.theme && <div style={{ fontSize: 11, color: 'var(--cf-text2)', marginTop: 5, lineHeight: 1.5 }}>{s.theme}</div>}
+                        {s.theme && (
+                          <div style={{ fontSize: 11, color: 'var(--cf-text2)', marginTop: 5, lineHeight: 1.5 }}>
+                            {formatSignalText(s.theme, SECTOR_META, THEME_META)}
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -203,6 +230,60 @@ export default function DigestView({ nodes, links, generated, sectors, onOpenEnt
         )}
 
       </div>
+    </div>
+  );
+}
+
+// A single engine-authored trend — title, grounded narrative, real numbers,
+// named allocators. Low/borderline confidence is flagged, never hidden.
+function TrendCard({ trend: t, onOpenEntity, nodeByName }) {
+  // Prefer resolved evidence (real node refs, so a click always works); when
+  // the engine's evidence doesn't resolve to ids yet, fall back to the plain
+  // display-name convenience array — still resolved to a clickable node via
+  // name lookup when possible, plain text otherwise.
+  const fromEvidence = [...new Map(
+    (t.evidence || []).filter(e => e.allocator).map(e => [e.allocator.id, e.allocator])
+  ).values()];
+  const allocators = fromEvidence.length ? fromEvidence
+    : (Array.isArray(t.allocators) ? t.allocators : [])
+        .map(name => nodeByName?.get(name) || { id: null, name });
+  const lowConfidence = t.confidence === 'low' || t.provisional;
+  return (
+    <div style={{ padding: '13px 15px', borderRadius: 10, background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)' }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--cf-text0)' }}>{t.title}</span>
+        {t.sector && (
+          <span style={{ fontSize: 9.5, color: SECTOR_META[t.sector]?.color || 'var(--cf-text6)', fontFamily: MONO }}>
+            {sectorLabel(t.sector)}
+          </span>
+        )}
+        {lowConfidence && (
+          <span style={{
+            marginLeft: 'auto', fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text6)',
+            border: '1px dashed var(--cf-border-dashed)', borderRadius: 5, padding: '2px 6px',
+            textTransform: 'uppercase', letterSpacing: '0.06em',
+          }}>Слабый сигнал</span>
+        )}
+      </div>
+      {t.narrative && (
+        <p style={{ margin: '6px 0 0', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.6 }}>{t.narrative}</p>
+      )}
+      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 9, fontSize: 10.5, fontFamily: MONO, color: 'var(--cf-text5)' }}>
+        {typeof t.deals === 'number' && <span>{t.deals} {plural(t.deals, ['сделка', 'сделки', 'сделок'])}</span>}
+        {typeof t.capital_usd === 'number' && <span style={{ color: 'var(--cf-text3)' }}>{fmtUSD(t.capital_usd)}</span>}
+        {Array.isArray(t.date_range) && t.date_range.length === 2 && (
+          <span>{t.date_range[0]} → {t.date_range[1]}</span>
+        )}
+      </div>
+      {allocators.length > 0 && (
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 9 }}>
+          {allocators.map((a, i) => (
+            a.id
+              ? <button key={a.id} onClick={() => onOpenEntity(a.id)} style={linkBtn}>{a.name}</button>
+              : <span key={i} style={{ color: 'var(--cf-text4)', fontSize: 'inherit' }}>{a.name}</span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

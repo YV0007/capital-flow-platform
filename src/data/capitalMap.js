@@ -312,11 +312,11 @@ export const NETWORK_META = {
 // ── Signal rule labels — rendered so users know WHY a group lit up.
 export const RULE_META = {
   sector_swarm:                { label: 'Наплыв в сектор',     blurb: 'Несколько ключевых инвесторов вошли в один сектор за короткое окно.' },
-  theme_swarm:                 { label: 'Наплыв в тему',       blurb: 'Ключевые инвесторы сошлись на одном сквозном нарративе.' },
+  theme_swarm:                 { label: 'Наплыв в тему',       blurb: 'Ключевые инвесторы сошлись на одной теме — сразу в нескольких секторах.' },
   smart_money_follow:          { label: 'Умные деньги ведут',  blurb: 'Ключевой инвестор вошёл первым; за ним быстро последовали другие.' },
   beneficiary_concentration:   { label: 'Бенефициар',          blurb: 'Несколько частных потоков указывают на один публичный тикер — вывод, который можно отыграть.' },
   stealth_accumulation:        { label: 'Тихое накопление',    blurb: 'Повторные доли незаметно накапливаются в одной компании.' },
-  repeat_conviction:           { label: 'Повторная ставка',    blurb: 'Одна и та же сеть снова и снова поддерживает одну компанию.' },
+  repeat_conviction:           { label: 'Повторная ставка',    blurb: 'Участник сети снова и снова вкладывает в одну и ту же тему.' },
   network_convergence:         { label: 'Схождение сети',      blurb: 'Отслеживаемая сеть сходится на одной компании.' },
   defense_network_convergence: { label: 'Оборонное схождение', blurb: 'Сеть, связанная с обороной, сходится на одной цели.' },
 };
@@ -656,6 +656,33 @@ export function buildGraph(data = raw) {
   collect(sectors, 'sector');
   collect(themes, 'theme');
 
+  // Signal evidence + entity attachment (engine ask, not yet shipped — every
+  // step below is defensive and no-ops cleanly on the current payload).
+  //   · signal.evidence[] — {allocator_id, target_id, amount_usd, date,
+  //     confirmed}, ids in the SAME alloc:/target: namespace as nodes[].id —
+  //     resolved here into real node refs so the UI never does its own lookup.
+  //   · signal.entity_id — attaches a signal directly to one node (company-
+  //     level signals like stealth_accumulation/beneficiary_concentration),
+  //     collected onto node.signals rather than only living in a sector zone.
+  nodes.forEach(n => { n.signals = []; });
+  const resolveEvidence = (evidence) => (Array.isArray(evidence) ? evidence : [])
+    .map(e => ({
+      ...e,
+      allocator: e.allocator_id ? nodeById.get(e.allocator_id) || null : null,
+      target: e.target_id ? nodeById.get(e.target_id) || null : null,
+    }))
+    .filter(e => e.allocator || e.target);
+  const attachSignals = (obj) => Object.values(obj).forEach(g =>
+    (g.signals || []).forEach(s => {
+      s.evidence = resolveEvidence(s.evidence);
+      if (s.entity_id) {
+        const entity = nodeById.get(s.entity_id);
+        if (entity) entity.signals.push(s);
+      }
+    }));
+  attachSignals(sectors);
+  attachSignals(themes);
+
   // Mark targets sitting under a beneficiary-concentration read (a public
   // ticker private capital points at) — the deal 'actionable path' factor uses
   // it. Approximate: match on the target's theme/sector.
@@ -691,8 +718,19 @@ export function buildGraph(data = raw) {
     ...classification,   // corePlayers, keyPlayers, flaggedDeals, emergingDeals
   };
 
+  // Trend narratives (engine ask, not yet shipped) — top 1-3 ranked entries per
+  // window (week/month/all), each with grounded evidence resolved the same way
+  // as signal evidence above. Empty object/arrays until the engine ships it.
+  const trends = {};
+  Object.entries(data.trends || {}).forEach(([win, list]) => {
+    trends[win] = (Array.isArray(list) ? list : []).map(t => ({
+      ...t,
+      evidence: resolveEvidence(t.evidence),
+    }));
+  });
+
   return {
-    nodes, links, sectors, themes, beneficiaries, stats,
+    nodes, links, sectors, themes, beneficiaries, stats, trends,
     generated: data.generated, confidenceThreshold: threshold, maxCapital, maxAmount,
   };
 }

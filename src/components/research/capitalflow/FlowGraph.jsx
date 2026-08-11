@@ -526,7 +526,7 @@ export default function FlowGraph({
     const isPlayer = n.type === 'player';
     // The new classification — the one bit worth surfacing on hover.
     const pivot = isPlayer
-      ? (n.playerRank === 'core' ? 'Ключевой инвестор' : n.playerRank === 'key' ? 'Инвестор на контроле' : null)
+      ? (n.playerRank === 'core' ? 'Ключевой инвестор' : n.playerRank === 'key' ? 'Стоит следить' : null)
       : (n.dealRank === 'flagged' ? 'Интересная сделка' : n.dealRank === 'emerging' ? 'Зарождается' : null);
     const sideLabel = isPlayer ? 'Вложено' : 'Получено';
     const sideVal = isPlayer ? n.totalOutflow : n.totalInflow;

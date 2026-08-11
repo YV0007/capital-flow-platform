@@ -62,7 +62,7 @@ const BG = 'var(--cf-canvas)';
 const TOPBAR_H = 62;
 const PANEL_W = 380;   // must match EntityPanel's width
 
-export default function CapitalFlowMap({ onBack, initialFlowId }) {
+export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
   const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links), [graph]);
@@ -699,6 +699,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           links={graph.links}
           generated={META.generated}
           sectors={graph.sectors}
+          trends={graph.trends}
           onOpenEntity={focusEntity}
         />
       )}
@@ -790,6 +791,9 @@ export default function CapitalFlowMap({ onBack, initialFlowId }) {
           report={clusterReport}
           onOpenEntity={focusEntity}
           onOpenReceivers={openSectorReceivers}
+          onOpenDetail={onOpenResearch
+            ? (blockId) => onOpenResearch('data-centers-ai', { blockId })
+            : null}
           onClose={() => setCluster(null)}
         />
       )}

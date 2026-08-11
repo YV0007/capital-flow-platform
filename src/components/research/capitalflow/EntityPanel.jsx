@@ -3,10 +3,11 @@
 // goes, how much, in what form, at what confidence. The graph stays live
 // underneath.
 
-import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, FileText, Newspaper, Briefcase } from 'lucide-react';
-import { fmtUSD, plural } from './format.js';
+import { useState } from 'react';
+import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, ChevronDown, FileText, Newspaper, Briefcase, Sparkles } from 'lucide-react';
+import { fmtUSD, plural, formatSignalText } from './format.js';
 import {
-  SECTOR_META, CLASS_META, TIER_META, NETWORK_META, confidenceBand, sectorLabel,
+  SECTOR_META, THEME_META, CLASS_META, TIER_META, NETWORK_META, RULE_META, confidenceBand, sectorLabel,
 } from '../../../data/capitalMap.js';
 import { subsectorLabel } from './subsectors.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
@@ -177,6 +178,13 @@ export default function EntityPanel({
         </div>
 
         {(node.playerParts || node.dealParts) && <ClassificationBlock node={node} />}
+
+        {/* Entity-level signals — an engine rule fired specifically on THIS
+            node (stealth_accumulation, beneficiary_concentration, ...), not
+            just its sector zone. Empty until the engine ships entity_id. */}
+        {Array.isArray(node.signals) && node.signals.length > 0 && (
+          <EntitySignalsBlock signals={node.signals} onOpenEntity={onOpenEntity} />
+        )}
 
         {inbound.length > 0 && (
           <Section title={`Кто инвестирует сюда · ${totalOrNull(inbound, node.totalInflow)}`}
@@ -660,6 +668,75 @@ const DEAL_FACTORS = [
   ['independence', 'Независимость'],
   ['actionable', 'Доступность'],
 ];
+
+// Signals fired specifically on this node (entity_id match) — same evidence
+// drill-down affordance as the sector-level version in ClusterReport.jsx, so
+// the interaction is consistent wherever a signal shows up.
+function EntitySignalsBlock({ signals, onOpenEntity }) {
+  const [open, setOpen] = useState(null);
+  return (
+    <div style={{ marginBottom: 16, display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {signals.map((s, i) => {
+        const rule = RULE_META[s.rule];
+        const isOpen = open === i;
+        const hasEvidence = Array.isArray(s.evidence) && s.evidence.length > 0;
+        return (
+          <div key={i} style={{
+            padding: '9px 11px', borderRadius: 10,
+            background: 'var(--cf-warn-bg)', border: '1px solid var(--cf-warn-bd)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Sparkles size={11} color="var(--cf-warn)" />
+              <span style={{
+                fontSize: 9, color: 'var(--cf-warn)', fontFamily: MONO, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.07em',
+              }}>{rule?.label || s.rule}</span>
+            </div>
+            <div style={{ fontSize: 11.5, color: 'var(--cf-text2)', marginTop: 5, lineHeight: 1.5 }}>
+              {formatSignalText(s.theme, SECTOR_META, THEME_META)}
+            </div>
+            {rule?.blurb && (
+              <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', marginTop: 4, lineHeight: 1.5 }}>{rule.blurb}</div>
+            )}
+            <button onClick={() => setOpen(isOpen ? null : i)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 4, marginTop: 7,
+                background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+                font: 'inherit', fontSize: 10, fontFamily: MONO, fontWeight: 700,
+                color: 'var(--cf-warn)', letterSpacing: '0.03em',
+              }}>
+              {isOpen ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
+              Кто именно
+            </button>
+            {isOpen && (
+              <div style={{ marginTop: 6, paddingTop: 7, borderTop: '1px solid var(--cf-warn-bd)' }}>
+                {hasEvidence ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+                    {s.evidence.map((e, j) => (
+                      <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', fontSize: 10.5 }}>
+                        {e.allocator
+                          ? <button onClick={() => onOpenEntity(e.allocator.id)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit', color: 'var(--cf-link)', fontWeight: 600 }}>{e.allocator.name}</button>
+                          : <span style={{ color: 'var(--cf-text5)' }}>—</span>}
+                        {typeof e.amount_usd === 'number' && (
+                          <span style={{ color: 'var(--cf-text5)', fontFamily: MONO }}>{fmtUSD(e.amount_usd)}</span>
+                        )}
+                        {e.date && <span style={{ color: 'var(--cf-text7)', fontFamily: MONO, fontSize: 9.5 }}>{e.date}</span>}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div style={{ fontSize: 10, color: 'var(--cf-text6)', lineHeight: 1.5 }}>
+                    Разбор по именам появится, когда движок начнёт присылать доказательства сигнала.
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 function ClassificationBlock({ node }) {
   const isPlayer = !!node.playerParts;

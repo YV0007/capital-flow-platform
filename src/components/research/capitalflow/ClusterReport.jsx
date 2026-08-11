@@ -23,21 +23,42 @@
 import { useState } from 'react';
 import {
   X, ChevronDown, ChevronRight, TrendingUp, TrendingDown, Minus,
-  ArrowUpRight, Sparkles, Table2,
+  ArrowUpRight, Sparkles, Table2, Layers,
 } from 'lucide-react';
-import { fmtUSD, plural } from './format.js';
-import { STATUS_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
+import { fmtUSD, plural, formatSignalText } from './format.js';
+import { STATUS_META, RULE_META, SECTOR_META, THEME_META, sectorLabel } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 export const REPORT_W = 430;
 
+// Capital Flow sector → the matching block in the Data Centers supply-chain
+// research (dc/Roadmap NODES id). Only sectors with a genuine hardware/tech
+// analog get the "technical breakdown" deep-link; the rest (defense, cyber,
+// pe, credit, ev, robotics) have no supply-chain block and show no button.
+const SECTOR_DC_BLOCK = {
+  'ai-labs': 'lab',
+  'ai-applications': 'apps',
+  'ai-compute': 'rack',
+  'neocloud': 'rack',
+  'semiconductors': 'silicon',
+  'fab-equipment': 'litho',
+  'datacenters': 'contracting',
+  'networking': 'photonics',
+  'power-energy': 'power',
+  'nuclear': 'nuc',
+};
+
 const pct = (x) => (x == null ? null : `${Math.round(x * 100)}%`);
 
-export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, onClose, topInset = 0 }) {
+export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, onOpenDetail, onClose, topInset = 0 }) {
   const [deep, setDeep] = useState(false);
+  const [openSignal, setOpenSignal] = useState(null);   // index of the expanded "who exactly" row
   if (!report) return null;
 
   const isSector = report.kind === 'sector';
+  // Technical deep-dive link — only when this sector has a matching block in the
+  // Data Centers supply-chain research.
+  const dcBlock = isSector ? SECTOR_DC_BLOCK[report.key] : null;
   const mix = isSector ? report.byClass : report.bySector;
   const h = report.head;
 
@@ -80,6 +101,40 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
           <div style={{ fontSize: 11.5, color: 'var(--cf-text3)', lineHeight: 1.55, marginTop: 9 }}>
             {report.blurb}
           </div>
+        )}
+        {/* Technical deep-dive → the sector's block in the Data Centers supply
+            chain: what it does, its role in the chain, and the key players. */}
+        {dcBlock && onOpenDetail && (
+          <button
+            onClick={() => onOpenDetail(dcBlock)}
+            title="Открыть технический разбор сектора в цепочке поставок ИИ"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 11, width: '100%',
+              marginTop: 11, padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
+              font: 'inherit', textAlign: 'left',
+              background: `linear-gradient(120deg, ${report.color}22, var(--cf-surface1))`,
+              border: `1px solid ${report.color}55`,
+              transition: 'border-color 140ms, transform 140ms',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = report.color + '99'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = report.color + '55'; e.currentTarget.style.transform = 'none'; }}>
+            <span style={{
+              width: 30, height: 30, borderRadius: 8, flexShrink: 0,
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              background: report.color + '1f', border: `1px solid ${report.color}44`, color: report.color,
+            }}>
+              <Layers size={15} />
+            </span>
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ display: 'block', fontSize: 12, fontWeight: 700, color: 'var(--cf-text0)' }}>
+                Как это устроено — технический разбор
+              </span>
+              <span style={{ display: 'block', fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2, letterSpacing: '0.02em' }}>
+                Цепочка поставок ИИ · роль сектора и ключевые игроки
+              </span>
+            </span>
+            <ArrowUpRight size={15} color={report.color} style={{ flexShrink: 0 }} />
+          </button>
         )}
         {report.outsideAiStack && (
           <div style={{
@@ -244,6 +299,8 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             <Section title="Сработавшие сигналы" note="Правила движка, этот цикл" />
             {report.signals.map((s, i) => {
               const rule = RULE_META[s.rule];
+              const open = openSignal === i;
+              const hasEvidence = Array.isArray(s.evidence) && s.evidence.length > 0;
               return (
                 <div key={i} style={{
                   padding: '9px 11px', marginBottom: 6, borderRadius: 8,
@@ -261,9 +318,55 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
                       </span>
                     )}
                   </div>
-                  <div style={{ fontSize: 11.5, color: 'var(--cf-text2)', marginTop: 5, lineHeight: 1.5 }}>{s.theme}</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--cf-text2)', marginTop: 5, lineHeight: 1.5 }}>
+                    {formatSignalText(s.theme, SECTOR_META, THEME_META)}
+                  </div>
                   {rule?.blurb && (
                     <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', marginTop: 4, lineHeight: 1.5 }}>{rule.blurb}</div>
+                  )}
+
+                  {/* Кто именно — the evidence breakdown. Always visible as an
+                      affordance so the interaction is discoverable before the
+                      engine ships evidence; the empty state says so plainly
+                      rather than pretending nothing is coming. */}
+                  <button onClick={() => setOpenSignal(open ? null : i)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 4, marginTop: 7,
+                      background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+                      font: 'inherit', fontSize: 10, fontFamily: MONO, fontWeight: 700,
+                      color: 'var(--cf-warn)', letterSpacing: '0.03em',
+                    }}>
+                    {open ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
+                    Кто именно
+                  </button>
+                  {open && (
+                    <div style={{ marginTop: 6, paddingTop: 7, borderTop: '1px solid var(--cf-warn-bd)' }}>
+                      {hasEvidence ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+                          {s.evidence.map((e, j) => (
+                            <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', fontSize: 10.5 }}>
+                              {e.allocator
+                                ? <button onClick={() => onOpenEntity(e.allocator.id)} style={linkBtn}>{e.allocator.name}</button>
+                                : <span style={{ color: 'var(--cf-text5)' }}>—</span>}
+                              {e.target && (
+                                <>
+                                  <ArrowUpRight size={10} color="var(--cf-text7)" />
+                                  <button onClick={() => onOpenEntity(e.target.id)} style={linkBtn}>{e.target.name}</button>
+                                </>
+                              )}
+                              {typeof e.amount_usd === 'number' && (
+                                <span style={{ color: 'var(--cf-text5)', fontFamily: MONO }}>{fmtUSD(e.amount_usd)}</span>
+                              )}
+                              {e.date && <span style={{ color: 'var(--cf-text7)', fontFamily: MONO, fontSize: 9.5 }}>{e.date}</span>}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div style={{ fontSize: 10, color: 'var(--cf-text6)', lineHeight: 1.5 }}>
+                          Разбор по именам появится, когда движок начнёт присылать доказательства сигнала.
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
               );
