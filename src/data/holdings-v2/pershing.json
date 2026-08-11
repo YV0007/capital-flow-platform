@@ -1938,38 +1938,43 @@
    "type": "news",
    "title": "СЧА Pershing Square Holdings на конец июля: −9,2% с начала года",
    "text": "Pershing Square Holdings (PSH LN) отчиталась о стоимости чистых активов (NAV) $77,10 на акцию (£57,21) по состоянию на 31 июля 2026 года. Доходность с начала года (year-to-date) составила −9,2% чистыми, оставаясь в отрицательной зоне при сохранении дисконта котировок к NAV. Неделей ранее, на 14 июля, NAV равнялась $77,06 при доходности −9,3%.",
-   "image": null,
+   "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Bill_Ackman_%2826410186110%29_%28cropped%29.jpg/960px-Bill_Ackman_%2826410186110%29_%28cropped%29.jpg",
    "url": "https://pershingsquareholdings.com/performance/nav/"
   },
   {
    "title": "IPO PSUS рухнуло на 18% в первый день",
    "source": "Bloomberg",
    "date": "29.04.2026",
-   "type": "news"
+   "type": "news",
+   "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/NYSE-floor.jpg/960px-NYSE-floor.jpg"
   },
   {
    "title": "Совет UMG отклонил предложение Pershing Square ($64.4 млрд)",
    "source": "UMG / Bolloré",
    "date": "29.05.2026",
-   "type": "news"
+   "type": "news",
+   "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Universal_Music_Group_UK_HQ%2C_King%27s_Cross_Central_development%2C_Pancras_Square%2C_London%2C_England_01.jpg/960px-Universal_Music_Group_UK_HQ%2C_King%27s_Cross_Central_development%2C_Pancras_Square%2C_London%2C_England_01.jpg"
   },
   {
    "title": "HHH закрыла покупку страховщика Vantage за $2.1 млрд",
    "source": "HHH 8-K",
    "date": "04.06.2026",
-   "type": "deal"
+   "type": "deal",
+   "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/DowntownSummerlin8.jpg/960px-DowntownSummerlin8.jpg"
   },
   {
    "title": "13F Q1 2026: Microsoft — новая позиция, Alphabet −95%",
    "source": "SEC EDGAR",
    "date": "15.05.2026",
-   "type": "filing"
+   "type": "filing",
+   "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Building_92_of_Microsoft_Redmond_Campus_-_panoramio.jpg/960px-Building_92_of_Microsoft_Redmond_Campus_-_panoramio.jpg"
   },
   {
    "title": "Pershing Square ликвидирует позицию в UMG полностью",
    "source": "Pershing Square / X",
    "date": "03.06.2026",
-   "type": "deal"
+   "type": "deal",
+   "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mixing_console.jpg/960px-Mixing_console.jpg"
   }
  ],
  "changesDeep": {
