@@ -2690,6 +2690,14 @@
  },
  "news": [
   {
+   "date": "11.08.2026",
+   "type": "announcement",
+   "title": "NVIDIA формирует с BlackRock и другими консорциум на $500+ млрд для финансирования AI-инфраструктуры",
+   "text": "CEO NVIDIA Дженсен Хуанг объявил о партнёрстве с Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs и KKR по созданию независимых финансовых платформ, нацеленных на мобилизацию свыше $500 млрд стороннего капитала для строительства AI-инфраструктуры. По словам Хуанга, отрасль переходит от точечных закупок чипов и строительства дата-центров проект за проектом к финансированию «AI-фабрик» как производительной инфраструктуры — с повторяемыми платформами, долгосрочным институциональным капиталом и широкой базой клиентов, монетизирующих вычисления. Для BlackRock это расширяет уже действующее партнёрство AIP с NVIDIA/Microsoft/MGX (цель до $100 млрд) до общей отраслевой платформы финансирования AI-capex.",
+   "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Jensen_Huang_-_RTX_Blackwell_-_Nvidia_Keynote_-_CES_2025_Las_Vegas_%283%29.jpg/960px-Jensen_Huang_-_RTX_Blackwell_-_Nvidia_Keynote_-_CES_2025_Las_Vegas_%283%29.jpg",
+   "url": "https://x.com/jensenhuang/status/2086934705207959965?s=46"
+  },
+  {
    "date": "03.08.2026",
    "type": "announcement",
    "title": "BlackRock расширяет токенизированные фонды денежного рынка",
