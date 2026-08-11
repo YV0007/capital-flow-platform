@@ -113,6 +113,7 @@
   --cf-warn-bg: rgba(251,191,36,0.08);
   --cf-warn-bd: rgba(251,191,36,0.25);
   --cf-bad: #F87171;
+  --cf-pivot: #FF4A55;   /* pivotal-node bloom — mirrors canvasTheme.js pivotGlow (dark) */
   --cf-muted: #94A3B8;
   --cf-link: #8fb3cf;
   --cf-link-hover: #3f9bd6;
@@ -218,6 +219,7 @@
   --cf-warn-bg: rgba(180,83,9,0.09);
   --cf-warn-bd: rgba(180,83,9,0.30);
   --cf-bad: #D23B3B;
+  --cf-pivot: #E5323D;   /* pivotal-node bloom — mirrors canvasTheme.js pivotGlow (light) */
   --cf-muted: #64748B;
   --cf-link: #1F6FB0;
   --cf-link-hover: #0284C7;

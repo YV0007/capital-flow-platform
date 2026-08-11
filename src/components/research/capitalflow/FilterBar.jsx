@@ -142,7 +142,7 @@ export default function FilterDrawer({
                 <Chip key={k} on={sectors.has(k)} color={meta.color || 'var(--cf-text5)'}
                   title={`Сделок: ${s.deals} · ${fmtUSD(s.capital)}${s.lit ? ' · сигнал' : ''}`}
                   onClick={() => onToggleSector(k)}>
-                  {s.lit && <span style={{ color: 'var(--cf-warn)', marginRight: -1 }}>◆</span>}
+                  {s.lit && <span style={{ color: 'var(--cf-warn)', marginRight: -1 }}>✦</span>}
                   {sectorLabel(k)}
                 </Chip>
               );

@@ -230,14 +230,15 @@ export default function FlowGraph({
       // Cluster TITLE — the only text on the canvas, and the entry point to the
       // cluster report. Fired-signal detail used to be printed underneath it;
       // that (and every other stat) now lives in the report instead, so the map
-      // stays a map. A lit cluster keeps the ◆ mark and nothing more.
+      // stays a map. A lit cluster keeps the ✦ mark and nothing more — matches
+      // the Sparkles icon used for signals in the cluster report / digest.
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
       const size = source ? 19 : 25;
       ctx.font = `700 ${size}px ui-monospace, monospace`;
       const hot = hoverRegionRef.current === r.key;
       ctx.fillStyle = hexA(rc, hot ? 1 : (source ? 0.85 : lit ? 0.96 : 0.72) * tA);
-      const title = lit ? `◆ ${r.label}` : r.label;
+      const title = lit ? `✦ ${r.label}` : r.label;
       const ty = r.cy - r.r - 12;
       ctx.fillText(title, r.cx, ty);
 

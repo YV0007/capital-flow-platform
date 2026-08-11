@@ -61,6 +61,11 @@ export default function Legend({ counts }) {
             <Row label="Остыл или не подтверждён" title="180 дней без активности либо только потоки-кандидаты."><GRim dashed /></Row>
           </Section>
 
+          <Section title="Красное свечение = достоин внимания">
+            <Row label="Ключевой инвестор" title="Стоит следить: отбор, повторные ставки, доказанный результат — не размер капитала."><GGlow /></Row>
+            <Row label="Интересная сделка" title="Ранее и независимое схождение умных денег — не размер сделки."><GGlow /></Row>
+          </Section>
+
           <Section title="Линия = тип события">
             {Object.entries(FAMILY_META).map(([k, v]) => (
               <Row key={k} label={v.label} count={counts.family?.[k]}>
@@ -99,8 +104,7 @@ export default function Legend({ counts }) {
             Цвет узла = сфера · размер = капитал.<br />
             Инвесторы в центре, сгруппированы по классам;<br />
             секторы — по орбите вокруг.<br />
-            <span style={{ color: 'var(--cf-warn)' }}>◆</span> / яркая зона = сработал сигнал.<br />
-            <span style={{ color: 'var(--cf-warn)' }}>▢</span> тёплая рамка = элитная сеть.<br />
+            <span style={{ color: 'var(--cf-warn)' }}>✦</span> / яркая зона = сработал сигнал.<br />
             Прозрачность связи = надёжность · толщина = сумма.<br />
             <span style={{ color: 'var(--cf-text4)' }}>
               Клик по узлу → панель разбора.<br />
@@ -193,6 +197,17 @@ function GRim({ color = N, dashed }) {
       width: 11, height: 11, borderRadius: '50%', display: 'inline-block',
       border: `1.6px ${dashed ? 'dashed' : 'solid'} ${color}`,
       background: dashed ? 'transparent' : 'var(--cf-surface3)',
+    }} />
+  );
+}
+
+// Matches the pivotal-node bloom drawn on the canvas (FlowGraph paintNode) —
+// same red, a soft radial glow rather than an outline.
+function GGlow() {
+  return (
+    <span style={{
+      width: 11, height: 11, borderRadius: '50%', display: 'inline-block',
+      background: 'radial-gradient(circle, var(--cf-pivot) 0%, color-mix(in srgb, var(--cf-pivot) 35%, transparent) 55%, transparent 100%)',
     }} />
   );
 }
