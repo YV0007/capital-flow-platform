@@ -220,6 +220,10 @@ export default function EntityPanel({
 function ProfileBlock({ node }) {
   const links = node.links || [];
   const hasProfile = !!node.description || links.length > 0;
+  // No `website`-kind link on file. This is the common, EXPECTED case for a
+  // stealth company (e.g. Cathedral) that still has news coverage — without a
+  // tag here it reads as a missing/broken link rather than "no site exists".
+  const hasWebsite = links.some(l => l.kind === 'website');
   return (
     <div style={{
       marginBottom: 16, padding: '11px 12px',
@@ -238,10 +242,21 @@ function ProfileBlock({ node }) {
         {node.description || 'Профиля в данных пока нет — найдите через поиск ниже.'}
       </div>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 10 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginTop: 10 }}>
         {links.map((l, i) => <LinkChip key={i} link={l} />)}
         {links.length === 0 && (
           <LinkChip link={{ kind: 'search', label: `Искать «${node.name}»`, url: node.searchUrl }} />
+        )}
+        {/* There's coverage (news/other links) but no official site — a stealth
+            company, not a broken/missing link. Called out inline so it isn't
+            mistaken for a data gap. */}
+        {links.length > 0 && !hasWebsite && (
+          <span title="Компания работает в стелс-режиме — публичного сайта пока нет." style={{
+            display: 'inline-flex', alignItems: 'center',
+            padding: '4px 8px', fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 600,
+            background: 'var(--cf-surface2)', border: '1px dashed var(--cf-border-dashed)', borderRadius: 6,
+            cursor: 'help', whiteSpace: 'nowrap',
+          }}>Стелс · нет сайта</span>
         )}
       </div>
 
@@ -635,7 +650,7 @@ const PLAYER_FACTORS = [
   ['leadTime', 'Опережает толпу'],
   ['focus', 'Фокус / отбор'],
   ['repeat', 'Повторная ставка'],
-  ['overlap', 'Можно отыграть'],
+  ['overlap', 'Доступность сделок'],
   ['trackRecord', 'Доказанный результат'],
 ];
 const DEAL_FACTORS = [
@@ -643,7 +658,7 @@ const DEAL_FACTORS = [
   ['early', 'Поймано рано'],
   ['backerQuality', 'Качество инвесторов'],
   ['independence', 'Независимость'],
-  ['actionable', 'Как отыграть'],
+  ['actionable', 'Доступность'],
 ];
 
 function ClassificationBlock({ node }) {
