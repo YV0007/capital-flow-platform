@@ -14,7 +14,7 @@ import { useMemo, useState, useCallback } from 'react';
 import { ArrowUp, ArrowDown, ChevronDown, ChevronRight } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
 import {
-  SECTOR_META, TIER_META, THEME_META, AGGREGATES, sectorLabel, basisLabel,
+  SECTOR_META, THEME_META, AGGREGATES, sectorLabel, basisLabel,
 } from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
 
@@ -218,9 +218,48 @@ function statusOf(n) {
   return { label: 'Активен', color: 'var(--cf-good)', title: 'Подтверждённая активность в текущем окне.' };
 }
 
+// Score + dominant driver — REPLACES the old rank label entirely (not
+// alongside it). "Уровень" used to show the same coarse ЯДРО/КЛЮЧ/НАБЛ. badge
+// on nearly every row (a hand-typed engine field, no math behind it — see
+// classification.js docs). This reads the real per-entity score and names
+// whichever computed factor actually drove it, so two "key"-tier rows that
+// used to look identical now visibly differ. Color still hints rank at a
+// glance; the text carries the more informative part.
+const PLAYER_DRIVER_LABEL = {
+  bellwether: 'Ведёт', leadTime: 'Опережает', focus: 'Отбор',
+  repeat: 'Повтор', overlap: 'Доступен', trackRecord: 'Результат',
+};
+const DEAL_DRIVER_LABEL = {
+  convergence: 'Схождение', early: 'Рано', backerQuality: 'Инвесторы',
+  independence: 'Независимо', actionable: 'Доступно',
+};
+const RANK_COLOR = {
+  core: 'var(--cf-gold)', flagged: 'var(--cf-gold)',
+  key: 'var(--cf-warn)', emerging: 'var(--cf-warn)',
+  watch: 'var(--cf-text5)',
+};
+function scoreDriver(n) {
+  const isPlayer = n.type === 'player';
+  const score = isPlayer ? n.playerScore : n.dealScore;
+  const rank = isPlayer ? n.playerRank : n.dealRank;
+  const parts = isPlayer ? n.playerParts : n.dealParts;
+  if (score == null || !parts) return null;
+  const labels = isPlayer ? PLAYER_DRIVER_LABEL : DEAL_DRIVER_LABEL;
+  let topKey = null, topVal = -1;
+  Object.keys(labels).forEach(k => {
+    const v = parts[k];
+    if (typeof v === 'number' && v > topVal) { topVal = v; topKey = k; }
+  });
+  return {
+    score: Math.round(score), rank,
+    driver: topKey ? labels[topKey] : null,
+    color: RANK_COLOR[rank] || 'var(--cf-text5)',
+  };
+}
+
 const COLS = [
   { key: 'name',    label: 'Объект',         sort: (n) => n.name.toLowerCase() },
-  { key: 'tier',    label: 'Уровень',        sort: (n) => (n.tier === 'core' ? 0 : n.tier === 'key' ? 1 : n.tier === 'watch' ? 2 : 3) },
+  { key: 'tier',    label: 'Оценка',         sort: (n) => (n.type === 'player' ? n.playerScore : n.dealScore) ?? -1, num: true },
   { key: 'sector',  label: 'Сектор',         sort: (n) => (n.sector ? sectorLabel(n.sector) : '~') },
   { key: 'deals',   label: 'Сделки',         sort: (n) => n.deals, num: true },
   { key: 'capital', label: 'Капитал',        sort: (n) => n.capital, num: true },
@@ -408,7 +447,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
 
                       {!shut && g.rows.map(n => {
                         const st = statusOf(n);
-                        const tier = n.tier ? TIER_META[n.tier] : null;
+                        const sd = scoreDriver(n);
                         const sec = n.sector ? SECTOR_META[n.sector] : null;
                         return (
                           <tr key={n.id}
@@ -432,11 +471,13 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                                 )}
                               </span>
                             </td>
-                            {/* Tier */}
+                            {/* Score — real number + the factor that drove it, not a
+                                shared rank label everyone gets the same one of. */}
                             <td style={{ padding: '9px 14px', whiteSpace: 'nowrap' }}>
-                              {tier
-                                ? <span title={tier.blurb} style={{ fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: tier.color, cursor: 'help' }}>
-                                    {tier.short} {tier.stars}
+                              {sd
+                                ? <span title="Открыть панель — полный разбор факторов"
+                                    style={{ fontSize: 10, fontFamily: MONO, fontWeight: 700, color: sd.color, cursor: 'help' }}>
+                                    {sd.score}{sd.driver && <span style={{ color: 'var(--cf-text6)', fontWeight: 600 }}> · {sd.driver}</span>}
                                   </span>
                                 : <span style={{ color: 'var(--cf-text9)', fontSize: 10 }}>—</span>}
                             </td>
