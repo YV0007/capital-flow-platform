@@ -101,7 +101,7 @@ function CycleSummary() {
             basis={basisLabel(top.basis)} />
         )}
         {co?.top && (
-          <Lead label="Самая поддержанная компания"
+          <Lead label="Больше всего инвесторов"
             value={co.top.target || '—'} color="var(--cf-text1)"
             detail={[
               co.top.investors ? `${co.top.investors} ${plural(co.top.investors, ['инвестор', 'инвестора', 'инвесторов'])}` : null,
