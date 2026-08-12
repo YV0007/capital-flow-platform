@@ -68,6 +68,40 @@ export const CLASSIFY_CONFIG = {
     tiers: { core: 0.10, key: 0.35 },
     minDealsForFocus: 3,     // focus/selectivity needs evidence to score high
   },
+
+  // ── ARCHETYPE — the single tag a name resolves to (table/list display).
+  // Deliberately ONE label per entity, not a score + a factor name — the
+  // dashboard is crowded enough; a name should resolve to one deterministic
+  // word, the way "core investor" already reads today. Priority-ordered rule
+  // cascade per type: first rule whose threshold clears wins; nothing clears
+  // → falls back to the plain rank word (Ядро/Ключ/Набл. · Флаг/Зарождается).
+  // Thresholds are magnitude-gated (not bare argmax) so a factor barely above
+  // its neighbours doesn't get crowned — it has to actually clear the bar.
+  archetype: {
+    player: [
+      // leads before the crowd — needs real timing data (bellwether/leadTime),
+      // still mostly dark until the engine ships co-investor entry dates.
+      { id: 'trend',        test: (p, rank) => (rank === 'core' || rank === 'key')
+          && ((p.bellwether != null && p.bellwether >= 0.7) || (p.leadTime != null && p.leadTime >= 0.7)) },
+      // concentrated AND repeatedly doubles down — conviction, not a spray.
+      { id: 'fundamental',  test: (p) => p.repeat >= 0.6 && p.focus >= 0.6 },
+      // broad, low selectivity — many bets, little concentration.
+      { id: 'aggressive',   test: (p) => p.overlap >= 0.7 && p.focus < 0.4 },
+      // real, disclosed returns are what's actually carrying the score.
+      { id: 'proven',       test: (p) => p.trackRecord != null && p.trackRecord >= 0.7 },
+    ],
+    deal: [
+      // already a public company — the strongest, most concrete "can I act on
+      // this" fact there is, so it's checked directly rather than by score.
+      { id: 'actionable',   test: (p, rank, t) => t.cls === 'public' },
+      // very few backers yet, but already flagged/emerging — genuinely early.
+      { id: 'early',        test: (p, rank) => (rank === 'flagged' || rank === 'emerging') && p.early >= 0.7 },
+      // the backers behind it are themselves top-ranked players.
+      { id: 'smart-money',  test: (p) => p.backerQuality >= 0.7 },
+      // backers share no common camp/network — independent agreement.
+      { id: 'independent',  test: (p) => p.independence >= 0.7 },
+    ],
+  },
 };
 
 // Weak/zero factors drag a score toward this floor rather than annihilating it
@@ -118,6 +152,25 @@ function percentiler(values) {
     while (lo < hi) { const m = (lo + hi) >> 1; if (sorted[m] < x) lo = m + 1; else hi = m; }
     return lo / (n - 1);
   };
+}
+
+// Display labels for archetype ids — the ONE word/phrase a table or list ever
+// shows for a name. Kept next to CLASSIFY_CONFIG.archetype so the rule and its
+// label are never edited out of sync with each other.
+export const ARCHETYPE_LABEL = {
+  trend: 'Трендовый', fundamental: 'Фундаментальный', aggressive: 'Агрессивный', proven: 'Проверенный',
+  actionable: 'Доступна', early: 'Рано', 'smart-money': 'Умные деньги', independent: 'Независимо',
+};
+
+// Runs a type's rule cascade (CLASSIFY_CONFIG.archetype.player / .deal) against
+// one entity's already-computed parts + rank; first rule that clears wins.
+// Returns null (→ caller falls back to the plain rank word) when nothing does.
+function pickArchetype(type, parts, rank, node) {
+  if (!parts || !rank) return null;
+  for (const rule of CFG.archetype[type]) {
+    if (rule.test(parts, rank, node)) return rule.id;
+  }
+  return null;
 }
 
 // Split the free-text co_investors string ("A; B (x); C") into clean names.
@@ -320,9 +373,12 @@ function classifyPlayers({ nodes, byId, outBySrc, inByTgt, now }) {
 
   assignTiers(scored, 'playerScore', 'playerRank',
     [['core', CFG.player.tiers.core], ['key', CFG.player.tiers.key], ['watch', 1]]);
+  // Archetype needs the final rank (some rules key off it), so it runs after
+  // assignTiers, not inside the scoring loop above.
+  for (const a of scored) a.playerArchetype = pickArchetype('player', a.playerParts, a.playerRank, a);
 
   // Non-eligible players get null so consumers can tell "unscored" from "watch".
-  for (const a of players) if (!raw.has(a.id)) { a.playerScore = null; a.playerRank = null; a.playerParts = null; }
+  for (const a of players) if (!raw.has(a.id)) { a.playerScore = null; a.playerRank = null; a.playerParts = null; a.playerArchetype = null; }
 }
 
 // ── RANK 1 · INTERESTING DEALS ──────────────────────────────────────────────
@@ -412,8 +468,9 @@ function classifyDeals({ nodes, byId, inByTgt, now }) {
 
   assignTiers(scored, 'dealScore', 'dealRank',
     [['flagged', CFG.deal.tiers.flagged], ['emerging', CFG.deal.tiers.emerging], [null, 1]]);
+  for (const t of scored) t.dealArchetype = pickArchetype('deal', t.dealParts, t.dealRank, t);
 
-  for (const t of targets) if (!raw.has(t.id)) { t.dealScore = null; t.dealRank = null; t.dealParts = null; }
+  for (const t of targets) if (!raw.has(t.id)) { t.dealScore = null; t.dealRank = null; t.dealParts = null; t.dealArchetype = null; }
 }
 
 // ── shared: tier assignment by quantile ─────────────────────────────────────

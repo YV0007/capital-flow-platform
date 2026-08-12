@@ -132,17 +132,26 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
     const seed = nodeIdFilter
       ? new Set([...nodeIdFilter].filter(id => !wlSet || wlSet.has(id)))
       : new Set(
-          // Seed = nodes matching ANY active entity selection (OR-union) —
-          // robust to mixing target-only (sector) and allocator-only
-          // (tier/network) dims.
+          // Seed = nodes clearing EVERY active facet (AND across facets),
+          // matching the natural reading of "pick a sector AND a tier" —
+          // their overlap, not everything from either one. Multiple values
+          // WITHIN one facet stay OR (Set membership already does that — e.g.
+          // two sectors selected means "either sector").
+          //
+          // A facet that structurally doesn't apply to a node's role (sector
+          // is target-only, tier/network are allocator-only — verified 0%
+          // cross-role in the payload) is vacuously satisfied rather than a
+          // false exclusion, via the truthiness check before the membership
+          // check below — otherwise combining a target-side and an
+          // allocator-side facet would always return nothing.
           graph.nodes.filter(n => {
             if (wlSet && !wlSet.has(n.id)) return false;
             if (!entityFilterOn) return true;
-            const mSec = sectors.size && n.sector && sectors.has(n.sector);
-            const mCls = classes.size && classes.has(n.cls);
-            const mTier = tiers.size && n.tier && tiers.has(n.tier);
-            const mNet = networks.size && n.network && networks.has(n.network);
-            return mSec || mCls || mTier || mNet;
+            if (sectors.size && n.sector && !sectors.has(n.sector)) return false;
+            if (classes.size && !classes.has(n.cls)) return false;
+            if (tiers.size && n.tier && !tiers.has(n.tier)) return false;
+            if (networks.size && n.network && !networks.has(n.network)) return false;
+            return true;
           }).map(n => n.id)
         );
 

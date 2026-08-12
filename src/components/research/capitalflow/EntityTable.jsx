@@ -17,6 +17,7 @@ import {
   SECTOR_META, THEME_META, AGGREGATES, sectorLabel, basisLabel,
 } from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
+import { ARCHETYPE_LABEL } from './classification.js';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -218,48 +219,36 @@ function statusOf(n) {
   return { label: 'Активен', color: 'var(--cf-good)', title: 'Подтверждённая активность в текущем окне.' };
 }
 
-// Score + dominant driver — REPLACES the old rank label entirely (not
-// alongside it). "Уровень" used to show the same coarse ЯДРО/КЛЮЧ/НАБЛ. badge
-// on nearly every row (a hand-typed engine field, no math behind it — see
-// classification.js docs). This reads the real per-entity score and names
-// whichever computed factor actually drove it, so two "key"-tier rows that
-// used to look identical now visibly differ. Color still hints rank at a
-// glance; the text carries the more informative part.
-const PLAYER_DRIVER_LABEL = {
-  bellwether: 'Ведёт', leadTime: 'Опережает', focus: 'Отбор',
-  repeat: 'Повтор', overlap: 'Доступен', trackRecord: 'Результат',
-};
-const DEAL_DRIVER_LABEL = {
-  convergence: 'Схождение', early: 'Рано', backerQuality: 'Инвесторы',
-  independence: 'Независимо', actionable: 'Доступно',
-};
+// ONE tag per row — REPLACES the old rank badge entirely. "Уровень" used to
+// show the same coarse ЯДРО/КЛЮЧ/НАБЛ. label on nearly every row (a hand-typed
+// engine field, no math behind it — see classification.js docs). This reads
+// the deterministic archetype classification.js already assigned (a priority-
+// ordered rule cascade over the real factors), falling back to the plain rank
+// word only when no archetype rule cleared. Kept deliberately single-tag —
+// dense dashboard, one word beats a score+factor pair for scanability. Color
+// still hints rank at a glance.
 const RANK_COLOR = {
   core: 'var(--cf-gold)', flagged: 'var(--cf-gold)',
   key: 'var(--cf-warn)', emerging: 'var(--cf-warn)',
   watch: 'var(--cf-text5)',
 };
+const RANK_FALLBACK_LABEL = {
+  core: 'Ядро', key: 'Ключ', watch: 'Набл.', flagged: 'Флаг', emerging: 'Зарождается',
+};
 function scoreDriver(n) {
   const isPlayer = n.type === 'player';
-  const score = isPlayer ? n.playerScore : n.dealScore;
   const rank = isPlayer ? n.playerRank : n.dealRank;
-  const parts = isPlayer ? n.playerParts : n.dealParts;
-  if (score == null || !parts) return null;
-  const labels = isPlayer ? PLAYER_DRIVER_LABEL : DEAL_DRIVER_LABEL;
-  let topKey = null, topVal = -1;
-  Object.keys(labels).forEach(k => {
-    const v = parts[k];
-    if (typeof v === 'number' && v > topVal) { topVal = v; topKey = k; }
-  });
+  const archetype = isPlayer ? n.playerArchetype : n.dealArchetype;
+  if (!rank) return null;
   return {
-    score: Math.round(score), rank,
-    driver: topKey ? labels[topKey] : null,
+    label: (archetype && ARCHETYPE_LABEL[archetype]) || RANK_FALLBACK_LABEL[rank] || rank,
     color: RANK_COLOR[rank] || 'var(--cf-text5)',
   };
 }
 
 const COLS = [
   { key: 'name',    label: 'Объект',         sort: (n) => n.name.toLowerCase() },
-  { key: 'tier',    label: 'Оценка',         sort: (n) => (n.type === 'player' ? n.playerScore : n.dealScore) ?? -1, num: true },
+  { key: 'tier',    label: 'Уровень',        sort: (n) => (n.type === 'player' ? n.playerScore : n.dealScore) ?? -1, num: true },
   { key: 'sector',  label: 'Сектор',         sort: (n) => (n.sector ? sectorLabel(n.sector) : '~') },
   { key: 'deals',   label: 'Сделки',         sort: (n) => n.deals, num: true },
   { key: 'capital', label: 'Капитал',        sort: (n) => n.capital, num: true },
@@ -471,13 +460,13 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                                 )}
                               </span>
                             </td>
-                            {/* Score — real number + the factor that drove it, not a
-                                shared rank label everyone gets the same one of. */}
+                            {/* Archetype — one deterministic tag, not a shared rank
+                                label everyone gets the same one of. */}
                             <td style={{ padding: '9px 14px', whiteSpace: 'nowrap' }}>
                               {sd
                                 ? <span title="Открыть панель — полный разбор факторов"
-                                    style={{ fontSize: 10, fontFamily: MONO, fontWeight: 700, color: sd.color, cursor: 'help' }}>
-                                    {sd.score}{sd.driver && <span style={{ color: 'var(--cf-text6)', fontWeight: 600 }}> · {sd.driver}</span>}
+                                    style={{ fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: sd.color, cursor: 'help' }}>
+                                    {sd.label}
                                   </span>
                                 : <span style={{ color: 'var(--cf-text9)', fontSize: 10 }}>—</span>}
                             </td>
