@@ -132,26 +132,46 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
     const seed = nodeIdFilter
       ? new Set([...nodeIdFilter].filter(id => !wlSet || wlSet.has(id)))
       : new Set(
-          // Seed = nodes clearing EVERY active facet (AND across facets),
-          // matching the natural reading of "pick a sector AND a tier" —
-          // their overlap, not everything from either one. Multiple values
-          // WITHIN one facet stay OR (Set membership already does that — e.g.
-          // two sectors selected means "either sector").
+          // Seed = nodes clearing EVERY active facet RELEVANT to their role
+          // (AND across facets), matching "pick a sector AND a tier" as their
+          // overlap. Multiple values WITHIN one facet stay OR (Set membership
+          // already does that — two sectors selected means "either sector").
           //
-          // A facet that structurally doesn't apply to a node's role (sector
-          // is target-only, tier/network are allocator-only — verified 0%
-          // cross-role in the payload) is vacuously satisfied rather than a
-          // false exclusion, via the truthiness check before the membership
-          // check below — otherwise combining a target-side and an
-          // allocator-side facet would always return nothing.
+          // sector is target-only; tier/network are allocator-only (verified
+          // 0% cross-role in the payload) — classes applies to both roles for
+          // real. A facet inapplicable to a node's role must NOT vacuously
+          // pass it (that was the bug: selecting only a sector used to let
+          // EVERY allocator through, since sector "didn't apply" to them, and
+          // their flows dragged in half the map regardless of sector). It
+          // must instead contribute nothing for that node — the node is only
+          // directly seeded if it (a) clears every facet relevant to its
+          // role, AND (b) had at least one relevant facet active at all.
+          // A role with none of the active facets applying to it isn't
+          // independently selected — it still surfaces normally via the
+          // flow-expansion step below if it's connected to a node that was.
           graph.nodes.filter(n => {
             if (wlSet && !wlSet.has(n.id)) return false;
             if (!entityFilterOn) return true;
-            if (sectors.size && n.sector && !sectors.has(n.sector)) return false;
-            if (classes.size && !classes.has(n.cls)) return false;
-            if (tiers.size && n.tier && !tiers.has(n.tier)) return false;
-            if (networks.size && n.network && !networks.has(n.network)) return false;
-            return true;
+            const isTarget = n.type === 'target';
+            const isPlayer = n.type === 'player';
+            let relevant = false;
+            if (sectors.size && isTarget) {
+              relevant = true;
+              if (!(n.sector && sectors.has(n.sector))) return false;
+            }
+            if (classes.size) {
+              relevant = true;
+              if (!classes.has(n.cls)) return false;
+            }
+            if (tiers.size && isPlayer) {
+              relevant = true;
+              if (!(n.tier && tiers.has(n.tier))) return false;
+            }
+            if (networks.size && isPlayer) {
+              relevant = true;
+              if (!(n.network && networks.has(n.network))) return false;
+            }
+            return relevant;
           }).map(n => n.id)
         );
 
