@@ -20,6 +20,42 @@ import { WatchlistMenu } from './WatchlistControl.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
+// Brand-mark tile for a table row. Tries each of the node's `logoUrls` in
+// order (same precedence the map canvas uses — flag · pre-fetched local logo ·
+// runtime favicon fallback) via onError, and drops to the monogram/colour
+// tile once every candidate has failed. No candidates at all skips straight
+// to the monogram.
+function EntityLogo({ node, size = 20 }) {
+  const urls = node.logoUrls || [];
+  const [i, setI] = useState(0);
+  const failed = i >= urls.length;
+  if (!urls.length || failed) {
+    return (
+      <span style={{
+        width: size, height: size, borderRadius: 6, flexShrink: 0,
+        background: node.color, color: '#fff',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: size * 0.4, fontWeight: 700, fontFamily: MONO, lineHeight: 1,
+      }}>
+        {node.monogram || '?'}
+      </span>
+    );
+  }
+  return (
+    <img
+      key={urls[i]}
+      src={urls[i]}
+      alt=""
+      onError={() => setI(v => v + 1)}
+      style={{
+        width: size, height: size, borderRadius: 6, flexShrink: 0,
+        objectFit: 'contain', background: 'var(--cf-surface1)',
+        border: '1px solid var(--cf-border-hair)',
+      }}
+    />
+  );
+}
+
 // ── Section model ────────────────────────────────────────────────────────
 // Role = the dimension monitored. Subsection = what kind of entity it is.
 // Both derive 1:1 from the payload's `kind` + `cls` — nothing is inferred.
@@ -384,7 +420,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                             {/* Entity */}
                             <td style={{ padding: '9px 14px 9px 32px', minWidth: 200 }}>
                               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <span style={{ width: 8, height: 8, borderRadius: '50%', background: n.color, flexShrink: 0 }} />
+                                <EntityLogo node={n} />
                                 <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--cf-text1)' }}>{n.name}</span>
                                 {/* Country reads as a quiet suffix — the flag icon itself is
                                     reserved for sovereigns, on the map. */}
