@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, ChevronDown, FileText, Newspaper, Briefcase, Sparkles } from 'lucide-react';
-import { fmtUSD, plural, formatSignalText } from './format.js';
+import { fmtUSD, plural, formatSignalThemes } from './format.js';
 import {
   SECTOR_META, THEME_META, CLASS_META, TIER_META, NETWORK_META, RULE_META, confidenceBand, sectorLabel,
 } from '../../../data/capitalMap.js';
@@ -720,7 +720,7 @@ function EntitySignalsBlock({ signals, onOpenEntity }) {
               }}>{rule?.label || s.rule}</span>
             </div>
             <div style={{ fontSize: 11.5, color: 'var(--cf-text2)', marginTop: 5, lineHeight: 1.5 }}>
-              {formatSignalText(s.theme, SECTOR_META, THEME_META)}
+              {formatSignalThemes(s.themes || [s.theme], s.rule, SECTOR_META, THEME_META)}
             </div>
             {rule?.blurb && (
               <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', marginTop: 4, lineHeight: 1.5 }}>{rule.blurb}</div>

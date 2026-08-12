@@ -314,7 +314,7 @@ export const RULE_META = {
   sector_swarm:                { label: 'Наплыв в сектор',     blurb: 'Несколько ключевых инвесторов вошли в один сектор за короткое окно.' },
   theme_swarm:                 { label: 'Наплыв в тему',       blurb: 'Ключевые инвесторы сошлись на одной теме — сразу в нескольких секторах.' },
   smart_money_follow:          { label: 'Умные деньги ведут',  blurb: 'Ключевой инвестор вошёл первым; за ним быстро последовали другие.' },
-  beneficiary_concentration:   { label: 'Бенефициар',          blurb: 'Несколько частных потоков указывают на один публичный тикер — вывод, который можно отыграть.' },
+  beneficiary_concentration:   { label: 'Бенефициар',          blurb: 'Несколько частных потоков указывают на публичный тикер (иногда — на несколько кандидатов сразу) — вывод, который можно отыграть.' },
   stealth_accumulation:        { label: 'Тихое накопление',    blurb: 'Повторные доли незаметно накапливаются в одной компании.' },
   repeat_conviction:           { label: 'Повторная ставка',    blurb: 'Участник сети снова и снова вкладывает в одну и ту же тему.' },
   network_convergence:         { label: 'Схождение сети',      blurb: 'Отслеживаемая сеть сходится на одной компании.' },
@@ -656,14 +656,21 @@ export function buildGraph(data = raw) {
   collect(sectors, 'sector');
   collect(themes, 'theme');
 
-  // Signal evidence + entity attachment (engine ask, not yet shipped — every
-  // step below is defensive and no-ops cleanly on the current payload).
-  //   · signal.evidence[] — {allocator_id, target_id, amount_usd, date,
-  //     confirmed}, ids in the SAME alloc:/target: namespace as nodes[].id —
-  //     resolved here into real node refs so the UI never does its own lookup.
-  //   · signal.entity_id — attaches a signal directly to one node (company-
-  //     level signals like stealth_accumulation/beneficiary_concentration),
-  //     collected onto node.signals rather than only living in a sector zone.
+  // Signal evidence + entity attachment (engine ask; PARTIALLY shipped).
+  //   · signal.entity_id — landed. Attaches a signal directly to one node
+  //     (company-level signals like stealth_accumulation/
+  //     beneficiary_concentration), collected onto node.signals rather than
+  //     only living in a sector zone.
+  //   · signal.evidence[] — NOT landed in the asked shape. The ask was
+  //     {allocator_id, target_id, amount_usd, date, confirmed} objects in the
+  //     same alloc:/target: namespace as nodes[].id; the engine instead sends
+  //     plain integers (flow-list indices, and not reliably into the top-level
+  //     `flows[]` either — spot-checked one that pointed at an unrelated
+  //     target). `resolveEvidence` below is defensive and no-ops cleanly on
+  //     this shape rather than guess at index semantics, so "Кто именно"
+  //     currently shows the same "waiting on the engine" state for every
+  //     signal in the payload. *(Backend request — see README § Logo
+  //     pipeline for the sibling asks.)*
   nodes.forEach(n => { n.signals = []; });
   const resolveEvidence = (evidence) => (Array.isArray(evidence) ? evidence : [])
     .map(e => ({
@@ -674,14 +681,45 @@ export function buildGraph(data = raw) {
     .filter(e => e.allocator || e.target);
   const attachSignals = (obj) => Object.values(obj).forEach(g =>
     (g.signals || []).forEach(s => {
+      // Raw evidence, keyed before resolveEvidence overwrites it below — the
+      // merge pass needs to compare what the engine actually sent, not the
+      // (currently always-empty) resolved result.
+      const evidenceKey = JSON.stringify(
+        [...(Array.isArray(s.evidence) ? s.evidence : [])].sort((a, b) => a - b)
+      );
       s.evidence = resolveEvidence(s.evidence);
       if (s.entity_id) {
         const entity = nodeById.get(s.entity_id);
-        if (entity) entity.signals.push(s);
+        if (entity) entity.signals.push({ ...s, evidenceKey });
       }
     }));
   attachSignals(sectors);
   attachSignals(themes);
+
+  // The engine sometimes proposes more than one public-ticker beneficiary off
+  // the exact same private-flow evidence (e.g. both FANUC and Siemens for one
+  // Hadrian round) — two same-rule signals on one entity that are really one
+  // finding with two candidates. Merge same-entity signals that share a rule
+  // + evidence fingerprint into a single card carrying every theme string, so
+  // the panel shows one honest "multiple candidates" line instead of two
+  // near-identical ones.
+  nodes.forEach(n => {
+    if (!n.signals || n.signals.length < 2) return;
+    const byKey = new Map();
+    const merged = [];
+    n.signals.forEach(s => {
+      const key = `${s.rule}::${s.evidenceKey}`;
+      const existing = byKey.get(key);
+      if (existing) existing.themes.push(s.theme);
+      else {
+        const { evidenceKey: _drop, ...rest } = s;
+        const entry = { ...rest, themes: [s.theme] };
+        byKey.set(key, entry);
+        merged.push(entry);
+      }
+    });
+    n.signals = merged;
+  });
 
   // Mark targets sitting under a beneficiary-concentration read (a public
   // ticker private capital points at) — the deal 'actionable path' factor uses

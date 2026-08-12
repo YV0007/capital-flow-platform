@@ -50,19 +50,66 @@ export function shortLabel(name, max = 22) {
  * Signal descriptions ship as one composed sentence from the engine
  * (`"energy_for_ai: 7 key allocators converge (30d)"`) — for sector/theme-wide
  * rules it leads with the raw slug, not a human label. Swap a recognized
- * leading `slug:` for its display label from the same meta tables already used
- * elsewhere (SECTOR_META/THEME_META), leaving everything else untouched. Rules
- * that lead with an entity name instead (beneficiary_concentration,
- * stealth_accumulation — e.g. "TSM (Taiwan Semiconductor): ...", "Cathedral:
- * ...") never match a real slug key, so they pass through unchanged.
+ * leading `slug:` (sector or `sector/subsector`) for its display label from
+ * the same meta tables already used elsewhere (SECTOR_META/THEME_META),
+ * leaving everything else untouched.
+ *
+ * Rules that lead with an entity name instead — `beneficiary_concentration`
+ * ("TSM (Taiwan Semiconductor): 7 private flows converge") and
+ * `stealth_accumulation` ("Cathedral: stealth accumulation — 3 stakes in
+ * 90d") — never match a slug key, so they get their own parse: put the
+ * readable name first, ticker/count folded into a plain Russian clause.
+ * Anything that doesn't match either shape passes through unchanged.
  */
 export function formatSignalText(text, sectorMeta = {}, themeMeta = {}) {
   if (typeof text !== 'string') return text;
-  const m = text.match(/^([a-z0-9_-]+):/i);
+
+  const benef = text.match(/^([A-Z][A-Z0-9.]{0,5})\s*\(([^)]+)\):\s*(\d+)\s+private flows? converge$/);
+  if (benef) {
+    const [, ticker, company, countStr] = benef;
+    const count = Number(countStr);
+    const verb = count === 1 ? 'указывает' : 'указывают';
+    return `${company} (${ticker}) — ${count} ${plural(count, ['частный поток', 'частных потока', 'частных потоков'])} ${verb} на этот тикер`;
+  }
+
+  const stealth = text.match(/^(.+?):\s*stealth accumulation\s*—\s*(\d+)\s+stakes?\s+in\s+(\d+)d$/);
+  if (stealth) {
+    const [, name, stakesStr, daysStr] = stealth;
+    const stakes = Number(stakesStr), days = Number(daysStr);
+    return `${name} — ${stakes} ${plural(stakes, ['доля', 'доли', 'долей'])} за ${days} ${plural(days, ['день', 'дня', 'дней'])} (тихое накопление)`;
+  }
+
+  const m = text.match(/^([a-z0-9_-]+(?:\/[a-z0-9_-]+)?):/i);
   if (!m) return text;
   const slug = m[1];
-  const label = sectorMeta[slug]?.label || themeMeta[slug]?.label;
+  const label = sectorMeta[slug]?.label || themeMeta[slug]?.label || sectorMeta[slug.split('/')[0]]?.label;
   return label ? label + text.slice(slug.length) : text;
+}
+
+/**
+ * Merges multiple signals that fired for the SAME entity off the SAME
+ * evidence (the engine occasionally proposes more than one public-ticker
+ * beneficiary for one private-flow cluster — e.g. both FANUC and Siemens for
+ * one Hadrian round) into a single readable line instead of two visually
+ * duplicate cards. `themes` is the array of raw `theme` strings sharing that
+ * evidence; falls back to the plain single-theme format for everything else.
+ */
+export function formatSignalThemes(themes, rule, sectorMeta = {}, themeMeta = {}) {
+  const list = (themes || []).filter(Boolean);
+  if (list.length <= 1) return formatSignalText(list[0], sectorMeta, themeMeta);
+
+  if (rule === 'beneficiary_concentration') {
+    const parsed = list.map(t => t.match(/^([A-Z][A-Z0-9.]{0,5})\s*\(([^)]+)\):\s*(\d+)\s+private flows? converge$/))
+      .filter(Boolean)
+      .map(([, ticker, company, countStr]) => ({ ticker, company, count: Number(countStr) }));
+    if (parsed.length === list.length) {
+      const names = parsed.map(p => `${p.company} (${p.ticker})`).join(', ');
+      const count = parsed[0].count;
+      return `${names} — ${count} ${plural(count, ['частный поток', 'частных потока', 'частных потоков'])} указывают сразу на ${parsed.length} тикера-кандидата`;
+    }
+  }
+
+  return list.map(t => formatSignalText(t, sectorMeta, themeMeta)).join(' · ');
 }
 
 /**
