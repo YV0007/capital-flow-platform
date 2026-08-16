@@ -292,21 +292,51 @@ function buildBlock({ flows, prior, allLinks, nodeById, gen, id, title, sub, uni
   };
 }
 
+// The date the payload's freshest confirmed flow is anchored at. The digest's
+// weekly/monthly windows use this — not `generated` — so a research cycle that
+// ships without any confirmed deals in its own final week doesn't wipe the
+// briefing to zero. The engine delivers on Monday morning; between deliveries
+// the same batch of flows stays visible, framed as "the last engine week that
+// actually reported confirmed activity". Falls back to `generated` only if the
+// payload has zero confirmed flows anywhere (shouldn't happen in practice).
+function newestConfirmedDate(links, fallback) {
+  let max = null;
+  for (const l of links) {
+    if (!isConfirmed(l) || !l.date) continue;
+    if (!max || l.date > max) max = l.date;
+  }
+  return max || fallback;
+}
+
 // ── Public entry ───────────────────────────────────────────────────────────
 export function buildDigest({ nodes, links, generated, sectors }) {
   const nodeById = new Map(nodes.map(n => [n.id, n]));
 
-  const week = windowFlows(links, generated, 7);
-  const priorWeek = windowFlows(links, generated, 14, 7);
-  const month = windowFlows(links, generated, 30);
-  const priorMonth = windowFlows(links, generated, 60, 30);
+  const anchor = newestConfirmedDate(links, generated);
+  const anchorLagsRun = anchor < generated;
+
+  const week = windowFlows(links, anchor, 7);
+  const priorWeek = windowFlows(links, anchor, 14, 7);
+  const month = windowFlows(links, anchor, 30);
+  const priorMonth = windowFlows(links, anchor, 60, 30);
+
+  // Human-readable window range for the header. When the anchor lags the run,
+  // this is the tell: sub reads "22.06 → 08.08 · держим прошлый цикл, пока
+  // Пн 10:00 не обновит" instead of the plain "last 7 days" line, so the tab
+  // stops looking like it's broken and starts looking like it's holding.
+  const weekSub = anchorLagsRun
+    ? `Данные последнего цикла (${daysBefore(anchor, 6)} → ${anchor}). Пн 10:00 Мадрид — новая выгрузка.`
+    : `Последние 7 дней до ${anchor}`;
+  const monthSub = anchorLagsRun
+    ? `Данные последнего цикла (${daysBefore(anchor, 29)} → ${anchor}). Пн 10:00 Мадрид — новая выгрузка.`
+    : `Последние 30 дней до ${anchor}`;
 
   const blocks = [
-    buildBlock({ flows: week, prior: priorWeek, allLinks: links, nodeById, gen: generated,
-      id: 'week', title: 'За неделю', sub: `Последние 7 дней до ${generated}`, unit: 'неделей' }),
-    buildBlock({ flows: month, prior: priorMonth, allLinks: links, nodeById, gen: generated,
-      id: 'month', title: 'За месяц', sub: `Последние 30 дней до ${generated}`, unit: 'месяцем' }),
-    buildBlock({ flows: links, prior: null, allLinks: links, nodeById, gen: generated,
+    buildBlock({ flows: week, prior: priorWeek, allLinks: links, nodeById, gen: anchor,
+      id: 'week', title: 'За неделю', sub: weekSub, unit: 'неделей' }),
+    buildBlock({ flows: month, prior: priorMonth, allLinks: links, nodeById, gen: anchor,
+      id: 'month', title: 'За месяц', sub: monthSub, unit: 'месяцем' }),
+    buildBlock({ flows: links, prior: null, allLinks: links, nodeById, gen: anchor,
       id: 'all', title: 'Вся карта', sub: 'Весь отслеживаемый стек на текущий цикл', unit: null }),
   ];
 
