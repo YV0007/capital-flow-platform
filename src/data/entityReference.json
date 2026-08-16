@@ -11,6 +11,16 @@
       }
     ]
   },
+  "alloc:Thrive Capital": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "thrivecap.com",
+        "url": "https://www.thrivecap.com"
+      }
+    ]
+  },
   "alloc:SoftBank": {
     "type": "org",
     "description": "Japanese holding/investment group behind the Vision Funds; a lead backer of OpenAI and large AI-infrastructure bets.",
@@ -987,5 +997,27 @@
         "url": "https://voltainfra.com"
       }
     ]
+  },
+  "alloc:Apollo": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "apollo.com",
+        "url": "https://apollo.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Goldman Sachs": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "goldmansachs.com",
+        "url": "https://goldmansachs.com"
+      }
+    ],
+    "auto_resolved": true
   }
 }

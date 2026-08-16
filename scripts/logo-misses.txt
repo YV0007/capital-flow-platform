@@ -8,9 +8,7 @@ target:KKR Global Infrastructure Investors V	KKR Global Infrastructure Investors
 target:Sturgeon County data center (Alberta, Canada)	Sturgeon County data center (Alberta, Canada)
 target:Akita 500MW AI data center (Japan)	Akita 500MW AI data center (Japan)
 target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbourne (third campus)
-target:Williams Power Innovation JV (Socrates, Apollo, Aquila, Socrates the Younger, Neo)	Williams Power Innovation JV (Socrates, Apollo, Aquila, Socrates the Younger, Neo)
 target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
-alloc:Thrive Capital	Thrive Capital
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
 target:Flourish	Flourish

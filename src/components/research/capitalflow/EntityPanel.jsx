@@ -799,12 +799,6 @@ function ClassificationBlock({ node }) {
         ))}
       </div>
 
-      <div style={{ marginTop: 9, fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, lineHeight: 1.5 }}>
-        {isPlayer
-          ? 'Не по размеру капитала — по отбору, повторным ставкам и результату.'
-          : 'Не по размеру сделки — по раннему схождению умных денег.'}
-        {parts.pending?.length ? ' Серым — ждёт данных движка.' : ''}
-      </div>
     </div>
   );
 }
