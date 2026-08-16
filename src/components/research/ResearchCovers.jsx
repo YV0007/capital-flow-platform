@@ -271,120 +271,127 @@ function ProxyCoverArt() {
   );
 }
 
-// Capital Flow Map — cover in the style of the classic blue network-analysis
-// visual the client picked as reference: a dense steel-blue force graph on a
-// light background, hundreds of small nodes in soft clusters, translucent
-// edges, and a handful of large pale hub circles at the centre. Everything is
-// generated deterministically (seeded PRNG) so the cover never re-flows.
-const CF_COVER = (() => {
+// Capital Flow Map — cover styled after a Pokec-style force-directed layout
+// reference: a dense, woven triangular mass of nodes (apex up, base wide),
+// stitched together by short local links AND a scatter of long crossing
+// edges — that crossing is what gives the reference its "solid basket-weave"
+// texture, not just a nearest-neighbour mesh. A few stray isolated nodes sit
+// outside the mass, matching the reference's scattered corner dots.
+// Recoloured into the dashboard's steel-blue/cyan family (light-on-lavender
+// in the reference → dark canvas here); one hub carries a warm gold accent
+// as the single "this is about capital" cue. Deterministic (seeded PRNG) so
+// the cover never re-flows.
+const CF_MESH = (() => {
   // mulberry32 — tiny deterministic PRNG
-  let seed = 20260805;
+  let seed = 20260816;
   const rnd = () => {
     seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
     let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
-  const gauss = () => (rnd() + rnd() + rnd() - 1.5) / 1.5;   // ~[-1,1], centre-weighted
 
-  // Cluster centres across the 200x120 canvas — denser mass around the middle.
-  const clusters = [
-    { x: 100, y: 62, s: 30, n: 46 },  // core
-    { x: 62,  y: 40, s: 22, n: 30 },
-    { x: 142, y: 42, s: 22, n: 30 },
-    { x: 46,  y: 84, s: 18, n: 24 },
-    { x: 148, y: 88, s: 19, n: 24 },
-    { x: 172, y: 26, s: 14, n: 16 },
-    { x: 26,  y: 22, s: 13, n: 16 },
-    { x: 104, y: 104, s: 15, n: 18 },
-    { x: 186, y: 64, s: 11, n: 12 },
-    { x: 14,  y: 56, s: 11, n: 12 },
-  ];
+  // Triangular envelope — apex up, base wide. Points sampled by barycentric
+  // coordinates inside the triangle, then jittered so the silhouette reads
+  // organic rather than a clean geometric wedge.
+  const A = [100, 10], B = [16, 111], C = [184, 111];
+  const inTri = () => {
+    let r1 = rnd(), r2 = rnd();
+    if (r1 + r2 > 1) { r1 = 1 - r1; r2 = 1 - r2; }
+    const x = A[0] + r1 * (B[0] - A[0]) + r2 * (C[0] - A[0]);
+    const y = A[1] + r1 * (B[1] - A[1]) + r2 * (C[1] - A[1]);
+    return [x + (rnd() - 0.5) * 6, y + (rnd() - 0.5) * 6];
+  };
 
+  const N = 150;
   const nodes = [];
-  clusters.forEach((c, ci) => {
-    for (let i = 0; i < c.n; i++) {
-      nodes.push({
-        x: c.x + gauss() * c.s,
-        y: c.y + gauss() * c.s * 0.78,
-        r: 0.7 + rnd() * 1.3,
-        c: ci,
-      });
-    }
-  });
+  for (let i = 0; i < N; i++) {
+    const [x, y] = inTri();
+    nodes.push({ x, y, r: 0.55 + rnd() * 1.05 });
+  }
 
-  // Hubs — large pale circles, centre-left like the reference image.
+  // Hubs — apex, two base corners, one centre-mass — rendered larger, the
+  // apex carrying the single warm accent.
   const hubs = [
-    { x: 88,  y: 66, r: 6.2 },
-    { x: 101, y: 57, r: 4.8 },
-    { x: 79,  y: 55, r: 4.2 },
-    { x: 95,  y: 78, r: 3.9 },
-    { x: 110, y: 70, r: 3.4 },
-    { x: 70,  y: 70, r: 3.0 },
+    { x: 100, y: 17, r: 5.2, gold: true },
+    { x: 42,  y: 96, r: 4.0 },
+    { x: 158, y: 96, r: 4.2 },
+    { x: 100, y: 66, r: 3.4 },
   ];
 
-  // Edges: hub↔hub mesh, node→hub spokes, plus local cluster links.
+  // Edges: every node → its nearest hub (the structural spine), plus 2 short
+  // local links approximating nearest-neighbour weave, plus a 10% chance of
+  // one long crossing edge to any other node — that sparse long-range set is
+  // what makes the mass read as densely woven instead of a clean spoke fan.
+  const dist = (p, q) => Math.hypot(p.x - q.x, p.y - q.y);
   const edges = [];
-  for (let i = 0; i < hubs.length; i++) {
-    for (let j = i + 1; j < hubs.length; j++) {
-      edges.push({ x1: hubs[i].x, y1: hubs[i].y, x2: hubs[j].x, y2: hubs[j].y, w: 0.7, o: 0.5 });
-    }
-  }
   nodes.forEach((n, i) => {
-    if (rnd() < 0.55) {
-      const h = hubs[Math.floor(rnd() * hubs.length)];
-      edges.push({ x1: n.x, y1: n.y, x2: h.x, y2: h.y, w: 0.25, o: 0.16 });
-    }
-    // a couple of near-neighbour links inside the cluster
-    for (let k = 0; k < 2; k++) {
-      const m = nodes[Math.floor(rnd() * nodes.length)];
-      if (m !== n && m.c === n.c) {
-        edges.push({ x1: n.x, y1: n.y, x2: m.x, y2: m.y, w: 0.2, o: 0.14 });
-      }
+    let best = 0, bd = Infinity;
+    hubs.forEach((h, hi) => { const d = dist(n, h); if (d < bd) { bd = d; best = hi; } });
+    edges.push({ x1: n.x, y1: n.y, x2: hubs[best].x, y2: hubs[best].y, w: 0.2, o: 0.15 });
+
+    const cands = [];
+    for (let k = 0; k < 8; k++) cands.push(nodes[(i + 1 + Math.floor(rnd() * (N - 1))) % N]);
+    cands.sort((a, b) => dist(n, a) - dist(n, b));
+    cands.slice(0, 2).forEach(m => edges.push({ x1: n.x, y1: n.y, x2: m.x, y2: m.y, w: 0.15, o: 0.12 }));
+
+    if (rnd() < 0.1) {
+      const m = nodes[Math.floor(rnd() * N)];
+      edges.push({ x1: n.x, y1: n.y, x2: m.x, y2: m.y, w: 0.13, o: 0.08 });
     }
   });
 
-  return { nodes, hubs, edges };
+  // Stray isolated nodes outside the main mass — the scattered corner dots
+  // in the reference.
+  const strays = [
+    { x: 9, y: 18 }, { x: 191, y: 26 }, { x: 7, y: 102 }, { x: 168, y: 12 },
+  ];
+
+  return { nodes, hubs, edges, strays };
 })();
 
 function CapitalFlowCoverArt() {
-  const { nodes, hubs, edges } = CF_COVER;
+  const { nodes, hubs, edges, strays } = CF_MESH;
   return (
     <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
       <defs>
-        <radialGradient id="cfw-bg" cx="50%" cy="52%" r="75%">
-          <stop offset="0%"   stopColor="#101720" />
-          <stop offset="65%"  stopColor="#0b1017" />
-          <stop offset="100%" stopColor="#07090c" />
+        <radialGradient id="cfw-bg" cx="50%" cy="42%" r="80%">
+          <stop offset="0%"   stopColor="#101825" />
+          <stop offset="60%"  stopColor="#0a0e16" />
+          <stop offset="100%" stopColor="#05070a" />
         </radialGradient>
       </defs>
 
       <rect width="200" height="120" fill="url(#cfw-bg)" />
 
       {/* edges under everything */}
-      <g stroke="#6fa3d4" fill="none">
+      <g stroke="#5a86b8" fill="none">
         {edges.map((e, i) => (
           <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-            strokeWidth={e.w} strokeOpacity={e.o * 0.9} />
+            strokeWidth={e.w} strokeOpacity={e.o} />
         ))}
       </g>
 
       {/* small steel-blue nodes */}
-      <g>
+      <g fill="#5aa0d8" fillOpacity="0.92">
         {nodes.map((n, i) => (
-          <circle key={i} cx={n.x} cy={n.y} r={n.r}
-            fill="#4f92c9" fillOpacity="0.92" stroke="#2b3f55" strokeWidth="0.25" />
+          <circle key={i} cx={n.x} cy={n.y} r={n.r} stroke="#1c2f45" strokeWidth="0.2" />
         ))}
       </g>
 
-      {/* large pale hub circles on top */}
+      {/* stray dots outside the main mass */}
+      <g fill="#3d5a7a" fillOpacity="0.75">
+        {strays.map((s, i) => <circle key={i} cx={s.x} cy={s.y} r="0.85" />)}
+      </g>
+
+      {/* large pale hub circles on top, apex carrying the warm accent */}
       <g>
         {hubs.map((h, i) => (
           <g key={i}>
-            <circle cx={h.x} cy={h.y} r={h.r + 2.5} fill="#9cc4e8" fillOpacity="0.12" />
+            <circle cx={h.x} cy={h.y} r={h.r + 3} fill={h.gold ? '#e9c17e' : '#9cc4e8'} fillOpacity="0.14" />
             <circle cx={h.x} cy={h.y} r={h.r}
-              fill="#eaf3fb" stroke="#7fa8cd" strokeWidth="0.7" />
+              fill={h.gold ? '#f6e2b0' : '#eaf3fb'} stroke={h.gold ? '#e9c17e' : '#7fa8cd'} strokeWidth="0.7" />
           </g>
         ))}
       </g>
