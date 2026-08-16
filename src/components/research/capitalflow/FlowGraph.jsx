@@ -352,9 +352,6 @@ export default function FlowGraph({
     const half = S / 2;
     const x = cx - half, y = cy - half;
     const corner = S * 0.26;        // rounded-square radius (app-icon look)
-    // Allocator rank. Encoded as a quiet neutral pip (below), NOT as a coloured
-    // rim — the gold outline fought the logos and read as a warning state.
-    const rank = node.tier === 'core' ? 2 : node.tier === 'key' ? 1 : 0;
 
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -437,21 +434,6 @@ export default function FlowGraph({
     if (node.stale || node.watchOnly) ctx.setLineDash([3, 3]);
     ctx.stroke();
     ctx.setLineDash([]);
-
-    // Rank pips — a small neutral rule under the tile. Two = core, one = key.
-    // Quiet enough to ignore, consistent enough to scan.
-    if (rank) {
-      const pipW = S * 0.16, pipH = Math.max(1.6, S * 0.035), gap = pipW * 0.5;
-      const totalW = rank * pipW + (rank - 1) * gap;
-      let px = cx - totalW / 2;
-      const py = y + S + Math.max(3, S * 0.075);
-      ctx.fillStyle = hexA(T.rankPip, selected || hovered ? 0.95 : 0.55);
-      for (let i = 0; i < rank; i++) {
-        roundRect(ctx, px, py, pipW, pipH, pipH / 2);
-        ctx.fill();
-        px += pipW + gap;
-      }
-    }
 
     // label — reveal by zoom, ranked by importance (node.labelScale)
     const gs = globalScale || 1;

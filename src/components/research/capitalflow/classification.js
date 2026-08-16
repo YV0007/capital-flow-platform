@@ -162,6 +162,16 @@ export const ARCHETYPE_LABEL = {
   actionable: 'Доступна', early: 'Рано', 'smart-money': 'Умные деньги', independent: 'Независимо',
 };
 
+// Plain rank word — the fallback whenever no archetype rule cleared, and the
+// color every rank-aware UI (map bloom, panel badge, table cell) keys off of.
+// Single source so every surface stays in sync by construction.
+export const RANK_LABEL = { core: 'Ядро', key: 'Ключ', watch: 'Набл.', flagged: 'Флаг', emerging: 'Зарождается' };
+export const RANK_COLOR = {
+  core: 'var(--cf-gold)', flagged: 'var(--cf-gold)',
+  key: 'var(--cf-warn)', emerging: 'var(--cf-warn)',
+  watch: 'var(--cf-text5)',
+};
+
 // Runs a type's rule cascade (CLASSIFY_CONFIG.archetype.player / .deal) against
 // one entity's already-computed parts + rank; first rule that clears wins.
 // Returns null (→ caller falls back to the plain rank word) when nothing does.

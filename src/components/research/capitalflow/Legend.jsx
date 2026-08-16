@@ -55,16 +55,19 @@ export default function Legend({ counts }) {
             <Row label="Проект · физическая стройка"><GProject /></Row>
           </Section>
 
-          <Section title="Полоски = уровень инвестора">
-            <Row label="Основной инвестор" title="Определяющий узел своей сети — самые убеждённые повторные инвесторы."><GPips n={2} /></Row>
-            <Row label="Ключевой инвестор" title="Решает, куда пойдут миллиарды."><GPips n={1} /></Row>
+          <Section title="Красное свечение = достоин внимания">
+            <Row label="Ядро — самые убеждённые" title="Верхние ~10% по отбору, повторным ставкам и результату — не по размеру капитала."><GGlow /></Row>
+            <Row label="Ключ — стоит следить" title="Тот же расчёт, следующий уровень."><GGlow soft /></Row>
+            <Row label="Интересная сделка" title="Раннее и независимое схождение умных денег — не размер сделки."><GGlow /></Row>
             <Row label="Остыл или не подтверждён" title="180 дней без активности либо только потоки-кандидаты."><GRim dashed /></Row>
           </Section>
-
-          <Section title="Красное свечение = достоин внимания">
-            <Row label="Ключевой инвестор" title="Стоит следить: отбор, повторные ставки, доказанный результат — не размер капитала."><GGlow /></Row>
-            <Row label="Интересная сделка" title="Ранее и независимое схождение умных денег — не размер сделки."><GGlow /></Row>
-          </Section>
+          <div style={{
+            marginTop: -5, marginBottom: 11, fontSize: 8.5, color: 'var(--cf-text7)',
+            fontFamily: MONO, lineHeight: 1.55,
+          }}>
+            Точная причина (Трендовый / Фундаментальный / Агрессивный / Проверенный
+            и т.п.) — в панели объекта и в столбце «Уровень» таблицы.
+          </div>
 
           <Section title="Линия = тип события">
             {Object.entries(FAMILY_META).map(([k, v]) => (
@@ -181,16 +184,6 @@ function GProject() {
 }
 
 // Rank pips — the neutral rule drawn under a ranked allocator's tile.
-function GPips({ n }) {
-  return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, width: 13, justifyContent: 'center' }}>
-      {Array.from({ length: n }, (_, i) => (
-        <span key={i} style={{ width: 5, height: 2, borderRadius: 1, background: 'var(--cf-text5)' }} />
-      ))}
-    </span>
-  );
-}
-
 function GRim({ color = N, dashed }) {
   return (
     <span style={{
@@ -203,11 +196,12 @@ function GRim({ color = N, dashed }) {
 
 // Matches the pivotal-node bloom drawn on the canvas (FlowGraph paintNode) —
 // same red, a soft radial glow rather than an outline.
-function GGlow() {
+function GGlow({ soft }) {
   return (
     <span style={{
       width: 11, height: 11, borderRadius: '50%', display: 'inline-block',
       background: 'radial-gradient(circle, var(--cf-pivot) 0%, color-mix(in srgb, var(--cf-pivot) 35%, transparent) 55%, transparent 100%)',
+      opacity: soft ? 0.5 : 1,
     }} />
   );
 }

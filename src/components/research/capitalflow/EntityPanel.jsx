@@ -7,10 +7,11 @@ import { useState } from 'react';
 import { X, ArrowDownLeft, ArrowUpRight, Globe, ExternalLink, Search, Linkedin, Building2, Users, ChevronRight, ChevronDown, FileText, Newspaper, Briefcase, Sparkles } from 'lucide-react';
 import { fmtUSD, plural, formatSignalThemes } from './format.js';
 import {
-  SECTOR_META, THEME_META, CLASS_META, TIER_META, NETWORK_META, RULE_META, confidenceBand, sectorLabel,
+  SECTOR_META, THEME_META, CLASS_META, NETWORK_META, RULE_META, confidenceBand, sectorLabel,
 } from '../../../data/capitalMap.js';
 import { subsectorLabel } from './subsectors.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
+import { ARCHETYPE_LABEL, RANK_LABEL, RANK_COLOR } from './classification.js';
 
 const MONO = 'ui-monospace, monospace';
 const W = 380;
@@ -29,7 +30,15 @@ export default function EntityPanel({
   if (!node) return null;
   const cls = CLASS_META[node.cls];
   const sec = node.sector ? SECTOR_META[node.sector] : null;
-  const tier = node.tier ? TIER_META[node.tier] : null;
+  // Deterministic rank + archetype (classification.js) — NOT the old
+  // hand-typed engine tier (no math behind it, ~35 of 68 allocators all
+  // landed on "key"). Same system as the map bloom and the table.
+  const rankKey = node.type === 'player' ? node.playerRank : node.dealRank;
+  const archetype = node.type === 'player' ? node.playerArchetype : node.dealArchetype;
+  const rank = rankKey ? {
+    label: (archetype && ARCHETYPE_LABEL[archetype]) || RANK_LABEL[rankKey] || rankKey,
+    color: RANK_COLOR[rankKey] || 'var(--cf-text5)',
+  } : null;
   const role = node.kind === 'allocator' ? 'Инвестор · вкладывает капитал' : 'Получатель · привлекает капитал';
   const isAllocator = node.kind === 'allocator';
 
@@ -75,13 +84,13 @@ export default function EntityPanel({
             fontSize: 9, color: 'var(--cf-text3)', fontFamily: MONO, fontWeight: 600,
             textTransform: 'uppercase', letterSpacing: '0.08em',
           }}>{role}</span>
-          {tier && (
-            <span title={tier.blurb} style={{
+          {rank && (
+            <span title="Определяется по отбору, повторным ставкам и результату — не по размеру капитала." style={{
               display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 8px',
-              background: tier.color + '12', border: `1px solid ${tier.color}38`, borderRadius: 5,
-              fontSize: 9, color: tier.color, fontFamily: MONO, fontWeight: 700,
+              background: rank.color + '12', border: `1px solid ${rank.color}38`, borderRadius: 5,
+              fontSize: 9, color: rank.color, fontFamily: MONO, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
-            }}>{tier.short} · {tier.label} <span style={{ letterSpacing: 1 }}>{tier.stars}</span></span>
+            }}>{rank.label}</span>
           )}
           {node.country && (
             <span title={`Национальная принадлежность — ${node.countryLabel || node.country.toUpperCase()}`} style={{

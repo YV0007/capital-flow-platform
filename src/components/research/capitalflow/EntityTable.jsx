@@ -17,7 +17,7 @@ import {
   SECTOR_META, THEME_META, AGGREGATES, sectorLabel, basisLabel,
 } from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
-import { ARCHETYPE_LABEL } from './classification.js';
+import { ARCHETYPE_LABEL, RANK_LABEL, RANK_COLOR } from './classification.js';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -227,21 +227,13 @@ function statusOf(n) {
 // word only when no archetype rule cleared. Kept deliberately single-tag —
 // dense dashboard, one word beats a score+factor pair for scanability. Color
 // still hints rank at a glance.
-const RANK_COLOR = {
-  core: 'var(--cf-gold)', flagged: 'var(--cf-gold)',
-  key: 'var(--cf-warn)', emerging: 'var(--cf-warn)',
-  watch: 'var(--cf-text5)',
-};
-const RANK_FALLBACK_LABEL = {
-  core: 'Ядро', key: 'Ключ', watch: 'Набл.', flagged: 'Флаг', emerging: 'Зарождается',
-};
 function scoreDriver(n) {
   const isPlayer = n.type === 'player';
   const rank = isPlayer ? n.playerRank : n.dealRank;
   const archetype = isPlayer ? n.playerArchetype : n.dealArchetype;
   if (!rank) return null;
   return {
-    label: (archetype && ARCHETYPE_LABEL[archetype]) || RANK_FALLBACK_LABEL[rank] || rank,
+    label: (archetype && ARCHETYPE_LABEL[archetype]) || RANK_LABEL[rank] || rank,
     color: RANK_COLOR[rank] || 'var(--cf-text5)',
   };
 }
