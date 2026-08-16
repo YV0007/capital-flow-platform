@@ -11,7 +11,8 @@
     "logos:all": "python3 scripts/fetch_logos.py --all",
     "reads:stats": "node scripts/generate_reads.mjs stats",
     "reads:briefs": "node scripts/generate_reads.mjs briefs",
-    "reads:save": "node scripts/generate_reads.mjs save"
+    "reads:save": "node scripts/generate_reads.mjs save",
+    "cf:ru": "node scripts/capitalflow_ru_status.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.396.0",

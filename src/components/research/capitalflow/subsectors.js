@@ -13,6 +13,8 @@
 // Vehicle type below is separate and structural (from `cls`, 100% coverage).
 // ══════════════════════════════════════════════════════════════════════════
 
+import { ruSubsector } from '../../../data/capitalMap.js';
+
 // ── Vehicle type — structural, from the engine's own `cls`. 100% coverage,
 // zero inference. Matters because a fund/SPV raising money is not a company
 // raising money, and the two get summed into the same sector total.
@@ -28,12 +30,17 @@ export function vehicleOf(node) {
   return 'company';
 }
 
-// De-slug an engine subsector key into a readable label, keeping the acronyms
-// the engine uses in caps ("hyperscale-ai" → "Hyperscale AI"). Exported so the
+// Label for an engine subsector key. The engine's slugs are English, so the
+// dashboard-owned Russian dictionary (capitalMapRu.json) is consulted first;
+// a slug it hasn't reached yet falls back to the de-slugged English rather
+// than to nothing, keeping a fresh delivery readable. Acronyms the engine uses
+// stay in caps ("hyperscale-ai" → "Hyperscale AI"). Exported so the
 // fund-portfolio view can label a holding's subsector the same way.
 const CAPS = new Set(['ai', 'gpu', 'spv', 'jv', 'doe', 'apac', 'us', 'ev', 'cpo', 'asic', 'dc', 'jpm', 'gw']);
 export function subsectorLabel(key) {
   if (!key) return '';
+  const rus = ruSubsector(key);
+  if (rus) return rus;
   return String(key).split(/[-_]/).map(w => {
     const lw = w.toLowerCase();
     if (CAPS.has(lw)) return w.toUpperCase();
