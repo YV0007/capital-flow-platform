@@ -24,7 +24,27 @@ export default function DigestView({ nodes, links, generated, sectors, trends, o
   const [tab, setTab] = useState('week');
   const block = digest.blocks.find(b => b.id === tab) || digest.blocks[0];
   const isAll = block.id === 'all';
-  const windowTrends = trends?.[block.id] || [];
+  // Engine ships each cluster into every window it qualifies for — so
+  // defense-manufacturing appears in both `month` and `all` today, and would
+  // read as a repeat across tabs if we rendered `trends[block.id]` as-is.
+  // Bucket each cluster into the NARROWEST engine window it appears in, so
+  // week/month/all become a strict differential: a trend hitting the 7-day
+  // bar shows only in week; a longer-arc pattern shows only in all. Honors
+  // the engine's own window analysis (a cluster in `week` really did clear
+  // the tighter 7-day threshold, not just fit inside a smaller date range).
+  const dedupedTrends = useMemo(() => {
+    const bins = { week: [], month: [], all: [] };
+    const seen = new Set();
+    for (const bin of ['week', 'month', 'all']) {
+      (trends?.[bin] || []).forEach(t => {
+        if (seen.has(t.cluster_id)) return;
+        seen.add(t.cluster_id);
+        bins[bin].push(t);
+      });
+    }
+    return bins;
+  }, [trends]);
+  const windowTrends = dedupedTrends[block.id] || [];
   // Fallback lookup for trend.allocators (plain display-name strings) when the
   // engine's evidence doesn't resolve to real ids — still lets a name open its
   // entity panel instead of rendering as inert text.
@@ -104,22 +124,27 @@ export default function DigestView({ nodes, links, generated, sectors, trends, o
             </div>
 
             {/* Trends — the engine's grounded narrative synthesis for this
-                window (not yet shipped; empty until it is). Deeper than the
-                arithmetic read above: a named "why", cited allocators, real
-                numbers — not just "capital moved toward X sector". */}
-            {windowTrends.length > 0 && (
-              <div style={{ marginBottom: 20 }}>
-                <SectionLabel>Тренды окна</SectionLabel>
-                <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', marginTop: -5, marginBottom: 11 }}>
-                  Разбор движка — что стоит за цифрами, не только куда сместился приток
-                </div>
+                window. Each cluster shows in the NARROWEST window it qualified
+                for (dedupe above), so week / month / all read as a strict
+                differential rather than three near-copies of the same list.
+                An empty window shows an honest explainer of why the engine
+                didn't tag anything at that scope and when the next refresh
+                will land, so a quiet week doesn't look like a broken tab. */}
+            <div style={{ marginBottom: 20 }}>
+              <SectionLabel>Тренды окна</SectionLabel>
+              <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', marginTop: -5, marginBottom: 11 }}>
+                Разбор движка — что стоит за цифрами, не только куда сместился приток
+              </div>
+              {windowTrends.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {windowTrends.map((t, i) => (
                     <TrendCard key={i} trend={t} onOpenEntity={onOpenEntity} nodeByName={nodeByName} />
                   ))}
                 </div>
-              </div>
-            )}
+              ) : (
+                <Empty>{trendEmptyCopy(block.id)}</Empty>
+              )}
+            </div>
 
             {/* Insight row — sector rotation + who's driving */}
             {(block.rotation || block.classMix.length > 0) && (
@@ -233,6 +258,20 @@ export default function DigestView({ nodes, links, generated, sectors, trends, o
       </div>
     </div>
   );
+}
+
+// Empty-state copy for the трenditor block. Names WHY the engine has nothing
+// to show at this window scope (its own qualifying rule, not a bug) and WHEN
+// the next research pass will attempt again. Reads honestly on a quiet week,
+// where the previous copy just rendered a "no data" tile that looked broken.
+function trendEmptyCopy(win) {
+  if (win === 'week') {
+    return 'За 7 дней ни один кластер не набрал минимум двух key/core-инвесторов в одной суб-отрасли — движок не тегирует такие как тренд недели. Следующая попытка — понедельник 10:00 Мадрид.';
+  }
+  if (win === 'month') {
+    return 'За 30 дней уникальных для месяца кластеров нет — всё, что движок нашёл на этом окне, уже показано в недельном разделе.';
+  }
+  return 'Долгосрочных трендов, отличных от месячных, движок в этом цикле не выделил.';
 }
 
 // A single engine-authored trend. Reading order is (why → what → who), because
