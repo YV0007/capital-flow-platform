@@ -97,8 +97,8 @@ const STATUS_COLOR = { verified: '#34D399', verified_alpha: '#FBBF24', candidate
 
 const RULE_RU = {
   sector_swarm: 'Приток капитала в сектор',
-  theme_swarm: 'Наплыв в тему',
-  smart_money_follow: 'За умными деньгами',
+  theme_swarm: 'Приток капитала в тему',
+  smart_money_follow: 'Умные деньги ведут',
   beneficiary_concentration: 'Публичный бенефициар',
   stealth_accumulation: 'Тихое накопление',
   repeat_conviction: 'Повторная ставка',
