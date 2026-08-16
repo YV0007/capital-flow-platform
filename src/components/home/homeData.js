@@ -96,10 +96,10 @@ const STATUS_RU = {
 const STATUS_COLOR = { verified: '#34D399', verified_alpha: '#FBBF24', candidate: '#94A3B8' };
 
 const RULE_RU = {
-  sector_swarm: 'Наплыв в сектор',
+  sector_swarm: 'Приток капитала в сектор',
   theme_swarm: 'Наплыв в тему',
   smart_money_follow: 'За умными деньгами',
-  beneficiary_concentration: 'Читается бенефициар',
+  beneficiary_concentration: 'Публичный бенефициар',
   stealth_accumulation: 'Тихое накопление',
   repeat_conviction: 'Повторная ставка',
   network_convergence: 'Сеть сходится на цели',

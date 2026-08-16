@@ -26,6 +26,7 @@
 
 import raw from './capitalMap.json';
 import entityRef from './entityReference.json';
+import ru from './capitalMapRu.json';
 import logoManifest from './logoManifest.json';
 import flowNotes from './flowNotes.json';
 import { classifyGraph } from '../components/research/capitalflow/classification.js';
@@ -311,7 +312,7 @@ export const NETWORK_META = {
 
 // ── Signal rule labels — rendered so users know WHY a group lit up.
 export const RULE_META = {
-  sector_swarm:                { label: 'Наплыв в сектор',     blurb: 'Несколько ключевых инвесторов вошли в один сектор за короткое окно.' },
+  sector_swarm:                { label: 'Приток капитала в сектор', blurb: 'Несколько ключевых инвесторов вошли в один сектор за короткое окно.' },
   theme_swarm:                 { label: 'Наплыв в тему',       blurb: 'Ключевые инвесторы сошлись на одной теме — сразу в нескольких секторах.' },
   smart_money_follow:          { label: 'Умные деньги ведут',  blurb: 'Ключевой инвестор вошёл первым; за ним быстро последовали другие.' },
   beneficiary_concentration:   { label: 'Бенефициар',          blurb: 'Несколько частных потоков указывают на публичный тикер (иногда — на несколько кандидатов сразу) — вывод, который можно отыграть.' },
@@ -333,7 +334,11 @@ export const META = {
 // Co-investors the engine has discovered but NEVER auto-adds — the user decides.
 // The dashboard renders this queue and captures the choice; the engine owns who
 // is actually tracked (see PromotionQueue + the exported decisions.json).
-export const PROMOTION_QUEUE = Array.isArray(raw.promotion_queue) ? raw.promotion_queue : [];
+export const PROMOTION_QUEUE = (Array.isArray(raw.promotion_queue) ? raw.promotion_queue : [])
+  .map(it => {
+    const t = (ru.promotions || {})[it.candidate_id]?.description;
+    return t ? { ...it, description: t } : it;
+  });
 
 // ── Payload-level blocks the engine owns outright. Rendered as-is; the `basis`
 // strings explain how each number was derived and must never be recomputed or
@@ -440,6 +445,52 @@ function monogramOf(label) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
+// RUSSIAN LAYER — the dashboard's own rendering of the engine's English prose.
+//
+// The engine writes every narrative field in English and re-delivers the whole
+// payload each cycle, so a translation living inside capitalMap.json would be
+// overwritten every Monday. `capitalMapRu.json` is the durable side-car
+// instead: keyed by the engine's STABLE ids, merged here, and ALWAYS falling
+// back to the English original. That fallback is the important part — a new
+// entity the translator hasn't reached yet renders in English rather than
+// blank, and `npm run cf:ru` reports exactly what is still missing.
+//
+// Names (companies, funds, people, tickers) are never translated — only prose.
+// ══════════════════════════════════════════════════════════════════════════
+const RU_SUBSECTORS  = ru.subsectors  || {};
+const RU_NODES       = ru.nodes       || {};
+const RU_ALLOCATORS  = ru.allocators  || {};
+const RU_TRENDS      = ru.trends      || {};
+const RU_PROMOTIONS  = ru.promotions  || {};
+
+/** Russian label for an engine subsector slug, or null to let the caller de-slug. */
+export function ruSubsector(key) {
+  return (key && RU_SUBSECTORS[key]) || null;
+}
+
+/** The stable key a track-record row is translated under. */
+function trackKey(row) {
+  return `${row?.metric}|${row?.fiscal_year}|${row?.scope || ''}`;
+}
+
+/** Engine profile with any translated field swapped in; untranslated keys stay English. */
+function ruProfile(name, profile) {
+  const t = RU_ALLOCATORS[name]?.profile;
+  if (!profile || !t) return profile || null;
+  return { ...profile, ...Object.fromEntries(Object.entries(t).filter(([, v]) => v)) };
+}
+
+/** Track-record rows with translated `notes`/`scope`; the numbers are untouched. */
+function ruTrackRecord(name, rows) {
+  const t = RU_ALLOCATORS[name]?.track_record;
+  if (!t) return rows;
+  return rows.map(r => {
+    const tr = t[trackKey(r)];
+    return tr ? { ...r, ...(tr.notes ? { notes: tr.notes } : null), ...(tr.scope ? { scope: tr.scope } : null) } : r;
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════════════
 // buildGraph — reshape the contract into { nodes, links, sectors, stats }.
 // ══════════════════════════════════════════════════════════════════════════
 export function buildGraph(data = raw) {
@@ -469,7 +520,9 @@ export function buildGraph(data = raw) {
     // Display-name override (e.g. "Andreessen Horowitz" → "a16z") — lives in
     // the dashboard reference file so it survives engine re-deliveries.
     const displayName = ref?.displayName || n.label;
-    const description = n.description || ref?.description || null;
+    // Russian first (dashboard-owned), then the engine's English, then the
+    // curated reference file — so an untranslated entity still reads.
+    const description = RU_NODES[n.id]?.description || n.description || ref?.description || null;
     const links = (Array.isArray(n.links) && n.links.length ? n.links : ref?.links) || [];
     const profileType = n.profile_type || ref?.type ||
       (isAllocator ? (n.cls === 'individual' ? 'person' : 'org')
@@ -520,8 +573,11 @@ export function buildGraph(data = raw) {
       logoUrls,
       // Engine-owned allocator record (null for targets, and for allocators the
       // engine has not profiled yet).
-      engineProfile: engineAlloc?.profile || null,
-      trackRecord: Array.isArray(engineAlloc?.track_record) ? engineAlloc.track_record : [],
+      engineProfile: ruProfile(n.id.replace(/^alloc:/, ''), engineAlloc?.profile),
+      trackRecord: ruTrackRecord(
+        n.id.replace(/^alloc:/, ''),
+        Array.isArray(engineAlloc?.track_record) ? engineAlloc.track_record : [],
+      ),
       engineSectors: engineAlloc?.sectors || null,
       thesisShares: engineAlloc?.thesis_shares || null,
       confirmedDeals: typeof engineAlloc?.confirmed_deals === 'number' ? engineAlloc.confirmed_deals : null,
@@ -763,6 +819,8 @@ export function buildGraph(data = raw) {
   Object.entries(data.trends || {}).forEach(([win, list]) => {
     trends[win] = (Array.isArray(list) ? list : []).map(t => ({
       ...t,
+      title: RU_TRENDS[t.cluster_id]?.title || t.title,
+      narrative: RU_TRENDS[t.cluster_id]?.narrative || t.narrative,
       evidence: resolveEvidence(t.evidence),
     }));
   });
