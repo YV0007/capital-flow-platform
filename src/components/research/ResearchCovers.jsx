@@ -271,19 +271,16 @@ function ProxyCoverArt() {
   );
 }
 
-// Capital Flow Map — cover styled after a Pokec-style force-directed layout
-// reference: a dense, woven triangular mass of nodes (apex up, base wide),
-// stitched together by short local links AND a scatter of long crossing
-// edges — that crossing is what gives the reference its "solid basket-weave"
-// texture, not just a nearest-neighbour mesh. A few stray isolated nodes sit
-// outside the mass, matching the reference's scattered corner dots.
-// Recoloured into the dashboard's steel-blue/cyan family (light-on-lavender
-// in the reference → dark canvas here); one hub carries a warm gold accent
-// as the single "this is about capital" cue. Deterministic (seeded PRNG) so
-// the cover never re-flows.
-const CF_MESH = (() => {
+// Capital Flow Map — cover as one dense fractal branching mass filling the
+// frame, matching the density of the client's second reference (thousands of
+// fine recursive branches overlapping into a solid organic cloud, wispy
+// escaping strands at the edges) rather than a sparse constellation — rebuilt
+// from scratch, not that artist's own image, and recoloured into the
+// dashboard's dark steel-blue palette. Deterministic (seeded PRNG) so the
+// cover never re-flows.
+const CF_CLOUD = (() => {
   // mulberry32 — tiny deterministic PRNG
-  let seed = 20260816;
+  let seed = 20260818;
   const rnd = () => {
     seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
     let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
@@ -291,108 +288,75 @@ const CF_MESH = (() => {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 
-  // Triangular envelope — apex up, base wide. Points sampled by barycentric
-  // coordinates inside the triangle, then jittered so the silhouette reads
-  // organic rather than a clean geometric wedge.
-  const A = [100, 10], B = [16, 111], C = [184, 111];
-  const inTri = () => {
-    let r1 = rnd(), r2 = rnd();
-    if (r1 + r2 > 1) { r1 = 1 - r1; r2 = 1 - r2; }
-    const x = A[0] + r1 * (B[0] - A[0]) + r2 * (C[0] - A[0]);
-    const y = A[1] + r1 * (B[1] - A[1]) + r2 * (C[1] - A[1]);
-    return [x + (rnd() - 0.5) * 6, y + (rnd() - 0.5) * 6];
-  };
+  const segments = [];
 
-  const N = 150;
-  const nodes = [];
-  for (let i = 0; i < N; i++) {
-    const [x, y] = inTri();
-    nodes.push({ x, y, r: 0.55 + rnd() * 1.05 });
+  // One recursive branch: a short run of jittered segments, tapering width
+  // by remaining depth, forking up to twice per level. High fork chance +
+  // many seed points is what turns this into a dense overlapping mass
+  // instead of a few legible sprigs.
+  function grow(x, y, angle, len, depth, maxDepth) {
+    let cx = x, cy = y, a = angle;
+    const steps = 2 + Math.floor(rnd() * 2);
+    for (let s = 0; s < steps; s++) {
+      a += (rnd() - 0.5) * 0.7;
+      const stepLen = len / steps;
+      const nx = cx + Math.cos(a) * stepLen;
+      const ny = cy + Math.sin(a) * stepLen;
+      segments.push({
+        x1: cx, y1: cy, x2: nx, y2: ny,
+        w: 0.12 + 0.3 * (depth / maxDepth),
+        o: 0.14 + 0.22 * (depth / maxDepth),
+      });
+      cx = nx; cy = ny;
+    }
+    if (depth > 0) {
+      const forks = rnd() < 0.58 ? 2 : 1;
+      for (let k = 0; k < forks; k++) {
+        const da = (k === 0 ? -1 : 1) * (0.3 + rnd() * 0.6);
+        grow(cx, cy, a + da, len * 0.76, depth - 1, maxDepth);
+      }
+    }
   }
 
-  // Hubs — apex, two base corners, one centre-mass — rendered larger, the
-  // apex carrying the single warm accent.
-  const hubs = [
-    { x: 100, y: 17, r: 5.2, gold: true },
-    { x: 42,  y: 96, r: 4.0 },
-    { x: 158, y: 96, r: 4.2 },
-    { x: 100, y: 66, r: 3.4 },
-  ];
-
-  // Edges: every node → its nearest hub (the structural spine), plus 2 short
-  // local links approximating nearest-neighbour weave, plus a 10% chance of
-  // one long crossing edge to any other node — that sparse long-range set is
-  // what makes the mass read as densely woven instead of a clean spoke fan.
-  const dist = (p, q) => Math.hypot(p.x - q.x, p.y - q.y);
-  const edges = [];
-  nodes.forEach((n, i) => {
-    let best = 0, bd = Infinity;
-    hubs.forEach((h, hi) => { const d = dist(n, h); if (d < bd) { bd = d; best = hi; } });
-    edges.push({ x1: n.x, y1: n.y, x2: hubs[best].x, y2: hubs[best].y, w: 0.2, o: 0.15 });
-
-    const cands = [];
-    for (let k = 0; k < 8; k++) cands.push(nodes[(i + 1 + Math.floor(rnd() * (N - 1))) % N]);
-    cands.sort((a, b) => dist(n, a) - dist(n, b));
-    cands.slice(0, 2).forEach(m => edges.push({ x1: n.x, y1: n.y, x2: m.x, y2: m.y, w: 0.15, o: 0.12 }));
-
-    if (rnd() < 0.1) {
-      const m = nodes[Math.floor(rnd() * N)];
-      edges.push({ x1: n.x, y1: n.y, x2: m.x, y2: m.y, w: 0.13, o: 0.08 });
+  // Seed points scattered across an oval envelope spanning most of the
+  // 200x120 canvas, each throwing off many branches so the whole thing reads
+  // as one dense mass, not isolated sprigs.
+  const seeds = [];
+  const SEED_N = 9;
+  for (let i = 0; i < SEED_N; i++) {
+    seeds.push({ x: 55 + rnd() * 95, y: 22 + rnd() * 76 });
+  }
+  seeds.forEach(sd => {
+    const branches = 7 + Math.floor(rnd() * 4);
+    for (let i = 0; i < branches; i++) {
+      grow(sd.x, sd.y, rnd() * Math.PI * 2, 9 + rnd() * 10, 4, 4);
     }
+    // one longer wispy strand escaping the mass, per seed
+    grow(sd.x, sd.y, rnd() * Math.PI * 2, 32 + rnd() * 30, 2, 2);
   });
 
-  // Stray isolated nodes outside the main mass — the scattered corner dots
-  // in the reference.
-  const strays = [
-    { x: 9, y: 18 }, { x: 191, y: 26 }, { x: 7, y: 102 }, { x: 168, y: 12 },
-  ];
-
-  return { nodes, hubs, edges, strays };
+  return { segments };
 })();
 
 function CapitalFlowCoverArt() {
-  const { nodes, hubs, edges, strays } = CF_MESH;
+  const { segments } = CF_CLOUD;
   return (
     <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
       <defs>
-        <radialGradient id="cfw-bg" cx="50%" cy="42%" r="80%">
+        <radialGradient id="cfd-bg" cx="55%" cy="48%" r="80%">
           <stop offset="0%"   stopColor="#101825" />
           <stop offset="60%"  stopColor="#0a0e16" />
           <stop offset="100%" stopColor="#05070a" />
         </radialGradient>
       </defs>
 
-      <rect width="200" height="120" fill="url(#cfw-bg)" />
+      <rect width="200" height="120" fill="url(#cfd-bg)" />
 
-      {/* edges under everything */}
-      <g stroke="#5a86b8" fill="none">
-        {edges.map((e, i) => (
-          <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-            strokeWidth={e.w} strokeOpacity={e.o} />
-        ))}
-      </g>
-
-      {/* small steel-blue nodes */}
-      <g fill="#5aa0d8" fillOpacity="0.92">
-        {nodes.map((n, i) => (
-          <circle key={i} cx={n.x} cy={n.y} r={n.r} stroke="#1c2f45" strokeWidth="0.2" />
-        ))}
-      </g>
-
-      {/* stray dots outside the main mass */}
-      <g fill="#3d5a7a" fillOpacity="0.75">
-        {strays.map((s, i) => <circle key={i} cx={s.x} cy={s.y} r="0.85" />)}
-      </g>
-
-      {/* large pale hub circles on top, apex carrying the warm accent */}
-      <g>
-        {hubs.map((h, i) => (
-          <g key={i}>
-            <circle cx={h.x} cy={h.y} r={h.r + 3} fill={h.gold ? '#e9c17e' : '#9cc4e8'} fillOpacity="0.14" />
-            <circle cx={h.x} cy={h.y} r={h.r}
-              fill={h.gold ? '#f6e2b0' : '#eaf3fb'} stroke={h.gold ? '#e9c17e' : '#7fa8cd'} strokeWidth="0.7" />
-          </g>
+      <g fill="none" strokeLinecap="round">
+        {segments.map((s, i) => (
+          <line key={i} x1={s.x1} y1={s.y1} x2={s.x2} y2={s.y2}
+            stroke="#6fa3d4" strokeWidth={s.w} strokeOpacity={s.o} />
         ))}
       </g>
     </svg>
