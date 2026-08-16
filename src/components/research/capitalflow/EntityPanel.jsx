@@ -254,7 +254,15 @@ export default function EntityPanel({
 // (never a guessed URL).
 function ProfileBlock({ node }) {
   const links = node.links || [];
-  const hasProfile = !!node.description || links.length > 0;
+  // Allocators carry a SEPARATE, richer profile block (engineProfile —
+  // background/focus/style/thesis, resolved from the engine's
+  // allocators[name].profile) alongside the generic node.description. This
+  // panel used to only ever look at node.description, so an allocator with a
+  // full researched profile (e.g. Founders Fund) but no generic description
+  // showed "no profile on file" even though real prose was one field away —
+  // it's surfaced in full via "Подробный разбор" but never reached here.
+  const description = node.description || node.engineProfile?.background || null;
+  const hasProfile = !!description || links.length > 0;
   // No `website`-kind link on file. This is the common, EXPECTED case for a
   // stealth company (e.g. Cathedral) that still has news coverage — without a
   // tag here it reads as a missing/broken link rather than "no site exists".
@@ -273,8 +281,8 @@ function ProfileBlock({ node }) {
           : node.profileType === 'fund' ? 'О фонде' : 'Описание'}
       </div>
 
-      <div style={{ fontSize: 12.5, color: node.description ? 'var(--cf-text2)' : 'var(--cf-text6)', lineHeight: 1.6, fontStyle: node.description ? 'normal' : 'italic' }}>
-        {node.description || 'Профиля в данных пока нет — найдите через поиск ниже.'}
+      <div style={{ fontSize: 12.5, color: description ? 'var(--cf-text2)' : 'var(--cf-text6)', lineHeight: 1.6, fontStyle: description ? 'normal' : 'italic' }}>
+        {description || 'Профиля в данных пока нет — найдите через поиск ниже.'}
       </div>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginTop: 10 }}>
