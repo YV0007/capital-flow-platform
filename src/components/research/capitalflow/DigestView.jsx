@@ -10,7 +10,8 @@
 import { useMemo, useState } from 'react';
 import { ArrowUpRight, Sparkles, TrendingUp, TrendingDown } from 'lucide-react';
 import { buildDigest } from './digest.js';
-import { fmtUSD, plural, formatSignalText } from './format.js';
+import { fmtUSD, plural, formatSignalText, businessGist } from './format.js';
+import { subsectorLabel } from './subsectors.js';
 import { SECTOR_META, THEME_META, RULE_META, sectorLabel } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
@@ -234,8 +235,19 @@ export default function DigestView({ nodes, links, generated, sectors, trends, o
   );
 }
 
-// A single engine-authored trend — title, grounded narrative, real numbers,
-// named allocators. Low/borderline confidence is flagged, never hidden.
+// A single engine-authored trend. Reading order is (why → what → who), because
+// the point of this card is to give the user a LEAD — "look here, this is
+// what's happening in this corner of the map" — not a data recap they have to
+// re-derive on their own.
+//   1. Title (engine's one-line thesis) + subsector chip.
+//   2. "О чём это" — a business gist for the primary target(s), so an
+//      unfamiliar name (Hadrian, Volta Infra) stops being opaque, plus a
+//      direct link to that entity's node on the map.
+//   3. Engine narrative — the grounded paragraph (why + who), rendered as
+//      secondary supporting prose. If the engine keeps writing pure recap,
+//      the header row and target gist above still carry a real "what to
+//      watch" message on their own.
+//   4. Stats + investor chips at the bottom, MONO, tertiary.
 function TrendCard({ trend: t, onOpenEntity, nodeByName }) {
   // Prefer resolved evidence (real node refs, so a click always works); when
   // the engine's evidence doesn't resolve to ids yet, fall back to the plain
@@ -247,13 +259,44 @@ function TrendCard({ trend: t, onOpenEntity, nodeByName }) {
   const allocators = fromEvidence.length ? fromEvidence
     : (Array.isArray(t.allocators) ? t.allocators : [])
         .map(name => nodeByName?.get(name) || { id: null, name });
+
+  // The companies actually on the receiving end of the trend — the "look at
+  // these" the card points the user toward. De-duped, resolved to real nodes
+  // when possible so each name is a click into the map.
+  const targets = [...new Map(
+    (t.evidence || [])
+      .map(e => e.target)
+      .filter(Boolean)
+      .map(n => [n.id, n])
+  ).values()];
+  // A one-line business gist per target — what the company DOES, not how much
+  // it raised (the funding half of the description is already the surrounding
+  // narrative). Falls back to whatever prose we have if trimming empties it.
+  const targetGists = targets.map(n => ({
+    node: n,
+    gist: businessGist(n.description, 2),
+  }));
+
   const lowConfidence = t.confidence === 'low' || t.provisional;
+  const subLabel = t.subsector ? subsectorLabel(t.subsector) : null;
+  const sectorColor = t.sector ? (SECTOR_META[t.sector]?.color || 'var(--cf-text6)') : null;
+
   return (
     <div style={{ padding: '13px 15px', borderRadius: 10, background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)' }}>
+      {/* 1 — headline */}
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--cf-text0)' }}>{t.title}</span>
-        {t.sector && (
-          <span style={{ fontSize: 9.5, color: SECTOR_META[t.sector]?.color || 'var(--cf-text6)', fontFamily: MONO }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--cf-text0)', lineHeight: 1.35 }}>{t.title}</span>
+        {subLabel && (
+          <span style={{
+            fontSize: 9.5, color: sectorColor || 'var(--cf-text5)', fontFamily: MONO,
+            border: `1px solid ${sectorColor ? sectorColor + '40' : 'var(--cf-border)'}`,
+            padding: '2px 7px', borderRadius: 5, textTransform: 'uppercase', letterSpacing: '0.06em',
+          }}>
+            {subLabel}
+          </span>
+        )}
+        {t.sector && !subLabel && (
+          <span style={{ fontSize: 9.5, color: sectorColor, fontFamily: MONO }}>
             {sectorLabel(t.sector)}
           </span>
         )}
@@ -265,18 +308,55 @@ function TrendCard({ trend: t, onOpenEntity, nodeByName }) {
           }}>Слабый сигнал</span>
         )}
       </div>
-      {t.narrative && (
-        <p style={{ margin: '6px 0 0', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.6 }}>{t.narrative}</p>
+
+      {/* 2 — the "what business is this even about" block, with a direct link
+          into the map for each target. This is what turns the trend from a
+          list of participants into a real lead. */}
+      {targetGists.length > 0 && (
+        <div style={{ marginTop: 9, display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {targetGists.map(({ node, gist }) => (
+            <div key={node.id} style={{ fontSize: 12, lineHeight: 1.55, color: 'var(--cf-text2)' }}>
+              <button
+                onClick={() => onOpenEntity(node.id)}
+                style={{ ...linkBtn, fontWeight: 700, color: 'var(--cf-text0)' }}
+                title="Открыть на карте"
+              >
+                {node.name}
+                <ArrowUpRight size={11} style={{ marginLeft: 2, verticalAlign: '-1px', color: 'var(--cf-text6)' }} />
+              </button>
+              {gist && (
+                <span style={{ color: 'var(--cf-text3)' }}> — {gist}</span>
+              )}
+            </div>
+          ))}
+        </div>
       )}
-      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 9, fontSize: 10.5, fontFamily: MONO, color: 'var(--cf-text5)' }}>
+
+      {/* 3 — engine narrative, kept but demoted to supporting prose */}
+      {t.narrative && (
+        <p style={{
+          margin: '10px 0 0', fontSize: 11.5, color: 'var(--cf-text4)',
+          lineHeight: 1.6, borderLeft: '2px solid var(--cf-border-soft)', paddingLeft: 10,
+        }}>
+          {t.narrative}
+        </p>
+      )}
+
+      {/* 4 — tertiary: numbers and named investors */}
+      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 10, fontSize: 10.5, fontFamily: MONO, color: 'var(--cf-text5)' }}>
         {typeof t.deals === 'number' && <span>{t.deals} {plural(t.deals, ['сделка', 'сделки', 'сделок'])}</span>}
-        {typeof t.capital_usd === 'number' && <span style={{ color: 'var(--cf-text3)' }}>{fmtUSD(t.capital_usd)}</span>}
+        {typeof t.capital_usd === 'number' && t.capital_usd > 0 && (
+          <span style={{ color: 'var(--cf-text3)' }}>{fmtUSD(t.capital_usd)}</span>
+        )}
         {Array.isArray(t.date_range) && t.date_range.length === 2 && (
           <span>{t.date_range[0]} → {t.date_range[1]}</span>
         )}
       </div>
       {allocators.length > 0 && (
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 9 }}>
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8, alignItems: 'baseline' }}>
+          <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            инвесторы:
+          </span>
           {allocators.map((a, i) => (
             a.id
               ? <button key={a.id} onClick={() => onOpenEntity(a.id)} style={linkBtn}>{a.name}</button>
