@@ -138,7 +138,7 @@ function CycleSummary() {
             basis={basisLabel(top.basis)} />
         )}
         {co?.top && (
-          <Lead label="Больше всего инвесторов"
+          <Lead label="Компания-лидер по инвесторам"
             value={co.top.target || '—'} color="var(--cf-text1)"
             detail={[
               co.top.investors ? `${co.top.investors} ${plural(co.top.investors, ['инвестор', 'инвестора', 'инвесторов'])}` : null,
@@ -233,7 +233,9 @@ function scoreDriver(n) {
   const archetype = isPlayer ? n.playerArchetype : n.dealArchetype;
   if (!rank) return null;
   return {
-    label: (archetype && ARCHETYPE_LABEL[archetype]) || RANK_LABEL[rank] || rank,
+    label: archetype
+      ? `${RANK_LABEL[rank] || rank} · ${ARCHETYPE_LABEL[archetype]}`
+      : (RANK_LABEL[rank] || rank),
     color: RANK_COLOR[rank] || 'var(--cf-text5)',
   };
 }
@@ -456,7 +458,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                                 label everyone gets the same one of. */}
                             <td style={{ padding: '9px 14px', whiteSpace: 'nowrap' }}>
                               {sd
-                                ? <span title="Открыть панель — полный разбор факторов"
+                                ? <span title="Ранг · стиль — не размер капитала. Открыть панель для полного разбора факторов."
                                     style={{ fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: sd.color, cursor: 'help' }}>
                                     {sd.label}
                                   </span>

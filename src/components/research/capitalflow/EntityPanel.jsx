@@ -36,7 +36,9 @@ export default function EntityPanel({
   const rankKey = node.type === 'player' ? node.playerRank : node.dealRank;
   const archetype = node.type === 'player' ? node.playerArchetype : node.dealArchetype;
   const rank = rankKey ? {
-    label: (archetype && ARCHETYPE_LABEL[archetype]) || RANK_LABEL[rankKey] || rankKey,
+    label: archetype
+      ? `${RANK_LABEL[rankKey] || rankKey} · ${ARCHETYPE_LABEL[archetype]}`
+      : (RANK_LABEL[rankKey] || rankKey),
     color: RANK_COLOR[rankKey] || 'var(--cf-text5)',
   } : null;
   const role = node.kind === 'allocator' ? 'Инвестор · вкладывает капитал' : 'Получатель · привлекает капитал';
@@ -85,7 +87,7 @@ export default function EntityPanel({
             textTransform: 'uppercase', letterSpacing: '0.08em',
           }}>{role}</span>
           {rank && (
-            <span title="Определяется по отбору, повторным ставкам и результату — не по размеру капитала." style={{
+            <span title="Ранг · стиль — определяется по отбору, повторным ставкам и результату, не по размеру капитала." style={{
               display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 8px',
               background: rank.color + '12', border: `1px solid ${rank.color}38`, borderRadius: 5,
               fontSize: 9, color: rank.color, fontFamily: MONO, fontWeight: 700,
