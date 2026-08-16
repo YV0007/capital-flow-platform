@@ -45,8 +45,7 @@ import { buildViews, viewKey, cutoffDate, EMPTY_VIEW } from './views.js';
 import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD, plural } from './format.js';
 import { applyMoleculeLayout } from './layout.js';
-import { buildGraph, buildAdjacency, META, PROMOTION_QUEUE } from '../../../data/capitalMap.js';
-import PromotionQueue, { promoShouldOpen } from './PromotionQueue.jsx';
+import { buildGraph, buildAdjacency, META } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -95,7 +94,6 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
   const [minAmount, setMinAmount] = useState(0);
   const [minConfidence, setMinConfidence] = useState(0);     // flows (v2 grade score)
   const [sinceDays, setSinceDays] = useState(DEFAULT_WINDOW); // trailing window (0 = all-time), aged via flow.age_days
-  const [promoOpen, setPromoOpen] = useState(() => promoShouldOpen(PROMOTION_QUEUE));
   const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [view, setView] = useState('map');                   // 'map' | 'table' (tracking universe)
@@ -493,13 +491,26 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
   );
   const networksPresent = useMemo(() => [...new Set(graph.nodes.map(n => n.network).filter(Boolean))], [graph]);
 
-  // Search suggestions
-  const suggestions = query.trim()
-    ? graph.nodes.filter(n => {
-        const q = query.trim().toLowerCase();
-        return n.name.toLowerCase().includes(q) || n.label.toLowerCase().includes(q);
-      }).slice(0, 7)
-    : [];
+  // Search suggestions — nodes (by name / label / ticker) + beneficiary signals
+  // (tickers that appear only inside a sector's `beneficiary_concentration`
+  // signal, not as their own node; typing "vertiv" or "VRT" surfaces the
+  // signal and clicking it opens the sector's cluster report).
+  const suggestions = (() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    const nodeHits = graph.nodes.filter(n =>
+      n.name.toLowerCase().includes(q)
+      || n.label.toLowerCase().includes(q)
+      || (n.ticker && n.ticker.toLowerCase().includes(q))
+    ).map(n => ({ kind: 'node', node: n }));
+    const nodeTickers = new Set(graph.nodes.map(n => n.ticker && n.ticker.toLowerCase()).filter(Boolean));
+    const signalHits = (graph.beneficiaries || [])
+      .filter(b => b.dim === 'sector' && b.name && b.ticker)
+      .filter(b => !nodeTickers.has(b.ticker.toLowerCase()))         // already covered by a node hit
+      .filter(b => b.ticker.toLowerCase().includes(q) || b.name.toLowerCase().includes(q))
+      .map(b => ({ kind: 'signal', benef: b, sectorKey: b.group }));
+    return [...nodeHits, ...signalHits].slice(0, 7);
+  })();
   const searchRef = useRef(null);
   const [searchOpen, setSearchOpen] = useState(false);
   // Capture phase — the graph canvas swallows mousedown (d3-drag calls
@@ -608,7 +619,12 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
             onChange={(e) => { setQuery(e.target.value); setSearchOpen(true); }}
             onFocus={() => setSearchOpen(true)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && suggestions[0]) { focusEntity(suggestions[0].id); setSearchOpen(false); }
+              if (e.key === 'Enter' && suggestions[0]) {
+                const s = suggestions[0];
+                if (s.kind === 'node') focusEntity(s.node.id);
+                else handleRegionClick('sector', s.sectorKey);
+                setSearchOpen(false);
+              }
               if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
             }}
             placeholder={view === 'table' ? 'Поиск по таблице…' : 'Найти на карте…'}
@@ -631,23 +647,58 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
               overflow: 'hidden', boxShadow: '0 16px 40px -12px var(--cf-shadow)',
               animation: 'cfmDrop 140ms ease-out',
             }}>
-              {suggestions.map(s => (
-                <button key={s.id}
-                  onClick={() => { focusEntity(s.id); setSearchOpen(false); }}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 8, width: '100%',
-                    padding: '7px 10px', background: 'transparent', border: 'none',
-                    borderBottom: '1px solid var(--cf-border-hair)', cursor: 'pointer', textAlign: 'left',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
-                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: s.color, flexShrink: 0 }} />
-                  <span style={{ fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600 }}>{s.name}</span>
-                  <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO, marginLeft: 'auto' }}>
-                    {fmtUSD(s.capital)}
-                  </span>
-                </button>
-              ))}
+              {suggestions.map((s, i) => {
+                if (s.kind === 'node') {
+                  const n = s.node;
+                  return (
+                    <button key={`n:${n.id}`}
+                      onClick={() => { focusEntity(n.id); setSearchOpen(false); }}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 8, width: '100%',
+                        padding: '7px 10px', background: 'transparent', border: 'none',
+                        borderBottom: '1px solid var(--cf-border-hair)', cursor: 'pointer', textAlign: 'left',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+                      <span style={{ width: 7, height: 7, borderRadius: '50%', background: n.color, flexShrink: 0 }} />
+                      <span style={{ fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600 }}>{n.name}</span>
+                      {n.ticker && (
+                        <span style={{ fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.04em' }}>{n.ticker}</span>
+                      )}
+                      <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO, marginLeft: 'auto' }}>
+                        {fmtUSD(n.capital)}
+                      </span>
+                    </button>
+                  );
+                }
+                // Signal-only hit — public ticker referenced by a beneficiary
+                // signal but not itself tracked as a flow party. Route to the
+                // sector's cluster report where the signal is fully shown.
+                const b = s.benef;
+                const sec = graph.sectors[s.sectorKey];
+                return (
+                  <button key={`s:${b.ticker}:${s.sectorKey}:${i}`}
+                    onClick={() => { handleRegionClick('sector', s.sectorKey); setSearchOpen(false); }}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 8, width: '100%',
+                      padding: '7px 10px', background: 'transparent', border: 'none',
+                      borderBottom: '1px solid var(--cf-border-hair)', cursor: 'pointer', textAlign: 'left',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+                    <span style={{
+                      width: 7, height: 7, borderRadius: '50%',
+                      background: 'var(--cf-warn)', flexShrink: 0,
+                      boxShadow: '0 0 6px var(--cf-warn)',
+                    }} />
+                    <span style={{ fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600 }}>{b.name}</span>
+                    <span style={{ fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.04em' }}>{b.ticker}</span>
+                    <span style={{ fontSize: 9, color: 'var(--cf-warn)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginLeft: 'auto' }}>
+                      Бенефициар · {sec?.label || s.sectorKey}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -842,14 +893,6 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
         />
       )}
 
-      {/* Monday promotion pop-up — renders the engine's promotion_queue and
-          exports decisions.json; never promotes/hides anyone dashboard-side. */}
-      {promoOpen && (
-        <PromotionQueue
-          queue={PROMOTION_QUEUE}
-          onClose={() => setPromoOpen(false)}
-        />
-      )}
     </div>
   );
 }

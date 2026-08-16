@@ -700,17 +700,36 @@ export function buildGraph(data = raw) {
 
   // Beneficiary-concentration signals — public tickers private capital points
   // at. The highest-value read-through, surfaced prominently in the UI.
+  // Themes are shipped in a stable "TICKER (Name): N private flows converge"
+  // shape, so we parse the ticker + name once here — that's what powers the
+  // ticker search (nodes gain a `ticker` when their display name matches, and
+  // beneficiaries without a matching node become signal-only search results).
   const beneficiaries = [];
   const seenBenef = new Set();
+  const parseBenef = (theme) => {
+    const m = /^\s*([A-Z0-9.\-]{1,8})\s*\(([^)]+)\)\s*:/.exec(String(theme || ''));
+    return m ? { ticker: m[1], name: m[2].trim() } : { ticker: null, name: null };
+  };
   const collect = (obj, dim) => Object.values(obj).forEach(g =>
     (g.signals || []).forEach(s => {
       if (s.rule === 'beneficiary_concentration' && !seenBenef.has(s.theme)) {
         seenBenef.add(s.theme);
-        beneficiaries.push({ ...s, dim, group: g.key });
+        beneficiaries.push({ ...s, dim, group: g.key, ...parseBenef(s.theme) });
       }
     }));
   collect(sectors, 'sector');
   collect(themes, 'theme');
+
+  // Ticker attachment — a node whose display name matches a beneficiary name
+  // (case-insensitive) gets that beneficiary's ticker, so a "NVDA" query lands
+  // on the NVIDIA node directly instead of only on the datacenter signal card.
+  const benefByName = new Map();
+  beneficiaries.forEach(b => { if (b.name && b.ticker) benefByName.set(b.name.toLowerCase(), b.ticker); });
+  nodes.forEach(n => {
+    const t = benefByName.get(String(n.name || '').toLowerCase())
+           || benefByName.get(String(n.label || '').toLowerCase());
+    if (t) n.ticker = t;
+  });
 
   // Signal evidence + entity attachment (engine ask; PARTIALLY shipped).
   //   · signal.entity_id — landed. Attaches a signal directly to one node
