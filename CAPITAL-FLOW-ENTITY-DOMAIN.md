@@ -2,66 +2,119 @@
 
 **Paste this into the Capital Flow engine's Claude Code session** (`~/Desktop/Capital Flow`).
 
-## 2026-08-17 FOLLOW-UP — still 0/178 nodes have `domain`
+## 2026-08-17 FOLLOW-UP — the real gap is the enrichment step, not `domain`
 
-The 2026-W34 delivery (generated `2026-08-17`) shipped **178 nodes; not a
-single one carries a top-level `domain` field.** This is the second cycle
-after the ask was filed — same shape, same gap. The dashboard's fetcher
-already has code paths waiting to consume `node.domain` (a verified
-website candidate that skips guess-then-verify entirely); they've been
-dormant for two weeks because there's nothing to consume.
+**Correction to a previous framing.** `domain` is actually landing well on
+2026-W34: **105/178 nodes carry a real `domain` string** (NVIDIA, Brookfield,
+Meta, Blue Owl, MGX, hyperscaler campuses, etc.). Good progress since the
+2026-08-10 ask. Retracting the "0/178" claim in the earlier draft — that was
+a bad count on my end.
 
-### What's actually broken right now (measured against this delivery)
+**What's still broken is different, and worse than a missing field.** Seven
+brand-new targets this cycle (`first_seen >= 2026-08-10`) shipped as **bare
+stubs** — the raw ingestion record made it into `nodes[]` but the entity
+enrichment step (description / domain / country / profile) never ran on them:
 
-- **28 org-type entities** (excluding sovereigns/individuals) ship without a
-  local logo file — every one of them would be trivially resolvable if
-  `domain` were present.
-- **8 of them are BRAND NEW this cycle** (`first_seen >= 2026-08-10`) and
-  most have single-word, unambiguous, well-known websites the research
-  agents almost certainly opened while writing the profile:
+```
+target:Corma             first_seen=2026-08-10  $180M / 3 deals — no description, no domain
+target:SpaceX            first_seen=2026-08-14  no description, no domain
+target:Form Energy       first_seen=2026-08-12  no description, no domain
+target:Boralex           first_seen=2026-08-14  no description, no domain
+target:Vals AI           first_seen=2026-08-13  no description, no domain
+target:Cambridge Aerospace first_seen=2026-08-10  no description, no domain
+target:Erebor            first_seen=2026-08-10  no description, no domain
+```
 
-  ```
-  target:SpaceX            first_seen=2026-08-14   → spacex.com
-  target:Boralex           first_seen=2026-08-14   → boralex.com
-  target:Vals AI           first_seen=2026-08-13   → vals.ai
-  target:Form Energy       first_seen=2026-08-12   → formenergy.com
-  target:Corma             first_seen=2026-08-10   → getcorma.com  (non-obvious — this is exactly the case where a verified `domain` beats name-guessing)
-  target:Cambridge Aerospace first_seen=2026-08-10
-  target:Erebor            first_seen=2026-08-10
-  ```
+Full record for Corma as delivered — nothing under `description`, `domain`,
+`country`, or `profile`:
 
-  These are companies with obvious sites. The engine's research agent
-  fetched *something* about SpaceX to write its profile; whatever URL it
-  landed on has spacex.com as its origin. That value just needs to reach
-  `nodes[i].domain`.
+```json
+{ "id": "target:Corma", "label": "Corma", "kind": "target", "cls": "private",
+  "sector": "cybersecurity", "capital": 180000000.0, "deals": 3,
+  "first_seen": "2026-08-10", "last_activity": "2026-08-10", "stale": false,
+  "tier": null, "network": null, "country": null }
+```
 
-- **Also missing (older nodes, same gap):** Performance Drone Works, Cathedral,
-  Flourish, SB Neo, Nippon Gateway Infrastructure, KKR Global Infrastructure
-  Investors V, and ~14 more. Full list is `scripts/logo-misses.txt` in the
-  dashboard repo after any `python3 scripts/fetch_logos.py` run.
+These are all well-known-enough companies that a research pass would have
+resolved them cleanly (Corma → getcorma.com, SpaceX → spacex.com, etc.).
+The 105 nodes that DO carry `domain` show the enrichment step works — it
+just isn't running on the newest arrivals before delivery.
 
-- **For entities that genuinely have no site of their own** — named JVs and
-  projects (Kuwait Oil Company Pipeline JV, Akita 500MW AI data center,
-  Project Sopaipilla Holdings), single-asset SPVs, unlisted funds
-  (GPx TX LP, Quiet Select TX LP) — please ship **`domain: null` explicitly**
-  rather than omitting the key. That way the dashboard can distinguish "no
-  domain known" from "engine hasn't decided yet" and stop the fetcher from
-  wasting cycles on entities that will never resolve.
+### The ask — enrichment must run on every new node, every weekly cycle
 
-### The ask is unchanged — restated for clarity
+**Requirement:** every `kind: target` node newly added to `nodes[]` on a
+weekly delivery must ship with a `description` populated. Not eventually,
+not "when the research queue catches up next week" — **on the same
+delivery that first surfaces it in the map.** A user opening the map on
+Monday morning should never see a bare stub for a company that just got
+its first tracked flow.
 
-Emit `domain` on every node in `capital_map.json`:
+This is the same failure shape as the "references.ingest ran after
+export" incident on 2026-08-10 (re-delivery fixed it, 108/108) — but this
+time it's the description/profile enrichment that's slipping past the
+export. Please treat it as a pipeline ordering fix, not per-node
+triage.
 
-- **String** (bare, no scheme/www — `"spacex.com"`) when the entity has a
-  verified official site. Pull it from your own `profile.sources[]`
-  research; you already opened these pages to write the description.
-- **`null`** when the entity is a JV / project / fund / SPV / individual that
-  genuinely has no site of its own.
-- **Never omit the key.** Missing != null in the dashboard's mental model.
+**Concrete pieces to check in `run_week.py` (or wherever the weekly job
+lives):**
 
-Two-line diff on the writer side, no new research, closes the entire
-logo-tile gap in one delivery. Same shape asked for on 2026-08-10; still
-open.
+1. Ordering — every step that mutates `nodes[]` (flow ingest, new-entity
+   detection, description/domain/country enrichment) must complete
+   **before** `export_map`. If enrichment runs on a queue, drain the
+   queue before the export.
+2. Age filter — if new entities go through a "wait N days before
+   researching" queue, that filter is what's producing the stubs. Remove
+   it for entities that already have a flow attached: as soon as they
+   hit the map, they need a description.
+3. Silent failures — if an entity's enrichment call errors out (rate
+   limit, source refuses, LLM hiccup), the node currently still ships as
+   a stub. Either retry within the same run, or fail the export loudly
+   so it's obvious the delivery is incomplete.
+
+**A pre-delivery invariant would make this self-checking.** Before
+writing `capital_map.json`, assert:
+
+```
+for n in nodes:
+    if n["kind"] == "target":
+        assert n.get("description"), f"unenriched target {n['id']}"
+```
+
+If that assertion fails, the delivery is incomplete — either re-run
+enrichment for the flagged nodes or block the export and page whoever
+owns the pipeline. Currently the invariant is enforced by the dashboard
+noticing at render time and me writing this document; that's the wrong
+place for it.
+
+### Nodes affected by this bug on 2026-W34
+
+Seven this cycle — all real companies with obvious enrichable content:
+
+```
+target:Corma             $180M / 3 deals  first_seen 2026-08-10
+target:SpaceX                              first_seen 2026-08-14
+target:Form Energy                         first_seen 2026-08-12
+target:Boralex                             first_seen 2026-08-14
+target:Vals AI                             first_seen 2026-08-13
+target:Cambridge Aerospace                 first_seen 2026-08-10
+target:Erebor                              first_seen 2026-08-10
+```
+
+Please back-fill descriptions for these in the next delivery, and add the
+invariant so this can't recur silently.
+
+### On `domain` specifically
+
+Keep the `domain` rollout going. Two small housekeeping asks:
+
+- For entities that genuinely have no site of their own (JVs, projects,
+  SPVs, unlisted funds, individuals), ship **`domain: null` explicitly**
+  rather than omitting the key. The dashboard already treats null as "engine
+  says none" vs missing as "engine hasn't decided" — the fetcher can then
+  stop trying to name-guess entries that will never resolve.
+- The 73 nodes still without any `domain` key are mostly this "no domain of
+  their own" category (projects, funds, JVs, individuals). Auditing that
+  list and marking each `domain: null` where correct would close the loop.
 
 ---
 
