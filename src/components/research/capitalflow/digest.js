@@ -16,7 +16,7 @@ import { fmtUSD, plural } from './format.js';
 
 const isConfirmed = (l) => l.status === 'verified' || l.status === 'verified_alpha';
 
-function daysBefore(iso, days) {
+export function daysBefore(iso, days) {
   const d = new Date(`${iso}T00:00:00Z`);
   if (Number.isNaN(d.getTime())) return null;
   d.setUTCDate(d.getUTCDate() - days);
@@ -299,7 +299,12 @@ function buildBlock({ flows, prior, allLinks, nodeById, gen, id, title, sub, uni
 // the same batch of flows stays visible, framed as "the last engine week that
 // actually reported confirmed activity". Falls back to `generated` only if the
 // payload has zero confirmed flows anywhere (shouldn't happen in practice).
-function newestConfirmedDate(links, fallback) {
+//
+// Exported: the map's trailing-window filter uses the same anchor so its
+// "7 дн" == the digest's "За неделю" == the last engine cycle's coverage,
+// instead of a trailing 7 days from `generated` that clips off the first two
+// days of the cycle when the delivery lands a few days after the cycle's end.
+export function newestConfirmedDate(links, fallback) {
   let max = null;
   for (const l of links) {
     if (!isConfirmed(l) || !l.date) continue;

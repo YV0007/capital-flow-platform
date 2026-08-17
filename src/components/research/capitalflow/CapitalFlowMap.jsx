@@ -46,6 +46,7 @@ import FlowDetailCard from './FlowDetailCard.jsx';
 import { fmtUSD, plural } from './format.js';
 import { applyMoleculeLayout } from './layout.js';
 import { buildGraph, buildAdjacency, META } from '../../../data/capitalMap.js';
+import { newestConfirmedDate, daysBefore } from './digest.js';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -54,11 +55,16 @@ const MONO = 'ui-monospace, monospace';
 // history; the user widens it. Nothing is deleted — only hidden.
 const VIEW_DEFAULTS = META.viewDefaults || { default_window_days: 30, windows: [7, 30, 90, null] };
 const DEFAULT_WINDOW = VIEW_DEFAULTS.default_window_days || 30;
-// The window is a HARD cutoff. An earlier rule kept flows tagged
-// `active_signal` visible past the chosen window so the signal's context
-// stayed on-canvas, but it made "7 дн" show ~110 flows instead of the actual
-// week's ~30 — the window stopped meaning what it says. Signals still surface
-// via sector frames and the Наводки/Сводка views regardless.
+// Flow sits in (anchor − days, anchor], matching digest.js `windowFlows`.
+function inWindow(l, anchor, days) {
+  if (!anchor || !l.date) return false;
+  const from = daysBefore(anchor, days);
+  return from ? (l.date > from && l.date <= anchor) : false;
+}
+// The window is a HARD cutoff, anchored on the newest confirmed flow date
+// (see `windowAnchor` below) so its coverage matches the digest exactly and
+// so a delivery landing 2-3 days after the cycle's end doesn't clip the
+// first days of "7 дн" off the map.
 const BG = 'var(--cf-canvas)';
 // Height reserved by the top overlay bar. Every floating surface (right panel,
 // filter drawer) starts below it so nothing ever sits under the controls.
@@ -68,6 +74,14 @@ const PANEL_W = 380;   // must match EntityPanel's width
 export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
+  // Window anchor — the newest confirmed flow date, not `generated`. The
+  // engine delivers 2-3 days after the last cycle's end; if we anchored to
+  // `generated`, "7 дн" would start 3 days into the cycle and clip its first
+  // two days. Digest already uses this anchor; the map now matches.
+  const windowAnchor = useMemo(
+    () => newestConfirmedDate(graph.links, graph.generated),
+    [graph]
+  );
   const regions = useMemo(() => applyMoleculeLayout(graph.nodes, graph.sectors, graph.links), [graph]);
   // Pristine layout snapshot, taken right after applyMoleculeLayout pins fx/fy.
   // Dragging overwrites a node's fx/fy (onNodeDragEnd), so this is the only copy
@@ -183,8 +197,10 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
       if (statuses.size && !statuses.has(l.status)) return;
       if (minAmount > 0 && l.amountUSD < minAmount) return;
       if (minConfidence > 0 && (l.confidence == null || l.confidence < minConfidence)) return;
-      // Trailing window (hard cutoff). window 0 = all-time.
-      if (sinceDays > 0 && !(l.age_days != null && l.age_days <= sinceDays)) return;
+      // Trailing window (hard cutoff), anchored on the newest confirmed
+      // flow, matching the digest — so "7 дн" == the last engine cycle's
+      // 7-day coverage. window 0 = all-time.
+      if (sinceDays > 0 && !inWindow(l, windowAnchor, sinceDays)) return;
       if ((entityFilterOn || wlSet) && !seed.has(l.sourceId) && !seed.has(l.targetId)) return;
       links.add(l.id);
     });
@@ -211,7 +227,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
     }
 
     return { matchedNodes: nodes, matchedLinks: links };
-  }, [graph, sectors, classes, tiers, families, statuses, networks, nodeIdFilter, minAmount, minConfidence, sinceDays, showWatch, nodeById, activeList]);
+  }, [graph, sectors, classes, tiers, families, statuses, networks, nodeIdFilter, minAmount, minConfidence, sinceDays, windowAnchor, showWatch, nodeById, activeList]);
 
   // ── Time window = the HARD scope of the view ─────────────────────────────
   // Out-of-window flows/nodes are REMOVED from the canvas entirely (not faded);
@@ -220,7 +236,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
   const windowLinkSet = useMemo(() => {
     const s = new Set();
     graph.links.forEach(l => {
-      if (sinceDays > 0 && !(l.age_days != null && l.age_days <= sinceDays)) return;
+      if (sinceDays > 0 && !inWindow(l, windowAnchor, sinceDays)) return;
       if (!showWatch) {
         const sN = nodeById.get(l.sourceId), tN = nodeById.get(l.targetId);
         const hide = (n) => n && n.watchOnly && !n.landmark;   // landmark consortiums stay in
@@ -229,7 +245,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
       s.add(l.id);
     });
     return s;
-  }, [graph, sinceDays, showWatch, nodeById]);
+  }, [graph, sinceDays, windowAnchor, showWatch, nodeById]);
   const windowNodeSet = useMemo(() => {
     const s = new Set();
     graph.links.forEach(l => { if (windowLinkSet.has(l.id)) { s.add(l.sourceId); s.add(l.targetId); } });
