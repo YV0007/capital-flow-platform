@@ -52,9 +52,13 @@ const MONO = 'ui-monospace, monospace';
 // ── Trailing time window (Feature 1) ────────────────────────────────────────
 // Engine-owned view policy. The map defaults to a trailing window instead of all
 // history; the user widens it. Nothing is deleted — only hidden.
-const VIEW_DEFAULTS = META.viewDefaults || { default_window_days: 30, windows: [7, 30, 90, null], keep_active_signal: true };
+const VIEW_DEFAULTS = META.viewDefaults || { default_window_days: 30, windows: [7, 30, 90, null] };
 const DEFAULT_WINDOW = VIEW_DEFAULTS.default_window_days || 30;
-const KEEP_ACTIVE_SIGNAL = VIEW_DEFAULTS.keep_active_signal !== false;
+// The window is a HARD cutoff. An earlier rule kept flows tagged
+// `active_signal` visible past the chosen window so the signal's context
+// stayed on-canvas, but it made "7 дн" show ~110 flows instead of the actual
+// week's ~30 — the window stopped meaning what it says. Signals still surface
+// via sector frames and the Наводки/Сводка views regardless.
 const BG = 'var(--cf-canvas)';
 // Height reserved by the top overlay bar. Every floating surface (right panel,
 // filter drawer) starts below it so nothing ever sits under the controls.
@@ -179,11 +183,8 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
       if (statuses.size && !statuses.has(l.status)) return;
       if (minAmount > 0 && l.amountUSD < minAmount) return;
       if (minConfidence > 0 && (l.confidence == null || l.confidence < minConfidence)) return;
-      // Trailing window: keep a flow inside the window OR, by rule, one tied to a
-      // signal firing this cycle (the keep-alive). window 0 = all-time.
-      if (sinceDays > 0
-        && !(l.age_days != null && l.age_days <= sinceDays)
-        && !(KEEP_ACTIVE_SIGNAL && l.active_signal)) return;
+      // Trailing window (hard cutoff). window 0 = all-time.
+      if (sinceDays > 0 && !(l.age_days != null && l.age_days <= sinceDays)) return;
       if ((entityFilterOn || wlSet) && !seed.has(l.sourceId) && !seed.has(l.targetId)) return;
       links.add(l.id);
     });
@@ -214,15 +215,12 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
 
   // ── Time window = the HARD scope of the view ─────────────────────────────
   // Out-of-window flows/nodes are REMOVED from the canvas entirely (not faded);
-  // only sector/entity filters fade. So the window rebuilds graphData itself: a
-  // flow survives if it's inside the window OR (by rule) tied to a live signal.
-  // window 0 = all-time. Watch-only nodes still obey the Наводки toggle.
+  // only sector/entity filters fade. window 0 = all-time. Watch-only nodes
+  // still obey the Наводки toggle.
   const windowLinkSet = useMemo(() => {
     const s = new Set();
     graph.links.forEach(l => {
-      if (sinceDays > 0
-        && !(l.age_days != null && l.age_days <= sinceDays)
-        && !(KEEP_ACTIVE_SIGNAL && l.active_signal)) return;
+      if (sinceDays > 0 && !(l.age_days != null && l.age_days <= sinceDays)) return;
       if (!showWatch) {
         const sN = nodeById.get(l.sourceId), tN = nodeById.get(l.targetId);
         const hide = (n) => n && n.watchOnly && !n.landmark;   // landmark consortiums stay in
