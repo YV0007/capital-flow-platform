@@ -157,9 +157,23 @@ export default function EntityPanel({
           </button>
         )}
 
-        {/* Fund portfolio — funds only: the top holdings + a button to the full
-            portfolio. Following smart money means seeing the exact companies. */}
-        {(node.cls === 'fund' || (node.holdings && node.holdings.length > 0)) && (
+        {/* Portfolio — any node that plausibly HOLDS a portfolio, not only
+            funds: allocator vehicles that deploy capital (VC / alt-manager /
+            corporate / sovereign) AND fund/firm targets AND any node the
+            engine already ships holdings/portfolio-URL for. Individuals are
+            excluded — their tracked deals live in the flow list below.
+            Missing data → the block's own honest empty state so the receiver
+            is at least mentioned, not silently hidden. */}
+        {((isAllocator && node.cls !== 'individual')
+            || node.cls === 'fund' || node.cls === 'firm'
+            || (node.holdings && node.holdings.length > 0)
+            || node.portfolio_url
+            /* target|private named "* Holdings" is almost always a holding
+               vehicle (Thrive Holdings, Volta Infra Holdings). Engine
+               classifies them as `private` today — catch them here so the
+               portfolio block at least appears with its empty state. */
+            || (node.kind === 'target' && node.cls === 'private'
+                && /\bHoldings?\b/i.test(node.name || node.label || ''))) && (
           <FundPortfolioBlock node={node} nodeById={nodeById}
             onOpenEntity={onOpenEntity} onFundHoldings={onFundHoldings} />
         )}

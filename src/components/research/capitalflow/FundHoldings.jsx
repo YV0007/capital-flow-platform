@@ -22,7 +22,7 @@ import { humanizeSourceUrl } from './format.js';
 
 const MONO = 'ui-monospace, monospace';
 const W = 560;
-const TOP_N = 25;
+const TOP_N = 20;
 
 export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onClose, topInset = 0 }) {
   const [showAll, setShowAll] = useState(false);
