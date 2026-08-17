@@ -311,6 +311,9 @@ export const NETWORK_META = {
 };
 
 // ── Signal rule labels — rendered so users know WHY a group lit up.
+// Any rule NOT listed here is hidden from the UI (see SUPPRESSED_RULES filter
+// in buildGraph) — that way an unlabeled future rule doesn't leak its raw
+// English slug into a Russian panel.
 export const RULE_META = {
   sector_swarm:                { label: 'Приток капитала в сектор', blurb: 'Несколько ключевых инвесторов вошли в один сектор за короткое окно.' },
   theme_swarm:                 { label: 'Приток капитала в тему', blurb: 'Ключевые инвесторы сошлись на одной теме — сразу в нескольких секторах.' },
@@ -321,6 +324,13 @@ export const RULE_META = {
   network_convergence:         { label: 'Схождение сети',      blurb: 'Отслеживаемая сеть сходится на одной компании.' },
   defense_network_convergence: { label: 'Оборонное схождение', blurb: 'Сеть, связанная с обороной, сходится на одной цели.' },
 };
+
+// Rules explicitly hidden from the UI. subsector_swarm duplicates
+// sector_swarm semantically ("N key allocators converge") and adds noise
+// without adding a distinct read — parked until the signals deep-dive
+// decides how (or whether) to surface it.
+const SUPPRESSED_RULES = new Set(['subsector_swarm']);
+const isVisibleSignal = (s) => !!s && !SUPPRESSED_RULES.has(s.rule) && !!RULE_META[s.rule];
 
 export const META = {
   generated: raw.generated,
@@ -754,8 +764,11 @@ export function buildGraph(data = raw) {
       target: e.target_id ? nodeById.get(e.target_id) || null : null,
     }))
     .filter(e => e.allocator || e.target);
-  const attachSignals = (obj) => Object.values(obj).forEach(g =>
-    (g.signals || []).forEach(s => {
+  const attachSignals = (obj) => Object.values(obj).forEach(g => {
+    // Drop hidden/unknown rules from the group's own signal list up-front so
+    // sector cards (ClusterReport) and entity panels stay consistent.
+    g.signals = (g.signals || []).filter(isVisibleSignal);
+    g.signals.forEach(s => {
       // Raw evidence, keyed before resolveEvidence overwrites it below — the
       // merge pass needs to compare what the engine actually sent, not the
       // (currently always-empty) resolved result.
@@ -767,7 +780,8 @@ export function buildGraph(data = raw) {
         const entity = nodeById.get(s.entity_id);
         if (entity) entity.signals.push({ ...s, evidenceKey });
       }
-    }));
+    });
+  });
   attachSignals(sectors);
   attachSignals(themes);
 
