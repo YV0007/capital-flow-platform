@@ -154,5 +154,8 @@
   "target:Vals AI": "/logos/target_Vals_AI.svg",
   "target:Boralex": "/logos/target_Boralex.svg",
   "target:Cambridge Aerospace": "/logos/target_Cambridge_Aerospace.png",
-  "alloc:Palmer Luckey": "/logos/alloc_Palmer_Luckey.png"
+  "alloc:Palmer Luckey": "/logos/alloc_Palmer_Luckey.png",
+  "target:SpaceX": "/logos/target_SpaceX.ico",
+  "target:Performance Drone Works": "/logos/target_Performance_Drone_Works.svg",
+  "target:Erebor": "/logos/target_Erebor.svg"
 }
