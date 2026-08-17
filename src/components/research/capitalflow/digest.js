@@ -345,21 +345,40 @@ export function buildDigest({ nodes, links, generated, sectors }) {
       id: 'all', title: 'Вся карта', sub: 'Весь отслеживаемый стек на текущий цикл', unit: null }),
   ];
 
-  // Fired signals — this cycle, from the sector blocks. Surfaced on the
-  // whole-map view; they are not dated, so they belong to the cycle, not a week.
-  // The same signal can be attached to more than one sector block, so dedupe
-  // on rule + theme.
-  const signals = [];
-  const seenSignal = new Set();
-  Object.entries(sectors || {}).forEach(([key, s]) => {
-    (s.signals || []).forEach(sig => {
-      const k = `${sig.rule}|${sig.theme}`;
-      if (seenSignal.has(k)) return;
-      seenSignal.add(k);
-      signals.push({ sector: key, ...sig });
+  // Fired signals, windowed like everything else. Each signal now ships
+  // dated `evidence[]` (engine v3.7) — a signal belongs to a window when at
+  // least one of its evidence flows falls inside it, same test as
+  // `windowFlows` uses for ordinary flows. `to: null` (the 'all' window)
+  // skips the date test entirely, so a signal with genuinely undated/empty
+  // evidence still surfaces there instead of vanishing everywhere.
+  // The same signal can attach to more than one sector block; dedupe on
+  // rule + theme within each window independently.
+  function signalsInWindow(from, to) {
+    const out = [];
+    const seen = new Set();
+    Object.entries(sectors || {}).forEach(([key, s]) => {
+      (s.signals || []).forEach(sig => {
+        const k = `${sig.rule}|${sig.theme}`;
+        if (seen.has(k)) return;
+        if (to != null) {
+          const evid = Array.isArray(sig.evidence) ? sig.evidence : [];
+          const hit = evid.some(e => e.date && e.date > from && e.date <= to);
+          if (!hit) return;
+        }
+        seen.add(k);
+        out.push({ sector: key, ...sig });
+      });
     });
-  });
-  signals.sort((a, b) => (b.strength || 0) - (a.strength || 0));
+    out.sort((a, b) => (b.strength || 0) - (a.strength || 0));
+    return out;
+  }
+  const signalsByWindow = {
+    week: signalsInWindow(daysBefore(anchor, 7), anchor),
+    month: signalsInWindow(daysBefore(anchor, 30), anchor),
+    all: signalsInWindow(null, null),
+  };
+  // Back-compat: some callers still read digest.signals for the whole-map list.
+  const signals = signalsByWindow.all;
 
-  return { generated, blocks, signals };
+  return { generated, blocks, signals, signalsByWindow };
 }

@@ -24,6 +24,7 @@ export default function DigestView({ nodes, links, generated, sectors, trends, o
   const [tab, setTab] = useState('week');
   const block = digest.blocks.find(b => b.id === tab) || digest.blocks[0];
   const isAll = block.id === 'all';
+  const windowSignals = digest.signalsByWindow?.[block.id] || [];
   // Engine ships each cluster into every window it qualifies for — so
   // defense-manufacturing appears in both `month` and `all` today, and would
   // read as a repeat across tabs if we rendered `trends[block.id]` as-is.
@@ -220,12 +221,18 @@ export default function DigestView({ nodes, links, generated, sectors, trends, o
               </div>
             )}
 
-            {/* Signals — whole-map view only */}
-            {isAll && digest.signals.length > 0 && (
+            {/* Signals — windowed like the rest of the block. A signal belongs
+                here when at least one of its evidence flows falls inside this
+                window (digest.js `signalsInWindow`), so 'За неделю' only ever
+                shows signals actually backed by this week's flows, not every
+                signal live on the whole map. */}
+            {windowSignals.length > 0 && (
               <div style={{ marginTop: 22 }}>
-                <SectionLabel>Сработавшие сигналы · этот цикл</SectionLabel>
+                <SectionLabel>
+                  {isAll ? 'Сработавшие сигналы · этот цикл' : `Сработавшие сигналы · ${block.id === 'week' ? 'за неделю' : 'за месяц'}`}
+                </SectionLabel>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 8 }}>
-                  {digest.signals.slice(0, 8).map((s, i) => {
+                  {windowSignals.slice(0, 8).map((s, i) => {
                     const rule = RULE_META[s.rule];
                     return (
                       <div key={i} style={{
