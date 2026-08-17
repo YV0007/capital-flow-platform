@@ -148,5 +148,11 @@
   "alloc:Apollo": "/logos/alloc_Apollo.ico",
   "alloc:Goldman Sachs": "/logos/alloc_Goldman_Sachs.svg",
   "target:Williams Power Innovation JV (Socrates, Apollo, Aquila, Socrates the Younger, Neo)": "/logos/alloc_Apollo.ico",
-  "target:NVIDIA AI Infrastructure Financing Platform": "/logos/alloc_NVIDIA.svg"
+  "target:NVIDIA AI Infrastructure Financing Platform": "/logos/alloc_NVIDIA.svg",
+  "target:Form Energy": "/logos/target_Form_Energy.png",
+  "target:Corma": "/logos/target_Corma.svg",
+  "target:Vals AI": "/logos/target_Vals_AI.svg",
+  "target:Boralex": "/logos/target_Boralex.svg",
+  "target:Cambridge Aerospace": "/logos/target_Cambridge_Aerospace.png",
+  "alloc:Palmer Luckey": "/logos/alloc_Palmer_Luckey.png"
 }

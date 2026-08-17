@@ -1019,5 +1019,71 @@
       }
     ],
     "auto_resolved": true
+  },
+  "target:Form Energy": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "formenergy.com",
+        "url": "https://formenergy.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Corma": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "corma.ai",
+        "url": "https://corma.ai"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Vals AI": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "vals.ai",
+        "url": "https://vals.ai"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Boralex": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "boralex.com",
+        "url": "https://boralex.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Cambridge Aerospace": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "cambridgeaerospace.com",
+        "url": "https://cambridgeaerospace.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Palmer Luckey": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "palmerluckey.com",
+        "url": "https://palmerluckey.com"
+      }
+    ],
+    "auto_resolved": true
   }
 }
