@@ -741,27 +741,33 @@ export function buildGraph(data = raw) {
     if (t) n.ticker = t;
   });
 
-  // Signal evidence + entity attachment (engine ask; PARTIALLY shipped).
-  //   · signal.entity_id — landed. Attaches a signal directly to one node
+  // Signal evidence + entity attachment (engine v3.7, 2026-08-17 — landed).
+  //   · signal.entity_id — attaches a signal directly to one node
   //     (company-level signals like stealth_accumulation/
   //     beneficiary_concentration), collected onto node.signals rather than
   //     only living in a sector zone.
-  //   · signal.evidence[] — NOT landed in the asked shape. The ask was
-  //     {allocator_id, target_id, amount_usd, date, confirmed} objects in the
-  //     same alloc:/target: namespace as nodes[].id; the engine instead sends
-  //     plain integers (flow-list indices, and not reliably into the top-level
-  //     `flows[]` either — spot-checked one that pointed at an unrelated
-  //     target). `resolveEvidence` below is defensive and no-ops cleanly on
-  //     this shape rather than guess at index semantics, so "Кто именно"
-  //     currently shows the same "waiting on the engine" state for every
-  //     signal in the payload. *(Backend request — see README § Logo
-  //     pipeline for the sibling asks.)*
+  //   · signal.evidence[] — now real {allocator_id, target_id, amount_usd,
+  //     date, confirmed, flow_id} objects in the alloc:/target: namespace.
+  //     `resolveEvidence` below intentionally snapshots each side to a plain
+  //     {id, name, description} — NOT the live node object. A live reference
+  //     here creates a genuine cycle (node.signals[i].evidence[j].target ===
+  //     some other node, which itself carries .signals with evidence back
+  //     into the graph) that force-graph's internal deep-clone
+  //     (JSON.parse(JSON.stringify(...))) cannot serialize — it crashed the
+  //     whole map on mount the day this evidence shape first landed. Every
+  //     consumer (EntityPanel, ClusterReport, TrendCard) only ever reads
+  //     .id/.name/.description off these, so the snapshot is a strict
+  //     subset with no functionality lost.
   nodes.forEach(n => { n.signals = []; });
+  const snapshotEntity = (id) => {
+    const n = id ? nodeById.get(id) : null;
+    return n ? { id: n.id, name: n.name, description: n.description || null } : null;
+  };
   const resolveEvidence = (evidence) => (Array.isArray(evidence) ? evidence : [])
     .map(e => ({
       ...e,
-      allocator: e.allocator_id ? nodeById.get(e.allocator_id) || null : null,
-      target: e.target_id ? nodeById.get(e.target_id) || null : null,
+      allocator: snapshotEntity(e.allocator_id),
+      target: snapshotEntity(e.target_id),
     }))
     .filter(e => e.allocator || e.target);
   const attachSignals = (obj) => Object.values(obj).forEach(g => {
