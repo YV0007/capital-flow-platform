@@ -5,10 +5,6 @@
 // MONTHLY pipeline exports. Nothing here is hard-coded: drop in the engine's
 // file and the map changes with no code edit. That is the acceptance test.
 //
-// The one behavioural difference between draft and real data is a banner:
-// while `source !== "engine"` a "черновые данные" strip sits under the top
-// bar. It disappears on its own the day the real file lands.
-//
 // Its state is ENTIRELY its own — CapitalFlowSection mounts either this or the
 // flow map, never both, so no filter, panel or selection is ever shared.
 //
@@ -22,7 +18,7 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
   ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, RefreshCw,
-  Sparkles, Cpu, AlertTriangle,
+  Sparkles, Cpu,
 } from 'lucide-react';
 import EcoGraph from './EcoGraph.jsx';
 import EcoLegend from './EcoLegend.jsx';
@@ -39,12 +35,20 @@ import { buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH } from '../../..
 const MONO = 'ui-monospace, monospace';
 const BG = 'var(--cf-canvas)';
 const TOPBAR_H = 62;
-const BANNER_H = 34;   // draft-data strip; shown only while source !== 'engine'
 
 export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   // Built once; the layout pins fx/fy — no simulation, no per-reload drift.
   const graph = useMemo(() => buildGraph(), []);
   const regions = useMemo(() => applyEcoLayout(graph), [graph]);
+  // Pristine layout snapshot, taken right after applyEcoLayout pins fx/fy.
+  // Dragging overwrites a node's fx/fy, so this is the only copy of "where
+  // things belong" — reset restores from it. Captured by value, so later drags
+  // never mutate it. Depends on `regions` so it runs AFTER the layout pass.
+  const homePositions = useMemo(() => {
+    const m = new Map();
+    graph.nodes.forEach(n => m.set(n.id, { x: n.fx, y: n.fy }));
+    return m;
+  }, [graph, regions]);
   const adjacency = useMemo(() => buildAdjacency(graph.edges), [graph]);
   const graphData = useMemo(
     () => ({ nodes: graph.nodes, links: graph.edges }),
@@ -147,7 +151,19 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     setExpanded(new Set());
   }, []);
 
-  const resetView = useCallback(() => fgRef.current?.zoomToFit(400, 70), []);
+  // Reset = snap every company back to its pristine layout spot (undoing any
+  // dragging), THEN re-frame. One click puts a messed-up board back — same
+  // behaviour as the flow map's reset.
+  const resetView = useCallback(() => {
+    const fg = fgRef.current;
+    if (!fg) return;
+    graph.nodes.forEach(n => {
+      const p = homePositions.get(n.id);
+      if (p) { n.fx = p.x; n.fy = p.y; n.x = p.x; n.y = p.y; }
+    });
+    fg.refresh?.();
+    fg.zoomToFit(700, 80);
+  }, [graph, homePositions]);
 
   const resetFilters = useCallback(() => {
     setRoles(new Set()); setSpines(new Set()); setTypes(new Set()); setLayerSel(new Set());
@@ -376,7 +392,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           <TopBtn onClick={() => setShowLabels(s => !s)} label="Показать / скрыть подписи" active={showLabels}>
             <Tag size={12} />
           </TopBtn>
-          <TopBtn onClick={resetView} label="Сбросить вид">
+          <TopBtn onClick={resetView} label="Вернуть всё на место — плитки на исходные позиции и вид целиком">
             <Maximize2 size={12} />
           </TopBtn>
           {(selectedNodeId || chainRoot || openLayer) && (
@@ -387,36 +403,6 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         </div>
       </div>
 
-      {/* ── Draft-data banner. The ONLY difference between fixture and engine.
-             It reads `source` from the payload, so it retires itself. ─────── */}
-      {META.isFixture && (
-        <div style={{
-          position: 'absolute', top: TOPBAR_H, left: 0, right: panelOpen ? ECO_PANEL_W : 0, zIndex: 28,
-          height: BANNER_H, boxSizing: 'border-box',
-          display: 'flex', alignItems: 'center', gap: 9,
-          padding: '0 16px',
-          background: 'var(--cf-warn-bg, rgba(224,163,64,0.12))',
-          borderBottom: '1px solid rgba(224,163,64,0.34)',
-          color: 'var(--cf-warn)', fontSize: 10.5, fontFamily: MONO, fontWeight: 600,
-          letterSpacing: '0.03em',
-          // One line, always: the chain controls dock right under this strip,
-          // and a wrapping banner would sit on top of them.
-          whiteSpace: 'nowrap', overflow: 'hidden',
-          animation: 'cfmDrop 200ms ease-out',
-        }}>
-          <AlertTriangle size={12} style={{ flexShrink: 0 }} />
-          <span style={{ flexShrink: 0 }}>Черновые данные — ждём первый прогон движка.</span>
-          <span style={{
-            color: 'var(--cf-text5)', fontWeight: 400,
-            overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0,
-          }}>
-            Структура, связи и цитаты правдоподобны, но не проверены. Плашка исчезнет, когда
-            <code style={{ margin: '0 4px' }}>ecosystemMap.json</code>
-            придёт из месячного конвейера.
-          </span>
-        </div>
-      )}
-
       {/* ── Chain controls — only while a chain is lit ──────────────────── */}
       {chainRoot && !cycleMode && (
         <ChainControls
@@ -426,14 +412,14 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           more={chain.more}
           nodeById={graph.nodeById}
           onExpand={(key) => setExpanded(prev => new Set(prev).add(key))}
-          top={TOPBAR_H + (META.isFixture ? BANNER_H : 0) + 10}
+          top={TOPBAR_H + 10}
         />
       )}
 
       {/* ── Filter drawer ──────────────────────────────────────────────── */}
       {drawerOpen && (
         <EcoFilterBar
-          topInset={TOPBAR_H + (META.isFixture ? BANNER_H : 0)}
+          topInset={TOPBAR_H}
           layers={graph.layers}
           roles={roles} onToggleRole={toggleIn(setRoles)}
           spines={spines} onToggleSpine={toggleIn(setSpines)}
