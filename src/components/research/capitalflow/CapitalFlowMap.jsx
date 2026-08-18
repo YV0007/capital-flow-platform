@@ -72,7 +72,7 @@ const BG = 'var(--cf-canvas)';
 const TOPBAR_H = 62;
 const PANEL_W = 380;   // must match EntityPanel's width
 
-export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }) {
+export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, mapSwitch }) {
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
   // Window anchor — the newest confirmed flow date, not `generated`. The
@@ -608,6 +608,9 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--cf-text3)'; e.currentTarget.style.borderColor = 'var(--cf-border)'; }}>
             <ChevronLeft size={13} /> {view !== 'map' ? 'К карте' : 'Назад'}
           </button>
+          {/* Потоки | Экосистема — owned by CapitalFlowSection one level up, so
+              the two maps never share state. See ecosystem/MapSwitch.jsx. */}
+          {mapSwitch}
           <div style={{ minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
               <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>

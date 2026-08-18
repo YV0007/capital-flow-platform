@@ -9,7 +9,7 @@ import HoldingsTab from './HoldingsTab.jsx';
 import HoldingsV2 from './HoldingsV2.jsx';
 import DataCentersAI from './DataCentersAI.jsx';
 import Proxy from './Proxy.jsx';
-import CapitalFlowMap from './capitalflow/CapitalFlowMap.jsx';
+import CapitalFlowSection from './CapitalFlowSection.jsx';
 
 const RESEARCH_LIBRARY = researchLibrary;
 
@@ -25,10 +25,18 @@ export default function ResearchDetail({ researchId, context, onBack, onOpenRese
       </div>
     );
   }
-  // Capital Flow Map is a full-screen canvas — no research header, no column;
-  // all navigation lives in its own floating top bar.
+  // Capital Flow is a full-screen canvas — no research header, no column; all
+  // navigation lives in its own floating top bar. The section holds TWO maps
+  // (Потоки · Экосистема) behind a switch; `context.map` can open either.
   if (researchId === 'capital-flow-map') {
-    return <CapitalFlowMap onBack={onBack} initialFlowId={context?.flowId} onOpenResearch={onOpenResearch} />;
+    return (
+      <CapitalFlowSection
+        onBack={onBack}
+        initialFlowId={context?.flowId}
+        initialMap={context?.map}
+        onOpenResearch={onOpenResearch}
+      />
+    );
   }
   // Holdings (Bloomberg IA) renders full-bleed with no research header —
   // navigation lives inside HoldingsV2's own sticky top bar.
