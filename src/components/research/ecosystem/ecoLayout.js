@@ -95,6 +95,32 @@ export function applyEcoLayout(graph) {
     cellR[k] = Math.max(packRelative(mem, 16, 13), 40);
   });
 
+  // ── Reach: how far across the stack a layer actually touches ───────────
+  // The angle of a cell is its position in the stack; its RADIUS is how
+  // pivotal it is. A layer whose companies trade with many OTHER layers gets
+  // pulled toward the middle, one that only talks to its neighbours drifts to
+  // the rim. Chips land in the centre because NVIDIA and TSMC touch nearly
+  // every layer — but nothing here names chips, or any layer: swap in a
+  // payload where power is the hub and power moves to the middle instead.
+  const layerOfNode = (id) => nodeById.get(id)?.primaryLayer;
+  const touched = {}, degree = {};
+  present.forEach(k => { touched[k] = new Set(); degree[k] = 0; });
+  edges.forEach(e => {
+    const a = layerOfNode(e.sourceId), b = layerOfNode(e.targetId);
+    if (a && touched[a]) { degree[a] += 1; if (b && b !== a) touched[a].add(b); }
+    if (b && touched[b]) { degree[b] += 1; if (a && a !== b) touched[b].add(a); }
+  });
+  const maxDeg = Math.max(1, ...present.map(k => degree[k]));
+  const reach = {};
+  present.forEach(k => {
+    const spread = touched[k].size / Math.max(1, N - 1);   // how many layers
+    const volume = degree[k] / maxDeg;                     // how many bonds
+    reach[k] = 0.62 * spread + 0.38 * volume;
+  });
+  const maxReach = Math.max(0.0001, ...present.map(k => reach[k]));
+  const reachNorm = {};
+  present.forEach(k => { reachNorm[k] = reach[k] / maxReach; });
+
   // ── Nucleus: the capital spine, aimed at what it controls ──────────────
   const outBySpine = {};
   edges.forEach(e => { (outBySpine[e.sourceId] ||= []).push(e); });
@@ -125,15 +151,23 @@ export function applyEcoLayout(graph) {
   }
   const maxCellR = Math.max(0, ...present.map(k => cellR[k]));
   ring = Math.max(ring, coreR + maxCellR + 300);
+  // Pulling the hub layers inward compresses the whole wheel, so the base
+  // radius is opened up by roughly what the pull takes back — otherwise the
+  // middle turns into a jam and the rim cells sit on each other.
+  ring *= 1.2;
 
-  // Per-cell radius jitter so the orbit sits organically off the perfect
-  // circle, then a light de-overlap of the cell centres.
+  // Radius = reach. The most connected layers sit close in, the peripheral
+  // ones ride the rim; a small stable jitter keeps it organic rather than
+  // mechanical. Then a de-overlap of the cell centres that also respects the
+  // capital nucleus, so an inward-pulled cell cannot land on top of it.
   const cellPos = {};
   present.forEach(k => {
-    const rr = ring * (0.86 + 0.26 * hash01(k, 5));
+    const pull = 0.42 * reachNorm[k];                       // 0 = rim, 1 = hub
+    const rr = ring * (1.02 - pull) * (0.94 + 0.12 * hash01(k, 5));
     cellPos[k] = { x: Math.cos(angleOf[k]) * rr, y: Math.sin(angleOf[k]) * rr };
   });
-  for (let it = 0; it < 80; it++) {
+  const NUCLEUS_GAP = 150;
+  for (let it = 0; it < 160; it++) {
     let moved = false;
     for (let i = 0; i < present.length; i++) {
       for (let j = i + 1; j < present.length; j++) {
@@ -147,6 +181,19 @@ export function applyEcoLayout(graph) {
           a.x -= ux * p; a.y -= uy * p; b.x += ux * p; b.y += uy * p;
         }
       }
+    }
+    // Clear the nucleus: a hub cell is pulled inward hard enough to reach it.
+    if (coreR) {
+      present.forEach(k => {
+        const c = cellPos[k];
+        const d = Math.hypot(c.x - spineCx, c.y - spineCy) || 0.01;
+        const min = coreR + cellR[k] + NUCLEUS_GAP;
+        if (d < min) {
+          moved = true;
+          const ux = (c.x - spineCx) / d, uy = (c.y - spineCy) / d;
+          c.x = spineCx + ux * min; c.y = spineCy + uy * min;
+        }
+      });
     }
     if (!moved) break;
   }
@@ -205,6 +252,7 @@ export function applyEcoLayout(graph) {
       // here" treatment, reused for the thing that matters on this map.
       lit: l?.concentration?.level === 'monopoly',
       concentration: l?.concentration,
+      reach: Math.round(reachNorm[k] * 100),
       count: cellMem[k].length,
     });
   });

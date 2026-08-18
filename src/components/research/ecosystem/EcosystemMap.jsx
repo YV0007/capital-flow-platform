@@ -21,7 +21,6 @@ import {
   Sparkles, Cpu,
 } from 'lucide-react';
 import EcoGraph from './EcoGraph.jsx';
-import EcoLegend from './EcoLegend.jsx';
 import EcoEntityPanel, { ECO_PANEL_W } from './EcoEntityPanel.jsx';
 import LayerReport from './LayerReport.jsx';
 import ChainCrumbs from './ChainCrumbs.jsx';
@@ -459,8 +458,6 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           </div>
         </div>
       )}
-
-      <EcoLegend counts={legendCounts} />
 
       {crumbs.length > 1 && !cycleMode && (
         <ChainCrumbs

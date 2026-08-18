@@ -192,7 +192,7 @@ export default function LayerReport({
         {/* Deep link */}
         {onOpenDcNode && members.some(m => m.n.dcNode) && (
           <Section title="Дальше">
-            <div style={{ padding: '0 12px' }}>
+            <div style={{ padding: '0 16px' }}>
               <button onClick={() => onOpenDcNode(members.find(m => m.n.dcNode).n.dcNode)}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 8, width: '100%',

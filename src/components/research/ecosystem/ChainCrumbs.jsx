@@ -17,15 +17,22 @@ export default function ChainCrumbs({ crumbs, rootId, counts, onOpenEntity, onCl
 
   return (
     <div style={{
-      position: 'absolute', left: '50%', bottom: 16, zIndex: 22,
-      transform: `translateX(calc(-50% - ${rightInset / 2}px))`,
-      maxWidth: `min(1080px, calc(100vw - ${rightInset + 60}px))`,
+      // Same shell as capitalflow/FlowDetailCard: an explicit width centred on
+      // the canvas MINUS the panel, and a transition on both, so the card
+      // glides across when the panel opens instead of jumping. Sizing by
+      // content made the card shrink-to-fit at its max width and left the
+      // wrapped second row hanging off to one side.
+      position: 'absolute', left: `calc(50% - ${rightInset / 2}px)`, bottom: 16, zIndex: 22,
+      transform: 'translateX(-50%)',
+      width: `min(860px, calc(100% - ${rightInset + 60}px))`, minWidth: 320,
+      boxSizing: 'border-box',
       background: 'var(--cf-panel)',
       border: '1px solid var(--cf-border)', borderRadius: 12,
       backdropFilter: 'blur(10px)',
       boxShadow: '0 22px 60px -22px var(--cf-shadow)',
       animation: 'cfmRise 200ms cubic-bezier(0.2,0.8,0.2,1)',
-      padding: '10px 12px 11px',
+      transition: 'left 220ms cubic-bezier(0.2,0.8,0.2,1), width 220ms cubic-bezier(0.2,0.8,0.2,1)',
+      padding: '10px 14px 12px',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
         <CornerDownRight size={11} color="var(--cf-text7)" />
@@ -47,7 +54,7 @@ export default function ChainCrumbs({ crumbs, rootId, counts, onOpenEntity, onCl
         </button>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap', rowGap: 6 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, flexWrap: 'wrap', rowGap: 6 }}>
         {crumbs.map((c, i) => (
           <span key={`${c.node.id}:${i}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
             {i > 0 && c.edge && (

@@ -31,6 +31,10 @@ import {
 
 const MONO = 'ui-monospace, monospace';
 export const ECO_PANEL_W = 400;
+// One horizontal gutter for the whole panel. Every row sits on it — the big
+// criticality and gravity numbers used to skip it and read as knocked out of
+// alignment against the section titles above them.
+const PAD = 16;
 
 export default function EcoEntityPanel({
   node, up, down, nodeById, layerById, isFixture,
@@ -136,19 +140,19 @@ export default function EcoEntityPanel({
             })}
           </div>
           {node.multiLayer && (
-            <Note>Компания живёт в {node.segments.length} слоях — на карте это один узел-капсула, а не несколько кружков. Цепочка входит и выходит в нужном слое.</Note>
+            <Note>Компания живёт в {node.segments.length} слоях — на карте это ОДИН узел в своём основном слое со значком из полосок, а не несколько кружков в разных островах.</Note>
           )}
         </Section>
 
         {/* 2. Criticality, with the rubric opened up */}
         <Section title="Критичность" icon={<CircleDot size={11} />}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 10, padding: `0 ${PAD}px` }}>
             <span style={{ fontSize: 30, fontWeight: 700, color: cb.color, lineHeight: 1, fontFamily: MONO }}>
               {node.criticality}
             </span>
             <span style={{ fontSize: 11.5, color: 'var(--cf-text3)', fontWeight: 600 }}>{cb.label}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: `0 ${PAD}px` }}>
             {CRITICALITY_FACTORS.map(f => {
               const v = node.criticalityFactors?.[f.key];
               return (
@@ -171,7 +175,7 @@ export default function EcoEntityPanel({
         {/* 3. Gravity */}
         {node.gravity && (
           <Section title="Гравитация" icon={<Zap size={11} />}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 8, padding: `0 ${PAD}px` }}>
               <span style={{ fontSize: 26, fontWeight: 700, color: 'var(--cf-text1)', lineHeight: 1, fontFamily: MONO }}>
                 {node.gravity.score}
               </span>
@@ -258,7 +262,7 @@ export default function EcoEntityPanel({
 
         {/* 9. Links out */}
         <Section title="Дальше">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: '0 12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: `0 ${PAD}px` }}>
             {node.dcNode && onOpenDcNode && (
               <LinkRow onClick={() => onOpenDcNode(node.dcNode)} icon={<Layers size={12} />}>
                 Технический разбор блока в DC-AI

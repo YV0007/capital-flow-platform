@@ -16,7 +16,8 @@
 //   · block size        → CRITICALITY (this map's "capital")
 //   · edge colour       → relation type; cool = physical spine, warm = capital
 //   · edge width        → strength (hairlines) · fainter = single source
-//   · dimmed            → filtered out, or outside the lit chain
+//   · absent            → filtered out, or outside the lit chain (removed,
+//                         not dimmed — a grey haze behind the answer is noise)
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
@@ -146,22 +147,28 @@ export default function EcoGraph({
     return chain.edges.has(e.id);
   }, [visibleEdges, hasChain, chain, cycleMode, cycleEdges]);
 
-  // Out-of-filter nodes/edges leave the render ENTIRELY (line, arrow,
-  // particles, hit area), so a filtered view is clean rather than a faint mess.
-  const nodeVisible = useCallback((n) => visibleNodes.has(n.id), [visibleNodes]);
-  const edgeVisible = useCallback((e) => visibleEdges.has(e.id), [visibleEdges]);
+  // Anything not lit leaves the render ENTIRELY — line, arrowhead, particles,
+  // hit area, tile. Fading it to 5% still left a grey haze of 60 companies
+  // behind the answer; with a chain up you want the chain and nothing else.
+  // Same treatment the flow map gives an active filter, extended to the chain
+  // and cycle lenses.
+  const nodeVisible = useCallback((n) => nodeLit(n), [nodeLit]);
+  const edgeVisible = useCallback((e) => edgeLit(e), [edgeLit]);
 
-  // Cell keys that still hold a visible node — a cell with none is removed.
+  // Cells that still hold a lit node. A cell emptied by the filter or by the
+  // chain loses its glow and its title too — an island labelled "L6 ГЕНЕРАЦИЯ"
+  // with nothing inside is worse than no island.
+  const narrowed = hasFilter || hasChain || cycleMode;
   const activeRegionKeys = useMemo(() => {
-    if (!hasFilter) return null;
+    if (!narrowed) return null;
     const keys = new Set();
     graphData.nodes.forEach(n => {
-      if (!visibleNodes.has(n.id)) return;
+      if (!nodeLit(n)) return;
       keys.add(n.primaryLayer);
       if (n.role === 'capital') keys.add('_capital');
     });
     return keys;
-  }, [hasFilter, graphData, visibleNodes]);
+  }, [narrowed, graphData, nodeLit]);
 
   // ── Cells: soft glow pools + a clickable title ─────────────────────────
   const paintRegions = useCallback((ctx, globalScale) => {
@@ -331,13 +338,14 @@ export default function EcoGraph({
 
   // ── Node painter — brand-logo "app-icon" tile ─────────────────────────
   const paintNode = useCallback((node, ctx, globalScale) => {
-    if (!visibleNodes.has(node.id)) return;
-    const lit = nodeLit(node);
+    // Unlit nodes are not painted at all — `nodeVisibility` already dropped
+    // them, so there is no dim branch left to take.
+    if (!nodeLit(node)) return;
+    const lit = true;
     const selected = node.id === selectedNodeId;
     const hovered = node.id === hoverNodeId;
     const isRoot = node.id === chainRoot;
-    const dim = node.faded ? 0.45 : 1;
-    const alpha = lit ? dim : ((hasChain || cycleMode) ? 0.05 : 0.5);
+    const alpha = node.faded ? 0.45 : 1;
     const col = tone(node.color, mode);
     const role = node.roleMeta || {};
     const R = node.r || 12;
@@ -440,21 +448,19 @@ export default function EcoGraph({
     }
 
     ctx.restore();
-  }, [visibleNodes, nodeLit, selectedNodeId, hoverNodeId, chainRoot, hasChain, cycleMode,
-      showLabels, getLogo, logoTick, mode, T]);
+  }, [nodeLit, selectedNodeId, hoverNodeId, chainRoot, showLabels, getLogo, logoTick, mode, T]);
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
-    if (!visibleNodes.has(node.id)) return;
+    if (!nodeLit(node)) return;
     const S = (node.r || 12) * 1.85, half = S / 2;
     ctx.fillStyle = colour;
     roundRect(ctx, node.x - half, node.y - half, S, S, S * 0.26);
     ctx.fill();
-  }, [visibleNodes]);
+  }, [nodeLit]);
 
   // ── Bond styling — force-graph's own renderer, flow-map settings ───────
   const linkColor = useCallback((e) => {
-    const lit = edgeLit(e);
-    if (!lit) return hexA(T.linkDim, T.linkDimAlpha * ((hasChain || cycleMode) ? 0.6 : 1));
+    if (!edgeLit(e)) return 'rgba(0,0,0,0)';      // dropped by linkVisibility
     if (e.id === selectedEdgeId) return T.labelStrong;
     const cyc = cycleMode ? cycleEdges.get(e.id) : null;
     if (cyc) return hexA(tone(cyc.color, mode), 0.95);
@@ -472,7 +478,7 @@ export default function EcoGraph({
   }, [edgeLit, selectedEdgeId, hoverEdgeId, hasChain, cycleMode, cycleEdges, mode, T]);
 
   const linkW = useCallback((e) => {
-    if (!visibleEdges.has(e.id)) return 0;
+    if (!edgeLit(e)) return 0;
     // HAIRLINES, like the flow map. Importance reads through opacity and the
     // particle flow, never through girth — a map of 60+ standing dependencies
     // turns into spaghetti the moment the lines get fat.
@@ -481,7 +487,7 @@ export default function EcoGraph({
     if (e.id === hoverEdgeId) return w + 0.8;
     if (cycleMode && cycleEdges.has(e.id)) return w + 0.9;
     return w;
-  }, [visibleEdges, selectedEdgeId, hoverEdgeId, cycleMode, cycleEdges]);
+  }, [edgeLit, selectedEdgeId, hoverEdgeId, cycleMode, cycleEdges]);
 
   const particles = useCallback((e) => {
     // Motion only on focus, so the map is still when idle — movement is a
