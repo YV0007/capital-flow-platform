@@ -1,52 +1,73 @@
 // ══════════════════════════════════════════════════════════════════════════
-// LayerReport — opens from a RING LABEL, never from a node.
+// LayerReport — opens from a CELL LABEL, never from an entity.
 //
-// That distinction is the model: on this map the only clickable object is a
-// COMPANY. A layer is a coordinate — so its report hangs off its label at the
-// top of the wheel, the way the flow map's cluster report hangs off a cluster
+// That distinction is the model: on this map the only clickable object is an
+// ENTITY. A layer is a coordinate — so its report hangs off its label at the
+// top of the cell, the way the flow map's cluster report hangs off a cluster
 // title.
 //
-// It answers, in this order and then stops:
+// For a layer on the ORBIT or the NUCLEUS it answers, in this order:
 //   1. How concentrated is this layer, and what that means in words
-//   2. Who controls it — ranked by criticality INSIDE this layer
+//   2. Who holds it — ranked by criticality INSIDE this layer
 //   3. Where the bottleneck actually is
 //   4. Is there a second source
 //   5. What changed this month
 //
+// For a layer on the CONTROL plane the report is a DIFFERENT QUESTION, and
+// that is deliberate. A gate is not a market: asking "who holds this layer" of
+// a set of jurisdictions and agencies produces a ranked list nobody wants.
+// What a reader wants to know about a gate is WHAT IT GATES — so the control
+// report leads with the outgoing `control`-spine edges: who is shut out of
+// what, with what risk and on what horizon.
+//
 // Every number is the engine's. The report only arranges them.
 // ══════════════════════════════════════════════════════════════════════════
 
-import { X, ChevronRight, Layers, AlertTriangle, GitBranch, History } from 'lucide-react';
-import { CONCENTRATION_META, critIn } from '../../../data/ecosystemMap.js';
+import { X, ChevronRight, Layers, AlertTriangle, GitBranch, History, ShieldAlert } from 'lucide-react';
+import { critIn } from '../../../data/nvidiaEcosystem.js';
 
 const MONO = 'ui-monospace, monospace';
 export const LAYER_REPORT_W = 430;
 
 export default function LayerReport({
-  layer, nodeById, edges, changelog, onOpenEntity, onOpenDcNode, onClose, topInset = 0,
+  layer, entityById, edges, changelog, onOpenEntity, onClose, topInset = 0,
 }) {
   if (!layer) return null;
 
-  const conc = CONCENTRATION_META[layer.concentration?.level] || CONCENTRATION_META.competitive;
+  const isGate = layer.plane === 'control';
+  const conc = layer.concentrationMeta;
   // Members, ranked by criticality IN THIS LAYER (not by their headline score
-  // — a company can be an anchor elsewhere and a bit player here).
+  // — an entity can be an anchor elsewhere and a bit player here).
   const members = (layer.members || [])
-    .map(id => nodeById.get(id))
+    .map(id => entityById.get(id))
     .filter(Boolean)
     .map(n => ({ n, c: critIn(n, layer.id) }))
     .sort((a, b) => b.c - a.c);
   const total = members.reduce((s, m) => s + m.c, 0);
+  const memberIds = new Set(members.map(m => m.n.id));
 
-  // The bottleneck: the most critical member, and how far clear of the next.
+  // What this gate actually gates: control-spine edges leaving the layer.
+  const gated = isGate
+    ? edges
+      .filter(e => e.spine === 'control' && memberIds.has(e.sourceId))
+      .sort((a, b) => (b.strength || 0) - (a.strength || 0))
+    : [];
+  // …and the mirror: control edges pointing INTO the layer. Read by the verb,
+  // these are always somebody else naming this jurisdiction or agency as what
+  // they hang off — «TSMC геополитически зависит от Тайваня», «NVIDIA
+  // экспортно подконтролен ведомству». So the block is "who hangs off this
+  // gate", NOT "what the gate obeys": the arrow runs the other way.
+  const hangingOn = isGate
+    ? edges
+      .filter(e => e.spine === 'control' && memberIds.has(e.targetId) && !memberIds.has(e.sourceId))
+      .sort((a, b) => (b.strength || 0) - (a.strength || 0))
+    : [];
+
   const lead = members[0] || null;
   const second = members[1] || null;
   const gap = lead && second ? lead.c - second.c : null;
-
-  // A second source exists when someone else in this layer supplies at least
-  // one of the same customers. Derived from the edges, not asserted.
-  const secondSource = lead ? findSecondSource(lead.n, members, edges, nodeById) : null;
-
-  const changes = collectChanges(changelog, layer, nodeById);
+  const secondSource = !isGate && lead ? findSecondSource(lead.n, members, edges, entityById) : null;
+  const changes = collectChanges(changelog, layer, entityById);
 
   return (
     <aside style={{
@@ -61,8 +82,16 @@ export default function LayerReport({
       <div style={{ padding: '15px 16px 13px', borderBottom: '1px solid var(--cf-border-soft)', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.12em' }}>
-              СЛОЙ {layer.id}
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+              <span style={{ fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.12em' }}>
+                СЛОЙ {layer.id}
+              </span>
+              {layer.planeMeta && (
+                <span title={layer.planeMeta.blurb} style={{
+                  fontSize: 8.5, color: layer.bandColor, fontFamily: MONO, fontWeight: 700,
+                  letterSpacing: '0.09em', cursor: 'help',
+                }}>{layer.planeMeta.short}</span>
+              )}
             </div>
             <div style={{ fontSize: 19, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, marginTop: 3 }}>
               {layer.label}
@@ -79,24 +108,50 @@ export default function LayerReport({
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '0 0 40px' }}>
-        {/* 1. Concentration */}
-        <Section title="Концентрация" icon={<Layers size={11} />}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px' }}>
-            <span style={{
-              padding: '4px 10px', borderRadius: 6, background: conc.color + '18',
-              border: `1px solid ${conc.color}55`, color: conc.color,
-              fontSize: 11, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.05em',
-            }}>{conc.label}</span>
-            <span style={{ fontSize: 11, color: 'var(--cf-text5)', fontFamily: MONO }}>
-              HHI {layer.concentration?.hhi ?? '—'} · {members.length} {plural(members.length, ['компания', 'компании', 'компаний'])}
-            </span>
-          </div>
-          <Note>{conc.blurb}</Note>
-        </Section>
 
-        {/* 2. Who holds it */}
-        <Section title="Кто контролирует слой" icon={<Layers size={11} />} count={members.length}>
-          {!members.length && <Note>В этом слое пока нет узлов — движок его ещё не наполнил.</Note>}
+        {/* ══ CONTROL PLANE: what does this gate actually gate ══ */}
+        {isGate && (
+          <>
+            <Section title="Что этот шлюз гейтит" icon={<ShieldAlert size={11} />} count={gated.length}
+              caption="Слои внешней дуги не стоят в стеке — они решают, что через него вообще может пройти. Поэтому отчёт начинается не с того, кто здесь сидит, а с того, на что они влияют.">
+              {!gated.length && <Note>Из этого слоя не выходит ни одной связи контроля.</Note>}
+              {gated.map(e => (
+                <GateRow key={e.id} e={e} entityById={entityById} onOpenEntity={onOpenEntity} side="target" />
+              ))}
+            </Section>
+
+            {hangingOn.length > 0 && (
+              <Section title="Кто на этот шлюз завязан" icon={<ShieldAlert size={11} />} count={hangingOn.length}
+                caption="Связи контроля, направленные внутрь слоя: другая сторона сама называет эту юрисдикцию или ведомство тем, от чего зависит.">
+                {hangingOn.map(e => (
+                  <GateRow key={e.id} e={e} entityById={entityById} onOpenEntity={onOpenEntity} side="source" />
+                ))}
+              </Section>
+            )}
+          </>
+        )}
+
+        {/* ══ ORBIT / NUCLEUS: concentration first ══ */}
+        {!isGate && (
+          <Section title="Концентрация" icon={<Layers size={11} />}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px' }}>
+              <span style={{
+                padding: '4px 10px', borderRadius: 6, background: conc.color + '18',
+                border: `1px solid ${conc.color}55`, color: conc.color,
+                fontSize: 11, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.05em',
+              }}>{conc.label}</span>
+              <span style={{ fontSize: 11, color: 'var(--cf-text5)', fontFamily: MONO }}>
+                HHI {layer.concentration?.hhi ?? '—'} · {members.length} {plural(members.length, ['участник', 'участника', 'участников'])}
+              </span>
+            </div>
+            <Note>{conc.blurb}</Note>
+          </Section>
+        )}
+
+        {/* Who is in this layer — on both planes, but worded differently */}
+        <Section title={isGate ? 'Кто стоит на этом шлюзе' : 'Кто контролирует слой'}
+          icon={<Layers size={11} />} count={members.length}>
+          {!members.length && <Note>В этом слое пока нет сущностей — движок его ещё не наполнил.</Note>}
           {members.map(({ n, c }) => (
             <button key={n.id} onClick={() => onOpenEntity(n.id)}
               style={{
@@ -111,7 +166,7 @@ export default function LayerReport({
               <span style={{ flex: 1, minWidth: 0, fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {n.name}
                 {n.multiLayer && (
-                  <span title="Компания живёт и в других слоях — на карте это одна капсула"
+                  <span title="Сущность живёт и в других слоях — на карте это одна плитка"
                     style={{ marginLeft: 6, fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700 }}>
                     {n.segments.map(s => s.layer).join('·')}
                   </span>
@@ -133,19 +188,18 @@ export default function LayerReport({
           ))}
         </Section>
 
-        {/* 3 + 4. Bottleneck and second source */}
-        {lead && (
+        {/* Bottleneck and second source — only meaningful for a market */}
+        {!isGate && lead && (
           <Section title="Узкое место" icon={<AlertTriangle size={11} />}>
             <div style={{ padding: '0 16px', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
               <b style={{ color: 'var(--cf-text0)' }}>{lead.n.name}</b> — критичность {lead.c} в этом слое
               {gap != null && second
                 ? `, следующий (${second.n.name}) отстаёт на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])}.`
-                : ' — единственный узел слоя.'}
+                : ' — единственная сущность слоя.'}
               {lead.n.whatBreaksIt && (
                 <div style={{ marginTop: 8, fontSize: 11.5, color: 'var(--cf-text4)' }}>
                   {/* Only the FIRST letter is lowered — `toLowerCase()` on the
-                      whole sentence turned "HBM Samsung у NVIDIA" into
-                      "hbm samsung у nvidia". */}
+                      whole sentence turned "HBM у NVIDIA" into "hbm у nvidia". */}
                   Сломает позицию: {uncapitalise(lead.n.whatBreaksIt)}
                 </div>
               )}
@@ -153,29 +207,31 @@ export default function LayerReport({
           </Section>
         )}
 
-        <Section title="Есть ли второй источник" icon={<GitBranch size={11} />}>
-          {secondSource ? (
-            <div style={{ padding: '0 16px', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
-              Да — <button onClick={() => onOpenEntity(secondSource.node.id)} style={inlineBtn}>{secondSource.node.name}</button>
-              {' '}поставляет{' '}
-              {secondSource.shared.map((c, i) => (
-                <span key={c.id}>
-                  {i > 0 && ', '}
-                  <button onClick={() => onOpenEntity(c.id)} style={inlineBtn}>{c.name}</button>
-                </span>
-              ))}
-              {' '}— тем же покупателям, что и лидер слоя. Переключение возможно, но по цене времени, а не мгновенно.
-            </div>
-          ) : (
-            <Note>
-              {lead
-                ? 'Нет: ни один другой узел слоя не поставляет тем же покупателям. Отказ лидера останавливает всё, что выше.'
-                : 'Слой пуст — вопрос не имеет смысла.'}
-            </Note>
-          )}
-        </Section>
+        {!isGate && (
+          <Section title="Есть ли второй источник" icon={<GitBranch size={11} />}>
+            {secondSource ? (
+              <div style={{ padding: '0 16px', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
+                Да — <button onClick={() => onOpenEntity(secondSource.entity.id)} style={inlineBtn}>{secondSource.entity.name}</button>
+                {' '}работает с{' '}
+                {secondSource.shared.map((c, i) => (
+                  <span key={c.id}>
+                    {i > 0 && ', '}
+                    <button onClick={() => onOpenEntity(c.id)} style={inlineBtn}>{c.name}</button>
+                  </span>
+                ))}
+                {' '}— теми же контрагентами, что и лидер слоя. Переключение возможно, но по цене времени, а не мгновенно.
+              </div>
+            ) : (
+              <Note>
+                {lead
+                  ? 'Нет: ни одна другая сущность слоя не работает с теми же контрагентами. Отказ лидера останавливает всё, что выше.'
+                  : 'Слой пуст — вопрос не имеет смысла.'}
+              </Note>
+            )}
+          </Section>
+        )}
 
-        {/* 5. What changed */}
+        {/* What changed */}
         <Section title="Что изменилось за месяц" icon={<History size={11} />}>
           {!changes.length && <Note>За этот прогон в слое ничего не менялось.</Note>}
           {changes.map((c, i) => (
@@ -188,27 +244,41 @@ export default function LayerReport({
             </div>
           ))}
         </Section>
-
-        {/* Deep link */}
-        {onOpenDcNode && members.some(m => m.n.dcNode) && (
-          <Section title="Дальше">
-            <div style={{ padding: '0 16px' }}>
-              <button onClick={() => onOpenDcNode(members.find(m => m.n.dcNode).n.dcNode)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 8, width: '100%',
-                  padding: '8px 10px', background: 'var(--cf-surface2)',
-                  border: '1px solid var(--cf-border)', borderRadius: 7,
-                  color: 'var(--cf-text2)', fontSize: 11, cursor: 'pointer', textAlign: 'left',
-                }}>
-                <Layers size={12} /> Технический разбор слоя в DC-AI
-                <span style={{ flex: 1 }} />
-                <ChevronRight size={12} color="var(--cf-text7)" />
-              </button>
-            </div>
-          </Section>
-        )}
       </div>
     </aside>
+  );
+}
+
+/** One gated relation: who is shut out of what, how hard, and with what risk. */
+function GateRow({ e, entityById, onOpenEntity, side }) {
+  const other = entityById.get(side === 'target' ? e.targetId : e.sourceId);
+  if (!other) return null;
+  return (
+    <div style={{ padding: '8px 16px', borderTop: '1px solid var(--cf-border-hair)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+        <span style={{ fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: e.color, textTransform: 'uppercase', letterSpacing: '0.05em', flexShrink: 0 }}>
+          {e.verb || e.typeLabel}
+        </span>
+        <button onClick={() => onOpenEntity(other.id)} style={{ ...inlineBtn, flex: 1, minWidth: 0, textAlign: 'left', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {other.name}
+        </button>
+        {e.riskMeta && e.risk?.level !== 'low' && (
+          <span title={e.risk?.mitigation ? `Чем крыть: ${e.risk.mitigation}` : e.riskMeta.blurb} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 4,
+            fontSize: 8.5, fontFamily: MONO, color: e.riskMeta.color, cursor: 'help', flexShrink: 0,
+          }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: e.riskMeta.color }} />
+            {e.riskTimelineLabel || e.riskMeta.label}
+          </span>
+        )}
+        <span style={{ width: 22, fontSize: 10, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text4)', textAlign: 'right', flexShrink: 0 }}>
+          {e.strength}
+        </span>
+      </div>
+      {e.note && (
+        <div style={{ marginTop: 4, fontSize: 11, color: 'var(--cf-text5)', lineHeight: 1.5 }}>{e.note}</div>
+      )}
+    </div>
   );
 }
 
@@ -219,10 +289,10 @@ const inlineBtn = {
 };
 
 /**
- * Is anyone else in this layer selling to the same customers as the leader?
- * Purely graph-derived — no judgement, no list of "known alternatives".
+ * Is anyone else in this layer working with the same counterparties as the
+ * leader? Purely graph-derived — no judgement, no list of "known alternatives".
  */
-function findSecondSource(lead, members, edges, nodeById) {
+function findSecondSource(lead, members, edges, entityById) {
   const leadCustomers = new Map();
   edges.forEach(e => { if (e.sourceId === lead.id) leadCustomers.set(e.targetId, true); });
   if (!leadCustomers.size) return null;
@@ -234,8 +304,8 @@ function findSecondSource(lead, members, edges, nodeById) {
     });
     if (shared.length) {
       return {
-        node: n,
-        shared: [...new Set(shared)].slice(0, 3).map(id => ({ id, name: nodeById.get(id)?.name || id })),
+        entity: n,
+        shared: [...new Set(shared)].slice(0, 3).map(id => ({ id, name: entityById.get(id)?.name || id })),
       };
     }
   }
@@ -243,20 +313,20 @@ function findSecondSource(lead, members, edges, nodeById) {
 }
 
 /** The engine's changelog, filtered down to this layer. */
-function collectChanges(changelog, layer, nodeById) {
+function collectChanges(changelog, layer, entityById) {
   if (!changelog) return [];
   const out = [];
   const touches = (id) => {
-    const n = nodeById.get(id);
+    const n = entityById.get(id);
     return n ? n.segments.some(s => s.layer === layer.id) : false;
   };
   const LABEL = { added: 'ПОЯВИЛОСЬ', removed: 'УБРАНО', changed: 'ИЗМЕНИЛОСЬ' };
   ['added', 'removed', 'changed'].forEach(kind => {
     (changelog[kind] || []).forEach(item => {
-      const name = nodeById.get(item.id)?.name;
-      // Node entries filter by layer; edge entries have no layer of their own,
-      // so they surface when either endpoint id is a member of this layer.
-      const relevant = item.kind === 'node'
+      const name = entityById.get(item.id)?.name;
+      // Entity entries filter by layer; edge entries have no layer of their
+      // own, so they surface when either endpoint id is a member of this layer.
+      const relevant = item.kind === 'entity'
         ? touches(item.id)
         : String(item.id).split('__').slice(0, 2).some(touches);
       if (!relevant) return;
@@ -271,17 +341,22 @@ function collectChanges(changelog, layer, nodeById) {
   return out;
 }
 
-function Section({ title, icon, count, children }) {
+function Section({ title, icon, count, caption, children }) {
   return (
     <div style={{ padding: '13px 0 10px', borderBottom: '1px solid var(--cf-border-hair)' }}>
       <div style={{
-        display: 'flex', alignItems: 'center', gap: 6, padding: '0 16px 9px',
+        display: 'flex', alignItems: 'center', gap: 6, padding: `0 16px ${caption ? 5 : 9}px`,
         fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.12em',
       }}>
         {icon}{title}
         {count != null && <span style={{ color: 'var(--cf-text8)' }}>· {count}</span>}
       </div>
+      {caption && (
+        <div style={{ padding: '0 16px 9px', fontSize: 10.5, color: 'var(--cf-text6)', lineHeight: 1.5 }}>
+          {caption}
+        </div>
+      )}
       {children}
     </div>
   );

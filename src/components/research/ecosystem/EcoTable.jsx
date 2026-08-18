@@ -3,14 +3,13 @@
 //
 // Sibling of capitalflow/EntityTable, and there for the same reason: a map is
 // good at "who touches whom" and bad at "show me everything, sorted". This is
-// the sorted-everything view — every company in the payload, with the numbers
+// the sorted-everything view — every entity in the payload, with the numbers
 // the map can only encode as size and colour, and every column sortable.
 //
-// It answers the questions the canvas cannot:
-//   · rank the whole ecosystem by criticality, or by gravity, or by reach
-//   · read a layer or a role as a flat list instead of an island
-//   · find the companies that nothing depends on, or that depend on nothing
-//   · see who is public and how to get exposure, at a glance
+// v2 puts the RUBRIC in the table: the four criticality factors get their own
+// columns, so you can rank the whole ecosystem by lock-in depth or by time to
+// replace and not just by the blended score. That is the one question the
+// blended score cannot answer — «кто держится на замке, а кто на сроке».
 //
 // Grouping is by LAYER by default — the stack order is the reading order —
 // with a flat mode for pure ranking. Clicking a row opens it on the map.
@@ -18,40 +17,54 @@
 
 import { useState, useMemo } from 'react';
 import { ChevronDown, ChevronUp, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
-import { criticalityBand, critIn, CONCENTRATION_META } from '../../../data/ecosystemMap.js';
+import { criticalityBand, CRITICALITY_FACTORS } from '../../../data/nvidiaEcosystem.js';
 
 const MONO = 'ui-monospace, monospace';
 
 const COLUMNS = [
-  { key: 'name',        label: 'Компания',   w: '1fr',  align: 'left'  },
-  { key: 'role',        label: 'Роль',       w: '84px', align: 'left'  },
-  { key: 'sector',      label: 'Функция',    w: '1fr',  align: 'left'  },
-  { key: 'layers',      label: 'Слои',       w: '96px', align: 'left'  },
-  { key: 'criticality', label: 'Критичн.',   w: '92px', align: 'right', num: true },
-  { key: 'gravity',     label: 'Гравит.',    w: '76px', align: 'right', num: true },
-  { key: 'up',          label: 'Зависит',    w: '68px', align: 'right', num: true },
-  { key: 'down',        label: 'Кормит',     w: '68px', align: 'right', num: true },
-  { key: 'exposure',    label: 'Экспозиция', w: '112px', align: 'left' },
+  { key: 'name',        label: 'Сущность',  w: '1.3fr', align: 'left'  },
+  { key: 'role',        label: 'Роль',      w: '76px',  align: 'left'  },
+  { key: 'sector',      label: 'Функция',   w: '1fr',   align: 'left'  },
+  { key: 'layers',      label: 'Слои',      w: '86px',  align: 'left'  },
+  { key: 'criticality', label: 'Критичн.',  w: '86px',  align: 'right', num: true },
+  // The rubric, opened up. Short headers on purpose — the full question is in
+  // the column's tooltip, taken from CRITICALITY_FACTORS.
+  { key: 'irreplaceability', label: 'Незам.',  w: '52px', align: 'right', num: true, factor: 'irreplaceability' },
+  { key: 'lockInDepth',      label: 'Замок',   w: '52px', align: 'right', num: true, factor: 'lockInDepth' },
+  { key: 'timeToReplace',    label: 'Срок',    w: '52px', align: 'right', num: true, factor: 'timeToReplace' },
+  { key: 'strategicControl', label: 'Рычаг',   w: '52px', align: 'right', num: true, factor: 'strategicControl' },
+  { key: 'gravity',     label: 'Гравит.',   w: '62px',  align: 'right', num: true },
+  { key: 'phase',       label: 'Фаза',      w: '78px',  align: 'left'  },
+  { key: 'risk',        label: 'Риск',      w: '74px',  align: 'left'  },
+  { key: 'links',       label: 'Связей',    w: '82px',  align: 'right', num: true },
 ];
 const GRID = COLUMNS.map(c => c.w).join(' ');
+const FACTOR_BY_KEY = Object.fromEntries(CRITICALITY_FACTORS.map(f => [f.key, f]));
+
+const RISK_ORDER = { critical: 3, high: 2, medium: 1, low: 0 };
 
 const valueOf = (n, key) => {
   switch (key) {
     case 'name': return n.name.toLowerCase();
     case 'role': return n.roleMeta?.label || n.role;
     case 'sector': return n.sectorLabel || '';
-    case 'layers': return n.primaryIdx;
+    case 'layers': return n.primaryOrder ?? 0;
     case 'criticality': return n.criticality || 0;
     case 'gravity': return n.gravity?.score || 0;
-    case 'up': return n.upCount || 0;
-    case 'down': return n.downCount || 0;
-    case 'exposure': return n.publicPrivate === 'Pub' ? (n.ticker || 'Pub') : 'zzz';
+    case 'phase': return n.phaseMeta?.order ?? 99;
+    case 'risk': return RISK_ORDER[n.risk?.geopolitical] ?? -1;
+    case 'links': return (n.upCount || 0) + (n.downCount || 0);
+    case 'irreplaceability':
+    case 'lockInDepth':
+    case 'timeToReplace':
+    case 'strategicControl':
+      return n.criticalityFactors?.[key] ?? -1;
     default: return 0;
   }
 };
 
 export default function EcoTable({
-  nodes, layers, layerById, query, visibleNodes, onOpenEntity, topInset = 0,
+  entities, layers, layerById, query, visibleEntities, onOpenEntity, topInset = 0,
 }) {
   const [sort, setSort] = useState({ key: 'criticality', dir: -1 });
   const [grouped, setGrouped] = useState(true);
@@ -59,10 +72,11 @@ export default function EcoTable({
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
-    let list = nodes.filter(n => {
-      if (onlyVisible && visibleNodes && !visibleNodes.has(n.id)) return false;
+    let list = entities.filter(n => {
+      if (onlyVisible && visibleEntities && !visibleEntities.has(n.id)) return false;
       if (!q) return true;
       return n.name.toLowerCase().includes(q)
+        || (n.aliases || []).some(a => a.toLowerCase().includes(q))
         || (n.ticker || '').toLowerCase().includes(q)
         || (n.sectorLabel || '').toLowerCase().includes(q)
         || (n.oneLiner || '').toLowerCase().includes(q);
@@ -74,26 +88,30 @@ export default function EcoTable({
       return a.name.localeCompare(b.name);
     });
     return list;
-  }, [nodes, query, sort, onlyVisible, visibleNodes]);
+  }, [entities, query, sort, onlyVisible, visibleEntities]);
 
-  // Grouped mode walks the stack in order; the capital spine gets its own
-  // block at the top because it stands beside the stack, not inside it.
+  // Grouped mode walks the payload's own layer order. Nothing here names a
+  // layer or a plane's contents — it just walks `layers`, which arrive sorted.
   const groups = useMemo(() => {
     if (!grouped) return [{ key: '_all', label: null, rows }];
     const out = [];
-    const spine = rows.filter(n => n.role === 'capital');
-    if (spine.length) out.push({ key: '_capital', label: 'ХРЕБЕТ КАПИТАЛА', caption: 'владеют и финансируют стек, не стоя в нём', rows: spine });
     layers.forEach(l => {
-      const mem = rows.filter(n => n.role !== 'capital' && n.primaryLayer === l.id);
+      const mem = rows.filter(n => n.primaryLayer === l.id);
       if (!mem.length) return;
-      const conc = CONCENTRATION_META[l.concentration?.level];
-      out.push({ key: l.id, label: `${l.id} · ${l.label}`, caption: l.caption, conc, rows: mem });
+      out.push({
+        key: l.id,
+        label: `${l.id} · ${l.label}`,
+        caption: l.caption,
+        conc: l.concentrationMeta,
+        plane: l.planeMeta,
+        rows: mem,
+      });
     });
     return out;
   }, [grouped, rows, layers]);
 
   const toggleSort = (key) => setSort(s => (
-    s.key === key ? { key, dir: -s.dir } : { key, dir: key === 'name' || key === 'sector' || key === 'role' ? 1 : -1 }
+    s.key === key ? { key, dir: -s.dir } : { key, dir: (key === 'name' || key === 'sector' || key === 'role' || key === 'phase') ? 1 : -1 }
   ));
 
   return (
@@ -110,7 +128,7 @@ export default function EcoTable({
           fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
         }}>
-          {rows.length} {plural(rows.length, ['компания', 'компании', 'компаний'])}
+          {rows.length} {plural(rows.length, ['сущность', 'сущности', 'сущностей'])}
         </span>
         <div style={{ flex: 1 }} />
         <Toggle on={grouped} onClick={() => setGrouped(g => !g)}
@@ -125,19 +143,22 @@ export default function EcoTable({
 
       {/* Header */}
       <div style={{
-        display: 'grid', gridTemplateColumns: GRID, gap: 10,
+        display: 'grid', gridTemplateColumns: GRID, gap: 8,
         padding: '8px 18px', borderBottom: '1px solid var(--cf-border)',
         flexShrink: 0, background: 'var(--cf-canvas)',
       }}>
         {COLUMNS.map(c => {
           const active = sort.key === c.key;
+          const f = c.factor ? FACTOR_BY_KEY[c.factor] : null;
           return (
             <button key={c.key} onClick={() => toggleSort(c.key)}
+              title={f ? `${f.label} · ${f.question} · вес ${Math.round(f.weight * 100)}%` : undefined}
               style={{
                 display: 'flex', alignItems: 'center', gap: 3,
                 justifyContent: c.align === 'right' ? 'flex-end' : 'flex-start',
-                background: 'none', border: 'none', padding: 0, cursor: 'pointer',
-                color: active ? 'var(--cf-accent)' : 'var(--cf-text6)',
+                background: 'none', border: 'none', padding: 0,
+                cursor: 'pointer',
+                color: active ? 'var(--cf-accent)' : (f ? 'var(--cf-text7)' : 'var(--cf-text6)'),
                 fontSize: 9, fontFamily: MONO, fontWeight: 700,
                 textTransform: 'uppercase', letterSpacing: '0.08em', whiteSpace: 'nowrap',
               }}>
@@ -167,8 +188,12 @@ export default function EcoTable({
                   fontSize: 10, color: 'var(--cf-text3)', fontFamily: MONO, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.1em',
                 }}>{g.label}</span>
-                {g.caption && (
-                  <span style={{ fontSize: 9.5, color: 'var(--cf-text7)' }}>{g.caption}</span>
+                {g.caption && <span style={{ fontSize: 9.5, color: 'var(--cf-text7)' }}>{g.caption}</span>}
+                {g.plane && (
+                  <span title={g.plane.blurb} style={{
+                    fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text7)',
+                    letterSpacing: '0.06em', cursor: 'help',
+                  }}>{g.plane.short}</span>
                 )}
                 {g.conc && (
                   <span style={{
@@ -193,7 +218,7 @@ function Row({ n, layerById, onOpen }) {
   return (
     <button onClick={() => onOpen(n.id)}
       style={{
-        display: 'grid', gridTemplateColumns: GRID, gap: 10, width: '100%',
+        display: 'grid', gridTemplateColumns: GRID, gap: 8, width: '100%',
         padding: '7px 18px', alignItems: 'center',
         background: 'transparent', border: 'none',
         borderTop: '1px solid var(--cf-border-hair)',
@@ -209,15 +234,14 @@ function Row({ n, layerById, onOpen }) {
             fontSize: 12, color: 'var(--cf-text1)', fontWeight: 600,
             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
           }}>{n.name}</span>
-          {n.tierMeta && (
-            <span title={n.tierMeta.blurb} style={{
-              fontSize: 8, color: n.tierMeta.color, fontFamily: MONO, fontWeight: 700,
-              letterSpacing: '0.06em', flexShrink: 0,
-            }}>{n.tierMeta.short}</span>
+          {n.isAnchor && (
+            <span title="Якорь экосистемы" style={{
+              fontSize: 8, color: 'var(--cf-accent)', fontFamily: MONO, fontWeight: 700, flexShrink: 0,
+            }}>ЯКОРЬ</span>
           )}
           {n.faded && (
-            <span title={`Не подтверждалось с ${n.lastConfirmed || '—'}`}
-              style={{ fontSize: 8, color: 'var(--cf-muted)', fontFamily: MONO, flexShrink: 0 }}>—</span>
+            <span title={`Данные не подтверждались с ${n.lastConfirmed || '—'}`}
+              style={{ fontSize: 8, color: 'var(--cf-muted)', fontFamily: MONO, flexShrink: 0 }}>устар.</span>
           )}
         </span>
       </Cell>
@@ -240,7 +264,7 @@ function Row({ n, layerById, onOpen }) {
       {/* Criticality: the bar makes the column scannable, the number keeps it exact */}
       <Cell align="right">
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end', width: '100%' }}>
-          <span style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--cf-surface2)', overflow: 'hidden', flexShrink: 0 }}>
+          <span style={{ width: 34, height: 4, borderRadius: 2, background: 'var(--cf-surface2)', overflow: 'hidden', flexShrink: 0 }}>
             <span style={{ display: 'block', height: '100%', width: `${n.criticality}%`, background: cb.color }} />
           </span>
           <span title={cb.label} style={{ fontSize: 11, fontFamily: MONO, fontWeight: 700, color: cb.color, width: 22, textAlign: 'right' }}>
@@ -249,25 +273,63 @@ function Row({ n, layerById, onOpen }) {
         </span>
       </Cell>
 
+      {/* The four rubric inputs, bare. They are only readable as a ROW —
+          "95 90 95 40" tells you this one holds on scarcity and time, not on
+          leverage — so no bars here, just the digits in a fixed order. */}
+      <FactorCell n={n} k="irreplaceability" />
+      <FactorCell n={n} k="lockInDepth" />
+      <FactorCell n={n} k="timeToReplace" />
+      <FactorCell n={n} k="strategicControl" />
+
       <Cell mono align="right">{n.gravity?.score ?? '—'}</Cell>
 
-      <Cell mono dim align="right">
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, justifyContent: 'flex-end' }}>
-          <ArrowDownLeft size={9} />{n.upCount}
-        </span>
-      </Cell>
-      <Cell mono dim align="right">
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, justifyContent: 'flex-end' }}>
-          <ArrowUpRight size={9} />{n.downCount}
-        </span>
+      <Cell>
+        {n.phaseMeta ? (
+          <span title={n.phaseMeta.blurb} style={{
+            fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: n.phaseMeta.color,
+            letterSpacing: '0.04em', cursor: 'help',
+          }}>{n.phaseMeta.label}</span>
+        ) : null}
       </Cell>
 
-      <Cell mono dim>
-        {n.publicPrivate === 'Pub'
-          ? <span style={{ color: 'var(--cf-text3)' }}>{n.ticker || 'ПУБЛ.'}</span>
-          : <span>частная</span>}
+      <Cell>
+        {n.riskMeta ? (
+          <span title={n.risk?.note || n.riskMeta.blurb} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 5,
+            fontSize: 9.5, fontFamily: MONO, color: n.riskMeta.color, cursor: 'help',
+          }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: n.riskMeta.color, flexShrink: 0 }} />
+            {n.riskMeta.label}
+          </span>
+        ) : null}
+      </Cell>
+
+      <Cell mono dim align="right">
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end' }}>
+          <span title={`Зависит от ${n.upCount}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+            <ArrowDownLeft size={9} />{n.upCount}
+          </span>
+          <span title={`Кормит ${n.downCount}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+            <ArrowUpRight size={9} />{n.downCount}
+          </span>
+        </span>
       </Cell>
     </button>
+  );
+}
+
+function FactorCell({ n, k }) {
+  const v = n.criticalityFactors?.[k];
+  const f = FACTOR_BY_KEY[k];
+  return (
+    <Cell mono align="right">
+      {v == null ? '' : (
+        <span title={`${f.label}: ${v} из 100 · вес ${Math.round(f.weight * 100)}%${n.criticalityWhy?.[k] ? `\n${n.criticalityWhy[k]}` : ''}`}
+          style={{ cursor: 'help', color: v >= 85 ? 'var(--cf-text2)' : 'var(--cf-text6)' }}>
+          {v}
+        </span>
+      )}
+    </Cell>
   );
 }
 
