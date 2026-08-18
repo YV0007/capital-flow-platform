@@ -465,11 +465,16 @@ export const META = {
 };
 
 // ══════════════════════════════════════════════════════════════════════════
-// LAYERS — read straight from the payload. NOTHING here is hard-coded: not
-// the count, not the order, not a single identifier. Twelve layers or twenty,
-// the map assembles.
+// buildLayers — read layers straight from a payload. NOTHING here is
+// hard-coded: not the count, not the order, not a single identifier. Twelve
+// layers or twenty, the map assembles.
+//
+// Parameterized on `raw` so the v3 network adapter can reuse the exact same
+// taxonomy over its own file — the layers, roles, spines, tiers and rubric of
+// v2 are frozen and MUST NOT be re-typed in a second place, or the two maps
+// drift the first time one is edited.
 // ══════════════════════════════════════════════════════════════════════════
-export const LAYERS = (() => {
+export function buildLayers(raw) {
   const list = (raw.layers || []).map(l => {
     const conc = l.concentration || {};
     const level = CONCENTRATION_META[conc.level] ? conc.level : 'competitive';
@@ -494,17 +499,26 @@ export const LAYERS = (() => {
   const byPlane = { nucleus: [], orbit: [], control: [] };
   list.forEach(l => byPlane[l.plane].push(l));
   return { list, byId, byPlane };
-})();
+}
+
+export const LAYERS = buildLayers(raw);
 
 // ══════════════════════════════════════════════════════════════════════════
-// buildGraph — one pass over the payload, everything the canvas needs.
+// buildGraphFrom — one pass over a payload, everything the canvas needs. The
+// v2 NVIDIA map calls buildGraph() (this file's own `raw`); the v3 network map
+// calls buildGraphFrom(networkRaw) and then decorates the result with pivots
+// and network metrics. One builder, two files, zero taxonomy drift.
 // ══════════════════════════════════════════════════════════════════════════
 export function buildGraph() {
+  return buildGraphFrom(raw);
+}
+
+export function buildGraphFrom(raw) {
   const asOf = raw.asOf || null;
   const anchorId = raw.anchor || null;
 
   // ── Layers ─────────────────────────────────────────────────────────────
-  const layers = LAYERS.list.map(l => ({ ...l, entityCount: 0, members: [] }));
+  const layers = buildLayers(raw).list.map(l => ({ ...l, entityCount: 0, members: [] }));
   const layerById = new Map(layers.map(l => [l.id, l]));
 
   const sectors = (raw.sectors || []).map(s => ({ ...s }));
@@ -688,8 +702,10 @@ export function buildGraph() {
     schema: raw.schema || null,
     generated: raw.generated || null,
     asOf,
-    source: META.source,
-    isFixture: META.isFixture,
+    // Source/isFixture come from the PASSED payload, not the module's META —
+    // the network adapter passes its own file and needs its own draft flag.
+    source: raw.source || 'fixture',
+    isFixture: raw.source !== 'engine',
     anchorId, anchor,
     layers, layerById, layersByPlane: {
       nucleus: layers.filter(l => l.plane === 'nucleus'),
