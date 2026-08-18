@@ -23,7 +23,7 @@ const MONO = 'ui-monospace, monospace';
 export const LAYER_REPORT_W = 430;
 
 export default function LayerReport({
-  layer, nodes, nodeById, edges, changelog, onOpenEntity, onOpenDcNode, onClose, topInset = 0,
+  layer, nodeById, edges, changelog, onOpenEntity, onOpenDcNode, onClose, topInset = 0,
 }) {
   if (!layer) return null;
 

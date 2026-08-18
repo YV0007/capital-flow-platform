@@ -34,10 +34,7 @@ import { applyEcoLayout } from './ecoLayout.js';
 import {
   buildChain, principalPath, CHAIN_KINDS, CHAIN_DIRECTIONS, CHAIN_DEPTHS, DEFAULT_BRANCH,
 } from './chain.js';
-import {
-  buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH,
-  ROLE_META, EDGE_TYPE_META,
-} from '../../../data/ecosystemMap.js';
+import { buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH } from '../../../data/ecosystemMap.js';
 
 const MONO = 'ui-monospace, monospace';
 const BG = 'var(--cf-canvas)';
@@ -514,7 +511,6 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         <LayerReport
           topInset={TOPBAR_H}
           layer={layerOpen}
-          nodes={graph.nodes}
           nodeById={graph.nodeById}
           edges={graph.edges}
           changelog={META.changelog}
