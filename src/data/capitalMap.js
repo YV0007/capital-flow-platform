@@ -29,6 +29,7 @@ import entityRef from './entityReference.json';
 import ru from './capitalMapRu.json';
 import logoManifest from './logoManifest.json';
 import flowNotes from './flowNotes.json';
+import allocatorNotes from './allocatorNotes.json';
 import { classifyGraph } from '../components/research/capitalflow/classification.js';
 
 // Pure consumer: `raw` is the engine's delivery, rendered as-is. The engine
@@ -570,6 +571,11 @@ export function buildGraph(data = raw) {
     // the `alloc:` prefix. This is the source of truth for allocator narrative
     // and track record — the dashboard sidecar is only a legacy fallback.
     const engineAlloc = isAllocator ? (data.allocators || {})[n.id.replace(/^alloc:/, '')] || null : null;
+    // Dashboard-curated context (allocatorNotes.json) — a short public-figure
+    // "known as" tag for the Тезисы panel, plus additive fallbacks for the
+    // handful of allocators the engine profiled thinly. Never overrides
+    // engine data — only fills a genuine gap (`|| fallback`, not `??`).
+    const allocNote = isAllocator ? allocatorNotes[n.id.replace(/^alloc:/, '')] || null : null;
     return {
       ...n,
       name: displayName,
@@ -591,6 +597,9 @@ export function buildGraph(data = raw) {
       engineSectors: engineAlloc?.sectors || null,
       thesisShares: engineAlloc?.thesis_shares || null,
       confirmedDeals: typeof engineAlloc?.confirmed_deals === 'number' ? engineAlloc.confirmed_deals : null,
+      knownAs: allocNote?.knownAs || null,
+      sectorsFallback: allocNote?.sectorsFallback || null,
+      thesisFallback: allocNote?.thesisFallback || null,
       monogram: monogramOf(displayName),
       searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(displayName)}`,
       // FlowGraph role encoding: 'player' deploys · 'target' receives.

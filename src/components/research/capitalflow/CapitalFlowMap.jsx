@@ -572,13 +572,19 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
       </div>
 
       {/* ── Top overlay bar ─────────────────────────────────────────────── */}
+      {/* The scrim (fades to transparent at its own bottom edge) is only
+          right on the map — it's there so the header blends into the canvas
+          instead of hard-cutting it. Table/digest/etc. have their own solid
+          `--cf-canvas` backdrop starting at topInset, so the same fade there
+          just exposes whatever canvas frame is still painted underneath.
+          Solid `--cf-canvas` behind the header everywhere but the map. */}
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30,
         height: TOPBAR_H, boxSizing: 'border-box',
         display: 'flex', alignItems: 'center', gap: 10,
         padding: '0 16px',
         pointerEvents: 'none',
-        background: 'var(--cf-scrim)',
+        background: view === 'map' ? 'var(--cf-scrim)' : 'var(--cf-canvas)',
       }}>
         {/* Back + title + stats */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, pointerEvents: 'auto', minWidth: 0 }}>

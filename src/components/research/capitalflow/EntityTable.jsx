@@ -11,13 +11,14 @@
 // within each subsection; a row click jumps to the map with the entity open.
 
 import { useMemo, useState, useCallback } from 'react';
-import { ArrowUp, ArrowDown, ChevronDown, ChevronRight } from 'lucide-react';
+import { ArrowUp, ArrowDown, ChevronDown, ChevronRight, Sparkles } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
 import {
   SECTOR_META, THEME_META, AGGREGATES, sectorLabel, basisLabel,
 } from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
 import { ARCHETYPE_LABEL, RANK_LABEL, RANK_COLOR } from './classification.js';
+import AllocatorTheses from './AllocatorTheses.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -254,6 +255,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
   const [sortKey, setSortKey] = useState('capital');
   const [sortDir, setSortDir] = useState(-1);         // -1 desc · 1 asc
   const [collapsed, setCollapsed] = useState(() => new Set());
+  const [thesesOpen, setThesesOpen] = useState(false);
 
   const toggleGroup = useCallback((id) => {
     setCollapsed(prev => {
@@ -353,6 +355,17 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
             {query ? <> · по запросу «{query}»</> : null}
           </span>
           <span style={{ flex: 1 }} />
+          <button onClick={() => setThesesOpen(true)}
+            title="Тезисы инвесторов — кто вкладывает, в каком статусе и почему"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 5,
+              padding: '5px 11px', borderRadius: 7, cursor: 'pointer',
+              background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)',
+              color: 'var(--cf-text3)', fontSize: 10, fontFamily: MONO, fontWeight: 600,
+              textTransform: 'uppercase', letterSpacing: '0.07em',
+            }}>
+            <Sparkles size={11} /> Тезисы
+          </button>
           {[['all', 'Все'], ['allocator', 'Инвесторы'], ['target', 'Получатели']].map(([k, label]) => (
             <button key={k} onClick={() => onKind?.(k)}
               style={{
@@ -367,6 +380,15 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
             </button>
           ))}
         </div>
+
+        {thesesOpen && (
+          <AllocatorTheses
+            nodes={nodes}
+            onOpenEntity={onOpenEntity}
+            onClose={() => setThesesOpen(false)}
+            topInset={0}
+          />
+        )}
 
         {sections.map(role => (
           <section key={role.key} style={{ marginBottom: 30 }}>
