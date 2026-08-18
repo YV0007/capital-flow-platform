@@ -4,15 +4,22 @@
 // either map lands you in the same place with the same shape of answer.
 //
 // The flow map's card leads with MONEY, because a flow is money. A bond here
-// is a standing dependency, and this contract carries no dollar volume at all
-// — inventing one would be worse than not having it. So the card leads with
-// the two facts the payload does carry, in the same slots:
+// is a standing position of power and the contract carries no dollar volume at
+// all — inventing one would be worse than not having it. So the card leads
+// with what the payload does carry, in the same slots:
 //
-//   what physically moves   ← the tech node (EUV · CoWoS · HBM3E · CUDA)
-//   how much it matters     ← strength 0-100, the map's own "how much"
+//   who does what to whom  ← the verb, coloured by its SPINE
+//   what moves along it    ← the tech node (EUV · CoWoS · HBM3E · CUDA)
+//   how hard it holds      ← strength, lock-in depth, substitutability
 //
-// Then: the written comment, the provenance chips, and every source quote
-// behind one disclosure, so the default state stays scannable.
+// Then: whether it can be undone, what could break it and on what horizon,
+// when it formed and when it deepened, how well it is proven, and every source
+// quote behind one disclosure so the default state stays scannable.
+//
+// `substitutability` is an INVERSE scale and the single most misreadable
+// number on this map — «заменимость 5» reads as the exact opposite of what it
+// means. It is never printed bare: `substitutabilityRead` turns it into
+// «заменить почти нечем», and the raw digit follows as a footnote.
 //
 // `rightInset` = px of canvas covered by the entity panel; the card centres
 // itself in the REMAINING space so the two never overlap.
@@ -20,26 +27,20 @@
 
 import { useState } from 'react';
 import { X, ChevronDown, ChevronRight, ExternalLink, Quote } from 'lucide-react';
+import { strengthBand, substitutabilityRead } from '../../../data/nvidiaEcosystem.js';
 
 const MONO = 'ui-monospace, monospace';
 
-// Plain Russian for a 0-100 strength. Same idea as criticalityBand, different
-// question: that one grades a COMPANY, this one grades one dependency.
-function strengthBand(s) {
-  if (s == null) return { label: 'не оценена', color: 'var(--cf-text5)' };
-  if (s >= 85) return { label: 'критическая', color: '#E5484D' };
-  if (s >= 65) return { label: 'высокая', color: '#E0A340' };
-  if (s >= 40) return { label: 'заметная', color: '#58ABCB' };
-  return { label: 'слабая', color: '#49C2AE' };
-}
-
-export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntity, rightInset = 0 }) {
+export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntity, isFixture, rightInset = 0 }) {
   const [sourcesOpen, setSourcesOpen] = useState(false);
   if (!edge) return null;
 
   const sb = strengthBand(edge.strength);
+  const sub = substitutabilityRead(edge.substitutability);
   const ev = edge.evidence || [];
-  const verb = edge.typeMeta?.verb || edge.typeLabel;
+  const verb = edge.verb || edge.typeLabel;
+  const risk = edge.risk || null;
+  const showRisk = !!(risk && risk.level && risk.level !== 'low');
 
   return (
     <div style={{
@@ -55,18 +56,25 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
       animation: 'cfmRise 200ms cubic-bezier(0.2,0.8,0.2,1)',
       transition: 'left 220ms cubic-bezier(0.2,0.8,0.2,1), width 220ms cubic-bezier(0.2,0.8,0.2,1)',
     }}>
-      {/* ── Кто кому, и что именно движется ───────────────────────────── */}
+      {/* ── Кто кому, чем и в какую сторону ───────────────────────────── */}
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '13px 14px 11px' }}>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap' }}>
-            <Party node={source} onOpenEntity={onOpenEntity} />
+            <Party entity={source} onOpenEntity={onOpenEntity} />
             <span style={{
               fontSize: 9, fontFamily: MONO, fontWeight: 700, color: edge.color,
               textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap',
             }}>
               —{verb}→
             </span>
-            <Party node={target} onOpenEntity={onOpenEntity} />
+            <Party entity={target} onOpenEntity={onOpenEntity} />
+            {edge.directionMeta && (
+              <span title={edge.directionMeta.blurb} style={{
+                fontSize: 10, fontFamily: MONO, color: 'var(--cf-text6)', cursor: 'help', whiteSpace: 'nowrap',
+              }}>
+                {edge.directionMeta.short} {edge.directionMeta.label}
+              </span>
+            )}
           </div>
 
           {/* Что физически идёт по связи. Это и есть ответ на «что это»:
@@ -96,7 +104,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
       </div>
 
       {/* ── Насколько связь существенна — «объём» этой карты ──────────── */}
-      <div style={{ padding: '0 14px 11px', display: 'flex', alignItems: 'center', gap: 11 }}>
+      <div style={{ padding: '0 14px 10px', display: 'flex', alignItems: 'center', gap: 11 }}>
         <span style={{ fontSize: 22, fontWeight: 700, fontFamily: MONO, color: sb.color, lineHeight: 1 }}>
           {edge.strength}
         </span>
@@ -112,12 +120,71 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
         </span>
       </div>
 
+      {/* ── Чем именно держит: глубина замка и чем заменить ───────────── */}
+      {(edge.lockInDepth != null || sub) && (
+        <div style={{ padding: '0 14px 10px', display: 'flex', gap: 18, flexWrap: 'wrap' }}>
+          {edge.lockInDepth != null && (
+            <Gauge label="Глубина замка" value={edge.lockInDepth}
+              read={`${edge.lockInDepth} из 100`} color={edge.color}
+              title="Сколько слоёв стека задевает зависимость: чем глубже, тем больше придётся переделать при разрыве." />
+          )}
+          {sub && (
+            <Gauge label="Замена" value={100 - edge.substitutability}
+              read={sub.label} color={sub.color}
+              foot={`${edge.substitutability} из 100 по обратной шкале`}
+              title="Обратная шкала: 0 — заменить нечем, 100 — меняется свободно. Полоса показана «наоборот», чтобы длиннее означало крепче." />
+          )}
+        </div>
+      )}
+
+      {/* ── Отыгрывается ли назад ─────────────────────────────────────── */}
+      {edge.isReversible === false && (
+        <div style={{
+          margin: '0 14px 11px', padding: '7px 10px',
+          background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 8,
+          fontSize: 11.5, color: 'var(--cf-text3)', lineHeight: 1.5,
+        }}>
+          <b style={{ color: 'var(--cf-text1)' }}>Связь не отыгрывается назад.</b>{' '}
+          Однажды принятое здесь решение переписывает всё, что построено поверх, — выход стоит не переключения, а перестройки.
+        </div>
+      )}
+
       {/* ── Комментарий: одна строка о том, что это за отношения ──────── */}
       {edge.note && (
-        <div style={{
-          padding: '0 14px 11px', fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.5,
-        }}>
+        <div style={{ padding: '0 14px 11px', fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.5 }}>
           {edge.note}
+        </div>
+      )}
+
+      {/* ── Риск: уровень, вид, горизонт, чем крыть ───────────────────── */}
+      {showRisk && (
+        <div style={{
+          margin: '0 14px 11px', padding: '8px 10px',
+          border: `1px solid ${edge.riskMeta?.color || 'var(--cf-border)'}44`, borderRadius: 8,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', gap: 5,
+              color: edge.riskMeta?.color, fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.07em',
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: edge.riskMeta?.color }} />
+              риск {edge.riskMeta?.label}
+            </span>
+            {edge.riskTypeLabel && (
+              <span style={{ fontSize: 10.5, color: 'var(--cf-text4)' }}>{edge.riskTypeLabel}</span>
+            )}
+            {edge.riskTimelineLabel && (
+              <span style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text6)' }}>
+                горизонт: {edge.riskTimelineLabel}
+              </span>
+            )}
+          </div>
+          {risk.mitigation && (
+            <div style={{ marginTop: 6, fontSize: 11.5, color: 'var(--cf-text3)', lineHeight: 1.5 }}>
+              <span style={{ color: 'var(--cf-text6)' }}>Чем крыть: </span>{risk.mitigation}
+            </div>
+          )}
         </div>
       )}
 
@@ -127,16 +194,14 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
         padding: '0 14px 12px',
       }}>
         <Chip color={edge.spineMeta?.color} title={edge.spineMeta?.blurb}>{edge.spineMeta?.label}</Chip>
-        <Chip color={edge.tierMeta?.color} title={edge.tierMeta?.label}>{edge.tierMeta?.short || edge.tier}</Chip>
-        <Chip title="Правило двух источников: сплошная линия на карте только при двух и более независимых подтверждениях">
-          {edge.confirmedSources >= 2 ? '2+ источника' : 'один источник'}
+        <Chip color={edge.statusMeta?.color} title={edge.statusMeta?.blurb}>{edge.statusMeta?.label}</Chip>
+        <Chip color={edge.tierMeta?.color} title={edge.tierMeta?.blurb}>{edge.tierMeta?.label}</Chip>
+        <Chip title="Сколько независимых источников подтверждают эту связь">
+          {edge.confirmedSources} {plural(edge.confirmedSources, ['источник', 'источника', 'источников'])}
         </Chip>
-        {edge.started && <Chip title="Год начала отношений">с {edge.started}</Chip>}
+        {edge.formed && <Chip title="Год возникновения связи">с {edge.formed}</Chip>}
+        {edge.strengthened && <Chip title="Год, когда связь резко углубилась">углубилась {edge.strengthened}</Chip>}
         {edge.lastConfirmed && <Chip title="Когда связь подтверждалась в последний раз">подтв. {edge.lastConfirmed}</Chip>}
-        {edge.engineConfirmed && (
-          <Chip color="#34D399" title="Та же связь доказана недельным конвейером карты потоков">подтв. движком</Chip>
-        )}
-        {edge.status !== 'active' && <Chip dashed>{edge.statusMeta?.label}</Chip>}
       </div>
 
       {/* ── Цитаты — за одной кнопкой, чтобы карточка оставалась лёгкой ─ */}
@@ -163,6 +228,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
                     <div style={{ fontSize: 11.5, color: 'var(--cf-text2)', lineHeight: 1.5 }}>{q.quote}</div>
                   </div>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 5, flexWrap: 'wrap' }}>
+                    {q.title && <span style={{ fontSize: 9.5, color: 'var(--cf-text4)' }}>{q.title}</span>}
                     {q.url && (
                       <a href={q.url} target="_blank" rel="noopener noreferrer" title={q.url}
                         style={{
@@ -178,6 +244,12 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
                     {q.alive === false && (
                       <span style={{ fontSize: 9, fontFamily: MONO, color: '#E5484D' }}>ссылка не отвечает</span>
                     )}
+                    {isFixture && (
+                      <span title="Данные пока черновые — настоящие цитаты придут с первым прогоном движка" style={{
+                        fontSize: 8.5, color: 'var(--cf-warn)', fontFamily: MONO, fontWeight: 700,
+                        textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
+                      }}>черновик</span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -190,21 +262,50 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
 }
 
 /** One end of the bond — clickable, so the card is also a way to walk. */
-function Party({ node, onOpenEntity }) {
-  if (!node) return null;
+function Party({ entity, onOpenEntity }) {
+  if (!entity) return null;
   return (
-    <button onClick={() => onOpenEntity?.(node.id)} title={node.oneLiner || node.name}
+    <button onClick={() => onOpenEntity?.(entity.id)} title={entity.oneLiner || entity.name}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
         background: 'none', border: 'none', padding: 0, cursor: 'pointer',
         color: 'var(--cf-text0)', fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em',
       }}>
-      <span style={{ width: 8, height: 8, borderRadius: 2, background: node.color, flexShrink: 0 }} />
-      {node.name}
+      <span style={{ width: 8, height: 8, borderRadius: 2, background: entity.color, flexShrink: 0 }} />
+      {entity.name}
       <span style={{ fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text7)' }}>
-        {node.primaryLayer}
+        {entity.primaryLayer}
       </span>
     </button>
+  );
+}
+
+/**
+ * A 0-100 with its meaning attached. `value` is what the bar draws and `read`
+ * is what the reader gets — the two are deliberately allowed to differ, which
+ * is the whole point for substitutability: the number runs backwards, so the
+ * bar is inverted and LONGER always means "holds tighter".
+ */
+function Gauge({ label, value, read, foot, color, title }) {
+  return (
+    <div style={{ flex: '1 1 200px', minWidth: 160 }}>
+      <div title={title} style={{
+        fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5, cursor: 'help',
+      }}>{label}</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span style={{ flex: 1, height: 4, borderRadius: 2, background: 'var(--cf-surface2)', overflow: 'hidden' }}>
+          <span style={{
+            display: 'block', height: '100%', borderRadius: 2, background: color,
+            width: `${Math.max(0, Math.min(100, value))}%`,
+          }} />
+        </span>
+        <span style={{ fontSize: 10.5, color, fontWeight: 600, whiteSpace: 'nowrap' }}>{read}</span>
+      </div>
+      {foot && (
+        <div style={{ marginTop: 3, fontSize: 9, fontFamily: MONO, color: 'var(--cf-text7)' }}>{foot}</div>
+      )}
+    </div>
   );
 }
 
@@ -224,4 +325,13 @@ function Chip({ children, color, title, dashed }) {
 
 function hostOf(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'источник'; }
+}
+
+function plural(n, [one, few, many]) {
+  const a = Math.abs(Math.round(n));
+  const d = a % 10, dd = a % 100;
+  if (dd >= 11 && dd <= 14) return many;
+  if (d === 1) return one;
+  if (d >= 2 && d <= 4) return few;
+  return many;
 }
