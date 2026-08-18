@@ -11,7 +11,8 @@
 //   · role dot: filled = receives capital · hollow = deploys · dot-in-ring = both
 //   · block size (3 tiers)  → total capital in + out
 //   · edge colour → deal type · thickness → amount · arrow → direction
-//   · dimmed = filtered out or outside the selected neighbourhood
+//   · absent = filtered out, or outside the selected neighbourhood (removed,
+//     not dimmed — a grey haze behind the answer is noise)
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
@@ -154,20 +155,7 @@ export default function FlowGraph({
   // "filter" case — where we push the unmatched rest further back so the
   // in-filter companies read cleanly.
   const hasFilter = matchedNodes.size < graphData.nodes.length;
-
-  // Region keys (sector for targets · class for allocators) that still hold at
-  // least one matched node. Regions with none get faded under a filter. null =
-  // no filter → nothing extra-dimmed (the default look is untouched).
-  const activeRegionKeys = useMemo(() => {
-    if (!hasFilter) return null;
-    const keys = new Set();
-    graphData.nodes.forEach((n) => {
-      if (!matchedNodes.has(n.id)) return;
-      if (n.sector) keys.add(n.sector);
-      if (n.cls) keys.add(n.cls);
-    });
-    return keys;
-  }, [hasFilter, graphData, matchedNodes]);
+  const narrowed = hasFilter || hasSelection;
 
   const nodeLit = useCallback((n) => {
     if (!matchedNodes.has(n.id)) return false;
@@ -181,12 +169,32 @@ export default function FlowGraph({
     return neighbourLinks.has(l.id);
   }, [matchedLinks, neighbourLinks, hasSelection]);
 
-  // Under an active filter, out-of-filter nodes/edges are removed from the
-  // render ENTIRELY (line, arrow, particles, hit area) — not just dimmed — so
-  // the filtered view is clean. force-graph skips anything visibility returns
-  // false for. No filter → everything visible (default look untouched).
-  const nodeVisible = useCallback((n) => !(hasFilter && !matchedNodes.has(n.id)), [hasFilter, matchedNodes]);
-  const linkVisible = useCallback((l) => !(hasFilter && !matchedLinks.has(l.id)), [hasFilter, matchedLinks]);
+  // Region keys (sector for targets · class for allocators) that still hold at
+  // least one LIT node — a filter, a selection, or both. A cluster emptied by
+  // either loses its glow and title, same as an emptied node: a region labelled
+  // "AI-ЛАБОРАТОРИИ" with nothing lit inside it is worse than no region. null =
+  // neither active → nothing extra-dimmed (the default look is untouched).
+  const activeRegionKeys = useMemo(() => {
+    if (!narrowed) return null;
+    const keys = new Set();
+    graphData.nodes.forEach((n) => {
+      if (!nodeLit(n)) return;
+      if (n.sector) keys.add(n.sector);
+      if (n.cls) keys.add(n.cls);
+    });
+    return keys;
+  }, [narrowed, graphData, nodeLit]);
+
+  // Anything not lit leaves the render ENTIRELY — line, arrow, particles, hit
+  // area, tile — for BOTH an active filter and an active selection. A selected
+  // node used to leave the rest of the map on screen at 3-6% alpha; a haze of
+  // a hundred faded companies behind the one you clicked on is still noise,
+  // and it competed with the neighbourhood you actually came to see. force-
+  // graph skips anything visibility returns false for. `nodeLit`/`linkLit`
+  // already fold in both cases (filter membership, then neighbourhood once a
+  // selection exists), so visibility is just that predicate.
+  const nodeVisible = useCallback((n) => nodeLit(n), [nodeLit]);
+  const linkVisible = useCallback((l) => linkLit(l), [linkLit]);
 
   // ── Source-class clusters (inner) + sector cells (outer) ───────────────
   const paintRegions = useCallback((ctx, globalScale) => {
@@ -334,16 +342,12 @@ export default function FlowGraph({
   //   size   = capital · gold rim = key/core · dashed = stale / unconfirmed
   //   labels reveal by zoom, ranked by importance (see node.labelScale)
   const paintNode = useCallback((node, ctx, globalScale) => {
-    const lit = nodeLit(node);
-    // Under an active filter, out-of-filter nodes are removed entirely (not just
-    // dimmed) so the filtered view stays clean instead of a faint mess.
-    if (hasFilter && !matchedNodes.has(node.id)) return;
+    // Unlit nodes are not painted at all — nodeVisibility already dropped
+    // them, so there is no dim branch left to take.
+    if (!nodeLit(node)) return;
     const selected = node.id === selectedNodeId;
     const hovered = node.id === hoverNodeId;
-    const dim = node.stale ? 0.4 : node.watchOnly ? 0.72 : 1;
-    // Filtered-out nodes fade further under an active filter so the matched
-    // companies carry the frame.
-    const alpha = lit ? dim : (hasFilter ? 0.03 : 0.06);
+    const alpha = node.stale ? 0.4 : node.watchOnly ? 0.72 : 1;
     const col = tone(node.color, mode);
     const tc = col;
     const R = node.r || 12;
@@ -362,7 +366,7 @@ export default function FlowGraph({
     const pivotal = node.type === 'target'
       ? (node.dealRank === 'flagged' || node.dealRank === 'emerging')
       : (node.playerRank === 'core' || node.playerRank === 'key');
-    if (lit && pivotal) {
+    if (pivotal) {
       const strength = (node.dealRank === 'flagged' || node.playerRank === 'core') ? 1 : 0.62;
       const gr = S * (1.05 + 0.7 * strength);
       const g = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, gr);
@@ -374,7 +378,7 @@ export default function FlowGraph({
     }
 
     // selection / hover glow
-    if (lit && (selected || hovered)) {
+    if (selected || hovered) {
       roundRect(ctx, x - 5, y - 5, S + 10, S + 10, corner + 4);
       ctx.fillStyle = hexA(col, selected ? 0.28 : 0.15); ctx.fill();
     }
@@ -451,23 +455,21 @@ export default function FlowGraph({
     }
 
     ctx.restore();
-  }, [nodeLit, matchedNodes, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick, mode, T, hasFilter]);
+  }, [nodeLit, selectedNodeId, hoverNodeId, showLabels, getLogo, logoTick, mode, T]);
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
-    // Hidden-by-filter nodes get no hit area — no ghost hovers on empty space.
-    if (hasFilter && !matchedNodes.has(node.id)) return;
+    // Unlit nodes get no hit area — no ghost hovers on empty space.
+    if (!nodeLit(node)) return;
     const S = (node.r || 12) * 1.85, half = S / 2;
     ctx.fillStyle = colour;
     roundRect(ctx, node.x - half, node.y - half, S, S, S * 0.26);
     ctx.fill();
-  }, [hasFilter, matchedNodes]);
+  }, [nodeLit]);
 
   // ── Link styling ───────────────────────────────────────────────────────
   const linkColor = useCallback((l) => {
-    const lit = linkLit(l);
-    // Under an active filter, hide out-of-filter edges entirely.
-    if (hasFilter && !matchedLinks.has(l.id)) return 'rgba(0,0,0,0)';
-    if (!lit) return hexA(T.linkDim, T.linkDimAlpha * (hasFilter ? 0.5 : 1));
+    // Unlit edges are not drawn at all — linkVisibility already dropped them.
+    if (!linkLit(l)) return 'rgba(0,0,0,0)';
     if (l.id === selectedLinkId) return T.labelStrong;
     // All bonds are SOLID; confidence (0–100 grade score) drives opacity so
     // high-confidence flows read stronger. Falls back to status when absent.
@@ -479,17 +481,16 @@ export default function FlowGraph({
     const lc = tone(l.color, mode);
     if (l.id === hoverLinkId) return hexA(lc, Math.min(1, a + 0.45));
     return hexA(lc, hasSelection ? Math.min(1, a + 0.3) : a);
-  }, [linkLit, matchedLinks, selectedLinkId, hoverLinkId, hasSelection, mode, T, hasFilter]);
+  }, [linkLit, selectedLinkId, hoverLinkId, hasSelection, mode, T]);
 
   const linkW = useCallback((l) => {
-    // Zero width for edges hidden by a filter — no hairline residue.
-    if (hasFilter && !matchedLinks.has(l.id)) return 0;
+    if (!linkLit(l)) return 0;
     // Restrained widths — importance reads through opacity + flow, not girth.
     const w = 0.6 + 2.8 * Math.sqrt(l.amountShare || 0);
     if (l.id === selectedLinkId) return w + 1.6;
     if (l.id === hoverLinkId) return w + 1;
     return w;
-  }, [selectedLinkId, hoverLinkId, hasFilter, matchedLinks]);
+  }, [linkLit, selectedLinkId, hoverLinkId]);
 
   const particles = useCallback((l) => {
     // Motion only on focus (selection / neighbourhood) — the map stays calm and
@@ -497,9 +498,9 @@ export default function FlowGraph({
     // for clicking in, not constant noise.
     if (l.id === selectedLinkId) return 6;
     if (l.id === hoverLinkId) return 4;
-    if (hasSelection) return (neighbourLinks.has(l.id) && matchedLinks.has(l.id)) ? 4 : 0;
+    if (hasSelection) return linkLit(l) ? 4 : 0;
     return 0;
-  }, [selectedLinkId, hoverLinkId, hasSelection, neighbourLinks, matchedLinks]);
+  }, [selectedLinkId, hoverLinkId, hasSelection, linkLit]);
 
   // ── Hover tooltips ─────────────────────────────────────────────────────
   const nodeTooltip = useCallback((n) => {
