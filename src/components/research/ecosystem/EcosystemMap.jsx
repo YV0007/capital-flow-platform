@@ -1,18 +1,25 @@
 // ══════════════════════════════════════════════════════════════════════════
 // EcosystemMap — FULL-SCREEN section shell for the second map.
 //
-// Renders src/data/ecosystemMap.json, the file the Capital Flow engine's
-// MONTHLY pipeline exports. Nothing here is hard-coded: drop in the engine's
-// file and the map changes with no code edit. That is the acceptance test.
+// Renders src/data/nvidiaEcosystem.json, the file the Capital Flow engine's
+// MONTHLY pipeline exports. Nothing here is hard-coded — not a layer id, not a
+// layer count, not the anchor: drop in the engine's file and the map changes
+// with no code edit. That is the acceptance test.
+//
+// The map answers ONE question: кто делает NVIDIA незаменимой, кто заперт в её
+// орбите, кто её шлюзует и чем она хеджируется. Exactly one ecosystem is
+// displayed — there is no selector, no «NVIDIA | AMD» tabs, nothing
+// multi-anchor. A second anchor arrives after this one is accepted; building
+// the chrome for it now would be building an empty frame.
 //
 // Its state is ENTIRELY its own — CapitalFlowSection mounts either this or the
 // flow map, never both, so no filter, panel or selection is ever shared.
 //
 // CONTROLS
-//   · Цепочка — depth · direction · relation kind. The map's main verb.
-//   · Круги   — the cycle lens: sales contours in red, financing in amber.
+//   · Цепочка — depth · direction · chain kind. The map's main verb.
+//   · Круги   — the cycle lens: sales, financing and lock-in contours.
 //   · Порог   — the on-canvas strength floor (default 20; panels ignore it).
-//   · Роль / хребет / слой — plain visibility filters.
+//   · Фильтры — spine first, then type, risk, role, phase, layer.
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
@@ -32,7 +39,7 @@ import { applyEcoLayout } from './ecoLayout.js';
 import {
   buildChain, principalPath, CHAIN_KINDS, CHAIN_DIRECTIONS, CHAIN_DEPTHS, DEFAULT_BRANCH,
 } from './chain.js';
-import { buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH } from '../../../data/ecosystemMap.js';
+import { buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH } from '../../../data/nvidiaEcosystem.js';
 
 const MONO = 'ui-monospace, monospace';
 const BG = 'var(--cf-canvas)';
@@ -48,14 +55,16 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   // never mutate it. Depends on `regions` so it runs AFTER the layout pass.
   const homePositions = useMemo(() => {
     const m = new Map();
-    graph.nodes.forEach(n => m.set(n.id, { x: n.fx, y: n.fy }));
+    graph.entities.forEach(n => m.set(n.id, { x: n.fx, y: n.fy }));
     return m;
   }, [graph, regions]);
   const adjacency = useMemo(() => buildAdjacency(graph.edges), [graph]);
   // Vocabulary for the in-prose links (companies, tech nodes, sector acronyms).
   const glossary = useMemo(() => buildGlossary(graph), [graph]);
+  // force-graph insists on `nodes`/`links`; the contract calls them entities
+  // and edges. The rename stops here, at the library boundary.
   const graphData = useMemo(
-    () => ({ nodes: graph.nodes, links: graph.edges }),
+    () => ({ nodes: graph.entities, links: graph.edges }),
     [graph, regions],   // depends on regions so the layout has run first
   );
 
@@ -68,6 +77,10 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   const [spines, setSpines] = useState(() => new Set());
   const [types, setTypes] = useState(() => new Set());
   const [layerSel, setLayerSel] = useState(() => new Set());
+  // Two filters new in v2, both straight out of the contract: an entity's own
+  // PHASE and an edge's RISK level.
+  const [phases, setPhases] = useState(() => new Set());
+  const [risks, setRisks] = useState(() => new Set());
   const [minStrength, setMinStrength] = useState(DEFAULT_MIN_STRENGTH);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showLabels, setShowLabels] = useState(true);
@@ -89,19 +102,21 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
   // ── Visibility — a plain filter, applied before any lens ───────────────
   const { visibleNodes, visibleEdges } = useMemo(() => {
-    const nodeOk = (n) => (!roles.size || roles.has(n.role))
+    const entityOk = (n) => (!roles.size || roles.has(n.role))
+      && (!phases.size || phases.has(n.phase))
       && (!layerSel.size || n.segments.some(s => layerSel.has(s.layer)));
-    const nodes = new Set(graph.nodes.filter(nodeOk).map(n => n.id));
+    const nodes = new Set(graph.entities.filter(entityOk).map(n => n.id));
     const edges = new Set(
       graph.edges.filter(e =>
         (e.strength || 0) >= minStrength
         && (!spines.size || spines.has(e.spine))
         && (!types.size || types.has(e.type))
+        && (!risks.size || risks.has(e.risk?.level))
         && nodes.has(e.sourceId) && nodes.has(e.targetId)
       ).map(e => e.id)
     );
     return { visibleNodes: nodes, visibleEdges: edges };
-  }, [graph, roles, layerSel, spines, types, minStrength]);
+  }, [graph, roles, phases, layerSel, spines, types, risks, minStrength]);
 
   // ── The chain ──────────────────────────────────────────────────────────
   const chain = useMemo(() => buildChain(chainRoot, {
@@ -115,12 +130,12 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   }), [chainRoot, adjacency, chainDepth, chainDir, chainKind, minStrength, expanded]);
 
   const crumbs = useMemo(() => (chainRoot ? principalPath(chainRoot, {
-    adjacency, chain, nodeById: graph.nodeById, kind: chainKind, minStrength,
+    adjacency, chain, entityById: graph.entityById, kind: chainKind, minStrength,
   }) : []), [chainRoot, adjacency, chain, graph, chainKind, minStrength]);
 
   // ── Interaction ────────────────────────────────────────────────────────
   const focusEntity = useCallback((id) => {
-    const n = graph.nodeById.get(id);
+    const n = graph.entityById.get(id);
     if (!n) return;
     setView('map');                    // a table row lands you on the map
     setSelectedNodeId(id);
@@ -167,7 +182,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   const resetView = useCallback(() => {
     const fg = fgRef.current;
     if (!fg) return;
-    graph.nodes.forEach(n => {
+    graph.entities.forEach(n => {
       const p = homePositions.get(n.id);
       if (p) { n.fx = p.x; n.fy = p.y; n.x = p.x; n.y = p.y; }
     });
@@ -177,6 +192,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
   const resetFilters = useCallback(() => {
     setRoles(new Set()); setSpines(new Set()); setTypes(new Set()); setLayerSel(new Set());
+    setPhases(new Set()); setRisks(new Set());
     setMinStrength(DEFAULT_MIN_STRENGTH);
   }, []);
 
@@ -196,8 +212,9 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   const suggestions = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (q.length < 2) return [];
-    return graph.nodes
+    return graph.entities
       .filter(n => n.name.toLowerCase().includes(q)
+        || (n.aliases || []).some(a => a.toLowerCase().includes(q))
         || (n.ticker || '').toLowerCase().includes(q)
         || (n.sectorLabel || '').toLowerCase().includes(q))
       .sort((a, b) => (b.criticality || 0) - (a.criticality || 0))
@@ -205,13 +222,24 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   }, [query, graph]);
 
   // ── Legend counts + active filter count ────────────────────────────────
+  // Counts for the legend and for the filter chips. `risk` counts EDGES (an
+  // edge's risk is what the filter selects), `phase` counts entities.
   const legendCounts = useMemo(() => {
-    const c = { role: {}, spine: {}, type: {}, tier: {}, concentration: {} };
-    graph.nodes.forEach(n => { c.role[n.role] = (c.role[n.role] || 0) + 1; });
+    const c = { role: {}, spine: {}, type: {}, tier: {}, status: {}, concentration: {},
+                phase: {}, risk: {}, band: {}, plane: {} };
+    graph.entities.forEach(n => {
+      c.role[n.role] = (c.role[n.role] || 0) + 1;
+      if (n.phase) c.phase[n.phase] = (c.phase[n.phase] || 0) + 1;
+      if (n.band != null) c.band[n.band] = (c.band[n.band] || 0) + 1;
+      if (n.plane) c.plane[n.plane] = (c.plane[n.plane] || 0) + 1;
+    });
     graph.edges.forEach(e => {
       c.spine[e.spine] = (c.spine[e.spine] || 0) + 1;
       c.type[e.type] = (c.type[e.type] || 0) + 1;
-      c.tier[e.tier] = (c.tier[e.tier] || 0) + 1;
+      c.tier[e.sourceTier] = (c.tier[e.sourceTier] || 0) + 1;
+      c.status[e.status] = (c.status[e.status] || 0) + 1;
+      const r = e.risk?.level;
+      if (r) c.risk[r] = (c.risk[r] || 0) + 1;
     });
     graph.layers.forEach(l => {
       const k = l.concentration?.level;
@@ -221,12 +249,13 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   }, [graph]);
 
   const activeFilterCount = roles.size + spines.size + types.size + layerSel.size
+    + phases.size + risks.size
     + (minStrength !== DEFAULT_MIN_STRENGTH ? 1 : 0);
 
-  const selectedNode = selectedNodeId ? graph.nodeById.get(selectedNodeId) : null;
+  const selectedEntity = selectedNodeId ? graph.entityById.get(selectedNodeId) : null;
   const adj = selectedNodeId ? adjacency.of(selectedNodeId) : null;
   const layerOpen = openLayer ? graph.layerById.get(openLayer) : null;
-  const panelOpen = !!selectedNode || !!layerOpen;
+  const panelOpen = !!selectedEntity || !!layerOpen;
 
   const toggleIn = (setter) => (v) => setter(prev => {
     const next = new Set(prev);
@@ -234,19 +263,11 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     return next;
   });
 
-  // «Подробнее» leaves for the DC-AI research — and hands it a return address,
-  // so its Назад comes back here to the ecosystem map instead of dumping the
-  // reader in the research library.
-  const openDcNode = onOpenResearch
-    ? (blockId) => onOpenResearch('data-centers-ai', {
-        blockId,
-        returnTo: {
-          researchId: 'capital-flow-map',
-          label: 'Назад к карте экосистемы',
-          context: { map: 'ecosystem' },
-        },
-      })
-    : null;
+  // v1 had a «подробнее» link into the DC-AI research and a return address so
+  // its «Назад» came back here. Both are GONE: this map no longer inherits the
+  // data-centre taxonomy and no longer points at it. The terminology is
+  // explained inside the map — see Glossed — and `onOpenResearch` is left in
+  // the props only because CapitalFlowSection passes it to both maps.
 
   return (
     <div style={{
@@ -281,11 +302,12 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           onNodeClick={handleNodeClick}
           onEdgeClick={handleEdgeClick}
           onBackgroundClick={clearSelection}
-          onRegionClick={(type, key) => {
-            // Only a LAYER title opens a report; the capital nucleus has no
-            // report of its own — clicking it filters the map to that role.
-            if (type === 'layer') setOpenLayer(prev => (prev === key ? null : key));
-            else setRoles(prev => (prev.has('capital') ? new Set() : new Set(['capital'])));
+          onRegionClick={(_type, key) => {
+            // Every cell title opens a layer report now, the nucleus included:
+            // in v1 the nucleus was a ROLE and had no report of its own, so
+            // clicking it filtered the map instead. In v2 it is a layer like
+            // any other, so it gets the same answer as any other.
+            setOpenLayer(prev => (prev === key ? null : key));
           }}
           showLabels={showLabels}
           showTech={showTech}
@@ -317,15 +339,35 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           <div style={{ minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
               <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
-                Экосистема
+                Экосистема NVIDIA
               </span>
               <span title="Месяц прогона месячного конвейера движка"
                 style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
                 НА {META.asOf || META.generated || '—'}
               </span>
+              {/* The ONE behavioural difference between draft and real data.
+                  It reads `source` straight out of the payload, so the day the
+                  engine's file lands it disappears by itself — no flag, no code
+                  edit. Deliberately a chip in the top bar rather than a banner
+                  over the canvas: it has to be impossible to miss and equally
+                  impossible to be in the way of the map underneath. */}
+              {META.isFixture && (
+                <span title="Данные пока черновые: цифры и цитаты правдоподобны, но не проверены. Плашка исчезнет сама, когда придёт первый прогон движка."
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 5,
+                    padding: '2px 7px', borderRadius: 5,
+                    border: '1px dashed var(--cf-warn)', color: 'var(--cf-warn)',
+                    fontSize: 8.5, fontFamily: MONO, fontWeight: 700,
+                    textTransform: 'uppercase', letterSpacing: '0.08em',
+                    whiteSpace: 'nowrap', cursor: 'help',
+                  }}>
+                  <AlertTriangle size={9} />
+                  Черновые данные — ждём первый прогон движка
+                </span>
+              )}
             </div>
             <div style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2, whiteSpace: 'nowrap' }}>
-              {visibleNodes.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.nodeCount}</span> компаний
+              {visibleNodes.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.entityCount}</span> сущностей
               <span style={{ color: 'var(--cf-text9)' }}> · </span>
               {visibleEdges.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.edgeCount}</span> связей
               <span style={{ color: 'var(--cf-text9)' }}> · </span>
@@ -355,7 +397,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
               if (e.key === 'Enter' && suggestions[0]) { focusEntity(suggestions[0].id); setSearchOpen(false); }
               if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
             }}
-            placeholder={view === 'table' ? 'Поиск по таблице…' : 'Найти компанию…'}
+            placeholder={view === 'table' ? 'Поиск по таблице…' : 'Найти в экосистеме…'}
             style={{
               width: '100%', padding: '7px 26px 7px 27px',
               background: 'var(--cf-topbar)', border: '1px solid var(--cf-border)', borderRadius: 8,
@@ -443,7 +485,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           dir={chainDir} onDir={setChainDir}
           kind={chainKind} onKind={setChainKind}
           more={chain.more}
-          nodeById={graph.nodeById}
+          entityById={graph.entityById}
           onExpand={(key) => setExpanded(prev => new Set(prev).add(key))}
           top={TOPBAR_H + 10}
         />
@@ -459,7 +501,11 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           types={types} onToggleType={toggleIn(setTypes)}
           typesPresent={legendCounts.type}
           layerSel={layerSel} onToggleLayer={toggleIn(setLayerSel)}
+          phases={phases} onTogglePhase={toggleIn(setPhases)} phasesPresent={legendCounts.phase}
+          risks={risks} onToggleRisk={toggleIn(setRisks)} risksPresent={legendCounts.risk}
           minStrength={minStrength} onMinStrength={setMinStrength}
+          shownEntities={visibleNodes.size} totalEntities={graph.stats.entityCount}
+          shownEdges={visibleEdges.size} totalEdges={graph.stats.edgeCount}
           activeCount={activeFilterCount}
           onReset={resetFilters}
           onClose={() => setDrawerOpen(false)}
@@ -470,11 +516,11 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
       {view === 'table' && (
         <EcoTable
           topInset={TOPBAR_H}
-          nodes={graph.nodes}
+          entities={graph.entities}
           layers={graph.layers}
           layerById={graph.layerById}
           query={query}
-          visibleNodes={visibleNodes}
+          visibleEntities={visibleNodes}
           onOpenEntity={focusEntity}
         />
       )}
@@ -494,7 +540,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
               <>
                 <span style={{ color: 'var(--cf-accent)', fontWeight: 700, letterSpacing: '0.08em' }}>ПУСТО</span><br />
                 <span style={{ display: 'inline-block', marginTop: 6 }}>Карта экосистемы ещё не наполнена.</span><br />
-                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>Ждём месячный прогон движка с <code>ecosystemMap.json</code>.</span>
+                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>Ждём месячный прогон движка с <code>nvidiaEcosystem.json</code>.</span>
               </>
             ) : (
               <>
@@ -520,23 +566,24 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
       {view === 'map' && selectedEdge && (
         <EcoEdgeCard
           edge={selectedEdge}
-          source={graph.nodeById.get(selectedEdge.sourceId)}
-          target={graph.nodeById.get(selectedEdge.targetId)}
+          source={graph.entityById.get(selectedEdge.sourceId)}
+          target={graph.entityById.get(selectedEdge.targetId)}
           onOpenEntity={focusEntity}
+          isFixture={META.isFixture}
           onClose={() => setSelectedEdgeId(null)}
           rightInset={panelOpen ? ECO_PANEL_W : 0}
         />
       )}
 
-      {view === 'map' && cycleMode && <CycleLegend cycles={graph.cycles} nodeById={graph.nodeById} onOpenEntity={focusEntity} />}
+      {view === 'map' && cycleMode && <CycleLegend cycles={graph.cycles} entityById={graph.entityById} onOpenEntity={focusEntity} />}
 
-      {selectedNode && !layerOpen && (
+      {selectedEntity && !layerOpen && (
         <EcoEntityPanel
           topInset={TOPBAR_H}
-          node={selectedNode}
+          entity={selectedEntity}
           up={adj?.up || []}
           down={adj?.down || []}
-          nodeById={graph.nodeById}
+          entityById={graph.entityById}
           layerById={graph.layerById}
           isFixture={META.isFixture}
           glossary={glossary}
@@ -544,7 +591,6 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           onSelectEdge={setSelectedEdgeId}
           onOpenEntity={focusEntity}
           onOpenLayer={(id) => setOpenLayer(id)}
-          onOpenDcNode={openDcNode}
           onClose={() => { setSelectedNodeId(null); setChainRoot(null); }}
         />
       )}
@@ -553,11 +599,10 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         <LayerReport
           topInset={TOPBAR_H}
           layer={layerOpen}
-          nodeById={graph.nodeById}
+          entityById={graph.entityById}
           edges={graph.edges}
           changelog={META.changelog}
           onOpenEntity={focusEntity}
-          onOpenDcNode={openDcNode}
           onClose={() => setOpenLayer(null)}
         />
       )}
@@ -566,7 +611,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 }
 
 // ── Chain controls — depth · direction · relation kind, plus "ещё N" ─────
-function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, nodeById, onExpand, top }) {
+function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, entityById, onExpand, top }) {
   return (
     <div style={{
       position: 'absolute', top, left: 14, zIndex: 24,
@@ -585,7 +630,7 @@ function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, nodeByI
       <Segmented label="Направление" value={dir} onChange={onDir}
         options={Object.entries(CHAIN_DIRECTIONS).map(([k, v]) => ({ value: k, label: v.short, title: v.label }))} />
       <Segmented label="Тип связи" value={kind} onChange={onKind}
-        options={Object.entries(CHAIN_KINDS).map(([k, v]) => ({ value: k, label: v.short, title: v.label }))} />
+        options={Object.entries(CHAIN_KINDS).map(([k, v]) => ({ value: k, label: v.short, title: `${v.label} — ${v.blurb}` }))} />
 
       {more.length > 0 && (
         <div style={{ marginTop: 9, paddingTop: 8, borderTop: '1px solid var(--cf-border-soft)' }}>
@@ -601,7 +646,7 @@ function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, nodeByI
                 color: 'var(--cf-text3)', fontSize: 9.5, fontFamily: MONO, textAlign: 'left',
               }}>
               <RefreshCw size={9} />
-              {nodeById.get(m.nodeId)?.name || m.nodeId}: ещё {m.hidden} {m.dir === 'up' ? '↑' : '↓'}
+              {entityById.get(m.nodeId)?.name || m.nodeId}: ещё {m.hidden} {m.dir === 'up' ? '↑' : '↓'}
             </button>
           ))}
         </div>
@@ -633,7 +678,7 @@ function Segmented({ label, value, onChange, options }) {
 }
 
 // ── Cycle lens legend — what each lit contour actually is ────────────────
-function CycleLegend({ cycles, nodeById, onOpenEntity }) {
+function CycleLegend({ cycles, entityById, onOpenEntity }) {
   return (
     <div style={{
       position: 'absolute', right: 14, bottom: 14, zIndex: 22, width: 340,
@@ -664,7 +709,7 @@ function CycleLegend({ cycles, nodeById, onOpenEntity }) {
                 <button onClick={() => onOpenEntity(id)} style={{
                   background: 'none', border: 'none', padding: 0, cursor: 'pointer',
                   color: 'var(--cf-text2)', fontSize: 11, fontWeight: 600,
-                }}>{nodeById.get(id)?.name || id}</button>
+                }}>{entityById.get(id)?.name || id}</button>
               </span>
             ))}
           </div>

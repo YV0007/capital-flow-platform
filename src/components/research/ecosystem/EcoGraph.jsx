@@ -10,20 +10,29 @@
 //
 // VISUAL ENCODING
 //   · node = labeled block (logo inside — no floating labels)
-//   · block rim colour  → layer band (how deep in the stack it sits)
-//   · rim style         → role: solid producer/owner/demand · dashed capital ·
-//                         dotted platform
-//   · block size        → CRITICALITY (this map's "capital")
-//   · edge colour       → relation type; cool = physical spine, warm = capital
-//   · edge width        → strength (hairlines) · fainter = single source
+//   · block rim colour  → layer band; on the outer arc, the control plane's own
+//   · rim style         → ROLE, one dash signature each. The tile silhouette is
+//                         frozen (it is the map's most recognisable element), so
+//                         the role's SHAPE lives in the legend and its signature
+//                         lives in the rim — colour alone carries the band, and
+//                         the map still reads for a colour-blind eye.
+//   · block size        → CRITICALITY (this map's "capital"); the outer arc is
+//                         scaled down — it frames the stack, it is not in it
+//   · edge colour       → relation type, within its SPINE's colour family
+//   · edge width        → strength (hairlines) · fainter = weaker confirmation
 //   · absent            → filtered out, or outside the lit chain (removed,
 //                         not dimmed — a grey haze behind the answer is noise)
+//
+// THE ANCHOR gets exactly ONE new privilege over v1: its label never hides at
+// any zoom. Same tile, same size rule, no halo, no bloom. It is the centre of
+// the question and it should always be findable; anything more and the map
+// starts arguing with itself about what matters.
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useThemeMode, canvasTokens, tone } from '../capitalflow/canvasTheme.js';
-import { criticalityBand } from '../../../data/ecosystemMap.js';
+import { criticalityBand } from '../../../data/nvidiaEcosystem.js';
 
 export default function EcoGraph({
   graphData, regions, techNodes,
@@ -162,11 +171,7 @@ export default function EcoGraph({
   const activeRegionKeys = useMemo(() => {
     if (!narrowed) return null;
     const keys = new Set();
-    graphData.nodes.forEach(n => {
-      if (!nodeLit(n)) return;
-      keys.add(n.primaryLayer);
-      if (n.role === 'capital') keys.add('_capital');
-    });
+    graphData.nodes.forEach(n => { if (nodeLit(n)) keys.add(n.primaryLayer); });
     return keys;
   }, [narrowed, graphData, nodeLit]);
 
@@ -175,14 +180,17 @@ export default function EcoGraph({
     const padX = 10 / (globalScale || 1);
     const padY = 9 / (globalScale || 1);
     regions.forEach(r => {
-      const core = r.type === 'capital';
+      const core = r.type === 'nucleus';
       const faded = !!activeRegionKeys && !activeRegionKeys.has(r.key);
       if (faded) { r._hit = null; return; }
 
-      // Soft glow POOL — a zone, not a bordered circle.
-      const glowR = r.r * 1.45;
+      // Soft glow POOL — a zone, not a bordered circle. The CONTROL plane's
+      // pools are deliberately dimmer and tighter: they are the frame around
+      // the stack, and a frame that glows as hard as the picture is a mistake.
+      const glowR = r.r * (r.quiet ? 1.25 : 1.45);
       const rc = tone(r.color, mode);
-      const baseA = core ? T.regionSource : (r.lit ? T.regionLit : T.regionTarget);
+      const baseA = (core ? T.regionSource : (r.lit ? T.regionLit : T.regionTarget))
+        * (r.quiet ? 0.55 : 1);
       const g = ctx.createRadialGradient(r.cx, r.cy, r.r * 0.12, r.cx, r.cy, glowR);
       g.addColorStop(0, hexA(rc, baseA));
       g.addColorStop(0.65, hexA(rc, baseA * 0.4));
@@ -205,10 +213,10 @@ export default function EcoGraph({
       // report. Layers stay coordinates; only companies are nodes.
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
-      const size = core ? 19 : 25;
+      const size = core ? 19 : r.quiet ? 20 : 25;
       ctx.font = `700 ${size}px ui-monospace, monospace`;
       const hot = hoverRegionRef.current === r.key;
-      ctx.fillStyle = hexA(rc, hot ? 1 : (core ? 0.85 : r.lit ? 0.96 : 0.74));
+      ctx.fillStyle = hexA(rc, hot ? 1 : (r.quiet ? 0.62 : core ? 0.85 : r.lit ? 0.96 : 0.74));
       const title = r.lit ? `✦ ${r.label}` : r.label;
       const ty = r.cy - r.r - 12;
       ctx.fillText(title, r.cx, ty);
@@ -231,8 +239,8 @@ export default function EcoGraph({
 
       if (r.stats) {
         ctx.textBaseline = 'top';
-        ctx.font = `600 ${core ? 13 : 16}px ui-monospace, monospace`;
-        ctx.fillStyle = hexA(rc, (mode === 'light' ? 0.85 : 0.42));
+        ctx.font = `600 ${core ? 13 : r.quiet ? 12 : 16}px ui-monospace, monospace`;
+        ctx.fillStyle = hexA(rc, (mode === 'light' ? 0.85 : 0.42) * (r.quiet ? 0.8 : 1));
         ctx.fillText(r.stats, r.cx, r.cy + r.r + 8);
       }
     });
@@ -517,45 +525,53 @@ export default function EcoGraph({
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:7px">
         <span style="font-weight:700;font-size:12px;color:${T.tipText};letter-spacing:-0.01em">${esc(n.name)}</span>
         ${n.ticker ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${esc(n.ticker)}</span>` : ''}
-        ${n.faded ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">НЕ ПОДТВ.</span>` : ''}
+        ${n.faded ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">УСТАР.</span>` : ''}
       </div>
-      ${n.tier === 'anchor' ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
+      ${n.isAnchor ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
         <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
-        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">Якорь стека</span>
+        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">Якорь экосистемы</span>
       </div>` : ''}
-      <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px">
+      <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
         <span style="width:7px;height:7px;border-radius:2px;background:${tone(n.color, mode)};flex:none"></span>
         <span style="color:${T.tipText3}">${esc(n.roleMeta?.label || n.role)}</span>
         <span style="color:${T.tipRule}">·</span>
         <span style="color:${T.tipText4}">${esc(n.sectorLabel)}</span>
+        ${n.phaseMeta ? `<span style="color:${T.tipRule}">·</span><span style="color:${tone(n.phaseMeta.color, mode)}">${esc(n.phaseMeta.label)}</span>` : ''}
       </div>
       <div style="color:${T.tipText2};margin-bottom:9px;line-height:1.45">${esc(n.oneLiner || '')}</div>
       <div style="border-top:1px solid ${T.tipBorder};padding-top:9px;display:grid;grid-template-columns:auto 1fr;gap:5px 16px">
         ${row('Критичность', `${n.criticality} · ${esc(cb.label)}`, tone(cb.color, mode))}
-        ${row('Слои', esc(n.segments.map(s => s.layer).join(' · ')), T.tipText3)}
+        ${row('Слои', esc(n.segments.map(s2 => s2.layer).join(' · ')), T.tipText3)}
         ${row('Зависит от / кормит', `${n.upCount} / ${n.downCount}`, T.tipText3)}
+        ${n.gravity ? row('Гравитация', String(n.gravity.score), T.tipText3) : ''}
+        ${n.riskMeta ? row('Риск', esc(n.riskMeta.label), tone(n.riskMeta.color, mode)) : ''}
       </div>
       <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">Клик → цепочка по стеку</div>
     `);
   }, [mode, T]);
 
   const edgeTooltip = useCallback((e) => {
-    const s = typeof e.source === 'object' ? e.source.name : e.sourceId;
-    const t = typeof e.target === 'object' ? e.target.name : e.targetId;
+    const s2 = typeof e.source === 'object' ? e.source.name : e.sourceId;
+    const t2 = typeof e.target === 'object' ? e.target.name : e.targetId;
     return tip(T, `
       <div style="color:${T.tipText};font-size:11.5px;margin-bottom:6px">
-        <b>${esc(s)}</b> <span style="color:${tone(e.color, mode)}">—${esc(e.typeLabel)}→</span> <b>${esc(t)}</b>
+        <b>${esc(s2)}</b> <span style="color:${tone(e.color, mode)}">—${esc(e.verb || e.typeLabel)}→</span> <b>${esc(t2)}</b>
       </div>
       <div style="color:${T.tipText2};margin-bottom:7px">${esc(e.note || '')}</div>
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-        <span style="color:${T.tipText3}">Существенность ${e.strength}</span>
+        <span style="color:${tone(e.spineMeta?.color || '#94A3B8', mode)}">${esc(e.spineMeta?.label || '')}</span>
         <span style="color:${T.tipRule}">·</span>
-        <span style="color:${tone(e.tierMeta?.color || '#94A3B8', mode)}">${esc(e.tierMeta?.short || e.tier)}</span>
-        <span style="color:${T.tipRule}">·</span>
-        <span style="color:${T.tipText4}">${e.confirmedSources >= 2 ? '2+ источника' : 'один источник'}</span>
+        <span style="color:${T.tipText3}">существенность ${e.strength}</span>
+        ${e.lockInDepth != null ? `<span style="color:${T.tipRule}">·</span><span style="color:${T.tipText4}">замок ${e.lockInDepth}</span>` : ''}
         ${e.techMeta ? `<span style="color:${T.tipRule}">·</span><span style="color:${T.tipText3}">${esc(e.techMeta.label)}</span>` : ''}
       </div>
-      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Клик → источник и цитата</div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:5px">
+        <span style="color:${tone(e.statusMeta?.color || '#94A3B8', mode)}">${esc(e.statusMeta?.label || '')}</span>
+        <span style="color:${T.tipRule}">·</span>
+        <span style="color:${T.tipText4}">${e.confirmedSources} ист. · ${esc(e.tierMeta?.short || '')}</span>
+        ${e.riskMeta && e.risk?.level !== 'low' ? `<span style="color:${T.tipRule}">·</span><span style="color:${tone(e.riskMeta.color, mode)}">риск ${esc(e.riskMeta.label.toLowerCase())}</span>` : ''}
+      </div>
+      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Клик → разбор связи и цитаты</div>
     `);
   }, [mode, T]);
 
@@ -606,12 +622,18 @@ export default function EcoGraph({
 }
 
 // Role → tile outline. Colour still says "layer band"; the stroke says "role".
+// Six signatures, deliberately far apart from each other at map zoom: solid,
+// long dash, short dash, dot, dash-dot, tight dot. The tile SILHOUETTE stays a
+// rounded square for every role — it is the single most recognisable thing on
+// both maps, and re-cutting it per role would be a redesign, not an adaptation.
+// The role's actual SHAPE is drawn in the legend, where there is room for it.
 const ROLE_DASH = {
   producer: null,
-  owner: null,
-  demand: null,
-  capital: [9, 5],
+  operator: [10, 4],
+  demand:   [4, 4],
+  capital:  [9, 5],
   platform: [2, 4],
+  state:    [7, 3, 2, 3],
 };
 
 // ── helpers ──────────────────────────────────────────────────────────────

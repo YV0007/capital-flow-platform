@@ -10,7 +10,7 @@ const MONO = 'ui-monospace, monospace';
 
 export const MAPS = [
   { key: 'flows',     label: 'Потоки',    hint: 'Куда пошли деньги — события с датой, обновление раз в неделю' },
-  { key: 'ecosystem', label: 'Экосистема', hint: 'Как отрасль устроена и кто её держит — стоящие позиции, обновление раз в месяц' },
+  { key: 'ecosystem', label: 'Экосистема NVIDIA', hint: 'Кто делает NVIDIA незаменимой, кто заперт в её орбите, кто её шлюзует и чем она хеджируется — стоящие позиции, обновление раз в месяц' },
 ];
 
 export default function MapSwitch({ value, onChange }) {

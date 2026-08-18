@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 // ChainCrumbs — the chain, as a sentence.
 //
-//   ASML —поставляет→ TSMC —поставляет→ NVIDIA —строит вместе→ Foxconn …
+//   ASML —поставляет→ TSMC —производит→ NVIDIA —отгружает→ Foxconn …
 //
 // Sits under the map, on the same strongest-path walk the canvas lit up. This
 // is the part you can read out loud and repeat to someone, which is usually
@@ -66,7 +66,10 @@ export default function ChainCrumbs({ crumbs, rootId, counts, onOpenEntity, onCl
                 whiteSpace: 'nowrap', cursor: 'help',
               }}>
                 <Arrow color={c.edge.color} />
-                {c.edge.typeLabel}
+                {/* The VERB, not the label — a crumb is a sentence you read
+                    out loud, and `verb` is the field the contract keeps for
+                    exactly that. All 31 types are picked up for free. */}
+                {c.edge.verb || c.edge.typeLabel}
                 {c.edge.techMeta ? ` · ${c.edge.techMeta.label}` : ''}
                 <Arrow color={c.edge.color} head />
               </span>

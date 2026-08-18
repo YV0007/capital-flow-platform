@@ -22,13 +22,17 @@
 // Sector acronyms are deliberately NOT linked any more. They were the hard
 // words, and the answer to a hard word is to not use it.
 //
-// Nothing is hard-coded: the vocabulary is company names and
-// `techNodes[].label` from the payload.
+// In v2 the vocabulary is built ONLY FROM THIS MAP. v1 had a third target —
+// a sector acronym could open the matching block in the DC-AI research, with a
+// return address so «Назад» came back here. That is gone along with every
+// other tie to DC-AI: the old taxonomy described building a data centre, this
+// one describes NVIDIA's position in the world, and half the terms no longer
+// have an honest counterpart over there. A term with nowhere to lead is simply
+// not underlined — a dead link is worse than a plain word.
+//
+// Nothing is hard-coded: the vocabulary is entity names, their aliases and
+// `techNodes[].label`, all from the payload.
 // ══════════════════════════════════════════════════════════════════════════
-
-import { ArrowUpRight } from 'lucide-react';
-
-const MONO = 'ui-monospace, monospace';
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const isWordChar = (c) => !!c && /[\p{L}\p{N}]/u.test(c);
@@ -46,10 +50,16 @@ export function buildGlossary(graph) {
     if (!terms.has(k)) terms.set(k, { ...entry, term: t });
   };
 
-  graph.nodes.forEach(n => add(n.name, { kind: 'node', id: n.id, hint: n.oneLiner }));
+  graph.entities.forEach(n => {
+    add(n.name, { kind: 'entity', id: n.id, hint: n.oneLiner });
+    // Aliases too: the prose says «Тайвань» where the payload's name is the
+    // same, but «Hon Hai» and «Foxconn» are one entity and both should lead
+    // to it.
+    (n.aliases || []).forEach(a => add(a, { kind: 'entity', id: n.id, hint: n.oneLiner }));
+  });
   graph.techNodes.forEach(t => add(t.label, {
     kind: 'tech', id: t.owner, hint: t.note,
-    owner: graph.nodeById.get(t.owner)?.name,
+    owner: graph.entityById.get(t.owner)?.name,
   }));
 
   const sorted = [...terms.keys()].sort((a, b) => b.length - a.length);
@@ -110,25 +120,3 @@ function Term({ raw, entry, onOpenEntity }) {
     </button>
   );
 }
-
-/**
- * The «подробнее» affordance. Small, at the end of a line, and it tells the
- * page it opens how to come back — a one-way trip out of the map costs the
- * reader everything they had on screen.
- */
-export function MoreLink({ dcNode, onOpenDcNode, label = 'подробнее' }) {
-  if (!dcNode || !onOpenDcNode) return null;
-  return (
-    <button onClick={() => onOpenDcNode(dcNode)}
-      title="Технический разбор этого звена в исследовании «Data Centers for AI». Оттуда можно вернуться сюда."
-      style={{
-        display: 'inline-flex', alignItems: 'center', gap: 3,
-        marginLeft: 6, padding: 0, background: 'none', border: 'none', cursor: 'pointer',
-        color: 'var(--cf-accent)', fontSize: 10, fontFamily: MONO, whiteSpace: 'nowrap',
-        verticalAlign: 'baseline',
-      }}>
-      {label} <ArrowUpRight size={9} />
-    </button>
-  );
-}
-
