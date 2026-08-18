@@ -17,7 +17,7 @@
 
 import { useState, useMemo } from 'react';
 import { ChevronDown, ChevronUp, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
-import { criticalityBand, CRITICALITY_FACTORS } from '../../../data/nvidiaEcosystem.js';
+import { criticalityBand, CRITICALITY_FACTORS } from '../../../data/aiEcosystemNetwork.js';
 
 const MONO = 'ui-monospace, monospace';
 

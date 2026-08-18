@@ -16,7 +16,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import {
   ROLE_META, EDGE_TYPE_META, SPINE_META, TIER_META, STATUS_META,
   PHASE_META, CONCENTRATION_META, BAND_META, PLANE_META,
-} from '../../../data/nvidiaEcosystem.js';
+} from '../../../data/aiEcosystemNetwork.js';
 
 const MONO = 'ui-monospace, monospace';
 

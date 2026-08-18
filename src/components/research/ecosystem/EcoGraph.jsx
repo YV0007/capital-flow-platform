@@ -32,13 +32,14 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useThemeMode, canvasTokens, tone } from '../capitalflow/canvasTheme.js';
-import { criticalityBand } from '../../../data/nvidiaEcosystem.js';
+import { criticalityBand } from '../../../data/aiEcosystemNetwork.js';
 
 export default function EcoGraph({
   graphData, regions, techNodes,
   visibleNodes, visibleEdges,
   chain, chainRoot,
   cycleEdges, cycleMode,
+  subgraphLens, spofById,
   selectedNodeId, selectedEdgeId,
   onNodeClick, onEdgeClick, onBackgroundClick, onRegionClick,
   showLabels, showTech,
@@ -144,17 +145,22 @@ export default function EcoGraph({
 
   const nodeLit = useCallback((n) => {
     if (!visibleNodes.has(n.id)) return false;
+    // The subgraph lens narrows exactly like the chain and cycle lenses: what
+    // is not in the subgraph leaves the render entirely, same "remove, don't
+    // dim" rule the README fixes for company selection.
+    if (subgraphLens) return subgraphLens.nodeSet.has(n.id);
     if (cycleMode) return n.onCycle;
     if (!hasChain) return true;
     return chain.nodes.has(n.id);
-  }, [visibleNodes, hasChain, chain, cycleMode]);
+  }, [visibleNodes, hasChain, chain, cycleMode, subgraphLens]);
 
   const edgeLit = useCallback((e) => {
     if (!visibleEdges.has(e.id)) return false;
+    if (subgraphLens) return subgraphLens.edgeSet.has(e.id);
     if (cycleMode) return cycleEdges.has(e.id);
     if (!hasChain) return true;
     return chain.edges.has(e.id);
-  }, [visibleEdges, hasChain, chain, cycleMode, cycleEdges]);
+  }, [visibleEdges, hasChain, chain, cycleMode, cycleEdges, subgraphLens]);
 
   // Anything not lit leaves the render ENTIRELY — line, arrowhead, particles,
   // hit area, tile. Fading it to 5% still left a grey haze of 60 companies
@@ -167,7 +173,7 @@ export default function EcoGraph({
   // Cells that still hold a lit node. A cell emptied by the filter or by the
   // chain loses its glow and its title too — an island labelled "L6 ГЕНЕРАЦИЯ"
   // with nothing inside is worse than no island.
-  const narrowed = hasFilter || hasChain || cycleMode;
+  const narrowed = hasFilter || hasChain || cycleMode || !!subgraphLens;
   const activeRegionKeys = useMemo(() => {
     if (!narrowed) return null;
     const keys = new Set();
@@ -424,6 +430,39 @@ export default function EcoGraph({
     ctx.stroke();
     ctx.setLineDash([]);
 
+    // Pivot mark — a thin corner bracket, NOT a new colour (colour is already
+    // spent on the band). Two small L-brackets, top-left and bottom-right, in
+    // the band colour: reads as "this one is a network pivot" without competing
+    // with the tile's own encoding. In v2 exactly one node (the anchor) was
+    // special; here 26 are, so the mark has to be quiet enough to repeat.
+    if (node.isPivotal) {
+      const b = S * 0.30, off = 3, lw = Math.max(1, S * 0.045);
+      ctx.strokeStyle = hexA(col, 0.9);
+      ctx.lineWidth = lw;
+      ctx.beginPath();
+      // top-left
+      ctx.moveTo(x - off, y - off + b); ctx.lineTo(x - off, y - off); ctx.lineTo(x - off + b, y - off);
+      // bottom-right
+      ctx.moveTo(x + S + off, y + S + off - b); ctx.lineTo(x + S + off, y + S + off); ctx.lineTo(x + S + off - b, y + S + off);
+      ctx.stroke();
+    }
+
+    // Single-point-of-failure ring — a NEUTRAL dashed contour, no fill and no
+    // hue of its own: red is spent on the control spine, green on moat, so a
+    // structural chokepoint gets a colourless ring instead. Only the nodes the
+    // engine flagged in network.singlePointsOfFailure.
+    if (spofById && spofById.has(node.id)) {
+      const rr = half + 6;
+      ctx.save();
+      ctx.setLineDash([4, 3]);
+      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = hexA('#94A3B8', mode === 'light' ? 0.6 : 0.72);
+      ctx.beginPath();
+      ctx.arc(cx, cy, rr, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.restore();
+    }
+
     // Multi-layer badge — a small stack of bars in the corner. This is what
     // replaces the old radial capsule: one company, one tile, and a mark that
     // says "it also stands in other layers" without duplicating the node.
@@ -456,7 +495,7 @@ export default function EcoGraph({
     }
 
     ctx.restore();
-  }, [nodeLit, selectedNodeId, hoverNodeId, chainRoot, showLabels, getLogo, logoTick, mode, T]);
+  }, [nodeLit, selectedNodeId, hoverNodeId, chainRoot, showLabels, getLogo, logoTick, mode, T, spofById]);
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
     if (!nodeLit(node)) return;
@@ -527,9 +566,13 @@ export default function EcoGraph({
         ${n.ticker ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${esc(n.ticker)}</span>` : ''}
         ${n.faded ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">УСТАР.</span>` : ''}
       </div>
-      ${n.isAnchor ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
+      ${(n.isAnchor || n.isPivotal) ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
         <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
-        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">Якорь экосистемы</span>
+        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">${n.isAnchor ? 'Якорь экосистемы' : 'Пивотный узел сети'}</span>
+      </div>` : ''}
+      ${(spofById && spofById.has(n.id)) ? `<div style="margin-bottom:8px;padding:5px 7px;border:1px dashed ${T.tipText4};border-radius:6px">
+        <span style="color:${T.tipText3};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">Точка отказа</span>
+        <div style="color:${T.tipText2};margin-top:3px;line-height:1.4">${esc(spofById.get(n.id).reason)}</div>
       </div>` : ''}
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
         <span style="width:7px;height:7px;border-radius:2px;background:${tone(n.color, mode)};flex:none"></span>
@@ -544,11 +587,12 @@ export default function EcoGraph({
         ${row('Слои', esc(n.segments.map(s2 => s2.layer).join(' · ')), T.tipText3)}
         ${row('Зависит от / кормит', `${n.upCount} / ${n.downCount}`, T.tipText3)}
         ${n.gravity ? row('Гравитация', String(n.gravity.score), T.tipText3) : ''}
+        ${n.centrality ? row('Центральность', `степень ${n.centrality.degree} · посредн. ${n.centrality.betweenness}`, T.tipText3) : ''}
         ${n.riskMeta ? row('Риск', esc(n.riskMeta.label), tone(n.riskMeta.color, mode)) : ''}
       </div>
       <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">Клик → цепочка по стеку</div>
     `);
-  }, [mode, T]);
+  }, [mode, T, spofById]);
 
   const edgeTooltip = useCallback((e) => {
     const s2 = typeof e.source === 'object' ? e.source.name : e.sourceId;

@@ -21,7 +21,7 @@
 import { X, RotateCcw } from 'lucide-react';
 import {
   ROLE_META, SPINE_META, EDGE_TYPE_META, PHASE_META, RISK_META, DEFAULT_MIN_STRENGTH,
-} from '../../../data/nvidiaEcosystem.js';
+} from '../../../data/aiEcosystemNetwork.js';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -33,6 +33,7 @@ export default function EcoFilterBar({
   layerSel, onToggleLayer,
   phases, onTogglePhase, phasesPresent,
   risks, onToggleRisk, risksPresent,
+  pivotsOnly, onTogglePivotsOnly, pivotCount,
   minStrength, onMinStrength,
   shownEntities, totalEntities, shownEdges, totalEdges,
   activeCount, onReset, onClose,
@@ -89,6 +90,20 @@ export default function EcoFilterBar({
         <br />
         Показано <b style={{ color: 'var(--cf-text1)' }}>{shownEdges}</b> из {totalEdges} связей
       </div>
+
+      {/* ── Охват сети — пивоты или всё ─────────────────────────────────── */}
+      {onTogglePivotsOnly && (
+        <Group title="Охват сети" hint="26 равноправных пивотов — центры, вокруг которых собрана сеть, — или вся сеть со вторичными узлами.">
+          <Chip on={!pivotsOnly} color="#8E9BE6" onClick={() => pivotsOnly && onTogglePivotsOnly()}
+            title="Показать всю сеть — пивоты и вторичные узлы" wide>
+            Вся сеть
+          </Chip>
+          <Chip on={pivotsOnly} color="#FDE047" onClick={() => !pivotsOnly && onTogglePivotsOnly()}
+            title="Оставить только 26 пивотов — центры сети" wide>
+            Только пивоты{pivotCount ? <Count>{pivotCount}</Count> : null}
+          </Chip>
+        </Group>
+      )}
 
       {/* ── Хребет — ПЕРВИЧНЫЙ переключатель ────────────────────────────── */}
       <Group title="Хребет" hint="Пять механик власти. Это первый вопрос к карте: физика, деньги, ров, шлюз или соперничество.">

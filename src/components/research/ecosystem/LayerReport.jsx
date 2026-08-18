@@ -24,7 +24,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 import { X, ChevronRight, Layers, AlertTriangle, GitBranch, History, ShieldAlert } from 'lucide-react';
-import { critIn } from '../../../data/nvidiaEcosystem.js';
+import { critIn } from '../../../data/aiEcosystemNetwork.js';
 
 const MONO = 'ui-monospace, monospace';
 export const LAYER_REPORT_W = 430;

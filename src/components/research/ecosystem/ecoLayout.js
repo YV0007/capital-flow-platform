@@ -41,7 +41,7 @@
 
 import { packRelative, hash01 } from '../capitalflow/layout.js';
 import { shortLabel } from '../capitalflow/format.js';
-import { PLANE_META, critIn } from '../../../data/nvidiaEcosystem.js';
+import { PLANE_META, critIn } from '../../../data/aiEcosystemNetwork.js';
 
 // Companies on the outer arc are drawn smaller than the ring's: they frame the
 // stack rather than stand in it, and at equal size the frame competes with the
@@ -62,10 +62,14 @@ function sizeAtom(n) {
   n.atomTier = s > 0.83 ? 0 : s > 0.65 ? 1 : s > 0.42 ? 2 : 3;
   n.atomLabel = shortLabel(n.name, 22);
   // Label priority: the more critical, the earlier a name appears as you zoom
-  // out. Same curve as the flow map. The ANCHOR is pinned at always-visible —
-  // it is the centre of the question, and this is its one privilege.
-  const imp = s + (n.isAnchor ? 0.6 : 0);
-  n.labelScale = n.isAnchor ? 0 : Math.max(0.14, Math.min(1.5, 0.9 - imp * 0.8));
+  // out. Same curve as the flow map. In v2 exactly ONE entity — the anchor —
+  // was pinned always-visible. In v3 that privilege GENERALIZES: every PIVOT
+  // gets it, because the whole point of the network view is that the 26 centres
+  // are co-equal. `isAnchor` stays honored so the reserve NVIDIA map is
+  // unchanged; `isPivotal` is the network's collective version of the same rule.
+  const privileged = n.isAnchor || n.isPivotal;
+  const imp = s + (privileged ? 0.6 : 0);
+  n.labelScale = privileged ? 0 : Math.max(0.14, Math.min(1.5, 0.9 - imp * 0.8));
 }
 
 // ── Packing footprint — what a company actually occupies ─────────────────

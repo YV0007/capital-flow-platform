@@ -34,7 +34,7 @@ import {
 } from 'lucide-react';
 import {
   CRITICALITY_FACTORS, criticalityBand, substitutabilityRead, critIn,
-} from '../../../data/nvidiaEcosystem.js';
+} from '../../../data/aiEcosystemNetwork.js';
 import Glossed from './Glossed.jsx';
 
 const MONO = 'ui-monospace, monospace';
@@ -120,6 +120,12 @@ export default function EcoEntityPanel({
                   fontSize: 8.5, color: 'var(--cf-accent)', fontFamily: MONO, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.09em', cursor: 'help',
                 }}>якорь</span>
+              )}
+              {entity.isPivotal && !entity.isAnchor && (
+                <span title="Пивотный узел сети — один из 26 равноправных центров, вокруг которых собрана вся карта" style={{
+                  fontSize: 8.5, color: '#FDE047', fontFamily: MONO, fontWeight: 700,
+                  textTransform: 'uppercase', letterSpacing: '0.09em', cursor: 'help',
+                }}>пивот</span>
               )}
             </div>
             <div style={{ fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
@@ -303,6 +309,26 @@ export default function EcoEntityPanel({
               <StatRow label="Разных типов связи" value={g.edgeTypes} />
               {g.cycles > 0 && <StatRow label="Стоит на контурах" value={g.cycles} accent="#E5484D" />}
             </div>
+            {/* Network centrality — the v3 addition. Two numbers the engine
+                computes over the whole graph: how "crowded" the node is
+                (degree) and how much "passes through" it (betweenness). Sits in
+                the gravity block because both answer the same family of
+                question — how load-bearing is this node structurally. */}
+            {entity.centrality && (
+              <div style={{ marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)', display: 'flex', flexDirection: 'column', gap: 5, padding: `9px ${PAD}px 0` }}>
+                <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>
+                  Центральность в сети
+                </div>
+                {entity.centrality.degree != null && (
+                  <StatRow label="Степень" value={entity.centrality.degree} unit="прямых связей"
+                    hint="Со сколькими сущностями есть прямое ребро. Насколько узел «людный»." />
+                )}
+                {entity.centrality.betweenness != null && (
+                  <StatRow label="Посредничество" value={entity.centrality.betweenness}
+                    hint="Доля кратчайших путей между другими, проходящих через эту сущность. Насколько через неё «всё идёт»." />
+                )}
+              </div>
+            )}
           </Section>
         )}
 
@@ -714,10 +740,10 @@ function ColHeads({ left, right }) {
   );
 }
 
-function StatRow({ label, value, unit, accent }) {
+function StatRow({ label, value, unit, accent, hint }) {
   return (
     <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, fontSize: 10.5 }}>
-      <span style={{ color: 'var(--cf-text5)' }}>{label}</span>
+      <span title={hint} style={{ color: 'var(--cf-text5)', cursor: hint ? 'help' : 'default' }}>{label}</span>
       <span style={{ flex: 1 }} />
       <span style={{ fontFamily: MONO, fontWeight: 700, color: accent || 'var(--cf-text2)' }}>{value}</span>
       {unit && <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>{unit}</span>}

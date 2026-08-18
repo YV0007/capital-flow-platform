@@ -27,7 +27,7 @@
 
 import { useState } from 'react';
 import { X, ChevronDown, ChevronRight, ExternalLink, Quote } from 'lucide-react';
-import { strengthBand, substitutabilityRead } from '../../../data/nvidiaEcosystem.js';
+import { strengthBand, substitutabilityRead } from '../../../data/aiEcosystemNetwork.js';
 
 const MONO = 'ui-monospace, monospace';
 

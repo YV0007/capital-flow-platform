@@ -1,16 +1,17 @@
 // ══════════════════════════════════════════════════════════════════════════
 // EcosystemMap — FULL-SCREEN section shell for the second map.
 //
-// Renders src/data/nvidiaEcosystem.json, the file the Capital Flow engine's
+// Renders src/data/aiEcosystemNetwork.json, the file the Capital Flow engine's
 // MONTHLY pipeline exports. Nothing here is hard-coded — not a layer id, not a
 // layer count, not the anchor: drop in the engine's file and the map changes
 // with no code edit. That is the acceptance test.
 //
-// The map answers ONE question: кто делает NVIDIA незаменимой, кто заперт в её
-// орбите, кто её шлюзует и чем она хеджируется. Exactly one ecosystem is
-// displayed — there is no selector, no «NVIDIA | AMD» tabs, nothing
-// multi-anchor. A second anchor arrives after this one is accepted; building
-// the chrome for it now would be building an empty frame.
+// v3: the map generalized from ONE anchor (NVIDIA) to a NETWORK of 26 co-equal
+// pivots — NVIDIA, Google, TSMC, OpenAI, … — with degree/betweenness
+// centrality, three subgraphs (GPU / TPU / infrastructure backbone) and the
+// structural single-points-of-failure. Same molecule, same lenses; the anchor
+// privilege (always-visible label) now belongs to every pivot. The reserve
+// NVIDIA-anchored map (nvidiaEcosystem.js/.json) is untouched behind this.
 //
 // Its state is ENTIRELY its own — CapitalFlowSection mounts either this or the
 // flow map, never both, so no filter, panel or selection is ever shared.
@@ -18,14 +19,15 @@
 // CONTROLS
 //   · Цепочка — depth · direction · chain kind. The map's main verb.
 //   · Круги   — the cycle lens: sales, financing and lock-in contours.
-//   · Порог   — the on-canvas strength floor (default 20; panels ignore it).
-//   · Фильтры — spine first, then type, risk, role, phase, layer.
+//   · Подграфы — the subgraph lens: GPU stack / TPU stack / infra backbone.
+//   · Сводка   — the network-science read (density, degree, SPOF list).
+//   · Фильтры — network scope (pivots/all), spine, type, risk, role, phase, layer.
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
   ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, RefreshCw,
-  Sparkles, Cpu, Table2, Share2, AlertTriangle,
+  Sparkles, Cpu, Table2, Share2, AlertTriangle, Network,
 } from 'lucide-react';
 import EcoGraph from './EcoGraph.jsx';
 import EcoEntityPanel, { ECO_PANEL_W } from './EcoEntityPanel.jsx';
@@ -34,12 +36,13 @@ import ChainCrumbs from './ChainCrumbs.jsx';
 import EcoEdgeCard from './EcoEdgeCard.jsx';
 import EcoFilterBar from './EcoFilterBar.jsx';
 import EcoTable from './EcoTable.jsx';
+import NetworkSummary from './NetworkSummary.jsx';
 import { buildGlossary } from './Glossed.jsx';
 import { applyEcoLayout } from './ecoLayout.js';
 import {
   buildChain, principalPath, CHAIN_KINDS, CHAIN_DIRECTIONS, CHAIN_DEPTHS, DEFAULT_BRANCH,
 } from './chain.js';
-import { buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH } from '../../../data/nvidiaEcosystem.js';
+import { buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH } from '../../../data/aiEcosystemNetwork.js';
 
 const MONO = 'ui-monospace, monospace';
 const BG = 'var(--cf-canvas)';
@@ -81,6 +84,9 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   // PHASE and an edge's RISK level.
   const [phases, setPhases] = useState(() => new Set());
   const [risks, setRisks] = useState(() => new Set());
+  // v3: show only the network's pivots, or the whole network. A plain entity
+  // filter like the others, but common enough to earn its own top-bar toggle.
+  const [pivotsOnly, setPivotsOnly] = useState(false);
   const [minStrength, setMinStrength] = useState(DEFAULT_MIN_STRENGTH);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showLabels, setShowLabels] = useState(true);
@@ -89,6 +95,11 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
   // ── Lenses + selection ─────────────────────────────────────────────────
   const [cycleMode, setCycleMode] = useState(false);
+  // v3: the subgraph lens. Holds the active subgraph id, or null. Mutually
+  // exclusive with the chain and cycle lenses — one answer on screen at a time.
+  const [subgraphId, setSubgraphId] = useState(null);
+  const [subgraphMenuOpen, setSubgraphMenuOpen] = useState(false);
+  const [summaryOpen, setSummaryOpen] = useState(false);
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState(null);
   const [openLayer, setOpenLayer] = useState(null);
@@ -104,6 +115,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   const { visibleNodes, visibleEdges } = useMemo(() => {
     const entityOk = (n) => (!roles.size || roles.has(n.role))
       && (!phases.size || phases.has(n.phase))
+      && (!pivotsOnly || n.isPivotal)
       && (!layerSel.size || n.segments.some(s => layerSel.has(s.layer)));
     const nodes = new Set(graph.entities.filter(entityOk).map(n => n.id));
     const edges = new Set(
@@ -116,7 +128,13 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
       ).map(e => e.id)
     );
     return { visibleNodes: nodes, visibleEdges: edges };
-  }, [graph, roles, phases, layerSel, spines, types, risks, minStrength]);
+  }, [graph, roles, phases, pivotsOnly, layerSel, spines, types, risks, minStrength]);
+
+  // The active subgraph object (with resolved nodeSet/edgeSet), or null.
+  const subgraphLens = useMemo(
+    () => (subgraphId ? graph.network.subgraphs.find(s => s.id === subgraphId) || null : null),
+    [subgraphId, graph],
+  );
 
   // ── The chain ──────────────────────────────────────────────────────────
   const chain = useMemo(() => buildChain(chainRoot, {
@@ -144,6 +162,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     setOpenLayer(null);
     setSelectedEdgeId(null);
     setCycleMode(false);
+    setSubgraphId(null);               // a chain and a subgraph are two answers
     const fg = fgRef.current;
     if (fg && Number.isFinite(n.x)) {
       fg.centerAt(n.x, n.y, 500);
@@ -174,6 +193,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     setChainRoot(null);
     setOpenLayer(null);
     setExpanded(new Set());
+    setSubgraphId(null);
   }, []);
 
   // Reset = snap every company back to its pristine layout spot (undoing any
@@ -192,12 +212,12 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
   const resetFilters = useCallback(() => {
     setRoles(new Set()); setSpines(new Set()); setTypes(new Set()); setLayerSel(new Set());
-    setPhases(new Set()); setRisks(new Set());
+    setPhases(new Set()); setRisks(new Set()); setPivotsOnly(false);
     setMinStrength(DEFAULT_MIN_STRENGTH);
   }, []);
 
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') { clearSelection(); setCycleMode(false); } };
+    const onKey = (e) => { if (e.key === 'Escape') { clearSelection(); setCycleMode(false); setSubgraphId(null); setSummaryOpen(false); setSubgraphMenuOpen(false); } };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [clearSelection]);
@@ -249,7 +269,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   }, [graph]);
 
   const activeFilterCount = roles.size + spines.size + types.size + layerSel.size
-    + phases.size + risks.size
+    + phases.size + risks.size + (pivotsOnly ? 1 : 0)
     + (minStrength !== DEFAULT_MIN_STRENGTH ? 1 : 0);
 
   const selectedEntity = selectedNodeId ? graph.entityById.get(selectedNodeId) : null;
@@ -297,6 +317,8 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           chainRoot={chainRoot}
           cycleEdges={graph.cycleEdges}
           cycleMode={cycleMode}
+          subgraphLens={subgraphLens}
+          spofById={graph.network.spofById}
           selectedNodeId={selectedNodeId}
           selectedEdgeId={selectedEdgeId}
           onNodeClick={handleNodeClick}
@@ -338,8 +360,9 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           {mapSwitch}
           <div style={{ minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-              <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
-                Экосистема NVIDIA
+              <span title="Сеть из 26 равноправных пивотов ИИ-инфраструктуры (в v2 карта была якорной на NVIDIA)"
+                style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
+                Экосистема ИИ
               </span>
               <span title="Месяц прогона месячного конвейера движка"
                 style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
@@ -380,6 +403,26 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                   </span>
                 </>
               )}
+              {/* v3 extends the SAME line rather than adding a block: the
+                  network counts sit right after the layer/cycle counts, and the
+                  richer aggregates (density, degree, clustering) hang off a
+                  click in NetworkSummary. */}
+              <span style={{ color: 'var(--cf-text9)' }}> · </span>
+              <button onClick={() => setSummaryOpen(o => !o)} title="Сводка сети: плотность, средняя степень, кластеризация"
+                style={{
+                  background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit',
+                  color: summaryOpen ? 'var(--cf-accent)' : 'var(--cf-text5)', textDecoration: 'underline', textDecorationStyle: 'dotted',
+                }}>
+                {graph.stats.pivotalCount} {plural(graph.stats.pivotalCount, ['пивот', 'пивота', 'пивотов'])}
+                <span style={{ color: 'var(--cf-text9)' }}> · </span>
+                {graph.network.subgraphs.length} {plural(graph.network.subgraphs.length, ['подграф', 'подграфа', 'подграфов'])}
+                {graph.network.spof.length > 0 && (
+                  <>
+                    <span style={{ color: 'var(--cf-text9)' }}> · </span>
+                    {graph.network.spof.length} {plural(graph.network.spof.length, ['точка отказа', 'точки отказа', 'точек отказа'])}
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>
@@ -440,11 +483,64 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
           <TopBtn
-            onClick={() => { setCycleMode(c => !c); if (!cycleMode) { setChainRoot(null); } }}
+            onClick={() => { setCycleMode(c => !c); if (!cycleMode) { setChainRoot(null); setSubgraphId(null); } }}
             label="Круги — замкнутые контуры сбыта и финансирования. Единственная линза без оценок: цикл есть свойство графа."
             active={cycleMode} wide>
             <Sparkles size={12} /> Круги{graph.stats.cycleCount ? ` · ${graph.stats.cycleCount}` : ''}
           </TopBtn>
+          {/* Subgraph lens — a third lens beside Круги. Picks one of the three
+              stacks; the chosen one lights and everything else leaves the
+              render, the same "remove, don't dim" the chain uses. */}
+          {view === 'map' && graph.network.subgraphs.length > 0 && (
+            <div style={{ position: 'relative' }}>
+              <TopBtn
+                onClick={() => setSubgraphMenuOpen(o => !o)}
+                label="Подграфы — три стека сети: GPU, TPU и общий хребет инфраструктуры. Выбор подсвечивает один, остальное гаснет."
+                active={!!subgraphId || subgraphMenuOpen} wide>
+                <Network size={12} /> {subgraphLens ? subgraphLens.label : 'Подграфы'}
+                {subgraphLens && <X size={11} onClick={(e) => { e.stopPropagation(); setSubgraphId(null); setSubgraphMenuOpen(false); }} />}
+              </TopBtn>
+              {subgraphMenuOpen && (
+                <div style={{
+                  position: 'absolute', top: 'calc(100% + 6px)', left: 0, zIndex: 50, width: 260,
+                  background: 'var(--cf-popover)', border: '1px solid var(--cf-border)', borderRadius: 9,
+                  overflow: 'hidden', boxShadow: '0 16px 40px -12px var(--cf-shadow)', animation: 'cfmDrop 140ms ease-out',
+                }}>
+                  {graph.network.subgraphs.map(sg => (
+                    <button key={sg.id}
+                      onClick={() => {
+                        setSubgraphId(prev => (prev === sg.id ? null : sg.id));
+                        setSubgraphMenuOpen(false);
+                        setChainRoot(null); setSelectedNodeId(null); setCycleMode(false);
+                      }}
+                      style={{
+                        display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
+                        padding: '9px 11px', border: 'none',
+                        borderBottom: '1px solid var(--cf-border-hair)',
+                        background: subgraphId === sg.id ? 'var(--cf-hover)' : 'transparent',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = subgraphId === sg.id ? 'var(--cf-hover)' : 'transparent')}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                        <span style={{ width: 8, height: 8, borderRadius: 2, background: sg.color, flexShrink: 0 }} />
+                        <span style={{ fontSize: 11.5, fontWeight: 700, color: 'var(--cf-text1)' }}>{sg.label}</span>
+                        <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text7)' }}>
+                          {sg.nodeCount} узл. · {sg.edgeCount} св.
+                        </span>
+                        {sg.degenerate && (
+                          <span title="Подграф вырожден: структурно это почти один узел со своими частями, а не самостоятельный ландшафт."
+                            style={{ marginLeft: 'auto', fontSize: 8, fontFamily: MONO, color: 'var(--cf-warn)', fontWeight: 700, cursor: 'help' }}>
+                            вырожден
+                          </span>
+                        )}
+                      </div>
+                      <div style={{ fontSize: 10, color: 'var(--cf-text5)', lineHeight: 1.45, marginTop: 4 }}>{sg.description}</div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           <TopBtn onClick={() => (view === 'table' ? setView('map') : (setView('table'), setDrawerOpen(false)))}
             label={view === 'table' ? 'Назад к карте' : 'Таблица — вся экосистема списком, с сортировкой по любому столбцу'}
             active={view === 'table'} wide>
@@ -503,6 +599,8 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           layerSel={layerSel} onToggleLayer={toggleIn(setLayerSel)}
           phases={phases} onTogglePhase={toggleIn(setPhases)} phasesPresent={legendCounts.phase}
           risks={risks} onToggleRisk={toggleIn(setRisks)} risksPresent={legendCounts.risk}
+          pivotsOnly={pivotsOnly} onTogglePivotsOnly={() => setPivotsOnly(p => !p)}
+          pivotCount={graph.stats.pivotalCount}
           minStrength={minStrength} onMinStrength={setMinStrength}
           shownEntities={visibleNodes.size} totalEntities={graph.stats.entityCount}
           shownEdges={visibleEdges.size} totalEdges={graph.stats.edgeCount}
@@ -540,7 +638,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
               <>
                 <span style={{ color: 'var(--cf-accent)', fontWeight: 700, letterSpacing: '0.08em' }}>ПУСТО</span><br />
                 <span style={{ display: 'inline-block', marginTop: 6 }}>Карта экосистемы ещё не наполнена.</span><br />
-                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>Ждём месячный прогон движка с <code>nvidiaEcosystem.json</code>.</span>
+                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>Ждём месячный прогон движка с <code>aiEcosystemNetwork.json</code>.</span>
               </>
             ) : (
               <>
@@ -576,6 +674,17 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
       )}
 
       {view === 'map' && cycleMode && <CycleLegend cycles={graph.cycles} entityById={graph.entityById} onOpenEntity={focusEntity} />}
+
+      {view === 'map' && summaryOpen && (
+        <NetworkSummary
+          network={graph.network}
+          version={META.version}
+          spofByEntity={graph.network.spof}
+          onOpenEntity={focusEntity}
+          onOpenSubgraph={(id) => { setSubgraphId(id); setSummaryOpen(false); setChainRoot(null); setSelectedNodeId(null); setCycleMode(false); }}
+          onClose={() => setSummaryOpen(false)}
+        />
+      )}
 
       {selectedEntity && !layerOpen && (
         <EcoEntityPanel
