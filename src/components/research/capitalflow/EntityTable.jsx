@@ -18,7 +18,6 @@ import {
 } from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
 import { ARCHETYPE_LABEL, RANK_LABEL, RANK_COLOR } from './classification.js';
-import AllocatorTheses from './AllocatorTheses.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -251,11 +250,10 @@ const COLS = [
   { key: 'status',  label: 'Статус',         sort: (n) => (n.stale ? 2 : n.watchOnly ? 1 : 0) },
 ];
 
-export default function EntityTable({ nodes, matchedNodes, query, activeList, wl, onOpenEntity, kind = 'all', onKind, topInset = 0 }) {
+export default function EntityTable({ nodes, matchedNodes, query, activeList, wl, onOpenEntity, kind = 'all', onKind, onOpenTheses, topInset = 0 }) {
   const [sortKey, setSortKey] = useState('capital');
   const [sortDir, setSortDir] = useState(-1);         // -1 desc · 1 asc
   const [collapsed, setCollapsed] = useState(() => new Set());
-  const [thesesOpen, setThesesOpen] = useState(false);
 
   const toggleGroup = useCallback((id) => {
     setCollapsed(prev => {
@@ -355,7 +353,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
             {query ? <> · по запросу «{query}»</> : null}
           </span>
           <span style={{ flex: 1 }} />
-          <button onClick={() => setThesesOpen(true)}
+          <button onClick={() => onOpenTheses?.()}
             title="Тезисы инвесторов — кто вкладывает, в каком статусе и почему"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 5,
@@ -367,6 +365,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
             <Sparkles size={11} /> Тезисы
           </button>
           {[['all', 'Все'], ['allocator', 'Инвесторы'], ['target', 'Получатели']].map(([k, label]) => (
+
             <button key={k} onClick={() => onKind?.(k)}
               style={{
                 padding: '5px 11px', borderRadius: 7, cursor: 'pointer',
@@ -381,14 +380,6 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
           ))}
         </div>
 
-        {thesesOpen && (
-          <AllocatorTheses
-            nodes={nodes}
-            onOpenEntity={onOpenEntity}
-            onClose={() => setThesesOpen(false)}
-            topInset={0}
-          />
-        )}
 
         {sections.map(role => (
           <section key={role.key} style={{ marginBottom: 30 }}>

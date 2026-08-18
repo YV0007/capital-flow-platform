@@ -36,6 +36,7 @@ import EntityPanel from './EntityPanel.jsx';
 import AllocatorDeepDive from './AllocatorDeepDive.jsx';
 import FundHoldings from './FundHoldings.jsx';
 import EntityTable from './EntityTable.jsx';
+import AllocatorTheses from './AllocatorTheses.jsx';
 import DigestView from './DigestView.jsx';
 import ClusterReport from './ClusterReport.jsx';
 import { buildSectorReport, buildClassReport } from './clusterStats.js';
@@ -115,6 +116,11 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
   const [showWatch, setShowWatch] = useState(false);         // reveal candidate-only nodes
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [view, setView] = useState('map');                   // 'map' | 'table' (tracking universe)
+  // Тезисы panel. Lives here, NOT inside EntityTable: the table's own
+  // container scrolls, and an absolutely-positioned child of a scroll
+  // container scrolls away with the content — the panel would slide up and
+  // expose the table rows underneath once you reached its bottom.
+  const [thesesOpen, setThesesOpen] = useState(false);
   const [tableKind, setTableKind] = useState('all');         // table role chip: all | allocator | target
   // Filter key auto-applied by the sector report's "all receivers" button. If
   // the filter is still exactly this on the way back to the map, it was never
@@ -802,7 +808,18 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch }
           wl={wl}
           kind={tableKind}
           onKind={setTableKind}
+          onOpenTheses={() => setThesesOpen(true)}
           onOpenEntity={focusEntity}
+        />
+      )}
+
+      {/* Тезисы — investor roster + methodology, over the table. */}
+      {view === 'table' && thesesOpen && (
+        <AllocatorTheses
+          topInset={TOPBAR_H}
+          nodes={graph.nodes}
+          onOpenEntity={(id) => { setThesesOpen(false); focusEntity(id); }}
+          onClose={() => setThesesOpen(false)}
         />
       )}
 

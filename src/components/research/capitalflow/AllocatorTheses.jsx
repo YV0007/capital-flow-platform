@@ -15,6 +15,7 @@
 // dashboard-curated allocatorNotes.json (see its _note) and only ever fill a
 // genuine gap — never override engine data.
 
+import { useState } from 'react';
 import { X, Sparkles, ShieldCheck } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
 import { CLASS_META, SECTOR_META, sectorLabel } from '../../../data/capitalMap.js';
@@ -40,12 +41,26 @@ function thesisOf(node) {
 }
 
 export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset = 0 }) {
-  const allocators = nodes
+  const [clsFilter, setClsFilter] = useState(null);   // null = все классы
+
+  const all = nodes
     .filter(n => n.kind === 'allocator')
     .slice()
     .sort((a, b) => (b.capital || 0) - (a.capital || 0));
 
-  // Aggregate top sectors across the whole allocator universe, capital-weighted.
+  // Class chips are built from what's actually present, heaviest class first —
+  // so a class the engine stops sending simply disappears instead of showing
+  // an empty filter.
+  const classCounts = new Map();
+  all.forEach(n => classCounts.set(n.cls, (classCounts.get(n.cls) || 0) + 1));
+  const classChips = [...classCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .filter(([cls]) => cls);
+
+  const allocators = clsFilter ? all.filter(n => n.cls === clsFilter) : all;
+
+  // Aggregate top sectors — follows the filter, so the metric describes what
+  // is actually on screen rather than the whole universe.
   const sectorTotals = new Map();
   allocators.forEach(n => {
     Object.entries(n.engineSectors || {}).forEach(([key, s]) => {
@@ -127,6 +142,41 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Class filter — chips built from the classes actually present */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>
+          <span style={{
+            fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.09em', marginRight: 2,
+          }}>Класс инвестора</span>
+          <button onClick={() => setClsFilter(null)}
+            style={{
+              padding: '4px 10px', borderRadius: 7, cursor: 'pointer',
+              background: clsFilter === null ? 'var(--cf-accent-bg)' : 'var(--cf-surface2)',
+              border: `1px solid ${clsFilter === null ? 'var(--cf-accent-bd)' : 'var(--cf-border)'}`,
+              color: clsFilter === null ? 'var(--cf-accent)' : 'var(--cf-text3)',
+              fontSize: 10, fontFamily: MONO, fontWeight: 600,
+            }}>
+            Все · {all.length}
+          </button>
+          {classChips.map(([cls, count]) => {
+            const on = clsFilter === cls;
+            const meta = CLASS_META[cls];
+            return (
+              <button key={cls} onClick={() => setClsFilter(on ? null : cls)}
+                title={meta?.blurb || undefined}
+                style={{
+                  padding: '4px 10px', borderRadius: 7, cursor: 'pointer',
+                  background: on ? 'var(--cf-accent-bg)' : 'var(--cf-surface2)',
+                  border: `1px solid ${on ? 'var(--cf-accent-bd)' : 'var(--cf-border)'}`,
+                  color: on ? 'var(--cf-accent)' : 'var(--cf-text3)',
+                  fontSize: 10, fontFamily: MONO, fontWeight: 600,
+                }}>
+                {meta?.label || cls} · {count}
+              </button>
+            );
+          })}
         </div>
 
         {/* Roster table */}
