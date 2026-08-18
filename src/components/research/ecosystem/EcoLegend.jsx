@@ -1,8 +1,8 @@
 // EcoLegend — the key to the ecosystem encoding. Same shell and behaviour as
 // capitalflow/Legend (bottom-left, collapsed by default), different content:
-// here size means criticality, colour means depth in the stack, the ring
-// colour means concentration, and the line style means how well sourced the
-// claim is.
+// a cell is a LAYER of the stack rather than a sector, tile size means
+// criticality rather than capital, and the bond colour splits the physical
+// spine from the capital one.
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
@@ -40,16 +40,16 @@ export default function EcoLegend({ counts }) {
 
       {open && (
         <div style={{ padding: '10px 11px 12px', maxHeight: 'min(480px, calc(100vh - 300px))', overflowY: 'auto' }}>
-          <Section title="Толщина узла = критичность">
-            <Row label="Незаменим — 85 и выше"><Bar w={22} /></Row>
-            <Row label="Труднозаменим — 65–85"><Bar w={15} /></Row>
-            <Row label="Взаимозаменяем — ниже 40"><Bar w={7} /></Row>
+          <Section title="Размер плитки = критичность">
+            <Row label="Незаменим — 85 и выше"><Tile s={15} /></Row>
+            <Row label="Труднозаменим — 65–85"><Tile s={11} /></Row>
+            <Row label="Взаимозаменяем — ниже 40"><Tile s={7} /></Row>
           </Section>
 
-          <Section title="Радиус = слой стека">
-            <Row label="Центр — сырьё и оборудование" />
-            <Row label="Край — модели и спрос" />
-            <Row label="Капсула через слои = одна компания в нескольких слоях" />
+          <Section title="Остров = слой стека">
+            <Row label="Центр — хребет капитала: владеет и финансирует, но в стеке не стоит" />
+            <Row label="По кругу от L1 к L12 — сырьё → оборудование → чипы → … → модели" />
+            <Row label="Значок из полосок на плитке — компания живёт в нескольких слоях" />
           </Section>
 
           <Section title="Обводка = роль">
@@ -82,22 +82,23 @@ export default function EcoLegend({ counts }) {
               ))}
           </Section>
 
-          <Section title="Линия = сколько источников">
-            <Row label="Сплошная — два и больше" title="Правило двух источников: сплошная линия только при двух независимых подтверждениях.">
-              <span style={{ width: 16, height: 2, background: 'var(--cf-text4)' }} />
+          <Section title="Яркость связи = насколько доказана">
+            <Row label="Ярче — два и больше источника" title="Правило двух источников. Раньше это был пунктир против сплошной; пунктирные волосяные линии читались как шум, поэтому различие несёт яркость, а точная формулировка — тултип и панель.">
+              <span style={{ width: 16, height: 2, background: 'var(--cf-text2)' }} />
             </Row>
-            <Row label="Пунктир — один, пресса или оценка">
-              <span style={{ width: 16, borderTop: '2px dashed var(--cf-text4)' }} />
+            <Row label="Бледнее — один источник">
+              <span style={{ width: 16, height: 2, background: 'var(--cf-text7)' }} />
             </Row>
-            <Row label="Блёклая — не подтверждалось 6 месяцев" />
+            <Row label="Совсем блёклая — не подтверждалось 6 месяцев" />
           </Section>
 
-          <Section title="Кольцо = концентрация слоя">
+          <Section title="Концентрация слоя">
             {Object.entries(CONCENTRATION_META).map(([k, v]) => (
               <Row key={k} label={v.label} count={counts?.concentration?.[k]} title={v.blurb}>
-                <span style={{ width: 13, height: 13, borderRadius: '50%', border: `1.5px ${k === 'monopoly' ? 'solid' : 'dashed'} ${v.color}` }} />
+                <span style={{ width: 11, height: 11, borderRadius: '50%', background: v.color + '33', border: `1.5px solid ${v.color}` }} />
               </Row>
             ))}
+            <Row label="Монопольный слой обведён и помечен ✦" />
           </Section>
 
           <Section title="Тир источника">
@@ -113,7 +114,7 @@ export default function EcoLegend({ counts }) {
             fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, lineHeight: 1.6,
           }}>
             Клик по компании → цепочка по стеку<br />
-            Клик по подписи кольца → отчёт по слою<br />
+            Клик по названию острова → отчёт по слою<br />
             Esc → сбросить
           </div>
         </div>
@@ -147,6 +148,6 @@ function Row({ label, count, title, children }) {
   );
 }
 
-function Bar({ w }) {
-  return <span style={{ width: 6, height: w, borderRadius: 3, background: 'var(--cf-text5)', display: 'inline-block' }} />;
+function Tile({ s }) {
+  return <span style={{ width: s, height: s, borderRadius: s * 0.26, background: 'var(--cf-text5)', display: 'inline-block' }} />;
 }

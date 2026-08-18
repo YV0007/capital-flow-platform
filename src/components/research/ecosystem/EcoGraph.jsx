@@ -1,44 +1,43 @@
 // ══════════════════════════════════════════════════════════════════════════
-// EcoGraph — the full-screen ecosystem canvas. Static diagram, zero forces.
+// EcoGraph — the full-screen ecosystem canvas. STATIC diagram, not a
+// simulation. Deliberately the SAME painter as capitalflow/FlowGraph: the two
+// maps should be indistinguishable in feel and differ only in content.
 //
-// Same engine and the same feel as capitalflow/FlowGraph (react-force-graph,
-// pinned fx/fy, cheap flat shadows, logo tiles, canvasTheme surfaces), but it
-// draws different objects, so both the node and the link painters are
-// replaced outright:
+// An earlier version drew concentric layer rings, radial capsules and hand-
+// painted port-to-port edges. All of it is gone. Node = the same app-icon
+// tile; edges = force-graph's own bonds, thin, curved, with the small
+// directional arrowheads and the on-focus particles the flow map uses.
 //
-//   · NODE — a radial CAPSULE, not a tile. One capsule per company however
-//     many layers it occupies; thickness at each layer is its criticality
-//     there. Role is carried by the outline, not by colour alone.
-//   · LINK — drawn between the two ends' LAYER PORTS, not between node
-//     centres, so a chain enters and leaves a multi-layer company at the
-//     right ring. Cool = physical spine, warm = capital spine. Solid = two
-//     confirmed sources, dashed = one.
-//   · RINGS — twelve, painted behind everything, tinted by the layer's
-//     concentration. Their labels at 12 o'clock are the only clickable text
-//     on the canvas (they open the layer report — nodes stay companies).
+// VISUAL ENCODING
+//   · node = labeled block (logo inside — no floating labels)
+//   · block rim colour  → layer band (how deep in the stack it sits)
+//   · rim style         → role: solid producer/owner/demand · dashed capital ·
+//                         dotted platform
+//   · block size        → CRITICALITY (this map's "capital")
+//   · edge colour       → relation type; cool = physical spine, warm = capital
+//   · edge width        → strength (hairlines) · fainter = single source
+//   · dimmed            → filtered out, or outside the lit chain
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useThemeMode, canvasTokens, tone } from '../capitalflow/canvasTheme.js';
-import { shortLabel } from '../capitalflow/format.js';
-import { CONCENTRATION_META, criticalityBand } from '../../../data/ecosystemMap.js';
-import { capsulePath, mapRadius } from './ecoLayout.js';
+import { criticalityBand } from '../../../data/ecosystemMap.js';
 
 export default function EcoGraph({
-  graphData, rings, techNodes,
+  graphData, regions, techNodes,
   visibleNodes, visibleEdges,
   chain, chainRoot,
   cycleEdges, cycleMode,
   selectedNodeId, selectedEdgeId,
-  onNodeClick, onEdgeClick, onBackgroundClick, onRingClick, onReady,
-  showLabels, showTech, topInset = 0,
+  onNodeClick, onEdgeClick, onBackgroundClick, onRegionClick,
+  showLabels, showTech,
   fgRef,
 }) {
   const mode = useThemeMode();
   const T = canvasTokens(mode);
   const wrapRef = useRef(null);
-  const hoverRingRef = useRef(null);
+  const hoverRegionRef = useRef(null);
   const handledAtRef = useRef(0);
   const lastResizeRef = useRef(typeof performance !== 'undefined' ? performance.now() : 0);
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -48,7 +47,7 @@ export default function EcoGraph({
   const hasChain = !!chainRoot && chain && chain.nodes.size > 1;
   const nodeIndex = useMemo(() => new Map(graphData.nodes.map(n => [n.id, n])), [graphData]);
 
-  // ── Brand-logo cache — identical strategy to FlowGraph ─────────────────
+  // ── Brand-logo image cache — load once, repaint when they arrive ───────
   const logoCache = useRef(new Map());
   const [logoTick, setLogoTick] = useState(0);
   const refreshTimer = useRef(null);
@@ -99,54 +98,28 @@ export default function EcoGraph({
     return () => ro.disconnect();
   }, []);
 
-  // Frame the whole wheel. The geometry is known — centre (0,0), outer radius
-  // from the layout — so the camera is set directly instead of fitted to a
-  // node bbox: the cloud is never symmetric, and the rim labels sit outside it.
-  const camera = useMemo(() => {
-    const R = mapRadius(rings.length || 12);
-    // The usable canvas is the viewport minus whatever floats over its top
-    // (bar, and the draft banner when it is up): the wheel is scaled to fit
-    // THAT and nudged down by half of it, or the outermost ring labels end up
-    // under the header.
-    const usableH = Math.max(120, size.h - topInset);
-    const k = Math.min(size.w || 1, usableH) / (2 * R * 1.04);
-    return { k, y: -topInset / (2 * k) };
-  }, [rings, size, topInset]);
-
-  const frameAll = useCallback((ms = 0) => {
-    const fg = fgRef.current;
-    if (!fg || !size.w || !size.h) return;
-    fg.centerAt(0, camera.y, ms);
-    fg.zoom(camera.k, ms);
-  }, [fgRef, size, camera]);
-
-  // Frame once on mount — but VERIFY, don't fire-and-forget. force-graph sets
-  // up its own camera asynchronously and will happily overwrite a zoom issued
-  // a moment too early (it did: the call reported success and the map still
-  // opened at 1:1). So the poll keeps re-applying until the camera has held
-  // the target across consecutive checks, then stops for good and leaves the
-  // camera to the user.
-  const framedRef = useRef(false);
+  // Frame the whole map on load. Two traps, both the flow map's: fitting
+  // before the graph has ingested its data zooms into a degenerate bbox, and
+  // the library resets the camera on resize, wiping a fit done too early.
   useEffect(() => {
-    if (framedRef.current || !size.w) return;
-    let tries = 0, held = 0;
+    let ticks = 0, goodFits = 0;
     const iv = setInterval(() => {
+      ticks += 1;
+      if (ticks >= 60) { clearInterval(iv); return; }
+      if (performance.now() - lastResizeRef.current < 600) return;
       const fg = fgRef.current;
-      if (framedRef.current || ++tries > 60 || !fg) { clearInterval(iv); return; }
-      if (performance.now() - lastResizeRef.current < 350) return;
-      const at = Math.abs((fg.zoom() || 0) - camera.k) < camera.k * 0.02;
-      if (at) {
-        if (++held >= 3) { framedRef.current = true; clearInterval(iv); }
-        return;
-      }
-      held = 0;
-      frameAll(0);
-    }, 150);
+      if (!fg) return;
+      const bbox = fg.getGraphBbox?.();
+      if (!(bbox && Number.isFinite(bbox.x?.[0]) && (bbox.x[1] - bbox.x[0]) > 100)) return;
+      fg.zoomToFit(goodFits === 0 ? 0 : 200, 70);
+      goodFits += 1;
+      if (goodFits >= 2) clearInterval(iv);
+    }, 250);
     return () => clearInterval(iv);
-  }, [size, camera, frameAll, fgRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  useEffect(() => { if (onReady) onReady({ frameAll }); }, [onReady, frameAll]);
-
+  // ── Kill every force — the layout is fixed ─────────────────────────────
   useEffect(() => {
     const fg = fgRef.current;
     if (!fg) return;
@@ -157,7 +130,8 @@ export default function EcoGraph({
 
   useEffect(() => { fgRef.current?.refresh?.(); }, [mode, fgRef]);
 
-  // ── Lit / visible predicates ───────────────────────────────────────────
+  const hasFilter = visibleNodes.size < graphData.nodes.length;
+
   const nodeLit = useCallback((n) => {
     if (!visibleNodes.has(n.id)) return false;
     if (cycleMode) return n.onCycle;
@@ -172,100 +146,139 @@ export default function EcoGraph({
     return chain.edges.has(e.id);
   }, [visibleEdges, hasChain, chain, cycleMode, cycleEdges]);
 
+  // Out-of-filter nodes/edges leave the render ENTIRELY (line, arrow,
+  // particles, hit area), so a filtered view is clean rather than a faint mess.
   const nodeVisible = useCallback((n) => visibleNodes.has(n.id), [visibleNodes]);
   const edgeVisible = useCallback((e) => visibleEdges.has(e.id), [visibleEdges]);
 
-  // ── Rings — painted behind everything ──────────────────────────────────
-  const paintRings = useCallback((ctx, globalScale) => {
-    const gs = globalScale || 1;
-    // Outermost first, so the inner rings' tint sits on top and the centre
-    // reads as the deepest part of the well.
-    [...rings].reverse().forEach(ring => {
-      const conc = CONCENTRATION_META[ring.concentration?.level] || CONCENTRATION_META.competitive;
-      const band = tone(ring.color, mode);
-      const cc = tone(conc.color, mode);
-
-      // Band fill — the layer's own slab of the wheel.
-      ctx.beginPath();
-      ctx.arc(0, 0, ring.outer, 0, 2 * Math.PI);
-      ctx.fillStyle = hexA(band, mode === 'light' ? 0.055 : 0.035);
-      ctx.fill();
-
-      // Concentration ring — the alarm colour lives on the RING, not on the
-      // nodes, so a monopolistic layer looks wrong at a glance.
-      ctx.beginPath();
-      ctx.arc(0, 0, ring.r, 0, 2 * Math.PI);
-      ctx.lineWidth = Math.max(0.6, 1.4 / gs);
-      ctx.strokeStyle = hexA(cc, ring.concentration?.level === 'competitive'
-        ? (mode === 'light' ? 0.22 : 0.14)
-        : (mode === 'light' ? 0.5 : 0.34));
-      ctx.setLineDash(ring.concentration?.level === 'monopoly' ? [] : [10 / gs, 8 / gs]);
-      ctx.stroke();
-      ctx.setLineDash([]);
+  // Cell keys that still hold a visible node — a cell with none is removed.
+  const activeRegionKeys = useMemo(() => {
+    if (!hasFilter) return null;
+    const keys = new Set();
+    graphData.nodes.forEach(n => {
+      if (!visibleNodes.has(n.id)) return;
+      keys.add(n.primaryLayer);
+      if (n.role === 'capital') keys.add('_capital');
     });
+    return keys;
+  }, [hasFilter, graphData, visibleNodes]);
 
-    // Ring LABELS, stacked in the 12 o'clock corridor the layout keeps clear.
-    // These are the only clickable text on the canvas — they open the layer
-    // report. Nodes stay companies; a layer is a coordinate, not an object.
-    // Sizes here are SCREEN-constant (divided by the zoom), so a ring label
-    // stays readable at "whole wheel" zoom instead of shrinking to four pixels.
-    const padX = 9 / gs, padY = 6 / gs;
-    rings.forEach(ring => {
-      const cc = tone((CONCENTRATION_META[ring.concentration?.level] || CONCENTRATION_META.competitive).color, mode);
-      const hot = hoverRingRef.current === ring.key;
-      const y = -ring.r;
-      const fs = 12.5 / gs;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = `700 ${fs}px ui-monospace, monospace`;
-      const title = `${ring.key} · ${ring.label}`;
-      const w = ctx.measureText(title).width;
+  // ── Cells: soft glow pools + a clickable title ─────────────────────────
+  const paintRegions = useCallback((ctx, globalScale) => {
+    const padX = 10 / (globalScale || 1);
+    const padY = 9 / (globalScale || 1);
+    regions.forEach(r => {
+      const core = r.type === 'capital';
+      const faded = !!activeRegionKeys && !activeRegionKeys.has(r.key);
+      if (faded) { r._hit = null; return; }
 
-      // A plate behind it, or the wheel's own lines cut the text in half.
-      roundRect(ctx, -w / 2 - padX, y - fs / 2 - padY, w + padX * 2, fs + padY * 2, 7);
-      ctx.fillStyle = hexA(T.bg, mode === 'light' ? 0.9 : 0.86);
+      // Soft glow POOL — a zone, not a bordered circle.
+      const glowR = r.r * 1.45;
+      const rc = tone(r.color, mode);
+      const baseA = core ? T.regionSource : (r.lit ? T.regionLit : T.regionTarget);
+      const g = ctx.createRadialGradient(r.cx, r.cy, r.r * 0.12, r.cx, r.cy, glowR);
+      g.addColorStop(0, hexA(rc, baseA));
+      g.addColorStop(0.65, hexA(rc, baseA * 0.4));
+      g.addColorStop(1, hexA(rc, 0));
+      ctx.beginPath();
+      ctx.arc(r.cx, r.cy, glowR, 0, 2 * Math.PI);
+      ctx.fillStyle = g;
       ctx.fill();
-      ctx.lineWidth = 1 / gs;
-      ctx.strokeStyle = hexA(cc, hot ? 0.8 : 0.28);
-      ctx.stroke();
 
-      ctx.fillStyle = hot ? T.labelStrong : hexA(T.label, ring.count ? 0.92 : 0.42);
-      ctx.fillText(title, 0, y);
+      // Only a MONOPOLY layer gets the accent ring — the alpha moment.
+      if (r.lit) {
+        ctx.beginPath();
+        ctx.arc(r.cx, r.cy, r.r + 4, 0, 2 * Math.PI);
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = hexA(tone('#E5484D', mode), 0.55);
+        ctx.stroke();
+      }
 
-      ring._hit = {
-        x0: -w / 2 - padX, x1: w / 2 + padX,
-        y0: y - fs / 2 - padY, y1: y + fs / 2 + padY,
+      // Cell TITLE — the only text on the canvas, and the way into the layer
+      // report. Layers stay coordinates; only companies are nodes.
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      const size = core ? 19 : 25;
+      ctx.font = `700 ${size}px ui-monospace, monospace`;
+      const hot = hoverRegionRef.current === r.key;
+      ctx.fillStyle = hexA(rc, hot ? 1 : (core ? 0.85 : r.lit ? 0.96 : 0.74));
+      const title = r.lit ? `✦ ${r.label}` : r.label;
+      const ty = r.cy - r.r - 12;
+      ctx.fillText(title, r.cx, ty);
+
+      // Hit box, refreshed every frame so it tracks pan/zoom for free.
+      const w = ctx.measureText(title).width;
+      r._hit = {
+        x0: r.cx - w / 2 - padX, x1: r.cx + w / 2 + padX,
+        y0: ty - size - padY, y1: ty + padY,
       };
 
-      // The caption only appears once you are close enough to read it.
-      if (gs > 0.5) {
-        ctx.font = `600 ${fs * 0.74}px ui-monospace, monospace`;
-        ctx.fillStyle = hexA(T.label, 0.5);
-        ctx.fillText(ring.caption, 0, y + fs * 1.15);
+      if (hot) {
+        ctx.beginPath();
+        ctx.moveTo(r.cx - w / 2, ty + 4);
+        ctx.lineTo(r.cx + w / 2, ty + 4);
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = hexA(rc, 0.8);
+        ctx.stroke();
+      }
+
+      if (r.stats) {
+        ctx.textBaseline = 'top';
+        ctx.font = `600 ${core ? 13 : 16}px ui-monospace, monospace`;
+        ctx.fillStyle = hexA(rc, (mode === 'light' ? 0.85 : 0.42));
+        ctx.fillText(r.stats, r.cx, r.cy + r.r + 8);
       }
     });
+  }, [regions, mode, T, activeRegionKeys]);
 
-    // Tech nodes — satellites beside their owner, never free-standing nodes.
-    if (showTech && gs > 0.3) {
+  // ── Tech satellites + the tech label on a lit bond, over the top ───────
+  const paintOverlay = useCallback((ctx, globalScale) => {
+    const gs = globalScale || 1;
+    if (showTech && gs > 0.34) {
       techNodes.forEach(t => {
         if (t._x == null) return;
         const owner = nodeIndex.get(t.owner);
         if (owner && !nodeLit(owner)) return;
         ctx.beginPath();
-        ctx.arc(t._x, t._y, 7, 0, 2 * Math.PI);
-        ctx.fillStyle = hexA(tone('#A46FD6', mode), 0.9);
+        ctx.arc(t._x, t._y, 4.5, 0, 2 * Math.PI);
+        ctx.fillStyle = hexA(tone('#A46FD6', mode), 0.95);
         ctx.fill();
-        ctx.font = `700 ${13}px ui-monospace, monospace`;
+        ctx.font = `700 ${11}px ui-monospace, monospace`;
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = hexA(T.label, 0.8);
-        ctx.fillText(t.label, t._x + 11, t._y);
+        ctx.fillStyle = hexA(T.label, 0.72);
+        ctx.fillText(t.label, t._x + 7, t._y);
       });
     }
-  }, [rings, mode, T, techNodes, showTech, nodeIndex, nodeLit]);
 
-  // ── Ring labels are clickable ─────────────────────────────────────────
-  const ringAt = useCallback((ev) => {
+    // What actually moves along a bond — "EUV", "CoWoS", "CUDA". Only on the
+    // lit chain or on hover, so the map stays quiet when idle.
+    if (!hasChain && !selectedEdgeId && !hoverEdgeId) return;
+    graphData.links.forEach(e => {
+      if (!e.techMeta || !edgeLit(e)) return;
+      const focused = e.id === selectedEdgeId || e.id === hoverEdgeId || hasChain;
+      if (!focused) return;
+      const s = e.source, t = e.target;
+      if (typeof s !== 'object' || typeof t !== 'object') return;
+      const mx = (s.x + t.x) / 2, my = (s.y + t.y) / 2;
+      // Nudged off the chord by the same curvature the bond is drawn with.
+      const dx = t.x - s.x, dy = t.y - s.y;
+      const cx = mx - dy * (e.curvature || 0) * 0.5;
+      const cy = my + dx * (e.curvature || 0) * 0.5;
+      ctx.font = `700 ${11}px ui-monospace, monospace`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const label = e.techMeta.label;
+      const tw = ctx.measureText(label).width;
+      roundRect(ctx, cx - tw / 2 - 4, cy - 8, tw + 8, 16, 4);
+      ctx.fillStyle = hexA(T.bg, 0.86); ctx.fill();
+      ctx.fillStyle = hexA(tone(e.color, mode), 0.95);
+      ctx.fillText(label, cx, cy);
+    });
+  }, [techNodes, showTech, nodeIndex, nodeLit, mode, T, graphData, edgeLit,
+      hasChain, selectedEdgeId, hoverEdgeId]);
+
+  // ── Cell titles are clickable ─────────────────────────────────────────
+  const regionAt = useCallback((ev) => {
     const fg = fgRef.current;
     if (!fg || !ev || typeof fg.screen2GraphCoords !== 'function') return null;
     const rect = wrapRef.current?.getBoundingClientRect();
@@ -274,173 +287,156 @@ export default function EcoGraph({
     if (!Number.isFinite(sx) || !Number.isFinite(sy)) return null;
     const p = fg.screen2GraphCoords(sx, sy);
     if (!p) return null;
-    return rings.find(r => r._hit
+    return regions.find(r => r._hit
       && p.x >= r._hit.x0 && p.x <= r._hit.x1
       && p.y >= r._hit.y0 && p.y <= r._hit.y1) || null;
-  }, [rings, fgRef]);
+  }, [regions, fgRef]);
 
   const handleMove = useCallback((ev) => {
-    if (!onRingClick) return;
-    const hit = ringAt(ev);
+    if (!onRegionClick) return;
+    const hit = regionAt(ev);
     const key = hit ? hit.key : null;
-    if (hoverRingRef.current !== key) {
-      hoverRingRef.current = key;
+    if (hoverRegionRef.current !== key) {
+      hoverRegionRef.current = key;
       const canvas = wrapRef.current?.querySelector('canvas');
       if (canvas) canvas.style.cursor = key ? 'pointer' : '';
       fgRef.current?.refresh?.();
     }
-  }, [ringAt, onRingClick, fgRef]);
+  }, [regionAt, onRegionClick, fgRef]);
 
-  // Capture phase, so an edge crossing the label corridor cannot steal the
-  // click (same trick as the flow map's cluster titles).
+  // Titles sit outside the cells but edges cross that space, and an edge under
+  // the cursor would win the click. Catching it in CAPTURE gets the title in
+  // first; the canvas never sees the event.
   const handleClickCapture = useCallback((ev) => {
-    if (!onRingClick) return;
-    const hit = ringAt(ev);
+    if (!onRegionClick) return;
+    const hit = regionAt(ev);
     if (!hit) return;
     ev.stopPropagation();
     ev.preventDefault();
     handledAtRef.current = performance.now();
-    onRingClick(hit.key);
-  }, [ringAt, onRingClick]);
+    onRegionClick(hit.type, hit.key);
+  }, [regionAt, onRegionClick]);
 
+  // Belt and braces — force-graph fires its own click a frame after pointerup
+  // on a DIFFERENT event object, so the timestamp guard is what stops one
+  // physical click from toggling the report open and straight back shut.
   const handleBackground = useCallback((ev) => {
     if (performance.now() - handledAtRef.current < 500) return;
-    if (onRingClick) {
-      const hit = ringAt(ev);
-      if (hit) { onRingClick(hit.key); return; }
+    if (onRegionClick) {
+      const hit = regionAt(ev);
+      if (hit) { onRegionClick(hit.type, hit.key); return; }
     }
     onBackgroundClick?.();
-  }, [ringAt, onRingClick, onBackgroundClick]);
+  }, [regionAt, onRegionClick, onBackgroundClick]);
 
-  // ── Node painter — the radial capsule ─────────────────────────────────
+  // ── Node painter — brand-logo "app-icon" tile ─────────────────────────
   const paintNode = useCallback((node, ctx, globalScale) => {
     if (!visibleNodes.has(node.id)) return;
-    const gs = globalScale || 1;
     const lit = nodeLit(node);
     const selected = node.id === selectedNodeId;
     const hovered = node.id === hoverNodeId;
     const isRoot = node.id === chainRoot;
     const dim = node.faded ? 0.45 : 1;
-    const alpha = lit ? dim : (hasChain || cycleMode ? 0.06 : 0.5);
-
+    const alpha = lit ? dim : ((hasChain || cycleMode) ? 0.05 : 0.5);
     const col = tone(node.color, mode);
     const role = node.roleMeta || {};
-    const pts = node._capsule || (node._capsule = capsulePath(node));
-    const p = node._primaryGeo;
+    const R = node.r || 12;
+    const cx = node.x, cy = node.y;
+    const S = R * 1.85;
+    const half = S / 2;
+    const x = cx - half, y = cy - half;
+    const corner = S * 0.26;
 
     ctx.save();
     ctx.globalAlpha = alpha;
 
-    // Chain root gets a bloom so you never lose where you clicked.
-    if (lit && (isRoot || selected)) {
-      const g = ctx.createRadialGradient(p.x, p.y, p.hw * 0.3, p.x, p.y, p.hw * 4.2);
-      g.addColorStop(0, hexA(T.pivotGlow, 0.55));
-      g.addColorStop(0.45, hexA(T.pivotGlow, 0.2));
-      g.addColorStop(1, hexA(T.pivotGlow, 0));
-      ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.hw * 4.2, 0, 2 * Math.PI); ctx.fill();
+    // NO attention bloom. The flow map blooms its "pivotal" nodes in red, and
+    // the obvious port was anchors + anything on a closed loop — but that lit
+    // roughly half the map, so the red stopped meaning anything and only
+    // competed with the cell glows. Until there is a criterion sharp enough to
+    // earn it, importance is carried by tile SIZE (criticality) alone. The
+    // cycles lens is where loop membership belongs, on demand.
+
+    if (lit && (selected || hovered || isRoot)) {
+      roundRect(ctx, x - 5, y - 5, S + 10, S + 10, corner + 4);
+      ctx.fillStyle = hexA(col, selected || isRoot ? 0.28 : 0.15); ctx.fill();
     }
 
-    // Body — flat shadow, then the capsule itself.
-    tracePoly(ctx, pts, 2.2, 3.2);
+    // Cheap flat drop shadow, then the tile.
+    roundRect(ctx, x + R * 0.06 + 1, y + R * 0.16 + 1, S, S, corner);
     ctx.fillStyle = T.tileShadow;
     ctx.fill();
-    tracePoly(ctx, pts);
+    roundRect(ctx, x, y, S, S, corner);
     ctx.fillStyle = T.nodeTile;
     ctx.fill();
 
-    // A colour wash inside the capsule so the band (= how deep in the stack)
-    // is visible even where the logo covers the middle.
-    tracePoly(ctx, pts);
-    ctx.fillStyle = hexA(col, mode === 'light' ? 0.2 : 0.32);
-    ctx.fill();
-
-    // Multi-layer only: a spine down the capsule's axis, plus a pip at every
-    // layer the company occupies. Without them the thin bridge between two
-    // distant layers reads as an EDGE at map zoom, and the one thing the
-    // capsule exists to say — "this is a single company spanning the stack" —
-    // is exactly what gets lost.
-    if (node.multiLayer) {
-      const a = node._angle;
-      ctx.beginPath();
-      ctx.moveTo(Math.cos(a) * node._rIn, Math.sin(a) * node._rIn);
-      ctx.lineTo(Math.cos(a) * node._rOut, Math.sin(a) * node._rOut);
-      ctx.lineWidth = 2.4;
-      ctx.strokeStyle = hexA(col, 0.75);
-      ctx.stroke();
-      node._segGeo.forEach(s => {
-        if (s.primary) return;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, Math.max(4, s.hw * 0.34), 0, 2 * Math.PI);
-        ctx.fillStyle = hexA(col, 0.95);
-        ctx.fill();
-      });
-    }
-
-    // Outline carries the ROLE — solid producer, dashed capital, dotted
-    // platform — so roles survive a colour-blind eye and a printed page.
-    tracePoly(ctx, pts);
-    ctx.lineWidth = (selected || isRoot) ? 3.2 : hovered ? 2.4 : 1.6;
-    ctx.strokeStyle = selected || isRoot
-      ? T.selectRing
-      : hexA(tone(role.color || col, mode), hovered ? 1 : 0.85);
-    const dash = ROLE_DASH[node.role];
-    if (dash) ctx.setLineDash(dash);
-    if (node.faded) ctx.setLineDash([3, 4]);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Logo sits in the PRIMARY layer's segment — the one the label belongs to.
-    const S = Math.min(p.hw * 1.62, 62);
     const logo = getLogo(node);
-    if (logo && logo.ok && logo.img && logo.img.naturalWidth && S > 14) {
-      ctx.save();
-      roundRect(ctx, p.x - S / 2, p.y - S / 2, S, S, S * 0.26);
+    if (logo && logo.ok && logo.img && logo.img.naturalWidth) {
+      roundRect(ctx, x, y, S, S, corner);
       ctx.fillStyle = T.logoPlate; ctx.fill();
-      ctx.clip();
-      const pad = S * 0.16;
+      ctx.save();
+      roundRect(ctx, x, y, S, S, corner); ctx.clip();
+      const pad = S * 0.15;
       const iw = logo.img.naturalWidth, ih = logo.img.naturalHeight;
       const box = S - pad * 2;
       let sc = Math.min(box / iw, box / ih);
-      if (!logo.vector) sc = Math.min(sc, 2 / gs);
+      // A 16px favicon blown up to fill the tile turns to mush — cap the
+      // upscale at 2× the source's real pixels. Vectors are unaffected.
+      if (!logo.vector) sc = Math.min(sc, 2 / (globalScale || 1));
       ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(logo.img, p.x - (iw * sc) / 2, p.y - (ih * sc) / 2, iw * sc, ih * sc);
+      ctx.drawImage(logo.img, cx - (iw * sc) / 2, cy - (ih * sc) / 2, iw * sc, ih * sc);
       ctx.restore();
     } else {
-      ctx.fillStyle = hexA(mode === 'light' ? '#0F172A' : '#ffffff', 0.86);
-      ctx.font = `800 ${Math.max(9, S * 0.42)}px -apple-system, "Segoe UI", sans-serif`;
+      const g = ctx.createLinearGradient(x, y, x + S, y + S);
+      g.addColorStop(0, mix(col, '#ffffff', mode === 'light' ? 0.06 : 0.22));
+      g.addColorStop(1, mix(col, '#05060a', mode === 'light' ? 0.30 : 0.45));
+      roundRect(ctx, x, y, S, S, corner); ctx.fillStyle = g; ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.92)';
+      ctx.font = `800 ${S * 0.4}px -apple-system, "Segoe UI", sans-serif`;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText(node.monogram || '?', p.x, p.y);
+      ctx.fillText(node.monogram || '?', cx, cy + S * 0.02);
     }
 
-    // On a cycle, in cycle mode: a hot dot at the primary segment.
-    if (cycleMode && node.onCycle) {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y - p.hw - 9, 5, 0, 2 * Math.PI);
-      ctx.fillStyle = tone('#E5484D', mode);
-      ctx.fill();
+    // Accent rim = layer band; the STROKE STYLE carries the role, so roles
+    // survive a colour-blind eye and a printed page.
+    roundRect(ctx, x, y, S, S, corner);
+    ctx.lineWidth = selected || isRoot ? 2.4 : 1.4;
+    ctx.strokeStyle = selected || isRoot ? T.selectRing : hexA(col, hovered ? 1 : 0.72);
+    const dash = ROLE_DASH[node.role];
+    if (node.faded) ctx.setLineDash([3, 3]);
+    else if (dash) ctx.setLineDash(dash);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Multi-layer badge — a small stack of bars in the corner. This is what
+    // replaces the old radial capsule: one company, one tile, and a mark that
+    // says "it also stands in other layers" without duplicating the node.
+    if (node.multiLayer) {
+      const bw = S * 0.2, bx = x + S - bw - S * 0.09, by = y + S * 0.09;
+      for (let i = 0; i < Math.min(3, node.segments.length); i++) {
+        roundRect(ctx, bx, by + i * (S * 0.075), bw, S * 0.045, S * 0.02);
+        ctx.fillStyle = hexA(col, 0.95 - i * 0.22);
+        ctx.fill();
+      }
     }
 
-    // Label — placed tangentially so it never crosses its own capsule, and
-    // flipped on the left half of the wheel so it is never upside down.
-    const showLabel = selected || hovered || isRoot
-      || (showLabels && gs >= (node._labelScale || 1));
+    // Label — reveal by zoom, ranked by importance (node.labelScale)
+    const gs = globalScale || 1;
+    const showLabel = selected || hovered || isRoot || (showLabels && gs >= (node.labelScale || 1));
     if (showLabel) {
-      const a = node._angle;
-      const lr = node._rOut + 9;
-      const lx = Math.cos(a) * lr, ly = Math.sin(a) * lr;
-      const flip = Math.cos(a) < 0;
-      ctx.save();
-      ctx.translate(lx, ly);
-      ctx.rotate(flip ? a + Math.PI : a);
-      ctx.textAlign = flip ? 'right' : 'left';
-      ctx.textBaseline = 'middle';
-      ctx.font = `${node.tier === 'anchor' ? 700 : 600} ${Math.max(11, p.hw * 0.6)}px -apple-system, "Segoe UI", sans-serif`;
-      ctx.fillStyle = selected || hovered || isRoot
-        ? T.labelStrong
-        : hexA(T.label, node.tier === 'anchor' ? 0.96 : 0.76);
-      ctx.fillText(shortLabel(node.name, 22), 0, 0);
-      ctx.restore();
+      const lx = cx + half + 6;
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      const big = node.atomTier <= 1;
+      ctx.font = `${big ? 700 : 600} ${Math.max(11, R * 0.62)}px -apple-system, "Segoe UI", sans-serif`;
+      ctx.fillStyle = selected || hovered || isRoot ? T.labelStrong : hexA(T.label, big ? 0.96 : 0.78);
+      ctx.fillText(node.atomLabel, lx, cy);
+      // A company in several layers says so under its name — the badge alone
+      // is a hint, this is the answer.
+      if (node.multiLayer && (selected || hovered || isRoot || gs > 1.1)) {
+        ctx.font = `700 ${Math.max(8.5, R * 0.4)}px ui-monospace, monospace`;
+        ctx.fillStyle = hexA(T.label, 0.5);
+        ctx.fillText(node.segments.map(s => s.layer).join('·'), lx, cy + Math.max(11, R * 0.62) * 0.92);
+      }
     }
 
     ctx.restore();
@@ -449,105 +445,68 @@ export default function EcoGraph({
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
     if (!visibleNodes.has(node.id)) return;
-    tracePoly(ctx, node._capsule || (node._capsule = capsulePath(node)));
+    const S = (node.r || 12) * 1.85, half = S / 2;
     ctx.fillStyle = colour;
+    roundRect(ctx, node.x - half, node.y - half, S, S, S * 0.26);
     ctx.fill();
   }, [visibleNodes]);
 
-  // ── Edge painter — port to port, not centre to centre ─────────────────
-  const paintEdge = useCallback((edge, ctx, globalScale) => {
-    if (!visibleEdges.has(edge.id)) return;
-    const gs = globalScale || 1;
-    const lit = edgeLit(edge);
-    const selected = edge.id === selectedEdgeId;
-    const hovered = edge.id === hoverEdgeId;
-    const cyc = cycleEdges.get(edge.id);
+  // ── Bond styling — force-graph's own renderer, flow-map settings ───────
+  const linkColor = useCallback((e) => {
+    const lit = edgeLit(e);
+    if (!lit) return hexA(T.linkDim, T.linkDimAlpha * ((hasChain || cycleMode) ? 0.6 : 1));
+    if (e.id === selectedEdgeId) return T.labelStrong;
+    const cyc = cycleMode ? cycleEdges.get(e.id) : null;
+    if (cyc) return hexA(tone(cyc.color, mode), 0.95);
+    // Strength drives opacity, and a single-source claim is knocked down
+    // further. The contract's "one source → dashed" rule is NOT drawn as a
+    // dash: dashed hairlines read as noise at map zoom and broke the family
+    // resemblance with the flow map. The distinction is carried by opacity
+    // here, and stated in words in the tooltip and the entity panel.
+    const conf = e.confirmedSources >= 2 ? 1 : 0.62;
+    const base = mode === 'light' ? 0.55 : 0.36;
+    const a = (base + 0.5 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
+    const lc = tone(e.color, mode);
+    if (e.id === hoverEdgeId) return hexA(lc, Math.min(1, a + 0.45));
+    return hexA(lc, hasChain ? Math.min(1, a + 0.3) : a);
+  }, [edgeLit, selectedEdgeId, hoverEdgeId, hasChain, cycleMode, cycleEdges, mode, T]);
 
-    let color = tone(edge.color, mode);
-    let alpha = lit
-      ? (0.3 + 0.55 * ((edge.strength || 0) / 100)) * (edge.faded ? 0.45 : 1)
-      : ((hasChain || cycleMode) ? 0.035 : 0.1);
-    if (lit && cycleMode && cyc) { color = tone(cyc.color, mode); alpha = 0.95; }
-    if (selected) { color = T.labelStrong; alpha = 1; }
-    else if (hovered && lit) alpha = Math.min(1, alpha + 0.35);
-    if (mode === 'light') alpha = Math.min(1, alpha * 1.25);
+  const linkW = useCallback((e) => {
+    if (!visibleEdges.has(e.id)) return 0;
+    // HAIRLINES, like the flow map. Importance reads through opacity and the
+    // particle flow, never through girth — a map of 60+ standing dependencies
+    // turns into spaghetti the moment the lines get fat.
+    const w = 0.5 + 1.1 * Math.sqrt((e.strength || 0) / 100);
+    if (e.id === selectedEdgeId) return w + 1.3;
+    if (e.id === hoverEdgeId) return w + 0.8;
+    if (cycleMode && cycleEdges.has(e.id)) return w + 0.9;
+    return w;
+  }, [visibleEdges, selectedEdgeId, hoverEdgeId, cycleMode, cycleEdges]);
 
-    const w = (0.9 + 3.4 * Math.sqrt((edge.strength || 0) / 100))
-      * (selected ? 2 : hovered ? 1.5 : 1)
-      * (lit && cycleMode && cyc ? 1.7 : 1);
+  const particles = useCallback((e) => {
+    // Motion only on focus, so the map is still when idle — movement is a
+    // reward for clicking in, not constant noise.
+    if (e.id === selectedEdgeId) return 6;
+    if (e.id === hoverEdgeId) return 4;
+    if (cycleMode) return cycleEdges.has(e.id) ? 5 : 0;
+    if (hasChain) return chain.edges.has(e.id) ? 4 : 0;
+    return 0;
+  }, [selectedEdgeId, hoverEdgeId, hasChain, chain, cycleMode, cycleEdges]);
 
-    const { x0, y0, x1, y1, cx, cy } = edgeGeometry(edge);
-    ctx.save();
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = hexA(color, alpha);
-    ctx.lineWidth = w;
-    ctx.lineCap = 'round';
-    // Two confirmed independent sources → solid. One → dashed, whatever the
-    // tier. `estimate` and `press` are dashed by rule too (see the adapter).
-    if (!edge.solid) ctx.setLineDash([9 / gs * 1.4, 7 / gs * 1.4]);
-    ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.quadraticCurveTo(cx, cy, x1, y1);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Arrow — direction is always supplier → consumer, so it also reads as
-    // "which way up the stack".
-    if (lit && gs > 0.22) {
-      const t = 0.86;
-      const px = qp(x0, cx, x1, t), py = qp(y0, cy, y1, t);
-      const dx = qd(x0, cx, x1, t), dy = qd(y0, cy, y1, t);
-      const a = Math.atan2(dy, dx);
-      const s = 6 + 7 * Math.sqrt((edge.strength || 0) / 100);
-      ctx.beginPath();
-      ctx.moveTo(px, py);
-      ctx.lineTo(px - Math.cos(a - 0.42) * s, py - Math.sin(a - 0.42) * s);
-      ctx.lineTo(px - Math.cos(a + 0.42) * s, py - Math.sin(a + 0.42) * s);
-      ctx.closePath();
-      ctx.fillStyle = hexA(color, alpha);
-      ctx.fill();
-    }
-
-    // Tech-node caption on the edge — "EUV", "CoWoS", "CUDA". This is what
-    // makes a dependency legible without opening anything: the label names
-    // the thing that actually moves.
-    if (lit && edge.techMeta && (selected || hovered || (hasChain && gs > 0.3) || gs > 0.75)) {
-      const mx = qp(x0, cx, x1, 0.5), my = qp(y0, cy, y1, 0.5);
-      ctx.font = `700 ${12}px ui-monospace, monospace`;
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      const label = edge.techMeta.label;
-      const tw = ctx.measureText(label).width;
-      roundRect(ctx, mx - tw / 2 - 5, my - 9, tw + 10, 18, 5);
-      ctx.fillStyle = hexA(T.bg, 0.88); ctx.fill();
-      ctx.strokeStyle = hexA(color, 0.5); ctx.lineWidth = 1 / gs; ctx.stroke();
-      ctx.fillStyle = hexA(T.label, 0.94);
-      ctx.fillText(label, mx, my);
-    }
-
-    ctx.restore();
-  }, [visibleEdges, edgeLit, selectedEdgeId, hoverEdgeId, hasChain, cycleMode, cycleEdges, mode, T]);
-
-  const paintEdgeArea = useCallback((edge, colour, ctx) => {
-    if (!visibleEdges.has(edge.id)) return;
-    const { x0, y0, x1, y1, cx, cy } = edgeGeometry(edge);
-    ctx.strokeStyle = colour;
-    ctx.lineWidth = 9;
-    ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.quadraticCurveTo(cx, cy, x1, y1);
-    ctx.stroke();
-  }, [visibleEdges]);
-
-  // ── Tooltips ───────────────────────────────────────────────────────────
+  // ── Hover tooltips ─────────────────────────────────────────────────────
   const nodeTooltip = useCallback((n) => {
     const cb = criticalityBand(n.criticality);
     const row = (k, v, vc) => `<span style="color:${T.tipText4}">${k}</span><span style="color:${vc};text-align:right">${v}</span>`;
-    const layersLine = n.segments.map(s => s.layer).join(' · ');
     return tip(T, `
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:7px">
         <span style="font-weight:700;font-size:12px;color:${T.tipText};letter-spacing:-0.01em">${esc(n.name)}</span>
-        ${n.ticker ? `<span style="color:${T.tipText4};font-size:9px;font-weight:700">${esc(n.ticker)}</span>` : ''}
+        ${n.ticker ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${esc(n.ticker)}</span>` : ''}
+        ${n.faded ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">НЕ ПОДТВ.</span>` : ''}
       </div>
+      ${n.tier === 'anchor' ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
+        <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
+        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">Якорь стека</span>
+      </div>` : ''}
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px">
         <span style="width:7px;height:7px;border-radius:2px;background:${tone(n.color, mode)};flex:none"></span>
         <span style="color:${T.tipText3}">${esc(n.roleMeta?.label || n.role)}</span>
@@ -558,7 +517,7 @@ export default function EcoGraph({
       <div style="border-top:1px solid ${T.tipBorder};padding-top:9px;display:grid;grid-template-columns:auto 1fr;gap:5px 16px">
         ${row('Критичность', `${n.criticality} · ${esc(cb.label)}`, tone(cb.color, mode))}
         ${row('Гравитация', `${n.gravity?.score ?? '—'}`, T.tipText3)}
-        ${row('Слои', esc(layersLine), T.tipText3)}
+        ${row('Слои', esc(n.segments.map(s => s.layer).join(' · ')), T.tipText3)}
         ${row('Зависит от / кормит', `${n.upCount} / ${n.downCount}`, T.tipText3)}
       </div>
       <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">Клик → цепочка по стеку</div>
@@ -585,8 +544,6 @@ export default function EcoGraph({
     `);
   }, [mode, T]);
 
-  const linkModeReplace = useMemo(() => () => 'replace', []);
-
   return (
     <div ref={wrapRef} style={{ position: 'absolute', inset: 0 }}
       onMouseMove={handleMove} onClickCapture={handleClickCapture}>
@@ -597,27 +554,35 @@ export default function EcoGraph({
           height={size.h}
           graphData={graphData}
           backgroundColor={T.bg}
-          onRenderFramePre={paintRings}
+          onRenderFramePre={paintRegions}
+          onRenderFramePost={paintOverlay}
           nodeCanvasObject={paintNode}
           nodePointerAreaPaint={paintPointerArea}
           nodeVisibility={nodeVisible}
           linkVisibility={edgeVisible}
-          linkCanvasObject={paintEdge}
-          linkCanvasObjectMode={linkModeReplace}
-          linkPointerAreaPaint={paintEdgeArea}
           nodeLabel={nodeTooltip}
           linkLabel={edgeTooltip}
+          linkColor={linkColor}
+          linkWidth={linkW}
+          linkCurvature="curvature"
+          linkDirectionalArrowLength={(e) => 3 + 2.2 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalArrowRelPos={0.92}
+          linkDirectionalParticles={particles}
+          linkDirectionalParticleWidth={(e) => 1.4 + 1.6 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalParticleSpeed={() => 0.004}
+          linkDirectionalParticleColor={(e) => {
+            const cyc = cycleMode ? cycleEdges.get(e.id) : null;
+            return tone(cyc ? cyc.color : e.color, mode);
+          }}
           onNodeClick={(n) => onNodeClick(n.id)}
           onLinkClick={(l) => onEdgeClick(l.id)}
           onBackgroundClick={handleBackground}
           onNodeHover={(n) => setHoverNodeId(n ? n.id : null)}
           onLinkHover={(l) => setHoverEdgeId(l ? l.id : null)}
-          // The whole map is a coordinate system — a dragged company would be
-          // in the wrong LAYER, and its edge ports would point at nothing.
-          enableNodeDrag={false}
+          onNodeDragEnd={(n) => { n.fx = n.x; n.fy = n.y; }}
           cooldownTicks={0}
           warmupTicks={0}
-          minZoom={0.06}
+          minZoom={0.1}
           maxZoom={9}
         />
       )}
@@ -625,32 +590,16 @@ export default function EcoGraph({
   );
 }
 
-// Role → outline dash. Colour still says "layer band"; the stroke says "role".
+// Role → tile outline. Colour still says "layer band"; the stroke says "role".
 const ROLE_DASH = {
   producer: null,
   owner: null,
-  capital: [9, 5],
   demand: null,
+  capital: [9, 5],
   platform: [2, 4],
 };
 
 // ── helpers ──────────────────────────────────────────────────────────────
-/** The quadratic control point for an edge's bow, derived once per paint. */
-function edgeGeometry(e) {
-  const x0 = e._x0, y0 = e._y0, x1 = e._x1, y1 = e._y1;
-  const mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
-  const dx = x1 - x0, dy = y1 - y0;
-  return { x0, y0, x1, y1, cx: mx - dy * (e._bow || 0), cy: my + dx * (e._bow || 0) };
-}
-const qp = (a, b, c, t) => (1 - t) * (1 - t) * a + 2 * (1 - t) * t * b + t * t * c;
-const qd = (a, b, c, t) => 2 * (1 - t) * (b - a) + 2 * t * (c - b);
-
-function tracePoly(ctx, pts, ox = 0, oy = 0) {
-  ctx.beginPath();
-  pts.forEach(([x, y], i) => (i ? ctx.lineTo(x + ox, y + oy) : ctx.moveTo(x + ox, y + oy)));
-  ctx.closePath();
-}
-
 function roundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
@@ -666,6 +615,13 @@ function hexA(hex, a) {
   if (!/^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$/.test(h)) return hex;
   const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
   return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+}
+
+function mix(a, b, t) {
+  const pa = parseInt(String(a).replace('#', ''), 16), pb = parseInt(String(b).replace('#', ''), 16);
+  const ar = (pa >> 16) & 255, ag = (pa >> 8) & 255, ab = pa & 255;
+  const br = (pb >> 16) & 255, bg = (pb >> 8) & 255, bb = pb & 255;
+  return `rgb(${Math.round(ar + (br - ar) * t)},${Math.round(ag + (bg - ag) * t)},${Math.round(ab + (bb - ab) * t)})`;
 }
 
 function esc(s) {

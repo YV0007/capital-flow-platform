@@ -23,7 +23,8 @@ const GOLDEN = 2.399963229728653;
 // Source classes, inner→outer in rough "concentration" order.
 const CLASS_ORDER = ['individual', 'vc', 'corporate', 'alt_manager', 'sovereign'];
 
-function hash01(str, salt) {
+/** Stable per-key jitter, so a cell looks organic without being random. */
+export function hash01(str, salt) {
   let h = 2166136261 ^ salt;
   for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
   return ((h >>> 0) % 1000) / 1000;
@@ -50,7 +51,14 @@ function sizeAtom(n, maxCap) {
   n.labelScale = Math.max(0.14, Math.min(1.5, 0.9 - imp * 0.8));
 }
 
-function packRelative(members, spread, pad) {
+/**
+ * Circle-packs `members` around a local origin (golden-angle seeding + a
+ * relaxation pass) and returns the enclosing radius. Exported because the
+ * ECOSYSTEM map packs its layer cells with exactly the same geometry — the two
+ * maps are meant to feel identical, so they share the packer rather than
+ * growing a second one that drifts.
+ */
+export function packRelative(members, spread, pad) {
   members.forEach((n, k) => {
     if (k === 0) { n._ox = 0; n._oy = 0; return; }
     const a = k * GOLDEN + hash01(n.id, 7) * 0.6;
@@ -63,7 +71,8 @@ function packRelative(members, spread, pad) {
   return R;
 }
 
-function relax(list, kx, ky, pad, iters) {
+/** Pairwise de-overlap on two coordinate keys. Shared with the ecosystem map. */
+export function relax(list, kx, ky, pad, iters) {
   for (let it = 0; it < iters; it++) {
     let moved = false;
     for (let i = 0; i < list.length; i++) {

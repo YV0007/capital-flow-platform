@@ -44,11 +44,11 @@ const BANNER_H = 34;   // draft-data strip; shown only while source !== 'engine'
 export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   // Built once; the layout pins fx/fy — no simulation, no per-reload drift.
   const graph = useMemo(() => buildGraph(), []);
-  const rings = useMemo(() => applyEcoLayout(graph), [graph]);
+  const regions = useMemo(() => applyEcoLayout(graph), [graph]);
   const adjacency = useMemo(() => buildAdjacency(graph.edges), [graph]);
   const graphData = useMemo(
     () => ({ nodes: graph.nodes, links: graph.edges }),
-    [graph, rings],   // depends on rings so the layout has run first
+    [graph, regions],   // depends on regions so the layout has run first
   );
 
   const fgRef = useRef(null);
@@ -147,10 +147,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     setExpanded(new Set());
   }, []);
 
-  // The canvas owns the framing maths (it knows the viewport); it hands the
-  // shell a `frameAll` so «Сбросить вид» does exactly what the first paint did.
-  const frameRef = useRef(null);
-  const resetView = useCallback(() => frameRef.current?.frameAll?.(400), []);
+  const resetView = useCallback(() => fgRef.current?.zoomToFit(400, 70), []);
 
   const resetFilters = useCallback(() => {
     setRoles(new Set()); setSpines(new Set()); setTypes(new Set()); setLayerSel(new Set());
@@ -233,7 +230,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         <EcoGraph
           fgRef={fgRef}
           graphData={graphData}
-          rings={rings}
+          regions={regions}
           techNodes={graph.techNodes}
           visibleNodes={visibleNodes}
           visibleEdges={visibleEdges}
@@ -246,11 +243,14 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           onNodeClick={handleNodeClick}
           onEdgeClick={handleEdgeClick}
           onBackgroundClick={clearSelection}
-          onRingClick={(key) => setOpenLayer(prev => (prev === key ? null : key))}
-          onReady={(api) => { frameRef.current = api; }}
+          onRegionClick={(type, key) => {
+            // Only a LAYER title opens a report; the capital nucleus has no
+            // report of its own — clicking it filters the map to that role.
+            if (type === 'layer') setOpenLayer(prev => (prev === key ? null : key));
+            else setRoles(prev => (prev.has('capital') ? new Set() : new Set(['capital'])));
+          }}
           showLabels={showLabels}
           showTech={showTech}
-          topInset={TOPBAR_H + (META.isFixture ? BANNER_H : 0)}
         />
       </div>
 

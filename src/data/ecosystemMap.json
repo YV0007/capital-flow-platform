@@ -4,10 +4,10 @@
  "source": "fixture",
  "ecosystem": "ai-datacenters",
  "totals": {
-  "nodes": 45,
-  "edges": 61,
+  "nodes": 62,
+  "edges": 107,
   "layers": 12,
-  "cycles": 4
+  "cycles": 5
  },
  "layers": [
   {
@@ -45,7 +45,7 @@
    "band": 2,
    "concentration": {
     "level": "competitive",
-    "hhi": 0.14,
+    "hhi": 0.12,
     "top": [
      "tsmc",
      "nvidia"
@@ -72,8 +72,8 @@
    "caption": "упаковка · платы",
    "band": 3,
    "concentration": {
-    "level": "oligopoly",
-    "hhi": 0.35,
+    "level": "competitive",
+    "hhi": 0.22,
     "top": [
      "tsmc",
      "ibiden"
@@ -87,7 +87,7 @@
    "band": 3,
    "concentration": {
     "level": "competitive",
-    "hhi": 0.18,
+    "hhi": 0.12,
     "top": [
      "westinghouse",
      "constellation"
@@ -101,7 +101,7 @@
    "band": 3,
    "concentration": {
     "level": "oligopoly",
-    "hhi": 0.34,
+    "hhi": 0.25,
     "top": [
      "hitachi-energy",
      "eaton"
@@ -115,7 +115,7 @@
    "band": 4,
    "concentration": {
     "level": "competitive",
-    "hhi": 0.2,
+    "hhi": 0.17,
     "top": [
      "nvidia",
      "broadcom"
@@ -128,8 +128,8 @@
    "caption": "серверы · охлаждение · стройка",
    "band": 4,
    "concentration": {
-    "level": "oligopoly",
-    "hhi": 0.27,
+    "level": "competitive",
+    "hhi": 0.22,
     "top": [
      "vertiv",
      "foxconn"
@@ -143,7 +143,7 @@
    "band": 4,
    "concentration": {
     "level": "competitive",
-    "hhi": 0.13,
+    "hhi": 0.08,
     "top": [
      "microsoft",
      "amazon"
@@ -156,11 +156,11 @@
    "caption": "работа моделей · цена ответа",
    "band": 5,
    "concentration": {
-    "level": "monopoly",
-    "hhi": 0.57,
+    "level": "oligopoly",
+    "hhi": 0.28,
     "top": [
      "databricks",
-     "together-ai"
+     "huggingface"
     ]
    }
   },
@@ -171,7 +171,7 @@
    "band": 5,
    "concentration": {
     "level": "competitive",
-    "hhi": 0.15,
+    "hhi": 0.13,
     "top": [
      "openai",
      "alphabet"
@@ -265,6 +265,12 @@
    "dcNode": "gasturbines"
   },
   {
+   "key": "Renewables",
+   "label": "Возобновляемая энергия",
+   "layer": "L6",
+   "dcNode": "renewables"
+  },
+  {
    "key": "Transformers",
    "label": "Трансформаторы",
    "layer": "L7",
@@ -349,7 +355,7 @@
     "nodes": 1,
     "layers": 2,
     "edgeTypes": 1,
-    "score": 10
+    "score": 9
    },
    "oneLiner": "Крупнейший в мире поставщик кремниевых пластин и фоторезистов для передовых узлов",
    "whatBreaksIt": "Расширение мощностей SUMCO и корейских резистов до сопоставимого качества",
@@ -386,7 +392,7 @@
     "nodes": 1,
     "layers": 2,
     "edgeTypes": 1,
-    "score": 10
+    "score": 9
    },
    "oneLiner": "Второй по объёму производитель кремниевых пластин на 300 мм",
    "whatBreaksIt": "Ввод новых линий в Китае, снимающий дефицит пластин",
@@ -460,7 +466,7 @@
     "nodes": 2,
     "layers": 3,
     "edgeTypes": 1,
-    "score": 15
+    "score": 14
    },
    "oneLiner": "Единственный в мире производитель EUV-сканеров",
    "whatBreaksIt": "Появление рабочей альтернативы EUV или потеря доступа к оптике Zeiss",
@@ -536,7 +542,7 @@
     "nodes": 1,
     "layers": 2,
     "edgeTypes": 1,
-    "score": 10
+    "score": 9
    },
    "oneLiner": "Крупнейший поставщик оборудования для напыления, травления и осаждения",
    "whatBreaksIt": "Локализация китайских аналогов на зрелых узлах",
@@ -570,10 +576,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 3,
+    "nodes": 3,
+    "layers": 5,
     "edgeTypes": 1,
-    "score": 12
+    "score": 21
    },
    "oneLiner": "Половина мирового рынка САПР для проектирования чипов",
    "whatBreaksIt": "Открытые маршруты проектирования, доведённые до промышленного качества",
@@ -607,10 +613,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 3,
+    "nodes": 3,
+    "layers": 5,
     "edgeTypes": 1,
-    "score": 12
+    "score": 21
    },
    "oneLiner": "Архитектура, на которой построены почти все CPU в дата-центрах нового поколения",
    "whatBreaksIt": "Массовый переход гиперскейлеров на RISC-V",
@@ -646,10 +652,10 @@
     "barrier": 3
    },
    "gravity": {
-    "nodes": 1,
+    "nodes": 2,
     "layers": 2,
     "edgeTypes": 1,
-    "score": 10
+    "score": 12
    },
    "oneLiner": "Установки гибридной склейки — вход в следующее поколение упаковки",
    "whatBreaksIt": "Выход ASMPT на сопоставимую точность склейки",
@@ -693,10 +699,10 @@
     "barrier": 5
    },
    "gravity": {
-    "nodes": 17,
-    "layers": 8,
+    "nodes": 22,
+    "layers": 9,
     "edgeTypes": 4,
-    "score": 78
+    "score": 81
    },
    "oneLiner": "Ускорители и CUDA — де-факто стандарт обучения моделей",
    "whatBreaksIt": "Кастомные ASIC гиперскейлеров, забирающие обучение внутрь",
@@ -738,10 +744,10 @@
     "barrier": 5
    },
    "gravity": {
-    "nodes": 8,
+    "nodes": 9,
     "layers": 5,
     "edgeTypes": 1,
-    "score": 38
+    "score": 35
    },
    "oneLiner": "Почти всё передовое ИИ-кремние делается здесь — и здесь же корпусируется",
    "whatBreaksIt": "Освоение N2-класса Samsung или Intel Foundry в объёме",
@@ -782,10 +788,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 5,
-    "layers": 5,
-    "edgeTypes": 2,
-    "score": 31
+    "nodes": 8,
+    "layers": 7,
+    "edgeTypes": 3,
+    "score": 42
    },
    "oneLiner": "Проектирует кастомные ускорители гиперскейлеров и коммутаторы, которые их связывают",
    "whatBreaksIt": "Перевод кастомных чипов на Marvell или собственные команды заказчиков",
@@ -821,10 +827,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 2,
-    "layers": 3,
+    "nodes": 3,
+    "layers": 4,
     "edgeTypes": 1,
-    "score": 15
+    "score": 19
    },
    "oneLiner": "Единственная реальная альтернатива NVIDIA в товарных объёмах",
    "whatBreaksIt": "Отставание софтверного стека от CUDA ещё на поколение",
@@ -858,10 +864,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 1,
+    "nodes": 2,
     "layers": 3,
     "edgeTypes": 1,
-    "score": 12
+    "score": 14
    },
    "oneLiner": "Основной поставщик HBM для ускорителей NVIDIA",
    "whatBreaksIt": "Квалификация HBM Samsung у NVIDIA в полном объёме",
@@ -897,10 +903,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 3,
+    "nodes": 2,
+    "layers": 5,
     "edgeTypes": 1,
-    "score": 12
+    "score": 19
    },
    "oneLiner": "Третий поставщик HBM и единственный американский",
    "whatBreaksIt": "Отставание по объёму выпуска от корейских конкурентов",
@@ -939,10 +945,10 @@
     "barrier": 5
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 3,
+    "nodes": 2,
+    "layers": 5,
     "edgeTypes": 1,
-    "score": 12
+    "score": 19
    },
    "oneLiner": "Память и собственная фаундри — редкая вертикаль внутри одного дома",
    "whatBreaksIt": "Проваленная квалификация HBM и отток заказов фаундри в TSMC",
@@ -979,7 +985,7 @@
     "nodes": 2,
     "layers": 4,
     "edgeTypes": 1,
-    "score": 18
+    "score": 17
    },
    "oneLiner": "Крупнейший внешний упаковщик — разгружает очередь CoWoS у TSMC",
    "whatBreaksIt": "Возврат всей передовой упаковки внутрь фаундри",
@@ -1053,7 +1059,7 @@
     "nodes": 3,
     "layers": 2,
     "edgeTypes": 2,
-    "score": 18
+    "score": 16
    },
    "oneLiner": "Реакторы AP1000 и топливный цикл — ядерное плечо ИИ-стройки",
    "whatBreaksIt": "Срыв сроков стройки AP1000 и перехват заказов южнокорейским KHNP",
@@ -1092,7 +1098,7 @@
     "nodes": 2,
     "layers": 1,
     "edgeTypes": 2,
-    "score": 12
+    "score": 11
    },
    "oneLiner": "Уран и совладение Westinghouse — топливо и реактор в одних руках",
    "whatBreaksIt": "Возврат казахстанского и российского топливного предложения на западный рынок",
@@ -1129,7 +1135,7 @@
     "nodes": 4,
     "layers": 5,
     "edgeTypes": 3,
-    "score": 30
+    "score": 28
    },
    "oneLiner": "Крупнейший парк действующих АЭС в США — готовая безуглеродная база под ДЦ",
    "whatBreaksIt": "Регуляторный запрет на прямое подключение ДЦ к станции",
@@ -1163,10 +1169,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 1,
-    "edgeTypes": 1,
-    "score": 7
+    "nodes": 3,
+    "layers": 2,
+    "edgeTypes": 3,
+    "score": 18
    },
    "oneLiner": "Газовые турбины большой мощности — очередь расписана на годы вперёд",
    "whatBreaksIt": "Расшивка очереди Siemens Energy и Mitsubishi Power",
@@ -1203,7 +1209,7 @@
     "nodes": 2,
     "layers": 2,
     "edgeTypes": 2,
-    "score": 15
+    "score": 14
    },
    "oneLiner": "Малые реакторы под ДЦ — подписанные контракты есть, работающего блока нет",
    "whatBreaksIt": "Отказ NRC в лицензии на первый коммерческий блок",
@@ -1242,10 +1248,10 @@
     "barrier": 5
    },
    "gravity": {
-    "nodes": 4,
+    "nodes": 6,
     "layers": 4,
-    "edgeTypes": 3,
-    "score": 28
+    "edgeTypes": 4,
+    "score": 32
    },
    "oneLiner": "Собственник узких мест: реакторы, возобновляемая генерация, площадки ДЦ",
    "whatBreaksIt": "Рост стоимости капитала, обрывающий модель «актив под долгосрочный контракт»",
@@ -1279,10 +1285,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 1,
+    "nodes": 2,
+    "layers": 2,
     "edgeTypes": 1,
-    "score": 7
+    "score": 12
    },
    "oneLiner": "Силовые трансформаторы — позиция с самой длинной очередью во всём стеке",
    "whatBreaksIt": "Ввод новых трансформаторных заводов в США и Индии",
@@ -1316,10 +1322,10 @@
     "barrier": 3
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 1,
+    "nodes": 2,
+    "layers": 2,
     "edgeTypes": 1,
-    "score": 7
+    "score": 12
    },
    "oneLiner": "Распределительные щиты и системы питания ДЦ",
    "whatBreaksIt": "Расширение мощностей Schneider и ABB под ту же очередь",
@@ -1358,10 +1364,10 @@
     "barrier": 3
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 1,
-    "edgeTypes": 1,
-    "score": 7
+    "nodes": 2,
+    "layers": 3,
+    "edgeTypes": 2,
+    "score": 16
    },
    "oneLiner": "Питание стойки и жидкостное охлаждение — два слоя в одном поставщике",
    "whatBreaksIt": "Переход гиперскейлеров на собственные референс-дизайны охлаждения",
@@ -1395,10 +1401,10 @@
     "barrier": 3
    },
    "gravity": {
-    "nodes": 1,
+    "nodes": 2,
     "layers": 3,
     "edgeTypes": 1,
-    "score": 12
+    "score": 14
    },
    "oneLiner": "Оптические трансиверы 800G и лазеры для них",
    "whatBreaksIt": "Ценовое давление китайских Innolight и Eoptolink",
@@ -1469,10 +1475,10 @@
     "barrier": 3
    },
    "gravity": {
-    "nodes": 1,
+    "nodes": 3,
     "layers": 1,
-    "edgeTypes": 1,
-    "score": 7
+    "edgeTypes": 2,
+    "score": 13
    },
    "oneLiner": "Оптоволокно и кабельные сборки для кампусов ДЦ",
    "whatBreaksIt": "Расширение предложения Prysmian и китайских производителей волокна",
@@ -1506,7 +1512,7 @@
     "barrier": 2
    },
    "gravity": {
-    "nodes": 4,
+    "nodes": 5,
     "layers": 5,
     "edgeTypes": 2,
     "score": 28
@@ -1590,10 +1596,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 6,
-    "layers": 7,
+    "nodes": 9,
+    "layers": 8,
     "edgeTypes": 6,
-    "score": 47
+    "score": 52
    },
    "oneLiner": "Azure, собственный ускоритель Maia и права на модели OpenAI — вертикаль от кремния до продукта",
    "whatBreaksIt": "Разрыв эксклюзивной связки с OpenAI",
@@ -1639,10 +1645,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 2,
-    "layers": 3,
-    "edgeTypes": 3,
-    "score": 19
+    "nodes": 6,
+    "layers": 6,
+    "edgeTypes": 4,
+    "score": 37
    },
    "oneLiner": "AWS, чипы Trainium и доля в Anthropic — тот же приём, что у Microsoft",
    "whatBreaksIt": "Отказ Anthropic от Trainium в пользу чужого кремния",
@@ -1678,10 +1684,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 2,
-    "layers": 2,
-    "edgeTypes": 2,
-    "score": 15
+    "nodes": 3,
+    "layers": 3,
+    "edgeTypes": 3,
+    "score": 20
    },
    "oneLiner": "Облако, живущее почти целиком на одном контракте с OpenAI",
    "whatBreaksIt": "Пересмотр или расторжение контракта с OpenAI",
@@ -1718,7 +1724,7 @@
     "nodes": 3,
     "layers": 4,
     "edgeTypes": 3,
-    "score": 25
+    "score": 23
    },
    "oneLiner": "Арендодатель GPU, выросший на поставках и доле NVIDIA",
    "whatBreaksIt": "Выравнивание сроков поставки GPU у гиперскейлеров",
@@ -1752,10 +1758,10 @@
     "barrier": 3
    },
    "gravity": {
-    "nodes": 4,
+    "nodes": 7,
     "layers": 3,
     "edgeTypes": 4,
-    "score": 27
+    "score": 31
    },
    "oneLiner": "Строит ДЦ прямо у источника энергии — площадка Abilene под Stargate",
    "whatBreaksIt": "Потеря доступа к дешёвой генерации на площадках",
@@ -1789,10 +1795,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 5,
+    "nodes": 7,
     "layers": 5,
-    "edgeTypes": 3,
-    "score": 33
+    "edgeTypes": 4,
+    "score": 36
    },
    "oneLiner": "Точки обмена трафиком — собственник связности, а не вычислений",
    "whatBreaksIt": "Уход обмена трафиком в частные сети гиперскейлеров",
@@ -1826,10 +1832,10 @@
     "barrier": 3
    },
    "gravity": {
-    "nodes": 1,
+    "nodes": 2,
     "layers": 3,
     "edgeTypes": 1,
-    "score": 12
+    "score": 14
    },
    "oneLiner": "Данные и оркестрация обучения внутри корпоративного контура",
    "whatBreaksIt": "Поглощение функции нативными сервисами гиперскейлеров",
@@ -1863,10 +1869,10 @@
     "barrier": 2
    },
    "gravity": {
-    "nodes": 1,
-    "layers": 1,
+    "nodes": 2,
+    "layers": 2,
     "edgeTypes": 1,
-    "score": 7
+    "score": 12
    },
    "oneLiner": "Инференс как товар — цена за токен и ничего сверх того",
    "whatBreaksIt": "Падение цены инференса у самих лабораторий ниже себестоимости",
@@ -1900,10 +1906,10 @@
     "barrier": 5
    },
    "gravity": {
-    "nodes": 6,
+    "nodes": 7,
     "layers": 5,
     "edgeTypes": 2,
-    "score": 34
+    "score": 32
    },
    "oneLiner": "Крупнейший в мире покупатель вычислений и главный источник спроса всего стека",
    "whatBreaksIt": "Обрыв доступа к капиталу под многолетние обязательства по мощности",
@@ -1937,10 +1943,10 @@
     "barrier": 5
    },
    "gravity": {
-    "nodes": 2,
-    "layers": 3,
+    "nodes": 3,
+    "layers": 4,
     "edgeTypes": 2,
-    "score": 17
+    "score": 21
    },
    "oneLiner": "Вторая передовая лаборатория, разложившая вычисления между AWS и Google",
    "whatBreaksIt": "Потеря льготного доступа к мощности у обоих партнёров",
@@ -1984,10 +1990,10 @@
     "barrier": 5
    },
    "gravity": {
-    "nodes": 2,
-    "layers": 3,
-    "edgeTypes": 3,
-    "score": 19
+    "nodes": 5,
+    "layers": 5,
+    "edgeTypes": 5,
+    "score": 34
    },
    "oneLiner": "Единственная компания со своим кремнием, своим облаком и своей передовой моделью",
    "whatBreaksIt": "Отставание TPU от следующего поколения ускорителей NVIDIA",
@@ -2023,10 +2029,10 @@
     "barrier": 4
    },
    "gravity": {
-    "nodes": 2,
+    "nodes": 3,
     "layers": 4,
     "edgeTypes": 2,
-    "score": 20
+    "score": 21
    },
    "oneLiner": "Крупнейший закупщик GPU без облачного бизнеса — весь парк под себя",
    "whatBreaksIt": "Сокращение капзатрат под давлением рекламной выручки",
@@ -2075,6 +2081,640 @@
    "tier": "emerging",
    "techNodes": [],
    "dcNode": "lab",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "blackstone",
+   "name": "Blackstone",
+   "role": "capital",
+   "sector": "AI Compute Infra",
+   "layers": [
+    {
+     "layer": "L10",
+     "primary": true,
+     "criticality": 66
+    }
+   ],
+   "criticality": 66,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 3,
+    "switchTime": 3,
+    "barrier": 5
+   },
+   "gravity": {
+    "nodes": 3,
+    "layers": 1,
+    "edgeTypes": 2,
+    "score": 13
+   },
+   "oneLiner": "Крупнейший владелец площадок ДЦ через QTS — арендодатель, а не строитель железа",
+   "whatBreaksIt": "Переход гиперскейлеров на собственную стройку вместо аренды",
+   "ticker": "NYSE: BX",
+   "publicPrivate": "Pub",
+   "geo": "US",
+   "tier": "anchor",
+   "techNodes": [],
+   "dcNode": "rack",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "kkr",
+   "name": "KKR",
+   "role": "capital",
+   "sector": "AI Compute Infra",
+   "layers": [
+    {
+     "layer": "L10",
+     "primary": true,
+     "criticality": 54
+    }
+   ],
+   "criticality": 54,
+   "criticalityFactors": {
+    "share": 2,
+    "alternatives": 2,
+    "switchTime": 3,
+    "barrier": 5
+   },
+   "gravity": {
+    "nodes": 2,
+    "layers": 2,
+    "edgeTypes": 1,
+    "score": 12
+   },
+   "oneLiner": "Инфраструктурный капитал в площадки и энергию под ДЦ",
+   "whatBreaksIt": "Рост стоимости долга, ломающий доходность инфраструктурных сделок",
+   "ticker": "NYSE: KKR",
+   "publicPrivate": "Pub",
+   "geo": "US",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "rack",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "mgx",
+   "name": "MGX",
+   "role": "capital",
+   "sector": "Frontier Lab",
+   "layers": [
+    {
+     "layer": "L12",
+     "primary": true,
+     "criticality": 54
+    }
+   ],
+   "criticality": 54,
+   "criticalityFactors": {
+    "share": 2,
+    "alternatives": 2,
+    "switchTime": 3,
+    "barrier": 5
+   },
+   "gravity": {
+    "nodes": 2,
+    "layers": 2,
+    "edgeTypes": 2,
+    "score": 14
+   },
+   "oneLiner": "Госкапитал ОАЭ, заходящий сразу в лаборатории и в стройку",
+   "whatBreaksIt": "Экспортные ограничения на поставку ускорителей в регион",
+   "ticker": null,
+   "publicPrivate": "Pvt",
+   "geo": "AE",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "lab",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "stonepeak",
+   "name": "Stonepeak",
+   "role": "capital",
+   "sector": "AI Compute Infra",
+   "layers": [
+    {
+     "layer": "L10",
+     "primary": true,
+     "criticality": 51
+    }
+   ],
+   "criticality": 51,
+   "criticalityFactors": {
+    "share": 2,
+    "alternatives": 2,
+    "switchTime": 3,
+    "barrier": 4
+   },
+   "gravity": {
+    "nodes": 2,
+    "layers": 2,
+    "edgeTypes": 2,
+    "score": 14
+   },
+   "oneLiner": "Инфраструктурный фонд в оптике, площадках и энергетике",
+   "whatBreaksIt": "Исчерпание доходных активов по приемлемой цене",
+   "ticker": null,
+   "publicPrivate": "Pvt",
+   "geo": "US",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "rack",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "gip",
+   "name": "GIP · BlackRock",
+   "role": "capital",
+   "sector": "Renewables",
+   "layers": [
+    {
+     "layer": "L6",
+     "primary": true,
+     "criticality": 71
+    }
+   ],
+   "criticality": 71,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 3,
+    "switchTime": 4,
+    "barrier": 5
+   },
+   "gravity": {
+    "nodes": 2,
+    "layers": 2,
+    "edgeTypes": 1,
+    "score": 12
+   },
+   "oneLiner": "Инфраструктурная платформа под генерацию и ДЦ — партнёр консорциума AIP",
+   "whatBreaksIt": "Регуляторные ограничения на владение генерацией и потребителем сразу",
+   "ticker": "NYSE: BLK",
+   "publicPrivate": "Pub",
+   "geo": "US",
+   "tier": "anchor",
+   "techNodes": [],
+   "dcNode": "renewables",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "unimicron",
+   "name": "Unimicron",
+   "role": "producer",
+   "sector": "PCB",
+   "layers": [
+    {
+     "layer": "L5",
+     "primary": true,
+     "criticality": 60
+    }
+   ],
+   "criticality": 60,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 3,
+    "switchTime": 3,
+    "barrier": 3
+   },
+   "gravity": {
+    "nodes": 1,
+    "layers": 3,
+    "edgeTypes": 1,
+    "score": 12
+   },
+   "oneLiner": "Второй источник ABF-подложек — снимает часть дефицита с Ibiden",
+   "whatBreaksIt": "Отставание по классу подложек для самых больших кристаллов",
+   "ticker": "TPE: 3037",
+   "publicPrivate": "Pub",
+   "geo": "TW",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "pcb",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "amkor",
+   "name": "Amkor Technology",
+   "role": "producer",
+   "sector": "Adv Packaging",
+   "layers": [
+    {
+     "layer": "L5",
+     "primary": true,
+     "criticality": 43
+    }
+   ],
+   "criticality": 43,
+   "criticalityFactors": {
+    "share": 2,
+    "alternatives": 2,
+    "switchTime": 2,
+    "barrier": 3
+   },
+   "gravity": {
+    "nodes": 2,
+    "layers": 3,
+    "edgeTypes": 1,
+    "score": 14
+   },
+   "oneLiner": "Упаковка и тест вне Тайваня — географическая страховка стека",
+   "whatBreaksIt": "Ценовое преимущество тайваньских упаковщиков при равном качестве",
+   "ticker": "NASDAQ: AMKR",
+   "publicPrivate": "Pub",
+   "geo": "US",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "pkg",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "schneider",
+   "name": "Schneider Electric",
+   "role": "producer",
+   "sector": "Switchgear",
+   "layers": [
+    {
+     "layer": "L7",
+     "primary": true,
+     "criticality": 60
+    }
+   ],
+   "criticality": 60,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 3,
+    "switchTime": 3,
+    "barrier": 3
+   },
+   "gravity": {
+    "nodes": 1,
+    "layers": 1,
+    "edgeTypes": 1,
+    "score": 7
+   },
+   "oneLiner": "Референс-дизайны питания ДЦ и щитовое оборудование",
+   "whatBreaksIt": "Стандартизация OCP, обесценивающая проприетарные решения",
+   "ticker": "EPA: SU",
+   "publicPrivate": "Pub",
+   "geo": "FR",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "switchgear",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "siemens-energy",
+   "name": "Siemens Energy",
+   "role": "producer",
+   "sector": "Gas Turbines",
+   "layers": [
+    {
+     "layer": "L6",
+     "primary": true,
+     "criticality": 68
+    }
+   ],
+   "criticality": 68,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 3,
+    "switchTime": 4,
+    "barrier": 4
+   },
+   "gravity": {
+    "nodes": 1,
+    "layers": 1,
+    "edgeTypes": 1,
+    "score": 7
+   },
+   "oneLiner": "Второй источник больших газовых турбин и сетевого оборудования",
+   "whatBreaksIt": "Расшивка очереди GE Vernova быстрее собственной",
+   "ticker": "ETR: ENR",
+   "publicPrivate": "Pub",
+   "geo": "DE",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "gasturbines",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "fireworks",
+   "name": "Fireworks AI",
+   "role": "platform",
+   "sector": "Inference",
+   "layers": [
+    {
+     "layer": "L11",
+     "primary": true,
+     "criticality": 23
+    }
+   ],
+   "criticality": 23,
+   "criticalityFactors": {
+    "share": 1,
+    "alternatives": 1,
+    "switchTime": 1,
+    "barrier": 2
+   },
+   "gravity": {
+    "nodes": 2,
+    "layers": 2,
+    "edgeTypes": 2,
+    "score": 14
+   },
+   "oneLiner": "Инференс открытых моделей по цене за токен",
+   "whatBreaksIt": "Падение цены инференса у самих лабораторий ниже себестоимости",
+   "ticker": null,
+   "publicPrivate": "Pvt",
+   "geo": "US",
+   "tier": "emerging",
+   "techNodes": [],
+   "dcNode": "inference",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "huggingface",
+   "name": "Hugging Face",
+   "role": "platform",
+   "sector": "Inference",
+   "layers": [
+    {
+     "layer": "L11",
+     "primary": true,
+     "criticality": 49
+    }
+   ],
+   "criticality": 49,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 2,
+    "switchTime": 2,
+    "barrier": 3
+   },
+   "gravity": {
+    "nodes": 3,
+    "layers": 2,
+    "edgeTypes": 1,
+    "score": 14
+   },
+   "oneLiner": "Реестр моделей и весов — де-факто точка распространения открытого ИИ",
+   "whatBreaksIt": "Уход публикации весов в закрытые каталоги гиперскейлеров",
+   "ticker": null,
+   "publicPrivate": "Pvt",
+   "geo": "US",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "inference",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "lambda",
+   "name": "Lambda",
+   "role": "owner",
+   "sector": "AI Compute Infra",
+   "layers": [
+    {
+     "layer": "L10",
+     "primary": true,
+     "criticality": 23
+    }
+   ],
+   "criticality": 23,
+   "criticalityFactors": {
+    "share": 1,
+    "alternatives": 1,
+    "switchTime": 1,
+    "barrier": 2
+   },
+   "gravity": {
+    "nodes": 2,
+    "layers": 3,
+    "edgeTypes": 1,
+    "score": 14
+   },
+   "oneLiner": "GPU в аренду для тех, кому не досталось у крупных",
+   "whatBreaksIt": "Выравнивание сроков поставки ускорителей у гиперскейлеров",
+   "ticker": null,
+   "publicPrivate": "Pvt",
+   "geo": "US",
+   "tier": "emerging",
+   "techNodes": [],
+   "dcNode": "rack",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "nebius",
+   "name": "Nebius",
+   "role": "owner",
+   "sector": "AI Compute Infra",
+   "layers": [
+    {
+     "layer": "L10",
+     "primary": true,
+     "criticality": 31
+    }
+   ],
+   "criticality": 31,
+   "criticalityFactors": {
+    "share": 1,
+    "alternatives": 1,
+    "switchTime": 2,
+    "barrier": 3
+   },
+   "gravity": {
+    "nodes": 3,
+    "layers": 4,
+    "edgeTypes": 2,
+    "score": 21
+   },
+   "oneLiner": "Европейское GPU-облако — вычисления в юрисдикции ЕС",
+   "whatBreaksIt": "Приход гиперскейлеров с суверенными регионами в ЕС",
+   "ticker": "NASDAQ: NBIS",
+   "publicPrivate": "Pub",
+   "geo": "NL",
+   "tier": "emerging",
+   "techNodes": [],
+   "dcNode": "rack",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "digital-realty",
+   "name": "Digital Realty",
+   "role": "owner",
+   "sector": "AI Compute Infra",
+   "layers": [
+    {
+     "layer": "L10",
+     "primary": true,
+     "criticality": 68
+    }
+   ],
+   "criticality": 68,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 3,
+    "switchTime": 4,
+    "barrier": 4
+   },
+   "gravity": {
+    "nodes": 7,
+    "layers": 6,
+    "edgeTypes": 4,
+    "score": 39
+   },
+   "oneLiner": "ДЦ-REIT: земля, корпуса и подведённая мощность в аренду",
+   "whatBreaksIt": "Дефицит подключений к сети, а не дефицит зданий",
+   "ticker": "NYSE: DLR",
+   "publicPrivate": "Pub",
+   "geo": "US",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "rack",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "vistra",
+   "name": "Vistra",
+   "role": "owner",
+   "sector": "Nuclear",
+   "layers": [
+    {
+     "layer": "L6",
+     "primary": true,
+     "criticality": 68
+    }
+   ],
+   "criticality": 68,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 3,
+    "switchTime": 4,
+    "barrier": 4
+   },
+   "gravity": {
+    "nodes": 3,
+    "layers": 4,
+    "edgeTypes": 3,
+    "score": 23
+   },
+   "oneLiner": "Парк генерации, включая атом, — второй после Constellation источник базы под ДЦ",
+   "whatBreaksIt": "Регуляторный запрет на прямое подключение ДЦ к станции",
+   "ticker": "NYSE: VST",
+   "publicPrivate": "Pub",
+   "geo": "US",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "nuc",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "marvell",
+   "name": "Marvell Technology",
+   "role": "producer",
+   "sector": "Custom ASIC",
+   "layers": [
+    {
+     "layer": "L3",
+     "primary": true,
+     "criticality": 63
+    },
+    {
+     "layer": "L8",
+     "primary": false,
+     "criticality": 55
+    }
+   ],
+   "criticality": 63,
+   "criticalityFactors": {
+    "share": 3,
+    "alternatives": 3,
+    "switchTime": 3,
+    "barrier": 4
+   },
+   "gravity": {
+    "nodes": 3,
+    "layers": 4,
+    "edgeTypes": 2,
+    "score": 21
+   },
+   "oneLiner": "Второй проектировщик кастомных ускорителей и оптических DSP",
+   "whatBreaksIt": "Возврат заказчиков к Broadcom или к собственным командам",
+   "ticker": "NASDAQ: MRVL",
+   "publicPrivate": "Pub",
+   "geo": "US",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "asic",
+   "firstSeen": "2026-08",
+   "lastConfirmed": "2026-08",
+   "stale": false
+  },
+  {
+   "id": "smci",
+   "name": "Supermicro",
+   "role": "producer",
+   "sector": "Server Systems",
+   "layers": [
+    {
+     "layer": "L9",
+     "primary": true,
+     "criticality": 35
+    }
+   ],
+   "criticality": 35,
+   "criticalityFactors": {
+    "share": 2,
+    "alternatives": 2,
+    "switchTime": 1,
+    "barrier": 2
+   },
+   "gravity": {
+    "nodes": 3,
+    "layers": 5,
+    "edgeTypes": 2,
+    "score": 23
+   },
+   "oneLiner": "Быстрая сборка ИИ-стоек с жидкостным охлаждением под заказ",
+   "whatBreaksIt": "Уход заказчиков к ODM напрямую ради цены",
+   "ticker": "NASDAQ: SMCI",
+   "publicPrivate": "Pub",
+   "geo": "US",
+   "tier": "core",
+   "techNodes": [],
+   "dcNode": "server",
    "firstSeen": "2026-08",
    "lastConfirmed": "2026-08",
    "stale": false
@@ -3884,6 +4524,1210 @@
      "alive": true
     }
    ]
+  },
+  {
+   "id": "nvidia__smci__partner",
+   "source": "nvidia",
+   "target": "smci",
+   "type": "partner",
+   "spine": "physical",
+   "strength": 58,
+   "techNode": null,
+   "status": "active",
+   "tier": "company_pr",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2022",
+   "lastConfirmed": "2026-03",
+   "note": "Референс-дизайн стойки с жидкостным охлаждением",
+   "evidence": [
+    {
+     "quote": "Стоечные платформы собираются по референс-дизайну производителя ускорителей.",
+     "url": "https://ir.supermicro.com/",
+     "tier": "company_pr",
+     "published": "2026-03-18",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "marvell__amazon__partner",
+   "source": "marvell",
+   "target": "amazon",
+   "type": "partner",
+   "spine": "physical",
+   "strength": 52,
+   "techNode": "trainium",
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2023",
+   "lastConfirmed": "2026-02",
+   "note": "Второй партнёр по кастомному кремнию",
+   "evidence": [
+    {
+     "quote": "Разработка кастомных ускорителей распределена между двумя внешними партнёрами.",
+     "url": "https://ir.aboutamazon.com/",
+     "tier": "press",
+     "published": "2026-02-17",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "marvell__microsoft__partner",
+   "source": "marvell",
+   "target": "microsoft",
+   "type": "partner",
+   "spine": "physical",
+   "strength": 44,
+   "techNode": "maia",
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-03",
+   "note": "Оптические DSP и кастомные блоки",
+   "evidence": [
+    {
+     "quote": "Оптическая часть кастомных платформ разрабатывается со сторонним партнёром.",
+     "url": "https://www.microsoft.com/en-us/investor",
+     "tier": "press",
+     "published": "2026-03-06",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "tsmc__marvell__supply",
+   "source": "tsmc",
+   "target": "marvell",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 86,
+   "techNode": "cowos",
+   "status": "active",
+   "tier": "filing",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2012",
+   "lastConfirmed": "2026-02",
+   "note": "Выпуск кастомных ускорителей и DSP",
+   "evidence": [
+    {
+     "quote": "Продукция производится на передовых узлах внешней фаундри.",
+     "url": "https://investor.marvell.com/",
+     "tier": "filing",
+     "published": "2026-02-11",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "nvidia__vertiv__partner",
+   "source": "nvidia",
+   "target": "vertiv",
+   "type": "partner",
+   "spine": "physical",
+   "strength": 49,
+   "techNode": null,
+   "status": "active",
+   "tier": "company_pr",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-04",
+   "note": "Совместный дизайн питания и охлаждения стойки",
+   "evidence": [
+    {
+     "quote": "Энергетическая и тепловая архитектура стойки разрабатывается совместно с вендором.",
+     "url": "https://investors.vertiv.com/",
+     "tier": "company_pr",
+     "published": "2026-04-01",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "schneider__digital-realty__supply",
+   "source": "schneider",
+   "target": "digital-realty",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 45,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2018",
+   "lastConfirmed": "2026-02",
+   "note": "Электрощитовое оборудование площадок",
+   "evidence": [
+    {
+     "quote": "Оборудование распределения питания поставляется операторам ДЦ.",
+     "url": "https://investor.digitalrealty.com/",
+     "tier": "press",
+     "published": "2026-02-19",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "siemens-energy__vistra__supply",
+   "source": "siemens-energy",
+   "target": "vistra",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 47,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2022",
+   "lastConfirmed": "2026-03",
+   "note": "Турбины и сетевое оборудование",
+   "evidence": [
+    {
+     "quote": "Второй поставщик турбин большой мощности законтрактован на несколько лет вперёд.",
+     "url": "https://www.siemens-energy.com/investor-relations",
+     "tier": "press",
+     "published": "2026-03-29",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "unimicron__nvidia__supply",
+   "source": "unimicron",
+   "target": "nvidia",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 46,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2021",
+   "lastConfirmed": "2026-01",
+   "note": "Второй источник ABF-подложек",
+   "evidence": [
+    {
+     "quote": "Подложки закупаются у нескольких японских и тайваньских производителей.",
+     "url": "https://www.unimicron.com/investors",
+     "tier": "press",
+     "published": "2026-01-27",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "amkor__broadcom__supply",
+   "source": "amkor",
+   "target": "broadcom",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 39,
+   "techNode": null,
+   "status": "active",
+   "tier": "company_pr",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2020",
+   "lastConfirmed": "2026-02",
+   "note": "Упаковка и тест вне Тайваня",
+   "evidence": [
+    {
+     "quote": "Часть операций упаковки и тестирования размещена за пределами Тайваня.",
+     "url": "https://ir.amkor.com/",
+     "tier": "company_pr",
+     "published": "2026-02-23",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "besi__amkor__supply",
+   "source": "besi",
+   "target": "amkor",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 34,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2023",
+   "lastConfirmed": "2026-03",
+   "note": "Установки склейки для внешних упаковщиков",
+   "evidence": [
+    {
+     "quote": "Оборудование гибридной склейки поставляется независимым упаковщикам.",
+     "url": "https://www.besi.com/investor-relations/",
+     "tier": "press",
+     "published": "2026-03-19",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "cadence__broadcom__platform",
+   "source": "cadence",
+   "target": "broadcom",
+   "type": "platform",
+   "spine": "physical",
+   "strength": 59,
+   "techNode": null,
+   "status": "active",
+   "tier": "transcript",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2010",
+   "lastConfirmed": "2026-02",
+   "note": "Маршрут проектирования кастомных чипов",
+   "evidence": [
+    {
+     "quote": "Проектирование кастомных ускорителей ведётся в коммерческих САПР-маршрутах.",
+     "url": "https://www.cadence.com/en_US/home/company/investor-relations.html",
+     "tier": "transcript",
+     "published": "2026-02-26",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "cadence__alphabet__platform",
+   "source": "cadence",
+   "target": "alphabet",
+   "type": "platform",
+   "spine": "physical",
+   "strength": 41,
+   "techNode": "tpu",
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2016",
+   "lastConfirmed": "2026-02",
+   "note": "САПР-маршрут для собственного ускорителя",
+   "evidence": [
+    {
+     "quote": "Собственный ускоритель проектируется в стандартном коммерческом маршруте.",
+     "url": "https://abc.xyz/investor/",
+     "tier": "press",
+     "published": "2026-02-13",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "arm__amazon__platform",
+   "source": "arm",
+   "target": "amazon",
+   "type": "platform",
+   "spine": "physical",
+   "strength": 64,
+   "techNode": "arm-isa",
+   "status": "active",
+   "tier": "filing",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2018",
+   "lastConfirmed": "2026-01",
+   "note": "Архитектура серверных CPU облака",
+   "evidence": [
+    {
+     "quote": "Серверные процессоры собственной разработки построены на лицензированной архитектуре.",
+     "url": "https://ir.aboutamazon.com/",
+     "tier": "filing",
+     "published": "2026-01-22",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "arm__microsoft__platform",
+   "source": "arm",
+   "target": "microsoft",
+   "type": "platform",
+   "spine": "physical",
+   "strength": 48,
+   "techNode": "arm-isa",
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2022",
+   "lastConfirmed": "2026-03",
+   "note": "Архитектура серверных CPU облака",
+   "evidence": [
+    {
+     "quote": "Собственные серверные процессоры облака используют лицензированную архитектуру.",
+     "url": "https://www.microsoft.com/en-us/investor",
+     "tier": "press",
+     "published": "2026-03-02",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "huggingface__together-ai__platform",
+   "source": "huggingface",
+   "target": "together-ai",
+   "type": "platform",
+   "spine": "physical",
+   "strength": 37,
+   "techNode": "pytorch",
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2022",
+   "lastConfirmed": "2026-03",
+   "note": "Реестр весов как вход в сервис инференса",
+   "evidence": [
+    {
+     "quote": "Провайдеры инференса обслуживают модели, распространяемые через открытый реестр.",
+     "url": "https://huggingface.co/blog",
+     "tier": "press",
+     "published": "2026-03-14",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "huggingface__fireworks__platform",
+   "source": "huggingface",
+   "target": "fireworks",
+   "type": "platform",
+   "spine": "physical",
+   "strength": 33,
+   "techNode": "pytorch",
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2023",
+   "lastConfirmed": "2026-03",
+   "note": "Тот же реестр, другой провайдер",
+   "evidence": [
+    {
+     "quote": "Открытые веса раздаются через общий реестр моделей.",
+     "url": "https://huggingface.co/blog",
+     "tier": "press",
+     "published": "2026-03-14",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "meta__huggingface__platform",
+   "source": "meta",
+   "target": "huggingface",
+   "type": "platform",
+   "spine": "physical",
+   "strength": 42,
+   "techNode": "pytorch",
+   "status": "active",
+   "tier": "company_pr",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2023",
+   "lastConfirmed": "2026-02",
+   "note": "Публикация открытых весов",
+   "evidence": [
+    {
+     "quote": "Веса моделей публикуются в открытом реестре под собственной лицензией.",
+     "url": "https://about.fb.com/news/",
+     "tier": "company_pr",
+     "published": "2026-02-08",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "nvidia__lambda__supply",
+   "source": "nvidia",
+   "target": "lambda",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 61,
+   "techNode": "cuda",
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2022",
+   "lastConfirmed": "2026-04",
+   "note": "Ускорители для независимого GPU-облака",
+   "evidence": [
+    {
+     "quote": "Оператор облака полностью зависит от поставок ускорителей одного производителя.",
+     "url": "https://lambdalabs.com/blog",
+     "tier": "press",
+     "published": "2026-04-03",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "nvidia__nebius__supply",
+   "source": "nvidia",
+   "target": "nebius",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 57,
+   "techNode": "cuda",
+   "status": "active",
+   "tier": "company_pr",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-03",
+   "note": "Ускорители для европейского облака",
+   "evidence": [
+    {
+     "quote": "Европейское GPU-облако строится на ускорителях одного производителя.",
+     "url": "https://group.nebius.com/investors",
+     "tier": "company_pr",
+     "published": "2026-03-26",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "foxconn__nebius__supply",
+   "source": "foxconn",
+   "target": "nebius",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 38,
+   "techNode": null,
+   "status": "active",
+   "tier": "estimate",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-04",
+   "note": "Поставка собранных стоек",
+   "evidence": [
+    {
+     "quote": "Стоечные системы поставляются операторам облаков напрямую с линий сборки.",
+     "url": "https://group.nebius.com/investors",
+     "tier": "estimate",
+     "published": "2026-04-18",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "smci__lambda__supply",
+   "source": "smci",
+   "target": "lambda",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 35,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2023",
+   "lastConfirmed": "2026-02",
+   "note": "Сборка стоек под заказ",
+   "evidence": [
+    {
+     "quote": "Небольшие операторы закупают собранные стойки у контрактных сборщиков.",
+     "url": "https://lambdalabs.com/blog",
+     "tier": "press",
+     "published": "2026-02-15",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "digital-realty__microsoft__offtake",
+   "source": "digital-realty",
+   "target": "microsoft",
+   "type": "offtake",
+   "spine": "physical",
+   "strength": 52,
+   "techNode": null,
+   "status": "active",
+   "tier": "filing",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2019",
+   "lastConfirmed": "2026-01",
+   "note": "Долгосрочная аренда мощности площадок",
+   "evidence": [
+    {
+     "quote": "Значительная часть арендованной мощности приходится на нескольких крупных клиентов.",
+     "url": "https://investor.digitalrealty.com/",
+     "tier": "filing",
+     "published": "2026-01-26",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "vistra__amazon__offtake",
+   "source": "vistra",
+   "target": "amazon",
+   "type": "offtake",
+   "spine": "physical",
+   "strength": 55,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-02",
+   "note": "Контракт на безуглеродную мощность",
+   "evidence": [
+    {
+     "quote": "Заключён долгосрочный договор на покупку электроэнергии для дата-центров.",
+     "url": "https://investor.vistracorp.com/",
+     "tier": "press",
+     "published": "2026-02-07",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "equinix__nebius__offtake",
+   "source": "equinix",
+   "target": "nebius",
+   "type": "offtake",
+   "spine": "physical",
+   "strength": 26,
+   "techNode": null,
+   "status": "active",
+   "tier": "estimate",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-04",
+   "note": "Связность европейской площадки",
+   "evidence": [
+    {
+     "quote": "Обмен трафиком между облаками проходит через нейтральные площадки.",
+     "url": "https://investor.equinix.com/",
+     "tier": "estimate",
+     "published": "2026-04-28",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "databricks__amazon__platform",
+   "source": "databricks",
+   "target": "amazon",
+   "type": "platform",
+   "spine": "physical",
+   "strength": 40,
+   "techNode": null,
+   "status": "active",
+   "tier": "company_pr",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2015",
+   "lastConfirmed": "2026-02",
+   "note": "Оркестрация обучения внутри облака",
+   "evidence": [
+    {
+     "quote": "Платформа данных доступна как нативный сервис внутри облака партнёра.",
+     "url": "https://www.databricks.com/company/newsroom",
+     "tier": "company_pr",
+     "published": "2026-02-24",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "fireworks__anthropic__offtake",
+   "source": "fireworks",
+   "target": "anthropic",
+   "type": "offtake",
+   "spine": "physical",
+   "strength": 20,
+   "techNode": null,
+   "status": "active",
+   "tier": "estimate",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-05",
+   "note": "Раздача моделей через внешний инференс",
+   "evidence": [
+    {
+     "quote": "Часть трафика моделей обслуживается независимыми провайдерами инференса.",
+     "url": "https://www.anthropic.com/news",
+     "tier": "estimate",
+     "published": "2026-05-04",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "sk-hynix__amd__supply",
+   "source": "sk-hynix",
+   "target": "amd",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 72,
+   "techNode": "hbm3e",
+   "status": "active",
+   "tier": "transcript",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2023",
+   "lastConfirmed": "2026-02",
+   "note": "HBM для ускорителей MI-серии",
+   "evidence": [
+    {
+     "quote": "Высокоскоростная память для ускорителей закупается у корейских производителей.",
+     "url": "https://ir.amd.com/",
+     "tier": "transcript",
+     "published": "2026-02-04",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "micron__alphabet__supply",
+   "source": "micron",
+   "target": "alphabet",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 43,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-03",
+   "note": "HBM для собственного ускорителя",
+   "evidence": [
+    {
+     "quote": "Память для собственных ускорителей закупается у нескольких поставщиков.",
+     "url": "https://investors.micron.com/",
+     "tier": "press",
+     "published": "2026-03-25",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "samsung__alphabet__supply",
+   "source": "samsung",
+   "target": "alphabet",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 38,
+   "techNode": null,
+   "status": "active",
+   "tier": "estimate",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-05",
+   "note": "Второй источник HBM для TPU",
+   "evidence": [
+    {
+     "quote": "Доли поставщиков высокоскоростной памяти оцениваются отраслевыми аналитиками.",
+     "url": "https://www.samsung.com/global/ir/",
+     "tier": "estimate",
+     "published": "2026-05-11",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "coherent__broadcom__supply",
+   "source": "coherent",
+   "target": "broadcom",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 41,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2021",
+   "lastConfirmed": "2026-02",
+   "note": "Лазеры и оптические компоненты",
+   "evidence": [
+    {
+     "quote": "Оптические компоненты для коммутационных платформ поставляются профильными вендорами.",
+     "url": "https://investors.coherent.com/",
+     "tier": "press",
+     "published": "2026-02-06",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "corning__digital-realty__supply",
+   "source": "corning",
+   "target": "digital-realty",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 33,
+   "techNode": null,
+   "status": "active",
+   "tier": "estimate",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2017",
+   "lastConfirmed": "2026-01",
+   "note": "Кабельные сборки кампусов",
+   "evidence": [
+    {
+     "quote": "Кампусы ДЦ строятся на кабельных сборках ограниченного числа производителей.",
+     "url": "https://investor.corning.com/",
+     "tier": "estimate",
+     "published": "2026-01-19",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "hitachi-energy__digital-realty__supply",
+   "source": "hitachi-energy",
+   "target": "digital-realty",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 51,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2021",
+   "lastConfirmed": "2026-04",
+   "note": "Трансформаторы под подключение площадок",
+   "evidence": [
+    {
+     "quote": "Очередь на силовые трансформаторы ограничивает сроки ввода площадок.",
+     "url": "https://www.hitachienergy.com/news",
+     "tier": "press",
+     "published": "2026-04-16",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "eaton__smci__supply",
+   "source": "eaton",
+   "target": "smci",
+   "type": "supply",
+   "spine": "physical",
+   "strength": 31,
+   "techNode": null,
+   "status": "active",
+   "tier": "estimate",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2023",
+   "lastConfirmed": "2026-02",
+   "note": "Питание стойки в составе системы",
+   "evidence": [
+    {
+     "quote": "Элементы распределения питания интегрируются в стоечные системы.",
+     "url": "https://www.eaton.com/us/en-us/company/investor-relations.html",
+     "tier": "estimate",
+     "published": "2026-02-09",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "blackstone__digital-realty__develops",
+   "source": "blackstone",
+   "target": "digital-realty",
+   "type": "develops",
+   "spine": "capital",
+   "strength": 58,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2022",
+   "lastConfirmed": "2026-03",
+   "note": "Совместная разработка кампусов ДЦ",
+   "evidence": [
+    {
+     "quote": "Стороны объявили о совместной разработке кампусов дата-центров.",
+     "url": "https://www.blackstone.com/news/",
+     "tier": "press",
+     "published": "2026-03-27",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "blackstone__equinix__finances",
+   "source": "blackstone",
+   "target": "equinix",
+   "type": "finances",
+   "spine": "capital",
+   "strength": 46,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2023",
+   "lastConfirmed": "2026-04",
+   "note": "Проектное финансирование площадок",
+   "evidence": [
+    {
+     "quote": "Строительство кампусов финансируется через совместную проектную структуру.",
+     "url": "https://www.blackstone.com/news/",
+     "tier": "press",
+     "published": "2026-04-14",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "kkr__digital-realty__stake",
+   "source": "kkr",
+   "target": "digital-realty",
+   "type": "stake",
+   "spine": "capital",
+   "strength": 42,
+   "techNode": null,
+   "status": "active",
+   "tier": "filing",
+   "confirmedSources": 2,
+   "engineConfirmed": true,
+   "started": "2023",
+   "lastConfirmed": "2026-01",
+   "note": "Доля в портфеле кампусов",
+   "evidence": [
+    {
+     "quote": "Инфраструктурный управляющий раскрыл долю в портфеле дата-центров.",
+     "url": "https://ir.kkr.com/",
+     "tier": "filing",
+     "published": "2026-01-30",
+     "fetched": "2026-08-18",
+     "alive": true
+    },
+    {
+     "quote": "Независимое подтверждение той же связи: доля в портфеле кампусов.",
+     "url": "https://ir.kkr.com/",
+     "tier": "press",
+     "published": "2026-01-30",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "kkr__vistra__stake",
+   "source": "kkr",
+   "target": "vistra",
+   "type": "stake",
+   "spine": "capital",
+   "strength": 27,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-02",
+   "note": "Пакет в генерирующей компании",
+   "evidence": [
+    {
+     "quote": "Управляющий активами приобрёл миноритарный пакет в генерирующей компании.",
+     "url": "https://ir.kkr.com/",
+     "tier": "press",
+     "published": "2026-02-20",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "stonepeak__crusoe__finances",
+   "source": "stonepeak",
+   "target": "crusoe",
+   "type": "finances",
+   "spine": "capital",
+   "strength": 44,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-04",
+   "note": "Финансирование площадки у источника энергии",
+   "evidence": [
+    {
+     "quote": "Строительство кампуса финансируется инфраструктурным фондом.",
+     "url": "https://stonepeak.com/news/",
+     "tier": "press",
+     "published": "2026-04-22",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "stonepeak__corning__offtake",
+   "source": "stonepeak",
+   "target": "corning",
+   "type": "offtake",
+   "spine": "capital",
+   "strength": 21,
+   "techNode": null,
+   "status": "active",
+   "tier": "estimate",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-03",
+   "note": "Законтрактованное волокно под стройку",
+   "evidence": [
+    {
+     "quote": "Объёмы оптоволокна законтрактованы заранее под портфель площадок.",
+     "url": "https://stonepeak.com/news/",
+     "tier": "estimate",
+     "published": "2026-03-11",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "gip__ge-vernova__finances",
+   "source": "gip",
+   "target": "ge-vernova",
+   "type": "finances",
+   "spine": "capital",
+   "strength": 49,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-04",
+   "note": "Финансирование генерации под ДЦ",
+   "evidence": [
+    {
+     "quote": "Проекты генерации под дата-центры финансируются инфраструктурной платформой.",
+     "url": "https://www.globalinfra.com/news/",
+     "tier": "press",
+     "published": "2026-04-09",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "gip__crusoe__finances",
+   "source": "gip",
+   "target": "crusoe",
+   "type": "finances",
+   "spine": "capital",
+   "strength": 53,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-04",
+   "note": "Участие в консорциуме под площадку",
+   "evidence": [
+    {
+     "quote": "Площадка финансируется консорциумом инфраструктурных инвесторов.",
+     "url": "https://www.crusoe.ai/newsroom",
+     "tier": "press",
+     "published": "2026-04-11",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "mgx__openai__stake",
+   "source": "mgx",
+   "target": "openai",
+   "type": "stake",
+   "spine": "capital",
+   "strength": 45,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-01",
+   "note": "Госкапитал ОАЭ в передовой лаборатории",
+   "evidence": [
+    {
+     "quote": "Государственный инвестиционный фонд участвовал в раунде лаборатории.",
+     "url": "https://mgx.ae/news",
+     "tier": "press",
+     "published": "2026-01-21",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "mgx__crusoe__finances",
+   "source": "mgx",
+   "target": "crusoe",
+   "type": "finances",
+   "spine": "capital",
+   "strength": 36,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-04",
+   "note": "Участие в финансировании площадки",
+   "evidence": [
+    {
+     "quote": "Государственный фонд вошёл в консорциум, финансирующий кампус.",
+     "url": "https://mgx.ae/news",
+     "tier": "press",
+     "published": "2026-04-11",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "blackstone__oracle__finances",
+   "source": "blackstone",
+   "target": "oracle",
+   "type": "finances",
+   "spine": "capital",
+   "strength": 34,
+   "techNode": null,
+   "status": "active",
+   "tier": "estimate",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-05",
+   "note": "Долговое финансирование стройки под контракт",
+   "evidence": [
+    {
+     "quote": "Стройка под долгосрочный контракт финансируется частным кредитом.",
+     "url": "https://www.blackstone.com/news/",
+     "tier": "estimate",
+     "published": "2026-05-02",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "brookfield__digital-realty__develops",
+   "source": "brookfield",
+   "target": "digital-realty",
+   "type": "develops",
+   "spine": "capital",
+   "strength": 39,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2024",
+   "lastConfirmed": "2026-03",
+   "note": "Совместные площадки в Европе",
+   "evidence": [
+    {
+     "quote": "Стороны объявили о совместной разработке европейских кампусов.",
+     "url": "https://bn.brookfield.com/press-releases",
+     "tier": "press",
+     "published": "2026-03-27",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
+  },
+  {
+   "id": "brookfield__ge-vernova__offtake",
+   "source": "brookfield",
+   "target": "ge-vernova",
+   "type": "offtake",
+   "spine": "capital",
+   "strength": 41,
+   "techNode": null,
+   "status": "active",
+   "tier": "press",
+   "confirmedSources": 1,
+   "engineConfirmed": false,
+   "started": "2025",
+   "lastConfirmed": "2026-04",
+   "note": "Заказ турбин под портфель проектов",
+   "evidence": [
+    {
+     "quote": "Турбины законтрактованы заранее под портфель генерирующих проектов.",
+     "url": "https://bn.brookfield.com/press-releases",
+     "tier": "press",
+     "published": "2026-04-07",
+     "fetched": "2026-08-18",
+     "alive": true
+    }
+   ]
   }
  ],
  "cycles": [
@@ -3930,6 +5774,22 @@
     "amazon__anthropic__offtake"
    ],
    "note": "Тот же приём: доля оплачивается выручкой от собственных мощностей"
+  },
+  {
+   "id": "c5",
+   "type": "financing",
+   "path": [
+    "gip",
+    "crusoe",
+    "openai",
+    "gip"
+   ],
+   "edges": [
+    "gip__crusoe__finances",
+    "crusoe__openai__offtake",
+    "gip__ge-vernova__finances"
+   ],
+   "note": "Актив как способ финансирования: стройка под долгосрочный контракт, контракт делает актив финансируемым"
   },
   {
    "id": "c4",
