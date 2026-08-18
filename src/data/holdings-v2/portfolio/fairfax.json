@@ -102,7 +102,7 @@
    "id": "insurance",
    "name": "Страхование и перестрахование",
    "plain": "Операционное ядро true holdco: восемь страховых и перестраховочных платформ. Дисциплинированный андеррайтинг создаёт страховой флоат (float) — деньги клиентов, которые лежат у Fairfax до выплат и всё это время инвестируются. GPW раскрыт по каждой платформе; комбинированный коэффициент (combined ratio) раскрывается на уровне отчётного сегмента, а не по каждой дочке.",
-   "stat": "Флоат $39.3B (имущественного страхования, 31.12.2025, +11.2% г/г) · GPW 2025 ~$33.3B · combined ratio 93.0% · андеррайтинговая прибыль $1,816.6M (рекорд)",
+   "stat": "34 компаний",
    "total": 10,
    "subsectors": [
     {
@@ -534,6 +534,131 @@
        "source": "research/fairfax.md (base dossier)"
       }
      ]
+    },
+    {
+     "name": "Дополнительные страховщики",
+     "companies": [
+      {
+       "name": "Brit Insurance",
+       "what": "Specialty Insurance",
+       "geography": "Europe"
+      },
+      {
+       "name": "Zenith National Insurance",
+       "what": "Workers' Compensation Insurance",
+       "geography": "Americas"
+      },
+      {
+       "name": "Fairfax Asia",
+       "what": "P&C Insurance",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "First Capital Insurance (Singapore)",
+       "what": "P&C Insurance",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Go Digit General Insurance",
+       "what": "Digital Insurance",
+       "geography": "India"
+      },
+      {
+       "name": "Pacific Insurance (Malaysia)",
+       "what": "P&C Insurance",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Falcon Insurance (Hong Kong/Thailand)",
+       "what": "P&C Insurance",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Bryte Insurance",
+       "what": "P&C Insurance",
+       "geography": "Africa"
+      },
+      {
+       "name": "Colonnade Insurance",
+       "what": "P&C Insurance",
+       "geography": "Europe"
+      },
+      {
+       "name": "Polish Re",
+       "what": "Reinsurance",
+       "geography": "Europe"
+      },
+      {
+       "name": "Advent Capital (Lloyd's)",
+       "what": "Specialty Insurance / Lloyd's Syndicate",
+       "geography": "Europe"
+      },
+      {
+       "name": "Ki Insurance",
+       "what": "Specialty Insurance / Lloyd's",
+       "geography": "Europe"
+      },
+      {
+       "name": "Southbridge Compañía de Seguros (Chile)",
+       "what": "P&C Insurance",
+       "geography": "Americas"
+      },
+      {
+       "name": "SBI Seguros Uruguay",
+       "what": "P&C Insurance",
+       "geography": "Americas"
+      },
+      {
+       "name": "Fairfax Brasil Seguros",
+       "what": "P&C Insurance",
+       "geography": "Americas"
+      },
+      {
+       "name": "Meridional Seguros",
+       "what": "P&C Insurance",
+       "geography": "Americas"
+      },
+      {
+       "name": "Thai Reinsurance (Thai Re)",
+       "what": "Reinsurance",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Alltrust Insurance (China)",
+       "what": "P&C Insurance",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "BIC Insurance (Vietnam)",
+       "what": "P&C Insurance",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Eurolife (Greece)",
+       "what": "Life Insurance",
+       "geography": "Europe"
+      },
+      {
+       "name": "Eurolife General",
+       "what": "General Insurance",
+       "geography": "Europe"
+      },
+      {
+       "name": "Africa Re",
+       "what": "Reinsurance",
+       "geography": "Africa"
+      },
+      {
+       "name": "AMAG Insurance",
+       "what": "P&C Insurance",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Alliance Insurance (Dubai)",
+       "what": "P&C Insurance",
+       "geography": "Global"
+      }
+     ]
     }
    ]
   },
@@ -541,7 +666,7 @@
    "id": "portfolio",
    "name": "Инвестиционный портфель",
    "plain": "Куда идёт флоат: портфель под управлением Hamblin Watsa (Prem Watsa). Три слоя — облигации короткой дюрации, стратегические компаний с крупной долей по методу долевого участия и публичные акции из 13F. Важная оговорка: 13F ловит только US-листингованные акции ($1.94B); главная equity-экономика сидит в компаний с крупной долей и консолидированных позициях, невидимых для 13F.",
-   "stat": "Fixed income ~$49.8B (дюрация ~2.2 года, ~5%) · сквозной портфель акций (look-through) ~$23.6B · 13F $1.94B (29 эмитентов)",
+   "stat": "27 компаний",
    "total": 17,
    "subsectors": [
     {
@@ -1198,6 +1323,61 @@
        "source": "Q1'26 earnings call (не подтверждено первичкой к 10-Q)"
       }
      ]
+    },
+    {
+     "name": "Дополнительные публичные позиции",
+     "companies": [
+      {
+       "name": "Poseidon (Atlas Corp/Seaspan)",
+       "what": "Shipping",
+       "geography": "Global"
+      },
+      {
+       "name": "Stelco",
+       "what": "Steel",
+       "geography": "Americas"
+      },
+      {
+       "name": "Resolute Forest Products",
+       "what": "Forest Products",
+       "geography": "Americas"
+      },
+      {
+       "name": "Mytilineos (Metlen Energy & Metals)",
+       "what": "Industrials/Energy",
+       "geography": "Europe"
+      },
+      {
+       "name": "Quess Corp",
+       "what": "Staffing/HR Services",
+       "geography": "India"
+      },
+      {
+       "name": "Occidental Petroleum",
+       "what": "Energy",
+       "geography": "Americas"
+      },
+      {
+       "name": "Commercial International Bank (Egypt)",
+       "what": "Banking",
+       "geography": "Africa"
+      },
+      {
+       "name": "Jordan Kuwait Bank",
+       "what": "Banking",
+       "geography": "Global"
+      },
+      {
+       "name": "Overstock.com",
+       "what": "E-commerce/Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Under Armour",
+       "what": "Apparel",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -1205,358 +1385,503 @@
    "id": "noninsurance",
    "name": "Non-insurance-холдинги под контролем",
    "plain": "Контрольные доли в работающих не-страховых компаниях: индийская инфраструктура, канадские рестораны и ретейл, агробизнес, спортивные бренды, греческая недвижимость. Справедливая стоимость не-страховых компаний с крупной долей $9.91B против балансовой $7.46B — скрытый резерв ~$2.46B, не отражённый в балансовой стоимости.",
-   "stat": "Справедливая стоимость не-страховых компаний с крупной долей $9.91B vs балансовая $7.46B (скрытый резерв ~$2.46B) · операционная прибыль сектора 2025 $397.4M",
+   "stat": "35 компаний",
    "total": 10,
-   "companies": [
+   "subsectors": [
     {
-     "name": "Fairfax India (FIH.U)",
-     "what": "Индийский холдинг; ключевой актив BIAL (аэропорт Бангалора)",
-     "stake": "~43%",
-     "value": "~$1.0B",
-     "valueDisclosed": false,
-     "size": "публичный холдинг; ядро — аэропорт Бангалора BIAL",
-     "geography": "Индия",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "Fairfax India (FIH.U) — публичный холдинг индийских активов; ~43% у Fairfax. Ядро — доля в аэропорте Бангалора (BIAL), инфраструктура с долгосрочным ростом трафика. Оценка ~$1.0B.",
-      "whyMatters": "Главная индийская инфраструктурная ставка компаундинга: аэропорт Бангалора — актив с длинным ростом пассажиропотока.",
-      "metrics": [
-       {
-        "label": "Стоимость",
-        "value": "~$1.0B"
+     "name": "Основные позиции",
+     "companies": [
+      {
+       "name": "Fairfax India (FIH.U)",
+       "what": "Индийский холдинг; ключевой актив BIAL (аэропорт Бангалора)",
+       "stake": "~43%",
+       "value": "~$1.0B",
+       "valueDisclosed": false,
+       "size": "публичный холдинг; ядро — аэропорт Бангалора BIAL",
+       "geography": "Индия",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Fairfax India (FIH.U) — публичный холдинг индийских активов; ~43% у Fairfax. Ядро — доля в аэропорте Бангалора (BIAL), инфраструктура с долгосрочным ростом трафика. Оценка ~$1.0B.",
+        "whyMatters": "Главная индийская инфраструктурная ставка компаундинга: аэропорт Бангалора — актив с длинным ростом пассажиропотока.",
+        "metrics": [
+         {
+          "label": "Стоимость",
+          "value": "~$1.0B"
+         },
+         {
+          "label": "Доля",
+          "value": "~43%"
+         },
+         {
+          "label": "Ключевой актив",
+          "value": "BIAL (аэропорт)"
+         },
+         {
+          "label": "Регион",
+          "value": "Индия"
+         }
+        ]
        },
-       {
-        "label": "Доля",
-        "value": "~43%"
+       "source": "FY2025 6-K + Fairfax India disclosures"
+      },
+      {
+       "name": "Recipe (ex-Cara)",
+       "what": "Канадские рестораны; выкуплена семья Phelan, спин-офф The Keg",
+       "stake": "100%",
+       "value": "~$0.7B",
+       "valueDisclosed": false,
+       "size": "100% с 2025 (выкуп Phelan), спин-офф The Keg",
+       "geography": "Канада",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Recipe (бывш. Cara) — сеть канадских ресторанов. В 2025 Fairfax выкупил долю семьи Phelan до 100% и выделил The Keg. Оценка ~$0.7B.",
+        "whyMatters": "Полный контроль (100%) над канадским ресторанным бизнесом — денежный поток и опция монетизации через выделения.",
+        "metrics": [
+         {
+          "label": "Стоимость",
+          "value": "~$0.7B"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Событие 2025",
+          "value": "выкуп Phelan, спин-офф Keg"
+         },
+         {
+          "label": "Регион",
+          "value": "Канада"
+         }
+        ]
        },
-       {
-        "label": "Ключевой актив",
-        "value": "BIAL (аэропорт)"
+       "source": "FY2025 6-K"
+      },
+      {
+       "name": "AGT Food & Ingredients",
+       "what": "Агробизнес: бобовые/чечевица; IPO завершено 09.03.2026",
+       "stake": "55.8%",
+       "value": "~$0.6B",
+       "valueDisclosed": false,
+       "size": "IPO на TSX 09.03.2026 (Cdn$450M @ Cdn$23), контроль сохранён",
+       "geography": "Канада",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "AGT Food & Ingredients — переработка бобовых и чечевицы. IPO на TSX завершено 09.03.2026 (Cdn$450M по Cdn$23), Fairfax сохранил контроль (55.8%). Оценка ~$0.6B.",
+        "whyMatters": "Свежая монетизация через IPO при сохранении контроля — фиксирует рыночную оценку агробизнеса без потери управления.",
+        "metrics": [
+         {
+          "label": "Стоимость",
+          "value": "~$0.6B"
+         },
+         {
+          "label": "Доля",
+          "value": "55.8%"
+         },
+         {
+          "label": "IPO",
+          "value": "09.03.2026, Cdn$450M"
+         },
+         {
+          "label": "Сектор",
+          "value": "агро"
+         }
+        ]
        },
-       {
-        "label": "Регион",
-        "value": "Индия"
-       }
-      ]
-     },
-     "source": "FY2025 6-K + Fairfax India disclosures"
+       "source": "AGT IPO 09.03.2026 (TSX) + FY2025 6-K"
+      },
+      {
+       "name": "Sleep Country",
+       "what": "Розница матрасов (Канада)",
+       "stake": "100%",
+       "value": "~$0.6B",
+       "valueDisclosed": false,
+       "size": "приобретена 01.10.2024, 100%",
+       "geography": "Канада",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Sleep Country — канадская розница матрасов; приобретена 01.10.2024, 100%. Оценка ~$0.6B.",
+        "whyMatters": "Свежая консолидация канадской розницы — потребительский денежный поток, чувствительный к спросу на товары длительного пользования.",
+        "metrics": [
+         {
+          "label": "Стоимость",
+          "value": "~$0.6B"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Куплено",
+          "value": "01.10.2024"
+         },
+         {
+          "label": "Сектор",
+          "value": "розница"
+         }
+        ]
+       },
+       "source": "FY2025 6-K"
+      },
+      {
+       "name": "Peak Achievement",
+       "what": "Спортинвентарь (бренды Bauer/Easton)",
+       "stake": "100%",
+       "value": "~$0.5B",
+       "valueDisclosed": false,
+       "size": "100%; бренды Bauer, Easton",
+       "geography": "Глобально",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Peak Achievement — спортивный инвентарь, бренды Bauer (хоккей) и Easton. 100% у Fairfax. Оценка ~$0.5B.",
+        "whyMatters": "Контроль над узнаваемыми спортивными брендами — нишевый потребительский бизнес с ценовой силой бренда.",
+        "metrics": [
+         {
+          "label": "Стоимость",
+          "value": "~$0.5B"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Бренды",
+          "value": "Bauer, Easton"
+         },
+         {
+          "label": "Сектор",
+          "value": "спортинвентарь"
+         }
+        ]
+       },
+       "source": "FY2025 6-K"
+      },
+      {
+       "name": "Grivalia Hospitality",
+       "what": "Недвижимость гостеприимства (Греция)",
+       "stake": "~84%",
+       "value": "~$0.5B",
+       "valueDisclosed": false,
+       "size": "~84%; греческая hospitality-недвижимость",
+       "geography": "Греция",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Grivalia Hospitality — греческая гостиничная недвижимость, ~84%. Оценка ~$0.5B. Часть греческого кластера Fairfax вместе с Eurobank и Eurolife.",
+        "whyMatters": "Экспозиция на греческий туризм и восстановление недвижимости — синергия с греческим кластером холдинга.",
+        "metrics": [
+         {
+          "label": "Стоимость",
+          "value": "~$0.5B"
+         },
+         {
+          "label": "Доля",
+          "value": "~84%"
+         },
+         {
+          "label": "Сектор",
+          "value": "hospitality real estate"
+         },
+         {
+          "label": "Регион",
+          "value": "Греция"
+         }
+        ]
+       },
+       "source": "FY2025 6-K"
+      },
+      {
+       "name": "Thomas Cook India",
+       "what": "Тревел и обмен валюты (Индия)",
+       "stake": "~64%",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "~64%; travel & forex, стоимость не раскрыта",
+       "geography": "Индия",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Thomas Cook India — тревел-услуги и обмен валюты (forex), ~64%. Поимённая стоимость не раскрыта.",
+        "whyMatters": "Дополнительная индийская экспозиция на потребительский тревел и forex — часть индийского узла роста.",
+        "metrics": [
+         {
+          "label": "Доля",
+          "value": "~64%"
+         },
+         {
+          "label": "Сегмент",
+          "value": "travel & forex"
+         },
+         {
+          "label": "Стоимость",
+          "value": "не раскрыта"
+         },
+         {
+          "label": "Регион",
+          "value": "Индия"
+         }
+        ]
+       },
+       "source": "FY2025 6-K (стоимость не раскрыта)"
+      },
+      {
+       "name": "Dexterra Group",
+       "what": "Управление объектами и стаффинг (Канада)",
+       "stake": "~50%",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "~50%; facilities management, стоимость не раскрыта",
+       "geography": "Канада",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Dexterra Group — канадское управление объектами и стаффинг, ~50%. Поимённая стоимость не раскрыта.",
+        "whyMatters": "Сервисный денежный поток от управления объектами — устойчивый, но раскрытие стоимости ограничено.",
+        "metrics": [
+         {
+          "label": "Доля",
+          "value": "~50%"
+         },
+         {
+          "label": "Сегмент",
+          "value": "facilities mgmt"
+         },
+         {
+          "label": "Стоимость",
+          "value": "не раскрыта"
+         },
+         {
+          "label": "Регион",
+          "value": "Канада"
+         }
+        ]
+       },
+       "source": "FY2025 6-K (стоимость не раскрыта)"
+      },
+      {
+       "name": "Meadow Foods",
+       "what": "Переработка молочных ингредиентов (Великобритания)",
+       "stake": "~95%",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "~95%; dairy-ingredient processor, стоимость не раскрыта",
+       "geography": "Великобритания",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Meadow Foods — британский переработчик молочных ингредиентов, ~95%. Поимённая стоимость не раскрыта.",
+        "whyMatters": "Контроль над нишевым переработчиком пищевых ингредиентов — стабильный B2B-денежный поток.",
+        "metrics": [
+         {
+          "label": "Доля",
+          "value": "~95%"
+         },
+         {
+          "label": "Сегмент",
+          "value": "dairy ingredients"
+         },
+         {
+          "label": "Стоимость",
+          "value": "не раскрыта"
+         },
+         {
+          "label": "Регион",
+          "value": "Великобритания"
+         }
+        ]
+       },
+       "source": "FY2025 6-K (стоимость не раскрыта)"
+      },
+      {
+       "name": "Andrew Peller",
+       "what": "Производитель вина (Канада); сделка в процессе",
+       "stake": "pending консолидация",
+       "value": "~CAD $397M equity",
+       "valueDisclosed": true,
+       "size": "соглашение 15.06.2026, закрытие Q3'26; делистинг с TSX",
+       "geography": "Канада",
+       "status": "pending",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Andrew Peller — канадский винодел. Fairfax договорился о покупке (15.06.2026): Class A (non-voting) по CAD $8.00, Class B (voting) по CAD $12.00; ~CAD $397M equity / ~$579M enterprise value; без условия финансирования; закрытие Q3'26; делистинг с TSX. Основатель John Peller переводит свои акции в капитал покупателя — то есть контроль консолидируется, но не обязательно 100% экономики.",
+        "whyMatters": "Свежая pending-сделка: закрытие в Q3'26 добавит консолидированный винный бизнес; структура — не чистый 100%-выкуп, основатель роллит акции.",
+        "metrics": [
+         {
+          "label": "Equity",
+          "value": "~CAD $397M"
+         },
+         {
+          "label": "EV",
+          "value": "~$579M"
+         },
+         {
+          "label": "Цена A / B",
+          "value": "CAD $8.00 / $12.00"
+         },
+         {
+          "label": "Статус",
+          "value": "pending, закрытие Q3'26"
+         }
+        ]
+       },
+       "source": "globenewswire / Andrew Peller IR 15.06.2026"
+      }
+     ]
     },
     {
-     "name": "Recipe (ex-Cara)",
-     "what": "Канадские рестораны; выкуплена семья Phelan, спин-офф The Keg",
-     "stake": "100%",
-     "value": "~$0.7B",
-     "valueDisclosed": false,
-     "size": "100% с 2025 (выкуп Phelan), спин-офф The Keg",
-     "geography": "Канада",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Recipe (бывш. Cara) — сеть канадских ресторанов. В 2025 Fairfax выкупил долю семьи Phelan до 100% и выделил The Keg. Оценка ~$0.7B.",
-      "whyMatters": "Полный контроль (100%) над канадским ресторанным бизнесом — денежный поток и опция монетизации через выделения.",
-      "metrics": [
-       {
-        "label": "Стоимость",
-        "value": "~$0.7B"
-       },
-       {
-        "label": "Доля",
-        "value": "100%"
-       },
-       {
-        "label": "Событие 2025",
-        "value": "выкуп Phelan, спин-офф Keg"
-       },
-       {
-        "label": "Регион",
-        "value": "Канада"
-       }
-      ]
-     },
-     "source": "FY2025 6-K"
+     "name": "Fairfax India",
+     "companies": [
+      {
+       "name": "IIFL Finance",
+       "what": "NBFC / Lending",
+       "geography": "India"
+      },
+      {
+       "name": "IIFL Capital Services",
+       "what": "Brokerage",
+       "geography": "India"
+      },
+      {
+       "name": "5paisa Capital",
+       "what": "Fintech / Discount Broking",
+       "geography": "India"
+      },
+      {
+       "name": "Bangalore International Airport (BIAL)",
+       "what": "Airport/Infrastructure",
+       "geography": "India"
+      },
+      {
+       "name": "Anchorage Infrastructure Investments",
+       "what": "Infrastructure Holding",
+       "geography": "India"
+      },
+      {
+       "name": "CSB Bank",
+       "what": "Banking",
+       "geography": "India"
+      },
+      {
+       "name": "Fairchem Organics",
+       "what": "Specialty Chemicals",
+       "geography": "India"
+      },
+      {
+       "name": "NCML (National Collateral Management Services)",
+       "what": "Agri Logistics/Warehousing",
+       "geography": "India"
+      },
+      {
+       "name": "Seven Islands Shipping",
+       "what": "Shipping",
+       "geography": "India"
+      },
+      {
+       "name": "Sanmar Chemical Enterprises",
+       "what": "Chemicals/PVC",
+       "geography": "India"
+      },
+      {
+       "name": "Saurashtra Freight",
+       "what": "Logistics",
+       "geography": "India"
+      },
+      {
+       "name": "Jaynix Engineering",
+       "what": "Manufacturing",
+       "geography": "India"
+      },
+      {
+       "name": "Maxop Engineering",
+       "what": "Manufacturing",
+       "geography": "India"
+      },
+      {
+       "name": "Global Aluminium",
+       "what": "Metals/Manufacturing",
+       "geography": "India"
+      },
+      {
+       "name": "ICICI Lombard",
+       "what": "Insurance",
+       "geography": "India"
+      },
+      {
+       "name": "Privi Speciality Chemicals",
+       "what": "Specialty Chemicals",
+       "geography": "India"
+      }
+     ]
     },
     {
-     "name": "AGT Food & Ingredients",
-     "what": "Агробизнес: бобовые/чечевица; IPO завершено 09.03.2026",
-     "stake": "55.8%",
-     "value": "~$0.6B",
-     "valueDisclosed": false,
-     "size": "IPO на TSX 09.03.2026 (Cdn$450M @ Cdn$23), контроль сохранён",
-     "geography": "Канада",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "AGT Food & Ingredients — переработка бобовых и чечевицы. IPO на TSX завершено 09.03.2026 (Cdn$450M по Cdn$23), Fairfax сохранил контроль (55.8%). Оценка ~$0.6B.",
-      "whyMatters": "Свежая монетизация через IPO при сохранении контроля — фиксирует рыночную оценку агробизнеса без потери управления.",
-      "metrics": [
-       {
-        "label": "Стоимость",
-        "value": "~$0.6B"
-       },
-       {
-        "label": "Доля",
-        "value": "55.8%"
-       },
-       {
-        "label": "IPO",
-        "value": "09.03.2026, Cdn$450M"
-       },
-       {
-        "label": "Сектор",
-        "value": "агро"
-       }
-      ]
-     },
-     "source": "AGT IPO 09.03.2026 (TSX) + FY2025 6-K"
+     "name": "Дополнительные контролируемые бизнесы",
+     "companies": [
+      {
+       "name": "Recipe Unlimited",
+       "what": "Restaurants",
+       "geography": "Americas"
+      },
+      {
+       "name": "Sleep Country Canada",
+       "what": "Retail",
+       "geography": "Americas"
+      },
+      {
+       "name": "Boat Rocker Media",
+       "what": "Media/TV Production",
+       "geography": "Americas"
+      },
+      {
+       "name": "Farmers Edge",
+       "what": "Agriculture Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "AGT Food and Ingredients",
+       "what": "Agriculture/Food",
+       "geography": "Americas"
+      },
+      {
+       "name": "Sporting Life Group",
+       "what": "Retail",
+       "geography": "Americas"
+      },
+      {
+       "name": "Toys \"R\" Us Canada",
+       "what": "Retail",
+       "geography": "Americas"
+      }
+     ]
     },
     {
-     "name": "Sleep Country",
-     "what": "Розница матрасов (Канада)",
-     "stake": "100%",
-     "value": "~$0.6B",
-     "valueDisclosed": false,
-     "size": "приобретена 01.10.2024, 100%",
-     "geography": "Канада",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Sleep Country — канадская розница матрасов; приобретена 01.10.2024, 100%. Оценка ~$0.6B.",
-      "whyMatters": "Свежая консолидация канадской розницы — потребительский денежный поток, чувствительный к спросу на товары длительного пользования.",
-      "metrics": [
-       {
-        "label": "Стоимость",
-        "value": "~$0.6B"
-       },
-       {
-        "label": "Доля",
-        "value": "100%"
-       },
-       {
-        "label": "Куплено",
-        "value": "01.10.2024"
-       },
-       {
-        "label": "Сектор",
-        "value": "розница"
-       }
-      ]
-     },
-     "source": "FY2025 6-K"
-    },
-    {
-     "name": "Peak Achievement",
-     "what": "Спортинвентарь (бренды Bauer/Easton)",
-     "stake": "100%",
-     "value": "~$0.5B",
-     "valueDisclosed": false,
-     "size": "100%; бренды Bauer, Easton",
-     "geography": "Глобально",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Peak Achievement — спортивный инвентарь, бренды Bauer (хоккей) и Easton. 100% у Fairfax. Оценка ~$0.5B.",
-      "whyMatters": "Контроль над узнаваемыми спортивными брендами — нишевый потребительский бизнес с ценовой силой бренда.",
-      "metrics": [
-       {
-        "label": "Стоимость",
-        "value": "~$0.5B"
-       },
-       {
-        "label": "Доля",
-        "value": "100%"
-       },
-       {
-        "label": "Бренды",
-        "value": "Bauer, Easton"
-       },
-       {
-        "label": "Сектор",
-        "value": "спортинвентарь"
-       }
-      ]
-     },
-     "source": "FY2025 6-K"
-    },
-    {
-     "name": "Grivalia Hospitality",
-     "what": "Недвижимость гостеприимства (Греция)",
-     "stake": "~84%",
-     "value": "~$0.5B",
-     "valueDisclosed": false,
-     "size": "~84%; греческая hospitality-недвижимость",
-     "geography": "Греция",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Grivalia Hospitality — греческая гостиничная недвижимость, ~84%. Оценка ~$0.5B. Часть греческого кластера Fairfax вместе с Eurobank и Eurolife.",
-      "whyMatters": "Экспозиция на греческий туризм и восстановление недвижимости — синергия с греческим кластером холдинга.",
-      "metrics": [
-       {
-        "label": "Стоимость",
-        "value": "~$0.5B"
-       },
-       {
-        "label": "Доля",
-        "value": "~84%"
-       },
-       {
-        "label": "Сектор",
-        "value": "hospitality real estate"
-       },
-       {
-        "label": "Регион",
-        "value": "Греция"
-       }
-      ]
-     },
-     "source": "FY2025 6-K"
-    },
-    {
-     "name": "Thomas Cook India",
-     "what": "Тревел и обмен валюты (Индия)",
-     "stake": "~64%",
-     "value": "",
-     "valueDisclosed": false,
-     "size": "~64%; travel & forex, стоимость не раскрыта",
-     "geography": "Индия",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Thomas Cook India — тревел-услуги и обмен валюты (forex), ~64%. Поимённая стоимость не раскрыта.",
-      "whyMatters": "Дополнительная индийская экспозиция на потребительский тревел и forex — часть индийского узла роста.",
-      "metrics": [
-       {
-        "label": "Доля",
-        "value": "~64%"
-       },
-       {
-        "label": "Сегмент",
-        "value": "travel & forex"
-       },
-       {
-        "label": "Стоимость",
-        "value": "не раскрыта"
-       },
-       {
-        "label": "Регион",
-        "value": "Индия"
-       }
-      ]
-     },
-     "source": "FY2025 6-K (стоимость не раскрыта)"
-    },
-    {
-     "name": "Dexterra Group",
-     "what": "Управление объектами и стаффинг (Канада)",
-     "stake": "~50%",
-     "value": "",
-     "valueDisclosed": false,
-     "size": "~50%; facilities management, стоимость не раскрыта",
-     "geography": "Канада",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Dexterra Group — канадское управление объектами и стаффинг, ~50%. Поимённая стоимость не раскрыта.",
-      "whyMatters": "Сервисный денежный поток от управления объектами — устойчивый, но раскрытие стоимости ограничено.",
-      "metrics": [
-       {
-        "label": "Доля",
-        "value": "~50%"
-       },
-       {
-        "label": "Сегмент",
-        "value": "facilities mgmt"
-       },
-       {
-        "label": "Стоимость",
-        "value": "не раскрыта"
-       },
-       {
-        "label": "Регион",
-        "value": "Канада"
-       }
-      ]
-     },
-     "source": "FY2025 6-K (стоимость не раскрыта)"
-    },
-    {
-     "name": "Meadow Foods",
-     "what": "Переработка молочных ингредиентов (Великобритания)",
-     "stake": "~95%",
-     "value": "",
-     "valueDisclosed": false,
-     "size": "~95%; dairy-ingredient processor, стоимость не раскрыта",
-     "geography": "Великобритания",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Meadow Foods — британский переработчик молочных ингредиентов, ~95%. Поимённая стоимость не раскрыта.",
-      "whyMatters": "Контроль над нишевым переработчиком пищевых ингредиентов — стабильный B2B-денежный поток.",
-      "metrics": [
-       {
-        "label": "Доля",
-        "value": "~95%"
-       },
-       {
-        "label": "Сегмент",
-        "value": "dairy ingredients"
-       },
-       {
-        "label": "Стоимость",
-        "value": "не раскрыта"
-       },
-       {
-        "label": "Регион",
-        "value": "Великобритания"
-       }
-      ]
-     },
-     "source": "FY2025 6-K (стоимость не раскрыта)"
-    },
-    {
-     "name": "Andrew Peller",
-     "what": "Производитель вина (Канада); сделка в процессе",
-     "stake": "pending консолидация",
-     "value": "~CAD $397M equity",
-     "valueDisclosed": true,
-     "size": "соглашение 15.06.2026, закрытие Q3'26; делистинг с TSX",
-     "geography": "Канада",
-     "status": "pending",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Andrew Peller — канадский винодел. Fairfax договорился о покупке (15.06.2026): Class A (non-voting) по CAD $8.00, Class B (voting) по CAD $12.00; ~CAD $397M equity / ~$579M enterprise value; без условия финансирования; закрытие Q3'26; делистинг с TSX. Основатель John Peller переводит свои акции в капитал покупателя — то есть контроль консолидируется, но не обязательно 100% экономики.",
-      "whyMatters": "Свежая pending-сделка: закрытие в Q3'26 добавит консолидированный винный бизнес; структура — не чистый 100%-выкуп, основатель роллит акции.",
-      "metrics": [
-       {
-        "label": "Equity",
-        "value": "~CAD $397M"
-       },
-       {
-        "label": "EV",
-        "value": "~$579M"
-       },
-       {
-        "label": "Цена A / B",
-        "value": "CAD $8.00 / $12.00"
-       },
-       {
-        "label": "Статус",
-        "value": "pending, закрытие Q3'26"
-       }
-      ]
-     },
-     "source": "globenewswire / Andrew Peller IR 15.06.2026"
+     "name": "Частные холдинги",
+     "companies": [
+      {
+       "name": "Torstar",
+       "what": "Media/Publishing",
+       "geography": "Americas"
+      },
+      {
+       "name": "Fairbridge Capital",
+       "what": "Investment Holding",
+       "geography": "India"
+      }
+     ]
     }
    ]
   }

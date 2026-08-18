@@ -117,7 +117,7 @@
    "id": "assetmgmt",
    "name": "Управление активами",
    "plain": "Это сам управляющий бизнес Brookfield (BAM): управляет деньгами внешних инвесторов через серию флагманских фондов, каждый из которых фокусируется на конкретном классе активов. Комиссии ~$3.1 млрд/год + доля в прибыли удачных фондов.",
-   "stat": "$614 млрд капитала, приносящего комиссии; 40+ активных фондов",
+   "stat": "15 компаний",
    "companies": [],
    "total": 6,
    "subsectors": [
@@ -334,6 +334,56 @@
        }
       }
      ]
+    },
+    {
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "Brookfield Corporation",
+       "what": "Diversified Holding Company",
+       "geography": "Global"
+      },
+      {
+       "name": "Brookfield Oaktree Wealth Solutions",
+       "what": "Wealth Distribution Platform",
+       "geography": "Americas"
+      },
+      {
+       "name": "Brookfield Real Assets Income Fund Inc.",
+       "what": "Real Assets Income Fund",
+       "geography": "Americas"
+      },
+      {
+       "name": "Brookfield Global Listed Infrastructure Fund",
+       "what": "Listed Infrastructure Fund",
+       "geography": "Global"
+      },
+      {
+       "name": "Brookfield Global Listed Real Estate Fund",
+       "what": "Listed Real Estate Fund",
+       "geography": "Global"
+      },
+      {
+       "name": "Brookfield Public Securities Group",
+       "what": "Public Securities Manager",
+       "geography": "Americas"
+      },
+      {
+       "name": "Brookfield Capital Partners Fund",
+       "what": "Private Equity Fund",
+       "geography": "Global"
+      },
+      {
+       "name": "Brookfield Strategic Real Estate Partners",
+       "what": "Real Estate Private Equity Fund",
+       "geography": "Global"
+      },
+      {
+       "name": "Brookfield Super-Core Infrastructure Partners",
+       "what": "Core Infrastructure Fund",
+       "geography": "Global"
+      }
+     ]
     }
    ]
   },
@@ -341,193 +391,228 @@
    "id": "insurance",
    "name": "Страхование и пенсии",
    "plain": "Brookfield собирает деньги через страховые компании и пенсионные продукты (аннуитеты), а затем вкладывает эти средства в свои же стратегии — получается долгосрочный капитал, который не нужно возвращать клиентам сразу.",
-   "stat": "~$180 млрд страховых активов (после покупки Just Group), доступ к ~$155 млрд постоянного капитала",
-   "companies": [
+   "stat": "11 компаний",
+   "subsectors": [
     {
-     "name": "American Equity Investment Life (AEL)",
-     "what": "Лидер США по аннуитетам с фиксированной и индексной ставкой",
-     "stake": "100%",
-     "value": "~$4.3 млрд",
-     "valueDisclosed": true,
-     "size": "40,000+ агентов, лицензии во всех 50 штатах",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "AEL — один из лидеров США по аннуитетам с фиксированной и индексной ставкой (продукты накопления к пенсии), с дистрибуцией через 40,000+ независимых агентов и лицензиями во всех 50 штатах. Brookfield владеет на 100% (выкуплено полностью к маю 2024 за ~$4.3 млрд, $56.50 за акцию).",
-      "whyMatters": "Крупный источник долгосрочных страховых денег, инвестируемых в стратегии Brookfield.",
-      "metrics": [
-       {
-        "label": "Размер",
-        "value": "40,000+ агентов"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "American Equity Investment Life (AEL)",
+       "what": "Лидер США по аннуитетам с фиксированной и индексной ставкой",
+       "stake": "100%",
+       "value": "~$4.3 млрд",
+       "valueDisclosed": true,
+       "size": "40,000+ агентов, лицензии во всех 50 штатах",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "AEL — один из лидеров США по аннуитетам с фиксированной и индексной ставкой (продукты накопления к пенсии), с дистрибуцией через 40,000+ независимых агентов и лицензиями во всех 50 штатах. Brookfield владеет на 100% (выкуплено полностью к маю 2024 за ~$4.3 млрд, $56.50 за акцию).",
+        "whyMatters": "Крупный источник долгосрочных страховых денег, инвестируемых в стратегии Brookfield.",
+        "metrics": [
+         {
+          "label": "Размер",
+          "value": "40,000+ агентов"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Гео",
+          "value": "США"
+         }
+        ]
        },
-       {
-        "label": "Доля",
-        "value": "100%"
+       "source": "bnt.brookfield.com / press release 02.05.2024"
+      },
+      {
+       "name": "American National Group (ANICO)",
+       "what": "Крупный страховщик жизни, аннуитетов и имущества",
+       "stake": "100%",
+       "value": "$5.1 млрд",
+       "valueDisclosed": true,
+       "size": "штаб-квартира Galveston, Texas",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "American National — крупный страховщик жизни, аннуитетов и имущества (P&C) со штаб-квартирой в Галвестоне, Техас. Brookfield владеет на 100% (сделка $5.1 млрд закрыта в мае 2022). P&C-часть позже объединена в платформу Argo.",
+        "whyMatters": "Ещё один крупный поставщик постоянного страхового капитала для платформы.",
+        "metrics": [
+         {
+          "label": "Размер",
+          "value": "$5.1 млрд сделка"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Гео",
+          "value": "США"
+         }
+        ]
        },
-       {
-        "label": "Гео",
-        "value": "США"
-       }
-      ]
-     },
-     "source": "bnt.brookfield.com / press release 02.05.2024"
+       "source": "bnt.brookfield.com / press release 25.05.2022"
+      },
+      {
+       "name": "Just Group plc",
+       "what": "Лидер Великобритании по передаче пенсионных рисков и аннуитетам",
+       "stake": "100%",
+       "value": "£2.4 млрд (~$3.2 млрд)",
+       "valueDisclosed": true,
+       "size": "700,000+ клиентов, ~£30 млрд пенсионных накоплений",
+       "geography": "Великобритания",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Just Group — лидер Великобритании по передаче пенсионных рисков (когда компания передаёт страховщику обязательства перед пенсионерами) и индивидуальным аннуитетам: 700,000+ клиентов и ~£30 млрд пенсионных накоплений. Brookfield владеет на 100% (сделка £2.4 млрд / ~$3.2 млрд закрыта 01.04.2026), что добавляет ~$40 млрд активов под управление.",
+        "whyMatters": "Свежая крупная покупка, выводящая страховые активы к ~$180 млрд.",
+        "metrics": [
+         {
+          "label": "Размер",
+          "value": "700,000+ клиентов"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Гео",
+          "value": "Великобритания"
+         }
+        ]
+       },
+       "source": "bnt.brookfield.com / press release 01.04.2026"
+      },
+      {
+       "name": "Brookfield Annuity (бренд Blumont Annuity)",
+       "what": "Канадский страховщик по групповым пенсионным аннуитетам",
+       "stake": "100%",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "~$5.5 млрд пенсионных активов, 33,000+ получателей выплат в год",
+       "geography": "Канада",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Brookfield Annuity (бренд Blumont) — единственный канадский страховщик жизни, сфокусированный на групповых пенсионных аннуитетах и передаче пенсионных рисков для планов с фиксированными выплатами: ~$5.5 млрд пенсионных активов и выплаты более 33,000 получателям в год. Brookfield владеет на 100%.",
+        "whyMatters": "Расширяет пенсионный бизнес на канадский рынок.",
+        "metrics": [
+         {
+          "label": "Размер",
+          "value": "~$5.5 млрд активов"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Гео",
+          "value": "Канада"
+         }
+        ]
+       },
+       "source": "blumontannuity.ca / bcgpension.com"
+      },
+      {
+       "name": "North End Re (Bermuda / Cayman)",
+       "what": "Перестраховочные площадки для долгосрочных аннуитетов",
+       "stake": "100%",
+       "value": "",
+       "valueDisclosed": false,
+       "size": "две площадки — Бермуды и Каймановы острова",
+       "geography": "Бермуды / Каймановы острова",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "North End Re — перестраховочные платформы Brookfield на Бермудах и Каймановых островах, принимающие на себя долгосрочные аннуитетные обязательства (перестрахование). Обе на 100% принадлежат страховому бизнесу BWS.",
+        "whyMatters": "Капитало-эффективная структура для роста страховых обязательств.",
+        "metrics": [
+         {
+          "label": "Размер",
+          "value": "2 площадки"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Гео",
+          "value": "Бермуды / Кайманы"
+         }
+        ]
+       },
+       "source": "reinsurancene.ws / Brookfield ratings release"
+      },
+      {
+       "name": "Argo Group International Holdings",
+       "what": "Страховщик специализированных и коммерческих имущественных рисков (P&C)",
+       "stake": "100%",
+       "value": "~$1.1 млрд",
+       "valueDisclosed": true,
+       "size": "единая P&C-платформа BWS",
+       "geography": "США / Бермуды",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Argo — страховщик специализированных и коммерческих имущественных рисков (P&C). С октября 2025 в него объединены P&C-подразделения American National — это единая имущественная платформа страхового бизнеса. Brookfield владеет на 100% (сделка ~$1.1 млрд закрыта в ноябре 2023).",
+        "whyMatters": "Добавляет имущественное страхование к преимущественно аннуитетному портфелю.",
+        "metrics": [
+         {
+          "label": "Размер",
+          "value": "~$1.1 млрд сделка"
+         },
+         {
+          "label": "Доля",
+          "value": "100%"
+         },
+         {
+          "label": "Гео",
+          "value": "США / Бермуды"
+         }
+        ]
+       },
+       "source": "theinsurer.com / Brookfield Reinsurance Argo acquisition release 2023"
+      }
+     ]
     },
     {
-     "name": "American National Group (ANICO)",
-     "what": "Крупный страховщик жизни, аннуитетов и имущества",
-     "stake": "100%",
-     "value": "$5.1 млрд",
-     "valueDisclosed": true,
-     "size": "штаб-квартира Galveston, Texas",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "American National — крупный страховщик жизни, аннуитетов и имущества (P&C) со штаб-квартирой в Галвестоне, Техас. Brookfield владеет на 100% (сделка $5.1 млрд закрыта в мае 2022). P&C-часть позже объединена в платформу Argo.",
-      "whyMatters": "Ещё один крупный поставщик постоянного страхового капитала для платформы.",
-      "metrics": [
-       {
-        "label": "Размер",
-        "value": "$5.1 млрд сделка"
-       },
-       {
-        "label": "Доля",
-        "value": "100%"
-       },
-       {
-        "label": "Гео",
-        "value": "США"
-       }
-      ]
-     },
-     "source": "bnt.brookfield.com / press release 25.05.2022"
-    },
-    {
-     "name": "Just Group plc",
-     "what": "Лидер Великобритании по передаче пенсионных рисков и аннуитетам",
-     "stake": "100%",
-     "value": "£2.4 млрд (~$3.2 млрд)",
-     "valueDisclosed": true,
-     "size": "700,000+ клиентов, ~£30 млрд пенсионных накоплений",
-     "geography": "Великобритания",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "Just Group — лидер Великобритании по передаче пенсионных рисков (когда компания передаёт страховщику обязательства перед пенсионерами) и индивидуальным аннуитетам: 700,000+ клиентов и ~£30 млрд пенсионных накоплений. Brookfield владеет на 100% (сделка £2.4 млрд / ~$3.2 млрд закрыта 01.04.2026), что добавляет ~$40 млрд активов под управление.",
-      "whyMatters": "Свежая крупная покупка, выводящая страховые активы к ~$180 млрд.",
-      "metrics": [
-       {
-        "label": "Размер",
-        "value": "700,000+ клиентов"
-       },
-       {
-        "label": "Доля",
-        "value": "100%"
-       },
-       {
-        "label": "Гео",
-        "value": "Великобритания"
-       }
-      ]
-     },
-     "source": "bnt.brookfield.com / press release 01.04.2026"
-    },
-    {
-     "name": "Brookfield Annuity (бренд Blumont Annuity)",
-     "what": "Канадский страховщик по групповым пенсионным аннуитетам",
-     "stake": "100%",
-     "value": "",
-     "valueDisclosed": false,
-     "size": "~$5.5 млрд пенсионных активов, 33,000+ получателей выплат в год",
-     "geography": "Канада",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Brookfield Annuity (бренд Blumont) — единственный канадский страховщик жизни, сфокусированный на групповых пенсионных аннуитетах и передаче пенсионных рисков для планов с фиксированными выплатами: ~$5.5 млрд пенсионных активов и выплаты более 33,000 получателям в год. Brookfield владеет на 100%.",
-      "whyMatters": "Расширяет пенсионный бизнес на канадский рынок.",
-      "metrics": [
-       {
-        "label": "Размер",
-        "value": "~$5.5 млрд активов"
-       },
-       {
-        "label": "Доля",
-        "value": "100%"
-       },
-       {
-        "label": "Гео",
-        "value": "Канада"
-       }
-      ]
-     },
-     "source": "blumontannuity.ca / bcgpension.com"
-    },
-    {
-     "name": "North End Re (Bermuda / Cayman)",
-     "what": "Перестраховочные площадки для долгосрочных аннуитетов",
-     "stake": "100%",
-     "value": "",
-     "valueDisclosed": false,
-     "size": "две площадки — Бермуды и Каймановы острова",
-     "geography": "Бермуды / Каймановы острова",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "North End Re — перестраховочные платформы Brookfield на Бермудах и Каймановых островах, принимающие на себя долгосрочные аннуитетные обязательства (перестрахование). Обе на 100% принадлежат страховому бизнесу BWS.",
-      "whyMatters": "Капитало-эффективная структура для роста страховых обязательств.",
-      "metrics": [
-       {
-        "label": "Размер",
-        "value": "2 площадки"
-       },
-       {
-        "label": "Доля",
-        "value": "100%"
-       },
-       {
-        "label": "Гео",
-        "value": "Бермуды / Кайманы"
-       }
-      ]
-     },
-     "source": "reinsurancene.ws / Brookfield ratings release"
-    },
-    {
-     "name": "Argo Group International Holdings",
-     "what": "Страховщик специализированных и коммерческих имущественных рисков (P&C)",
-     "stake": "100%",
-     "value": "~$1.1 млрд",
-     "valueDisclosed": true,
-     "size": "единая P&C-платформа BWS",
-     "geography": "США / Бермуды",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Argo — страховщик специализированных и коммерческих имущественных рисков (P&C). С октября 2025 в него объединены P&C-подразделения American National — это единая имущественная платформа страхового бизнеса. Brookfield владеет на 100% (сделка ~$1.1 млрд закрыта в ноябре 2023).",
-      "whyMatters": "Добавляет имущественное страхование к преимущественно аннуитетному портфелю.",
-      "metrics": [
-       {
-        "label": "Размер",
-        "value": "~$1.1 млрд сделка"
-       },
-       {
-        "label": "Доля",
-        "value": "100%"
-       },
-       {
-        "label": "Гео",
-        "value": "США / Бермуды"
-       }
-      ]
-     },
-     "source": "theinsurer.com / Brookfield Reinsurance Argo acquisition release 2023"
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "Brookfield Reinsurance Ltd",
+       "what": "Reinsurance Holding Company",
+       "geography": "Global"
+      },
+      {
+       "name": "American National Life Insurance Company of New York",
+       "what": "Life Insurance",
+       "geography": "Americas"
+      },
+      {
+       "name": "North End Re (Cayman)",
+       "what": "Reinsurance",
+       "geography": "Americas"
+      },
+      {
+       "name": "Brookfield Annuity Company",
+       "what": "Annuities",
+       "geography": "Americas"
+      },
+      {
+       "name": "American National Property And Casualty Company",
+       "what": "Property & Casualty Insurance",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -535,7 +620,7 @@
    "id": "realestate",
    "name": "Недвижимость",
    "plain": "Brookfield напрямую владеет зданиями по всему миру — офисами, торговыми центрами, складами, жильём и отелями, которые приносят арендный доход и со временем продаются дороже.",
-   "stat": "~$277 млрд активов под управлением, более 500 млн кв. футов площадей (~675 объектов в 9 странах)",
+   "stat": "43 компаний",
    "subsectors": [
     {
      "id": "office",
@@ -922,6 +1007,176 @@
        "source": "theleela.com press / brookfield.com"
       }
      ]
+    },
+    {
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "Brookfield Properties",
+       "what": "Diversified Real Estate Operator",
+       "geography": "Global"
+      },
+      {
+       "name": "One Liberty Plaza",
+       "what": "Office",
+       "geography": "Americas"
+      },
+      {
+       "name": "Bay Adelaide Centre",
+       "what": "Office",
+       "geography": "Americas"
+      },
+      {
+       "name": "First Canadian Place",
+       "what": "Office",
+       "geography": "Americas"
+      },
+      {
+       "name": "Bankers Hall",
+       "what": "Office",
+       "geography": "Americas"
+      },
+      {
+       "name": "Brookfield Place Calgary",
+       "what": "Office",
+       "geography": "Americas"
+      },
+      {
+       "name": "555 California Street",
+       "what": "Office",
+       "geography": "Americas"
+      },
+      {
+       "name": "Water Street Tampa",
+       "what": "Mixed-Use Development",
+       "geography": "Americas"
+      },
+      {
+       "name": "Principal Place",
+       "what": "Mixed-Use Development",
+       "geography": "Europe"
+      },
+      {
+       "name": "ICD Brookfield Place",
+       "what": "Office",
+       "geography": "Middle East"
+      },
+      {
+       "name": "GGP (Brookfield Properties Retail)",
+       "what": "Regional Mall REIT",
+       "geography": "Americas"
+      },
+      {
+       "name": "Ala Moana Center",
+       "what": "Regional Mall",
+       "geography": "Americas"
+      },
+      {
+       "name": "Woodfield Mall",
+       "what": "Regional Mall",
+       "geography": "Americas"
+      },
+      {
+       "name": "Tysons Galleria",
+       "what": "Regional Mall",
+       "geography": "Americas"
+      },
+      {
+       "name": "Glendale Galleria",
+       "what": "Regional Mall",
+       "geography": "Americas"
+      },
+      {
+       "name": "Fashion Show Las Vegas",
+       "what": "Regional Mall",
+       "geography": "Americas"
+      },
+      {
+       "name": "Willowbrook Mall",
+       "what": "Regional Mall",
+       "geography": "Americas"
+      },
+      {
+       "name": "Natick Mall",
+       "what": "Regional Mall",
+       "geography": "Americas"
+      },
+      {
+       "name": "Oakbrook Center",
+       "what": "Regional Mall",
+       "geography": "Americas"
+      },
+      {
+       "name": "Forest City Realty Trust",
+       "what": "Diversified Real Estate",
+       "geography": "Americas"
+      },
+      {
+       "name": "Student Roost",
+       "what": "Student Housing",
+       "geography": "Europe"
+      },
+      {
+       "name": "Extended Stay America",
+       "what": "Extended-Stay Hospitality",
+       "geography": "Americas"
+      },
+      {
+       "name": "The Diplomat Beach Resort",
+       "what": "Hospitality",
+       "geography": "Americas"
+      },
+      {
+       "name": "Nobu Hospitality",
+       "what": "Hospitality",
+       "geography": "Global"
+      },
+      {
+       "name": "The Leela Palaces, Hotels and Resorts",
+       "what": "Hospitality",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Brookfield Residential Properties",
+       "what": "Homebuilding",
+       "geography": "Americas"
+      },
+      {
+       "name": "Kolter Land",
+       "what": "Land Development",
+       "geography": "Americas"
+      },
+      {
+       "name": "Simply Self Storage",
+       "what": "Self-Storage",
+       "geography": "Americas"
+      },
+      {
+       "name": "Brookfield India Real Estate Trust",
+       "what": "Office REIT",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Brookfield Place Perth",
+       "what": "Office",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "One Shelley Street",
+       "what": "Office",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Rialto Capital Management",
+       "what": "Real Estate Special Servicing/Credit",
+       "geography": "Americas"
+      },
+      {
+       "name": "Brookfield Multifamily Portfolio (US Sun Belt)",
+       "what": "Multifamily",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -929,7 +1184,7 @@
    "id": "renewables",
    "name": "Энергетика",
    "plain": "Brookfield владеет одним из крупнейших в мире портфелей чистой энергии — вода, ветер, солнце, хранилища — плюс атомный бизнес Westinghouse; всё это продаёт электричество, спрос на которое тянут вверх дата-центры и AI.",
-   "stat": "~47 GW работающей мощности + более 200 GW проектов в разработке",
+   "stat": "20 компаний",
    "subsectors": [
     {
      "id": "hydro",
@@ -1283,6 +1538,71 @@
        "source": "cameco.com / bep.brookfield.com 2023; K&L Gates 2025"
       }
      ]
+    },
+    {
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "TerraForm Power",
+       "what": "Wind & Solar",
+       "geography": "Americas"
+      },
+      {
+       "name": "Urban Grid",
+       "what": "Utility-Scale Solar",
+       "geography": "Americas"
+      },
+      {
+       "name": "Standard Solar",
+       "what": "Community & Distributed Solar",
+       "geography": "Americas"
+      },
+      {
+       "name": "Deriva Energy",
+       "what": "Wind & Solar",
+       "geography": "Americas"
+      },
+      {
+       "name": "Origis Energy",
+       "what": "Solar & Storage",
+       "geography": "Americas"
+      },
+      {
+       "name": "Isagen",
+       "what": "Hydro Power",
+       "geography": "Americas"
+      },
+      {
+       "name": "Erie Boulevard Hydropower",
+       "what": "Hydro Power",
+       "geography": "Americas"
+      },
+      {
+       "name": "Great Lakes Hydro",
+       "what": "Hydro Power",
+       "geography": "Americas"
+      },
+      {
+       "name": "Shepherds Flat Wind Farm",
+       "what": "Wind",
+       "geography": "Americas"
+      },
+      {
+       "name": "Mesquite Solar",
+       "what": "Utility-Scale Solar",
+       "geography": "Americas"
+      },
+      {
+       "name": "K2 Wind",
+       "what": "Wind",
+       "geography": "Americas"
+      },
+      {
+       "name": "Bord Gáis Energy",
+       "what": "Energy Retail & Generation",
+       "geography": "Europe"
+      }
+     ]
     }
    ]
   },
@@ -1290,7 +1610,7 @@
    "id": "infra",
    "name": "Инфраструктура",
    "plain": "Brookfield владеет физической инфраструктурой экономики: дата-центрами и вышками связи, железными дорогами и портами, газопроводами и коммунальными сетями. Почти весь доход — регулируемый или законтрактованный.",
-   "stat": "~$124.5 млрд активов под управлением; FFO $709 млн за квартал (Q1 2026, +10% г/г)",
+   "stat": "43 компаний",
    "subsectors": [
     {
      "id": "digital",
@@ -2119,6 +2439,106 @@
        "source": "BIP press / aggregation"
       }
      ]
+    },
+    {
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "Evoque Data Center Solutions",
+       "what": "Data Centers",
+       "geography": "Americas"
+      },
+      {
+       "name": "Cyxtera",
+       "what": "Data Centers",
+       "geography": "Americas"
+      },
+      {
+       "name": "Altera Infrastructure",
+       "what": "Offshore Energy Shipping",
+       "geography": "Global"
+      },
+      {
+       "name": "Southern Star Central Gas Pipeline",
+       "what": "Natural Gas Pipelines",
+       "geography": "Americas"
+      },
+      {
+       "name": "Transportadora de Gas Internacional (TGI)",
+       "what": "Natural Gas Transmission",
+       "geography": "Americas"
+      },
+      {
+       "name": "TDF Infrastructure",
+       "what": "Telecom Towers & Fiber",
+       "geography": "Europe"
+      },
+      {
+       "name": "GD Towers (Deutsche Funkturm)",
+       "what": "Telecom Towers",
+       "geography": "Europe"
+      },
+      {
+       "name": "Wireless Infrastructure Group",
+       "what": "Telecom Towers",
+       "geography": "Europe"
+      },
+      {
+       "name": "Summit Digitel Infrastructure",
+       "what": "Telecom Towers",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "ExteNet Systems",
+       "what": "In-Building & DAS Wireless",
+       "geography": "Americas"
+      },
+      {
+       "name": "Enwave Energy Corporation",
+       "what": "District Energy",
+       "geography": "Americas"
+      },
+      {
+       "name": "GATX Rail Portfolio (JV)",
+       "what": "Railcar Leasing",
+       "geography": "Americas"
+      },
+      {
+       "name": "Clarus",
+       "what": "Natural Gas Utility",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Patrick Terminals",
+       "what": "Port Terminals",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "BAI Communications",
+       "what": "Transit Connectivity",
+       "geography": "Global"
+      },
+      {
+       "name": "Transit Wireless",
+       "what": "Transit Connectivity",
+       "geography": "Americas"
+      },
+      {
+       "name": "VLI (Valor da Logística Integrada)",
+       "what": "Rail & Port Logistics",
+       "geography": "Americas"
+      },
+      {
+       "name": "Porto Sudeste",
+       "what": "Port Terminals",
+       "geography": "Americas"
+      },
+      {
+       "name": "Quiport",
+       "what": "Airport Concession",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -2126,7 +2546,7 @@
    "id": "business",
    "name": "Операционные бизнесы",
    "plain": "Brookfield контрольно владеет работающими компаниями — производство, услуги, ПО для автодилеров, лотереи — развивает их и со временем продаёт дороже.",
-   "stat": "~$2.4 млрд операционной прибыли (EBITDA) за 2025 год с ~9 крупных бизнесов",
+   "stat": "15 компаний",
    "subsectors": [
     {
      "id": "industrials",
@@ -2500,6 +2920,36 @@
        "source": "bbuc.brookfield.com пресс-релиз июнь 2026 / сделка Obayashi"
       }
      ]
+    },
+    {
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "Sagen (Canada Guaranty)",
+       "what": "Mortgage Insurance",
+       "geography": "Americas"
+      },
+      {
+       "name": "GrafTech International",
+       "what": "Graphite Electrode Manufacturing",
+       "geography": "Americas"
+      },
+      {
+       "name": "BRK Ambiental",
+       "what": "Water & Sanitation",
+       "geography": "Americas"
+      },
+      {
+       "name": "Ouro Verde",
+       "what": "Fleet Leasing",
+       "geography": "Americas"
+      },
+      {
+       "name": "Just Energy",
+       "what": "Energy Retail",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -2507,7 +2957,7 @@
    "id": "credit",
    "name": "Кредит",
    "plain": "Brookfield — один из крупнейших в мире кредиторов: через Oaktree и купленные кредитные компании он даёт займы бизнесам и зарабатывает на процентах и комиссиях за управление чужими деньгами.",
-   "stat": "~$365 млрд под управлением в кредите (крупнейший сегмент Brookfield); ядро — Oaktree с $223 млрд",
+   "stat": "22 компаний",
    "subsectors": [
     {
      "id": "managers",
@@ -2848,6 +3298,76 @@
         ]
        },
        "source": "OCSL 8-K ex99.2 Q2 FY2026 (31.03.2026)"
+      }
+     ]
+    },
+    {
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "Oaktree Strategic Income Corporation",
+       "what": "Business Development Company",
+       "geography": "Americas"
+      },
+      {
+       "name": "Oaktree Diversified Income Fund",
+       "what": "Multi-Strategy Credit Fund",
+       "geography": "Americas"
+      },
+      {
+       "name": "Oaktree European Capital Solutions Fund",
+       "what": "Private Credit",
+       "geography": "Europe"
+      },
+      {
+       "name": "Oaktree Real Estate Income Trust",
+       "what": "Real Estate Credit",
+       "geography": "Americas"
+      },
+      {
+       "name": "Aeromexico",
+       "what": "Airlines",
+       "geography": "Americas"
+      },
+      {
+       "name": "Diebold Nixdorf",
+       "what": "ATM & Retail Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Franchise Group",
+       "what": "Retail Holding Company",
+       "geography": "Americas"
+      },
+      {
+       "name": "athenahealth Group",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "WP CPP Holdings",
+       "what": "Aerospace Components",
+       "geography": "Americas"
+      },
+      {
+       "name": "ADC Therapeutics",
+       "what": "Biotechnology",
+       "geography": "Europe"
+      },
+      {
+       "name": "Mesoblast",
+       "what": "Biotechnology",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "BioXcel Therapeutics",
+       "what": "Biotechnology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Eyesouth Eye Care",
+       "what": "Healthcare Services",
+       "geography": "Americas"
       }
      ]
     }

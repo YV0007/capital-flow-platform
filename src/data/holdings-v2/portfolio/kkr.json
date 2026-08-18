@@ -121,140 +121,816 @@
    "id": "privateequity",
    "name": "Частные инвестиции (Private Equity)",
    "plain": "Флагманский бизнес KKR: фонды выкупают компании, а KKR со-инвестирует собственные $3.28 млрд (41% balance-sheet инвестиций) бок о бок с фондами. Все названные сделки 2025-26 — это активы КЛИЕНТСКИХ фондов, а не баланс KKR; экономика KKR по ним = комиссии за управление (FRE) + carry + тонкий co-invest. Per-name fair value и долю co-invest KKR не раскрывает.",
-   "stat": "$3.28 млрд собственного co-invest (41% из $7.999 млрд); флагманы North America XIII/XIV, Asian Fund IV, European Fund VI; per-name fair value не раскрывается",
-   "companies": [
+   "stat": "129 компаний",
+   "total": 4,
+   "subsectors": [
     {
-     "name": "Karo Healthcare",
-     "what": "Пан-европейский производитель потребительского здоровья (бренды E45, Remescar, Nutravita) — актив фонда, не баланс KKR",
-     "stake": "актив клиентского фонда (доля co-invest KKR не раскрыта)",
-     "value": "€2.65 млрд (~$2.9 млрд) EV",
-     "valueDisclosed": true,
-     "size": "покупка у EQT, включая долг",
-     "geography": "Европа",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "Karo Healthcare — пан-европейская платформа потребительского здоровья (кремы E45, Remescar, витамины Nutravita). KKR купил её у шведской EQT за €2.65 млрд (~$2.9 млрд) с учётом долга, сделка закрыта 27.08.2025. Это актив фонда KKR — не позиция на балансе холдинга; KKR зарабатывает комиссии и carry, а не отражает компанию как собственный актив.",
-      "whyMatters": "Показывает, куда KKR разворачивает клиентский PE-капитал в Европе (defensive consumer-health), но на HOLD/ADD/CUT по KKR влияет только через будущие fees/carry, а не через баланс.",
-      "metrics": [
-       {
-        "label": "EV сделки",
-        "value": "€2.65 млрд (~$2.9 млрд)"
+     "name": "Ключевые позиции",
+     "blurb": "Основные раскрытые позиции с детальной информацией.",
+     "companies": [
+      {
+       "name": "Karo Healthcare",
+       "what": "Пан-европейский производитель потребительского здоровья (бренды E45, Remescar, Nutravita) — актив фонда, не баланс KKR",
+       "stake": "актив клиентского фонда (доля co-invest KKR не раскрыта)",
+       "value": "€2.65 млрд (~$2.9 млрд) EV",
+       "valueDisclosed": true,
+       "size": "покупка у EQT, включая долг",
+       "geography": "Европа",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Karo Healthcare — пан-европейская платформа потребительского здоровья (кремы E45, Remescar, витамины Nutravita). KKR купил её у шведской EQT за €2.65 млрд (~$2.9 млрд) с учётом долга, сделка закрыта 27.08.2025. Это актив фонда KKR — не позиция на балансе холдинга; KKR зарабатывает комиссии и carry, а не отражает компанию как собственный актив.",
+        "whyMatters": "Показывает, куда KKR разворачивает клиентский PE-капитал в Европе (defensive consumer-health), но на HOLD/ADD/CUT по KKR влияет только через будущие fees/carry, а не через баланс.",
+        "metrics": [
+         {
+          "label": "EV сделки",
+          "value": "€2.65 млрд (~$2.9 млрд)"
+         },
+         {
+          "label": "Продавец / закрытие",
+          "value": "EQT / 27.08.2025"
+         },
+         {
+          "label": "Статус для KKR",
+          "value": "актив фонда, не баланс"
+         }
+        ]
        },
-       {
-        "label": "Продавец / закрытие",
-        "value": "EQT / 27.08.2025"
+       "source": "prnewswire / karohealthcare.com 27.08.2025"
+      },
+      {
+       "name": "Biotage AB",
+       "what": "Шведская life-sciences компания (сепарация и очистка) — актив фонда, не баланс KKR",
+       "stake": "актив клиентского фонда (Gamma Biosciences держал 17% до оферты)",
+       "value": "$1.22 млрд (SEK 11.6 млрд)",
+       "valueDisclosed": true,
+       "size": "тендер 145 SEK/акция, премия 60%",
+       "geography": "Швеция",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "Biotage — шведский производитель технологий сепарации и очистки для наук о жизни. KKR (через платформу Gamma Biosciences, державшую 17% до оферты) провёл тендер на $1.22 млрд (SEK 11.6 млрд, 145 SEK за акцию, премия ~60%), объявлено 22.04.2025, завершено к середине 2025. Актив фонда, не баланс KKR.",
+        "whyMatters": "Пример life-sciences bolt-on клиентского фонда; для KKR — источник fees/carry, а не balance-sheet стоимости.",
+        "metrics": [
+         {
+          "label": "Цена сделки",
+          "value": "$1.22 млрд (SEK 11.6 млрд)"
+         },
+         {
+          "label": "Премия",
+          "value": "~60% (145 SEK/акция)"
+         },
+         {
+          "label": "Статус для KKR",
+          "value": "актив фонда, не баланс"
+         }
+        ]
        },
-       {
-        "label": "Статус для KKR",
-        "value": "актив фонда, не баланс"
-       }
-      ]
-     },
-     "source": "prnewswire / karohealthcare.com 27.08.2025"
+       "source": "reuters via investing.com / mergerlinks 22.04.2025"
+      },
+      {
+       "name": "Thomson Reuters Global Print JV",
+       "what": "СП вокруг печатного бизнеса Thomson Reuters — KKR берёт 51% (актив фонда)",
+       "stake": "51% (актив клиентского фонда); TR сохраняет 49% + IP/редакция",
+       "value": "~$500 млн (валовая цена за 51%)",
+       "valueDisclosed": true,
+       "size": "закрытие ожидается Q4'26",
+       "geography": "Глобально",
+       "status": "pending",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "KKR покупает 51% в совместном предприятии на базе Global Print бизнеса Thomson Reuters за ~$500 млн валовой цены; TR оставляет 49% плюс IP и редакцию. Объявлено 14.07.2026, закрытие ожидается в Q4'26. Актив фонда, не баланс KKR.",
+        "whyMatters": "Свежая carve-out сделка; влияет на KKR через комиссии/carry по мере закрытия, не через баланс.",
+        "metrics": [
+         {
+          "label": "Доля / цена",
+          "value": "51% за ~$500 млн"
+         },
+         {
+          "label": "Объявлено / закрытие",
+          "value": "14.07.2026 / Q4'26"
+         },
+         {
+          "label": "Статус",
+          "value": "pending (актив фонда)"
+         }
+        ]
+       },
+       "source": "ir.thomsonreuters.com / prnewswire 302824956 14.07.2026"
+      },
+      {
+       "name": "Qiagen (интерес, не сделка)",
+       "what": "Молекулярная диагностика — KKR среди интересующихся сторон, сделки НЕТ",
+       "stake": "интерес, не сделка (с EQT, Advent; оферты ≥$50/акция)",
+       "value": "не раскрыто — интерес, не сделка",
+       "valueDisclosed": false,
+       "size": "рыночная капитализация Qiagen — крупная публичная компания",
+       "geography": "Европа / США",
+       "status": "pending",
+       "ai": false,
+       "key": false,
+       "detail": {
+        "summary": "По сообщениям Bloomberg от 09.07.2026, KKR среди интересующихся покупкой Qiagen (наряду с EQT и Advent), с офертами ≥$50 за акцию. Это лишь интерес — «no final decisions», сделки нет. Помечено как слух/PENDING, не отражается ни на балансе, ни в fee-базе KKR.",
+        "whyMatters": "Не влияет на HOLD/ADD/CUT, пока не станет реальной сделкой; включено, чтобы честно пометить как неподтверждённое.",
+        "metrics": [
+         {
+          "label": "Статус",
+          "value": "интерес, сделки нет"
+         },
+         {
+          "label": "Оферта (сообщается)",
+          "value": "≥$50/акция"
+         },
+         {
+          "label": "Источник даты",
+          "value": "09.07.2026"
+         }
+        ]
+       },
+       "source": "Bloomberg via tradingview 09.07.2026 (RUMORED)"
+      }
+     ]
     },
     {
-     "name": "Biotage AB",
-     "what": "Шведская life-sciences компания (сепарация и очистка) — актив фонда, не баланс KKR",
-     "stake": "актив клиентского фонда (Gamma Biosciences держал 17% до оферты)",
-     "value": "$1.22 млрд (SEK 11.6 млрд)",
-     "valueDisclosed": true,
-     "size": "тендер 145 SEK/акция, премия 60%",
-     "geography": "Швеция",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "Biotage — шведский производитель технологий сепарации и очистки для наук о жизни. KKR (через платформу Gamma Biosciences, державшую 17% до оферты) провёл тендер на $1.22 млрд (SEK 11.6 млрд, 145 SEK за акцию, премия ~60%), объявлено 22.04.2025, завершено к середине 2025. Актив фонда, не баланс KKR.",
-      "whyMatters": "Пример life-sciences bolt-on клиентского фонда; для KKR — источник fees/carry, а не balance-sheet стоимости.",
-      "metrics": [
-       {
-        "label": "Цена сделки",
-        "value": "$1.22 млрд (SEK 11.6 млрд)"
-       },
-       {
-        "label": "Премия",
-        "value": "~60% (145 SEK/акция)"
-       },
-       {
-        "label": "Статус для KKR",
-        "value": "актив фонда, не баланс"
-       }
-      ]
-     },
-     "source": "reuters via investing.com / mergerlinks 22.04.2025"
+     "name": "Технологии",
+     "companies": [
+      {
+       "name": "AVIV Group",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Accuris",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Alchemer",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Apex Analytix",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "BMC",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Barracuda Networks",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "ByteDance",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Cegid",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Cloudera",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Contabo",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "DATAGROUP",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Devoteam",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Ensono Holdings, LLC",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Exact",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "FUJI SOFT",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Finago",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Infios",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Internet Brands",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Kokusai Electric Corporation",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "MYOB",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Ness Digital",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Omnissa",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Optiv",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Parallels",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Probe Group Pty Ltd",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "TechOne",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "The Stepstone Group",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Voyager Innovations",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Yayoi Co., Ltd.",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "ghSMART",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      }
+     ]
     },
     {
-     "name": "Thomson Reuters Global Print JV",
-     "what": "СП вокруг печатного бизнеса Thomson Reuters — KKR берёт 51% (актив фонда)",
-     "stake": "51% (актив клиентского фонда); TR сохраняет 49% + IP/редакция",
-     "value": "~$500 млн (валовая цена за 51%)",
-     "valueDisclosed": true,
-     "size": "закрытие ожидается Q4'26",
-     "geography": "Глобально",
-     "status": "pending",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "KKR покупает 51% в совместном предприятии на базе Global Print бизнеса Thomson Reuters за ~$500 млн валовой цены; TR оставляет 49% плюс IP и редакцию. Объявлено 14.07.2026, закрытие ожидается в Q4'26. Актив фонда, не баланс KKR.",
-      "whyMatters": "Свежая carve-out сделка; влияет на KKR через комиссии/carry по мере закрытия, не через баланс.",
-      "metrics": [
-       {
-        "label": "Доля / цена",
-        "value": "51% за ~$500 млн"
-       },
-       {
-        "label": "Объявлено / закрытие",
-        "value": "14.07.2026 / Q4'26"
-       },
-       {
-        "label": "Статус",
-        "value": "pending (актив фонда)"
-       }
-      ]
-     },
-     "source": "ir.thomsonreuters.com / prnewswire 302824956 14.07.2026"
+     "name": "Здравоохранение",
+     "companies": [
+      {
+       "name": "123Dentist",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "BMH",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Biotage",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "BrightSpring Health Services",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Cotiviti",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Covenant Physician Partners",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "DentalXChange",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Elsan Holding SAS",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Ensora Health",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Global Medical Response",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "HealthCare Global Enterprises",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Healthium Medtech",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Heartland Dental",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Henry Schein",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "IVI-RMA",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Infinx",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Kareway Health",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Medical Saigon Group",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Metro Pacific Hospital Holdings, Inc.",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "PHC",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "PetVet",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Suzhou Quanyi Health Pharmacy Chain",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Topcon Corporation",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      }
+     ]
     },
     {
-     "name": "Qiagen (интерес, не сделка)",
-     "what": "Молекулярная диагностика — KKR среди интересующихся сторон, сделки НЕТ",
-     "stake": "интерес, не сделка (с EQT, Advent; оферты ≥$50/акция)",
-     "value": "не раскрыто — интерес, не сделка",
-     "valueDisclosed": false,
-     "size": "рыночная капитализация Qiagen — крупная публичная компания",
-     "geography": "Европа / США",
-     "status": "pending",
-     "ai": false,
-     "key": false,
-     "detail": {
-      "summary": "По сообщениям Bloomberg от 09.07.2026, KKR среди интересующихся покупкой Qiagen (наряду с EQT и Advent), с офертами ≥$50 за акцию. Это лишь интерес — «no final decisions», сделки нет. Помечено как слух/PENDING, не отражается ни на балансе, ни в fee-базе KKR.",
-      "whyMatters": "Не влияет на HOLD/ADD/CUT, пока не станет реальной сделкой; включено, чтобы честно пометить как неподтверждённое.",
-      "metrics": [
-       {
-        "label": "Статус",
-        "value": "интерес, сделки нет"
-       },
-       {
-        "label": "Оферта (сообщается)",
-        "value": "≥$50/акция"
-       },
-       {
-        "label": "Источник даты",
-        "value": "09.07.2026"
-       }
-      ]
-     },
-     "source": "Bloomberg via tradingview 09.07.2026 (RUMORED)"
+     "name": "Потребительский (дискреционный)",
+     "companies": [
+      {
+       "name": "1-800 Contacts, Inc.",
+       "what": "Consumer Discretionary",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Bay Club",
+       "what": "Consumer Discretionary",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Groundworks",
+       "what": "Consumer Discretionary",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Grupo Alvic",
+       "what": "Consumer Discretionary",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "LS Automotive",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Landal",
+       "what": "Consumer Discretionary",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Lighthouse Learning Private Limited",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Neighborly",
+       "what": "Consumer Discretionary",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Reliance Retail Ventures Limited",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Ruichen Pet Veterinary Hospitals",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Sector Alarm",
+       "what": "Consumer Discretionary",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Teaching Strategies Inc",
+       "what": "Consumer Discretionary",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Travelopia",
+       "what": "Consumer Discretionary",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "V3 Group Limited",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Varsity Brands",
+       "what": "Consumer Discretionary",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Vini Cosmetics Pvt. Ltd.",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "nexeye",
+       "what": "Consumer Discretionary",
+       "geography": "Европа / Ближний Восток"
+      }
+     ]
+    },
+    {
+     "name": "Промышленность",
+     "companies": [
+      {
+       "name": "A-Gas",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "BrightView",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "CIRCOR",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Chase Corp",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "ERM Worldwide Group Limited",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Flow Control Group",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Fortifi",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "GfK SE",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Hyundai Marine Solution., Ltd.",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Industrial Physics",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Koki Holdings Co., Ltd",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "LOGISTEED",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Marmic Fire & Safety, Inc",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "OHB",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Potter Global Technologies",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Spectris",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "SupplyHouse",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      }
+     ]
+    },
+    {
+     "name": "Финансы",
+     "companies": [
+      {
+       "name": "April",
+       "what": "Financials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Ascend Asia",
+       "what": "Financials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Avendus Capital",
+       "what": "Financials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Beacon Pointe Advisors Holdings, LLC",
+       "what": "Financials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Captive Resources",
+       "what": "Financials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Colonial First State",
+       "what": "Financials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Hoken Minaoshi Hompo",
+       "what": "Financials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Janney Montgomery Scott",
+       "what": "Financials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Latitude Financial Services",
+       "what": "Financials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Osttra Group Ltd",
+       "what": "Financials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Shriram General Insurance",
+       "what": "Financials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Söderberg & Partners",
+       "what": "Financials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "USI Insurance Services LLC",
+       "what": "Financials",
+       "geography": "Сев. Америка"
+      }
+     ]
+    },
+    {
+     "name": "Потребительский (базовый)",
+     "companies": [
+      {
+       "name": "Arnott's",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Dayao Beverage",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Flora Food Group",
+       "what": "Consumer Staples",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Gambol Pet Group",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Jiangsu Yuguan",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Knowlton Development Corp",
+       "what": "Consumer Staples",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "NVC Lighting",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Natural Pet Food Group",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Samhwa",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Wella",
+       "what": "Consumer Staples",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "ZJLD Group Inc.",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      }
+     ]
+    },
+    {
+     "name": "Коммуникации и медиа",
+     "companies": [
+      {
+       "name": "Cue & Co",
+       "what": "Communication Services",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Epic Games",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "FGS Global",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "MasOrange",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Mediawan Holding",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "OverDrive",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "PlayOn! Sports",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Simon & Schuster",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Sovra",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Superstruct Entertainment",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      }
+     ]
+    },
+    {
+     "name": "Материалы",
+     "companies": [
+      {
+       "name": "Charter Next Generation",
+       "what": "Materials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Hyperion Materials & Technologies",
+       "what": "Materials",
+       "geography": "Сев. Америка"
+      }
+     ]
+    },
+    {
+     "name": "Энергетика",
+     "companies": [
+      {
+       "name": "Joulon",
+       "what": "Energy",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Monterra Energy",
+       "what": "Energy",
+       "geography": "Сев. Америка"
+      }
+     ]
     }
-   ],
-   "total": 4
+   ]
   },
   {
    "id": "infra",
    "name": "Инфраструктура (дата-центры, питание для AI, энергия)",
    "plain": "Главная AI-экспозиция KKR. Клиентский AUM инфраструктуры — $79.9 млрд (10-K FY2024), собственный co-invest — ~$0.56 млрд (7% balance-sheet). KKR развернул $40 млрд+ в цифровую инфраструктуру через 6 глобальных дата-центр платформ (gross IRR 20%+). Все названные платформы ниже — активы фондов и совместных предприятий, не баланс KKR; доля co-invest KKR не раскрыта.",
-   "stat": "$79.9 млрд клиентского AUM инфраструктуры (10-K FY2024); ~$0.56 млрд собственного co-invest; $40 млрд+ развёрнуто, 6 дата-центр платформ, gross IRR 20%+",
+   "stat": "78 компаний",
    "companies": [],
    "total": 5,
    "subsectors": [
@@ -475,6 +1151,411 @@
        "source": "osttra.com / investing.com 10.10.2025"
       }
      ]
+    },
+    {
+     "name": "Утилиты и энергетика",
+     "companies": [
+      {
+       "name": "AEP Transmission",
+       "what": "Utilities",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Albioma",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Aster Renewable Energy",
+       "what": "Utilities",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Avantus",
+       "what": "Utilities",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "CarbonCount Holdings",
+       "what": "Utilities",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Caruna Oy",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "CleanPeak Energy",
+       "what": "Utilities",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Contour Global",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Cordia Energy",
+       "what": "Utilities",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "EGC Group",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Encavis AG",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "First Gen Corporation",
+       "what": "Utilities",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Greenvolt",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Hero Future Energies",
+       "what": "Utilities",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Ignis",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "IndiGrid",
+       "what": "Utilities",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Neon Renewables",
+       "what": "Utilities",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Northumbrian Water",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Sempra Infrastructure",
+       "what": "Utilities",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Serentica Renewables",
+       "what": "Utilities",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Smart Metering Services",
+       "what": "Utilities",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Sol Systems LLC",
+       "what": "Utilities",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Spark Infrastructure",
+       "what": "Utilities",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Zenith Energy",
+       "what": "Utilities",
+       "geography": "Азия-Тихоокеан."
+      }
+     ]
+    },
+    {
+     "name": "Промышленность",
+     "companies": [
+      {
+       "name": "Altitude Aircraft Leasing",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Atlantic Aviation",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "CapeOmega",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Dawsongroup",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Depot Connect International",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Green Mobility Partners",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Greentide Maritime",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "John Laing",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Korean Battery ESS",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "LEAP India Private Limited",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Ocean Yield",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Q-Park N.V.",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Queensland Airports Limited",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Reliance Logistics and Warehouse Holdings Limited",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Renewus",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Ritchies Transport Holdings Ltd.",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "The Parking Spot",
+       "what": "Industrials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Vertis Infrastructure Trust",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Viridor",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "We Park Limited",
+       "what": "Industrials",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Zenobe",
+       "what": "Industrials",
+       "geography": "Европа / Ближний Восток"
+      }
+     ]
+    },
+    {
+     "name": "Коммуникации и медиа",
+     "companies": [
+      {
+       "name": "Compass Datacenters",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "CyrusOne, LLC",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "FiberCop NetCo",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Global Technical Realty",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Gulf Data Hub",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Hyperoptic",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "MetroNet Fiber Inc",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Nxera",
+       "what": "Communication Services",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "ON*NET Fibra Chile",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "ON*NET Fibra Colombia",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Open Dutch Fiber",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Pinnacle Towers Pte Ltd",
+       "what": "Communication Services",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "STT Global",
+       "what": "Communication Services",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Telenor Fiber",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "TowerNex",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Vantage Towers",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      }
+     ]
+    },
+    {
+     "name": "Энергетика",
+     "companies": [
+      {
+       "name": "Central Tank Terminal",
+       "what": "Energy",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Coastal GasLink",
+       "what": "Energy",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Enilive S.p.A Global",
+       "what": "Energy",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Genesis Energy, L.P.",
+       "what": "Energy",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Pembina Gas Infrastructure",
+       "what": "Energy",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Port Arthur LNG LLC",
+       "what": "Energy",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "SK E&S",
+       "what": "Energy",
+       "geography": "Азия-Тихоокеан."
+      }
+     ]
+    },
+    {
+     "name": "Технологии",
+     "companies": [
+      {
+       "name": "Optic Marine Services Group",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Reintel",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      }
+     ]
+    },
+    {
+     "name": "Здравоохранение",
+     "companies": [
+      {
+       "name": "Bushu Pharma",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      }
+     ]
+    },
+    {
+     "name": "Потребительский (базовый)",
+     "companies": [
+      {
+       "name": "ProTen",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      }
+     ]
+    },
+    {
+     "name": "Материалы",
+     "companies": [
+      {
+       "name": "Refresco",
+       "what": "Materials",
+       "geography": "Европа / Ближний Восток"
+      }
+     ]
     }
    ]
   },
@@ -482,7 +1563,7 @@
    "id": "realestate",
    "name": "Недвижимость",
    "plain": "KKR привлекает капитал в недвижимость через фонды и REIT (в т.ч. KREST) и НЕ публикует поимённый список зданий, сопоставимый с трофейным офисным реестром Brookfield. Это честный пробел зеркала: клиентский AUM недвижимости — $79.5 млрд (RE-кредит $42.5B + RE-акции $37.0B, 10-K FY2024), собственный co-invest — ~$1.28 млрд (16% balance-sheet). Названий отдельных объектов не выдумываем.",
-   "stat": "$79.5 млрд клиентского AUM (RE-кредит $42.5B + RE-акции $37.0B, 10-K FY2024); ~$1.28 млрд собственного co-invest; поимённого списка зданий KKR НЕ раскрывает",
+   "stat": "1 компаний",
    "companies": [
     {
      "name": "Портфель недвижимости KKR (агрегат)",
@@ -522,7 +1603,7 @@
    "id": "credit",
    "name": "Кредит / BDC / Asset-Based Finance",
    "plain": "Кредит — крупнейший AUM-двигатель KKR, но почти весь это клиентские деньги. Единственное поимённое окно — публичный BDC FS KKR Capital (FSK), чьи позиции видны построчно в 10-Q. FSK же — главный сигнал раннего стресса частного кредита в экосистеме KKR. Плюс растущая ветка Asset-Based Finance и private-credit origination (HCRx, Ampol).",
-   "stat": "FSK: портфель $12.3 млрд, ~236 компаний, NAV/пай $18.83 (−9.9% кв/кв), non-accrual 4.2% FV; собственный co-invest в кредит — Alternative Credit 7% + Leveraged Credit 5%",
+   "stat": "14 компаний",
    "companies": [],
    "total": 14,
    "subsectors": [
@@ -1008,47 +2089,508 @@
    "id": "growth",
    "name": "Growth Equity (технологии и здравоохранение)",
    "plain": "Собственный co-invest ~$1.04 млрд (13% balance-sheet) в tech- и health-growth фонды. Свежий пример активов таких фондов — платформа Allyntra на базе Precipart. Актив фонда, не баланс KKR; долю co-invest не раскрывает.",
-   "stat": "~$1.04 млрд собственного co-invest (13% из $7.999 млрд); фонды Health Care Strategic Growth, tech growth",
-   "companies": [
+   "stat": "85 компаний",
+   "total": 1,
+   "subsectors": [
     {
-     "name": "Allyntra",
-     "what": "Медтех-платформа (компоненты для роботизированной/минимально-инвазивной хирургии) на базе Precipart",
-     "stake": "актив Health Care Strategic Growth Fund II (доля не раскрыта)",
-     "value": "не раскрыто — платформа на базе Precipart",
-     "valueDisclosed": false,
-     "size": "CEO Robbie Atkinson; запуск 07-09.07.2026",
-     "geography": "США / глобально",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "Allyntra — новая медтех-платформа прецизионных решений (компоненты для роботизированной и минимально-инвазивной хирургии), построенная на базе Precipart из Health Care Strategic Growth Fund II. CEO — Robbie Atkinson, председатель — Brian Highley; запуск 07-09.07.2026, KKR выделяет дополнительный капитал под bolt-on-сделки. Актив фонда, не баланс KKR; отдельная оценка не раскрыта.",
-      "whyMatters": "Пример разворота growth-капитала KKR в медтех; влияет на KKR через fees/carry, не баланс. Оценка не раскрыта — само по себе находка.",
-      "metrics": [
-       {
-        "label": "База",
-        "value": "Precipart (HC Strategic Growth II)"
+     "name": "Ключевые позиции",
+     "blurb": "Основные раскрытые позиции с детальной информацией.",
+     "companies": [
+      {
+       "name": "Allyntra",
+       "what": "Медтех-платформа (компоненты для роботизированной/минимально-инвазивной хирургии) на базе Precipart",
+       "stake": "актив Health Care Strategic Growth Fund II (доля не раскрыта)",
+       "value": "не раскрыто — платформа на базе Precipart",
+       "valueDisclosed": false,
+       "size": "CEO Robbie Atkinson; запуск 07-09.07.2026",
+       "geography": "США / глобально",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Allyntra — новая медтех-платформа прецизионных решений (компоненты для роботизированной и минимально-инвазивной хирургии), построенная на базе Precipart из Health Care Strategic Growth Fund II. CEO — Robbie Atkinson, председатель — Brian Highley; запуск 07-09.07.2026, KKR выделяет дополнительный капитал под bolt-on-сделки. Актив фонда, не баланс KKR; отдельная оценка не раскрыта.",
+        "whyMatters": "Пример разворота growth-капитала KKR в медтех; влияет на KKR через fees/carry, не баланс. Оценка не раскрыта — само по себе находка.",
+        "metrics": [
+         {
+          "label": "База",
+          "value": "Precipart (HC Strategic Growth II)"
+         },
+         {
+          "label": "Профиль",
+          "value": "медтех, хирург. компоненты"
+         },
+         {
+          "label": "Запуск",
+          "value": "07.2026"
+         }
+        ]
        },
-       {
-        "label": "Профиль",
-        "value": "медтех, хирург. компоненты"
-       },
-       {
-        "label": "Запуск",
-        "value": "07.2026"
-       }
-      ]
-     },
-     "source": "businesswire 20260707491568 07.2026"
+       "source": "businesswire 20260707491568 07.2026"
+      }
+     ]
+    },
+    {
+     "name": "Технологии",
+     "companies": [
+      {
+       "name": "Advanced Navigation",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Agiloft",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Aiwyn Inc",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Coder Technologies",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Contentsquare",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Darwinbox",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Data X",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Dcar",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Employment Hero",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Feedzai",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "GetYourGuide",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Growsari",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Guesty",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "KiotViet",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "KnowBe4",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Leapwork A/S",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Level Access",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Lighthouse",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Nasuni",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "NetSPI",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "NetStars",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Ontic Technologies",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Ornikar",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "OutSystems",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Paddle.com Market Limited",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Premialab",
+       "what": "Information Technology",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Privy ID",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Qventus Inc",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "RVShare",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "RainFocus",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Rebel Foods",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "ReliaQuest LLC",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Restaurant365",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Saviynt",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Semperis",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Shenzhen XunCe Technology Co., Ltd.",
+       "what": "Information Technology",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "SmartHR",
+       "what": "Information Technology",
+       "geography": "Japan"
+      },
+      {
+       "name": "Xoi",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "o9 Solutions",
+       "what": "Information Technology",
+       "geography": "Сев. Америка"
+      }
+     ]
+    },
+    {
+     "name": "Здравоохранение",
+     "companies": [
+      {
+       "name": "Argenta",
+       "what": "Healthcare",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Ballast",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Biosynth",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Blue Sprig",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "BridgeBio Pharma",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Brightline, Inc.",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Clarify Health Solutions",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Clinisupplies",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Coherus BioSciences",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Cordis",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Dawn Biopharma",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "EchoNous (fka Signostics)",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Falcon Vision",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Frontier Biosolutions",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Gamma Biosciences",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Geode Health",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Immedica Pharma",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Impel Pharmaceuticals",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Nordic Bioscience",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Precipart",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Resolian",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Sapphiros",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "SkinSpirit",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Sleepme Inc.",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Sunfire",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Trilogy MedWaste",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Zeus Health",
+       "what": "Healthcare",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "smaXtec",
+       "what": "Healthcare",
+       "geography": "Европа / Ближний Восток"
+      }
+     ]
+    },
+    {
+     "name": "Потребительский (дискреционный)",
+     "companies": [
+      {
+       "name": "Huohua Logic",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Lenskart",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "MUSINSA",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "My Pizza Technologies, Inc.",
+       "what": "Consumer Discretionary",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Shanghai Moody E-commerce Co., Ltd.",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Walnut Programming",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Xingsheng Youxuan",
+       "what": "Consumer Discretionary",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Zinnia Corporate Holdings, LLC",
+       "what": "Consumer Discretionary",
+       "geography": "Сев. Америка"
+      }
+     ]
+    },
+    {
+     "name": "Финансы",
+     "companies": [
+      {
+       "name": "+Simple",
+       "what": "Financials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Anchorage Digital",
+       "what": "Financials",
+       "geography": "Сев. Америка"
+      },
+      {
+       "name": "Qonto",
+       "what": "Financials",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Vitesse",
+       "what": "Financials",
+       "geography": "Европа / Ближний Восток"
+      }
+     ]
+    },
+    {
+     "name": "Коммуникации и медиа",
+     "companies": [
+      {
+       "name": "Artlist",
+       "what": "Communication Services",
+       "geography": "Европа / Ближний Восток"
+      },
+      {
+       "name": "Jio Platforms Limited",
+       "what": "Communication Services",
+       "geography": "Азия-Тихоокеан."
+      },
+      {
+       "name": "Zwift Inc.",
+       "what": "Communication Services",
+       "geography": "Сев. Америка"
+      }
+     ]
+    },
+    {
+     "name": "Потребительский (базовый)",
+     "companies": [
+      {
+       "name": "Adopt A Cow",
+       "what": "Consumer Staples",
+       "geography": "Азия-Тихоокеан."
+      }
+     ]
+    },
+    {
+     "name": "Недвижимость",
+     "companies": [
+      {
+       "name": "Livspace",
+       "what": "Real Estate",
+       "geography": "Азия-Тихоокеан."
+      }
+     ]
     }
-   ],
-   "total": 1
+   ]
   },
   {
    "id": "insurance",
    "name": "Страхование — Global Atlantic",
    "plain": "Крупнейший собственный пул KKR: страховщик Global Atlantic (100% KKR), облигационный инвестпортфель под аннуитеты и life. Это замена брукфилдовского блока владельца-оператора на страховую экономику (по правилу зеркала). Содержимое — bond book, а не корпоративные доли, поэтому поимённого списка активов KKR здесь не раскрывает. Свежий жёсткий факт: −$652.7 млн GAAP-убытка по инвестпортфелю за Q1'26.",
-   "stat": "book value $11.66 млрд, AUM $220 млрд; net investment income ~$1.9 млрд Q1'26; GAAP net investment-related loss −$652.7 млн за Q1'26",
+   "stat": "1 компаний",
    "companies": [
     {
      "name": "Global Atlantic general account (агрегат)",
@@ -1088,7 +2630,7 @@
    "id": "capmarkets",
    "name": "Capital Markets",
    "plain": "Комиссионный двигатель, а не balance-sheet портфель: KKR берёт transaction- и monitoring-fees за организацию финансирования сделок своих фондов и портфельных компаний. Поимённого портфеля активов здесь нет — это поток комиссий.",
-   "stat": "Transaction & Monitoring Fees $252.7 млн Q1'26 / $1,083.8 млн за 12 мес; часть Q2'26 транзакционных комиссий (~$175 млн гайд) сместилась в Q3'26",
+   "stat": "1 компаний",
    "companies": [
     {
      "name": "KKR Capital Markets (агрегат)",
@@ -1128,7 +2670,7 @@
    "id": "strategic",
    "name": "Strategic Holdings (прямые core-PE доли)",
    "plain": "Структурный отличитель KKR от конкурентов: прямые мажоритарные доли в core-PE компаниях, держащиеся на балансе долгосрочно и приносящие ДИВИДЕНДЫ (а не fee-доход). KKR раскрывает сегмент ТОЛЬКО в агрегате (operating earnings $178.9 млн за 12 мес, look-through Adjusted EBITDA ~$1.1 млрд) и поимённо подтверждает лишь 6 крупнейших из ~18. Per-company fair value не раскрыта — учёт по дивидендам. KKR увеличивает доли в трёх (USI, 1-800 Contacts, Heartland Dental) примерно на $1.1 млрд (полный close не подтверждён).",
-   "stat": "~18 компаний; OE $178.9 млн за 12 мес (Q1'26 $48.3 млн); look-through Adj. EBITDA ~$1.1 млрд; цель OE $350 млн+ 2026 → $1.1 млрд+ 2030",
+   "stat": "6 компаний",
    "companies": [
     {
      "name": "USI Insurance Services",
@@ -1318,6 +2860,99 @@
     }
    ],
    "total": 6
+  },
+  {
+   "id": "globalimpact",
+   "name": "Global Impact",
+   "plain": "Инвестиции KKR с фокусом на ESG и устойчивое развитие — через специализированные impact-фонды.",
+   "stat": "17 компаний",
+   "companies": [
+    {
+     "name": "Advanta Seeds",
+     "what": "Materials",
+     "geography": "Азия-Тихоокеан."
+    },
+    {
+     "name": "Axius Water",
+     "what": "Utilities",
+     "geography": "Сев. Америка"
+    },
+    {
+     "name": "CMC Packaging Automation",
+     "what": "Industrials",
+     "geography": "Европа / Ближний Восток"
+    },
+    {
+     "name": "Citation Group",
+     "what": "Industrials",
+     "geography": "Европа / Ближний Восток"
+    },
+    {
+     "name": "CoolIT Systems",
+     "what": "Industrials",
+     "geography": "Сев. Америка"
+    },
+    {
+     "name": "Re Sustainability Limited",
+     "what": "Industrials",
+     "geography": "Азия-Тихоокеан."
+    },
+    {
+     "name": "Resource Environmental Solutions (\"RES\")",
+     "what": "Industrials",
+     "geography": "Сев. Америка"
+    },
+    {
+     "name": "Davante",
+     "what": "Consumer Discretionary",
+     "geography": "Европа / Ближний Восток"
+    },
+    {
+     "name": "EQuest Education Joint Stock Company",
+     "what": "Consumer Discretionary",
+     "geography": "Азия-Тихоокеан."
+    },
+    {
+     "name": "Graduation Alliance",
+     "what": "Consumer Discretionary",
+     "geography": "Сев. Америка"
+    },
+    {
+     "name": "PHINMA Education",
+     "what": "Consumer Discretionary",
+     "geography": "Азия-Тихоокеан."
+    },
+    {
+     "name": "Education Perfect Limited",
+     "what": "Information Technology",
+     "geography": "Азия-Тихоокеан."
+    },
+    {
+     "name": "IQGeo",
+     "what": "Information Technology",
+     "geography": "Европа / Ближний Восток"
+    },
+    {
+     "name": "Infobric Group",
+     "what": "Information Technology",
+     "geography": "Европа / Ближний Восток"
+    },
+    {
+     "name": "Instructure Holdings Inc.",
+     "what": "Information Technology",
+     "geography": "Сев. Америка"
+    },
+    {
+     "name": "Lightcast",
+     "what": "Information Technology",
+     "geography": "Сев. Америка"
+    },
+    {
+     "name": "Five-Star Business Finance Limited",
+     "what": "Financials",
+     "geography": "Азия-Тихоокеан."
+    }
+   ]
   }
  ],
  "notDisclosed": "KKR раскрывает Strategic Holdings ТОЛЬКО в агрегате (operating earnings $178.9 млн за 12 мес, look-through Adjusted EBITDA ~$1.1 млрд) — полного именного списка ~18 core-PE компаний с долями и per-company fair value НЕТ ни в 10-K, ни в 10-Q, ни в earnings release (в 10-Q названы лишь USI и 1-800 Contacts, по которым была переоценка); поимённо подтверждены 6 крупнейших. Также НЕ раскрываются: (1) поимённый состав инвестпортфеля Global Atlantic — только агрегат (book value $11.66 млрд, AUM $220 млрд, NII, дюрация origination); это облигационный портфель страховщика, а не корпоративные доли; (2) поимённые позиции внутри balance-sheet investments ($7.999 млрд) — только разбивка по 8 классам активов в %; (3) собственная доля co-invest KKR внутри каждой названной сделки фондов (Karo, Biotage, Thomson Reuters print, Helix, ECP/KKR Texas, SK renewables, OSTTRA, ST Telemedia, HCRx, Ampol, Allyntra) — публичны только размер фонда/EV, поэтому все они поданы как активы ФОНДОВ, не баланс KKR; (4) активы клиентских фондов KKR (PE/Infra/RE/Credit) поимённо — кроме единственного публичного BDC FS KKR (FSK), чьи ~236 позиций видны в 10-Q. Мирроринг-пробел: у KKR НЕТ filing-grade именного списка объектов недвижимости, сопоставимого с трофейным офисным реестром Brookfield — RE ведётся через фонды/REIT (включая KREST), названий зданий не выдумываем. Неподтверждённое/спорное: Qiagen — только интерес, сделки нет (слух 09.07.2026); увеличение core-PE долей на ~$1.1 млрд (USI/1-800/Heartland) — полный close не подтверждён. Оговорки: значения fair value по FSK-холдингам приблизительны (извлечены из XBRL-разметки 10-Q — абсолютные числа ±, ранжирование надёжно); счёт «~236 компаний» FSK не переподтверждён первичкой; разбивка $7.999 млрд по классам и цифры Global Atlantic $11.66 млрд / $220 млрд — из релиз-экзибитов KKR, независимо не переподтверждены. Рыночная капитализация: агрегаторное значение $130 млрд — ошибка; при ~891 млн акций × $100.94 (22.07.2026) корректно ~$90 млрд. Динамика 1 год: −34.78% по цене против −30.04% total return (разница — дивиденд ~0.9%). 13F-позиции KKR (Masonite/Amedisys/Lamar и др.) — это активы клиентских фондов, НЕ баланс KKR, и в разбор НЕ включены.",
@@ -1479,1807 +3114,5 @@
     "delta": -0.05
    }
   ]
- },
- "allCompanies": [
-  {
-   "name": "+Simple",
-   "assetClass": "Tech Growth",
-   "industry": "Financials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "1-800 Contacts, Inc.",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "123Dentist",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "A-Gas",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "AEP Transmission",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Americas"
-  },
-  {
-   "name": "AVIV Group",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Accuris",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Adopt A Cow",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Advanced Navigation",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Advanta Seeds",
-   "assetClass": "Global Impact",
-   "industry": "Materials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Agiloft",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Aiwyn Inc",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Albioma",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Alchemer",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Altitude Aircraft Leasing",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Anchorage Digital",
-   "assetClass": "Tech Growth",
-   "industry": "Financials",
-   "region": "Americas"
-  },
-  {
-   "name": "Apex Analytix",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "April",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Argenta",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Arnott's",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Artlist",
-   "assetClass": "Tech Growth",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Ascend Asia",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Aster Renewable Energy",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Atlantic Aviation",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Avantus",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Americas"
-  },
-  {
-   "name": "Avendus Capital",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Axius Water",
-   "assetClass": "Global Impact",
-   "industry": "Utilities",
-   "region": "Americas"
-  },
-  {
-   "name": "BMC",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "BMH",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Ballast",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Barracuda Networks",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Bay Club",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "Beacon Pointe Advisors Holdings, LLC",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Americas"
-  },
-  {
-   "name": "Biosynth",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Biotage",
-   "assetClass": "Private Equity, Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Blue Sprig",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "BridgeBio Pharma",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "BrightSpring Health Services",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "BrightView",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Brightline, Inc.",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Bushu Pharma",
-   "assetClass": "Infrastructure",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "ByteDance",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "CIRCOR",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "CMC Packaging Automation",
-   "assetClass": "Global Impact",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "CapeOmega",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Captive Resources",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Americas"
-  },
-  {
-   "name": "CarbonCount Holdings",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Americas"
-  },
-  {
-   "name": "Caruna Oy",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Cegid",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Central Tank Terminal",
-   "assetClass": "Infrastructure",
-   "industry": "Energy",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Charter Next Generation",
-   "assetClass": "Private Equity",
-   "industry": "Materials",
-   "region": "Americas"
-  },
-  {
-   "name": "Chase Corp",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Citation Group",
-   "assetClass": "Global Impact, Private Equity",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Clarify Health Solutions",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "CleanPeak Energy",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Clinisupplies",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Cloudera",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Coastal GasLink",
-   "assetClass": "Infrastructure",
-   "industry": "Energy",
-   "region": "Americas"
-  },
-  {
-   "name": "Coder Technologies",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Coherus BioSciences",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Colonial First State",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Compass Datacenters",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "Contabo",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Contentsquare",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Contour Global",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "CoolIT Systems",
-   "assetClass": "Global Impact",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Cordia Energy",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Americas"
-  },
-  {
-   "name": "Cordis",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Cotiviti",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Covenant Physician Partners",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Cue & Co",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "CyrusOne, LLC",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "DATAGROUP",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Darwinbox",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Data X",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Davante",
-   "assetClass": "Global Impact",
-   "industry": "Consumer Discretionary",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Dawn Biopharma",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Dawsongroup",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Dayao Beverage",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Dcar",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "DentalXChange",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Depot Connect International",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Devoteam",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "EGC Group",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "EQuest Education Joint Stock Company",
-   "assetClass": "Global Impact",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "ERM Worldwide Group Limited",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "EchoNous (fka Signostics)",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Education Perfect Limited",
-   "assetClass": "Global Impact, Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Elsan Holding SAS",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Employment Hero",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Encavis AG",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Enilive S.p.A Global",
-   "assetClass": "Infrastructure",
-   "industry": "Energy",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Ensono Holdings, LLC",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Ensora Health",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Epic Games",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "Exact",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "FGS Global",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "FUJI SOFT",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Falcon Vision",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Feedzai",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "FiberCop NetCo",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Finago",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "First Gen Corporation",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Five-Star Business Finance Limited",
-   "assetClass": "Global Impact",
-   "industry": "Financials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Flora Food Group",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Flow Control Group",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Fortifi",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Frontier Biosolutions",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Gambol Pet Group",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Gamma Biosciences",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Genesis Energy, L.P.",
-   "assetClass": "Infrastructure",
-   "industry": "Energy",
-   "region": "Americas"
-  },
-  {
-   "name": "Geode Health",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "GetYourGuide",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "GfK SE",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Global Medical Response",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Global Technical Realty",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Graduation Alliance",
-   "assetClass": "Global Impact",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "Green Mobility Partners",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Greentide Maritime",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Greenvolt",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Groundworks",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "Growsari",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Grupo Alvic",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Guesty",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Gulf Data Hub",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "HealthCare Global Enterprises",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Healthium Medtech",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Heartland Dental",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Henry Schein",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Hero Future Energies",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Hoken Minaoshi Hompo",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Huohua Logic",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Hyperion Materials & Technologies",
-   "assetClass": "Private Equity",
-   "industry": "Materials",
-   "region": "Americas"
-  },
-  {
-   "name": "Hyperoptic",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Hyundai Marine Solution., Ltd.",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "IQGeo",
-   "assetClass": "Global Impact, Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "IVI-RMA",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Ignis",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Immedica Pharma",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Impel Pharmaceuticals",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "IndiGrid",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Industrial Physics",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Infinx",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Infios",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Infobric Group",
-   "assetClass": "Global Impact",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Instructure Holdings Inc.",
-   "assetClass": "Global Impact",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Internet Brands",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Janney Montgomery Scott",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Americas"
-  },
-  {
-   "name": "Jiangsu Yuguan",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Jio Platforms Limited",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Communication Services",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "John Laing",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Joulon",
-   "assetClass": "Private Equity",
-   "industry": "Energy",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Kareway Health",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Karo Healthcare",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "KiotViet",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "KnowBe4",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Knowlton Development Corp",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Americas"
-  },
-  {
-   "name": "Koki Holdings Co., Ltd",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Kokusai Electric Corporation",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Korean Battery ESS",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "LEAP India Private Limited",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "LOGISTEED",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "LS Automotive",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Landal",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Latitude Financial Services",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Leapwork A/S",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Lenskart",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Level Access",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Lightcast",
-   "assetClass": "Global Impact",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Lighthouse",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Lighthouse Learning Private Limited",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Livspace",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Real Estate",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "MUSINSA",
-   "assetClass": "Tech Growth",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "MYOB",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Marmic Fire & Safety, Inc",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "MasOrange",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Mediawan Holding",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Medical Saigon Group",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Metro Pacific Hospital Holdings, Inc.",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "MetroNet Fiber Inc",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "Monterra Energy",
-   "assetClass": "Private Equity",
-   "industry": "Energy",
-   "region": "Americas"
-  },
-  {
-   "name": "My Pizza Technologies, Inc.",
-   "assetClass": "Tech Growth",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "NVC Lighting",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Nasuni",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Natural Pet Food Group",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Neighborly",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "Neon Renewables",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Americas"
-  },
-  {
-   "name": "Ness Digital",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "NetSPI",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "NetStars",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Nordic Bioscience",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Northumbrian Water",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Nxera",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "OHB",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "ON*NET Fibra Chile",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "ON*NET Fibra Colombia",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "Ocean Yield",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Omnissa",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Ontic Technologies",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Open Dutch Fiber",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Optic Marine Services Group",
-   "assetClass": "Infrastructure",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Optiv",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Ornikar",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Osttra Group Ltd",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "OutSystems",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "OverDrive",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "PHC",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "PHINMA Education",
-   "assetClass": "Global Impact",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Paddle.com Market Limited",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Parallels",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Pembina Gas Infrastructure",
-   "assetClass": "Infrastructure",
-   "industry": "Energy",
-   "region": "Americas"
-  },
-  {
-   "name": "PetVet",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Pinnacle Towers Pte Ltd",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "PlayOn! Sports",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "Port Arthur LNG LLC",
-   "assetClass": "Infrastructure",
-   "industry": "Energy",
-   "region": "Americas"
-  },
-  {
-   "name": "Potter Global Technologies",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Precipart",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Premialab",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Privy ID",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "ProTen",
-   "assetClass": "Infrastructure",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Probe Group Pty Ltd",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Q-Park N.V.",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Qonto",
-   "assetClass": "Tech Growth",
-   "industry": "Financials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Queensland Airports Limited",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Qventus Inc",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "RVShare",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "RainFocus",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Re Sustainability Limited",
-   "assetClass": "Global Impact, Private Equity",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Rebel Foods",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Refresco",
-   "assetClass": "Infrastructure",
-   "industry": "Materials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Reintel",
-   "assetClass": "Infrastructure",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "ReliaQuest LLC",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Reliance Logistics and Warehouse Holdings Limited",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Reliance Retail Ventures Limited",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Renewus",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Resolian",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Resource Environmental Solutions (\"RES\")",
-   "assetClass": "Global Impact",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Restaurant365",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Ritchies Transport Holdings Ltd.",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Ruichen Pet Veterinary Hospitals",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "SK E&S",
-   "assetClass": "Infrastructure",
-   "industry": "Energy",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "STT Global",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Samhwa",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Sapphiros",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Saviynt",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Sector Alarm",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Semperis",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Sempra Infrastructure",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Americas"
-  },
-  {
-   "name": "Serentica Renewables",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Shanghai Moody E-commerce Co., Ltd.",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Shenzhen XunCe Technology Co., Ltd.",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Shriram General Insurance",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Simon & Schuster",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "SkinSpirit",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Sleepme Inc.",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Smart Metering Services",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "SmartHR",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Japan"
-  },
-  {
-   "name": "Sol Systems LLC",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Americas"
-  },
-  {
-   "name": "Sovra",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "Spark Infrastructure",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Spectris",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Sunfire",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Superstruct Entertainment",
-   "assetClass": "Private Equity",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "SupplyHouse",
-   "assetClass": "Private Equity",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "Suzhou Quanyi Health Pharmacy Chain",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Söderberg & Partners",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Teaching Strategies Inc",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "TechOne",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Telenor Fiber",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "The Parking Spot",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Americas"
-  },
-  {
-   "name": "The Stepstone Group",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Topcon Corporation",
-   "assetClass": "Private Equity",
-   "industry": "Healthcare",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "TowerNex",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "Travelopia",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Trilogy MedWaste",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "USI Insurance Services LLC",
-   "assetClass": "Private Equity",
-   "industry": "Financials",
-   "region": "Americas"
-  },
-  {
-   "name": "V3 Group Limited",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Vantage Towers",
-   "assetClass": "Infrastructure",
-   "industry": "Communication Services",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Varsity Brands",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "Vertis Infrastructure Trust",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Vini Cosmetics Pvt. Ltd.",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Viridor",
-   "assetClass": "Infrastructure, Global Impact",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Vitesse",
-   "assetClass": "Tech Growth",
-   "industry": "Financials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Voyager Innovations",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Walnut Programming",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "We Park Limited",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Wella",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Xingsheng Youxuan",
-   "assetClass": "Tech Growth, Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Xoi",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "Yayoi Co., Ltd.",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "ZJLD Group Inc.",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Staples",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Zenith Energy",
-   "assetClass": "Infrastructure",
-   "industry": "Utilities",
-   "region": "Asia Pacific"
-  },
-  {
-   "name": "Zenobe",
-   "assetClass": "Infrastructure",
-   "industry": "Industrials",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "Zeus Health",
-   "assetClass": "Health Care Growth",
-   "industry": "Healthcare",
-   "region": "Americas"
-  },
-  {
-   "name": "Zinnia Corporate Holdings, LLC",
-   "assetClass": "Tech Growth",
-   "industry": "Consumer Discretionary",
-   "region": "Americas"
-  },
-  {
-   "name": "Zwift Inc.",
-   "assetClass": "Tech Growth",
-   "industry": "Communication Services",
-   "region": "Americas"
-  },
-  {
-   "name": "ghSMART",
-   "assetClass": "Private Equity",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "nexeye",
-   "assetClass": "Private Equity",
-   "industry": "Consumer Discretionary",
-   "region": "Europe, Middle East And Africa"
-  },
-  {
-   "name": "o9 Solutions",
-   "assetClass": "Tech Growth",
-   "industry": "Information Technology",
-   "region": "Americas"
-  },
-  {
-   "name": "smaXtec",
-   "assetClass": "Tech Growth",
-   "industry": "Healthcare",
-   "region": "Europe, Middle East And Africa"
-  }
- ]
+ }
 }

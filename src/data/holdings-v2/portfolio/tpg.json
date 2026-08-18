@@ -100,7 +100,7 @@
    "id": "credit",
    "name": "Credit (вкл. Angelo Gordon)",
    "plain": "Крупнейшая платформа TPG — $95.2 млрд AUM, 31% всего, +30% г/г. Fee-heavy база (комиссии $356 млн за 12 мес), низкий нереализованный carry $83 млн.",
-   "stat": "$95.2 млрд AUM · 31% · комиссии $356 млн LTM",
+   "stat": "4 компаний",
    "total": "$95.2 млрд AUM",
    "subsectors": [
     {
@@ -221,122 +221,237 @@
    "id": "capital",
    "name": "Capital (private equity)",
    "plain": "Контрольный private equity — $89.7 млрд AUM, 29%. Крупнейший нереализованный carry TPG ($581 млн). Net IRR серии 15% / 1.6x. Комиссии $525 млн за 12 мес.",
-   "stat": "$89.7 млрд AUM · 29% · carry $581 млн (крупнейший)",
+   "stat": "27 компаний",
    "total": "$89.7 млрд AUM",
-   "companies": [
+   "subsectors": [
     {
-     "name": "Hologic",
-     "what": "Диагностика женского здоровья — take-private Blackstone + TPG",
-     "stake": "актив фонда TPG Capital (чек TPG отдельно не раскрыт)",
-     "value": "до $18.3 млрд EV",
-     "valueDisclosed": true,
-     "size": "$76 cash + CVR до $3; закрыт 07.04.2026",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "Hologic — производитель диагностики женского здоровья. Blackstone и TPG вывели компанию с биржи (take-private) при EV до $18.3 млрд: $76 наличными за акцию плюс CVR до $3. Сделка закрыта 07.04.2026. Это крупнейшая сделка цикла для TPG, но чек TPG отдельно от Blackstone не раскрыт.",
-      "whyMatters": "Демонстрирует масштаб и партнёрскую модель TPG Capital, но влияет на TPG через будущие fees/carry, а не через баланс. Флагман perf-heavy сегмента с крупнейшим нереализованным carry.",
-      "metrics": [
-       {
-        "label": "EV",
-        "value": "до $18.3 млрд"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "Hologic",
+       "what": "Диагностика женского здоровья — take-private Blackstone + TPG",
+       "stake": "актив фонда TPG Capital (чек TPG отдельно не раскрыт)",
+       "value": "до $18.3 млрд EV",
+       "valueDisclosed": true,
+       "size": "$76 cash + CVR до $3; закрыт 07.04.2026",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Hologic — производитель диагностики женского здоровья. Blackstone и TPG вывели компанию с биржи (take-private) при EV до $18.3 млрд: $76 наличными за акцию плюс CVR до $3. Сделка закрыта 07.04.2026. Это крупнейшая сделка цикла для TPG, но чек TPG отдельно от Blackstone не раскрыт.",
+        "whyMatters": "Демонстрирует масштаб и партнёрскую модель TPG Capital, но влияет на TPG через будущие fees/carry, а не через баланс. Флагман perf-heavy сегмента с крупнейшим нереализованным carry.",
+        "metrics": [
+         {
+          "label": "EV",
+          "value": "до $18.3 млрд"
+         },
+         {
+          "label": "Структура",
+          "value": "$76 cash + CVR до $3"
+         },
+         {
+          "label": "Закрытие",
+          "value": "07.04.2026 (с Blackstone)"
+         }
+        ]
        },
-       {
-        "label": "Структура",
-        "value": "$76 cash + CVR до $3"
+       "source": "Blackstone IR / MedTech Dive"
+      },
+      {
+       "name": "Proficy (ex-GE Vernova)",
+       "what": "Промышленный софт (HMI/SCADA, MES, Historians), 20 000+ клиентов",
+       "stake": "актив фонда TPG Capital",
+       "value": "$600 млн",
+       "valueDisclosed": true,
+       "size": "~20% выручки Electrification Software GEV; закрыт 02.03.2026",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "Proficy — бизнес промышленного ПО, выделенный из GE Vernova: системы HMI/SCADA, MES и Historians для 20 000+ промышленных клиентов, ~20% выручки Electrification Software GEV. TPG Capital купил его за $600 млн, сделка закрыта 02.03.2026.",
+        "whyMatters": "Свежий carve-out — показывает, как TPG разворачивает капитал в промышленный софт с повторяющейся выручкой. Влияет через fees/carry.",
+        "metrics": [
+         {
+          "label": "Цена",
+          "value": "$600 млн"
+         },
+         {
+          "label": "Клиенты",
+          "value": "20 000+"
+         },
+         {
+          "label": "Закрытие",
+          "value": "02.03.2026"
+         }
+        ]
        },
-       {
-        "label": "Закрытие",
-        "value": "07.04.2026 (с Blackstone)"
-       }
-      ]
-     },
-     "source": "Blackstone IR / MedTech Dive"
+       "source": "tpg.com; GE Vernova press"
+      },
+      {
+       "name": "Curium Pharma",
+       "what": "Радиофармацевтика — $3.8 млрд continuation vehicle",
+       "stake": "актив фонда / continuation vehicle",
+       "value": "$3.8 млрд (CV)",
+       "valueDisclosed": true,
+       "size": "Q1'26",
+       "geography": "Европа / США",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "earnings call Q1'26"
+      },
+      {
+       "name": "Surescripts",
+       "what": "Сеть электронных рецептов — мажоритарная доля TPG",
+       "stake": "мажоритарная доля (актив фонда)",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "e-prescribing сеть США",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "Healthcare Dive"
+      },
+      {
+       "name": "DIRECTV · CAA · Entertainment Partners · Fandom",
+       "what": "Медиа и развлечения — портфель TPG Capital",
+       "stake": "активы фондов (суммы не раскрыты)",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "из IR-портфолио",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "TPG IR-портфолио"
+      },
+      {
+       "name": "Troon · AmSpec · Aareon · A&O Hostels",
+       "what": "Enterprise / consumer — портфель TPG Capital",
+       "stake": "активы фондов (суммы не раскрыты)",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "из IR-портфолио",
+       "geography": "США / Европа",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "TPG IR-портфолио"
+      }
+     ]
     },
     {
-     "name": "Proficy (ex-GE Vernova)",
-     "what": "Промышленный софт (HMI/SCADA, MES, Historians), 20 000+ клиентов",
-     "stake": "актив фонда TPG Capital",
-     "value": "$600 млн",
-     "valueDisclosed": true,
-     "size": "~20% выручки Electrification Software GEV; закрыт 02.03.2026",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "Proficy — бизнес промышленного ПО, выделенный из GE Vernova: системы HMI/SCADA, MES и Historians для 20 000+ промышленных клиентов, ~20% выручки Electrification Software GEV. TPG Capital купил его за $600 млн, сделка закрыта 02.03.2026.",
-      "whyMatters": "Свежий carve-out — показывает, как TPG разворачивает капитал в промышленный софт с повторяющейся выручкой. Влияет через fees/carry.",
-      "metrics": [
-       {
-        "label": "Цена",
-        "value": "$600 млн"
-       },
-       {
-        "label": "Клиенты",
-        "value": "20 000+"
-       },
-       {
-        "label": "Закрытие",
-        "value": "02.03.2026"
-       }
-      ]
-     },
-     "source": "tpg.com; GE Vernova press"
-    },
-    {
-     "name": "Curium Pharma",
-     "what": "Радиофармацевтика — $3.8 млрд continuation vehicle",
-     "stake": "актив фонда / continuation vehicle",
-     "value": "$3.8 млрд (CV)",
-     "valueDisclosed": true,
-     "size": "Q1'26",
-     "geography": "Европа / США",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "source": "earnings call Q1'26"
-    },
-    {
-     "name": "Surescripts",
-     "what": "Сеть электронных рецептов — мажоритарная доля TPG",
-     "stake": "мажоритарная доля (актив фонда)",
-     "value": "не раскрыто",
-     "valueDisclosed": false,
-     "size": "e-prescribing сеть США",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "source": "Healthcare Dive"
-    },
-    {
-     "name": "DIRECTV · CAA · Entertainment Partners · Fandom",
-     "what": "Медиа и развлечения — портфель TPG Capital",
-     "stake": "активы фондов (суммы не раскрыты)",
-     "value": "не раскрыто",
-     "valueDisclosed": false,
-     "size": "из IR-портфолио",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "source": "TPG IR-портфолио"
-    },
-    {
-     "name": "Troon · AmSpec · Aareon · A&O Hostels",
-     "what": "Enterprise / consumer — портфель TPG Capital",
-     "stake": "активы фондов (суммы не раскрыты)",
-     "value": "не раскрыто",
-     "valueDisclosed": false,
-     "size": "из IR-портфолио",
-     "geography": "США / Европа",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "source": "TPG IR-портфолио"
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "Aareon",
+       "what": "Information Technology",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Boomi",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Delinea",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Digital.ai",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Nintex",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Planview",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Adare Pharmaceuticals",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Beaver-Visitec International",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Ellodi Pharmaceuticals",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Enlivant",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Kindred Healthcare",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Creative Artists Agency",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Entertainment Partners",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Tenth Revolution Group",
+       "what": "Industrials",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Transplace Holdings",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Troon",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "DirecTV",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Global Music Rights",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Vice Media",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Life Time",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Viking Cruises",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -344,65 +459,140 @@
    "id": "real-estate",
    "name": "Real Estate",
    "plain": "Недвижимость и ипотечный кредит — $39.2 млрд AUM, 13%. Единственный сегмент со снижением комиссий кв/кв ($95→$83 млн). Carry $100 млн.",
-   "stat": "$39.2 млрд AUM · 13% · комиссии снижаются кв/кв",
+   "stat": "16 компаний",
    "total": "$39.2 млрд AUM",
-   "companies": [
+   "subsectors": [
     {
-     "name": "TRTX (TPG RE Finance Trust)",
-     "what": "CRE-кредитный REIT (NYSE) — loan book $4.3 млрд, 100% performing",
-     "stake": "управляемый публичный REIT",
-     "value": "$4.3 млрд loan book",
-     "valueDisclosed": true,
-     "size": "средний заём $86.3 млн; офис <5%",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": true,
-     "detail": {
-      "summary": "TPG RE Finance Trust (TRTX, NYSE) — коммерческий ипотечный REIT под управлением TPG: книга займов $4.3 млрд, средний заём $86.3 млн, 100% performing, доля офисной недвижимости менее 5%. Публичное аффилированное средство, а не баланс TPG.",
-      "whyMatters": "Барометр здоровья CRE-кредита TPG. Низкая доля офисов и 100% performing — сигнал качества; ухудшение — ранний риск для Real Estate fees.",
-      "metrics": [
-       {
-        "label": "Loan book",
-        "value": "$4.3 млрд"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "TRTX (TPG RE Finance Trust)",
+       "what": "CRE-кредитный REIT (NYSE) — loan book $4.3 млрд, 100% performing",
+       "stake": "управляемый публичный REIT",
+       "value": "$4.3 млрд loan book",
+       "valueDisclosed": true,
+       "size": "средний заём $86.3 млн; офис <5%",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": true,
+       "detail": {
+        "summary": "TPG RE Finance Trust (TRTX, NYSE) — коммерческий ипотечный REIT под управлением TPG: книга займов $4.3 млрд, средний заём $86.3 млн, 100% performing, доля офисной недвижимости менее 5%. Публичное аффилированное средство, а не баланс TPG.",
+        "whyMatters": "Барометр здоровья CRE-кредита TPG. Низкая доля офисов и 100% performing — сигнал качества; ухудшение — ранний риск для Real Estate fees.",
+        "metrics": [
+         {
+          "label": "Loan book",
+          "value": "$4.3 млрд"
+         },
+         {
+          "label": "Средний заём",
+          "value": "$86.3 млн"
+         },
+         {
+          "label": "Офис",
+          "value": "<5%"
+         }
+        ]
        },
-       {
-        "label": "Средний заём",
-        "value": "$86.3 млн"
-       },
-       {
-        "label": "Офис",
-        "value": "<5%"
-       }
-      ]
-     },
-     "source": "TRTX 8-K Q1'26"
+       "source": "TRTX 8-K Q1'26"
+      },
+      {
+       "name": "MITT (AG Mortgage Investment Trust)",
+       "what": "Resi-ипотечный кредитный REIT (NYSE) — из Angelo Gordon",
+       "stake": "управляемый публичный REIT",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "residential mortgage credit",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "MITT filings"
+      },
+      {
+       "name": "TPG Real Estate Partners · Net Lease V · Asia RE VI",
+       "what": "Equity-фонды недвижимости — Net Lease V (~$1 млрд), Asia RE VI (запуск июнь'26)",
+       "stake": "стратегии управляемых фондов",
+       "value": "~$1 млрд (Net Lease V fundraise)",
+       "valueDisclosed": true,
+       "size": "equity real estate",
+       "geography": "США / Азия",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "TPG earnings call Q1'26"
+      }
+     ]
     },
     {
-     "name": "MITT (AG Mortgage Investment Trust)",
-     "what": "Resi-ипотечный кредитный REIT (NYSE) — из Angelo Gordon",
-     "stake": "управляемый публичный REIT",
-     "value": "не раскрыто",
-     "valueDisclosed": false,
-     "size": "residential mortgage credit",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "source": "MITT filings"
-    },
-    {
-     "name": "TPG Real Estate Partners · Net Lease V · Asia RE VI",
-     "what": "Equity-фонды недвижимости — Net Lease V (~$1 млрд), Asia RE VI (запуск июнь'26)",
-     "stake": "стратегии управляемых фондов",
-     "value": "~$1 млрд (Net Lease V fundraise)",
-     "valueDisclosed": true,
-     "size": "equity real estate",
-     "geography": "США / Азия",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "source": "TPG earnings call Q1'26"
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "4th Industrial",
+       "what": "Real Estate",
+       "geography": "EMEA"
+      },
+      {
+       "name": "A&O Hostels",
+       "what": "Real Estate",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Alloy Properties",
+       "what": "Real Estate",
+       "geography": "Americas"
+      },
+      {
+       "name": "B2R Partners",
+       "what": "Real Estate",
+       "geography": "Americas"
+      },
+      {
+       "name": "Catellus",
+       "what": "Real Estate",
+       "geography": "Americas"
+      },
+      {
+       "name": "Cinespace",
+       "what": "Real Estate",
+       "geography": "Americas"
+      },
+      {
+       "name": "CT Real Estate",
+       "what": "Real Estate",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Deutsche Office Properties",
+       "what": "Real Estate",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Dogwood Industrial Properties",
+       "what": "Real Estate",
+       "geography": "Americas"
+      },
+      {
+       "name": "Milestone Student Properties",
+       "what": "Real Estate",
+       "geography": "Americas"
+      },
+      {
+       "name": "Odyssey Hotel Partners",
+       "what": "Real Estate",
+       "geography": "Americas"
+      },
+      {
+       "name": "Physicus",
+       "what": "Real Estate",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Cushman & Wakefield",
+       "what": "Industrials",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -410,65 +600,320 @@
    "id": "growth",
    "name": "Growth",
    "plain": "Растущие компании и late-stage tech — $32.4 млрд AUM, 11%. Net IRR серии 13% / 1.6x; carry $211 млн. Прямые доли в Anthropic/OpenAI/SpaceX.",
-   "stat": "$32.4 млрд AUM · 11% · Net IRR 13% / 1.6x",
+   "stat": "52 компаний",
    "total": "$32.4 млрд AUM",
-   "companies": [
+   "subsectors": [
     {
-     "name": "Anthropic · OpenAI · SpaceX",
-     "what": "Прямые late-stage позиции через Tech Adjacencies / T-POP",
-     "stake": "актив фондов (доли и суммы НЕ раскрыты)",
-     "value": "не раскрыто",
-     "valueDisclosed": false,
-     "size": "прямая AI/космос-экспозиция",
-     "geography": "США",
-     "status": "operating",
-     "ai": true,
-     "key": true,
-     "detail": {
-      "summary": "TPG держит прямые late-stage позиции в Anthropic, OpenAI и SpaceX через стратегии Tech Adjacencies и T-POP (TPG Private Opportunities). Сам факт раскрыт, но доли и вложенные суммы TPG НЕ публикует.",
-      "whyMatters": "Прямая экспозиция на самые дорогие частные AI/космос-компании — сильная тема для восприятия TPG, но без раскрытых цифр это качественный, а не количественный драйвер оценки.",
-      "metrics": [
-       {
-        "label": "Компании",
-        "value": "Anthropic, OpenAI, SpaceX"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "Anthropic · OpenAI · SpaceX",
+       "what": "Прямые late-stage позиции через Tech Adjacencies / T-POP",
+       "stake": "актив фондов (доли и суммы НЕ раскрыты)",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "прямая AI/космос-экспозиция",
+       "geography": "США",
+       "status": "operating",
+       "ai": true,
+       "key": true,
+       "detail": {
+        "summary": "TPG держит прямые late-stage позиции в Anthropic, OpenAI и SpaceX через стратегии Tech Adjacencies и T-POP (TPG Private Opportunities). Сам факт раскрыт, но доли и вложенные суммы TPG НЕ публикует.",
+        "whyMatters": "Прямая экспозиция на самые дорогие частные AI/космос-компании — сильная тема для восприятия TPG, но без раскрытых цифр это качественный, а не количественный драйвер оценки.",
+        "metrics": [
+         {
+          "label": "Компании",
+          "value": "Anthropic, OpenAI, SpaceX"
+         },
+         {
+          "label": "Средство",
+          "value": "Tech Adjacencies / T-POP"
+         },
+         {
+          "label": "Доли/суммы",
+          "value": "не раскрыты"
+         }
+        ]
        },
-       {
-        "label": "Средство",
-        "value": "Tech Adjacencies / T-POP"
-       },
-       {
-        "label": "Доли/суммы",
-        "value": "не раскрыты"
-       }
-      ]
-     },
-     "source": "TPG раскрытие (доли не раскрыты)"
+       "source": "TPG раскрытие (доли не раскрыты)"
+      },
+      {
+       "name": "Smith + Howard",
+       "what": "Assurance / tax / advisory-фирма — FY24 выручка $74.2 млн, ~800 профессионалов",
+       "stake": "актив фонда TPG Growth",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "анонс 09.06.2026, закрытие Q3'26",
+       "geography": "США",
+       "status": "pending",
+       "ai": false,
+       "key": false,
+       "source": "tpg.com; Accounting Today"
+      },
+      {
+       "name": "LSI (Life Sciences Innovations)",
+       "what": "Ранний фонд life sciences (2023) — Net IRR −25% / 0.8x",
+       "stake": "стратегия управляемого фонда",
+       "value": "не раскрыто",
+       "valueDisclosed": false,
+       "size": "ранняя стадия, отрицательный IRR",
+       "geography": "США",
+       "status": "operating",
+       "ai": false,
+       "key": false,
+       "source": "TPG track record"
+      }
+     ]
     },
     {
-     "name": "Smith + Howard",
-     "what": "Assurance / tax / advisory-фирма — FY24 выручка $74.2 млн, ~800 профессионалов",
-     "stake": "актив фонда TPG Growth",
-     "value": "не раскрыто",
-     "valueDisclosed": false,
-     "size": "анонс 09.06.2026, закрытие Q3'26",
-     "geography": "США",
-     "status": "pending",
-     "ai": false,
-     "key": false,
-     "source": "tpg.com; Accounting Today"
-    },
-    {
-     "name": "LSI (Life Sciences Innovations)",
-     "what": "Ранний фонд life sciences (2023) — Net IRR −25% / 0.8x",
-     "stake": "стратегия управляемого фонда",
-     "value": "не раскрыто",
-     "valueDisclosed": false,
-     "size": "ранняя стадия, отрицательный IRR",
-     "geography": "США",
-     "status": "operating",
-     "ai": false,
-     "key": false,
-     "source": "TPG track record"
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "Checkmarx",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "EIS",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Everlaw",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "FreedomPay",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Government Brands",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Guardicore",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Hayden AI Tech",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Infinidat",
+       "what": "Information Technology",
+       "geography": "EMEA"
+      },
+      {
+       "name": "MX Technologies",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Noodle.ai",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "SauceLabs",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Sayari",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Sonatype",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Tanium",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Toast Inc.",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Trumid",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Visma AS",
+       "what": "Information Technology",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Zenoti",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Age of Learning",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Airbnb",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Au10tix",
+       "what": "Communication Services",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Azoff Music Company",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "BookMyShow",
+       "what": "Communication Services",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Calm.com",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Dream11",
+       "what": "Communication Services",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Evolution Media",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Fandom",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Goal.com",
+       "what": "Communication Services",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Kajabi",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "musixmatch",
+       "what": "Communication Services",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Prodigy Education",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "StackCommerce",
+       "what": "Communication Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "AnovoRX",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "API Holdings",
+       "what": "Healthcare",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "GoHealth Urgent Care",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Precision for Medicine",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Rhea Healthcare (Motherhood)",
+       "what": "Healthcare",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Vaxcyte",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Campus Active Wear",
+       "what": "Consumer Discretionary",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Crunch Fitness",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Ipsy",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Mendocino Farms",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Philz Coffee",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Denali",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Halo Branded Solutions",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Keter Environmental Services",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "People 2.0",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "PS (The Private Suite)",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "SmartSweets",
+       "what": "Consumer Staples",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -476,7 +921,7 @@
    "id": "impact",
    "name": "Impact (Rise / Rise Climate)",
    "plain": "Инвестиции с двойной отдачей — $31.6 млрд AUM, 10%. Rise Climate I Net 15% / 1.3x, нереализованный Total Value ~$7.9 млрд (крупнейший будущий carry сегмента).",
-   "stat": "$31.6 млрд AUM · 10% · Rise Climate I Net 15%",
+   "stat": "68 компаний",
    "total": "$31.6 млрд AUM",
    "subsectors": [
     {
@@ -661,6 +1106,316 @@
        "source": "TPG IR-портфолио"
       }
      ]
+    },
+    {
+     "name": "Дополнительные позиции",
+     "companies": [
+      {
+       "name": "A-Gas",
+       "what": "Utilities",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Altus Power",
+       "what": "Utilities",
+       "geography": "Americas"
+      },
+      {
+       "name": "Anew",
+       "what": "Utilities",
+       "geography": "Americas"
+      },
+      {
+       "name": "Climavision",
+       "what": "Utilities",
+       "geography": "Americas"
+      },
+      {
+       "name": "Enpal GmbH",
+       "what": "Utilities",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Fourth Partner Energy",
+       "what": "Utilities",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "GRIDSERVE",
+       "what": "Utilities",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Intersect Power",
+       "what": "Utilities",
+       "geography": "Americas"
+      },
+      {
+       "name": "Matrix Renewables",
+       "what": "Utilities",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Monarch Bioenergy",
+       "what": "Utilities",
+       "geography": "Americas"
+      },
+      {
+       "name": "Ohmium International",
+       "what": "Utilities",
+       "geography": "Americas"
+      },
+      {
+       "name": "Palmetto Clean Technology",
+       "what": "Utilities",
+       "geography": "Americas"
+      },
+      {
+       "name": "Wilderness Holdings",
+       "what": "Utilities",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Allogene Therapeutics",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Banyan Treatment Centers",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Blue Cloud",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "CARE",
+       "what": "Healthcare",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Ceribell",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Evercare",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Foodsmart",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Presence",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Rallybio",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Zipline International",
+       "what": "Healthcare",
+       "geography": "Americas"
+      },
+      {
+       "name": "Asia Pacific University",
+       "what": "Consumer Discretionary",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Center for Health Education and Access",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Eruditus",
+       "what": "Consumer Discretionary",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "IMU Health",
+       "what": "Consumer Discretionary",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "InStride",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Outcomes First Group",
+       "what": "Consumer Discretionary",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Rad Power Bikes",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Renaissance Learning",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Tata Motors",
+       "what": "Consumer Discretionary",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Teachers of Tomorrow",
+       "what": "Consumer Discretionary",
+       "geography": "Americas"
+      },
+      {
+       "name": "Acorns",
+       "what": "Financials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Airtel Money",
+       "what": "Financials",
+       "geography": "EMEA"
+      },
+      {
+       "name": "BillEease",
+       "what": "Financials",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Cellulant",
+       "what": "Financials",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Human Interest",
+       "what": "Financials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Rubicon Carbon",
+       "what": "Financials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Varo Money",
+       "what": "Financials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Yoco Holdings",
+       "what": "Financials",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Elevated Materials",
+       "what": "Materials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Hybar",
+       "what": "Materials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Monolith Materials",
+       "what": "Materials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Syre",
+       "what": "Materials",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Twelve Benefit Corp.",
+       "what": "Materials",
+       "geography": "Americas"
+      },
+      {
+       "name": "UBQ",
+       "what": "Materials",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Benevity",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Greenhouse Software",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Miratech",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Persefoni",
+       "what": "Information Technology",
+       "geography": "Americas"
+      },
+      {
+       "name": "Tata Technologies",
+       "what": "Information Technology",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Beta Technologies",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "CLEAResult",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Du Xiaoman",
+       "what": "Industrials",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Form Energy",
+       "what": "Industrials",
+       "geography": "Americas"
+      },
+      {
+       "name": "Little Leaf",
+       "what": "Consumer Staples",
+       "geography": "Americas"
+      },
+      {
+       "name": "LiveKindly",
+       "what": "Consumer Staples",
+       "geography": "Americas"
+      },
+      {
+       "name": "Pearl Dairy Farms",
+       "what": "Consumer Staples",
+       "geography": "EMEA"
+      },
+      {
+       "name": "Amspec",
+       "what": "Energy",
+       "geography": "Americas"
+      },
+      {
+       "name": "Summit Carbon Solutions",
+       "what": "Energy",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -668,7 +1423,7 @@
    "id": "market-solutions",
    "name": "Market Solutions",
    "plain": "GP-led secondaries, capital markets и цифровая инфраструктура — $18.1 млрд AUM, 6%. Вырос ×2.4 г/г за счёт консолидации Peppertree.",
-   "stat": "$18.1 млрд AUM · 6% · ×2.4 г/г (Peppertree)",
+   "stat": "3 компаний",
    "total": "$18.1 млрд AUM",
    "companies": [
     {
@@ -727,6 +1482,187 @@
      "ai": false,
      "key": false,
      "source": "TPG 10-K"
+    }
+   ]
+  },
+  {
+   "id": "asia",
+   "name": "TPG Asia",
+   "plain": "Инвестиционная платформа TPG в Азиатско-Тихоокеанском регионе: частный капитал, технологии, финансовые услуги.",
+   "stat": "21 компаний",
+   "companies": [
+    {
+     "name": "APM Monaco",
+     "what": "Consumer Discretionary",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Dingdang Health",
+     "what": "Healthcare",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "FirstCry",
+     "what": "Consumer Discretionary",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Funlab",
+     "what": "Consumer Discretionary",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Greencross",
+     "what": "Consumer Discretionary",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "HKBN",
+     "what": "Communication Services",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Janalakshmi Financial Services",
+     "what": "Financials",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Jio Platforms",
+     "what": "Communication Services",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "JNBY",
+     "what": "Consumer Discretionary",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Kakao Bank",
+     "what": "Financials",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Kakao Mobility",
+     "what": "Communication Services",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Loyal Valley Capital",
+     "what": "Financials",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Manipal Health",
+     "what": "Healthcare",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Navis Capital Partners",
+     "what": "Financials",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Novotech Holdings",
+     "what": "Healthcare",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Nox Corporation",
+     "what": "Consumer Discretionary",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "PropertyGuru",
+     "what": "Communication Services",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Reliance Retail Ventures",
+     "what": "Consumer Discretionary",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Sai Life Sciences",
+     "what": "Healthcare",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "XCL Education",
+     "what": "Consumer Discretionary",
+     "geography": "Asia Pacific"
+    },
+    {
+     "name": "Zhaoke Ophthalmology",
+     "what": "Healthcare",
+     "geography": "Asia Pacific"
+    }
+   ]
+  },
+  {
+   "id": "healthcare",
+   "name": "TPG Healthcare",
+   "plain": "Выделенная платформа TPG для инвестиций в здравоохранение, биотехнологии и MedTech.",
+   "stat": "12 компаний",
+   "companies": [
+    {
+     "name": "BGB Communications",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "Bicara",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "Convey Health",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "Ellodi",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "K2 Medical Research",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "LifeStance Health",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "MBrace",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "Monogram Health",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "Saluda",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "Santa Ana Bio",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "Sling Therapeutics",
+     "what": "Healthcare",
+     "geography": "Americas"
+    },
+    {
+     "name": "Sudo",
+     "what": "Healthcare",
+     "geography": "Americas"
     }
    ]
   }

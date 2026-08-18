@@ -101,81 +101,246 @@
    "id": "topicus",
    "name": "Topicus.com (TSXV: TOI)",
    "plain": "Публичная spin-out платформа: pan-European VMS. CSU держит 50.1% голосов + ~31.3% экономики",
-   "stat": "€1,552M выручки FY2025 (+20%)",
+   "stat": "34 компаний",
    "total": "~16% консол. выручки CSU",
-   "companies": [
+   "subsectors": [
     {
-     "name": "Topicus.com B.V.",
-     "what": "Ядро: финтех, образование, госсектор Нидерландов",
-     "stake": "100% (через TOI)",
-     "value": "внутри mcap TOI",
-     "valueDisclosed": false,
-     "size": "€1.55 млрд выручки",
-     "geography": "Нидерланды, Германия, Скандинавия, Польша",
-     "status": "консолидируется CSU",
-     "ai": false,
-     "detail": {
-      "summary": "Pan-European VMS платформа. Органический рост 4%. FCFA2S €219M. Приобретения €390M за FY2025.",
-      "whyMatters": "Главный канал расширения CSU в Европе + источник spin-out playbook",
-      "metrics": [
-       {
-        "k": "FCFA2S FY2025",
-        "v": "€218.7M"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "Topicus.com B.V.",
+       "what": "Ядро: финтех, образование, госсектор Нидерландов",
+       "stake": "100% (через TOI)",
+       "value": "внутри mcap TOI",
+       "valueDisclosed": false,
+       "size": "€1.55 млрд выручки",
+       "geography": "Нидерланды, Германия, Скандинавия, Польша",
+       "status": "консолидируется CSU",
+       "ai": false,
+       "detail": {
+        "summary": "Pan-European VMS платформа. Органический рост 4%. FCFA2S €219M. Приобретения €390M за FY2025.",
+        "whyMatters": "Главный канал расширения CSU в Европе + источник spin-out playbook",
+        "metrics": [
+         {
+          "k": "FCFA2S FY2025",
+          "v": "€218.7M"
+         },
+         {
+          "k": "Organic growth",
+          "v": "4%"
+         },
+         {
+          "k": "Net income",
+          "v": "€70.1M (−53%, Asseco)"
+         }
+        ]
        },
-       {
-        "k": "Organic growth",
-        "v": "4%"
+       "source": "TOI FY2025 пресс-релиз"
+      },
+      {
+       "name": "Asseco Poland (WSE: ACP)",
+       "what": "Крупнейший IT-холдинг Польши",
+       "stake": "~23.14% (associate, equity method)",
+       "value": "$530M инвестиций FY2025",
+       "valueDisclosed": true,
+       "size": "крупный",
+       "geography": "Польша, ЦВЕ",
+       "status": "equity method (с 25.09.2025)",
+       "ai": false,
+       "detail": {
+        "summary": "Публичная польская IT-компания. Topicus Coop приобрёл ~23% через серию покупок.",
+        "whyMatters": "Новый канал: покупка публичных VMS в Европе. Revaluation charge $440M ударила по net income CSU.",
+        "metrics": [
+         {
+          "k": "Инвестиция CSU",
+          "v": "~$530M (FY2025)"
+         },
+         {
+          "k": "IRGA/TSS revaluation",
+          "v": "−$440M net income impact"
+         }
+        ]
        },
-       {
-        "k": "Net income",
-        "v": "€70.1M (−53%, Asseco)"
-       }
-      ]
-     },
-     "source": "TOI FY2025 пресс-релиз"
+       "source": "CSU FY2025 MD&A"
+      },
+      {
+       "name": "Sygnity (WSE)",
+       "what": "Польская IT-компания",
+       "stake": "~72.68% (через Topicus Coop)",
+       "value": "внутри Asseco инвестиции",
+       "valueDisclosed": false,
+       "size": "средний",
+       "geography": "Польша",
+       "status": "консолидируется через TOI",
+       "ai": false,
+       "detail": {
+        "summary": "IT-компания для финансового сектора и госсектора Польши.",
+        "whyMatters": "Часть стратегии Topicus по экспансии в Восточную Европу",
+        "metrics": []
+       },
+       "source": "Topicus Q1 2026 отчётность"
+      }
+     ]
     },
     {
-     "name": "Asseco Poland (WSE: ACP)",
-     "what": "Крупнейший IT-холдинг Польши",
-     "stake": "~23.14% (associate, equity method)",
-     "value": "$530M инвестиций FY2025",
-     "valueDisclosed": true,
-     "size": "крупный",
-     "geography": "Польша, ЦВЕ",
-     "status": "equity method (с 25.09.2025)",
-     "ai": false,
-     "detail": {
-      "summary": "Публичная польская IT-компания. Topicus Coop приобрёл ~23% через серию покупок.",
-      "whyMatters": "Новый канал: покупка публичных VMS в Европе. Revaluation charge $440M ударила по net income CSU.",
-      "metrics": [
-       {
-        "k": "Инвестиция CSU",
-        "v": "~$530M (FY2025)"
-       },
-       {
-        "k": "IRGA/TSS revaluation",
-        "v": "−$440M net income impact"
-       }
-      ]
-     },
-     "source": "CSU FY2025 MD&A"
-    },
-    {
-     "name": "Sygnity (WSE)",
-     "what": "Польская IT-компания",
-     "stake": "~72.68% (через Topicus Coop)",
-     "value": "внутри Asseco инвестиции",
-     "valueDisclosed": false,
-     "size": "средний",
-     "geography": "Польша",
-     "status": "консолидируется через TOI",
-     "ai": false,
-     "detail": {
-      "summary": "IT-компания для финансового сектора и госсектора Польши.",
-      "whyMatters": "Часть стратегии Topicus по экспансии в Восточную Европу",
-      "metrics": []
-     },
-     "source": "Topicus Q1 2026 отчётность"
+     "name": "Дополнительные VMS-компании",
+     "companies": [
+      {
+       "name": "ParnasSys",
+       "what": "Education Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Somtoday",
+       "what": "Education Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "PharmaPartners",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Local Government",
+       "what": "Government/Public Sector",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Healthcare",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Care",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Cure",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Food and Hospitality",
+       "what": "Hospitality Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Healthcare Business Solutions",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Hospitals BI",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Mental Care",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "PinkRoccade Ziekenhuizen",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "Arter",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "AS Systems",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "BCT Software",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "Biomedical Data Solutions",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "Convenient",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "Copernicare",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "Datamed",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "Delta Informatica",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "ExpertDoc",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "Formelio",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "HI-Systems",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "IMS MAXIMS",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "iSOFT Nederland",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "TECHNIDATA",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "Vlot Solutions",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "easySoft",
+       "what": "Education Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "KMO Solutions",
+       "what": "Government/Public Sector",
+       "geography": "Europe"
+      },
+      {
+       "name": "Niveo",
+       "what": "Education Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Simple",
+       "what": "Government/Public Sector",
+       "geography": "Europe"
+      }
+     ]
     }
    ]
   },
@@ -183,60 +348,240 @@
    "id": "lumine",
    "name": "Lumine Group (TSXV: LMN)",
    "plain": "Публичная spin-out платформа: communications & media VMS. CSU держит 50.1% голосов + 61.4% экономики",
-   "stat": "$765.7M выручки FY2025 (+15%)",
+   "stat": "36 компаний",
    "total": "~7% консол. выручки CSU",
-   "companies": [
+   "subsectors": [
     {
-     "name": "Synchronoss Technologies",
-     "what": "Personal-cloud SaaS для телекомов",
-     "stake": "100% (делистинг NASDAQ)",
-     "value": "$309.3M",
-     "valueDisclosed": true,
-     "size": "$309.3M paid",
-     "geography": "США, глобально",
-     "status": "закрыта 13.02.2026",
-     "ai": false,
-     "detail": {
-      "summary": "Personal-cloud платформа. Крупнейшая сделка Lumine. Интеграция давит: Lumine выручка +17% при органике 0%, FCFA2S −56%.",
-      "whyMatters": "Масштабная корпоративная carve-out — характерная для playbook Lumine",
-      "metrics": [
-       {
-        "k": "Цена",
-        "v": "$309.3M cash"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "Synchronoss Technologies",
+       "what": "Personal-cloud SaaS для телекомов",
+       "stake": "100% (делистинг NASDAQ)",
+       "value": "$309.3M",
+       "valueDisclosed": true,
+       "size": "$309.3M paid",
+       "geography": "США, глобально",
+       "status": "закрыта 13.02.2026",
+       "ai": false,
+       "detail": {
+        "summary": "Personal-cloud платформа. Крупнейшая сделка Lumine. Интеграция давит: Lumine выручка +17% при органике 0%, FCFA2S −56%.",
+        "whyMatters": "Масштабная корпоративная carve-out — характерная для playbook Lumine",
+        "metrics": [
+         {
+          "k": "Цена",
+          "v": "$309.3M cash"
+         },
+         {
+          "k": "Влияние на Lumine FCFA2S",
+          "v": "−56%"
+         }
+        ]
        },
-       {
-        "k": "Влияние на Lumine FCFA2S",
-        "v": "−56%"
-       }
-      ]
-     },
-     "source": "Lumine Q1 2026 пресс-релиз"
+       "source": "Lumine Q1 2026 пресс-релиз"
+      },
+      {
+       "name": "WideOrbit",
+       "what": "Media ad-tech платформа",
+       "stake": "100%",
+       "value": "$490M gross (2023)",
+       "valueDisclosed": true,
+       "size": "$490M",
+       "geography": "США",
+       "status": "интегрирован",
+       "ai": false,
+       "detail": {
+        "summary": "Reverse-takeover: акционеры CSU получили акции Lumine. WideOrbit — ядро media-вертикали Lumine.",
+        "whyMatters": "Сделка, которая создала Lumine как отдельную публичную платформу",
+        "metrics": [
+         {
+          "k": "Цена",
+          "v": "$490M gross"
+         },
+         {
+          "k": "Выручка WideOrbit (2022)",
+          "v": "~$169M"
+         }
+        ]
+       },
+       "source": "Lumine проспект"
+      }
+     ]
     },
     {
-     "name": "WideOrbit",
-     "what": "Media ad-tech платформа",
-     "stake": "100%",
-     "value": "$490M gross (2023)",
-     "valueDisclosed": true,
-     "size": "$490M",
-     "geography": "США",
-     "status": "интегрирован",
-     "ai": false,
-     "detail": {
-      "summary": "Reverse-takeover: акционеры CSU получили акции Lumine. WideOrbit — ядро media-вертикали Lumine.",
-      "whyMatters": "Сделка, которая создала Lumine как отдельную публичную платформу",
-      "metrics": [
-       {
-        "k": "Цена",
-        "v": "$490M gross"
-       },
-       {
-        "k": "Выручка WideOrbit (2022)",
-        "v": "~$169M"
-       }
-      ]
-     },
-     "source": "Lumine проспект"
+     "name": "Дополнительные VMS-компании",
+     "companies": [
+      {
+       "name": "Motive",
+       "what": "Telecom BSS Software",
+       "geography": "Global"
+      },
+      {
+       "name": "RazorFlow",
+       "what": "Telecom BSS Software",
+       "geography": "Global"
+      },
+      {
+       "name": "Telarix",
+       "what": "Telecom BSS Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "MACH",
+       "what": "Telecom BSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "TOMIA",
+       "what": "Telecom BSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "Kansys",
+       "what": "Telecom BSS Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "NetEngage",
+       "what": "Telecom BSS Software",
+       "geography": "Global"
+      },
+      {
+       "name": "Ubersmith",
+       "what": "Telecom BSS Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Neural Technologies",
+       "what": "Telecom BSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "VAS-X",
+       "what": "Telecom BSS Software",
+       "geography": "Global"
+      },
+      {
+       "name": "Symbrio",
+       "what": "Telecom BSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "Collab",
+       "what": "Telecom BSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "Lifecycle Software",
+       "what": "Telecom BSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "MDS Global",
+       "what": "Telecom BSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "Advantage 360",
+       "what": "Telecom BSS Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "WDS-SICAP",
+       "what": "Telecom BSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "Telepin",
+       "what": "Telecom BSS Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Incognito Software Systems",
+       "what": "Telecom BSS Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Imagine Communications",
+       "what": "Media/Broadcasting",
+       "geography": "Americas"
+      },
+      {
+       "name": "Quortex",
+       "what": "Media/Broadcasting",
+       "geography": "Europe"
+      },
+      {
+       "name": "Vidispine",
+       "what": "Media/Broadcasting",
+       "geography": "Europe"
+      },
+      {
+       "name": "Wiztivi",
+       "what": "Media/Broadcasting",
+       "geography": "Europe"
+      },
+      {
+       "name": "TransMedia Dynamics",
+       "what": "Media/Broadcasting",
+       "geography": "Europe"
+      },
+      {
+       "name": "Velocix",
+       "what": "Media/Broadcasting",
+       "geography": "Europe"
+      },
+      {
+       "name": "Aleyant",
+       "what": "Media/Broadcasting",
+       "geography": "Americas"
+      },
+      {
+       "name": "Datafusion Systems",
+       "what": "Telecom Network Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "Axyom.Core",
+       "what": "Telecom Network Software",
+       "geography": "Global"
+      },
+      {
+       "name": "Openwave",
+       "what": "Telecom Network Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Titan.ium",
+       "what": "Telecom Network Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Flash Networks",
+       "what": "Telecom Network Software",
+       "geography": "Global"
+      },
+      {
+       "name": "Avance Metering",
+       "what": "Telecom OSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "Tarantula",
+       "what": "Telecom OSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "Netadmin Systems",
+       "what": "Telecom OSS Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "SpatialNetworX",
+       "what": "Telecom Software",
+       "geography": "Global"
+      }
+     ]
     }
    ]
   },
@@ -244,38 +589,133 @@
    "id": "harris",
    "name": "Harris / N. Harris Computer",
    "plain": "Старейшая группа CSU: утилиты (биллинг электро/вода/газ), здравоохранение, госсектор, страхование",
-   "stat": "Ring 2 — выручка не раскрывается отдельно",
+   "stat": "18 компаний",
    "total": "крупная доля CSI core (~78% от ~$2.47 млрд Q1'26)",
-   "companies": [
+   "subsectors": [
     {
-     "name": "Altera (бывш. Allscripts)",
-     "what": "Healthcare EHR — крупный carve-out",
-     "stake": "100%",
-     "value": "не раскрыта",
-     "valueDisclosed": false,
-     "size": "~$147M выручки Q1'26 (4.6% консол.)",
-     "geography": "США",
-     "status": "реструктурирован в 11 бизнесов",
-     "ai": false,
-     "detail": {
-      "summary": "Куплен 02.05.2022. Трансформационная по размеру. Органика −13% (FX-adj) — worst-in-portfolio. Реструктурирован в 11 бизнесов внутри Harris.",
-      "whyMatters": "Тест модели на крупных carve-out: может ли Constellation стабилизировать крупные сокращающиеся бизнесы?",
-      "metrics": [
-       {
-        "k": "Выручка Q1'26",
-        "v": "~$147M"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "Altera (бывш. Allscripts)",
+       "what": "Healthcare EHR — крупный carve-out",
+       "stake": "100%",
+       "value": "не раскрыта",
+       "valueDisclosed": false,
+       "size": "~$147M выручки Q1'26 (4.6% консол.)",
+       "geography": "США",
+       "status": "реструктурирован в 11 бизнесов",
+       "ai": false,
+       "detail": {
+        "summary": "Куплен 02.05.2022. Трансформационная по размеру. Органика −13% (FX-adj) — worst-in-portfolio. Реструктурирован в 11 бизнесов внутри Harris.",
+        "whyMatters": "Тест модели на крупных carve-out: может ли Constellation стабилизировать крупные сокращающиеся бизнесы?",
+        "metrics": [
+         {
+          "k": "Выручка Q1'26",
+          "v": "~$147M"
+         },
+         {
+          "k": "Organic growth",
+          "v": "−13% FX-adj"
+         },
+         {
+          "k": "Кеш",
+          "v": "$142M"
+         }
+        ]
        },
-       {
-        "k": "Organic growth",
-        "v": "−13% FX-adj"
-       },
-       {
-        "k": "Кеш",
-        "v": "$142M"
-       }
-      ]
-     },
-     "source": "CSU Q1 2026 MD&A supplemental"
+       "source": "CSU Q1 2026 MD&A supplemental"
+      }
+     ]
+    },
+    {
+     "name": "Дополнительные VMS-компании",
+     "companies": [
+      {
+       "name": "Cayenta",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Advanced Utility Systems",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Altera Digital Health",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "Cogsdale",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "DataVoice",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Harris ERP",
+       "what": "Government/Public Sector",
+       "geography": "Americas"
+      },
+      {
+       "name": "Ingenious Med",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "inHANCE",
+       "what": "Government/Public Sector",
+       "geography": "Americas"
+      },
+      {
+       "name": "NorthStar Utilities Solutions",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "ServiceLink",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "SmartWorks",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "System Innovators",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Systems & Software",
+       "what": "Utilities Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "MEDHOST",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "CareTracker",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "QuadraMed",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "MediSolution",
+       "what": "Government/Public Sector",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -283,25 +723,345 @@
    "id": "volaris",
    "name": "Volaris Group",
    "plain": "Генералист: 240+ бизнесов в 40+ вертикалях, 60+ стран. Agri-food, education, financial services, asset management",
-   "stat": "Ring 2 — выручка не раскрывается отдельно",
+   "stat": "63 компаний",
    "total": "крупнейшая группа CSI core",
-   "companies": [
+   "subsectors": [
     {
-     "name": "Volaris (aggregate)",
-     "what": "240+ VMS-бизнесов в 40+ вертикалях",
-     "stake": "100%",
-     "value": "не раскрыта",
-     "valueDisclosed": false,
-     "size": "крупнейшая группа",
-     "geography": "60+ стран",
-     "status": "операционная группа CSI core",
-     "ai": false,
-     "detail": {
-      "summary": "Первое поглощение 1995 года. Самая широкая по вертикалям группа: agri-food, education, financial services, asset management, government. Ring 2 — пообъектная выручка не раскрывается.",
-      "whyMatters": "Масштабный пример модели: 240+ бизнесов доказывают, что децентрализация работает",
-      "metrics": []
-     },
-     "source": "CSI Operating Groups page"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "Volaris (aggregate)",
+       "what": "240+ VMS-бизнесов в 40+ вертикалях",
+       "stake": "100%",
+       "value": "не раскрыта",
+       "valueDisclosed": false,
+       "size": "крупнейшая группа",
+       "geography": "60+ стран",
+       "status": "операционная группа CSI core",
+       "ai": false,
+       "detail": {
+        "summary": "Первое поглощение 1995 года. Самая широкая по вертикалям группа: agri-food, education, financial services, asset management, government. Ring 2 — пообъектная выручка не раскрывается.",
+        "whyMatters": "Масштабный пример модели: 240+ бизнесов доказывают, что децентрализация работает",
+        "metrics": []
+       },
+       "source": "CSI Operating Groups page"
+      }
+     ]
+    },
+    {
+     "name": "Дополнительные VMS-компании",
+     "companies": [
+      {
+       "name": "Accent Technologies",
+       "what": "Compliance Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Sureview Systems",
+       "what": "Security Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Symplicity",
+       "what": "Education Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "BIG Consulting",
+       "what": "Agri-Food Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Automate",
+       "what": "Automotive Software",
+       "geography": "Global"
+      },
+      {
+       "name": "Alpine Testing Solutions",
+       "what": "Workforce Management",
+       "geography": "Americas"
+      },
+      {
+       "name": "AskCody",
+       "what": "Asset Management & Logistics",
+       "geography": "Europe"
+      },
+      {
+       "name": "Maze Feedback",
+       "what": "MarTech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Surveypal",
+       "what": "MarTech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Trapeze Group",
+       "what": "Transportation Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "TripSpark",
+       "what": "Transportation Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "Binary System",
+       "what": "Transportation Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Cittati",
+       "what": "Transportation Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Empresa1",
+       "what": "Transportation Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Holmedal",
+       "what": "Transportation Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Imperial",
+       "what": "Transportation Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "PLANit",
+       "what": "Transportation Tech",
+       "geography": "Global"
+      },
+      {
+       "name": "Signature Rail",
+       "what": "Transportation Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "Systemtechnik",
+       "what": "Transportation Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "TransTrack Systems",
+       "what": "Transportation Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "AMS (Advanced Management Systems)",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "BBT Software",
+       "what": "Financial Services",
+       "geography": "Europe"
+      },
+      {
+       "name": "Covenir",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Datapro",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Fisa Group",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Insuresoft",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Kaboodle",
+       "what": "Financial Services",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "payCloud.io",
+       "what": "Financial Services",
+       "geography": "Global"
+      },
+      {
+       "name": "Portfolio+",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Red Hawk",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Silvervine",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "SSP",
+       "what": "Financial Services",
+       "geography": "Europe"
+      },
+      {
+       "name": "Travisoft",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Wellington IT",
+       "what": "Financial Services",
+       "geography": "Europe"
+      },
+      {
+       "name": "Data Action",
+       "what": "Financial Services",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "SERIVA",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "CREALOGIX",
+       "what": "Financial Services",
+       "geography": "Europe"
+      },
+      {
+       "name": "Quarzo",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Company Watch",
+       "what": "Financial Services",
+       "geography": "Europe"
+      },
+      {
+       "name": "AGRIS",
+       "what": "Agri-Food Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "ExtendAg",
+       "what": "Agri-Food Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "BMS Computer Solutions",
+       "what": "Agri-Food Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Cal Software",
+       "what": "Agri-Food Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Kinross Software",
+       "what": "Agri-Food Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Adapt IT",
+       "what": "Enterprise Asset Management",
+       "geography": "Global"
+      },
+      {
+       "name": "Akuiteo",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "CentroAssist",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "CPR Vision",
+       "what": "Enterprise Asset Management",
+       "geography": "Americas"
+      },
+      {
+       "name": "Drams",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "Evolis",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "Gaina",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "Helm",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "Holocentric",
+       "what": "Enterprise Asset Management",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "IDEA",
+       "what": "Enterprise Asset Management",
+       "geography": "Global"
+      },
+      {
+       "name": "Incom",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "Infoview",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "Lutra",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "Shipnet",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "Smartrak",
+       "what": "Enterprise Asset Management",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Spectec",
+       "what": "Enterprise Asset Management",
+       "geography": "Europe"
+      },
+      {
+       "name": "ValuePro",
+       "what": "Enterprise Asset Management",
+       "geography": "Americas"
+      },
+      {
+       "name": "Worldwide Chain Stores",
+       "what": "Enterprise Asset Management",
+       "geography": "Americas"
+      }
+     ]
     }
    ]
   },
@@ -309,59 +1069,439 @@
    "id": "other-groups",
    "name": "Jonas / Vela / Perseus",
    "plain": "Три операционные группы: leisure (Jonas), промышленность (Vela), телеком и малый бизнес (Perseus)",
-   "stat": "Ring 2 — выручка не раскрывается отдельно",
+   "stat": "75 компаний",
    "total": "внутри CSI core",
-   "companies": [
+   "subsectors": [
     {
-     "name": "Jonas Software",
-     "what": "Club & leisure, fitness, construction, foodservice",
-     "stake": "100%",
-     "value": "не раскрыта",
-     "valueDisclosed": false,
-     "size": "средняя группа",
-     "geography": "Сев. Америка, Европа",
-     "status": "операционная группа",
-     "ai": false,
-     "detail": {
-      "summary": "25+ вертикалей. Изначально — club & leisure, теперь расширена на attractions, construction, foodservice. 20+ лет опыта.",
-      "whyMatters": "Одна из наиболее уязвимых к AI групп — «лёгкие» вертикали без регуляторной встроенности",
-      "metrics": []
-     },
-     "source": "CSI Operating Groups page"
+     "name": "Ключевые позиции",
+     "companies": [
+      {
+       "name": "Jonas Software",
+       "what": "Club & leisure, fitness, construction, foodservice",
+       "stake": "100%",
+       "value": "не раскрыта",
+       "valueDisclosed": false,
+       "size": "средняя группа",
+       "geography": "Сев. Америка, Европа",
+       "status": "операционная группа",
+       "ai": false,
+       "detail": {
+        "summary": "25+ вертикалей. Изначально — club & leisure, теперь расширена на attractions, construction, foodservice. 20+ лет опыта.",
+        "whyMatters": "Одна из наиболее уязвимых к AI групп — «лёгкие» вертикали без регуляторной встроенности",
+        "metrics": []
+       },
+       "source": "CSI Operating Groups page"
+      },
+      {
+       "name": "Vela Software",
+       "what": "Промышленные и капиталоёмкие секторы: energy, marine, mining",
+       "stake": "100%",
+       "value": "не раскрыта",
+       "valueDisclosed": false,
+       "size": "средняя группа",
+       "geography": "глобально",
+       "status": "операционная группа",
+       "ai": false,
+       "detail": {
+        "summary": "Включает Juniper Group (DerbySoft — travel/hospitality, контроль 2026), acQuire (mining ПО). Промышленные вертикали с высокими switching costs.",
+        "whyMatters": "DerbySoft — свежая крупная сделка через Juniper Group (закрытие 01.06.2026)",
+        "metrics": []
+       },
+       "source": "CSI Operating Groups page"
+      },
+      {
+       "name": "Perseus Group",
+       "what": "Малый бизнес: healthcare, homebuilding, телеком",
+       "stake": "100%",
+       "value": "не раскрыта",
+       "valueDisclosed": false,
+       "size": "наименьшая группа",
+       "geography": "Сев. Америка",
+       "status": "операционная группа",
+       "ai": false,
+       "detail": {
+        "summary": "Философия: «маленькие бизнесы должны оставаться маленькими». Healthcare, homebuilding.",
+        "whyMatters": "Наиболее уязвима к AI — «тонкие» SaaS в простых вертикалях",
+        "metrics": []
+       },
+       "source": "CSI Operating Groups page"
+      }
+     ]
     },
     {
-     "name": "Vela Software",
-     "what": "Промышленные и капиталоёмкие секторы: energy, marine, mining",
-     "stake": "100%",
-     "value": "не раскрыта",
-     "valueDisclosed": false,
-     "size": "средняя группа",
-     "geography": "глобально",
-     "status": "операционная группа",
-     "ai": false,
-     "detail": {
-      "summary": "Включает Juniper Group (DerbySoft — travel/hospitality, контроль 2026), acQuire (mining ПО). Промышленные вертикали с высокими switching costs.",
-      "whyMatters": "DerbySoft — свежая крупная сделка через Juniper Group (закрытие 01.06.2026)",
-      "metrics": []
-     },
-     "source": "CSI Operating Groups page"
+     "name": "Jonas",
+     "companies": [
+      {
+       "name": "Springer-Miller Systems",
+       "what": "Hospitality Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "MSI",
+       "what": "Hospitality Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "BookAssist",
+       "what": "Hospitality Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "EZ Facility",
+       "what": "Fitness/Clubs",
+       "geography": "Americas"
+      },
+      {
+       "name": "Jonas Fitness",
+       "what": "Fitness/Clubs",
+       "geography": "Americas"
+      },
+      {
+       "name": "InnoSoft",
+       "what": "Fitness/Clubs",
+       "geography": "Americas"
+      },
+      {
+       "name": "ProviderSoft",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "Fisikal",
+       "what": "Fitness/Clubs",
+       "geography": "Europe"
+      },
+      {
+       "name": "Fitronics",
+       "what": "Fitness/Clubs",
+       "geography": "Europe"
+      },
+      {
+       "name": "TRP",
+       "what": "Fitness/Clubs",
+       "geography": "Europe"
+      },
+      {
+       "name": "CoursePro",
+       "what": "Fitness/Clubs",
+       "geography": "Europe"
+      },
+      {
+       "name": "Strive",
+       "what": "Fitness/Clubs",
+       "geography": "Europe"
+      },
+      {
+       "name": "Jonas Construction",
+       "what": "Construction",
+       "geography": "Americas"
+      },
+      {
+       "name": "Ventus VMS",
+       "what": "Construction",
+       "geography": "Americas"
+      },
+      {
+       "name": "ACENTE",
+       "what": "Construction",
+       "geography": "Americas"
+      },
+      {
+       "name": "Premier Green",
+       "what": "Construction",
+       "geography": "Americas"
+      },
+      {
+       "name": "mJobTime",
+       "what": "Construction",
+       "geography": "Americas"
+      },
+      {
+       "name": "Automated Integration",
+       "what": "Construction",
+       "geography": "Americas"
+      },
+      {
+       "name": "PowerTrack",
+       "what": "Construction",
+       "geography": "Americas"
+      },
+      {
+       "name": "Data Basics",
+       "what": "Construction",
+       "geography": "Americas"
+      },
+      {
+       "name": "Gary Jonas Computing",
+       "what": "Fitness/Clubs",
+       "geography": "Americas"
+      },
+      {
+       "name": "Phoenix (Finastra Core System)",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Aptech",
+       "what": "Hospitality Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "Minisoft",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Magnusmode",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "Pollution Monitors",
+       "what": "Government/Public Sector",
+       "geography": "Europe"
+      },
+      {
+       "name": "Suplos",
+       "what": "Government/Public Sector",
+       "geography": "Europe"
+      },
+      {
+       "name": "Benbria",
+       "what": "Government/Public Sector",
+       "geography": "Americas"
+      }
+     ]
     },
     {
-     "name": "Perseus Group",
-     "what": "Малый бизнес: healthcare, homebuilding, телеком",
-     "stake": "100%",
-     "value": "не раскрыта",
-     "valueDisclosed": false,
-     "size": "наименьшая группа",
-     "geography": "Сев. Америка",
-     "status": "операционная группа",
-     "ai": false,
-     "detail": {
-      "summary": "Философия: «маленькие бизнесы должны оставаться маленькими». Healthcare, homebuilding.",
-      "whyMatters": "Наиболее уязвима к AI — «тонкие» SaaS в простых вертикалях",
-      "metrics": []
-     },
-     "source": "CSI Operating Groups page"
+     "name": "Perseus",
+     "companies": [
+      {
+       "name": "Auto-IT",
+       "what": "Automotive Dealership Software",
+       "geography": "Global"
+      },
+      {
+       "name": "BuildTopia",
+       "what": "Real Estate Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "c-Systems",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Campana Systems",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Catalyst Computer Systems",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Charter Software",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Clinical Computing",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "CONASYS",
+       "what": "Real Estate Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "Constellation Automotive Software",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Constellation HomeBuilder Systems",
+       "what": "Real Estate Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "DIS",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "ediwise",
+       "what": "Manufacturing",
+       "geography": "Americas"
+      },
+      {
+       "name": "GoldCare",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "Ibcos",
+       "what": "Automotive Dealership Software",
+       "geography": "Europe"
+      },
+      {
+       "name": "IDEAL",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "IDS",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Infian",
+       "what": "Healthcare IT",
+       "geography": "Europe"
+      },
+      {
+       "name": "LandDev",
+       "what": "Real Estate Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "Magstar",
+       "what": "Retail Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "MAJIQ",
+       "what": "Manufacturing",
+       "geography": "Americas"
+      },
+      {
+       "name": "Matrix",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "Mediqal H.I.",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "MIQS",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "MOPSsys",
+       "what": "Manufacturing",
+       "geography": "Americas"
+      },
+      {
+       "name": "NEWSTAR",
+       "what": "Real Estate Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "OPTIVIQ",
+       "what": "Manufacturing",
+       "geography": "Americas"
+      },
+      {
+       "name": "POMS",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "QMS",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "R.O. Writer",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "Renal Insights",
+       "what": "Healthcare IT",
+       "geography": "Americas"
+      },
+      {
+       "name": "Sales1440",
+       "what": "Real Estate Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "Starkwood",
+       "what": "Automotive Dealership Software",
+       "geography": "Americas"
+      },
+      {
+       "name": "WinTech",
+       "what": "Financial Services",
+       "geography": "Americas"
+      },
+      {
+       "name": "Woodland, O'Brien & Scott",
+       "what": "Real Estate Tech",
+       "geography": "Americas"
+      },
+      {
+       "name": "Market Leader",
+       "what": "Real Estate Tech",
+       "geography": "Americas"
+      }
+     ]
+    },
+    {
+     "name": "Vela",
+     "companies": [
+      {
+       "name": "Indiqator",
+       "what": "Automotive Retail Tech",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Farm Focus",
+       "what": "Agri-Food Tech",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "FirstApex",
+       "what": "Financial Services",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Tower Systems",
+       "what": "Retail Tech",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Vitalcare",
+       "what": "Healthcare IT",
+       "geography": "Asia Pacific"
+      },
+      {
+       "name": "Nexo CS",
+       "what": "Government/Public Sector",
+       "geography": "Europe"
+      },
+      {
+       "name": "Peakwork",
+       "what": "Travel Tech",
+       "geography": "Europe"
+      },
+      {
+       "name": "Shoplogix",
+       "what": "Manufacturing",
+       "geography": "Americas"
+      },
+      {
+       "name": "PROXIA Software",
+       "what": "Manufacturing",
+       "geography": "Europe"
+      }
+     ]
     }
    ]
   }

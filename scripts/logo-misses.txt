@@ -4,7 +4,6 @@
 # src/data/entityReference.json and re-run `npm run logos`.
 
 target:DOE Paducah Site AI data center campus (Western Kentucky)	DOE Paducah Site AI data center campus (Western Kentucky)
-target:SpaceX	SpaceX
 target:KKR Global Infrastructure Investors V	KKR Global Infrastructure Investors V
 target:Sturgeon County data center (Alberta, Canada)	Sturgeon County data center (Alberta, Canada)
 target:Akita 500MW AI data center (Japan)	Akita 500MW AI data center (Japan)
@@ -12,7 +11,6 @@ target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbou
 target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
-target:Performance Drone Works	Performance Drone Works
 target:Flourish	Flourish
 target:Strategic Bauxite USA, LLC (SBX)	Strategic Bauxite USA, LLC (SBX)
 target:Standard Bauxite	Standard Bauxite
@@ -30,6 +28,5 @@ target:Paducah AI/HPC innovation campus	Paducah AI/HPC innovation campus
 target:Savannah River Site AI data center	Savannah River Site AI data center
 target:Kuwait Oil Company Pipeline JV (Project Peregrine)	Kuwait Oil Company Pipeline JV (Project Peregrine)
 target:TotalEnergies European renewables portfolio (Germany/Spain/France/Poland)	TotalEnergies European renewables portfolio (Germany/Spain/France/Poland)
-target:Erebor	Erebor
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
 target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure
