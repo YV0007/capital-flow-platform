@@ -24,6 +24,7 @@ import EcoGraph from './EcoGraph.jsx';
 import EcoEntityPanel, { ECO_PANEL_W } from './EcoEntityPanel.jsx';
 import LayerReport from './LayerReport.jsx';
 import ChainCrumbs from './ChainCrumbs.jsx';
+import EcoEdgeCard from './EcoEdgeCard.jsx';
 import EcoFilterBar from './EcoFilterBar.jsx';
 import EcoTable from './EcoTable.jsx';
 import { buildGlossary } from './Glossed.jsx';
@@ -147,6 +148,10 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     // the dependency actually matters to.
     if (e && !selectedNodeId) setSelectedNodeId(e.targetId);
   }, [graph, selectedNodeId]);
+
+  // The bond whose card is open. One click on a line on either map now opens
+  // the same kind of card in the same place.
+  const selectedEdge = selectedEdgeId ? graph.edgeById.get(selectedEdgeId) : null;
 
   const clearSelection = useCallback(() => {
     setSelectedNodeId(null);
@@ -501,13 +506,24 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         </div>
       )}
 
-      {view === 'map' && crumbs.length > 1 && !cycleMode && (
+      {view === 'map' && crumbs.length > 1 && !cycleMode && !selectedEdge && (
         <ChainCrumbs
           crumbs={crumbs}
           rootId={chainRoot}
           counts={chain.counts}
           onOpenEntity={focusEntity}
           onClear={clearSelection}
+          rightInset={panelOpen ? ECO_PANEL_W : 0}
+        />
+      )}
+
+      {view === 'map' && selectedEdge && (
+        <EcoEdgeCard
+          edge={selectedEdge}
+          source={graph.nodeById.get(selectedEdge.sourceId)}
+          target={graph.nodeById.get(selectedEdge.targetId)}
+          onOpenEntity={focusEntity}
+          onClose={() => setSelectedEdgeId(null)}
           rightInset={panelOpen ? ECO_PANEL_W : 0}
         />
       )}
