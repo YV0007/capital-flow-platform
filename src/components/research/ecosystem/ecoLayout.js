@@ -33,15 +33,39 @@ import { ROLE_META, BAND_META, CONCENTRATION_META, critIn } from '../../../data/
 
 // ── Node sizing — criticality is this map's "capital" ────────────────────
 function sizeAtom(n) {
-  const share = Math.sqrt(Math.max(0, Math.min(100, n.criticality || 0)) / 100);
-  n.r = 11 + 30 * share;
-  n.atomTier = share > 0.9 ? 0 : share > 0.78 ? 1 : share > 0.6 ? 2 : 3;
+  // Criticality is a 0-100 rubric, not a power law like the flow map's capital,
+  // so the flow map's square root is the wrong curve here: it squeezed the
+  // whole field into 26-41px and every company came out roughly the same size,
+  // which is a lot of ink for very little information. A gentle 0.85 power
+  // spreads the same numbers across 18-38px, so "who is load-bearing" is
+  // legible without clicking, and it shrinks the long tail — which is where
+  // the crowding was coming from.
+  const s = Math.pow(Math.max(0, Math.min(100, n.criticality || 0)) / 100, 0.85);
+  n.r = 9 + 29 * s;
+  n.atomTier = s > 0.83 ? 0 : s > 0.65 ? 1 : s > 0.42 ? 2 : 3;
   n.atomLabel = shortLabel(n.name, 22);
   // Label priority: the more critical and the higher the tier, the earlier a
   // name appears as you zoom out. Same curve as the flow map.
   const tierBonus = n.tier === 'anchor' ? 0.5 : n.tier === 'core' ? 0.3 : n.tier === 'emerging' ? 0.15 : 0;
-  const imp = share + tierBonus;
+  const imp = s + tierBonus;
   n.labelScale = Math.max(0.14, Math.min(1.5, 0.9 - imp * 0.8));
+}
+
+// ── Packing footprint — what a company actually occupies ─────────────────
+// A company is DRAWN as a square tile of side r*1.85 with its name set to the
+// right of it, but the circle packer only knows n.r. Packing by r alone
+// under-books every company by the ~31% its corners stick out past the
+// inscribed circle, before a single label is counted — which is why cells read
+// as crowded and names ran into each other. Everything is packed by the tile's
+// true half-diagonal plus a little label room, and n.r is handed straight back
+// so the painter still draws the real size.
+const TILE_HALF_DIAG = 1.85 * Math.SQRT1_2;   // square side -> half-diagonal
+const LABEL_ROOM = 12;
+function packTiles(members, spread, pad) {
+  members.forEach(n => { n._rDraw = n.r; n.r = n.r * TILE_HALF_DIAG + LABEL_ROOM; });
+  const R = packRelative(members, spread, pad);
+  members.forEach(n => { n.r = n._rDraw; });
+  return R;
 }
 
 /**
@@ -92,7 +116,7 @@ export function applyEcoLayout(graph) {
       || (critIn(b, k) - critIn(a, k))
       || a.id.localeCompare(b.id));
     cellMem[k] = mem;
-    cellR[k] = Math.max(packRelative(mem, 16, 13), 40);
+    cellR[k] = Math.max(packTiles(mem, 16, 14), 40);
   });
 
   // ── Reach: how far across the stack a layer actually touches ───────────
@@ -126,7 +150,7 @@ export function applyEcoLayout(graph) {
   edges.forEach(e => { (outBySpine[e.sourceId] ||= []).push(e); });
 
   const spineMem = spine.slice().sort((a, b) => (b.criticality || 0) - (a.criticality || 0));
-  const spineR = spineMem.length ? Math.max(packRelative(spineMem, 15, 12), 44) : 0;
+  const spineR = spineMem.length ? Math.max(packTiles(spineMem, 15, 14), 44) : 0;
 
   let vx = 0, vy = 0;
   spineMem.forEach(a => (outBySpine[a.id] || []).forEach(e => {
@@ -142,7 +166,7 @@ export function applyEcoLayout(graph) {
   const coreR = spineMem.length ? spineR : 0;
 
   // ── Orbit ring: cells clear each other AND the nucleus ─────────────────
-  const GAP_CELL = 190;
+  const GAP_CELL = 250;
   let ring = 0;
   const chord = 2 * Math.sin(Math.PI / N) || 0.0001;
   for (let i = 0; i < N; i++) {
@@ -150,7 +174,7 @@ export function applyEcoLayout(graph) {
     ring = Math.max(ring, (cellR[a] + cellR[b] + GAP_CELL) / chord);
   }
   const maxCellR = Math.max(0, ...present.map(k => cellR[k]));
-  ring = Math.max(ring, coreR + maxCellR + 300);
+  ring = Math.max(ring, coreR + maxCellR + 340);
   // Pulling the hub layers inward compresses the whole wheel, so the base
   // radius is opened up by roughly what the pull takes back — otherwise the
   // middle turns into a jam and the rim cells sit on each other.
@@ -166,7 +190,7 @@ export function applyEcoLayout(graph) {
     const rr = ring * (1.02 - pull) * (0.94 + 0.12 * hash01(k, 5));
     cellPos[k] = { x: Math.cos(angleOf[k]) * rr, y: Math.sin(angleOf[k]) * rr };
   });
-  const NUCLEUS_GAP = 150;
+  const NUCLEUS_GAP = 185;
   for (let it = 0; it < 160; it++) {
     let moved = false;
     for (let i = 0; i < present.length; i++) {
@@ -174,7 +198,7 @@ export function applyEcoLayout(graph) {
         const a = cellPos[present[i]], b = cellPos[present[j]];
         const dx = b.x - a.x, dy = b.y - a.y;
         const d = Math.hypot(dx, dy) || 0.01;
-        const min = cellR[present[i]] + cellR[present[j]] + 125;
+        const min = cellR[present[i]] + cellR[present[j]] + 170;
         if (d < min) {
           moved = true;
           const p = (min - d) / 2, ux = dx / d, uy = dy / d;

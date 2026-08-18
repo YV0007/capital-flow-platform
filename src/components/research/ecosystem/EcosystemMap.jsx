@@ -18,13 +18,15 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
   ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, RefreshCw,
-  Sparkles, Cpu,
+  Sparkles, Cpu, Table2, Share2, AlertTriangle,
 } from 'lucide-react';
 import EcoGraph from './EcoGraph.jsx';
 import EcoEntityPanel, { ECO_PANEL_W } from './EcoEntityPanel.jsx';
 import LayerReport from './LayerReport.jsx';
 import ChainCrumbs from './ChainCrumbs.jsx';
 import EcoFilterBar from './EcoFilterBar.jsx';
+import EcoTable from './EcoTable.jsx';
+import { buildGlossary } from './Glossed.jsx';
 import { applyEcoLayout } from './ecoLayout.js';
 import {
   buildChain, principalPath, CHAIN_KINDS, CHAIN_DIRECTIONS, CHAIN_DEPTHS, DEFAULT_BRANCH,
@@ -49,6 +51,8 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     return m;
   }, [graph, regions]);
   const adjacency = useMemo(() => buildAdjacency(graph.edges), [graph]);
+  // Vocabulary for the in-prose links (companies, tech nodes, sector acronyms).
+  const glossary = useMemo(() => buildGlossary(graph), [graph]);
   const graphData = useMemo(
     () => ({ nodes: graph.nodes, links: graph.edges }),
     [graph, regions],   // depends on regions so the layout has run first
@@ -67,6 +71,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showLabels, setShowLabels] = useState(true);
   const [showTech, setShowTech] = useState(true);
+  const [view, setView] = useState('map');            // 'map' | 'table'
 
   // ── Lenses + selection ─────────────────────────────────────────────────
   const [cycleMode, setCycleMode] = useState(false);
@@ -116,6 +121,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   const focusEntity = useCallback((id) => {
     const n = graph.nodeById.get(id);
     if (!n) return;
+    setView('map');                    // a table row lands you on the map
     setSelectedNodeId(id);
     setChainRoot(id);
     setExpanded(new Set());
@@ -278,7 +284,8 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         background: 'var(--cf-scrim)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, pointerEvents: 'auto', minWidth: 0 }}>
-          <button onClick={onBack} title="К библиотеке исследований"
+          <button onClick={() => (view !== 'map' ? setView('map') : onBack())}
+            title={view !== 'map' ? 'Назад к карте' : 'К библиотеке исследований'}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 3,
               padding: '6px 10px 6px 6px',
@@ -287,7 +294,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text0)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--cf-text3)'; }}>
-            <ChevronLeft size={13} /> Назад
+            <ChevronLeft size={13} /> {view !== 'map' ? 'К карте' : 'Назад'}
           </button>
           {mapSwitch}
           <div style={{ minWidth: 0 }}>
@@ -331,7 +338,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
               if (e.key === 'Enter' && suggestions[0]) { focusEntity(suggestions[0].id); setSearchOpen(false); }
               if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
             }}
-            placeholder="Найти компанию…"
+            placeholder={view === 'table' ? 'Поиск по таблице…' : 'Найти компанию…'}
             style={{
               width: '100%', padding: '7px 26px 7px 27px',
               background: 'var(--cf-topbar)', border: '1px solid var(--cf-border)', borderRadius: 8,
@@ -344,7 +351,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
               <X size={12} />
             </button>
           )}
-          {searchOpen && suggestions.length > 0 && (
+          {view === 'map' && searchOpen && suggestions.length > 0 && (
             <div style={{
               position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 50,
               background: 'var(--cf-popover)', border: '1px solid var(--cf-border)', borderRadius: 8,
@@ -379,21 +386,31 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
             active={cycleMode} wide>
             <Sparkles size={12} /> Круги{graph.stats.cycleCount ? ` · ${graph.stats.cycleCount}` : ''}
           </TopBtn>
+          <TopBtn onClick={() => (view === 'table' ? setView('map') : (setView('table'), setDrawerOpen(false)))}
+            label={view === 'table' ? 'Назад к карте' : 'Таблица — вся экосистема списком, с сортировкой по любому столбцу'}
+            active={view === 'table'} wide>
+            {view === 'table' ? <Share2 size={12} /> : <Table2 size={12} />}
+            {view === 'table' ? 'Карта' : 'Таблица'}
+          </TopBtn>
           <TopBtn onClick={() => setDrawerOpen(o => !o)}
             label="Фильтры: роль, хребет, тип связи, слой, порог существенности"
             active={drawerOpen || activeFilterCount > 0} wide>
             <SlidersHorizontal size={12} />
             Фильтры{activeFilterCount ? ` · ${activeFilterCount}` : ''}
           </TopBtn>
-          <TopBtn onClick={() => setShowTech(s => !s)} label="Тех-узлы: EUV, CUDA, CoWoS — спутники при владельце" active={showTech}>
-            <Cpu size={12} />
-          </TopBtn>
-          <TopBtn onClick={() => setShowLabels(s => !s)} label="Показать / скрыть подписи" active={showLabels}>
-            <Tag size={12} />
-          </TopBtn>
-          <TopBtn onClick={resetView} label="Вернуть всё на место — плитки на исходные позиции и вид целиком">
-            <Maximize2 size={12} />
-          </TopBtn>
+          {view === 'map' && (
+            <>
+              <TopBtn onClick={() => setShowTech(s => !s)} label="Тех-узлы: EUV, CUDA, CoWoS — спутники при владельце" active={showTech}>
+                <Cpu size={12} />
+              </TopBtn>
+              <TopBtn onClick={() => setShowLabels(s => !s)} label="Показать / скрыть подписи" active={showLabels}>
+                <Tag size={12} />
+              </TopBtn>
+              <TopBtn onClick={resetView} label="Вернуть всё на место — плитки на исходные позиции и вид целиком">
+                <Maximize2 size={12} />
+              </TopBtn>
+            </>
+          )}
           {(selectedNodeId || chainRoot || openLayer) && (
             <TopBtn onClick={clearSelection} label="Снять выделение (Esc)" wide>
               Сброс · Esc
@@ -403,7 +420,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
       </div>
 
       {/* ── Chain controls — only while a chain is lit ──────────────────── */}
-      {chainRoot && !cycleMode && (
+      {view === 'map' && chainRoot && !cycleMode && (
         <ChainControls
           depth={chainDepth} onDepth={setChainDepth}
           dir={chainDir} onDir={setChainDir}
@@ -432,8 +449,21 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         />
       )}
 
+      {/* ── Table — the whole ecosystem as sortable rows ─────────────────── */}
+      {view === 'table' && (
+        <EcoTable
+          topInset={TOPBAR_H}
+          nodes={graph.nodes}
+          layers={graph.layers}
+          layerById={graph.layerById}
+          query={query}
+          visibleNodes={visibleNodes}
+          onOpenEntity={focusEntity}
+        />
+      )}
+
       {/* Empty state */}
-      {visibleEdges.size === 0 && (
+      {view === 'map' && visibleEdges.size === 0 && (
         <div style={{
           position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
           pointerEvents: 'none', zIndex: 8,
@@ -459,7 +489,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         </div>
       )}
 
-      {crumbs.length > 1 && !cycleMode && (
+      {view === 'map' && crumbs.length > 1 && !cycleMode && (
         <ChainCrumbs
           crumbs={crumbs}
           rootId={chainRoot}
@@ -470,7 +500,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         />
       )}
 
-      {cycleMode && <CycleLegend cycles={graph.cycles} nodeById={graph.nodeById} onOpenEntity={focusEntity} />}
+      {view === 'map' && cycleMode && <CycleLegend cycles={graph.cycles} nodeById={graph.nodeById} onOpenEntity={focusEntity} />}
 
       {selectedNode && !layerOpen && (
         <EcoEntityPanel
@@ -481,6 +511,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           nodeById={graph.nodeById}
           layerById={graph.layerById}
           isFixture={META.isFixture}
+          glossary={glossary}
           selectedEdgeId={selectedEdgeId}
           onSelectEdge={setSelectedEdgeId}
           onOpenEntity={focusEntity}

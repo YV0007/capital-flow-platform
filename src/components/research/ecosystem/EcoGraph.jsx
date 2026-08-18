@@ -470,8 +470,15 @@ export default function EcoGraph({
     // resemblance with the flow map. The distinction is carried by opacity
     // here, and stated in words in the tooltip and the entity panel.
     const conf = e.confirmedSources >= 2 ? 1 : 0.62;
-    const base = mode === 'light' ? 0.55 : 0.36;
-    const a = (base + 0.5 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
+    // The flow map's curve is fed a share-of-total that is tiny for almost
+    // every flow, so its bonds land near the floor. Strength here is a 0-100
+    // rubric and a standing dependency that made it onto the map usually
+    // scores high — the same curve pinned nearly every bond near full opacity
+    // and the idle map read as a wall of colour. Same shape, much narrower
+    // band (0.26-0.54 rather than 0.55-1.05); hover, selection and a lit chain
+    // still lift a bond clear of the field, which is when you want to see it.
+    const base = mode === 'light' ? 0.26 : 0.20;
+    const a = (base + 0.28 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
     const lc = tone(e.color, mode);
     if (e.id === hoverEdgeId) return hexA(lc, Math.min(1, a + 0.45));
     return hexA(lc, hasChain ? Math.min(1, a + 0.3) : a);
@@ -479,13 +486,16 @@ export default function EcoGraph({
 
   const linkW = useCallback((e) => {
     if (!edgeLit(e)) return 0;
-    // HAIRLINES, like the flow map. Importance reads through opacity and the
-    // particle flow, never through girth — a map of 60+ standing dependencies
-    // turns into spaghetti the moment the lines get fat.
-    const w = 0.5 + 1.1 * Math.sqrt((e.strength || 0) / 100);
-    if (e.id === selectedEdgeId) return w + 1.3;
-    if (e.id === hoverEdgeId) return w + 0.8;
-    if (cycleMode && cycleEdges.has(e.id)) return w + 0.9;
+    // TRUE hairlines — 0.26-0.74, thinner than the flow map's, because this
+    // map carries roughly twice the bonds in the same frame and they are all
+    // lit at once. Importance reads through opacity and the particle flow,
+    // never through girth: the moment these lines get fat it is spaghetti.
+    const w = 0.26 + 0.48 * Math.sqrt((e.strength || 0) / 100);
+    // The bumps are held down with the base so a hovered bond still reads as
+    // the same map, only louder — not as a different, fatter kind of line.
+    if (e.id === selectedEdgeId) return w + 0.95;
+    if (e.id === hoverEdgeId) return w + 0.6;
+    if (cycleMode && cycleEdges.has(e.id)) return w + 0.65;
     return w;
   }, [edgeLit, selectedEdgeId, hoverEdgeId, cycleMode, cycleEdges]);
 
@@ -522,7 +532,6 @@ export default function EcoGraph({
       <div style="color:${T.tipText2};margin-bottom:9px;line-height:1.45">${esc(n.oneLiner || '')}</div>
       <div style="border-top:1px solid ${T.tipBorder};padding-top:9px;display:grid;grid-template-columns:auto 1fr;gap:5px 16px">
         ${row('Критичность', `${n.criticality} · ${esc(cb.label)}`, tone(cb.color, mode))}
-        ${row('Гравитация', `${n.gravity?.score ?? '—'}`, T.tipText3)}
         ${row('Слои', esc(n.segments.map(s => s.layer).join(' · ')), T.tipText3)}
         ${row('Зависит от / кормит', `${n.upCount} / ${n.downCount}`, T.tipText3)}
       </div>
@@ -571,10 +580,10 @@ export default function EcoGraph({
           linkColor={linkColor}
           linkWidth={linkW}
           linkCurvature="curvature"
-          linkDirectionalArrowLength={(e) => 3 + 2.2 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalArrowLength={(e) => 1.9 + 1.2 * Math.sqrt((e.strength || 0) / 100)}
           linkDirectionalArrowRelPos={0.92}
           linkDirectionalParticles={particles}
-          linkDirectionalParticleWidth={(e) => 1.4 + 1.6 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalParticleWidth={(e) => 1.1 + 1.2 * Math.sqrt((e.strength || 0) / 100)}
           linkDirectionalParticleSpeed={() => 0.004}
           linkDirectionalParticleColor={(e) => {
             const cyc = cycleMode ? cycleEdges.get(e.id) : null;

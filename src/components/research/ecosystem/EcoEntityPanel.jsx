@@ -7,40 +7,51 @@
 //   1. What is it, in one line, and in which layers does it sit
 //   2. How critical — WITH the four rubric inputs, not just the score. A "98"
 //      with no visible reason is a number to distrust.
-//   3. How much gravity — and why that deliberately differs from criticality
-//   4. Up the stack: what it depends on          (top 5, then the rest)
-//   5. Down the stack: what depends on it        (top 5, then the rest)
-//   6. Its layer's concentration, and its share of it
-//   7. Public/private, ticker, geography, what breaks the position
-//   8. Every edge carries its SOURCE: tier, date, link, quote
-//   9. A jump into the matching DC-AI block
+//   3. Up the stack: what it depends on          (top 5, then the rest)
+//   4. Down the stack: what depends on it        (top 5, then the rest)
+//   5. Its layer's concentration, and its share of it
+//   6. Public/private, ticker, geography, what breaks the position
+//   7. Every edge carries its SOURCE: tier, date, link, quote
+//   8. A jump into the matching DC-AI block
+//
+// GRAVITY is pulled from the panel for now — the engine still ships the field
+// and nothing downstream changed, it is simply not shown.
 //
 // The relation lists here are ALWAYS complete — the strength threshold is a
 // canvas control, never a data control. A dependency you cannot see because a
 // slider is at 20 is a dependency you will forget exists.
 // ══════════════════════════════════════════════════════════════════════════
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
-  X, ArrowDownLeft, ArrowUpRight, ExternalLink, Search, ChevronDown, ChevronRight,
-  Layers, Quote, CircleDot, Zap, AlertTriangle,
+  X, ArrowDownLeft, ArrowUpRight, ExternalLink, Search, Globe, ChevronDown, ChevronRight,
+  Layers, Quote, CircleDot, Users, AlertTriangle,
 } from 'lucide-react';
 import {
   CRITICALITY_FACTORS, CONCENTRATION_META, criticalityBand, critIn,
 } from '../../../data/ecosystemMap.js';
+import Glossed from './Glossed.jsx';
 
 const MONO = 'ui-monospace, monospace';
 export const ECO_PANEL_W = 400;
 // One horizontal gutter for the whole panel. Every row sits on it — the big
-// criticality and gravity numbers used to skip it and read as knocked out of
+// criticality number used to skip it and read as knocked out of
 // alignment against the section titles above them.
 const PAD = 16;
 
 export default function EcoEntityPanel({
-  node, up, down, nodeById, layerById, isFixture,
+  node, up, down, nodeById, layerById, isFixture, glossary,
   selectedEdgeId, onSelectEdge, onOpenEntity, onOpenLayer, onOpenDcNode, onClose,
   topInset = 0,
 }) {
+  // Every piece of prose in this panel runs through <Glossed>: a term the map
+  // already knows becomes a link to wherever that term is answered. Without
+  // it, a line like «кастомные ASIC гиперскейлеров» names the threat and then
+  // abandons the reader with it.
+  const gloss = (text) => (
+    <Glossed text={text} glossary={glossary} selfId={node.id}
+      onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode} />
+  );
   const [openEvidence, setOpenEvidence] = useState(null);   // edge id
   const [showAllUp, setShowAllUp] = useState(false);
   const [showAllDown, setShowAllDown] = useState(false);
@@ -49,10 +60,28 @@ export default function EcoEntityPanel({
   const cb = criticalityBand(node.criticality);
   const primaryLayer = layerById.get(node.primaryLayer);
   const conc = primaryLayer ? CONCENTRATION_META[primaryLayer.concentration?.level] : null;
-  // Share of the layer's total criticality — a proxy for "how much of this
-  // layer is this one company", computed from the engine's own per-layer
-  // scores. Nothing is invented; it is a ratio of numbers already in the file.
-  const layerShare = primaryLayer ? shareOfLayer(node, primaryLayer, nodeById) : null;
+  // Who else does the same job. The SECTOR is the comparison set, not the
+  // layer: L3 «Чипы» holds both AI silicon and custom ASIC, which are not the
+  // same function, while the sector is exactly what the rubric's `share`
+  // factor is measured against.
+  //
+  // This replaced a "16% of the layer's total criticality" line that nobody
+  // could act on — a ratio of two scores is not a market share, and the bare
+  // HHI beside it had no scale to read against. The question a reader actually
+  // has is "who else makes this, and how far ahead is this one" — so the panel
+  // answers that, by name, and leaves HHI to the layer report where there is
+  // room to explain it.
+  const rivals = useMemo(() => {
+    if (!node.sector) return [];
+    const out = [];
+    nodeById.forEach(n => {
+      if (n.id === node.id || n.sector !== node.sector) return;
+      out.push({ n, c: critIn(n, n.primaryLayer) || n.criticality || 0 });
+    });
+    return out.sort((a, b) => b.c - a.c);
+  }, [node, nodeById]);
+  const ownScore = critIn(node, node.primaryLayer) || node.criticality || 0;
+  const rank = rivals.filter(r => r.c > ownScore).length + 1;
 
   return (
     <aside style={{
@@ -103,18 +132,19 @@ export default function EcoEntityPanel({
           )}
         </div>
 
-        {node.oneLiner && (
-          <div style={{ marginTop: 11, fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.5 }}>
-            {node.oneLiner}
-          </div>
-        )}
       </div>
 
       {/* ── Body ───────────────────────────────────────────────────────── */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '4px 0 40px' }}>
 
+        {/* 0. What this company actually is — the flow map's profile card,
+               same shell and same links, fed by the contract's one-liner. */}
+        <ProfileBlock node={node} />
+
         {/* 1. Layers this company occupies */}
-        <Section title="Где стоит в стеке" icon={<Layers size={11} />}>
+        <Section title="Где стоит в стеке" icon={<Layers size={11} />}
+          caption="Справа — критичность компании В КАЖДОМ слое по отдельности: 0 — легко обойтись, 100 — слой без неё встаёт. Клик по строке открывает разбор слоя.">
+          <ColHeads left="Слой" right="Критичность в слое" />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {node.segments.map(s => {
               const l = layerById.get(s.layer);
@@ -132,7 +162,10 @@ export default function EcoEntityPanel({
                     {s.primary && <span style={{ color: 'var(--cf-text7)', fontSize: 9, fontFamily: MONO }}> · основной</span>}
                   </span>
                   <Meter value={s.criticality} color={node.color} />
-                  <span style={{ width: 26, fontSize: 10.5, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text3)', textAlign: 'right' }}>
+                  <span title={`Критичность в слое ${s.layer}: ${s.criticality} из 100`} style={{
+                    width: 26, fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
+                    color: 'var(--cf-text3)', textAlign: 'right',
+                  }}>
                     {s.criticality}
                   </span>
                 </button>
@@ -140,54 +173,52 @@ export default function EcoEntityPanel({
             })}
           </div>
           {node.multiLayer && (
-            <Note>Компания живёт в {node.segments.length} слоях — на карте это ОДИН узел в своём основном слое со значком из полосок, а не несколько кружков в разных островах.</Note>
+            <Note>В {node.segments.length} слоях, но на карте это один узел — со значком из полосок, а не несколько кружков.</Note>
           )}
         </Section>
 
         {/* 2. Criticality, with the rubric opened up */}
-        <Section title="Критичность" icon={<CircleDot size={11} />}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 10, padding: `0 ${PAD}px` }}>
+        <Section title="Критичность" icon={<CircleDot size={11} />}
+          caption="Насколько тяжело заменить компанию в её работе: 0 — заменяется завтра, 100 — не заменяется. Складывается из четырёх ответов ниже.">
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 12, padding: `0 ${PAD}px` }}>
             <span style={{ fontSize: 30, fontWeight: 700, color: cb.color, lineHeight: 1, fontFamily: MONO }}>
               {node.criticality}
             </span>
             <span style={{ fontSize: 11.5, color: 'var(--cf-text3)', fontWeight: 600 }}>{cb.label}</span>
+            <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>из 100</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: `0 ${PAD}px` }}>
+          {/* One factor per block rather than per line: the question it answers
+              is the whole point, and it does not fit next to a bar. */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 13, padding: `0 ${PAD}px` }}>
             {CRITICALITY_FACTORS.map(f => {
               const v = node.criticalityFactors?.[f.key];
               return (
-                <div key={f.key} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ width: 132, fontSize: 10.5, color: 'var(--cf-text4)' }}>{f.label}</span>
-                  <span style={{ width: 26, fontSize: 9, fontFamily: MONO, color: 'var(--cf-text7)' }}>×{f.weight}</span>
-                  <Meter value={(v ?? 0) * 20} color={cb.color} width={54} />
-                  <span style={{ flex: 1, fontSize: 10.5, color: 'var(--cf-text3)', textAlign: 'right' }}>
-                    {v == null ? '—' : (f.scale[v] || v)}
-                  </span>
+                <div key={f.key}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                    <span style={{ flex: 1, fontSize: 11.5, fontWeight: 600, color: 'var(--cf-text2)' }}>
+                      {f.label}
+                    </span>
+                    <span style={{ fontSize: 11.5, fontWeight: 700, color: cb.color, textAlign: 'right' }}>
+                      {v == null ? '—' : (f.scale[v] || v)}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: 10, color: 'var(--cf-text6)', lineHeight: 1.45, marginTop: 2 }}>
+                    {f.question}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 5 }}>
+                    <span style={{ flex: 1, display: 'flex' }}>
+                      <Meter value={(v ?? 0) * 20} color={cb.color} width="100%" />
+                    </span>
+                    <span title={`Вес этого ответа в итоговой оценке — ${Math.round(f.weight * 100)}%`} style={{
+                      fontSize: 9, fontFamily: MONO, color: 'var(--cf-text7)', cursor: 'help', flexShrink: 0,
+                    }}>вес {Math.round(f.weight * 100)}%</span>
+                  </div>
                 </div>
               );
             })}
           </div>
-          <Note>
-            Четыре входа по фиксированной рубрике, веса 0.30 · 0.30 · 0.25 · 0.15. Считает движок, дашборд только показывает.
-          </Note>
+          <Note>Рубрика фиксирована — считает движок, дашборд только показывает.</Note>
         </Section>
-
-        {/* 3. Gravity */}
-        {node.gravity && (
-          <Section title="Гравитация" icon={<Zap size={11} />}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 8, padding: `0 ${PAD}px` }}>
-              <span style={{ fontSize: 26, fontWeight: 700, color: 'var(--cf-text1)', lineHeight: 1, fontFamily: MONO }}>
-                {node.gravity.score}
-              </span>
-              <span style={{ fontSize: 10.5, color: 'var(--cf-text5)', fontFamily: MONO }}>
-                {node.gravity.nodes} компаний · {node.gravity.layers} слоёв · {node.gravity.edgeTypes} типов связи
-              </span>
-            </div>
-            <Note>
-              {gravityRead(node)}
-            </Note>
-          </Section>
-        )}
 
         {/* 4 + 5. Up and down the stack */}
         <RelationList
@@ -198,7 +229,8 @@ export default function EcoEntityPanel({
           showAll={showAllUp} onShowAll={() => setShowAllUp(true)}
           selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
           openEvidence={openEvidence} onToggleEvidence={(id) => setOpenEvidence(p => (p === id ? null : id))}
-          onOpenEntity={onOpenEntity} isFixture={isFixture}
+          onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode}
+          glossary={glossary} isFixture={isFixture}
         />
         <RelationList
           title="Вниз по стеку — кто зависит"
@@ -208,39 +240,74 @@ export default function EcoEntityPanel({
           showAll={showAllDown} onShowAll={() => setShowAllDown(true)}
           selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
           openEvidence={openEvidence} onToggleEvidence={(id) => setOpenEvidence(p => (p === id ? null : id))}
-          onOpenEntity={onOpenEntity} isFixture={isFixture}
+          onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode}
+          glossary={glossary} isFixture={isFixture}
         />
 
-        {/* 6. Layer concentration */}
-        {primaryLayer && conc && (
-          <Section title="Концентрация слоя" icon={<Layers size={11} />}>
-            <button onClick={() => onOpenLayer?.(primaryLayer.id)} style={{ ...rowBtn, padding: '8px 16px' }}
+        {/* 6. Who else does this — the rank, then the actual names */}
+        <Section title="Кто ещё в этой функции" icon={<Users size={11} />} count={rivals.length || null}>
+          <div style={{ padding: `0 ${PAD}px 2px`, fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
+            {rivalRead(node, rivals, rank)}
+          </div>
+          {rivals.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', marginTop: 9 }}>
+              {[...rivals, { n: node, c: critIn(node, node.primaryLayer) || node.criticality }]
+                .sort((a, b) => b.c - a.c)
+                .map(({ n, c }) => {
+                  const self = n.id === node.id;
+                  return (
+                    <button key={n.id} onClick={() => !self && onOpenEntity(n.id)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 8, width: '100%',
+                        padding: `5px ${PAD}px`, border: 'none', textAlign: 'left',
+                        background: self ? 'var(--cf-hover)' : 'transparent',
+                        cursor: self ? 'default' : 'pointer', transition: 'background 120ms',
+                      }}
+                      onMouseEnter={(e) => { if (!self) e.currentTarget.style.background = 'var(--cf-hover)'; }}
+                      onMouseLeave={(e) => { if (!self) e.currentTarget.style.background = 'transparent'; }}>
+                      <span style={{ width: 6, height: 6, borderRadius: 2, background: n.color, flexShrink: 0 }} />
+                      <span style={{
+                        flex: 1, minWidth: 0, fontSize: 11.5,
+                        color: self ? 'var(--cf-text0)' : 'var(--cf-text2)',
+                        fontWeight: self ? 700 : 600,
+                        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                      }}>{n.name}</span>
+                      <span style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, flexShrink: 0 }}>
+                        {n.geo}
+                      </span>
+                      <Meter value={c} color={n.color} width={40} />
+                      <span style={{
+                        width: 22, fontSize: 10, fontFamily: MONO, fontWeight: 700,
+                        color: self ? 'var(--cf-text1)' : 'var(--cf-text4)', textAlign: 'right', flexShrink: 0,
+                      }}>{c}</span>
+                    </button>
+                  );
+                })}
+            </div>
+          )}
+          {primaryLayer && conc && (
+            <button onClick={() => onOpenLayer?.(primaryLayer.id)}
+              style={{ ...rowBtn, padding: `9px ${PAD}px 3px` }}
               onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
               onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
               <span style={{
                 padding: '2px 7px', borderRadius: 4, background: conc.color + '1a',
                 border: `1px solid ${conc.color}44`, color: conc.color,
-                fontSize: 9, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em',
+                fontSize: 9, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em', flexShrink: 0,
               }}>{conc.label}</span>
               <span style={{ flex: 1, fontSize: 11, color: 'var(--cf-text4)', textAlign: 'left' }}>
-                {primaryLayer.label} · HHI {primaryLayer.concentration?.hhi ?? '—'}
+                весь слой {primaryLayer.id} · {primaryLayer.label}
               </span>
               <ChevronRight size={12} color="var(--cf-text7)" />
             </button>
-            {layerShare != null && (
-              <Note>
-                На эту компанию приходится {Math.round(layerShare * 100)}% суммарной критичности слоя {primaryLayer.id}.
-                {' '}{conc.blurb}
-              </Note>
-            )}
-          </Section>
-        )}
+          )}
+        </Section>
 
         {/* 7. What breaks it */}
         {node.whatBreaksIt && (
           <Section title="Что сломает позицию" icon={<AlertTriangle size={11} />}>
-            <div style={{ padding: '0 16px', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
-              {node.whatBreaksIt}
+            <div style={{ padding: `0 ${PAD}px`, fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
+              {gloss(node.whatBreaksIt)}
             </div>
           </Section>
         )}
@@ -262,14 +329,13 @@ export default function EcoEntityPanel({
 
         {/* 9. Links out */}
         <Section title="Дальше">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: `0 ${PAD}px` }}>
-            {node.dcNode && onOpenDcNode && (
+          {node.dcNode && onOpenDcNode && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: `0 ${PAD}px` }}>
               <LinkRow onClick={() => onOpenDcNode(node.dcNode)} icon={<Layers size={12} />}>
                 Технический разбор блока в DC-AI
               </LinkRow>
-            )}
-            <LinkRow href={node.searchUrl} icon={<Search size={12} />}>Найти в поиске</LinkRow>
-          </div>
+            </div>
+          )}
           <div style={{ padding: '10px 16px 0', fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO, lineHeight: 1.5 }}>
             Впервые в карте: {node.firstSeen || '—'} · подтверждено: {node.lastConfirmed || '—'}
           </div>
@@ -282,15 +348,25 @@ export default function EcoEntityPanel({
 // ── Relation list — the full set, with sources per edge ──────────────────
 function RelationList({
   title, icon, empty, edges, node, nodeById, side, showAll, onShowAll,
-  selectedEdgeId, onSelectEdge, openEvidence, onToggleEvidence, onOpenEntity, isFixture,
+  selectedEdgeId, onSelectEdge, openEvidence, onToggleEvidence,
+  onOpenEntity, onOpenDcNode, glossary, isFixture,
 }) {
   const TOP = 5;
   const list = showAll ? edges : edges.slice(0, TOP);
   const hidden = edges.length - list.length;
 
+  // Who performs the verb flips with the direction of the list, and that was
+  // the whole confusion: «ПОСТАВЛЯЕТ» next to TSMC on NVIDIA's panel could be
+  // read either way round. Said once, in words, per list.
+  const up = side === 'source';
+  const caption = up
+    ? `Глагол — что делает эта компания для ${node.name}. Цифра — насколько эта связь существенна для ${node.name}, 0–100.`
+    : `Глагол — что делает ${node.name} для этой компании. Цифра — насколько эта связь существенна для неё, 0–100.`;
+
   return (
-    <Section title={title} icon={icon} count={edges.length}>
+    <Section title={title} icon={icon} count={edges.length} caption={edges.length ? caption : undefined}>
       {!edges.length && <Note>{empty}</Note>}
+      {!!edges.length && <ColHeads left="Компания" right="Связь · существенность" />}
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {list.map(e => {
           const otherId = side === 'source' ? e.sourceId : e.targetId;
@@ -317,11 +393,11 @@ function RelationList({
                     {other.primaryLayer}
                   </span>
                 </button>
-                <span title={e.typeMeta?.blurb} style={{
+                <span title={sentence(e, node, other, up)} style={{
                   fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: e.color,
                   textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'help', flexShrink: 0,
-                }}>{e.typeLabel}</span>
-                <span title="Существенность связи ДЛЯ ПОЛУЧАТЕЛЯ, 0–100" style={{
+                }}>{e.typeMeta?.verb || e.typeLabel}</span>
+                <span title={`Существенность этой связи для получателя — ${e.strength} из 100`} style={{
                   width: 24, fontSize: 10, fontFamily: MONO, fontWeight: 700,
                   color: 'var(--cf-text4)', textAlign: 'right', cursor: 'help', flexShrink: 0,
                 }}>{e.strength}</span>
@@ -339,7 +415,10 @@ function RelationList({
               {open && (
                 <div style={{ padding: '2px 16px 11px' }}>
                   {e.note && (
-                    <div style={{ fontSize: 11, color: 'var(--cf-text3)', lineHeight: 1.5, marginBottom: 7 }}>{e.note}</div>
+                    <div style={{ fontSize: 11, color: 'var(--cf-text3)', lineHeight: 1.5, marginBottom: 7 }}>
+                      <Glossed text={e.note} glossary={glossary} selfId={node.id}
+                        onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode} />
+                    </div>
                   )}
                   <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 8 }}>
                     <Chip color={e.tierMeta?.color} title={e.tierMeta?.label}>{e.tierMeta?.short}</Chip>
@@ -404,6 +483,85 @@ function RelationList({
   );
 }
 
+// ── Profile: what this company is, plus a way out to the source ──────────
+// The same card the flow map opens its entity panel with, so the two panels
+// read as one product. The prose is the contract's `oneLiner` — the engine
+// writes it, the dashboard never invents one. The website comes from the logo
+// side-car's domain (see ecosystemMap.js) and simply does not appear when
+// there is no entry; a search chip is always there as the honest fallback.
+function ProfileBlock({ node }) {
+  const what = node.oneLiner || null;
+  return (
+    <div style={{ padding: `12px ${PAD}px 4px` }}>
+      <div style={{
+        padding: '11px 12px',
+        background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 10,
+      }}>
+        <div style={{
+          fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
+          textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 7,
+        }}>
+          {node.role === 'capital' ? 'Кто это' : 'Чем занимается'}
+        </div>
+
+        <div style={{
+          fontSize: 12.5, lineHeight: 1.6,
+          color: what ? 'var(--cf-text2)' : 'var(--cf-text6)',
+          fontStyle: what ? 'normal' : 'italic',
+        }}>
+          {what || 'Описания в данных пока нет — найдите через поиск ниже.'}
+        </div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginTop: 10 }}>
+          {node.site && <LinkChip url={node.site} icon={<Globe size={12} />} label="Сайт" external />}
+          <LinkChip url={node.searchUrl} icon={<Search size={12} />} label={`Искать «${node.name}»`} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LinkChip({ url, icon, label, external }) {
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" title={url}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        padding: '5px 10px', background: 'var(--cf-surface2)',
+        border: '1px solid var(--cf-border)', borderRadius: 7,
+        color: 'var(--cf-text2)', fontSize: 10.5, fontFamily: MONO, fontWeight: 600,
+        textDecoration: 'none', cursor: 'pointer', maxWidth: '100%',
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--cf-link-hover)'; e.currentTarget.style.color = 'var(--cf-text1)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--cf-border)'; e.currentTarget.style.color = 'var(--cf-text2)'; }}>
+      <span style={{ flexShrink: 0, opacity: 0.85, lineHeight: 0 }}>{icon}</span>
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+      {external && <ExternalLink size={10} style={{ flexShrink: 0, opacity: 0.5 }} />}
+    </a>
+  );
+}
+
+/** The relation as a plain sentence, in the direction it actually runs. */
+function sentence(e, node, other, up) {
+  const v = e.typeMeta?.verb || e.typeLabel || '';
+  return up
+    ? `${other.name} ${v} ${node.name}${e.typeMeta?.blurb ? ` — ${e.typeMeta.blurb}` : ''}`
+    : `${node.name} ${v} ${other.name}${e.typeMeta?.blurb ? ` — ${e.typeMeta.blurb}` : ''}`;
+}
+
+/** Column labels over a list, so a bare 0-100 column is never unexplained. */
+function ColHeads({ left, right }) {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 8, padding: `0 ${PAD}px 5px`,
+      fontSize: 8, color: 'var(--cf-text8)', fontFamily: MONO, fontWeight: 700,
+      textTransform: 'uppercase', letterSpacing: '0.1em',
+    }}>
+      <span style={{ flex: 1 }}>{left}</span>
+      <span>{right}</span>
+    </div>
+  );
+}
+
 // ── Small pieces ─────────────────────────────────────────────────────────
 const rowBtn = {
   display: 'flex', alignItems: 'center', gap: 8, width: '100%',
@@ -411,11 +569,15 @@ const rowBtn = {
   cursor: 'pointer', transition: 'background 120ms',
 };
 
-function Section({ title, icon, count, children }) {
+// `caption` is where a section says what its numbers MEAN. Every block on this
+// panel shows a 0-100 score of some kind, and a bare number with a bar next to
+// it is unreadable — you cannot tell criticality-in-a-layer from strength-of-a-
+// link from the headline score. One line under the title, always.
+function Section({ title, icon, count, caption, children }) {
   return (
     <div style={{ padding: '13px 0 3px', borderBottom: '1px solid var(--cf-border-hair)' }}>
       <div style={{
-        display: 'flex', alignItems: 'center', gap: 6, padding: '0 16px 9px',
+        display: 'flex', alignItems: 'center', gap: 6, padding: `0 ${PAD}px ${caption ? 5 : 9}px`,
         fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.12em',
       }}>
@@ -423,6 +585,11 @@ function Section({ title, icon, count, children }) {
         {title}
         {count != null && <span style={{ color: 'var(--cf-text8)' }}>· {count}</span>}
       </div>
+      {caption && (
+        <div style={{ padding: `0 ${PAD}px 9px`, fontSize: 10.5, color: 'var(--cf-text6)', lineHeight: 1.5 }}>
+          {caption}
+        </div>
+      )}
       {children}
     </div>
   );
@@ -452,7 +619,7 @@ function Chip({ children, color, title, dashed }) {
 
 function Meter({ value, color, width = 44 }) {
   return (
-    <span style={{ width, height: 4, borderRadius: 2, background: 'var(--cf-surface2)', flexShrink: 0, overflow: 'hidden', display: 'inline-block' }}>
+    <span style={{ width, minWidth: 0, height: 4, borderRadius: 2, background: 'var(--cf-surface2)', flexShrink: 0, overflow: 'hidden', display: 'inline-block' }}>
       <span style={{ display: 'block', height: '100%', width: `${Math.max(0, Math.min(100, value))}%`, background: color, borderRadius: 2 }} />
     </span>
   );
@@ -472,27 +639,35 @@ function LinkRow({ children, href, onClick, icon }) {
     : <button onClick={onClick} style={style}>{inner}</button>;
 }
 
-/** This company's slice of its layer's total criticality. */
-function shareOfLayer(node, layer, nodeById) {
-  const total = (layer.members || []).reduce((s, id) => {
-    const n = nodeById.get(id);
-    return s + (n ? critIn(n, layer.id) : 0);
-  }, 0);
-  return total ? critIn(node, layer.id) / total : null;
+/**
+ * The one line above the rival list: where this company stands, in words.
+ * Everything in it is a fact from the file — a rank, a gap, a count — never a
+ * derived percentage that looks like a market share but isn't one.
+ */
+function rivalRead(node, rivals, rank) {
+  const sector = node.sectorLabel || node.sector || 'своей функции';
+  if (!rivals.length) {
+    return `${node.name} — единственная компания в карте в функции «${sector}». Второго источника здесь просто нет.`;
+  }
+  const total = rivals.length + 1;
+  const own = critIn(node, node.primaryLayer) || node.criticality || 0;
+  const leader = rivals[0];
+  if (rank === 1) {
+    const gap = own - leader.c;
+    return gap > 0
+      ? `Первый из ${total} в функции «${sector}» — следующий (${leader.n.name}) отстаёт на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])} критичности.`
+      : `Делит первое место в функции «${sector}» с ${leader.n.name} — оба на ${own}.`;
+  }
+  const gap = leader.c - own;
+  return `${rank}-й из ${total} в функции «${sector}»; лидер ${leader.n.name} впереди на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])}.`;
 }
 
-/**
- * Why gravity and criticality disagree — the one thing that makes two scores
- * worth showing side by side instead of averaging them into one.
- */
-function gravityRead(node) {
-  const g = node.gravity?.score ?? 0;
-  const c = node.criticality ?? 0;
-  if (g - c >= 18) {
-    return 'Гравитация выше критичности: компания задевает многое, но заменима. Её уход перекроил бы карту, а не остановил её.';
-  }
-  if (c - g >= 18) {
-    return 'Критичность выше гравитации: узел узкий, но незаменимый. Связей мало — зато без них не работает всё, что выше.';
-  }
-  return 'Гравитация и критичность сошлись: сколько компания задевает, столько и держит.';
+function plural(n, [one, few, many]) {
+  const a = Math.abs(Math.round(n));
+  const d = a % 10, dd = a % 100;
+  if (dd >= 11 && dd <= 14) return many;
+  if (d === 1) return one;
+  if (d >= 2 && d <= 4) return few;
+  return many;
 }
+
