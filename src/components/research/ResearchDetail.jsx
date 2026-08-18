@@ -63,7 +63,9 @@ export default function ResearchDetail({ researchId, context, onBack, onOpenRese
           }}
           onMouseEnter={(e) => e.currentTarget.style.color = r.accent}
           onMouseLeave={(e) => e.currentTarget.style.color = 'var(--hm-text5)'}>
-          ← Back to research library
+          {/* A page reached via a «подробнее» link says where it will go back
+              to, so the trip is round rather than one-way. */}
+          {context?.returnTo?.label ? `← ${context.returnTo.label}` : '← Back to research library'}
         </button>
 
         {/* Header */}

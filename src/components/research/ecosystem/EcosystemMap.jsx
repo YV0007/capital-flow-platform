@@ -229,7 +229,19 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     return next;
   });
 
-  const openDcNode = onOpenResearch ? (blockId) => onOpenResearch('data-centers-ai', { blockId }) : null;
+  // «Подробнее» leaves for the DC-AI research — and hands it a return address,
+  // so its Назад comes back here to the ecosystem map instead of dumping the
+  // reader in the research library.
+  const openDcNode = onOpenResearch
+    ? (blockId) => onOpenResearch('data-centers-ai', {
+        blockId,
+        returnTo: {
+          researchId: 'capital-flow-map',
+          label: 'Назад к карте экосистемы',
+          context: { map: 'ecosystem' },
+        },
+      })
+    : null;
 
   return (
     <div style={{

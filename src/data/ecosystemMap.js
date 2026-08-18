@@ -39,6 +39,7 @@
 
 import raw from './ecosystemMap.json';
 import logoDomains from './ecosystemLogos.json';
+import profiles from './ecosystemProfiles.json';
 import logoManifest from './logoManifest.json';
 
 // ── Roles — the second dimension, orthogonal to the layer ────────────────
@@ -141,15 +142,29 @@ export const NODE_TIER_META = {
 // ── Criticality rubric — the four inputs, fixed weights ──────────────────
 // Shown in the panel so the number is never a black box. The engine does the
 // arithmetic; this table only names the axes and the anchors.
+// `question` is what the factor actually ASKS, in plain Russian. A weighted
+// score with four unlabelled bars is a number nobody can argue with, which is
+// the opposite of useful — every input now states its own question in the
+// panel. The engine ships an integer 0-5 per factor; the wording below is
+// DISPLAY ONLY and can be improved without touching the contract, as long as
+// the meaning of each bucket stays put.
 export const CRITICALITY_FACTORS = [
   { key: 'share',        label: 'Доля в своей функции', weight: 0.30,
+    question: 'Какая часть этой работы в мире идёт через неё',
     scale: ['<15%', '15–30%', '30–50%', '50–70%', '70–90%', '>90%'] },
   { key: 'alternatives', label: 'Реальных альтернатив', weight: 0.30,
+    question: 'Сколько компаний реально могут сделать то же самое',
     scale: ['товар', 'много', 'три-четыре', 'две', 'одна', 'нет'] },
-  { key: 'switchTime',   label: 'Время замены',         weight: 0.25,
-    scale: ['мгновенно', '<6 мес', '6–12 мес', '1–3 года', '3–5 лет', '>5 лет'] },
+  // Was «Время замены» — читалось как «сколько компания строила себя», а
+  // спрашивается ровно обратное: сколько отрасли понадобится, чтобы её
+  // заменить. Верхняя корзина названа словами, потому что «>5 лет» выглядит
+  // как потолок, хотя это «и сколько угодно дальше».
+  { key: 'switchTime',   label: 'Сколько займёт замена', weight: 0.25,
+    question: 'Если она исчезнет — за какой срок отрасль поднимет замену',
+    scale: ['мгновенно', 'до 6 мес', '6–12 мес', '1–3 года', '3–5 лет', 'больше 5 лет'] },
   { key: 'barrier',      label: 'Порог входа',          weight: 0.15,
-    scale: ['нет', 'низкий', 'средний', 'высокий', 'очень высокий', 'запретительный'] },
+    question: 'Насколько тяжело новому игроку вообще войти в эту нишу',
+    scale: ['нет', 'низкий', 'средний', 'высокий', 'очень высокий', 'неподъёмный'] },
 ];
 
 /** Plain-Russian band for a 0–100 criticality score. */
@@ -312,6 +327,19 @@ export function buildGraph() {
       logoUrls: logoUrlsFor(n),
       monogram: monogramOf(n.name),
       searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(n.name || '')}`,
+      // The logo side-car is `id -> domain`, and that domain is also the
+      // company's own site — so the panel gets a real website link for free,
+      // with no contract field and no guessed URL. If a domain is trusted
+      // enough to pull a brand mark from, it is trusted enough to link to;
+      // where there is no entry there is no chip, never a guess.
+      site: logoDomains[n.id] ? `https://${logoDomains[n.id]}` : null,
+      // Long-form profile. The contract only carries a one-liner, and a one-
+      // liner cannot explain WHY a company is hard to replace — you cannot
+      // understand NVIDIA without being told what CUDA is. So the paragraph
+      // lives in a dashboard side-car, same arrangement as the logo domains
+      // above: no contract field, no invented data on the engine's side, and
+      // an engine-supplied field would simply take precedence later.
+      profile: profiles[n.id] || null,
       // filled by the layout pass
       x: 0, y: 0,
     };

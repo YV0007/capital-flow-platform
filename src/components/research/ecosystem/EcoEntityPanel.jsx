@@ -30,7 +30,7 @@ import {
 import {
   CRITICALITY_FACTORS, CONCENTRATION_META, criticalityBand, critIn,
 } from '../../../data/ecosystemMap.js';
-import Glossed from './Glossed.jsx';
+import Glossed, { MoreLink } from './Glossed.jsx';
 
 const MONO = 'ui-monospace, monospace';
 export const ECO_PANEL_W = 400;
@@ -49,8 +49,7 @@ export default function EcoEntityPanel({
   // it, a line like «кастомные ASIC гиперскейлеров» names the threat and then
   // abandons the reader with it.
   const gloss = (text) => (
-    <Glossed text={text} glossary={glossary} selfId={node.id}
-      onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode} />
+    <Glossed text={text} glossary={glossary} selfId={node.id} onOpenEntity={onOpenEntity} />
   );
   const [openEvidence, setOpenEvidence] = useState(null);   // edge id
   const [showAllUp, setShowAllUp] = useState(false);
@@ -139,11 +138,38 @@ export default function EcoEntityPanel({
 
         {/* 0. What this company actually is — the flow map's profile card,
                same shell and same links, fed by the contract's one-liner. */}
-        <ProfileBlock node={node} />
+        <ProfileBlock node={node} gloss={gloss} onOpenDcNode={onOpenDcNode} />
 
-        {/* 1. Layers this company occupies */}
-        <Section title="Где стоит в стеке" icon={<Layers size={11} />}
-          caption="Справа — критичность компании В КАЖДОМ слое по отдельности: 0 — легко обойтись, 100 — слой без неё встаёт. Клик по строке открывает разбор слоя.">
+        {/* Who feeds it and who it feeds — moved ABOVE the metrics on
+           purpose. This is the working surface: you come to a company to
+           see what it hangs off and what hangs off it, and only go down
+           to the scoring if the answer is not obvious. */}
+        <RelationList
+          title="Вверх по стеку — от кого зависит"
+          icon={<ArrowDownLeft size={11} />}
+          empty="Ни одной входящей зависимости в карте."
+          edges={up} node={node} nodeById={nodeById} side="source"
+          showAll={showAllUp} onShowAll={() => setShowAllUp(true)}
+          selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
+          openEvidence={openEvidence} onToggleEvidence={(id) => setOpenEvidence(p => (p === id ? null : id))}
+          onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode}
+          glossary={glossary} isFixture={isFixture}
+        />
+        <RelationList
+          title="Вниз по стеку — кто зависит"
+          icon={<ArrowUpRight size={11} />}
+          empty="Никто в карте не зависит от этой компании напрямую."
+          edges={down} node={node} nodeById={nodeById} side="target"
+          showAll={showAllDown} onShowAll={() => setShowAllDown(true)}
+          selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
+          openEvidence={openEvidence} onToggleEvidence={(id) => setOpenEvidence(p => (p === id ? null : id))}
+          onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode}
+          glossary={glossary} isFixture={isFixture}
+        />
+
+
+        {/* Then the scoring: where it stands, and how hard it is to replace. */}
+        <Section title="Где стоит в стеке" icon={<Layers size={11} />}>
           <ColHeads left="Слой" right="Критичность в слое" />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {node.segments.map(s => {
@@ -172,80 +198,40 @@ export default function EcoEntityPanel({
               );
             })}
           </div>
-          {node.multiLayer && (
-            <Note>В {node.segments.length} слоях, но на карте это один узел — со значком из полосок, а не несколько кружков.</Note>
-          )}
         </Section>
 
-        {/* 2. Criticality, with the rubric opened up */}
-        <Section title="Критичность" icon={<CircleDot size={11} />}
-          caption="Насколько тяжело заменить компанию в её работе: 0 — заменяется завтра, 100 — не заменяется. Складывается из четырёх ответов ниже.">
+        <Section title="Критичность" icon={<CircleDot size={11} />}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 12, padding: `0 ${PAD}px` }}>
             <span style={{ fontSize: 30, fontWeight: 700, color: cb.color, lineHeight: 1, fontFamily: MONO }}>
               {node.criticality}
             </span>
             <span style={{ fontSize: 11.5, color: 'var(--cf-text3)', fontWeight: 600 }}>{cb.label}</span>
-            <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>из 100</span>
+            <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>
+              из 100 · насколько трудно заменить
+            </span>
           </div>
-          {/* One factor per block rather than per line: the question it answers
-              is the whole point, and it does not fit next to a bar. */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 13, padding: `0 ${PAD}px` }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 7, padding: `0 ${PAD}px` }}>
             {CRITICALITY_FACTORS.map(f => {
               const v = node.criticalityFactors?.[f.key];
               return (
-                <div key={f.key}>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                    <span style={{ flex: 1, fontSize: 11.5, fontWeight: 600, color: 'var(--cf-text2)' }}>
-                      {f.label}
-                    </span>
-                    <span style={{ fontSize: 11.5, fontWeight: 700, color: cb.color, textAlign: 'right' }}>
-                      {v == null ? '—' : (f.scale[v] || v)}
-                    </span>
-                  </div>
-                  <div style={{ fontSize: 10, color: 'var(--cf-text6)', lineHeight: 1.45, marginTop: 2 }}>
-                    {f.question}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 5 }}>
-                    <span style={{ flex: 1, display: 'flex' }}>
-                      <Meter value={(v ?? 0) * 20} color={cb.color} width="100%" />
-                    </span>
-                    <span title={`Вес этого ответа в итоговой оценке — ${Math.round(f.weight * 100)}%`} style={{
-                      fontSize: 9, fontFamily: MONO, color: 'var(--cf-text7)', cursor: 'help', flexShrink: 0,
-                    }}>вес {Math.round(f.weight * 100)}%</span>
-                  </div>
+                <div key={f.key} title={`${f.question} · вес в оценке ${Math.round(f.weight * 100)}%`}
+                  style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'help' }}>
+                  <span style={{ flex: 1, fontSize: 10.5, color: 'var(--cf-text4)' }}>{f.label}</span>
+                  <Meter value={(v ?? 0) * 20} color={cb.color} width={48} />
+                  <span style={{
+                    width: 96, fontSize: 10.5, fontWeight: 600,
+                    color: 'var(--cf-text3)', textAlign: 'right',
+                  }}>
+                    {v == null ? '—' : (f.scale[v] || v)}
+                  </span>
                 </div>
               );
             })}
           </div>
-          <Note>Рубрика фиксирована — считает движок, дашборд только показывает.</Note>
         </Section>
 
-        {/* 4 + 5. Up and down the stack */}
-        <RelationList
-          title="Вверх по стеку — от кого зависит"
-          icon={<ArrowDownLeft size={11} />}
-          empty="Ни одной входящей зависимости в карте."
-          edges={up} node={node} nodeById={nodeById} side="source"
-          showAll={showAllUp} onShowAll={() => setShowAllUp(true)}
-          selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
-          openEvidence={openEvidence} onToggleEvidence={(id) => setOpenEvidence(p => (p === id ? null : id))}
-          onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode}
-          glossary={glossary} isFixture={isFixture}
-        />
-        <RelationList
-          title="Вниз по стеку — кто зависит"
-          icon={<ArrowUpRight size={11} />}
-          empty="Никто в карте не зависит от этой компании напрямую."
-          edges={down} node={node} nodeById={nodeById} side="target"
-          showAll={showAllDown} onShowAll={() => setShowAllDown(true)}
-          selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
-          openEvidence={openEvidence} onToggleEvidence={(id) => setOpenEvidence(p => (p === id ? null : id))}
-          onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode}
-          glossary={glossary} isFixture={isFixture}
-        />
-
         {/* 6. Who else does this — the rank, then the actual names */}
-        <Section title="Кто ещё в этой функции" icon={<Users size={11} />} count={rivals.length || null}>
+        <Section title="Кто ещё в этом секторе" icon={<Users size={11} />} count={rivals.length || null}>
           <div style={{ padding: `0 ${PAD}px 2px`, fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
             {rivalRead(node, rivals, rank)}
           </div>
@@ -359,12 +345,9 @@ function RelationList({
   // the whole confusion: «ПОСТАВЛЯЕТ» next to TSMC on NVIDIA's panel could be
   // read either way round. Said once, in words, per list.
   const up = side === 'source';
-  const caption = up
-    ? `Глагол — что делает эта компания для ${node.name}. Цифра — насколько эта связь существенна для ${node.name}, 0–100.`
-    : `Глагол — что делает ${node.name} для этой компании. Цифра — насколько эта связь существенна для неё, 0–100.`;
 
   return (
-    <Section title={title} icon={icon} count={edges.length} caption={edges.length ? caption : undefined}>
+    <Section title={title} icon={icon} count={edges.length}>
       {!edges.length && <Note>{empty}</Note>}
       {!!edges.length && <ColHeads left="Компания" right="Связь · существенность" />}
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -417,7 +400,7 @@ function RelationList({
                   {e.note && (
                     <div style={{ fontSize: 11, color: 'var(--cf-text3)', lineHeight: 1.5, marginBottom: 7 }}>
                       <Glossed text={e.note} glossary={glossary} selfId={node.id}
-                        onOpenEntity={onOpenEntity} onOpenDcNode={onOpenDcNode} />
+                        onOpenEntity={onOpenEntity} />
                     </div>
                   )}
                   <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 8 }}>
@@ -489,7 +472,7 @@ function RelationList({
 // writes it, the dashboard never invents one. The website comes from the logo
 // side-car's domain (see ecosystemMap.js) and simply does not appear when
 // there is no entry; a search chip is always there as the honest fallback.
-function ProfileBlock({ node }) {
+function ProfileBlock({ node, gloss, onOpenDcNode }) {
   const what = node.oneLiner || null;
   return (
     <div style={{ padding: `12px ${PAD}px 4px` }}>
@@ -504,13 +487,27 @@ function ProfileBlock({ node }) {
           {node.role === 'capital' ? 'Кто это' : 'Чем занимается'}
         </div>
 
+        {/* The one-liner leads — it is the claim. The profile underneath is
+            the argument for it: what the company physically does, the term you
+            have to know to follow the rest, and where its moat actually sits. */}
         <div style={{
-          fontSize: 12.5, lineHeight: 1.6,
-          color: what ? 'var(--cf-text2)' : 'var(--cf-text6)',
+          fontSize: 12.5, lineHeight: 1.55, fontWeight: 600,
+          color: what ? 'var(--cf-text1)' : 'var(--cf-text6)',
           fontStyle: what ? 'normal' : 'italic',
         }}>
-          {what || 'Описания в данных пока нет — найдите через поиск ниже.'}
+          {what ? gloss(what) : 'Описания в данных пока нет — найдите через поиск ниже.'}
+          {/* One small way out, right where a newcomer first asks "what IS
+              this" — and the page it opens knows how to come back. */}
+          <MoreLink dcNode={node.dcNode} onOpenDcNode={onOpenDcNode} />
         </div>
+        {node.profile && (
+          <div style={{
+            marginTop: 8, paddingTop: 8, borderTop: '1px solid var(--cf-border-hair)',
+            fontSize: 12, lineHeight: 1.62, color: 'var(--cf-text3)',
+          }}>
+            {gloss(node.profile)}
+          </div>
+        )}
 
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginTop: 10 }}>
           {node.site && <LinkChip url={node.site} icon={<Globe size={12} />} label="Сайт" external />}
@@ -647,7 +644,7 @@ function LinkRow({ children, href, onClick, icon }) {
 function rivalRead(node, rivals, rank) {
   const sector = node.sectorLabel || node.sector || 'своей функции';
   if (!rivals.length) {
-    return `${node.name} — единственная компания в карте в функции «${sector}». Второго источника здесь просто нет.`;
+    return `${node.name} — единственная компания в карте в секторе «${sector}». Второго источника здесь просто нет.`;
   }
   const total = rivals.length + 1;
   const own = critIn(node, node.primaryLayer) || node.criticality || 0;
@@ -655,11 +652,11 @@ function rivalRead(node, rivals, rank) {
   if (rank === 1) {
     const gap = own - leader.c;
     return gap > 0
-      ? `Первый из ${total} в функции «${sector}» — следующий (${leader.n.name}) отстаёт на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])} критичности.`
-      : `Делит первое место в функции «${sector}» с ${leader.n.name} — оба на ${own}.`;
+      ? `Первый из ${total} в секторе «${sector}» — следующий (${leader.n.name}) отстаёт на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])} критичности.`
+      : `Делит первое место в секторе «${sector}» с ${leader.n.name} — оба на ${own}.`;
   }
   const gap = leader.c - own;
-  return `${rank}-й из ${total} в функции «${sector}»; лидер ${leader.n.name} впереди на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])}.`;
+  return `${rank}-й из ${total} в секторе «${sector}»; лидер ${leader.n.name} впереди на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])}.`;
 }
 
 function plural(n, [one, few, many]) {

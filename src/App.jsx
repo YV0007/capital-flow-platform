@@ -428,7 +428,20 @@ export default function App() {
               researchId={activeResearchId}
               context={researchContext}
               onOpenResearch={openResearchPage}
-              onBack={() => { setActiveResearchId(null); setResearchContext(null); }} />
+              onBack={() => {
+                // One level of history. A research page can hand the next one a
+                // `returnTo` (see the ecosystem map's «подробнее» links); Назад
+                // then steps back to where you came from instead of dumping you
+                // in the library and losing the map you were reading.
+                const back = researchContext?.returnTo;
+                if (back?.researchId) {
+                  setActiveResearchId(back.researchId);
+                  setResearchContext(back.context || null);
+                  return;
+                }
+                setActiveResearchId(null);
+                setResearchContext(null);
+              }} />
           : <ResearchLanding onOpen={(id) => setActiveResearchId(id)} />}
       </div>
     );
