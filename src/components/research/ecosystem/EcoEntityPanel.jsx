@@ -309,11 +309,13 @@ export default function EcoEntityPanel({
               <StatRow label="Разных типов связи" value={g.edgeTypes} />
               {g.cycles > 0 && <StatRow label="Стоит на контурах" value={g.cycles} accent="#E5484D" />}
             </div>
-            {/* Network centrality — the v3 addition. Two numbers the engine
-                computes over the whole graph: how "crowded" the node is
-                (degree) and how much "passes through" it (betweenness). Sits in
-                the gravity block because both answer the same family of
-                question — how load-bearing is this node structurally. */}
+            {/* Network centrality — the v3 addition. Engine-computed measures
+                over the whole graph: how "crowded" the node is (degree), how
+                much "passes through" it (betweenness), and — once the engine
+                ships it — how much important things depend on it (pagerank).
+                Sits in the gravity block because all answer the same family of
+                question: how load-bearing is this node structurally. Each row
+                renders only if its number arrived. */}
             {entity.centrality && (
               <div style={{ marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)', display: 'flex', flexDirection: 'column', gap: 5, padding: `9px ${PAD}px 0` }}>
                 <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>
@@ -326,6 +328,19 @@ export default function EcoEntityPanel({
                 {entity.centrality.betweenness != null && (
                   <StatRow label="Посредничество" value={entity.centrality.betweenness}
                     hint="Доля кратчайших путей между другими, проходящих через эту сущность. Насколько через неё «всё идёт»." />
+                )}
+                {/* PageRank — engine-computed, present only once the engine ships
+                    it. Raw pagerank (≈1/N average) is meaningless to read, so it
+                    is shown as a MULTIPLE of the network average — pagerank × N,
+                    where N is the node count. 1.0× = average pull; higher means
+                    important things depend on it. Multiplying by N is display
+                    arithmetic, not metric computation — the number itself is the
+                    engine's. */}
+                {entity.centrality.pagerank != null && entityById.size > 0 && (
+                  <StatRow label="Влияние"
+                    value={`${(entity.centrality.pagerank * entityById.size).toFixed(1)}×`}
+                    unit="среднего"
+                    hint="PageRank: важность тем выше, чем больше на неё опираются ВАЖНЫЕ узлы — как ранг страницы у Google. Показано в разах от среднего влияния по сети (1× — среднее)." />
                 )}
               </div>
             )}
