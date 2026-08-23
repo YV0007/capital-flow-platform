@@ -27,7 +27,7 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
   ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, RefreshCw,
-  Sparkles, Cpu, Table2, Share2, AlertTriangle, Network,
+  Sparkles, Cpu, Table2, Share2, AlertTriangle, Network, Settings2, Waypoints,
 } from 'lucide-react';
 import EcoGraph from './EcoGraph.jsx';
 import EcoEntityPanel, { ECO_PANEL_W } from './EcoEntityPanel.jsx';
@@ -46,7 +46,8 @@ import { buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH } from '../../..
 
 const MONO = 'ui-monospace, monospace';
 const BG = 'var(--cf-canvas)';
-const TOPBAR_H = 62;
+const TOPBAR_H = 56;
+const EMPTY_SET = new Set();
 
 export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   // Built once; the layout pins fx/fy — no simulation, no per-reload drift.
@@ -95,10 +96,15 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
   // ── Lenses + selection ─────────────────────────────────────────────────
   const [cycleMode, setCycleMode] = useState(false);
+  // Which single circuit is lit, or null while the picker is showing the list
+  // of all of them. Круги no longer paints all 140 circuits at once — that
+  // read as a wall of colour. Pick one, see one.
+  const [cycleId, setCycleId] = useState(null);
   // v3: the subgraph lens. Holds the active subgraph id, or null. Mutually
   // exclusive with the chain and cycle lenses — one answer on screen at a time.
   const [subgraphId, setSubgraphId] = useState(null);
   const [subgraphMenuOpen, setSubgraphMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState(null);
@@ -136,6 +142,20 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     [subgraphId, graph],
   );
 
+  // The one chosen circuit, or null while the picker is up.
+  const activeCycle = useMemo(
+    () => (cycleId ? graph.cycles.find(c => c.id === cycleId) || null : null),
+    [cycleId, graph],
+  );
+  // Same shape the map already reads (edge id → cycle), just narrowed to the
+  // one circuit — so EcoGraph's colouring/width/particle code needs no change.
+  const cycleEdgesForGraph = useMemo(() => {
+    const m = new Map();
+    if (activeCycle) activeCycle.edgeSet.forEach(id => m.set(id, activeCycle));
+    return m;
+  }, [activeCycle]);
+  const cycleNodeSet = activeCycle ? activeCycle.entitySet : EMPTY_SET;
+
   // ── The chain ──────────────────────────────────────────────────────────
   const chain = useMemo(() => buildChain(chainRoot, {
     adjacency,
@@ -162,6 +182,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     setOpenLayer(null);
     setSelectedEdgeId(null);
     setCycleMode(false);
+    setCycleId(null);
     setSubgraphId(null);               // a chain and a subgraph are two answers
     const fg = fgRef.current;
     if (fg && Number.isFinite(n.x)) {
@@ -217,7 +238,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   }, []);
 
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') { clearSelection(); setCycleMode(false); setSubgraphId(null); setSummaryOpen(false); setSubgraphMenuOpen(false); } };
+    const onKey = (e) => { if (e.key === 'Escape') { clearSelection(); setCycleMode(false); setCycleId(null); setSubgraphId(null); setSummaryOpen(false); setSubgraphMenuOpen(false); setSettingsOpen(false); } };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [clearSelection]);
@@ -315,8 +336,9 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           visibleEdges={visibleEdges}
           chain={chain}
           chainRoot={chainRoot}
-          cycleEdges={graph.cycleEdges}
+          cycleEdges={cycleEdgesForGraph}
           cycleMode={cycleMode}
+          cycleNodeSet={cycleNodeSet}
           subgraphLens={subgraphLens}
           spofById={graph.network.spofById}
           selectedNodeId={selectedNodeId}
@@ -344,7 +366,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         padding: '0 16px', pointerEvents: 'none',
         background: 'var(--cf-scrim)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, pointerEvents: 'auto', minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, pointerEvents: 'auto', minWidth: 0 }}>
           <button onClick={() => (view !== 'map' ? setView('map') : onBack())}
             title={view !== 'map' ? 'Назад к карте' : 'К библиотеке исследований'}
             style={{
@@ -352,20 +374,21 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
               padding: '6px 10px 6px 6px',
               background: 'var(--cf-topbar)', border: '1px solid var(--cf-border)', borderRadius: 8,
               color: 'var(--cf-text3)', fontSize: 11, fontFamily: MONO, fontWeight: 600, cursor: 'pointer',
+              flexShrink: 0,
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text0)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--cf-text3)'; }}>
             <ChevronLeft size={13} /> {view !== 'map' ? 'К карте' : 'Назад'}
           </button>
           {mapSwitch}
-          <div style={{ minWidth: 0 }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+          <div style={{ minWidth: 0, overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, minWidth: 0 }}>
               <span title="Сеть из 26 равноправных пивотов ИИ-инфраструктуры (в v2 карта была якорной на NVIDIA)"
-                style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
+                style={{ fontSize: 14, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
                 Экосистема ИИ
               </span>
               <span title="Месяц прогона месячного конвейера движка"
-                style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
+                style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap', flexShrink: 0 }}>
                 НА {META.asOf || META.generated || '—'}
               </span>
               {/* The ONE behavioural difference between draft and real data.
@@ -373,7 +396,9 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                   engine's file lands it disappears by itself — no flag, no code
                   edit. Deliberately a chip in the top bar rather than a banner
                   over the canvas: it has to be impossible to miss and equally
-                  impossible to be in the way of the map underneath. */}
+                  impossible to be in the way of the map underneath. Truncates
+                  with an ellipsis rather than wrapping — a second line is what
+                  used to escape the bar's fixed height and overlap the canvas. */}
               {META.isFixture && (
                 <span title="Данные пока черновые: цифры и цитаты правдоподобны, но не проверены. Плашка исчезнет сама, когда придёт первый прогон движка."
                   style={{
@@ -382,55 +407,39 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                     border: '1px dashed var(--cf-warn)', color: 'var(--cf-warn)',
                     fontSize: 8.5, fontFamily: MONO, fontWeight: 700,
                     textTransform: 'uppercase', letterSpacing: '0.08em',
-                    whiteSpace: 'nowrap', cursor: 'help',
+                    whiteSpace: 'nowrap', cursor: 'help', overflow: 'hidden', textOverflow: 'ellipsis',
+                    minWidth: 0,
                   }}>
-                  <AlertTriangle size={9} />
-                  Черновые данные — ждём первый прогон движка
+                  <AlertTriangle size={9} style={{ flexShrink: 0 }} />
+                  Черновые данные
                 </span>
               )}
             </div>
-            <div style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2, whiteSpace: 'nowrap' }}>
-              {visibleNodes.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.entityCount}</span> сущностей
-              <span style={{ color: 'var(--cf-text9)' }}> · </span>
-              {visibleEdges.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.edgeCount}</span> связей
-              <span style={{ color: 'var(--cf-text9)' }}> · </span>
-              {graph.stats.layerCount} слоёв
-              {graph.stats.cycleCount > 0 && (
-                <>
-                  <span style={{ color: 'var(--cf-text9)' }}> · </span>
-                  <span style={{ color: 'var(--cf-warn)', fontWeight: 700 }}>
-                    {graph.stats.cycleCount} {plural(graph.stats.cycleCount, ['круг', 'круга', 'кругов'])}
-                  </span>
-                </>
-              )}
-              {/* v3 extends the SAME line rather than adding a block: the
-                  network counts sit right after the layer/cycle counts, and the
-                  richer aggregates (density, degree, clustering) hang off a
-                  click in NetworkSummary. */}
-              <span style={{ color: 'var(--cf-text9)' }}> · </span>
-              <button onClick={() => setSummaryOpen(o => !o)} title="Сводка сети: плотность, средняя степень, кластеризация"
-                style={{
-                  background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit',
-                  color: summaryOpen ? 'var(--cf-accent)' : 'var(--cf-text5)', textDecoration: 'underline', textDecorationStyle: 'dotted',
-                }}>
-                {graph.stats.pivotalCount} {plural(graph.stats.pivotalCount, ['пивот', 'пивота', 'пивотов'])}
+            {/* Everything the old inline line spelled out (pivots, subgraphs,
+                SPOF, density, degree, clustering) now lives ONLY in NetworkSummary
+                — this stays one short line that never wraps into the canvas. */}
+            <button onClick={() => setSummaryOpen(o => !o)}
+              title="Сводка сети: пивоты, подграфы, точки отказа, плотность, средняя степень, кластеризация"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 4,
+                background: 'none', border: 'none', padding: 0, marginTop: 2, cursor: 'pointer', font: 'inherit',
+              }}>
+              <span style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, whiteSpace: 'nowrap' }}>
+                {visibleNodes.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.entityCount}</span> сущ.
                 <span style={{ color: 'var(--cf-text9)' }}> · </span>
-                {graph.network.subgraphs.length} {plural(graph.network.subgraphs.length, ['подграф', 'подграфа', 'подграфов'])}
-                {graph.network.spof.length > 0 && (
-                  <>
-                    <span style={{ color: 'var(--cf-text9)' }}> · </span>
-                    {graph.network.spof.length} {plural(graph.network.spof.length, ['точка отказа', 'точки отказа', 'точек отказа'])}
-                  </>
-                )}
-              </button>
-            </div>
+                {visibleEdges.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.edgeCount}</span> связ.
+                <span style={{ color: 'var(--cf-text9)' }}> · </span>
+                {graph.stats.layerCount} слоёв
+              </span>
+              <Waypoints size={10} style={{ color: summaryOpen ? 'var(--cf-accent)' : 'var(--cf-text7)', flexShrink: 0 }} />
+            </button>
           </div>
         </div>
 
         <div style={{ flex: 1 }} />
 
         {/* Search */}
-        <div ref={searchRef} style={{ position: 'relative', pointerEvents: 'auto', width: 'min(280px, 26vw)' }}>
+        <div ref={searchRef} style={{ position: 'relative', pointerEvents: 'auto', width: 'min(240px, 22vw)', flexShrink: 1 }}>
           <Search size={12} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--cf-text7)' }} />
           <input
             value={query}
@@ -482,11 +491,21 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
+          {/* Круги — a PICKER, not a paint-everything toggle: choosing it opens
+              the circuit list (bottom-right); the map lights only the one
+              circuit you pick, not all 140 contours stacked on each other. */}
           <TopBtn
-            onClick={() => { setCycleMode(c => !c); if (!cycleMode) { setChainRoot(null); setSubgraphId(null); } }}
-            label="Круги — замкнутые контуры сбыта и финансирования. Единственная линза без оценок: цикл есть свойство графа."
+            onClick={() => {
+              const turningOn = !cycleMode;
+              setCycleMode(turningOn);
+              setCycleId(null);
+              if (turningOn) { setChainRoot(null); setSubgraphId(null); setSubgraphMenuOpen(false); }
+            }}
+            label="Круги — замкнутые контуры сбыта, финансирования и лок-ина. Выберите один в списке — карта покажет только его."
             active={cycleMode} wide>
-            <Sparkles size={12} /> Круги{graph.stats.cycleCount ? ` · ${graph.stats.cycleCount}` : ''}
+            <Sparkles size={12} /> {activeCycle ? activeCycle.typeLabel : 'Круги'}
+            {!activeCycle && graph.stats.cycleCount ? ` · ${graph.stats.cycleCount}` : ''}
+            {activeCycle && <X size={11} onClick={(e) => { e.stopPropagation(); setCycleId(null); }} />}
           </TopBtn>
           {/* Subgraph lens — a third lens beside Круги. Picks one of the three
               stacks; the chosen one lights and everything else leaves the
@@ -553,18 +572,40 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
             <SlidersHorizontal size={12} />
             Фильтры{activeFilterCount ? ` · ${activeFilterCount}` : ''}
           </TopBtn>
+          {/* Vid settings — tech-node visibility, labels, reset-to-home, all
+              merged into one gear menu so the bar doesn't carry three
+              icon-only buttons whose meaning only a tooltip explains. */}
           {view === 'map' && (
-            <>
-              <TopBtn onClick={() => setShowTech(s => !s)} label="Тех-узлы: EUV, CUDA, CoWoS — спутники при владельце" active={showTech}>
-                <Cpu size={12} />
+            <div style={{ position: 'relative' }}>
+              <TopBtn onClick={() => setSettingsOpen(o => !o)} label="Вид карты: тех-узлы, подписи, сброс позиций" active={settingsOpen}>
+                <Settings2 size={12} />
               </TopBtn>
-              <TopBtn onClick={() => setShowLabels(s => !s)} label="Показать / скрыть подписи" active={showLabels}>
-                <Tag size={12} />
-              </TopBtn>
-              <TopBtn onClick={resetView} label="Вернуть всё на место — плитки на исходные позиции и вид целиком">
-                <Maximize2 size={12} />
-              </TopBtn>
-            </>
+              {settingsOpen && (
+                <div style={{
+                  position: 'absolute', top: 'calc(100% + 6px)', right: 0, zIndex: 50, width: 210,
+                  background: 'var(--cf-popover)', border: '1px solid var(--cf-border)', borderRadius: 9,
+                  overflow: 'hidden', boxShadow: '0 16px 40px -12px var(--cf-shadow)', animation: 'cfmDrop 140ms ease-out',
+                  padding: 4,
+                }}>
+                  <SettingsToggle icon={Cpu} label="Тех-узлы" hint="EUV, CUDA, CoWoS — спутники при владельце"
+                    checked={showTech} onClick={() => setShowTech(s => !s)} />
+                  <SettingsToggle icon={Tag} label="Подписи" hint="Названия компаний на карте"
+                    checked={showLabels} onClick={() => setShowLabels(s => !s)} />
+                  <div style={{ height: 1, background: 'var(--cf-border-hair)', margin: '4px 6px' }} />
+                  <button onClick={() => { resetView(); setSettingsOpen(false); }}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 8, width: '100%', textAlign: 'left', cursor: 'pointer',
+                      padding: '7px 8px', border: 'none', borderRadius: 6, background: 'transparent',
+                      color: 'var(--cf-text2)', fontSize: 11,
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+                    <Maximize2 size={12} style={{ color: 'var(--cf-text6)' }} />
+                    Восстановить вид
+                  </button>
+                </div>
+              )}
+            </div>
           )}
           {(selectedNodeId || chainRoot || openLayer) && (
             <TopBtn onClick={clearSelection} label="Снять выделение (Esc)" wide>
@@ -673,7 +714,17 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         />
       )}
 
-      {view === 'map' && cycleMode && <CycleLegend cycles={graph.cycles} entityById={graph.entityById} onOpenEntity={focusEntity} />}
+      {view === 'map' && cycleMode && (
+        <CycleLegend
+          cycles={graph.cycles}
+          activeCycleId={cycleId}
+          onSelect={setCycleId}
+          onBack={() => setCycleId(null)}
+          onClose={() => { setCycleMode(false); setCycleId(null); }}
+          entityById={graph.entityById}
+          onOpenEntity={focusEntity}
+        />
+      )}
 
       {view === 'map' && summaryOpen && (
         <NetworkSummary
@@ -786,8 +837,12 @@ function Segmented({ label, value, onChange, options }) {
   );
 }
 
-// ── Cycle lens legend — what each lit contour actually is ────────────────
-function CycleLegend({ cycles, entityById, onOpenEntity }) {
+// ── Cycle lens — a PICKER when nothing is chosen, a single detail card once
+// something is. Same panel, two modes: this is the "down popup" the top-bar
+// Круги button opens — never all 140 contours stacked on the map at once.
+function CycleLegend({ cycles, activeCycleId, onSelect, onBack, onClose, entityById, onOpenEntity }) {
+  const active = activeCycleId ? cycles.find(c => c.id === activeCycleId) : null;
+
   return (
     <div style={{
       position: 'absolute', right: 14, bottom: 14, zIndex: 22, width: 340,
@@ -796,36 +851,103 @@ function CycleLegend({ cycles, entityById, onOpenEntity }) {
       padding: '11px 13px 12px', maxHeight: '46vh', overflowY: 'auto',
       animation: 'cfmDrop 180ms ease-out',
     }}>
-      <div style={{
-        fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
-        textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 9,
-      }}>Замкнутые контуры · {cycles.length}</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 9 }}>
+        {active && (
+          <button onClick={onBack} title="Ко всем контурам"
+            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'var(--cf-text6)', display: 'flex' }}>
+            <ChevronLeft size={13} />
+          </button>
+        )}
+        <div style={{
+          fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
+          textTransform: 'uppercase', letterSpacing: '0.12em',
+        }}>
+          {active ? active.typeLabel : `Выберите контур · ${cycles.length}`}
+        </div>
+        <div style={{ flex: 1 }} />
+        <button onClick={onClose} title="Закрыть (Esc)"
+          style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 2, lineHeight: 0 }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
+          <X size={14} />
+        </button>
+      </div>
+
       {!cycles.length && (
         <div style={{ fontSize: 11, color: 'var(--cf-text6)' }}>Движок пока не нашёл ни одного круга.</div>
       )}
-      {cycles.map(c => (
-        <div key={c.id} style={{ marginBottom: 11, paddingBottom: 10, borderBottom: '1px solid var(--cf-border-hair)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
-            <span style={{ width: 8, height: 8, borderRadius: 2, background: c.color, flexShrink: 0 }} />
-            <span style={{ fontSize: 9, color: c.color, fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
-              {c.typeLabel}
-            </span>
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'center', marginBottom: 5 }}>
-            {(c.path || []).map((id, i) => (
-              <span key={`${id}:${i}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-                {i > 0 && <span style={{ color: 'var(--cf-text8)', fontSize: 10 }}>→</span>}
-                <button onClick={() => onOpenEntity(id)} style={{
-                  background: 'none', border: 'none', padding: 0, cursor: 'pointer',
-                  color: 'var(--cf-text2)', fontSize: 11, fontWeight: 600,
-                }}>{entityById.get(id)?.name || id}</button>
-              </span>
-            ))}
-          </div>
-          <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', lineHeight: 1.5 }}>{c.note}</div>
-        </div>
-      ))}
+
+      {(active ? [active] : cycles).map(c => {
+        const row = (
+          <>
+            {!active && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
+                <span style={{ width: 8, height: 8, borderRadius: 2, background: c.color, flexShrink: 0 }} />
+                <span style={{ fontSize: 9, color: c.color, fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                  {c.typeLabel}
+                </span>
+              </div>
+            )}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'center', marginBottom: 5 }}>
+              {(c.path || []).map((id, i) => (
+                <span key={`${id}:${i}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+                  {i > 0 && <span style={{ color: 'var(--cf-text8)', fontSize: 10 }}>→</span>}
+                  {active ? (
+                    <button onClick={() => onOpenEntity(id)} style={{
+                      background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+                      color: 'var(--cf-text2)', fontSize: 11, fontWeight: 600,
+                    }}>{entityById.get(id)?.name || id}</button>
+                  ) : (
+                    <span style={{ color: 'var(--cf-text2)', fontSize: 11, fontWeight: 600 }}>{entityById.get(id)?.name || id}</span>
+                  )}
+                </span>
+              ))}
+            </div>
+            <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', lineHeight: 1.5 }}>{c.note}</div>
+          </>
+        );
+        return active ? (
+          <div key={c.id}>{row}</div>
+        ) : (
+          <button key={c.id} onClick={() => onSelect(c.id)}
+            style={{
+              display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
+              background: 'transparent', border: 'none', borderRadius: 7,
+              padding: '6px 6px', marginBottom: 4,
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+            {row}
+          </button>
+        );
+      })}
     </div>
+  );
+}
+
+function SettingsToggle({ icon: Icon, label, hint, checked, onClick }) {
+  return (
+    <button onClick={onClick} title={hint}
+      style={{
+        display: 'flex', alignItems: 'center', gap: 8, width: '100%', textAlign: 'left', cursor: 'pointer',
+        padding: '7px 8px', border: 'none', borderRadius: 6, background: 'transparent',
+        color: 'var(--cf-text2)', fontSize: 11,
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
+      onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+      <Icon size={12} style={{ color: 'var(--cf-text6)', flexShrink: 0 }} />
+      <span style={{ flex: 1 }}>{label}</span>
+      <span style={{
+        width: 26, height: 15, borderRadius: 8, flexShrink: 0, position: 'relative',
+        background: checked ? 'var(--cf-accent-bg)' : 'var(--cf-surface2)',
+        border: `1px solid ${checked ? 'var(--cf-accent-bd)' : 'var(--cf-border)'}`,
+      }}>
+        <span style={{
+          position: 'absolute', top: 1, left: checked ? 12 : 1, width: 11, height: 11, borderRadius: '50%',
+          background: checked ? 'var(--cf-accent)' : 'var(--cf-text6)', transition: 'left 120ms',
+        }} />
+      </span>
+    </button>
   );
 }
 
@@ -849,13 +971,4 @@ function TopBtn({ children, onClick, label, active, wide }) {
       {children}
     </button>
   );
-}
-
-function plural(n, [one, few, many]) {
-  const a = Math.abs(Math.round(n));
-  const d = a % 10, dd = a % 100;
-  if (dd >= 11 && dd <= 14) return many;
-  if (d === 1) return one;
-  if (d >= 2 && d <= 4) return few;
-  return many;
 }
