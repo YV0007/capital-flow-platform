@@ -18,6 +18,7 @@ import {
 } from '../../../data/capitalMap.js';
 import { WatchlistMenu } from './WatchlistControl.jsx';
 import { ARCHETYPE_LABEL, RANK_LABEL, RANK_COLOR } from './classification.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -63,30 +64,30 @@ function EntityLogo({ node, size = 20 }) {
 const ROLES = [
   {
     key: 'allocator',
-    label: 'Инвесторы',
-    tagline: 'кто вкладывает капитал',
+    label: t('Инвесторы', 'Allocators'),
+    tagline: t('кто вкладывает капитал', 'who deploys the capital'),
     accent: 'var(--cf-gold)',
-    capitalWord: 'вложено',
+    capitalWord: t('вложено', 'deployed'),
     groups: [
-      { cls: 'sovereign',   label: 'Государственные',        blurb: 'Госфонды и госпрограммы — национальный капитал.' },
-      { cls: 'corporate',   label: 'Корпорации',             blurb: 'Операционные компании, инвестирующие с собственного баланса.' },
-      { cls: 'vc',          label: 'Венчур',                 blurb: 'Венчурные фонды и фонды роста, вкладывающие капитал LP.' },
-      { cls: 'alt_manager', label: 'Управляющие активами',   blurb: 'Инфраструктурные, кредитные и private-equity управляющие.' },
-      { cls: 'individual',  label: 'Частные лица',           blurb: 'Ангелы, основатели и семейные офисы, инвестирующие лично.' },
+      { cls: 'sovereign',   label: t('Государственные', 'State'),        blurb: t('Госфонды и госпрограммы — национальный капитал.', 'Sovereign funds and state programmes — national capital.') },
+      { cls: 'corporate',   label: t('Корпорации', 'Corporates'),             blurb: t('Операционные компании, инвестирующие с собственного баланса.', 'Operating companies investing off their own balance sheet.') },
+      { cls: 'vc',          label: t('Венчур', 'Venture'),                 blurb: t('Венчурные фонды и фонды роста, вкладывающие капитал LP.', 'Venture and growth funds deploying LP capital.') },
+      { cls: 'alt_manager', label: t('Управляющие активами', 'Asset managers'),   blurb: t('Инфраструктурные, кредитные и private-equity управляющие.', 'Infrastructure, credit and private-equity managers.') },
+      { cls: 'individual',  label: t('Частные лица', 'Individuals'),           blurb: t('Ангелы, основатели и семейные офисы, инвестирующие лично.', 'Angels, founders and family offices investing personally.') },
     ],
   },
   {
     key: 'target',
-    label: 'Получатели',
-    tagline: 'куда приходит капитал',
+    label: t('Получатели', 'Recipients'),
+    tagline: t('куда приходит капитал', 'where the capital lands'),
     accent: 'var(--cf-green2)',
-    capitalWord: 'получено',
+    capitalWord: t('получено', 'received'),
     groups: [
-      { cls: 'public',  label: 'Публичные компании',  blurb: 'Компании на бирже — торгуемый вывод из частных потоков.' },
-      { cls: 'private', label: 'Частные компании',    blurb: 'Венчурные и растущие компании, привлекающие капитал.' },
-      { cls: 'fund',    label: 'Фонды и SPV',         blurb: 'Фонды, SPV и СП, собранные, чтобы инвестировать дальше.' },
-      { cls: 'project', label: 'Проекты и стройка',   blurb: 'Именованные физические стройки — дата-центры, станции, фабрики.' },
-      { cls: 'asset',   label: 'Активы',              blurb: 'Отдельные активы и купленные позиции.' },
+      { cls: 'public',  label: t('Публичные компании', 'Public companies'),  blurb: t('Компании на бирже — торгуемый вывод из частных потоков.', 'Listed companies — the tradeable conclusion from private flows.') },
+      { cls: 'private', label: t('Частные компании', 'Private companies'),    blurb: t('Венчурные и растущие компании, привлекающие капитал.', 'Venture and growth companies raising capital.') },
+      { cls: 'fund',    label: t('Фонды и SPV', 'Funds & SPVs'),         blurb: t('Фонды, SPV и СП, собранные, чтобы инвестировать дальше.', 'Funds, SPVs and JVs raised in order to invest onward.') },
+      { cls: 'project', label: t('Проекты и стройка', 'Projects & builds'),   blurb: t('Именованные физические стройки — дата-центры, станции, фабрики.', 'Named physical builds — data centers, plants, fabs.') },
+      { cls: 'asset',   label: t('Активы', 'Assets'),              blurb: t('Отдельные активы и купленные позиции.', 'Individual assets and acquired positions.') },
     ],
   },
 ];
@@ -98,6 +99,7 @@ const ROLES = [
 // share or re-rank a leader, because then the figure would no longer be the
 // engine's and the provenance claim would be false.
 function CycleSummary() {
+  const t = useT();
   if (!AGGREGATES) return null;
   const top = AGGREGATES?.top_sector;
   const co = AGGREGATES?.top_company;
@@ -116,38 +118,38 @@ function CycleSummary() {
           fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
         }}>
-          Этот цикл
+          {t('Этот цикл', 'This cycle')}
         </span>
       </div>
 
       <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap' }}>
         {top?.top && (
-          <Lead label="Сектор-лидер"
+          <Lead label={t('Сектор-лидер', 'Leading sector')}
             value={top.top.sector ? sectorLabel(top.top.sector) : '—'}
             color={SECTOR_META[top.top.sector]?.color || 'var(--cf-text3)'}
             detail={[
               top.top.capital_usd ? fmtUSD(top.top.capital_usd) : null,
-              top.top.deals ? `${top.top.deals} ${plural(top.top.deals, ['сделка', 'сделки', 'сделок'])}` : null,
-              top.top.allocators ? `${top.top.allocators} ${plural(top.top.allocators, ['инвестор', 'инвестора', 'инвесторов'])}` : null,
+              top.top.deals ? `${top.top.deals} ${plural(top.top.deals, ['сделка', 'сделки', 'сделок'], ['deal', 'deals'])}` : null,
+              top.top.allocators ? `${top.top.allocators} ${plural(top.top.allocators, ['инвестор', 'инвестора', 'инвесторов'], ['allocator', 'allocators'])}` : null,
             ].filter(Boolean).join(' · ')}
             runnersUp={(top.ranked || []).slice(1, 4).map(r => ({
               name: sectorLabel(r.sector),
               color: SECTOR_META[r.sector]?.color,
-              tail: r.capital_usd ? fmtUSD(r.capital_usd) : `${r.deals} сд.`,
+              tail: r.capital_usd ? fmtUSD(r.capital_usd) : `${r.deals} ${t('сд.', 'deals')}`,
             }))}
             basis={basisLabel(top.basis)} />
         )}
         {co?.top && (
-          <Lead label="Компания-лидер по инвесторам"
+          <Lead label={t('Компания-лидер по инвесторам', 'Most-backed company')}
             value={co.top.target || '—'} color="var(--cf-text1)"
             detail={[
-              co.top.investors ? `${co.top.investors} ${plural(co.top.investors, ['инвестор', 'инвестора', 'инвесторов'])}` : null,
+              co.top.investors ? `${co.top.investors} ${plural(co.top.investors, ['инвестор', 'инвестора', 'инвесторов'], ['investor', 'investors'])}` : null,
               co.top.capital_usd ? fmtUSD(co.top.capital_usd) : null,
             ].filter(Boolean).join(' · ')}
             runnersUp={(co.ranked || []).slice(1, 4).map(r => ({
               name: r.target,
               color: SECTOR_META[(r.sectors || [])[0]]?.color,
-              tail: r.investors ? `${r.investors} инв.` : null,
+              tail: r.investors ? `${r.investors} ${t('инв.', 'inv.')}` : null,
             }))}
             basis={basisLabel(co.basis)} />
         )}
@@ -161,11 +163,12 @@ function CycleSummary() {
               textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6,
               cursor: shares.basis ? 'help' : 'default',
             }}>
-            Где сидит капитал · по темам
+            {t('Где сидит капитал · по темам', 'Where the capital sits · by theme')}
           </div>
           <div style={{ display: 'flex', height: 6, borderRadius: 3, overflow: 'hidden', background: 'var(--cf-border-hair)' }}>
             {byCap.map(([k, v]) => (
-              <span key={k} title={`${THEME_META[k]?.label || k} — ${Math.round(v * 100)}% отслеживаемого капитала`}
+              <span key={k} title={t(`${THEME_META[k]?.label || k} — ${Math.round(v * 100)}% отслеживаемого капитала`,
+                       `${THEME_META[k]?.label || k} — ${Math.round(v * 100)}% of tracked capital`)}
                 style={{ width: `${v * 100}%`, background: THEME_META[k]?.color || 'var(--cf-text9)' }} />
             ))}
           </div>
@@ -185,6 +188,7 @@ function CycleSummary() {
 }
 
 function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
+  const t = useT();
   return (
     <div style={{ minWidth: 0, maxWidth: 430 }}>
       <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
@@ -214,9 +218,9 @@ function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
 }
 
 function statusOf(n) {
-  if (n.stale) return { label: 'Остыл', color: 'var(--cf-muted)', title: 'Нет активности 180 дней — остаётся в памяти, приглушён.' };
-  if (n.watchOnly) return { label: 'Наблюдение', color: 'var(--cf-text5)', title: 'Только потоки-кандидаты — не подтверждено.' };
-  return { label: 'Активен', color: 'var(--cf-good)', title: 'Подтверждённая активность в текущем окне.' };
+  if (n.stale) return { label: t('Остыл', 'Cold'), color: 'var(--cf-muted)', title: t('Нет активности 180 дней — остаётся в памяти, приглушён.', 'No activity for 180 days — kept on the map, muted.') };
+  if (n.watchOnly) return { label: t('Наблюдение', 'Watch'), color: 'var(--cf-text5)', title: t('Только потоки-кандидаты — не подтверждено.', 'Candidate flows only — unconfirmed.') };
+  return { label: t('Активен', 'Active'), color: 'var(--cf-good)', title: t('Подтверждённая активность в текущем окне.', 'Confirmed activity in the current window.') };
 }
 
 // ONE tag per row — REPLACES the old rank badge entirely. "Уровень" used to
@@ -241,16 +245,17 @@ function scoreDriver(n) {
 }
 
 const COLS = [
-  { key: 'name',    label: 'Объект',         sort: (n) => n.name.toLowerCase() },
-  { key: 'tier',    label: 'Уровень',        sort: (n) => (n.type === 'player' ? n.playerScore : n.dealScore) ?? -1, num: true },
-  { key: 'sector',  label: 'Сектор',         sort: (n) => (n.sector ? sectorLabel(n.sector) : '~') },
-  { key: 'deals',   label: 'Сделки',         sort: (n) => n.deals, num: true },
-  { key: 'capital', label: 'Капитал',        sort: (n) => n.capital, num: true },
-  { key: 'last',    label: 'Активность',     sort: (n) => n.last_activity || '', num: true },
-  { key: 'status',  label: 'Статус',         sort: (n) => (n.stale ? 2 : n.watchOnly ? 1 : 0) },
+  { key: 'name',    label: t('Объект', 'Entity'),         sort: (n) => n.name.toLowerCase() },
+  { key: 'tier',    label: t('Уровень', 'Tier'),        sort: (n) => (n.type === 'player' ? n.playerScore : n.dealScore) ?? -1, num: true },
+  { key: 'sector',  label: t('Сектор', 'Sector'),         sort: (n) => (n.sector ? sectorLabel(n.sector) : '~') },
+  { key: 'deals',   label: t('Сделки', 'Deals'),         sort: (n) => n.deals, num: true },
+  { key: 'capital', label: t('Капитал', 'Capital'),        sort: (n) => n.capital, num: true },
+  { key: 'last',    label: t('Активность', 'Activity'),     sort: (n) => n.last_activity || '', num: true },
+  { key: 'status',  label: t('Статус', 'Status'),         sort: (n) => (n.stale ? 2 : n.watchOnly ? 1 : 0) },
 ];
 
 export default function EntityTable({ nodes, matchedNodes, query, activeList, wl, onOpenEntity, kind = 'all', onKind, onOpenTheses, topInset = 0 }) {
+  const t = useT();
   const [sortKey, setSortKey] = useState('capital');
   const [sortDir, setSortDir] = useState(-1);         // -1 desc · 1 asc
   const [collapsed, setCollapsed] = useState(() => new Set());
@@ -295,8 +300,8 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
         const leftovers = mine.filter(n => !named.has(n.cls));
         if (leftovers.length) {
           groups.push({
-            cls: 'other', id: `${role.key}:other`, label: 'Прочее',
-            blurb: 'Классы объектов из данных движка, для которых здесь пока нет секции.',
+            cls: 'other', id: `${role.key}:other`, label: t('Прочее', 'Other'),
+            blurb: t('Классы объектов из данных движка, для которых здесь пока нет секции.', 'Entity classes in the engine data that have no section here yet.'),
             rows: leftovers.sort(cmp),
           });
         }
@@ -348,13 +353,13 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
         {/* Scope line + role chips */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
           <span style={{ fontSize: 10.5, color: 'var(--cf-text5)', fontFamily: MONO }}>
-            {shown} из {nodes.length} {plural(nodes.length, ['объекта', 'объектов', 'объектов'])} в выборке
-            {activeList ? <> · список <span style={{ color: 'var(--cf-accent)', fontWeight: 700 }}>{activeList.name}</span></> : null}
-            {query ? <> · по запросу «{query}»</> : null}
+            {shown} {t('из', 'of')} {nodes.length} {plural(nodes.length, ['объекта', 'объектов', 'объектов'], ['entity', 'entities'])} {t('в выборке', 'in selection')}
+            {activeList ? <> · {t('список', 'list')} <span style={{ color: 'var(--cf-accent)', fontWeight: 700 }}>{activeList.name}</span></> : null}
+            {query ? <> · {t('по запросу', 'matching')} «{query}»</> : null}
           </span>
           <span style={{ flex: 1 }} />
           <button onClick={() => onOpenTheses?.()}
-            title="Тезисы инвесторов — кто вкладывает, в каком статусе и почему"
+            title={t('Тезисы инвесторов — кто вкладывает, в каком статусе и почему', 'Allocator theses — who deploys, at what standing and why')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 5,
               padding: '5px 11px', borderRadius: 7, cursor: 'pointer',
@@ -362,9 +367,9 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
               color: 'var(--cf-text3)', fontSize: 10, fontFamily: MONO, fontWeight: 600,
               textTransform: 'uppercase', letterSpacing: '0.07em',
             }}>
-            <Sparkles size={11} /> Тезисы
+            <Sparkles size={11} /> {t('Тезисы', 'Theses')}
           </button>
-          {[['all', 'Все'], ['allocator', 'Инвесторы'], ['target', 'Получатели']].map(([k, label]) => (
+          {[['all', t('Все', 'All')], ['allocator', t('Инвесторы', 'Allocators')], ['target', t('Получатели', 'Recipients')]].map(([k, label]) => (
 
             <button key={k} onClick={() => onKind?.(k)}
               style={{
@@ -397,7 +402,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
               <span style={{ fontSize: 10.5, color: 'var(--cf-text6)', fontFamily: MONO }}>{role.tagline}</span>
               <span style={{ flex: 1 }} />
               <span style={{ fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO }}>
-                {role.count} {plural(role.count, ['объект', 'объекта', 'объектов'])}
+                {role.count} {plural(role.count, ['объект', 'объекта', 'объектов'], ['entity', 'entities'])}
                 <span style={{ color: 'var(--cf-text9)' }}> · </span>
                 <span style={{ color: 'var(--cf-text3)', fontWeight: 700 }}>{fmtUSD(role.capital)}</span> {role.capitalWord}
               </span>
@@ -417,7 +422,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                     <tbody key={g.id}>
                       {/* Subsection header — what this bucket is, and how big */}
                       <tr onClick={() => toggleGroup(g.id)}
-                        title={shut ? 'Развернуть' : 'Свернуть'}
+                        title={shut ? t('Развернуть', 'Expand') : t('Свернуть', 'Collapse')}
                         style={{ cursor: 'pointer', background: 'var(--cf-surface0)' }}>
                         <td colSpan={COLS.length + 1} style={{ padding: '9px 14px', borderBottom: '1px solid var(--cf-border-hair)', borderTop: '1px solid var(--cf-border-hair)' }}>
                           <span style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -448,7 +453,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                         return (
                           <tr key={n.id}
                             onClick={() => onOpenEntity(n.id)}
-                            title={`Открыть ${n.name} на карте`}
+                            title={t(`Открыть ${n.name} на карте`, `Open ${n.name} on the map`)}
                             style={{ cursor: 'pointer', borderBottom: '1px solid var(--cf-border-hair)' }}
                             onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-surface1)')}
                             onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
@@ -471,7 +476,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                                 label everyone gets the same one of. */}
                             <td style={{ padding: '9px 14px', whiteSpace: 'nowrap' }}>
                               {sd
-                                ? <span title="Ранг · стиль — не размер капитала. Открыть панель для полного разбора факторов."
+                                ? <span title={t('Ранг · стиль — не размер капитала. Открыть панель для полного разбора факторов.', 'Rank · style — not capital size. Open the panel for the full factor breakdown.')}
                                     style={{ fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: sd.color, cursor: 'help' }}>
                                     {sd.label}
                                   </span>
@@ -489,7 +494,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                             </td>
                             {/* Capital — 0 with deals on file = undisclosed, not zero */}
                             <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 11.5, fontFamily: MONO, fontWeight: 700, color: n.capital > 0 ? 'var(--cf-text0)' : 'var(--cf-text7)' }}>
-                              {n.capital > 0 ? fmtUSD(n.capital) : n.degree > 0 ? 'не раскрыто' : '$0'}
+                              {n.capital > 0 ? fmtUSD(n.capital) : n.degree > 0 ? t('не раскрыто', 'undisclosed') : '$0'}
                             </td>
                             {/* Last activity */}
                             <td style={{ padding: '9px 14px', textAlign: 'right', fontSize: 10, fontFamily: MONO, color: 'var(--cf-text5)', whiteSpace: 'nowrap' }}>
@@ -525,14 +530,17 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
             padding: '28px 16px', textAlign: 'center', fontSize: 11, color: 'var(--cf-text7)', fontFamily: MONO,
             border: '1px solid var(--cf-border-soft)', borderRadius: 12,
           }}>
-            Ничего не найдено — очистите поиск{activeList ? ' или отключите список' : ''}.
+            {t('Ничего не найдено — очистите поиск', 'Nothing found — clear the search')}{activeList ? t(' или отключите список', ' or turn off the list') : ''}.
           </div>
         )}
 
         <div style={{ marginTop: 12, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.6 }}>
-          Вселенная отслеживания, как её присылает движок: каждый объект хотя бы с одним потоком, в той роли и типе,
+          {t(`Вселенная отслеживания, как её присылает движок: каждый объект хотя бы с одним потоком, в той роли и типе,
           что заданы в данных. Строки «Наблюдение» — только неподтверждённые кандидаты; «Остыл» — 180 дней без активности.
-          Клик по заголовку секции сворачивает её, по строке — открывает объект на карте.
+          Клик по заголовку секции сворачивает её, по строке — открывает объект на карте.`,
+             `The tracked universe exactly as the engine ships it: every entity with at least one flow, in the role and type
+          the data assigns. “Watch” rows are unconfirmed candidates only; “Cold” means 180 days without activity.
+          Clicking a section header collapses it; clicking a row opens the entity on the map.`)}
         </div>
       </div>
     </div>
