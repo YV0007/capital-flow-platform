@@ -38,7 +38,7 @@ export default function EcoGraph({
   graphData, regions, techNodes,
   visibleNodes, visibleEdges,
   chain, chainRoot,
-  cycleEdges, cycleMode,
+  cycleEdges, cycleMode, cycleNodeSet,
   subgraphLens, spofById,
   selectedNodeId, selectedEdgeId,
   onNodeClick, onEdgeClick, onBackgroundClick, onRegionClick,
@@ -149,10 +149,14 @@ export default function EcoGraph({
     // is not in the subgraph leaves the render entirely, same "remove, don't
     // dim" rule the README fixes for company selection.
     if (subgraphLens) return subgraphLens.nodeSet.has(n.id);
-    if (cycleMode) return n.onCycle;
+    // A specific circuit chosen → only its own path lights, not every entity
+    // that happens to sit on ANY of the 140 circuits (n.onCycle). Nothing
+    // chosen yet → cycleNodeSet is empty, so the lens shows nothing until the
+    // picker gives it one to show.
+    if (cycleMode) return !!cycleNodeSet && cycleNodeSet.has(n.id);
     if (!hasChain) return true;
     return chain.nodes.has(n.id);
-  }, [visibleNodes, hasChain, chain, cycleMode, subgraphLens]);
+  }, [visibleNodes, hasChain, chain, cycleMode, cycleNodeSet, subgraphLens]);
 
   const edgeLit = useCallback((e) => {
     if (!visibleEdges.has(e.id)) return false;
@@ -587,7 +591,7 @@ export default function EcoGraph({
         ${row('Слои', esc(n.segments.map(s2 => s2.layer).join(' · ')), T.tipText3)}
         ${row('Зависит от / кормит', `${n.upCount} / ${n.downCount}`, T.tipText3)}
         ${n.gravity ? row('Гравитация', String(n.gravity.score), T.tipText3) : ''}
-        ${n.centrality ? row('Центральность', `степень ${n.centrality.degree} · посредн. ${n.centrality.betweenness}`, T.tipText3) : ''}
+        ${n.centrality ? row('Центральность', `степень ${n.centrality.degree} · посредн. ${n.centrality.betweenness}${n.centrality.pagerank != null ? ` · влияние ${(n.centrality.pagerank * graphData.nodes.length).toFixed(1)}×` : ''}`, T.tipText3) : ''}
         ${n.riskMeta ? row('Риск', esc(n.riskMeta.label), tone(n.riskMeta.color, mode)) : ''}
       </div>
       <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">Клик → цепочка по стеку</div>
