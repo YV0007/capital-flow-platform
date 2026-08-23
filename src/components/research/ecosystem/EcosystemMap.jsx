@@ -96,10 +96,14 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
   // ── Lenses + selection ─────────────────────────────────────────────────
   const [cycleMode, setCycleMode] = useState(false);
-  // Which single circuit is lit, or null while the picker is showing the list
-  // of all of them. Круги no longer paints all 140 circuits at once — that
-  // read as a wall of colour. Pick one, see one.
+  // Круги no longer paints all 140 circuits at once — that read as a wall of
+  // colour. ONE circuit is lit at a time; `cycleId` says which. Turning the
+  // lens on picks the first one straight away, so the map is never blank while
+  // you decide, and `cycleListOpen` says whether the panel is showing the
+  // whole list to choose from or the detail of the lit one. The lit circuit
+  // stays on the map in BOTH panel modes — browsing the list never empties it.
   const [cycleId, setCycleId] = useState(null);
+  const [cycleListOpen, setCycleListOpen] = useState(true);
   // v3: the subgraph lens. Holds the active subgraph id, or null. Mutually
   // exclusive with the chain and cycle lenses — one answer on screen at a time.
   const [subgraphId, setSubgraphId] = useState(null);
@@ -142,11 +146,22 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     [subgraphId, graph],
   );
 
-  // The one chosen circuit, or null while the picker is up.
+  // The one circuit currently lit on the canvas.
   const activeCycle = useMemo(
     () => (cycleId ? graph.cycles.find(c => c.id === cycleId) || null : null),
     [cycleId, graph],
   );
+
+  // Open the lens ON the first circuit rather than on a blank map. Done in an
+  // effect, not in the button's click handler, and that is not incidental: the
+  // canvas only takes up a new circuit when the lens is ALREADY on, so turning
+  // the lens on and choosing the circuit in the same update left the map empty.
+  // Two passes — lens on, then circuit chosen — is exactly what clicking a row
+  // does, and that path always worked.
+  useEffect(() => {
+    if (cycleMode && !cycleId) setCycleId(graph.cycles[0]?.id ?? null);
+  }, [cycleMode, cycleId, graph]);
+
   // Same shape the map already reads (edge id → cycle), just narrowed to the
   // one circuit — so EcoGraph's colouring/width/particle code needs no change.
   const cycleEdgesForGraph = useMemo(() => {
@@ -155,6 +170,14 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     return m;
   }, [activeCycle]);
   const cycleNodeSet = activeCycle ? activeCycle.entitySet : EMPTY_SET;
+
+  // NOTE: no automatic camera move when a circuit lights. It was tried and
+  // taken out. force-graph's zoomToFit runs centerAt and zoom as two d3
+  // transitions on the same zoom behaviour, so an animated fit has the second
+  // cancel the first — the camera zooms but never pans, and a circuit a
+  // thousand world-units off-centre lands outside the viewport, leaving a blank
+  // map while the panel insists something is lit. The camera stays where the
+  // reader put it; «Восстановить вид» in the settings menu reframes on demand.
 
   // ── The chain ──────────────────────────────────────────────────────────
   const chain = useMemo(() => buildChain(chainRoot, {
@@ -383,7 +406,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           {mapSwitch}
           <div style={{ minWidth: 0, overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, minWidth: 0 }}>
-              <span title="Сеть из 26 равноправных пивотов ИИ-инфраструктуры (в v2 карта была якорной на NVIDIA)"
+              <span title="Сеть ключевых узлов ИИ-инфраструктуры (в v2 карта была якорной на NVIDIA)"
                 style={{ fontSize: 14, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
                 Экосистема ИИ
               </span>
@@ -419,7 +442,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                 SPOF, density, degree, clustering) now lives ONLY in NetworkSummary
                 — this stays one short line that never wraps into the canvas. */}
             <button onClick={() => setSummaryOpen(o => !o)}
-              title="Сводка сети: пивоты, подграфы, точки отказа, плотность, средняя степень, кластеризация"
+              title="Сводка сети: ключевые узлы, подграфы, точки отказа, плотность, средняя степень, кластеризация"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 4,
                 background: 'none', border: 'none', padding: 0, marginTop: 2, cursor: 'pointer', font: 'inherit',
@@ -481,7 +504,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                   <span style={{ width: 7, height: 7, borderRadius: 2, background: n.color, flexShrink: 0 }} />
                   <span style={{ fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600 }}>{n.name}</span>
                   <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO, marginLeft: 'auto' }}>
-                    {n.segments.map(s => s.layer).join('·')} · {n.criticality}
+                    {n.primaryLayerLabel || n.primaryLayer} · {n.criticality}
                   </span>
                 </button>
               ))}
@@ -491,21 +514,22 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
-          {/* Круги — a PICKER, not a paint-everything toggle: choosing it opens
-              the circuit list (bottom-right); the map lights only the one
-              circuit you pick, not all 140 contours stacked on each other. */}
+          {/* Круги — a PICKER, not a paint-everything toggle: it opens the
+              circuit list (bottom-right) ALREADY SHOWING the first circuit, so
+              the map is never blank while you choose; picking another swaps it.
+              Never all 140 contours stacked on each other. */}
           <TopBtn
             onClick={() => {
               const turningOn = !cycleMode;
               setCycleMode(turningOn);
-              setCycleId(null);
+              if (!turningOn) setCycleId(null);   // the default is picked below
+              setCycleListOpen(true);
               if (turningOn) { setChainRoot(null); setSubgraphId(null); setSubgraphMenuOpen(false); }
             }}
-            label="Круги — замкнутые контуры сбыта, финансирования и лок-ина. Выберите один в списке — карта покажет только его."
+            label="Круги — замкнутые контуры сбыта, финансирования и лок-ина. Карта показывает один контур за раз; выберите любой в списке."
             active={cycleMode} wide>
             <Sparkles size={12} /> {activeCycle ? activeCycle.typeLabel : 'Круги'}
             {!activeCycle && graph.stats.cycleCount ? ` · ${graph.stats.cycleCount}` : ''}
-            {activeCycle && <X size={11} onClick={(e) => { e.stopPropagation(); setCycleId(null); }} />}
           </TopBtn>
           {/* Subgraph lens — a third lens beside Круги. Picks one of the three
               stacks; the chosen one lights and everything else leaves the
@@ -718,9 +742,10 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         <CycleLegend
           cycles={graph.cycles}
           activeCycleId={cycleId}
-          onSelect={setCycleId}
-          onBack={() => setCycleId(null)}
-          onClose={() => { setCycleMode(false); setCycleId(null); }}
+          listOpen={cycleListOpen}
+          onSelect={(id) => { setCycleId(id); setCycleListOpen(false); }}
+          onBack={() => setCycleListOpen(true)}
+          onClose={() => { setCycleMode(false); setCycleId(null); setCycleListOpen(true); }}
           entityById={graph.entityById}
           onOpenEntity={focusEntity}
         />
@@ -837,11 +862,14 @@ function Segmented({ label, value, onChange, options }) {
   );
 }
 
-// ── Cycle lens — a PICKER when nothing is chosen, a single detail card once
-// something is. Same panel, two modes: this is the "down popup" the top-bar
-// Круги button opens — never all 140 contours stacked on the map at once.
-function CycleLegend({ cycles, activeCycleId, onSelect, onBack, onClose, entityById, onOpenEntity }) {
-  const active = activeCycleId ? cycles.find(c => c.id === activeCycleId) : null;
+// ── Cycle lens — the "down popup" the top-bar Круги button opens. Two modes
+// in one panel: the LIST of every circuit to choose from, and the DETAIL of
+// the one currently lit. The lit circuit stays on the map in both modes — the
+// list is for choosing the next one, not for clearing the map — and the lens
+// opens with the first circuit already lit rather than on a blank canvas.
+function CycleLegend({ cycles, activeCycleId, listOpen, onSelect, onBack, onClose, entityById, onOpenEntity }) {
+  const lit = activeCycleId ? cycles.find(c => c.id === activeCycleId) : null;
+  const active = listOpen ? null : lit;      // null → render the list
 
   return (
     <div style={{
@@ -862,7 +890,7 @@ function CycleLegend({ cycles, activeCycleId, onSelect, onBack, onClose, entityB
           fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
         }}>
-          {active ? active.typeLabel : `Выберите контур · ${cycles.length}`}
+          {active ? active.typeLabel : `Контуры · ${cycles.length}`}
         </div>
         <div style={{ flex: 1 }} />
         <button onClick={onClose} title="Закрыть (Esc)"
@@ -878,6 +906,7 @@ function CycleLegend({ cycles, activeCycleId, onSelect, onBack, onClose, entityB
       )}
 
       {(active ? [active] : cycles).map(c => {
+        const onMap = !active && c.id === activeCycleId;
         const row = (
           <>
             {!active && (
@@ -886,6 +915,15 @@ function CycleLegend({ cycles, activeCycleId, onSelect, onBack, onClose, entityB
                 <span style={{ fontSize: 9, color: c.color, fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
                   {c.typeLabel}
                 </span>
+                {/* Which row you are actually looking at on the canvas. The
+                    list never empties the map, so without this marker there is
+                    no way to tell which of the 140 is the one lit. */}
+                {onMap && (
+                  <span style={{
+                    marginLeft: 'auto', fontSize: 8, fontFamily: MONO, fontWeight: 700,
+                    color: 'var(--cf-accent)', textTransform: 'uppercase', letterSpacing: '0.08em',
+                  }}>на карте</span>
+                )}
               </div>
             )}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'center', marginBottom: 5 }}>
@@ -910,13 +948,15 @@ function CycleLegend({ cycles, activeCycleId, onSelect, onBack, onClose, entityB
           <div key={c.id}>{row}</div>
         ) : (
           <button key={c.id} onClick={() => onSelect(c.id)}
+            ref={onMap ? (el) => el?.scrollIntoView({ block: 'nearest' }) : undefined}
             style={{
               display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
-              background: 'transparent', border: 'none', borderRadius: 7,
+              background: onMap ? 'var(--cf-accent-bg)' : 'transparent',
+              border: `1px solid ${onMap ? 'var(--cf-accent-bd)' : 'transparent'}`, borderRadius: 7,
               padding: '6px 6px', marginBottom: 4,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
-            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
+            onMouseEnter={(e) => { if (!onMap) e.currentTarget.style.background = 'var(--cf-hover)'; }}
+            onMouseLeave={(e) => { if (!onMap) e.currentTarget.style.background = 'transparent'; }}>
             {row}
           </button>
         );

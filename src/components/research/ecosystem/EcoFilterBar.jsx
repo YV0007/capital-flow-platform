@@ -91,16 +91,16 @@ export default function EcoFilterBar({
         Показано <b style={{ color: 'var(--cf-text1)' }}>{shownEdges}</b> из {totalEdges} связей
       </div>
 
-      {/* ── Охват сети — пивоты или всё ─────────────────────────────────── */}
+      {/* ── Охват сети — ключевые узлы или всё ──────────────────────────── */}
       {onTogglePivotsOnly && (
-        <Group title="Охват сети" hint="26 равноправных пивотов — центры, вокруг которых собрана сеть, — или вся сеть со вторичными узлами.">
+        <Group title="Охват сети" hint="Ключевые узлы — центры, вокруг которых собрана сеть, — или вся сеть целиком, вместе с остальными участниками.">
           <Chip on={!pivotsOnly} color="#8E9BE6" onClick={() => pivotsOnly && onTogglePivotsOnly()}
-            title="Показать всю сеть — пивоты и вторичные узлы" wide>
+            title="Показать всю сеть — ключевые узлы и всех остальных" wide>
             Вся сеть
           </Chip>
           <Chip on={pivotsOnly} color="#FDE047" onClick={() => !pivotsOnly && onTogglePivotsOnly()}
-            title="Оставить только 26 пивотов — центры сети" wide>
-            Только пивоты{pivotCount ? <Count>{pivotCount}</Count> : null}
+            title="Оставить только ключевые узлы — центры сети" wide>
+            Только ключевые{pivotCount ? <Count>{pivotCount}</Count> : null}
           </Chip>
         </Group>
       )}

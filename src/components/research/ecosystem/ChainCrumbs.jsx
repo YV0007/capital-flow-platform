@@ -92,7 +92,7 @@ export default function ChainCrumbs({ crumbs, rootId, counts, onOpenEntity, onCl
               <span style={{ width: 6, height: 6, borderRadius: 2, background: c.node.color, flexShrink: 0 }} />
               {c.node.name}
               <span style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700 }}>
-                {c.node.primaryLayer}
+                {c.node.primaryLayerLabel || c.node.primaryLayer}
               </span>
             </button>
           </span>

@@ -274,7 +274,7 @@ function Party({ entity, onOpenEntity }) {
       <span style={{ width: 8, height: 8, borderRadius: 2, background: entity.color, flexShrink: 0 }} />
       {entity.name}
       <span style={{ fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text7)' }}>
-        {entity.primaryLayer}
+        {entity.primaryLayerLabel || entity.primaryLayer}
       </span>
     </button>
   );

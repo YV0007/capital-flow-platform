@@ -168,7 +168,7 @@ export default function LayerReport({
                 {n.multiLayer && (
                   <span title="Сущность живёт и в других слоях — на карте это одна плитка"
                     style={{ marginLeft: 6, fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700 }}>
-                    {n.segments.map(s => s.layer).join('·')}
+                    {n.segments.filter(s => s.layer !== layer.id).map(s => s.layerLabel || s.layer).join(' · ')}
                   </span>
                 )}
               </span>

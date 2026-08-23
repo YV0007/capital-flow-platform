@@ -122,14 +122,14 @@ export default function EcoEntityPanel({
                 }}>якорь</span>
               )}
               {entity.isPivotal && !entity.isAnchor && (
-                <span title="Пивотный узел сети — один из 26 равноправных центров, вокруг которых собрана вся карта" style={{
+                <span title="Ключевой узел сети — один из центров, вокруг которых собрана вся карта" style={{
                   fontSize: 8.5, color: '#FDE047', fontFamily: MONO, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.09em', cursor: 'help',
-                }}>пивот</span>
+                }}>ключевой</span>
               )}
             </div>
             <div style={{ fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
-              {entity.roleMeta?.label} · {entity.sectorLabel}
+              {entity.sectorLabel} · {entity.primaryLayerLabel || entity.primaryLayer}
             </div>
           </div>
           <button onClick={onClose} title="Закрыть панель"
@@ -141,14 +141,9 @@ export default function EcoEntityPanel({
         </div>
 
         <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
-          <Chip title={entity.roleMeta?.blurb}>{entity.roleMeta?.short}</Chip>
-          {entity.phaseMeta && (
-            <Chip color={entity.phaseMeta.color} title={entity.phaseMeta.blurb}>{entity.phaseMeta.label}</Chip>
-          )}
           {entity.publicMeta && <Chip title={entity.typeMeta?.label}>{entity.publicMeta.label}</Chip>}
           {entity.ticker && <Chip title="Биржевой тикер">{entity.ticker}</Chip>}
           {entity.geo && <Chip title="Юрисдикция штаб-квартиры">{entity.geo}</Chip>}
-          {entity.onCycle && <Chip color="#E5484D" title="Стоит на замкнутом контуре — см. линзу «Круги»">В КРУГЕ</Chip>}
           {entity.faded && (
             <Chip dashed color="#E0A340" title={`Данные не подтверждались с ${entity.lastConfirmed || '—'}`}>
               Данные устарели · {entity.lastConfirmed || '—'}
@@ -359,15 +354,15 @@ export default function EcoEntityPanel({
                   onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
                   onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
                   <span style={{
-                    width: 34, fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
-                    color: s.primary ? 'var(--cf-accent)' : 'var(--cf-text6)', textAlign: 'left',
-                  }}>{s.layer}</span>
-                  <span style={{ flex: 1, fontSize: 11.5, color: 'var(--cf-text2)', textAlign: 'left' }}>
+                    flex: 1, fontSize: 11.5, textAlign: 'left',
+                    color: s.primary ? 'var(--cf-accent)' : 'var(--cf-text2)',
+                    fontWeight: s.primary ? 600 : 400,
+                  }}>
                     {l?.label || s.layer}
-                    {s.primary && <span style={{ color: 'var(--cf-text7)', fontSize: 9, fontFamily: MONO }}> · основной</span>}
+                    {s.primary && <span style={{ color: 'var(--cf-text7)', fontSize: 9, fontFamily: MONO, fontWeight: 400 }}> · основной</span>}
                   </span>
                   <Meter value={s.criticality} color={entity.color} />
-                  <span title={`Критичность в слое ${s.layer}: ${s.criticality} из 100`} style={{
+                  <span title={`Критичность в слое «${l?.label || s.layer}»: ${s.criticality} из 100`} style={{
                     width: 26, fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
                     color: 'var(--cf-text3)', textAlign: 'right',
                   }}>{s.criticality}</span>
@@ -429,7 +424,7 @@ export default function EcoEntityPanel({
                 fontSize: 9, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em', flexShrink: 0,
               }}>{conc.label}</span>
               <span style={{ flex: 1, fontSize: 11, color: 'var(--cf-text4)', textAlign: 'left' }}>
-                весь слой {primaryLayer.id} · {primaryLayer.label}
+весь слой «{primaryLayer.label}»
               </span>
               <ChevronRight size={12} color="var(--cf-text7)" />
             </button>
@@ -521,14 +516,17 @@ function RelationList({
                     fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600,
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                   }}>{other.name}</span>
-                  <span style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>
-                    {other.primaryLayer}
+                  <span style={{
+                    fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
+                    flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                  }}>
+                    {other.primaryLayerLabel || other.primaryLayer}
                   </span>
                 </button>
                 <span title={sentence(e, entity, other, up)} style={{
                   fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: e.color,
                   textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'help', flexShrink: 0,
-                }}>{e.verb || e.typeLabel}</span>
+                }}>{(up ? e.typeMeta?.up : e.typeMeta?.down) || e.verb || e.typeLabel}</span>
                 <span title={`Существенность этой связи для получателя — ${e.strength} из 100`} style={{
                   width: 24, fontSize: 10, fontFamily: MONO, fontWeight: 700,
                   color: 'var(--cf-text4)', textAlign: 'right', cursor: 'help', flexShrink: 0,
@@ -672,12 +670,20 @@ function Evidence({ ev, accent, isFixture }) {
 }
 
 // ── Profile: what this entity is ─────────────────────────────────────────
-// The prose is the contract's `oneLiner` — the engine writes it, the dashboard
-// never invents one. The website comes from the logo side-car's domain and
-// simply does not appear when there is no entry; a search chip is always there
-// as the honest fallback.
+// TWO fields, both the engine's — the dashboard never invents either:
+//   · oneLiner    — the lede. What this thing DOES inside this map, one line.
+//   · description — the paragraph behind it. Who they are, when and by whom
+//     they were founded, how big, where they sit in their market, what they
+//     just did. The point is that the panel is SELF-SUFFICIENT: nobody should
+//     have to go and google the company to follow the map.
+// The paragraph is regular weight against the lede's semibold — same
+// typographic split the flow map's EntityPanel uses, so the two maps read the
+// same. The website comes from the logo side-car's domain and simply does not
+// appear when there is no entry; a search chip is always there as the honest
+// fallback, and it is the ONLY thing left when neither field arrived.
 function ProfileBlock({ entity, gloss }) {
   const what = entity.oneLiner || null;
+  const more = entity.description || null;
   return (
     <div style={{ padding: `12px ${PAD}px 4px` }}>
       <div style={{
@@ -697,6 +703,14 @@ function ProfileBlock({ entity, gloss }) {
         }}>
           {what ? gloss(what) : 'Описания в данных пока нет — найдите через поиск ниже.'}
         </div>
+        {more && (
+          <div style={{
+            fontSize: 12, lineHeight: 1.62, fontWeight: 400, color: 'var(--cf-text2)',
+            marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)',
+          }}>
+            {gloss(more)}
+          </div>
+        )}
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginTop: 10 }}>
           {entity.site && <LinkChip url={entity.site} icon={<Globe size={12} />} label="Сайт" external />}
           <LinkChip url={entity.searchUrl} icon={<Search size={12} />} label={`Искать «${entity.name}»`} />

@@ -109,7 +109,7 @@ export default function NetworkSummary({ network, version, onOpenEntity, onOpenS
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                   <span style={{ fontSize: 11.5, fontWeight: 700, color: 'var(--cf-text1)' }}>{s.name || s.id}</span>
                   <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text7)', marginLeft: 'auto' }}>
-                    {s.layer} · b={s.betweenness}
+                    {s.layerLabel || s.layer}
                   </span>
                 </div>
                 <div style={{ fontSize: 10, color: 'var(--cf-text5)', lineHeight: 1.45, marginTop: 3 }}>{s.reason}</div>

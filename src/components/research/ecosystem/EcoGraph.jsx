@@ -67,7 +67,6 @@ export default function EcoGraph({
     refreshTimer.current = setTimeout(() => {
       refreshTimer.current = null;
       setLogoTick(t => t + 1);
-      fgRef.current?.refresh?.();
     }, 120);
   }, [fgRef]);
   const getLogo = useCallback((node) => {
@@ -139,7 +138,6 @@ export default function EcoGraph({
     fg.d3Force('link', null);
   }, [fgRef, graphData]);
 
-  useEffect(() => { fgRef.current?.refresh?.(); }, [mode, fgRef]);
 
   const hasFilter = visibleNodes.size < graphData.nodes.length;
 
@@ -325,9 +323,8 @@ export default function EcoGraph({
       hoverRegionRef.current = key;
       const canvas = wrapRef.current?.querySelector('canvas');
       if (canvas) canvas.style.cursor = key ? 'pointer' : '';
-      fgRef.current?.refresh?.();
     }
-  }, [regionAt, onRegionClick, fgRef]);
+  }, [regionAt, onRegionClick]);
 
   // Titles sit outside the cells but edges cross that space, and an edge under
   // the cursor would win the click. Catching it in CAPTURE gets the title in
@@ -494,7 +491,7 @@ export default function EcoGraph({
       if (node.multiLayer && (selected || hovered || isRoot || gs > 1.1)) {
         ctx.font = `700 ${Math.max(8.5, R * 0.4)}px ui-monospace, monospace`;
         ctx.fillStyle = hexA(T.label, 0.5);
-        ctx.fillText(node.segments.map(s => s.layer).join('·'), lx, cy + Math.max(11, R * 0.62) * 0.92);
+        ctx.fillText(node.segments.map(s => s.layerLabel || s.layer).join(' · '), lx, cy + Math.max(11, R * 0.62) * 0.92);
       }
     }
 
@@ -532,7 +529,11 @@ export default function EcoGraph({
     const a = (base + 0.28 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
     const lc = tone(e.color, mode);
     if (e.id === hoverEdgeId) return hexA(lc, Math.min(1, a + 0.45));
-    return hexA(lc, hasChain ? Math.min(1, a + 0.3) : a);
+    // With a node selected the field is already down to its own chain, so the
+    // surviving bonds can be pushed well clear of the idle band — that is the
+    // whole point of having clicked. Only the chain is on screen, so a strong
+    // lift reads as focus, not as clutter.
+    return hexA(lc, hasChain ? Math.min(1, a + 0.55) : a);
   }, [edgeLit, selectedEdgeId, hoverEdgeId, hasChain, cycleMode, cycleEdges, mode, T]);
 
   const linkW = useCallback((e) => {
@@ -547,8 +548,11 @@ export default function EcoGraph({
     if (e.id === selectedEdgeId) return w + 0.95;
     if (e.id === hoverEdgeId) return w + 0.6;
     if (cycleMode && cycleEdges.has(e.id)) return w + 0.65;
+    // Same reasoning as the opacity lift: a lit chain is a handful of bonds in
+    // an otherwise empty frame, so a modest bump is legible without going fat.
+    if (hasChain) return w + 0.5;
     return w;
-  }, [edgeLit, selectedEdgeId, hoverEdgeId, cycleMode, cycleEdges]);
+  }, [edgeLit, selectedEdgeId, hoverEdgeId, cycleMode, cycleEdges, hasChain]);
 
   const particles = useCallback((e) => {
     // Motion only on focus, so the map is still when idle — movement is a
@@ -556,7 +560,7 @@ export default function EcoGraph({
     if (e.id === selectedEdgeId) return 6;
     if (e.id === hoverEdgeId) return 4;
     if (cycleMode) return cycleEdges.has(e.id) ? 5 : 0;
-    if (hasChain) return chain.edges.has(e.id) ? 4 : 0;
+    if (hasChain) return chain.edges.has(e.id) ? 5 : 0;
     return 0;
   }, [selectedEdgeId, hoverEdgeId, hasChain, chain, cycleMode, cycleEdges]);
 
@@ -570,33 +574,28 @@ export default function EcoGraph({
         ${n.ticker ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${esc(n.ticker)}</span>` : ''}
         ${n.faded ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">УСТАР.</span>` : ''}
       </div>
-      ${(n.isAnchor || n.isPivotal) ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
-        <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
-        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">${n.isAnchor ? 'Якорь экосистемы' : 'Пивотный узел сети'}</span>
-      </div>` : ''}
-      ${(spofById && spofById.has(n.id)) ? `<div style="margin-bottom:8px;padding:5px 7px;border:1px dashed ${T.tipText4};border-radius:6px">
-        <span style="color:${T.tipText3};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">Точка отказа</span>
-        <div style="color:${T.tipText2};margin-top:3px;line-height:1.4">${esc(spofById.get(n.id).reason)}</div>
-      </div>` : ''}
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
         <span style="width:7px;height:7px;border-radius:2px;background:${tone(n.color, mode)};flex:none"></span>
-        <span style="color:${T.tipText3}">${esc(n.roleMeta?.label || n.role)}</span>
+        <span style="color:${T.tipText3}">${esc(n.sectorLabel)}</span>
         <span style="color:${T.tipRule}">·</span>
-        <span style="color:${T.tipText4}">${esc(n.sectorLabel)}</span>
-        ${n.phaseMeta ? `<span style="color:${T.tipRule}">·</span><span style="color:${tone(n.phaseMeta.color, mode)}">${esc(n.phaseMeta.label)}</span>` : ''}
+        <span style="color:${T.tipText4}">${esc(n.primaryLayerLabel || n.primaryLayer)}</span>
       </div>
+      ${(n.isAnchor || n.isPivotal) ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
+        <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
+        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">${n.isAnchor ? 'Якорь экосистемы' : 'Ключевой узел сети'}</span>
+      </div>` : ''}
       <div style="color:${T.tipText2};margin-bottom:9px;line-height:1.45">${esc(n.oneLiner || '')}</div>
       <div style="border-top:1px solid ${T.tipBorder};padding-top:9px;display:grid;grid-template-columns:auto 1fr;gap:5px 16px">
         ${row('Критичность', `${n.criticality} · ${esc(cb.label)}`, tone(cb.color, mode))}
-        ${row('Слои', esc(n.segments.map(s2 => s2.layer).join(' · ')), T.tipText3)}
+        ${n.centrality?.pagerank != null
+          ? row('Влияние в сети', `${(n.centrality.pagerank * graphData.nodes.length).toFixed(1)}× среднего`, T.tipText3)
+          : ''}
         ${row('Зависит от / кормит', `${n.upCount} / ${n.downCount}`, T.tipText3)}
-        ${n.gravity ? row('Гравитация', String(n.gravity.score), T.tipText3) : ''}
-        ${n.centrality ? row('Центральность', `степень ${n.centrality.degree} · посредн. ${n.centrality.betweenness}${n.centrality.pagerank != null ? ` · влияние ${(n.centrality.pagerank * graphData.nodes.length).toFixed(1)}×` : ''}`, T.tipText3) : ''}
-        ${n.riskMeta ? row('Риск', esc(n.riskMeta.label), tone(n.riskMeta.color, mode)) : ''}
+        ${n.multiLayer ? row('Ещё в слоях', esc(n.segments.filter(s2 => s2.layer !== n.primaryLayer).map(s2 => s2.layerLabel || s2.layer).join(' · ')), T.tipText3) : ''}
       </div>
       <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">Клик → цепочка по стеку</div>
     `);
-  }, [mode, T, spofById]);
+  }, [mode, T, graphData]);
 
   const edgeTooltip = useCallback((e) => {
     const s2 = typeof e.source === 'object' ? e.source.name : e.sourceId;
@@ -644,10 +643,10 @@ export default function EcoGraph({
           linkColor={linkColor}
           linkWidth={linkW}
           linkCurvature="curvature"
-          linkDirectionalArrowLength={(e) => 1.9 + 1.2 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalArrowLength={(e) => (hasChain ? 3.2 : 1.9) + 1.2 * Math.sqrt((e.strength || 0) / 100)}
           linkDirectionalArrowRelPos={0.92}
           linkDirectionalParticles={particles}
-          linkDirectionalParticleWidth={(e) => 1.1 + 1.2 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalParticleWidth={(e) => (hasChain ? 2 : 1.1) + 1.2 * Math.sqrt((e.strength || 0) / 100)}
           linkDirectionalParticleSpeed={() => 0.004}
           linkDirectionalParticleColor={(e) => {
             const cyc = cycleMode ? cycleEdges.get(e.id) : null;
@@ -661,6 +660,15 @@ export default function EcoGraph({
           onNodeDragEnd={(n) => { n.fx = n.x; n.fy = n.y; }}
           cooldownTicks={0}
           warmupTicks={0}
+          // The engine is stopped, so force-graph's default autoPauseRedraw
+          // parks the render loop and only wakes it on pointer interaction.
+          // Everything this map changes in code — a lens, a filter, a lit
+          // circuit — then failed to reach the canvas: selecting a circuit by
+          // CLICK painted it, selecting the identical circuit from an effect
+          // left the map blank while the panel insisted it was lit. There is no
+          // refresh() on force-graph to ask for a frame (its own .d.ts has
+          // none), so the loop has to stay awake.
+          autoPauseRedraw={false}
           minZoom={0.1}
           maxZoom={9}
         />

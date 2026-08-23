@@ -256,8 +256,8 @@ function Row({ n, layerById, onOpen }) {
       </Cell>
 
       <Cell mono dim>
-        <span title={n.segments.map(s => `${s.layer} · ${layerById.get(s.layer)?.label || ''} — ${s.criticality}`).join('\n')}>
-          {n.segments.map(s => s.layer).join('·')}
+        <span title={n.segments.map(s => `${layerById.get(s.layer)?.label || s.layer} — ${s.criticality}`).join('\n')}>
+          {n.segments.map(s => s.layerLabel || s.layer).join(' · ')}
         </span>
       </Cell>
 

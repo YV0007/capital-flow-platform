@@ -120,8 +120,8 @@ export const subgraphMeta = (id) => SUBGRAPH_META[id] || SUBGRAPH_META._default;
 export const NETWORK_META = {
   totalNodes:    { label: 'Узлов',        blurb: 'Всего сущностей в сети.' },
   totalEdges:    { label: 'Связей',       blurb: 'Всего рёбер в сети.' },
-  pivotalNodes:  { label: 'Пивотов',      blurb: 'Сущностей-центров, вокруг которых собрана сеть.' },
-  secondaryNodes:{ label: 'Вторичных',    blurb: 'Остальные — попали в двух шагах от какого-то пивота.' },
+  pivotalNodes:  { label: 'Ключевых',     blurb: 'Сущностей-центров, вокруг которых собрана сеть.' },
+  secondaryNodes:{ label: 'Остальных',    blurb: 'Попали в карту, потому что стоят в двух шагах от ключевого узла.' },
   density:       { label: 'Плотность',    blurb: 'Доля реально существующих рёбер от всех возможных. Ближе к 0 — разреженная сеть.' },
   averageDegree: { label: 'Средняя степень', blurb: 'Сколько прямых связей в среднем у сущности.' },
   clusteringCoefficient: { label: 'Кластеризация', blurb: 'Насколько соседи узла связаны и между собой. Ближе к 1 — плотные «клики».' },
@@ -202,7 +202,11 @@ function resolveNetwork(rawNet, graph) {
   // the network (lostPairsPct), the strongest chokepoint first.
   const spof = (rawNet.singlePointsOfFailure || [])
     .filter(s => graph.entityById.has(s.id))
-    .map(s => ({ ...s, name: graph.entityById.get(s.id).name }))
+    .map(s => ({
+      ...s,
+      name: graph.entityById.get(s.id).name,
+      layerLabel: graph.entityById.get(s.id).primaryLayerLabel || s.layer,
+    }))
     .sort((a, b) => (b.lostPairsPct ?? 0) - (a.lostPairsPct ?? 0) || (b.betweenness ?? 0) - (a.betweenness ?? 0));
   const spofById = new Map(spof.map(s => [s.id, s]));
   const spofSet = new Set(spof.map(s => s.id));

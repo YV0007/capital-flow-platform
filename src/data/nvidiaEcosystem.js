@@ -97,77 +97,117 @@ export const ROLE_META = {
 // `verb` is what the chain crumbs say out loud. `blurb` is one sentence for
 // the legend and the tooltip. `spine` here is a FALLBACK only — the engine
 // ships `edges[].spine` and that is what gets painted.
+// `up` / `down` are what the RELATION LISTS print. Both always describe the
+// COUNTERPARTY — the name the tag sits next to — never the entity whose panel
+// is open. That one rule is the whole fix: a tag like «вкладывается в» left the
+// object dangling, so «Microsoft вкладывается в» could be read either way
+// round. «Вкладывает сюда» / «получает вложения» cannot.
+//   up   — counterparty is the edge's SOURCE (it acts on the open entity)
+//   down — counterparty is the edge's TARGET (the open entity acts on it)
+// Symmetric relations (partnership, rivalry, co-design) carry the same text in
+// both, because there is no direction to disambiguate.
 export const EDGE_TYPE_META = {
   // ── physical ──────────────────────────────────────────────────────────
   manufactures:   { label: 'производит',        verb: 'производит',          spine: 'physical', color: '#5A93DE', order: 0,
+                    up: 'производит по заказу', down: 'заказывает производство',
                     blurb: 'Физически изготавливает продукт другой стороны на своих линиях.' },
   supplies:       { label: 'поставляет',        verb: 'поставляет',          spine: 'physical', color: '#6F93DE', order: 1,
+                    up: 'поставляет сюда', down: 'получает поставки',
                     blurb: 'Критический физический вход: без него продукт получателя не выпускается.' },
   packages:       { label: 'упаковывает',       verb: 'упаковывает',         spine: 'physical', color: '#58ABCB', order: 2,
+                    up: 'упаковывает чипы', down: 'отдаёт на упаковку',
                     blurb: 'Сажает кристалл и память на одну подложку — отдельный дефицитный этап.' },
   integrates:     { label: 'собирает',          verb: 'собирает',            spine: 'physical', color: '#4FB4C9', order: 3,
+                    up: 'собирает системы', down: 'отдаёт на сборку',
                     blurb: 'Собирает из чужих компонентов готовую систему под конкретного заказчика.' },
   delivers_to:    { label: 'отгружает',         verb: 'отгружает',           spine: 'physical', color: '#45C0D0', order: 4,
+                    up: 'отгружает сюда', down: 'принимает отгрузки',
                     blurb: 'Прямая поставка продукта покупателю.' },
   enables:        { label: 'делает возможным',  verb: 'делает возможным',    spine: 'physical', color: '#49C2AE', order: 5,
+                    up: 'делает это возможным', down: 'работает благодаря этому',
                     blurb: 'Без этого другая сторона не может ни спроектировать, ни включить свой продукт.' },
   co_designs:     { label: 'проектирует вместе',verb: 'проектирует вместе с',spine: 'physical', color: '#3FA9C4', order: 6,
+                    up: 'проектирует вместе', down: 'проектирует вместе',
                     blurb: 'Обе стороны вкладывают инженерию: продукт спроектирован под другого.' },
   optimizes_for:  { label: 'затачивает под',    verb: 'затачивает под',      spine: 'physical', color: '#52C6BC', order: 7,
+                    up: 'заточен под это', down: 'целевая платформа',
                     blurb: 'Продукт подогнан под чужую платформу и на другой работает хуже.' },
 
   // ── capital ───────────────────────────────────────────────────────────
   invests_in:        { label: 'вкладывается',     verb: 'вкладывается в',    spine: 'capital', color: '#E0A340', order: 10,
+                       up: 'вкладывает сюда', down: 'получает вложения',
                        blurb: 'Доля в капитале — с контролем или без.' },
   funded_by:         { label: 'финансируется',    verb: 'получает деньги от',spine: 'capital', color: '#E8975E', order: 11,
+                       up: 'финансируется отсюда', down: 'даёт финансирование',
                        blurb: 'Долг или проектное финансирование под стройку.' },
   board_seat:        { label: 'место в совете',   verb: 'сидит в совете',    spine: 'capital', color: '#D98C55', order: 12,
+                       up: 'занимает место в совете', down: 'отдаёт место в совете',
                        blurb: 'Прямое участие в решениях, а не только в доходе.' },
   strategic_partner: { label: 'стратегический союз', verb: 'в союзе с',      spine: 'capital', color: '#C99B72', order: 13,
+                       up: 'стратегический союз', down: 'стратегический союз',
                        blurb: 'Дорожные карты согласованы на годы вперёд, а не разовый заказ.' },
   hedges_against:    { label: 'страхуется',       verb: 'страхуется от',     spine: 'capital', color: '#D9B36A', order: 14,
+                       up: 'страхуется через это', down: 'служит страховкой',
                        blurb: 'Вложение не ради дохода, а чтобы дыра в обороне не открылась.' },
   diversifies_supply:{ label: 'второй источник',  verb: 'страхует поставку', spine: 'capital', color: '#C2A36B', order: 15,
+                       up: 'второй источник', down: 'второй источник',
                        blurb: 'Поставщик, заведённый ради переговорной позиции, а не ради объёма.' },
   customer_of:       { label: 'покупает',         verb: 'покупает у',        spine: 'capital', color: '#E8B268', order: 16,
+                       up: 'покупает здесь', down: 'продаёт сюда',
                        blurb: 'Платит деньги — то есть кормит другую сторону выручкой.' },
 
   // ── moat ──────────────────────────────────────────────────────────────
   validates_demand:    { label: 'доказывает спрос',     verb: 'доказывает спрос на',     spine: 'moat', color: '#3FB984', order: 20,
+                         up: 'доказывает спрос', down: 'выигрывает от спроса',
                          blurb: 'Своим результатом доказал, что вычисления такого масштаба вообще нужны.' },
   proves_roi:          { label: 'доказывает окупаемость',verb: 'доказывает окупаемость', spine: 'moat', color: '#4FC49A', order: 21,
+                         up: 'доказывает окупаемость', down: 'выигрывает от окупаемости',
                          blurb: 'Показывает, что на этом зарабатывает не только продавец.' },
   proves_use_case:     { label: 'доказывает применимость',verb: 'показывает, зачем нужен',spine: 'moat', color: '#5CCFA6', order: 22,
+                         up: 'показывает применение', down: 'получает применение',
                          blurb: 'Доводит спрос до обычных рабочих процессов, а не только лабораторий.' },
   locks_in_developers: { label: 'запирает разработчиков',verb: 'запирает разработчиков на',spine: 'moat', color: '#2FA873', order: 23,
+                         up: 'запирает разработчиков', down: 'разработчики заперты',
                          blurb: 'Написанный код по умолчанию зовёт этот слой, и переписывать его никто не станет.' },
   locks_in_platforms:  { label: 'запирает платформы',   verb: 'запирает платформы на',   spine: 'moat', color: '#37B07C', order: 24,
+                         up: 'запирает платформы', down: 'платформа заперта',
                          blurb: 'Уйти значит потерять доступ ко всему, что уже собрано вокруг.' },
   path_dependent_on:   { label: 'завязан на',           verb: 'завязан на',              spine: 'moat', color: '#46BE8E', order: 25,
+                         up: 'завязан на это', down: 'на него завязаны',
                          blurb: 'Накопленное решение прошлого не отыгрывается назад без переписывания всего.' },
   standardizes_on:     { label: 'стандартизован на',    verb: 'стандартизован на',       spine: 'moat', color: '#63D0B0', order: 26,
+                         up: 'общий стандарт', down: 'общий стандарт',
                          blurb: 'Выбрал одну платформу по умолчанию и строит вокруг неё.' },
   sets_benchmark:      { label: 'задаёт планку',        verb: 'задаёт планку для',       spine: 'moat', color: '#7AD9B6', order: 27,
+                         up: 'задаёт планку', down: 'по нему меряют',
                          blurb: 'Определяет, чем меряются все остальные, — а значит, во многом и ответ.' },
   defines_category:    { label: 'определяет категорию', verb: 'определяет категорию',    spine: 'moat', color: '#8FE0C0', order: 28,
+                         up: 'определяет категорию', down: 'живёт в этой категории',
                          blurb: 'Сам класс продукта появился потому, что появилось что в него ставить.' },
 
   // ── control ───────────────────────────────────────────────────────────
   controls_access_to:     { label: 'шлюзует',              verb: 'шлюзует доступ к',      spine: 'control', color: '#E5484D', order: 30,
+                            up: 'контролирует доступ', down: 'доступ под контролем',
                             blurb: 'Решает, кому и что можно продать. Не участник стека, а рубильник над ним.' },
   subject_to_restriction: { label: 'под ограничением',     verb: 'ограничен в',           spine: 'control', color: '#E06A6E', order: 31,
+                            up: 'закрытый рынок', down: 'ограничен в продажах',
                             blurb: 'Рынок или продукт закрыт решением, а не отсутствием спроса.' },
   export_controlled_by:   { label: 'экспорт под контролем',verb: 'экспортно подконтролен',spine: 'control', color: '#CF3B45', order: 32,
+                            up: 'контролирует экспорт', down: 'экспорт ограничен',
                             blurb: 'Каждая поставка требует разрешения, которое выдают по одному случаю за раз.' },
   geopolitically_dependent:{ label: 'геополитически зависит',verb: 'геополитически зависит от',spine: 'control', color: '#EC8A80', order: 33,
+                            up: 'ключевая география', down: 'зависит от географии',
                             blurb: 'Позиция держится на географии, которую нельзя переставить в разумный срок.' },
 
   // ── rivalry ───────────────────────────────────────────────────────────
   competes_with: { label: 'конкурирует',    verb: 'конкурирует с',  spine: 'rivalry', color: '#9A8FB8', order: 40,
+                   up: 'прямой конкурент', down: 'прямой конкурент',
                    blurb: 'Прямо борется за ту же долю тем же продуктом.' },
   threatens:     { label: 'угрожает',       verb: 'угрожает',       spine: 'rivalry', color: '#8A7EAE', order: 41,
+                   up: 'угрожает', down: 'находится под угрозой',
                    blurb: 'Готовит замену, которой пока нет, но которая уже финансируется.' },
   could_disrupt: { label: 'может подорвать',verb: 'может подорвать',spine: 'rivalry', color: '#AFA4C8', order: 42,
+                   up: 'может подорвать', down: 'может быть подорван',
                    blurb: 'Достаточно велик, чтобы его собственное решение переписало рынок.' },
 };
 
@@ -532,7 +572,7 @@ export function buildGraphFrom(raw) {
     const role = ROLE_META[e.role] ? e.role : 'producer';
     const segs = (e.layers || [])
       .filter(l => layerById.has(l.layer))
-      .map(l => ({ ...l, order: layerById.get(l.layer).order }))
+      .map(l => ({ ...l, order: layerById.get(l.layer).order, layerLabel: layerById.get(l.layer).label }))
       .sort((a, b) => a.order - b.order);
     // Defensive: an entity the engine ships with no usable layer still has to
     // land somewhere rather than vanish — pin it to its sector's layer, else
@@ -541,6 +581,7 @@ export function buildGraphFrom(raw) {
     const list = segs.length ? segs : [{
       layer: fallback, primary: true, criticality: e.criticality || 0,
       order: layerById.get(fallback)?.order ?? 0,
+      layerLabel: layerById.get(fallback)?.label || fallback,
     }];
     const primarySeg = (layerById.has(e.primaryLayer) && list.find(l => l.layer === e.primaryLayer))
       || list.find(l => l.primary)
@@ -558,6 +599,10 @@ export function buildGraphFrom(raw) {
       publicMeta: PUBLIC_PRIVATE_META[e.publicPrivate] || null,
       segments: list,
       primaryLayer: primarySeg.layer,
+      // The readable name of the layer. An "L12" tells a first-time reader
+      // nothing, so every surface prints this instead; the code stays only as
+      // the stable id the payload and the filters key on.
+      primaryLayerLabel: layer?.label || primarySeg.layer,
       primaryOrder: primarySeg.order,
       plane: layer?.plane || 'orbit',
       multiLayer: list.length > 1,
