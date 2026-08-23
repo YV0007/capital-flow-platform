@@ -10,6 +10,7 @@ import {
 } from '../../../data/capitalMap.js';
 import { fmtUSD } from './format.js';
 import { RECENCY_OPTIONS, cutoffDate } from './views.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -27,6 +28,7 @@ export default function FilterDrawer({
   sinceDays, onSinceDays, generated,
   activeCount, onReset, onClose,
 }) {
+  const t = useT();
   // Only offer the sectors that are actually in the file this cycle.
   const sectorKeys = Object.keys(sectorsPresent || {})
     .sort((a, b) => (SECTOR_META[a]?.order ?? 99) - (SECTOR_META[b]?.order ?? 99));
@@ -51,7 +53,7 @@ export default function FilterDrawer({
         position: 'sticky', top: 0, background: 'var(--cf-panel)', zIndex: 1,
       }}>
         <span style={{ fontSize: 10, color: 'var(--cf-text2)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-          Фильтры
+          {t('Фильтры', 'Filters')}
         </span>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <button onClick={onReset} disabled={activeCount === 0}
@@ -64,7 +66,7 @@ export default function FilterDrawer({
               textTransform: 'uppercase', letterSpacing: '0.07em',
               cursor: activeCount ? 'pointer' : 'default',
             }}>
-            <RotateCcw size={10} /> Сброс
+            <RotateCcw size={10} /> {t('Сброс', 'Reset')}
           </button>
           <button onClick={onClose}
             style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 2, lineHeight: 0 }}
@@ -79,13 +81,13 @@ export default function FilterDrawer({
         {/* Quick views — a whole filter combination in one click */}
         {views.length > 0 && (
           <div>
-            <GroupLabel>Быстрые виды · готовые комбинации</GroupLabel>
+            <GroupLabel>{t('Быстрые виды · готовые комбинации', 'Quick views · ready-made combinations')}</GroupLabel>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
               {views.map(v => {
                 const on = v.id === activeViewId;
                 return (
                   <button key={v.id} onClick={() => !v.disabled && onApplyView(v)}
-                    title={v.disabled ? v.blurb : `${v.blurb}${on ? '\n\nПовторный клик снимает.' : ''}`}
+                    title={v.disabled ? v.blurb : `${v.blurb}${on ? `\n\n${t('Повторный клик снимает.', 'Click again to clear.')}` : ''}`}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 7, padding: '8px 10px',
                       background: on ? hexA(v.color, 0.12) : 'var(--cf-surface2)',
@@ -110,20 +112,21 @@ export default function FilterDrawer({
             <div style={{ marginTop: 7, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.55 }}>
               {activeViewId
                 ? views.find(v => v.id === activeViewId)?.blurb
-                : 'Каждый вид заменяет фильтры ниже. Наведите, чтобы узнать, что он выбирает; клик по активному виду снимает его.'}
+                : t('Каждый вид заменяет фильтры ниже. Наведите, чтобы узнать, что он выбирает; клик по активному виду снимает его.', 'Each view replaces the filters below. Hover to see what it selects; clicking the active view clears it.')}
             </div>
           </div>
         )}
 
         {/* Recency — ages measured against the payload date, not today */}
         <div>
-          <GroupLabel>Свежесть · потоки{generated ? ` · на ${generated}` : ''}</GroupLabel>
+          <GroupLabel>{t('Свежесть · потоки', 'Recency · flows')}{generated ? ` · ${t('на', 'as of')} ${generated}` : ''}</GroupLabel>
           <ChipWrap>
             {RECENCY_OPTIONS.map(o => (
               <Chip key={o.days} on={(sinceDays || 0) === o.days} color="var(--cf-accent)" square
                 title={o.days === 0
-                  ? 'Все потоки в файле.'
-                  : `Потоки с датой от ${cutoffDate(generated, o.days) || '—'} — последние ${o.days} дней данных.`}
+                  ? t('Все потоки в файле.', 'Every flow in the file.')
+                  : t(`Потоки с датой от ${cutoffDate(generated, o.days) || '—'} — последние ${o.days} дней данных.`,
+                       `Flows dated ${cutoffDate(generated, o.days) || '—'} or later — the last ${o.days} days of data.`)}
                 onClick={() => onSinceDays(o.days)}>
                 {o.label}
               </Chip>
@@ -133,14 +136,14 @@ export default function FilterDrawer({
 
         {/* Sector */}
         <div>
-          <GroupLabel>Сектор · получатели</GroupLabel>
+          <GroupLabel>{t('Сектор · получатели', 'Sector · recipients')}</GroupLabel>
           <ChipWrap>
             {sectorKeys.map(k => {
               const s = sectorsPresent[k];
               const meta = SECTOR_META[k] || {};
               return (
                 <Chip key={k} on={sectors.has(k)} color={meta.color || 'var(--cf-text5)'}
-                  title={`Сделок: ${s.deals} · ${fmtUSD(s.capital)}${s.lit ? ' · сигнал' : ''}`}
+                  title={`${t('Сделок', 'Deals')}: ${s.deals} · ${fmtUSD(s.capital)}${s.lit ? ` · ${t('сигнал', 'signal')}` : ''}`}
                   onClick={() => onToggleSector(k)}>
                   {s.lit && <span style={{ color: 'var(--cf-warn)', marginRight: -1 }}>✦</span>}
                   {sectorLabel(k)}
@@ -152,7 +155,7 @@ export default function FilterDrawer({
 
         {/* Class */}
         <div>
-          <GroupLabel>Класс инвестора</GroupLabel>
+          <GroupLabel>{t('Класс инвестора', 'Allocator class')}</GroupLabel>
           <ChipWrap>
             {allocClasses.map(([k, v]) => (
               <Chip key={k} on={classes.has(k)} color={v.color} onClick={() => onToggleClass(k)}>
@@ -161,7 +164,7 @@ export default function FilterDrawer({
             ))}
           </ChipWrap>
           <div style={{ height: 8 }} />
-          <GroupLabel>Класс получателя</GroupLabel>
+          <GroupLabel>{t('Класс получателя', 'Recipient class')}</GroupLabel>
           <ChipWrap>
             {targetClasses.map(([k, v]) => (
               <Chip key={k} on={classes.has(k)} color={v.color} square onClick={() => onToggleClass(k)}>
@@ -173,7 +176,7 @@ export default function FilterDrawer({
 
         {/* Tier */}
         <div>
-          <GroupLabel>Уровень инвестора</GroupLabel>
+          <GroupLabel>{t('Уровень инвестора', 'Allocator tier')}</GroupLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {Object.entries(TIER_META).map(([k, t]) => {
               const on = tiers.has(k);
@@ -199,7 +202,7 @@ export default function FilterDrawer({
         {/* Network */}
         {networksPresent && networksPresent.length > 0 && (
           <div>
-            <GroupLabel>Сеть · элитные круги</GroupLabel>
+            <GroupLabel>{t('Сеть · элитные круги', 'Network · elite circles')}</GroupLabel>
             <ChipWrap>
               {networksPresent.map(k => {
                 const v = NETWORK_META[k] || { label: k, color: '#F5B942' };
@@ -215,7 +218,7 @@ export default function FilterDrawer({
 
         {/* Event family */}
         <div>
-          <GroupLabel>Тип события · потоки</GroupLabel>
+          <GroupLabel>{t('Тип события · потоки', 'Event type · flows')}</GroupLabel>
           <ChipWrap>
             {Object.entries(FAMILY_META).map(([k, v]) => (
               <Chip key={k} on={families.has(k)} color={v.color} square onClick={() => onToggleFamily(k)}>
@@ -227,7 +230,7 @@ export default function FilterDrawer({
 
         {/* Status */}
         <div>
-          <GroupLabel>Статус · потоки</GroupLabel>
+          <GroupLabel>{t('Статус · потоки', 'Status · flows')}</GroupLabel>
           <ChipWrap>
             {Object.entries(STATUS_META).map(([k, v]) => (
               <Chip key={k} on={statuses.has(k)} color={v.color} title={v.blurb} onClick={() => onToggleStatus(k)}>
@@ -239,7 +242,7 @@ export default function FilterDrawer({
 
         {/* Confidence score (v2 grade) */}
         <div>
-          <GroupLabel>Минимальная надёжность{confidenceThreshold != null ? ` · порог движка ${confidenceThreshold}` : ''}</GroupLabel>
+          <GroupLabel>{t('Минимальная надёжность', 'Minimum confidence')}{confidenceThreshold != null ? ` · ${t('порог движка', 'engine threshold')} ${confidenceThreshold}` : ''}</GroupLabel>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <input
               type="range" min={0} max={100} step={5} value={minConfidence || 0}
@@ -250,14 +253,14 @@ export default function FilterDrawer({
               fontSize: 11, fontFamily: MONO, fontWeight: 700,
               color: minConfidence > 0 ? 'var(--cf-good)' : 'var(--cf-text7)', minWidth: 52, textAlign: 'right',
             }}>
-              {minConfidence > 0 ? `≥ ${minConfidence}` : 'все'}
+              {minConfidence > 0 ? `≥ ${minConfidence}` : t('все', 'all')}
             </span>
           </div>
         </div>
 
         {/* Min amount */}
         <div>
-          <GroupLabel>Минимальный размер потока</GroupLabel>
+          <GroupLabel>{t('Минимальный размер потока', 'Minimum flow size')}</GroupLabel>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <input
               type="range" min={0} max={100} value={amountToSlider(minAmount, maxAmount)}
@@ -269,15 +272,19 @@ export default function FilterDrawer({
               color: minAmount > 0 ? 'var(--cf-accent)' : 'var(--cf-text7)',
               minWidth: 52, textAlign: 'right',
             }}>
-              {minAmount > 0 ? `≥ ${fmtUSD(minAmount)}` : 'все'}
+              {minAmount > 0 ? `≥ ${fmtUSD(minAmount)}` : t('все', 'all')}
             </span>
           </div>
         </div>
 
         <div style={{ fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, lineHeight: 1.6, borderTop: '1px solid var(--cf-border-soft)', paddingTop: 10 }}>
-          Сектор, класс и уровень выбирают <span style={{ color: 'var(--cf-text3)' }}>объекты</span> — их контрагенты остаются видны, чтобы можно было проследить деньги.
-          Событие, статус, свежесть, надёжность и минимальная сумма выбирают <span style={{ color: 'var(--cf-text3)' }}>потоки</span>.
-          Потоки без раскрытой суммы выпадают, как только задан минимум.
+          {t('Сектор, класс и уровень выбирают', 'Sector, class and tier select')}{' '}
+          <span style={{ color: 'var(--cf-text3)' }}>{t('объекты', 'entities')}</span>
+          {t(' — их контрагенты остаются видны, чтобы можно было проследить деньги.',
+             ' — their counterparties stay visible so the money can still be traced.')}
+          {t('Событие, статус, свежесть, надёжность и минимальная сумма выбирают', 'Event, status, recency, confidence and minimum size select')}{' '}
+          <span style={{ color: 'var(--cf-text3)' }}>{t('потоки', 'flows')}</span>.
+          {t('Потоки без раскрытой суммы выпадают, как только задан минимум.', 'Flows with no disclosed amount drop out the moment a minimum is set.')}
         </div>
       </div>
     </div>

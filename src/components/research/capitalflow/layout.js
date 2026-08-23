@@ -18,6 +18,7 @@
 
 import { SECTOR_META, CLASS_META, sectorLabel } from '../../../data/capitalMap.js';
 import { shortLabel, fmtUSD } from './format.js';
+import { getLang } from '../../../lib/i18n.jsx';
 
 const GOLDEN = 2.399963229728653;
 // Source classes, inner→outer in rough "concentration" order.
@@ -248,7 +249,7 @@ export function applyMoleculeLayout(nodes, sectors = {}, links = []) {
       type: 'source', key: c, cx, cy, r: classR[c] + 24,
       color: CLASS_META[c]?.color || '#9aa3b2',
       label: (CLASS_META[c]?.zone || CLASS_META[c]?.label || c).toUpperCase(),
-      stats: `ВЛОЖЕНО ${fmtUSD(cap)}`,
+      stats: `${getLang() === 'en' ? 'DEPLOYED' : 'ВЛОЖЕНО'} ${fmtUSD(cap)}`,
     });
   });
   present.forEach(k => {

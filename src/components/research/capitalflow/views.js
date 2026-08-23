@@ -19,6 +19,8 @@
 // Empty filter state — the shape every view fills in. `nodeIds: null` means
 // "use the category dimensions below" (unset); a Set/array means "this exact
 // set of entities IS the seed", overriding sector/class/tier/network entirely.
+import { getLang } from '../../../lib/i18n.jsx';
+
 export const EMPTY_VIEW = {
   sectors: [], classes: [], tiers: [], families: [], statuses: [], networks: [],
   minAmount: 0, minConfidence: 0, sinceDays: 0, nodeIds: null,
@@ -93,36 +95,54 @@ export function buildViews(graph, { confidenceThreshold = 60 } = {}) {
     weekTrends.flatMap(t => (t.allocators || []).map(name => nameToId.get(name)).filter(Boolean))
   );
 
-  const lens = (id, label, blurb, color, ids, extra = {}) => ({
-    id, label, blurb: ids.size ? blurb : `Пока пусто в этой выгрузке — ${blurb[0].toLowerCase()}${blurb.slice(1)}`,
-    color, disabled: ids.size === 0,
-    state: { ...EMPTY_VIEW, nodeIds: asArray(ids), ...extra },
-  });
+  // `label` and `blurb` arrive as [ru, en] pairs and are resolved here, once,
+  // at the moment the view list is built for a render.
+  const pick = (pair) => (getLang() === 'en' ? (pair[1] ?? pair[0]) : pair[0]);
+  const lens = (id, labelPair, blurbPair, color, ids, extra = {}) => {
+    const label = pick(labelPair);
+    const blurb = pick(blurbPair);
+    const empty = getLang() === 'en'
+      ? `Nothing here in this delivery — ${blurb[0].toLowerCase()}${blurb.slice(1)}`
+      : `Пока пусто в этой выгрузке — ${blurb[0].toLowerCase()}${blurb.slice(1)}`;
+    return {
+      id, label, blurb: ids.size ? blurb : empty,
+      color, disabled: ids.size === 0,
+      state: { ...EMPTY_VIEW, nodeIds: asArray(ids), ...extra },
+    };
+  };
 
   return [
-    lens('smart-first', 'Лидеры зашли первыми',
-      'Ключевые инвесторы вошли первыми в сектор — за ними быстро последовали другие.',
+    lens('smart-first', ['Лидеры зашли первыми', 'Leaders went in first'],
+      ['Ключевые инвесторы вошли первыми в сектор — за ними быстро последовали другие.',
+       'Key allocators entered a sector first — others followed quickly behind them.'],
       '#FBBF24', smartMoneyIds),
-    lens('conviction', 'Наращивают свои ставки',
-      'Инвесторы, которые снова и снова докладывают в свои же ставки — не разовый чек.',
+    lens('conviction', ['Наращивают свои ставки', 'Doubling down'],
+      ['Инвесторы, которые снова и снова докладывают в свои же ставки — не разовый чек.',
+       'Allocators adding to their own bets again and again — not a one-off cheque.'],
       '#F59E0B', convictionIds),
-    lens('emerging', 'Ранние сделки',
-      'Раннее и независимое схождение умных денег — ещё не консенсус.',
+    lens('emerging', ['Ранние сделки', 'Early deals'],
+      ['Раннее и независимое схождение умных денег — ещё не консенсус.',
+       'Early, independent convergence of smart money — not consensus yet.'],
       '#5ACAD4', emergingIds),
-    lens('core', 'Ключевые игроки',
-      'Только «ядро»: определяющие узлы своей сети, самые повторные инвесторы.',
+    lens('core', ['Ключевые игроки', 'Core players'],
+      ['Только «ядро»: определяющие узлы своей сети, самые повторные инвесторы.',
+       'Core only: the defining nodes of their networks, the most repeat allocators.'],
       '#F0505A', coreIds),
-    lens('stealth', 'Тихо набирают долю',
-      'Компании, куда повторные доли незаметно накапливаются, — ещё до того как это стало очевидно.',
+    lens('stealth', ['Тихо набирают долю', 'Quietly building a stake'],
+      ['Компании, куда повторные доли незаметно накапливаются, — ещё до того как это стало очевидно.',
+       'Companies where repeat stakes are quietly accumulating — before it becomes obvious.'],
       '#C084FC', stealthIds),
-    lens('beneficiary', 'Публичные бенефициары',
-      'Публичные тикеры, на которые указывают несколько частных потоков, — то, что реально можно купить.',
+    lens('beneficiary', ['Публичные бенефициары', 'Public beneficiaries'],
+      ['Публичные тикеры, на которые указывают несколько частных потоков, — то, что реально можно купить.',
+       'Public tickers that several private flows point at — the part you can actually buy.'],
       '#82B98D', beneficiaryIds),
-    lens('network', 'Связанные инвесторы',
-      'Отслеживаемая сеть (PayPal Mafia, круг Тиля) сходится на одном секторе.',
+    lens('network', ['Связанные инвесторы', 'Networked allocators'],
+      ['Отслеживаемая сеть (PayPal Mafia, круг Тиля) сходится на одном секторе.',
+       'A tracked network (PayPal Mafia, the Thiel circle) converging on one sector.'],
       '#E8975E', networkConvergeIds),
-    lens('trend', 'Главное за период',
-      'Именные инвесторы за проверенными кластерами этого окна — самая синтезированная линза.',
+    lens('trend', ['Главное за период', 'The period in brief'],
+      ['Именные инвесторы за проверенными кластерами этого окна — самая синтезированная линза.',
+       'The named allocators behind this window\'s verified clusters — the most synthesised lens.'],
       '#8E9BE6', trendIds, { sinceDays: 30 }),
   ];
 }
@@ -146,10 +166,10 @@ export function viewKey(state) {
 // ([7,30,90,null]). This is the map's recency control — it lives in the filter
 // drawer; the map defaults to 30 days. 0 = all history.
 export const RECENCY_OPTIONS = [
-  { days: 7, label: '7 дн' },
-  { days: 30, label: '30 дн' },
-  { days: 90, label: '90 дн' },
-  { days: 0, label: 'Всё' },
+  { days: 7,  get label() { return getLang() === 'en' ? '7d'  : '7 дн'; } },
+  { days: 30, get label() { return getLang() === 'en' ? '30d' : '30 дн'; } },
+  { days: 90, get label() { return getLang() === 'en' ? '90d' : '90 дн'; } },
+  { days: 0,  get label() { return getLang() === 'en' ? 'All' : 'Всё'; } },
 ];
 
 /** ISO date `generated` minus `days`, as an ISO string. Null when days ≤ 0. */

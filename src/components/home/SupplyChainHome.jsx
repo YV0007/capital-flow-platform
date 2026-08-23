@@ -175,7 +175,7 @@ export default function SupplyChainHome({ onOpen }) {
             }}>
               {cards.map((c, i) => (
                 <BucketCard
-                  key={c.name}
+                  key={c.key}
                   card={c}
                   active={i === index}
                   onOpen={onOpen}

@@ -20,6 +20,7 @@ import ForceGraph2D from 'react-force-graph-2d';
 import { fmtUSD, linkWidth } from './format.js';
 import { SECTOR_META, CLASS_META, TIER_META, STATUS_META } from '../../../data/capitalMap.js';
 import { useThemeMode, canvasTokens, tone } from './canvasTheme.js';
+import { getLang } from '../../../lib/i18n.jsx';
 
 // Surfaces come from canvasTheme (a JS mirror of the --cf-* CSS variables,
 // which a canvas cannot read). `tone()` adapts the SEMANTIC palette — sector
@@ -511,7 +512,9 @@ export default function FlowGraph({
     const pivot = isPlayer
       ? (n.playerRank === 'core' ? 'Ключевой инвестор' : n.playerRank === 'key' ? 'Стоит следить' : null)
       : (n.dealRank === 'flagged' ? 'Интересная сделка' : n.dealRank === 'emerging' ? 'Зарождается' : null);
-    const sideLabel = isPlayer ? 'Вложено' : 'Получено';
+    const sideLabel = getLang() === 'en'
+      ? (isPlayer ? 'Deployed' : 'Received')
+      : (isPlayer ? 'Вложено' : 'Получено');
     const sideVal = isPlayer ? n.totalOutflow : n.totalInflow;
     const sideColor = isPlayer ? tone('#C2A36B', mode) : tone('#82B98D', mode);
     const row = (k, v, vc) => `<span style="color:${T.tipText4}">${k}</span><span style="color:${vc};text-align:right">${v}</span>`;

@@ -7,6 +7,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Bookmark, BookmarkCheck, Plus, Trash2, Check, X } from 'lucide-react';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -39,6 +40,7 @@ function useOutsideClose(open, onClose) {
 }
 
 function NewListRow({ onCreate }) {
+  const t = useT();
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState('');
   const commit = () => {
@@ -55,7 +57,7 @@ function NewListRow({ onCreate }) {
         }}
         onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
         onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
-        <Plus size={11} /> Новый список
+        <Plus size={11} /> {t('Новый список', 'New list')}
       </button>
     );
   }
@@ -63,17 +65,17 @@ function NewListRow({ onCreate }) {
     <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 8px' }}>
       <input autoFocus value={name} onChange={(e) => setName(e.target.value)}
         onKeyDown={(e) => { if (e.key === 'Enter') commit(); if (e.key === 'Escape') { setName(''); setEditing(false); } }}
-        placeholder="Название…"
+        placeholder={t('Название…', 'Name…')}
         style={{
           flex: 1, minWidth: 0, padding: '5px 8px', background: 'var(--cf-surface0)',
           border: '1px solid var(--cf-border)', borderRadius: 6,
           color: 'var(--cf-text1)', fontSize: 10.5, fontFamily: MONO, outline: 'none',
         }} />
-      <button onClick={commit} title="Создать"
+      <button onClick={commit} title={t('Создать', 'Create')}
         style={{ background: 'none', border: 'none', color: 'var(--cf-good)', cursor: 'pointer', padding: 3, lineHeight: 0 }}>
         <Check size={13} />
       </button>
-      <button onClick={() => { setName(''); setEditing(false); }} title="Отмена"
+      <button onClick={() => { setName(''); setEditing(false); }} title={t('Отмена', 'Cancel')}
         style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0 }}>
         <X size={13} />
       </button>
@@ -83,6 +85,7 @@ function NewListRow({ onCreate }) {
 
 // ── Top-bar selector ─────────────────────────────────────────────────────
 export function WatchlistSelector({ wl }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const ref = useOutsideClose(open, () => setOpen(false));
   const active = wl.activeList;
@@ -90,7 +93,7 @@ export function WatchlistSelector({ wl }) {
   return (
     <div ref={ref} style={{ position: 'relative', pointerEvents: 'auto' }}>
       <button onClick={() => setOpen(o => !o)}
-        title="Списки наблюдения — сохранённые подборки карты"
+        title={t('Списки наблюдения — сохранённые подборки карты', 'Watchlists — saved selections from the map')}
         style={{
           display: 'inline-flex', alignItems: 'center', gap: 6, height: 30, padding: '0 11px',
           background: active ? 'var(--cf-accent-bg)' : 'var(--cf-topbar)',
@@ -101,14 +104,14 @@ export function WatchlistSelector({ wl }) {
           maxWidth: 190,
         }}>
         {active ? <BookmarkCheck size={12} style={{ flexShrink: 0 }} /> : <Bookmark size={12} style={{ flexShrink: 0 }} />}
-        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{active ? active.name : 'Списки'}</span>
+        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{active ? active.name : t('Списки', 'Lists')}</span>
       </button>
 
       {open && (
         <div style={pop}>
           {wl.lists.length === 0 && (
             <div style={{ padding: '10px 12px', fontSize: 10, color: 'var(--cf-text6)', fontFamily: MONO, lineHeight: 1.6 }}>
-              Списков пока нет. Создайте один и добавляйте объекты из панели или таблицы.
+              {t('Списков пока нет. Создайте один и добавляйте объекты из панели или таблицы.', 'No lists yet. Create one and add entities from the panel or the table.')}
             </div>
           )}
           {wl.lists.map(l => {
@@ -129,7 +132,7 @@ export function WatchlistSelector({ wl }) {
                   overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                 }}>{l.name}</span>
                 <span style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, flexShrink: 0 }}>{l.ids.length}</span>
-                <button onClick={(e) => { e.stopPropagation(); wl.deleteList(l.id); }} title={`Удалить «${l.name}»`}
+                <button onClick={(e) => { e.stopPropagation(); wl.deleteList(l.id); }} title={t(`Удалить «${l.name}»`, `Delete “${l.name}”`)}
                   style={{ background: 'none', border: 'none', color: 'var(--cf-text9)', cursor: 'pointer', padding: 2, lineHeight: 0, flexShrink: 0 }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-bad)')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text9)')}>
@@ -148,7 +151,7 @@ export function WatchlistSelector({ wl }) {
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text0)')}
               onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text3)')}>
-              Показать всю карту
+              {t('Показать всю карту', 'Show the whole map')}
             </button>
           )}
         </div>
@@ -159,6 +162,7 @@ export function WatchlistSelector({ wl }) {
 
 // ── Per-entity bookmark menu ─────────────────────────────────────────────
 export function WatchlistMenu({ wl, entityId, size = 15, align = 'right' }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const ref = useOutsideClose(open, () => setOpen(false));
   const memberIds = wl.memberOf(entityId);
@@ -167,7 +171,7 @@ export function WatchlistMenu({ wl, entityId, size = 15, align = 'right' }) {
   return (
     <div ref={ref} style={{ position: 'relative', display: 'inline-flex' }}>
       <button onClick={(e) => { e.stopPropagation(); setOpen(o => !o); }}
-        title={inAny ? `В списках: ${memberIds.length}` : 'Добавить в список'}
+        title={inAny ? `В списках: ${memberIds.length}` : t('Добавить в список', 'Add to a list')}
         style={{
           background: 'none', border: 'none', cursor: 'pointer', padding: 3, lineHeight: 0,
           color: inAny ? 'var(--cf-accent)' : 'var(--cf-text7)',
@@ -182,7 +186,7 @@ export function WatchlistMenu({ wl, entityId, size = 15, align = 'right' }) {
           onClick={(e) => e.stopPropagation()}>
           {wl.lists.length === 0 && (
             <div style={{ padding: '9px 12px', fontSize: 10, color: 'var(--cf-text6)', fontFamily: MONO, lineHeight: 1.6 }}>
-              Списков пока нет — создайте первый ниже.
+              {t('Списков пока нет — создайте первый ниже.', 'No lists yet — create the first one below.')}
             </div>
           )}
           {wl.lists.map(l => {

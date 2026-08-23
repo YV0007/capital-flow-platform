@@ -48,6 +48,7 @@ import { fmtUSD, plural } from './format.js';
 import { applyMoleculeLayout } from './layout.js';
 import { buildGraph, buildAdjacency, META } from '../../../data/capitalMap.js';
 import { newestConfirmedDate, daysBefore } from './digest.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -73,6 +74,7 @@ const TOPBAR_H = 62;
 const PANEL_W = 380;   // must match EntityPanel's width
 
 export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, mapSwitch }) {
+  const t = useT();
   // Built once; positions are pinned by the static layout — no simulation.
   const graph = useMemo(() => buildGraph(), []);
   // Window anchor — the newest confirmed flow date, not `generated`. The
@@ -597,7 +599,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, 
           {/* In the table, Назад steps back to the map (the intuitive "up one
               level"); on the map it leaves for the research library. */}
           <button onClick={() => (view !== 'map' ? exitToMap() : onBack())}
-            title={view !== 'map' ? 'Назад к карте' : 'К библиотеке исследований'}
+            title={view !== 'map' ? t('Назад к карте', 'Back to the map') : t('К библиотеке исследований', 'Back to the research library')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 3,
               padding: '6px 10px 6px 6px',
@@ -606,7 +608,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, 
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text0)'; e.currentTarget.style.borderColor = 'var(--cf-text9)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--cf-text3)'; e.currentTarget.style.borderColor = 'var(--cf-border)'; }}>
-            <ChevronLeft size={13} /> {view !== 'map' ? 'К карте' : 'Назад'}
+            <ChevronLeft size={13} /> {view !== 'map' ? t('К карте', 'To the map') : t('Назад', 'Back')}
           </button>
           {/* Потоки | Экосистема — owned by CapitalFlowSection one level up, so
               the two maps never share state. See ecosystem/MapSwitch.jsx. */}
@@ -614,24 +616,24 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, 
           <div style={{ minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
               <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
-                Карта потоков капитала
+                {t('Карта потоков капитала', 'Capital Flow Map')}
               </span>
-              <span title="Дата генерации данных движком Capital Flow"
+              <span title={t('Дата генерации данных движком Capital Flow', 'The date the Capital Flow engine produced this file')}
                 style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
-                НА {META.generated}
+                {t('НА', 'AS OF')} {META.generated}
               </span>
             </div>
             <div style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2, whiteSpace: 'nowrap' }}>
               <span style={{ color: 'var(--cf-accent)', fontWeight: 700 }}>{fmtUSD(activeFilterCount ? visibleTotal : graph.stats.totalTracked)}</span>
-              {activeFilterCount ? ' в выборке' : ' раскрыто'}
+              {activeFilterCount ? t(' в выборке', ' in selection') : t(' раскрыто', ' disclosed')}
               <span style={{ color: 'var(--cf-text9)' }}> · </span>
-              {matchedNodes.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.nodeCount}</span> объектов
+              {matchedNodes.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.nodeCount}</span> {t('объектов', 'entities')}
               <span style={{ color: 'var(--cf-text9)' }}> · </span>
-              {matchedLinks.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.flowCount}</span> потоков
+              {matchedLinks.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.flowCount}</span> {t('потоков', 'flows')}
               {graph.stats.signalCount > 0 && (
                 <>
                   <span style={{ color: 'var(--cf-text9)' }}> · </span>
-                  <span style={{ color: 'var(--cf-warn)', fontWeight: 700 }}>{graph.stats.signalCount} {plural(graph.stats.signalCount, ['сигнал', 'сигнала', 'сигналов'])}</span>
+                  <span style={{ color: 'var(--cf-warn)', fontWeight: 700 }}>{graph.stats.signalCount} {plural(graph.stats.signalCount, ['сигнал', 'сигнала', 'сигналов'], ['signal', 'signals'])}</span>
                 </>
               )}
             </div>
@@ -656,7 +658,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, 
               }
               if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
             }}
-            placeholder={view === 'table' ? 'Поиск по таблице…' : 'Найти на карте…'}
+            placeholder={view === 'table' ? t('Поиск по таблице…', 'Search the table…') : t('Найти на карте…', 'Find on the map…')}
             style={{
               width: '100%', padding: '7px 26px 7px 27px',
               background: 'var(--cf-topbar)', border: '1px solid var(--cf-border)', borderRadius: 8,
@@ -723,7 +725,7 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, 
                     <span style={{ fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600 }}>{b.name}</span>
                     <span style={{ fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.04em' }}>{b.ticker}</span>
                     <span style={{ fontSize: 9, color: 'var(--cf-warn)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginLeft: 'auto' }}>
-                      Бенефициар · {sec?.label || s.sectorKey}
+                      {t('Бенефициар', 'Beneficiary')} · {sec?.label || s.sectorKey}
                     </span>
                   </button>
                 );
@@ -735,42 +737,44 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, 
         {/* Controls */}
         <div style={{ display: 'flex', gap: 6, pointerEvents: 'auto' }}>
           <TopBtn onClick={() => (view === 'table' ? exitToMap() : (setView('table'), setDrawerOpen(false)))}
-            label={view === 'table' ? 'Назад к карте' : 'Таблица — вся отслеживаемая вселенная, по ролям и типам'}
+            label={view === 'table' ? t('Назад к карте', 'Back to the map') : t('Таблица — вся отслеживаемая вселенная, по ролям и типам', 'Table — the whole tracked universe, by role and type')}
             active={view === 'table'} wide>
             {view === 'table' ? <Share2 size={12} /> : <Table2 size={12} />}
-            {view === 'table' ? 'Карта' : 'Таблица'}
+            {view === 'table' ? t('Карта', 'Map') : t('Таблица', 'Table')}
           </TopBtn>
           <TopBtn onClick={() => (view === 'digest' ? exitToMap() : (setView('digest'), setDrawerOpen(false)))}
-            label={view === 'digest' ? 'Назад к карте' : 'Сводка — недельный, месячный и общий обзор потоков'}
+            label={view === 'digest' ? t('Назад к карте', 'Back to the map') : t('Сводка — недельный, месячный и общий обзор потоков', 'Digest — the weekly, monthly and all-time view of the flows')}
             active={view === 'digest'} wide>
             {view === 'digest' ? <Share2 size={12} /> : <FileText size={12} />}
-            {view === 'digest' ? 'Карта' : 'Сводка'}
+            {view === 'digest' ? t('Карта', 'Map') : t('Сводка', 'Digest')}
           </TopBtn>
           <WatchlistSelector wl={wl} />
           {/* Filters drive both views — the table is the same universe as the map. */}
           <TopBtn onClick={() => setDrawerOpen(o => !o)}
-            label="Фильтры и быстрые виды" active={drawerOpen || activeFilterCount > 0} wide>
+            label={t('Фильтры и быстрые виды', 'Filters and quick views')} active={drawerOpen || activeFilterCount > 0} wide>
             <SlidersHorizontal size={12} />
-            Фильтры{activeFilterCount ? ` · ${activeFilterCount}` : ''}
+            {t('Фильтры', 'Filters')}{activeFilterCount ? ` · ${activeFilterCount}` : ''}
           </TopBtn>
           {view === 'map' && (
             <>
               {graph.stats.watchCount > 0 && (
                 <TopBtn onClick={() => setShowWatch(s => !s)}
-                  label={`Неподтверждённые наводки — ${graph.stats.watchCount} объектов, у которых есть только потоки-кандидаты без подтверждения источником. По умолчанию скрыты; включите, чтобы увидеть, что может быть на подходе.`}
+                  label={t(
+                    `Неподтверждённые наводки — ${graph.stats.watchCount} объектов, у которых есть только потоки-кандидаты без подтверждения источником. По умолчанию скрыты; включите, чтобы увидеть, что может быть на подходе.`,
+                    `Unconfirmed leads — ${graph.stats.watchCount} entities whose flows are candidates only, with no source confirmation. Hidden by default; switch them on to see what may be coming.`)}
                   active={showWatch} wide>
-                  <Eye size={12} /> Наводки{showWatch ? ` · ${graph.stats.watchCount}` : ''}
+                  <Eye size={12} /> {t('Наводки', 'Leads')}{showWatch ? ` · ${graph.stats.watchCount}` : ''}
                 </TopBtn>
               )}
-              <TopBtn onClick={() => setShowLabels(s => !s)} label="Показать / скрыть подписи" active={showLabels}>
+              <TopBtn onClick={() => setShowLabels(s => !s)} label={t('Показать / скрыть подписи', 'Show / hide labels')} active={showLabels}>
                 <Tag size={12} />
               </TopBtn>
-              <TopBtn onClick={resetView} label="Сбросить вид">
+              <TopBtn onClick={resetView} label={t('Сбросить вид', 'Reset the view')}>
                 <Maximize2 size={12} />
               </TopBtn>
               {(selectedNodeId || selectedFlowId) && (
-                <TopBtn onClick={clearSelection} label="Снять выделение (Esc)" wide>
-                  Сброс · Esc
+                <TopBtn onClick={clearSelection} label={t('Снять выделение (Esc)', 'Clear the selection (Esc)')} wide>
+                  {t('Сброс', 'Reset')} · Esc
                 </TopBtn>
               )}
             </>
@@ -852,14 +856,14 @@ export default function CapitalFlowMap({ onBack, initialFlowId, onOpenResearch, 
           }}>
             {graph.stats.flowCount === 0 ? (
               <>
-                <span style={{ color: 'var(--cf-accent)', fontWeight: 700, letterSpacing: '0.08em' }}>ПУСТО</span><br />
-                <span style={{ display: 'inline-block', marginTop: 6 }}>Данные о потоках капитала ещё не загружены.</span><br />
-                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>Ждём следующего прогона движка с <code>capitalMap.json</code>.</span>
+                <span style={{ color: 'var(--cf-accent)', fontWeight: 700, letterSpacing: '0.08em' }}>{t('ПУСТО', 'EMPTY')}</span><br />
+                <span style={{ display: 'inline-block', marginTop: 6 }}>{t('Данные о потоках капитала ещё не загружены.', 'No capital-flow data has been loaded yet.')}</span><br />
+                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>{t('Ждём следующего прогона движка с', 'Waiting on the next engine run with')} <code>capitalMap.json</code>.</span>
               </>
             ) : (
               <>
-                Под эти фильтры не попал ни один поток.<br />
-                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>Ослабьте минимальную сумму или снимите один из фильтров.</span>
+                {t('Под эти фильтры не попал ни один поток.', 'No flow matches these filters.')}<br />
+                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>{t('Ослабьте минимальную сумму или снимите один из фильтров.', 'Loosen the minimum amount or drop one of the filters.')}</span>
               </>
             )}
           </div>

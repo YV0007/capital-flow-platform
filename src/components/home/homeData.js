@@ -418,6 +418,9 @@ export const SUPPLY_CHAIN_CARDS = Object.entries(dcBuckets.DC_BUCKETS || {}).map
       ...(second ? [{ name: second.company, ticker: second.ticker }] : []),
     ];
     return {
+      // Stable identity for React keys and lookups — the label is a {ru,en}
+      // pair now and cannot serve as one.
+      key: name,
       name: BUCKET_L[name] || pair(name),
       color: b.color,
       companies,
