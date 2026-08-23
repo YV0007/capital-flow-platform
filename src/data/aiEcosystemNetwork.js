@@ -114,7 +114,27 @@ export const SUBGRAPH_META = {
   'infrastructure-backbone':{ color: '#9AA7B8', fallbackLabel: 'Хребет инфраструктуры' },
   _default:                 { color: '#8E9BE6', fallbackLabel: 'Подграф' },
 };
-export const subgraphMeta = (id) => SUBGRAPH_META[id] || SUBGRAPH_META._default;
+
+// Spare hues for subgraphs the engine adds that this file has never heard of.
+// Deliberately clear of the five spine colours, so a lens accent is never
+// mistaken for a relation family. Picked by a hash of the id rather than by
+// arrival order, so a group keeps its colour when the engine reorders the list
+// or ships a new one alongside it.
+const SUBGRAPH_SPARE_COLORS = [
+  '#5EC2B7', '#C98BD9', '#E0B15A', '#7FB2E8', '#D98B8B',
+  '#8FCB72', '#B49BE0', '#E09A6B',
+];
+const hashId = (s) => {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+};
+export const subgraphMeta = (id) => SUBGRAPH_META[id] || {
+  ...SUBGRAPH_META._default,
+  color: id
+    ? SUBGRAPH_SPARE_COLORS[hashId(id) % SUBGRAPH_SPARE_COLORS.length]
+    : SUBGRAPH_META._default.color,
+};
 
 // Labels + one-liners for the network-summary aggregates.
 export const NETWORK_META = {
