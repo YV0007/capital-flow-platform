@@ -171,13 +171,25 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   }, [activeCycle]);
   const cycleNodeSet = activeCycle ? activeCycle.entitySet : EMPTY_SET;
 
-  // NOTE: no automatic camera move when a circuit lights. It was tried and
-  // taken out. force-graph's zoomToFit runs centerAt and zoom as two d3
-  // transitions on the same zoom behaviour, so an animated fit has the second
-  // cancel the first — the camera zooms but never pans, and a circuit a
-  // thousand world-units off-centre lands outside the viewport, leaving a blank
-  // map while the panel insists something is lit. The camera stays where the
-  // reader put it; «Восстановить вид» in the settings menu reframes on demand.
+  // Re-frame the whole map whenever the cycle lens opens, closes or swaps
+  // circuits. Not a flourish — without it the camera is left zoomed in on the
+  // world origin with the lit circuit off-screen, and the lens reads as broken.
+  //
+  // Deliberately the SAME call the «Восстановить вид» button makes, whole-map
+  // and animated, rather than a fit filtered to the circuit: a filtered fit has
+  // to pan a long way, and force-graph drives centerAt and zoom as two d3
+  // transitions on one zoom behaviour, so the pan gets cancelled by the zoom
+  // and the circuit lands outside the viewport. Whole-map framing needs no pan,
+  // so it survives. The circuit shows small, exactly as when picked by hand.
+  const cycleWasOn = useRef(false);
+  useEffect(() => {
+    if (cycleMode) cycleWasOn.current = true;
+    if (!cycleWasOn.current) return;
+    // Late enough to be after the panel's own layout shift, which otherwise
+    // re-centres the camera on top of this.
+    const t = setTimeout(() => fgRef.current?.zoomToFit(700, 80), 450);
+    return () => clearTimeout(t);
+  }, [cycleMode, cycleNodeSet, fgRef]);
 
   // ── The chain ──────────────────────────────────────────────────────────
   const chain = useMemo(() => buildChain(chainRoot, {

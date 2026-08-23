@@ -111,6 +111,7 @@ export default function EcoGraph({
   // Frame the whole map on load. Two traps, both the flow map's: fitting
   // before the graph has ingested its data zooms into a degenerate bbox, and
   // the library resets the camera on resize, wiping a fit done too early.
+  const fitIntervalRef = useRef(null);
   useEffect(() => {
     let ticks = 0, goodFits = 0;
     const iv = setInterval(() => {
@@ -121,13 +122,32 @@ export default function EcoGraph({
       if (!fg) return;
       const bbox = fg.getGraphBbox?.();
       if (!(bbox && Number.isFinite(bbox.x?.[0]) && (bbox.x[1] - bbox.x[0]) > 100)) return;
-      fg.zoomToFit(goodFits === 0 ? 0 : 200, 70);
+      // BOTH passes instant. An animated zoomToFit drives centerAt and zoom as
+      // two d3 transitions on the same zoom behaviour and the zoom cancels the
+      // pan, so the camera ends up scaled but never centred — the map then sits
+      // zoomed in on the world origin with most of the graph off-screen.
+      fg.zoomToFit(0, 70);
       goodFits += 1;
       if (goodFits >= 2) clearInterval(iv);
     }, 250);
+    fitIntervalRef.current = iv;
     return () => clearInterval(iv);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // …and stop trying the moment a lens takes over the camera. That interval can
+  // stay alive for up to fifteen seconds, because every layout change (a panel
+  // opening, a drawer sliding) bumps lastResizeRef and defers its next attempt.
+  // A late whole-map fit then lands ON TOP of the framing a lens just did and
+  // silently undoes it — the symptom being a circuit that is lit, correct, and
+  // three pixels wide because the camera snapped back out.
+  useEffect(() => {
+    if (!cycleMode && !subgraphLens && !chainRoot) return;
+    if (fitIntervalRef.current) {
+      clearInterval(fitIntervalRef.current);
+      fitIntervalRef.current = null;
+    }
+  }, [cycleMode, subgraphLens, chainRoot]);
 
   // ── Kill every force — the layout is fixed ─────────────────────────────
   useEffect(() => {
@@ -155,11 +175,6 @@ export default function EcoGraph({
     if (!hasChain) return true;
     return chain.nodes.has(n.id);
   }, [visibleNodes, hasChain, chain, cycleMode, cycleNodeSet, subgraphLens]);
-
-  if (cycleMode) {
-    const litIds = graphData.nodes.filter(nodeLit).map(n => [n.id, Math.round(n.x), Math.round(n.y)]);
-    console.log('[dbg-graph] cycleMode', { cycleNodeSet: [...(cycleNodeSet || [])], lit: litIds });
-  }
 
   const edgeLit = useCallback((e) => {
     if (!visibleEdges.has(e.id)) return false;
@@ -665,6 +680,14 @@ export default function EcoGraph({
           onNodeDragEnd={(n) => { n.fx = n.x; n.fy = n.y; }}
           cooldownTicks={0}
           warmupTicks={0}
+          // The layout is static and the engine never runs, so force-graph's
+          // default autoPauseRedraw parks the render loop and only wakes it on
+          // pointer interaction. Anything this map changes in CODE then never
+          // reached the canvas: picking a circuit by click painted it, picking
+          // the identical circuit from an effect left the map blank while the
+          // panel correctly showed it as lit. force-graph exposes no refresh()
+          // to ask for a single frame, so the loop has to stay awake.
+          autoPauseRedraw={false}
           minZoom={0.1}
           maxZoom={9}
         />
