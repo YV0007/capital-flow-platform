@@ -156,6 +156,11 @@ export default function EcoGraph({
     return chain.nodes.has(n.id);
   }, [visibleNodes, hasChain, chain, cycleMode, cycleNodeSet, subgraphLens]);
 
+  if (cycleMode) {
+    const litIds = graphData.nodes.filter(nodeLit).map(n => [n.id, Math.round(n.x), Math.round(n.y)]);
+    console.log('[dbg-graph] cycleMode', { cycleNodeSet: [...(cycleNodeSet || [])], lit: litIds });
+  }
+
   const edgeLit = useCallback((e) => {
     if (!visibleEdges.has(e.id)) return false;
     if (subgraphLens) return subgraphLens.edgeSet.has(e.id);
@@ -660,15 +665,6 @@ export default function EcoGraph({
           onNodeDragEnd={(n) => { n.fx = n.x; n.fy = n.y; }}
           cooldownTicks={0}
           warmupTicks={0}
-          // The engine is stopped, so force-graph's default autoPauseRedraw
-          // parks the render loop and only wakes it on pointer interaction.
-          // Everything this map changes in code — a lens, a filter, a lit
-          // circuit — then failed to reach the canvas: selecting a circuit by
-          // CLICK painted it, selecting the identical circuit from an effect
-          // left the map blank while the panel insisted it was lit. There is no
-          // refresh() on force-graph to ask for a frame (its own .d.ts has
-          // none), so the loop has to stay awake.
-          autoPauseRedraw={false}
           minZoom={0.1}
           maxZoom={9}
         />

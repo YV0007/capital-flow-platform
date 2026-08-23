@@ -947,8 +947,11 @@ function CycleLegend({ cycles, activeCycleId, listOpen, onSelect, onBack, onClos
         return active ? (
           <div key={c.id}>{row}</div>
         ) : (
+          // NB: no scrollIntoView on the lit row, however tempting — it scrolls
+          // every scrollable ancestor, and here that pushed the map canvas
+          // itself out of view: the lens looked broken while the panel was
+          // perfectly correct. The «на карте» marker is enough to find the row.
           <button key={c.id} onClick={() => onSelect(c.id)}
-            ref={onMap ? (el) => el?.scrollIntoView({ block: 'nearest' }) : undefined}
             style={{
               display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
               background: onMap ? 'var(--cf-accent-bg)' : 'transparent',
