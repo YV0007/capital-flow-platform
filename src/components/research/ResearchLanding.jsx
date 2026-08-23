@@ -4,8 +4,11 @@
 
 import ResearchCover from './ResearchCovers.jsx';
 import RESEARCH_LIBRARY from '../../data/research-library.json';
+import { useT, useL } from '../../lib/i18n.jsx';
 
 export default function ResearchLanding({ onOpen }) {
+  const t = useT();
+  const L = useL();
   return (
     <div style={{
       minHeight: 'calc(100vh - 80px)',
@@ -15,13 +18,15 @@ export default function ResearchLanding({ onOpen }) {
       {/* Title block */}
       <div style={{ maxWidth: 1200, margin: '0 auto 56px auto', paddingLeft: 8 }}>
         <div style={{ fontSize: 11, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.16em', marginBottom: 12 }}>
-          Research Library
+          {t('Библиотека исследований', 'Research Library')}
         </div>
         <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
-          Sector reports
+          {t('Отраслевые отчёты', 'Sector reports')}
         </div>
         <div style={{ fontSize: 14, color: 'var(--hm-text3)', marginTop: 10, maxWidth: 640, lineHeight: 1.55 }}>
-          Deep-dive research on specific sectors, technologies, and theses. Each report covers the dominant players, structural dynamics, and the open questions that determine who wins.
+          {t(
+            'Глубокие исследования по конкретным секторам, технологиям и тезисам. В каждом отчёте — доминирующие игроки, структурная динамика и открытые вопросы, от которых зависит, кто выиграет.',
+            'Deep-dive research on specific sectors, technologies, and theses. Each report covers the dominant players, structural dynamics, and the open questions that determine who wins.')}
         </div>
       </div>
 
@@ -75,24 +80,24 @@ export default function ResearchLanding({ onOpen }) {
                 textTransform: 'uppercase', letterSpacing: '0.1em',
                 backdropFilter: 'blur(4px)',
               }}>
-                {r.sector}
+                {L(r.sector)}
               </span>
             </div>
 
             {/* Card body */}
             <div style={{ padding: '20px 22px 22px 22px', display: 'flex', flexDirection: 'column', flex: 1 }}>
               <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.01em', lineHeight: 1.25, marginBottom: 10 }}>
-                {r.title}
+                {L(r.title)}
               </div>
               <div style={{ fontSize: 12, color: 'var(--hm-text3)', lineHeight: 1.5, marginBottom: 16, minHeight: 54 }}>
-                {r.subtitle}
+                {L(r.subtitle)}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, fontSize: 10, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text5)', marginTop: 'auto' }}>
-                <span>{r.companyCount} companies</span>
+                <span>{r.companyCount} {t('компаний', 'companies')}</span>
                 <span style={{ color: 'var(--hm-rank)' }}>·</span>
-                <span>{r.sectionCount} sections</span>
+                <span>{r.sectionCount} {t('разделов', 'sections')}</span>
                 <span style={{ flex: 1 }}></span>
-                <span>{r.dateCompleted}</span>
+                <span>{L(r.dateCompleted)}</span>
               </div>
             </div>
           </button>

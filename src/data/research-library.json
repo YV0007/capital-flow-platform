@@ -1,46 +1,97 @@
 [
   {
     "id": "capital-flow-map",
-    "title": "Карта потоков капитала",
-    "subtitle": "Кто кому даёт деньги в AI, полупроводниках, инфраструктуре и энергетике — интерактивная карта направленных потоков капитала.",
-    "sector": "Потоки капитала",
+    "title": {
+      "ru": "Карта потоков капитала",
+      "en": "Capital Flow Map"
+    },
+    "subtitle": {
+      "ru": "Кто кому даёт деньги в AI, полупроводниках, инфраструктуре и энергетике — интерактивная карта направленных потоков капитала.",
+      "en": "Who is funding whom across AI, semiconductors, infrastructure and power — an interactive map of directed capital flows."
+    },
+    "sector": {
+      "ru": "Потоки капитала",
+      "en": "Capital flows"
+    },
     "dateCompleted": "2026-08-06",
     "companyCount": 46,
     "sectionCount": 33,
     "accent": "#38BDF8",
-    "summary": "Интерактивный граф потоков капитала: каждое ребро — конкретная сделка с суммой, типом, датой и логикой. Видно круговые потоки (NVIDIA инвестирует в OpenAI, OpenAI покупает NVIDIA), кто финансирует стройку и где деньги реально заканчиваются."
+    "summary": {
+      "ru": "Интерактивный граф потоков капитала: каждое ребро — конкретная сделка с суммой, типом, датой и логикой. Видно круговые потоки (NVIDIA инвестирует в OpenAI, OpenAI покупает NVIDIA), кто финансирует стройку и где деньги реально заканчиваются.",
+      "en": "An interactive graph of capital flows: every edge is a specific deal with an amount, a type, a date and a rationale. Circular flows show up plainly (NVIDIA invests in OpenAI, OpenAI buys NVIDIA), along with who funds the build-out and where the money actually stops."
+    }
   },
   {
     "id": "data-centers-ai",
-    "title": "Data Centers for AI",
-    "subtitle": "Как устроена цепочка поставок ИИ-инфраструктуры – от сырья до готового ИИ: 41 подсектор, зависимости между ними и ключевые компании каждого.",
-    "sector": "Infrastructure",
+    "title": {
+      "ru": "Дата-центры для ИИ",
+      "en": "Data Centers for AI"
+    },
+    "subtitle": {
+      "ru": "Как устроена цепочка поставок ИИ-инфраструктуры – от сырья до готового ИИ: 41 подсектор, зависимости между ними и ключевые компании каждого.",
+      "en": "How the AI-infrastructure supply chain is built — from raw materials to deployed AI: 41 subsectors, the dependencies between them and the key companies in each."
+    },
+    "sector": {
+      "ru": "Инфраструктура",
+      "en": "Infrastructure"
+    },
     "dateCompleted": "2026-07-23",
     "companyCount": 254,
     "sectionCount": 21,
     "accent": "#22D3EE",
-    "summary": "Интерактивная карта цепочки поставок ИИ: 12 уровней от сырьевых материалов до инференса и внедрения ИИ в бизнес – включая память (HBM/DRAM/SSD), сетевую фабрику и сборку серверов. По каждому подсектору – простое объяснение, роль в общей цепочке и заметные компании как примеры."
+    "summary": {
+      "ru": "Интерактивная карта цепочки поставок ИИ: 12 уровней от сырьевых материалов до инференса и внедрения ИИ в бизнес – включая память (HBM/DRAM/SSD), сетевую фабрику и сборку серверов. По каждому подсектору – простое объяснение, роль в общей цепочке и заметные компании как примеры.",
+      "en": "An interactive map of the AI supply chain: 12 levels from raw materials to inference and enterprise deployment — including memory (HBM/DRAM/SSD), the network fabric and server assembly. Each subsector gets a plain explanation, its role in the chain, and notable companies as examples."
+    }
   },
   {
     "id": "holdings",
-    "title": "Holdings",
-    "subtitle": "What you own, and how it maps onto the AI bet — nine holdings across three zones.",
-    "sector": "Portfolio",
+    "title": {
+      "ru": "Холдинги",
+      "en": "Holdings"
+    },
+    "subtitle": {
+      "ru": "Что лежит в портфеле и как это ложится на ставку на ИИ — девять холдингов в трёх зонах.",
+      "en": "What you own, and how it maps onto the AI bet — nine holdings across three zones."
+    },
+    "sector": {
+      "ru": "Портфель",
+      "en": "Portfolio"
+    },
     "dateCompleted": "2026-05-26",
     "companyCount": 9,
     "sectionCount": 2,
     "accent": "#2FD9C4",
-    "summary": "Nine names that behave like roughly five or six independent bets. A relationship map showing real AI-infrastructure exposure, hidden overlaps, and the ballast that balances the book."
+    "summary": {
+      "ru": "Девять имён, которые ведут себя примерно как пять-шесть независимых ставок. Карта связей показывает реальную экспозицию на ИИ-инфраструктуру, скрытые пересечения и балласт, уравновешивающий портфель.",
+      "en": "Nine names that behave like roughly five or six independent bets. A relationship map showing real AI-infrastructure exposure, hidden overlaps, and the ballast that balances the book."
+    }
   },
   {
     "id": "proxy",
-    "title": "Proxy",
-    "subtitle": "Анализ прокси-инвестиций в частные AI-компании через публичные холдинги — окно возможностей, концентрация, риски и проекции",
-    "sector": "Конгломераты / Прокси",
-    "dateCompleted": "Июнь 2026",
+    "title": {
+      "ru": "Прокси",
+      "en": "Proxy"
+    },
+    "subtitle": {
+      "ru": "Анализ прокси-инвестиций в частные AI-компании через публичные холдинги — окно возможностей, концентрация, риски и проекции",
+      "en": "Proxy exposure to private AI companies through public holdings — the window of opportunity, concentration, risks and projections"
+    },
+    "sector": {
+      "ru": "Конгломераты / Прокси",
+      "en": "Conglomerates / Proxies"
+    },
+    "dateCompleted": {
+      "ru": "Июнь 2026",
+      "en": "June 2026"
+    },
     "companyCount": 50,
     "sectionCount": 6,
     "accent": "#F59E0B",
-    "summary": "Карта публичных прокси на SpaceX, OpenAI и Anthropic накануне трёх IPO 2026 года: окно дисконта, концентрация по проксям, конгломератный налог и круговые денежные потоки между стратегами и стартапами."
+    "summary": {
+      "ru": "Карта публичных прокси на SpaceX, OpenAI и Anthropic накануне трёх IPO 2026 года: окно дисконта, концентрация по проксям, конгломератный налог и круговые денежные потоки между стратегами и стартапами.",
+      "en": "A map of the public proxies on SpaceX, OpenAI and Anthropic ahead of three 2026 IPOs: the discount window, concentration across proxies, the conglomerate tax, and the circular cash flows between strategics and startups."
+    }
   }
 ]

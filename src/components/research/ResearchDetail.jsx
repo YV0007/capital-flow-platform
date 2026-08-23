@@ -4,6 +4,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 import React from 'react';
 import researchLibrary from '../../data/research-library.json';
+import { useT, useL } from '../../lib/i18n.jsx';
 import ResearchCover from './ResearchCovers.jsx';
 import HoldingsTab from './HoldingsTab.jsx';
 import HoldingsV2 from './HoldingsV2.jsx';
@@ -14,13 +15,15 @@ import CapitalFlowSection from './CapitalFlowSection.jsx';
 const RESEARCH_LIBRARY = researchLibrary;
 
 export default function ResearchDetail({ researchId, context, onBack, onOpenResearch }) {
+  const t = useT();
+  const L = useL();
   const r = RESEARCH_LIBRARY.find(x => x.id === researchId);
   if (!r) {
     return (
       <div style={{ padding: 64, textAlign: 'center', color: 'var(--hm-text3)' }}>
-        Research not found.
+        {t('Исследование не найдено.', 'Research not found.')}
         <button onClick={onBack} style={{ display: 'block', margin: '20px auto', padding: '8px 16px', background: '#22D3EE', color: '#0a0a0a', border: 'none', borderRadius: 6, cursor: 'pointer' }}>
-          ← Back to library
+          ← {t('К библиотеке', 'Back to library')}
         </button>
       </div>
     );
@@ -65,7 +68,7 @@ export default function ResearchDetail({ researchId, context, onBack, onOpenRese
           onMouseLeave={(e) => e.currentTarget.style.color = 'var(--hm-text5)'}>
           {/* A page reached via a «подробнее» link says where it will go back
               to, so the trip is round rather than one-way. */}
-          {context?.returnTo?.label ? `← ${context.returnTo.label}` : '← Back to research library'}
+          {context?.returnTo?.label ? `← ${L(context.returnTo.label)}` : `← ${t('К библиотеке исследований', 'Back to research library')}`}
         </button>
 
         {/* Header */}
@@ -89,18 +92,18 @@ export default function ResearchDetail({ researchId, context, onBack, onOpenRese
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: 10, color: r.accent, fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase', letterSpacing: '0.14em', marginBottom: 8, fontWeight: 700 }}>
-              {r.sector} · {r.dateCompleted}
+              {L(r.sector)} · {L(r.dateCompleted)}
             </div>
             <div style={{ fontSize: 32, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 12 }}>
-              {r.title}
+              {L(r.title)}
             </div>
             <div style={{ fontSize: 15, color: 'var(--hm-text3)', lineHeight: 1.55, maxWidth: 760 }}>
-              {r.subtitle}
+              {L(r.subtitle)}
             </div>
             <div style={{ display: 'flex', gap: 18, marginTop: 18, fontSize: 11, fontFamily: 'ui-monospace,monospace', color: 'var(--hm-text5)' }}>
-              <span><span style={{ color: 'var(--hm-text)', fontWeight: 600 }}>{r.companyCount}</span> companies covered</span>
+              <span><span style={{ color: 'var(--hm-text)', fontWeight: 600 }}>{r.companyCount}</span> {t('компаний в обзоре', 'companies covered')}</span>
               <span style={{ color: 'var(--hm-rank)' }}>·</span>
-              <span><span style={{ color: 'var(--hm-text)', fontWeight: 600 }}>{r.sectionCount}</span> sections</span>
+              <span><span style={{ color: 'var(--hm-text)', fontWeight: 600 }}>{r.sectionCount}</span> {t('разделов', 'sections')}</span>
             </div>
           </div>
         </div>
