@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { fmtUSD, plural, formatSignalText } from './format.js';
 import { STATUS_META, RULE_META, SECTOR_META, THEME_META, sectorLabel } from '../../../data/capitalMap.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 export const REPORT_W = 430;
@@ -51,6 +52,7 @@ const SECTOR_DC_BLOCK = {
 const pct = (x) => (x == null ? null : `${Math.round(x * 100)}%`);
 
 export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, onOpenDetail, onClose, topInset = 0 }) {
+  const t = useT();
   const [deep, setDeep] = useState(false);
   const [openSignal, setOpenSignal] = useState(null);   // index of the expanded "who exactly" row
   if (!report) return null;
@@ -87,10 +89,10 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
               fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 5,
               textTransform: 'uppercase', letterSpacing: '0.09em',
             }}>
-              {isSector ? 'Отчёт по сектору · куда идёт капитал' : 'Отчёт по классу · кто вкладывает капитал'}
+              {isSector ? t('Отчёт по сектору · куда идёт капитал', 'Sector report · where the capital goes') : t('Отчёт по классу · кто вкладывает капитал', 'Class report · who deploys the capital')}
             </div>
           </div>
-          <button onClick={onClose} title="Закрыть отчёт"
+          <button onClick={onClose} title={t('Закрыть отчёт', 'Close the report')}
             style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -107,7 +109,7 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
         {dcBlock && onOpenDetail && (
           <button
             onClick={() => onOpenDetail(dcBlock)}
-            title="Открыть технический разбор сектора в цепочке поставок ИИ"
+            title={t('Открыть технический разбор сектора в цепочке поставок ИИ', 'Open the technical breakdown of this sector in the AI supply chain')}
             style={{
               display: 'flex', alignItems: 'center', gap: 11, width: '100%',
               marginTop: 11, padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
@@ -127,10 +129,10 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             </span>
             <span style={{ flex: 1, minWidth: 0 }}>
               <span style={{ display: 'block', fontSize: 12, fontWeight: 700, color: 'var(--cf-text0)' }}>
-                Как это устроено — технический разбор
+                {t('Как это устроено — технический разбор', 'How it works — the technical breakdown')}
               </span>
               <span style={{ display: 'block', fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2, letterSpacing: '0.02em' }}>
-                Цепочка поставок ИИ · роль сектора и ключевые игроки
+                {t('Цепочка поставок ИИ · роль сектора и ключевые игроки', 'AI supply chain · the sector\'s role and its key players')}
               </span>
             </span>
             <ArrowUpRight size={15} color={report.color} style={{ flexShrink: 0 }} />
@@ -142,7 +144,7 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)', borderRadius: 5,
             fontSize: 9, color: 'var(--cf-muted)', fontFamily: MONO, fontWeight: 700,
             textTransform: 'uppercase', letterSpacing: '0.07em',
-          }}>Вне AI-тематики</div>
+          }}>{t('Вне AI-тематики', 'Outside the AI theme')}</div>
         )}
       </div>
 
@@ -151,16 +153,16 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
 
         {/* 1 · How big */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-          <Stat label={isSector ? 'Привлечено' : 'Вложено'}
+          <Stat label={isSector ? t('Привлечено', 'Raised') : t('Вложено', 'Deployed')}
             value={report.disclosedTotal ? fmtUSD(report.disclosedTotal) : (h.capital ? fmtUSD(h.capital) : '—')}
-            hint="Весь раскрытый капитал, включая неподтверждённые потоки." big />
-          <Stat label="Подтверждённые сделки" value={String(h.deals)}
-            hint={h.undisclosedDeals ? `${h.undisclosedDeals} без раскрытой суммы` : 'Все суммы раскрыты'} big />
-          <Stat label={isSector ? 'Инвесторы' : 'Активные имена'}
+            hint={t('Весь раскрытый капитал, включая неподтверждённые потоки.', 'All disclosed capital, including unconfirmed flows.')} big />
+          <Stat label={t('Подтверждённые сделки', 'Confirmed deals')} value={String(h.deals)}
+            hint={h.undisclosedDeals ? `${h.undisclosedDeals} без раскрытой суммы` : t('Все суммы раскрыты', 'Every amount disclosed')} big />
+          <Stat label={isSector ? t('Инвесторы', 'Allocators') : t('Активные имена', 'Active names')}
             value={String(isSector ? report.allocators : report.activeCount)}
-            hint={isSector ? 'Уникальные источники капитала' : `${report.memberCount} в этом классе всего`} />
-          <Stat label="Получатели" value={String(report.recipients)}
-            hint="Уникальные получатели капитала" />
+            hint={isSector ? t('Уникальные источники капитала', 'Distinct sources of capital') : `${report.memberCount} в этом классе всего`} />
+          <Stat label={t('Получатели', 'Recipients')} value={String(report.recipients)}
+            hint={t('Уникальные получатели капитала', 'Distinct recipients of capital')} />
         </div>
 
         <div style={{
@@ -170,23 +172,23 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
         }}>
           {report.rank && (
             <div>
-              <b style={{ color: 'var(--cf-text1)' }}>#{report.rank.position}</b> из {report.rank.of}{' '}
-              {isSector ? 'секторов' : 'классов инвесторов'} по капиталу
-              {report.shareOfTracked != null && <> · <b style={{ color: 'var(--cf-text1)' }}>{pct(report.shareOfTracked)}</b> всего отслеживаемого капитала</>}
+              <b style={{ color: 'var(--cf-text1)' }}>#{report.rank.position}</b> {t('из', 'of')} {report.rank.of}{' '}
+              {isSector ? t('секторов', 'sectors') : t('классов инвесторов', 'allocator classes')} {t('по капиталу', 'by capital')}
+              {report.shareOfTracked != null && <> · <b style={{ color: 'var(--cf-text1)' }}>{pct(report.shareOfTracked)}</b> {t('всего отслеживаемого капитала', 'of all tracked capital')}</>}
             </div>
           )}
           {h.medianTicket != null && (
             <div style={{ color: 'var(--cf-text5)' }}>
-              Медианный чек {fmtUSD(h.medianTicket)}
-              {h.largest && <> · крупнейший {fmtUSD(h.largest.amountUSD)}</>}
+              {t('Медианный чек', 'Median cheque')} {fmtUSD(h.medianTicket)}
+              {h.largest && <> · {t('крупнейший', 'largest')} {fmtUSD(h.largest.amountUSD)}</>}
             </div>
           )}
           {(h.capital > 0 || h.candidateDeals > 0) && (
             <div style={{ color: 'var(--cf-text5)', marginTop: 3 }}>
-              Подтверждено <b style={{ color: 'var(--cf-text3)' }}>{fmtUSD(h.capital)}</b> · {h.deals} {plural(h.deals, ['сделка', 'сделки', 'сделок'])}
+              {t('Подтверждено', 'Confirmed')} <b style={{ color: 'var(--cf-text3)' }}>{fmtUSD(h.capital)}</b> · {h.deals} {plural(h.deals, ['сделка', 'сделки', 'сделок'], ['deal', 'deals'])}
               {h.candidateDeals ? (
                 <span style={{ color: 'var(--cf-muted)' }}>
-                  {' · '}кандидаты {h.candidateCapital ? fmtUSD(h.candidateCapital) : '—'} ({h.candidateDeals} {plural(h.candidateDeals, ['поток', 'потока', 'потоков'])})
+                  {' · '}{t('кандидаты', 'candidates')} {h.candidateCapital ? fmtUSD(h.candidateCapital) : '—'} ({h.candidateDeals} {plural(h.candidateDeals, ['поток', 'потока', 'потоков'], ['flow', 'flows'])})
                 </span>
               ) : null}
             </div>
@@ -198,7 +200,8 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             by company / fund / project / asset, filtered to this sector. */}
         {isSector && onOpenReceivers && report.recipients > 0 && (
           <button onClick={() => onOpenReceivers(report.key)}
-            title={`Открыть таблицу со всеми получателями сектора «${report.label}»`}
+            title={t(`Открыть таблицу со всеми получателями сектора «${report.label}»`,
+                      `Open the table with every recipient in the ${report.label} sector`)}
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
               width: '100%', padding: '10px 12px', marginTop: 10,
@@ -208,25 +211,25 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
               textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer',
             }}>
             <Table2 size={12} />
-            Все получатели · {report.recipients}
+            {t('Все получатели', 'All recipients')} · {report.recipients}
             <ArrowUpRight size={12} />
           </button>
         )}
 
         {/* 2 · Who dominates */}
-        <Section title={isSector ? 'Кто вкладывает' : 'Куда идут деньги'} />
+        <Section title={isSector ? t('Кто вкладывает', 'Who deploys') : t('Куда идут деньги', 'Where the money goes')} />
         {report.dominant && (
           <div style={{
             padding: '10px 12px', borderRadius: 9, marginBottom: 9,
             background: `${report.dominant.color}0F`, border: `1px solid ${report.dominant.color}38`,
           }}>
             <div style={{ fontSize: 13, fontWeight: 700, color: report.dominant.color }}>
-              Впереди — {report.dominant.label.toLowerCase()}
+              {t('Впереди —', 'Out in front —')} {report.dominant.label.toLowerCase()}
             </div>
             <div style={{ fontSize: 11, color: 'var(--cf-text3)', marginTop: 3, fontFamily: MONO }}>
-              {fmtUSD(report.dominant.capital)} · {report.dominant.deals} {plural(report.dominant.deals, ['сделка', 'сделки', 'сделок'])}
-              {h.deals ? ` · ${pct(report.dominant.deals / h.deals)} сделок` : ''}
-              {h.capital ? ` · ${pct(report.dominant.capital / h.capital)} денег` : ''}
+              {fmtUSD(report.dominant.capital)} · {report.dominant.deals} {plural(report.dominant.deals, ['сделка', 'сделки', 'сделок'], ['deal', 'deals'])}
+              {h.deals ? ` · ${pct(report.dominant.deals / h.deals)} ${t('сделок', 'of deals')}` : ''}
+              {h.capital ? ` · ${pct(report.dominant.capital / h.capital)} ${t('денег', 'of the money')}` : ''}
             </div>
             {report.dominant.blurb && (
               <div style={{ fontSize: 11, color: 'var(--cf-text4)', marginTop: 6, lineHeight: 1.5 }}>
@@ -238,41 +241,42 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
         {mix.slice(0, 6).map(m => (
           <Bar key={m.key} label={m.label} color={m.color}
             share={h.capital ? m.capital / h.capital : 0}
-            right={`${fmtUSD(m.capital)} · ${m.deals} сд.`} />
+            right={`${fmtUSD(m.capital)} · ${m.deals} ${t('сд.', 'deals')}`} />
         ))}
 
         {/* 3 · Names */}
-        <Section title="Крупнейшие инвесторы"
-          note="По подтверждённому раскрытому капиталу" />
+        <Section title={t('Крупнейшие инвесторы', 'Largest allocators')}
+          note={t('По подтверждённому раскрытому капиталу', 'By confirmed, disclosed capital')} />
         {report.topAllocators.map((a, i) => (
           <NameRow key={a.key} rank={i + 1} node={a.node}
             main={fmtUSD(a.capital)}
-            sub={`${a.deals} ${plural(a.deals, ['сделка', 'сделки', 'сделок'])}${a.biggest ? ` · крупнейшая ${fmtUSD(a.biggest.amountUSD)}` : ''}`}
+            sub={`${a.deals} ${plural(a.deals, ['сделка', 'сделки', 'сделок'], ['deal', 'deals'])}${a.biggest ? ` · ${t('крупнейшая', 'largest')} ${fmtUSD(a.biggest.amountUSD)}` : ''}`}
             onClick={() => a.node && onOpenEntity(a.node.id)} />
         ))}
-        {!report.topAllocators.length && <Empty>Подтверждённых инвесторов в данных пока нет.</Empty>}
+        {!report.topAllocators.length && <Empty>{t('Подтверждённых инвесторов в данных пока нет.', 'No confirmed allocators in the data yet.')}</Empty>}
 
-        <Section title={isSector ? 'Кто привлекает здесь' : 'Крупнейшие позиции'}
-          note={isSector ? 'Компании и фонды, привлекающие в этом секторе' : 'По капиталу, полученному от этого класса'} />
+        <Section title={isSector ? t('Кто привлекает здесь', 'Who raises here') : t('Крупнейшие позиции', 'Largest positions')}
+          note={isSector ? t('Компании и фонды, привлекающие в этом секторе', 'Companies and funds raising in this sector') : t('По капиталу, полученному от этого класса', 'By capital received from this class')} />
         {report.topRecipients.map((r, i) => (
           <NameRow key={r.key} rank={i + 1} node={r.node}
-            main={r.capital ? fmtUSD(r.capital) : 'не раскрыто'}
-            sub={`${r.investors} ${plural(r.investors, ['инвестор', 'инвестора', 'инвесторов'])} · ${r.deals} ${plural(r.deals, ['сделка', 'сделки', 'сделок'])}`}
+            main={r.capital ? fmtUSD(r.capital) : t('не раскрыто', 'undisclosed')}
+            sub={`${r.investors} ${plural(r.investors, ['инвестор', 'инвестора', 'инвесторов'], ['investor', 'investors'])} · ${r.deals} ${plural(r.deals, ['сделка', 'сделки', 'сделок'], ['deal', 'deals'])}`}
             onClick={() => r.node && onOpenEntity(r.node.id)} />
         ))}
-        {!report.topRecipients.length && <Empty>Подтверждённых получателей в данных пока нет.</Empty>}
+        {!report.topRecipients.length && <Empty>{t('Подтверждённых получателей в данных пока нет.', 'No confirmed recipients in the data yet.')}</Empty>}
 
         {/* 4 · Momentum */}
         {report.momentum && (report.momentum.recentDeals || report.momentum.priorDeals) && (
           <>
-            <Section title="Динамика"
-              note={`Последние ${report.momentum.windowDays} дней против предыдущих ${report.momentum.windowDays}, отсчёт от даты выгрузки`} />
+            <Section title={t('Динамика', 'Momentum')}
+              note={t(`Последние ${report.momentum.windowDays} дней против предыдущих ${report.momentum.windowDays}, отсчёт от даты выгрузки`,
+                        `The last ${report.momentum.windowDays} days against the ${report.momentum.windowDays} before them, counted from the delivery date`)} />
             <Momentum m={report.momentum} />
             {isSector && !!report.newEntrants.length && (
               <div style={{ fontSize: 11, color: 'var(--cf-text3)', marginTop: 8, lineHeight: 1.55 }}>
-                <span title="До этого окна отслеженных сделок в секторе не было"
+                <span title={t('До этого окна отслеженных сделок в секторе не было', 'No tracked deals in this sector before this window')}
                   style={{ color: 'var(--cf-text5)', fontFamily: MONO, fontSize: 9.5, textTransform: 'uppercase', letterSpacing: '0.07em', cursor: 'help' }}>
-                  Впервые в секторе · </span>
+                  {t('Впервые в секторе', 'First time in the sector')} · </span>
                 {report.newEntrants.slice(0, 6).map((n, i) => (
                   <span key={n.id}>
                     {i > 0 && ', '}
@@ -283,9 +287,9 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             )}
             {!isSector && !!report.newSectors.length && (
               <div style={{ fontSize: 11, color: 'var(--cf-text3)', marginTop: 8, lineHeight: 1.55 }}>
-                <span title="До этого окна отслеженных сделок в этих секторах не было"
+                <span title={t('До этого окна отслеженных сделок в этих секторах не было', 'No tracked deals in these sectors before this window')}
                   style={{ color: 'var(--cf-text5)', fontFamily: MONO, fontSize: 9.5, textTransform: 'uppercase', letterSpacing: '0.07em', cursor: 'help' }}>
-                  Впервые вошли в · </span>
+                  {t('Впервые вошли в', 'First entry into')} · </span>
                 {report.newSectors.map(sectorLabel).join(', ')}
               </div>
             )}
@@ -296,7 +300,7 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             the canvas; it belongs to the sector, so it lives in its report. */}
         {isSector && !!report.signals.length && (
           <>
-            <Section title="Сработавшие сигналы" note="Правила движка, этот цикл" />
+            <Section title={t('Сработавшие сигналы', 'Signals fired')} note={t('Правила движка, этот цикл', 'Engine rules, this cycle')} />
             {report.signals.map((s, i) => {
               const rule = RULE_META[s.rule];
               const open = openSignal === i;
@@ -314,7 +318,7 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
                     }}>{rule?.label || s.rule}</span>
                     {typeof s.strength === 'number' && (
                       <span style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginLeft: 'auto' }}>
-                        сила {s.strength}
+                        {t('сила', 'strength')} {s.strength}
                       </span>
                     )}
                   </div>
@@ -337,7 +341,7 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
                       color: 'var(--cf-warn)', letterSpacing: '0.03em',
                     }}>
                     {open ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
-                    Кто именно
+                    {t('Кто именно', 'Exactly who')}
                   </button>
                   {open && (
                     <div style={{ marginTop: 6, paddingTop: 7, borderTop: '1px solid var(--cf-warn-bd)' }}>
@@ -363,7 +367,7 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
                         </div>
                       ) : (
                         <div style={{ fontSize: 10, color: 'var(--cf-text6)', lineHeight: 1.5 }}>
-                          Разбор по именам появится, когда движок начнёт присылать доказательства сигнала.
+                          {t('Разбор по именам появится, когда движок начнёт присылать доказательства сигнала.', 'The name-by-name breakdown appears once the engine starts shipping signal evidence.')}
                         </div>
                       )}
                     </div>
@@ -377,7 +381,7 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
         {/* 5 · The read */}
         {!!report.read.length && (
           <>
-            <Section title="Наш комментарий" note="Выводы из цифр выше — наша трактовка, не данные движка" />
+            <Section title={t('Наш комментарий', 'Our commentary')} note={t('Выводы из цифр выше — наша трактовка, не данные движка', 'Conclusions drawn from the numbers above — our reading, not engine data')} />
             <ul style={{ margin: 0, padding: '0 0 0 16px', listStyle: 'none' }}>
               {report.read.map((line, i) => (
                 <li key={i} style={{
@@ -407,18 +411,18 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer',
           }}>
           {deep ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-          Подробный разбор
+          {t('Подробный разбор', 'Detailed breakdown')}
         </button>
 
         {deep && (
           <div style={{ marginTop: 12 }}>
             {/* Vehicle split — structural, from the engine's own class field */}
-            <Section title="Что на самом деле получает деньги"
-              note="По классу объекта из данных движка — без домыслов" />
+            <Section title={t('Что на самом деле получает деньги', 'What is actually receiving the money')}
+              note={t('По классу объекта из данных движка — без домыслов', 'By entity class from the engine data — nothing inferred')} />
             {report.breakdown.vehicles.map(v => (
               <Bar key={v.key} label={`${v.label} (${v.count})`} color={v.color}
                 share={h.capital ? v.capital / h.capital : 0}
-                right={v.capital ? fmtUSD(v.capital) : 'не раскрыто'} />
+                right={v.capital ? fmtUSD(v.capital) : t('не раскрыто', 'undisclosed')} />
             ))}
             {report.breakdown.vehicles.map(v => (
               <div key={`b-${v.key}`} style={{ fontSize: 10.5, color: 'var(--cf-text5)', lineHeight: 1.5, marginBottom: 5 }}>
@@ -427,10 +431,10 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             ))}
 
             {/* Sub-sector split — from the engine's per-deal subsector field */}
-            <Section title="Подсекторы внутри кластера"
-              note="Подсектор присылает движок по каждой сделке — показан как есть, без догадок" />
+            <Section title={t('Подсекторы внутри кластера', 'Subsectors inside the cluster')}
+              note={t('Подсектор присылает движок по каждой сделке — показан как есть, без догадок', 'The engine ships a subsector per deal — rendered as-is, never guessed')} />
             {report.breakdown.operatingCount === 0 ? (
-              <Empty>Операционных компаний здесь нет — все получатели это фонды, проекты или активы.</Empty>
+              <Empty>{t('Операционных компаний здесь нет — все получатели это фонды, проекты или активы.', 'No operating companies here — every recipient is a fund, a project or an asset.')}</Empty>
             ) : (
               <>
                 <div style={{
@@ -438,9 +442,11 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
                   background: 'var(--cf-surface1)', border: '1px dashed var(--cf-border)',
                   fontSize: 10, color: 'var(--cf-muted)', fontFamily: MONO, lineHeight: 1.55,
                 }}>
-                  Подсектор из данных движка у {report.breakdown.coverage.classified} из {report.breakdown.coverage.total} операционных компаний.
+                  {t(`Подсектор из данных движка у ${report.breakdown.coverage.classified} из ${report.breakdown.coverage.total} операционных компаний.`,
+                      `${report.breakdown.coverage.classified} of ${report.breakdown.coverage.total} operating companies carry a subsector in the engine data.`)}
                   {report.breakdown.coverage.classified < report.breakdown.coverage.total &&
-                    ' У остальных подсектор в данных не указан — оставлены без категории.'}
+                    t(' У остальных подсектор в данных не указан — оставлены без категории.',
+                        ' The rest carry no subsector in the data and are left uncategorised.')}
                 </div>
                 {report.breakdown.subsectors.map(s => (
                   <div key={s.key || '_none'} style={{ marginBottom: 9 }}>
@@ -454,7 +460,7 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
                           <button onClick={() => onOpenEntity(n.id)} style={linkBtn}>{n.name}</button>
                         </span>
                       ))}
-                      {s.members.length > 8 && ` и ещё ${s.members.length - 8}`}
+                      {s.members.length > 8 && t(` и ещё ${s.members.length - 8}`, ` and ${s.members.length - 8} more`)}
                     </div>
                   </div>
                 ))}
@@ -462,12 +468,16 @@ export default function ClusterReport({ report, onOpenEntity, onOpenReceivers, o
             )}
 
             {/* Confidence mix */}
-            <Section title="Насколько этому верить" />
+            <Section title={t('Насколько этому верить', 'How much to trust this')} />
             <div style={{ fontSize: 11, color: 'var(--cf-text3)', lineHeight: 1.6 }}>
-              В заголовочных цифрах учтены только потоки со статусом <b style={{ color: STATUS_META.verified.color }}>подтверждено</b> и{' '}
-              <b style={{ color: STATUS_META.verified_alpha.color }}>подтверждено α</b>.
-              Нераскрытые суммы дают $0 — доллары занижены, а счётчик сделок нет.
-              {!!h.candidateDeals && ` ${h.candidateDeals} ${plural(h.candidateDeals, ['поток-кандидат', 'потока-кандидата', 'потоков-кандидатов'])} не входят ни в одну цифру.`}
+              {t('В заголовочных цифрах учтены только потоки со статусом', 'The headline numbers count only flows with status')}{' '}
+              <b style={{ color: STATUS_META.verified.color }}>{t('подтверждено', 'verified')}</b> {t('и', 'and')}{' '}
+              <b style={{ color: STATUS_META.verified_alpha.color }}>{t('подтверждено α', 'verified α')}</b>.
+              {t(' Нераскрытые суммы дают $0 — доллары занижены, а счётчик сделок нет.',
+                 ' Undisclosed amounts count as $0 — the dollars understate, the deal count does not.')}
+              {!!h.candidateDeals && t(
+                ` ${h.candidateDeals} ${plural(h.candidateDeals, ['поток-кандидат', 'потока-кандидата', 'потоков-кандидатов'])} не входят ни в одну цифру.`,
+                ` ${h.candidateDeals} candidate ${h.candidateDeals === 1 ? 'flow is' : 'flows are'} in none of these numbers.`)}
             </div>
           </div>
         )}
@@ -531,9 +541,10 @@ function Bar({ label, color, share, right }) {
 }
 
 function NameRow({ rank, node, main, sub, onClick }) {
+  const t = useT();
   if (!node) return null;
   return (
-    <button onClick={onClick} title={`Открыть ${node.name}`}
+    <button onClick={onClick} title={t(`Открыть ${node.name}`, `Open ${node.name}`)}
       style={{
         display: 'flex', alignItems: 'center', gap: 10, width: '100%',
         padding: '8px 10px', marginBottom: 5, textAlign: 'left',
@@ -561,6 +572,7 @@ function NameRow({ rank, node, main, sub, onClick }) {
 }
 
 function Momentum({ m }) {
+  const t = useT();
   const up = m.recentDeals > m.priorDeals;
   const flat = m.recentDeals === m.priorDeals;
   const Icon = flat ? Minus : up ? TrendingUp : TrendingDown;
@@ -569,23 +581,23 @@ function Momentum({ m }) {
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
       <div style={{ padding: '9px 11px', background: 'var(--cf-surface1)', border: `1px solid ${color}33`, borderRadius: 8 }}>
         <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em' }}>
-          Последние {m.windowDays} дн
+          {t('Последние', 'Last')} {m.windowDays} {t('дн', 'd')}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
           <Icon size={13} color={color} />
           <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text0)' }}>{fmtUSD(m.recentCapital)}</span>
         </div>
         <div style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2 }}>
-          {m.recentDeals} {plural(m.recentDeals, ['сделка', 'сделки', 'сделок'])}
+          {m.recentDeals} {plural(m.recentDeals, ['сделка', 'сделки', 'сделок'], ['deal', 'deals'])}
         </div>
       </div>
       <div style={{ padding: '9px 11px', background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 8 }}>
         <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em' }}>
-          Предыдущие {m.windowDays} дн
+          {t('Предыдущие', 'Previous')} {m.windowDays} {t('дн', 'd')}
         </div>
         <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text3)', marginTop: 3 }}>{fmtUSD(m.priorCapital)}</div>
         <div style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2 }}>
-          {m.priorDeals} {plural(m.priorDeals, ['сделка', 'сделки', 'сделок'])}
+          {m.priorDeals} {plural(m.priorDeals, ['сделка', 'сделки', 'сделок'], ['deal', 'deals'])}
         </div>
       </div>
     </div>

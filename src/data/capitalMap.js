@@ -663,6 +663,12 @@ function monogramOf(label) {
 //
 // Names (companies, funds, people, tickers) are never translated — only prose.
 // ══════════════════════════════════════════════════════════════════════════
+// The engine's payload is ENGLISH; `capitalMapRu.json` is the dashboard-owned
+// Russian side-car layered over it. So the English UI needs no translation
+// work at all — it just declines the side-car and renders the engine's own
+// words. `side()` is that switch, and every lookup below goes through it.
+const side = (dict) => (getLang() === 'en' ? EMPTY_SIDECAR : dict);
+const EMPTY_SIDECAR = {};
 const RU_SUBSECTORS  = ru.subsectors  || {};
 const RU_NODES       = ru.nodes       || {};
 const RU_ALLOCATORS  = ru.allocators  || {};
@@ -671,7 +677,7 @@ const RU_PROMOTIONS  = ru.promotions  || {};
 
 /** Russian label for an engine subsector slug, or null to let the caller de-slug. */
 export function ruSubsector(key) {
-  return (key && RU_SUBSECTORS[key]) || null;
+  return (key && side(RU_SUBSECTORS)[key]) || null;
 }
 
 /** The stable key a track-record row is translated under. */
@@ -681,14 +687,14 @@ function trackKey(row) {
 
 /** Engine profile with any translated field swapped in; untranslated keys stay English. */
 function ruProfile(name, profile) {
-  const t = RU_ALLOCATORS[name]?.profile;
+  const t = side(RU_ALLOCATORS)[name]?.profile;
   if (!profile || !t) return profile || null;
   return { ...profile, ...Object.fromEntries(Object.entries(t).filter(([, v]) => v)) };
 }
 
 /** Track-record rows with translated `notes`/`scope`; the numbers are untouched. */
 function ruTrackRecord(name, rows) {
-  const t = RU_ALLOCATORS[name]?.track_record;
+  const t = side(RU_ALLOCATORS)[name]?.track_record;
   if (!t) return rows;
   return rows.map(r => {
     const tr = t[trackKey(r)];
@@ -728,7 +734,7 @@ export function buildGraph(data = raw) {
     const displayName = ref?.displayName || n.label;
     // Russian first (dashboard-owned), then the engine's English, then the
     // curated reference file — so an untranslated entity still reads.
-    const description = RU_NODES[n.id]?.description || n.description || ref?.description || null;
+    const description = side(RU_NODES)[n.id]?.description || n.description || ref?.description || null;
     const links = (Array.isArray(n.links) && n.links.length ? n.links : ref?.links) || [];
     const profileType = n.profile_type || ref?.type ||
       (isAllocator ? (n.cls === 'individual' ? 'person' : 'org')
@@ -1062,8 +1068,8 @@ export function buildGraph(data = raw) {
   Object.entries(data.trends || {}).forEach(([win, list]) => {
     trends[win] = (Array.isArray(list) ? list : []).map(t => ({
       ...t,
-      title: RU_TRENDS[t.cluster_id]?.title || t.title,
-      narrative: RU_TRENDS[t.cluster_id]?.narrative || t.narrative,
+      title: side(RU_TRENDS)[t.cluster_id]?.title || t.title,
+      narrative: side(RU_TRENDS)[t.cluster_id]?.narrative || t.narrative,
       evidence: resolveEvidence(t.evidence),
     }));
   });

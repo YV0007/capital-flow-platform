@@ -27,6 +27,8 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 // ── CONFIG — the tuning surface ────────────────────────────────────────────
+import { biMap } from '../../../data/capitalMap.js';
+
 export const CLASSIFY_CONFIG = {
   // Investable universe. A deal only counts if the TARGET is a company a
   // solo investor could ride, reached by an investable instrument. This is
@@ -157,15 +159,27 @@ function percentiler(values) {
 // Display labels for archetype ids — the ONE word/phrase a table or list ever
 // shows for a name. Kept next to CLASSIFY_CONFIG.archetype so the rule and its
 // label are never edited out of sync with each other.
-export const ARCHETYPE_LABEL = {
-  trend: 'Трендовый', fundamental: 'Фундаментальный', aggressive: 'Агрессивный', proven: 'Проверенный',
-  actionable: 'Доступна', early: 'Рано', 'smart-money': 'Умные деньги', independent: 'Независимо',
-};
+export const ARCHETYPE_LABEL = biMap({
+  trend:         ['Трендовый', 'Trend-following'],
+  fundamental:   ['Фундаментальный', 'Fundamental'],
+  aggressive:    ['Агрессивный', 'Aggressive'],
+  proven:        ['Проверенный', 'Proven'],
+  actionable:    ['Доступна', 'Actionable'],
+  early:         ['Рано', 'Early'],
+  'smart-money': ['Умные деньги', 'Smart money'],
+  independent:   ['Независимо', 'Independent'],
+});
 
 // Plain rank word — the fallback whenever no archetype rule cleared, and the
 // color every rank-aware UI (map bloom, panel badge, table cell) keys off of.
 // Single source so every surface stays in sync by construction.
-export const RANK_LABEL = { core: 'Ядро', key: 'Ключ', watch: 'Набл.', flagged: 'Флаг', emerging: 'Зарождается' };
+export const RANK_LABEL = biMap({
+  core:     ['Ядро', 'Core'],
+  key:      ['Ключ', 'Key'],
+  watch:    ['Набл.', 'Watch'],
+  flagged:  ['Флаг', 'Flagged'],
+  emerging: ['Зарождается', 'Emerging'],
+});
 export const RANK_COLOR = {
   core: 'var(--cf-gold)', flagged: 'var(--cf-gold)',
   key: 'var(--cf-warn)', emerging: 'var(--cf-warn)',

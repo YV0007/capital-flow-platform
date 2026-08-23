@@ -13,6 +13,7 @@
 
 import { sectorLabel, SECTOR_META, CLASS_META } from '../../../data/capitalMap.js';
 import { fmtUSD, plural } from './format.js';
+import { getLang } from '../../../lib/i18n.jsx';
 
 const isConfirmed = (l) => l.status === 'verified' || l.status === 'verified_alpha';
 
@@ -118,25 +119,31 @@ function newEntrants(windowSet, allLinks, nodeById, limit = 6) {
 // Which sector layer the money moved toward vs the window before it. Returns a
 // short phrase or null when there's nothing worth calling out.
 function sectorShift(cur, prev) {
+  const en = getLang() === 'en';
   const top = cur.rows[0];
   if (!top) return null;
   const prevTop = prev.rows[0];
-  const topLabel = top.key === '_none' ? 'без сектора' : sectorLabel(top.key);
+  const topLabel = top.key === '_none' ? (en ? 'no sector' : 'без сектора') : sectorLabel(top.key);
   if (!prevTop || prevTop.key === top.key) {
-    return `Лидирует «${topLabel}» — ${pct(top.share)} недельного притока.`;
+    return en
+      ? `${topLabel} leads — ${pct(top.share)} of the week's inflow.`
+      : `Лидирует «${topLabel}» — ${pct(top.share)} недельного притока.`;
   }
-  const prevLabel = prevTop.key === '_none' ? 'без сектора' : sectorLabel(prevTop.key);
-  return `Фокус сместился в «${topLabel}» — до этого вёл «${prevLabel}».`;
+  const prevLabel = prevTop.key === '_none' ? (en ? 'no sector' : 'без сектора') : sectorLabel(prevTop.key);
+  return en
+    ? `Focus moved to ${topLabel} — ${prevLabel} led before it.`
+    : `Фокус сместился в «${topLabel}» — до этого вёл «${prevLabel}».`;
 }
 
 function deltaPhrase(cur, prev, unit) {
+  const en = getLang() === 'en';
+  const ago = en ? (unit === 'неделей' ? 'a week earlier' : 'a month earlier') : `${unit} ранее`;
   if (!prev || !prev.capital) return null;
-  if (!cur.capital) return `против ${fmtUSD(prev.capital)} ${unit} ранее`;
+  if (!cur.capital) return en ? `against ${fmtUSD(prev.capital)} ${ago}` : `против ${fmtUSD(prev.capital)} ${ago}`;
   const d = (cur.capital - prev.capital) / prev.capital;
-  if (Math.abs(d) < 0.05) return `примерно столько же, сколько ${unit} ранее`;
-  return d > 0
-    ? `на ${pct(d)} больше, чем ${unit} ранее`
-    : `на ${pct(-d)} меньше, чем ${unit} ранее`;
+  if (Math.abs(d) < 0.05) return en ? `about the same as ${ago}` : `примерно столько же, сколько ${ago}`;
+  if (en) return d > 0 ? `${pct(d)} more than ${ago}` : `${pct(-d)} less than ${ago}`;
+  return d > 0 ? `на ${pct(d)} больше, чем ${ago}` : `на ${pct(-d)} меньше, чем ${ago}`;
 }
 
 const names = (rows, n = 3) => rows.slice(0, n).map(r => r.node?.name).filter(Boolean);
@@ -168,7 +175,7 @@ function sectorRotation(cur, prior) {
     if (Math.abs(deltaPP) < 1) return;
     rows.push({
       key: k, deltaPP, curShare: c,
-      label: k === '_none' ? 'Без сектора' : sectorLabel(k),
+      label: k === '_none' ? (getLang() === 'en' ? 'No sector' : 'Без сектора') : sectorLabel(k),
       color: SECTOR_META[k]?.color || '#71717a',
     });
   });
@@ -210,7 +217,12 @@ function concentration(flows) {
   let acc = 0, half = 0;
   for (const x of d) { acc += x; half += 1; if (acc >= total * 0.5) break; }
   const top3Share = top3 / total;
-  const mood = top3Share >= 0.6 ? 'сконцентрирован' : top3Share <= 0.35 ? 'распределён широко' : 'умеренно распределён';
+  const en = getLang() === 'en';
+  const mood = top3Share >= 0.6
+    ? (en ? 'concentrated' : 'сконцентрирован')
+    : top3Share <= 0.35
+      ? (en ? 'spread wide' : 'распределён широко')
+      : (en ? 'moderately spread' : 'умеренно распределён');
   return { top3Share, dealsToHalf: half, dealCount: d.length, mood };
 }
 
@@ -233,54 +245,69 @@ function buildBlock({ flows, prior, allLinks, nodeById, gen, id, title, sub, uni
   const conc = concentration(flows);
 
   const read = [];
+  const en = getLang() === 'en';
   if (head.deals || head.capital) {
     const delta = unit ? deltaPhrase(head, priorHead, unit) : null;
-    read.push(
-      `${title}: раскрыто ${fmtUSD(head.capital)} в ${head.deals} ` +
-      `${plural(head.deals, ['сделке', 'сделках', 'сделках'])}` +
-      `${delta ? ` — ${delta}` : ''}.`
-    );
+    read.push(en
+      ? `${title}: ${fmtUSD(head.capital)} disclosed across ${head.deals} ` +
+        `${head.deals === 1 ? 'deal' : 'deals'}${delta ? ` — ${delta}` : ''}.`
+      : `${title}: раскрыто ${fmtUSD(head.capital)} в ${head.deals} ` +
+        `${plural(head.deals, ['сделке', 'сделках', 'сделках'])}` +
+        `${delta ? ` — ${delta}` : ''}.`);
     const inv = names(investors);
-    if (inv.length) read.push(`Крупнейшие источники — ${inv.join(', ')}.`);
+    if (inv.length) read.push(en
+      ? `Largest sources — ${inv.join(', ')}.`
+      : `Крупнейшие источники — ${inv.join(', ')}.`);
     const ben = names(beneficiaries);
-    if (ben.length) read.push(`Больше всего получили ${ben.join(', ')}.`);
+    if (ben.length) read.push(en
+      ? `Most of it went to ${ben.join(', ')}.`
+      : `Больше всего получили ${ben.join(', ')}.`);
     if (mix.rows.length) {
       const lead = mix.rows[0];
       const priorLead = priorMix?.rows.find(r => r.cls === lead.cls);
       const dp = priorLead ? Math.round((lead.share - priorLead.share) * 100) : null;
-      const tail = dp != null && Math.abs(dp) >= 3 ? ` (${dp > 0 ? '+' : ''}${dp} п.п. к прошлому окну)` : '';
-      read.push(`Двигают в основном ${lead.label.toLowerCase()} — ${pct(lead.share)} притока${tail}.`);
+      const tail = dp != null && Math.abs(dp) >= 3
+        ? (en ? ` (${dp > 0 ? '+' : ''}${dp} pp vs the previous window)`
+              : ` (${dp > 0 ? '+' : ''}${dp} п.п. к прошлому окну)`)
+        : '';
+      read.push(en
+        ? `Mostly driven by ${lead.label.toLowerCase()} — ${pct(lead.share)} of the inflow${tail}.`
+        : `Двигают в основном ${lead.label.toLowerCase()} — ${pct(lead.share)} притока${tail}.`);
     }
     if (rotation) {
-      const g = rotation.gained.map(r => `«${r.label}»`).join(', ');
-      const l = rotation.lost.map(r => `«${r.label}»`).join(', ');
-      if (g && l) read.push(`Фокус смещается в ${g} и уходит из ${l}.`);
-      else if (g) read.push(`Фокус смещается в ${g}.`);
-      else if (l) read.push(`Капитал уходит из ${l}.`);
+      const g = rotation.gained.map(r => (en ? r.label : `«${r.label}»`)).join(', ');
+      const l = rotation.lost.map(r => (en ? r.label : `«${r.label}»`)).join(', ');
+      if (g && l) read.push(en ? `Focus is rotating into ${g} and out of ${l}.` : `Фокус смещается в ${g} и уходит из ${l}.`);
+      else if (g) read.push(en ? `Focus is rotating into ${g}.` : `Фокус смещается в ${g}.`);
+      else if (l) read.push(en ? `Capital is leaving ${l}.` : `Капитал уходит из ${l}.`);
     } else if (unit) {
-      const s = sectorShift(sectors, priorSectors); if (s) read.push(s);
+      const s2 = sectorShift(sectors, priorSectors); if (s2) read.push(s2);
     }
     if (conc) {
-      read.push(
-        `Капитал ${conc.mood}: топ-3 сделки — ${pct(conc.top3Share)}, ` +
-        `половина в ${conc.dealsToHalf} ${plural(conc.dealsToHalf, ['сделке', 'сделках', 'сделках'])}.`
-      );
+      read.push(en
+        ? `Capital is ${conc.mood}: the top 3 deals are ${pct(conc.top3Share)}, ` +
+          `and half of it sits in ${conc.dealsToHalf} ${conc.dealsToHalf === 1 ? 'deal' : 'deals'}.`
+        : `Капитал ${conc.mood}: топ-3 сделки — ${pct(conc.top3Share)}, ` +
+          `половина в ${conc.dealsToHalf} ${plural(conc.dealsToHalf, ['сделке', 'сделках', 'сделках'])}.`);
     }
     if (biggest) {
-      read.push(
-        `Крупнейшая сделка — ${biggest.source?.name || '—'} → ` +
-        `${biggest.target?.name || '—'} на ${fmtUSD(biggest.amount)}.`
-      );
+      read.push(en
+        ? `Largest deal — ${biggest.source?.name || '—'} → ${biggest.target?.name || '—'} at ${fmtUSD(biggest.amount)}.`
+        : `Крупнейшая сделка — ${biggest.source?.name || '—'} → ` +
+          `${biggest.target?.name || '—'} на ${fmtUSD(biggest.amount)}.`);
     }
     if (head.candidateDeals) {
-      read.push(
-        `Плюс ${head.candidateDeals} ` +
-        `${plural(head.candidateDeals, ['неподтверждённый поток', 'неподтверждённых потока', 'неподтверждённых потоков'])}` +
-        `${head.candidateCapital ? ` на ${fmtUSD(head.candidateCapital)}` : ''} — ещё без подтверждения.`
-      );
+      read.push(en
+        ? `Plus ${head.candidateDeals} unconfirmed ${head.candidateDeals === 1 ? 'flow' : 'flows'}` +
+          `${head.candidateCapital ? ` worth ${fmtUSD(head.candidateCapital)}` : ''} — still unverified.`
+        : `Плюс ${head.candidateDeals} ` +
+          `${plural(head.candidateDeals, ['неподтверждённый поток', 'неподтверждённых потока', 'неподтверждённых потоков'])}` +
+          `${head.candidateCapital ? ` на ${fmtUSD(head.candidateCapital)}` : ''} — ещё без подтверждения.`);
     }
   } else {
-    read.push(`${title}: подтверждённых потоков с раскрытой суммой нет.`);
+    read.push(en
+      ? `${title}: no confirmed flows with a disclosed amount.`
+      : `${title}: подтверждённых потоков с раскрытой суммой нет.`);
   }
 
   return {
@@ -329,20 +356,26 @@ export function buildDigest({ nodes, links, generated, sectors }) {
   // this is the tell: sub reads "22.06 → 08.08 · держим прошлый цикл, пока
   // Пн 10:00 не обновит" instead of the plain "last 7 days" line, so the tab
   // stops looking like it's broken and starts looking like it's holding.
+  const enSub = getLang() === 'en';
   const weekSub = anchorLagsRun
-    ? `Данные последнего цикла (${daysBefore(anchor, 6)} → ${anchor}). Пн 10:00 Мадрид — новая выгрузка.`
-    : `Последние 7 дней до ${anchor}`;
+    ? (enSub
+        ? `Latest cycle's data (${daysBefore(anchor, 6)} → ${anchor}). New delivery Mon 10:00 Madrid.`
+        : `Данные последнего цикла (${daysBefore(anchor, 6)} → ${anchor}). Пн 10:00 Мадрид — новая выгрузка.`)
+    : (enSub ? `The last 7 days to ${anchor}` : `Последние 7 дней до ${anchor}`);
   const monthSub = anchorLagsRun
-    ? `Данные последнего цикла (${daysBefore(anchor, 29)} → ${anchor}). Пн 10:00 Мадрид — новая выгрузка.`
-    : `Последние 30 дней до ${anchor}`;
+    ? (enSub
+        ? `Latest cycle's data (${daysBefore(anchor, 29)} → ${anchor}). New delivery Mon 10:00 Madrid.`
+        : `Данные последнего цикла (${daysBefore(anchor, 29)} → ${anchor}). Пн 10:00 Мадрид — новая выгрузка.`)
+    : (enSub ? `The last 30 days to ${anchor}` : `Последние 30 дней до ${anchor}`);
 
   const blocks = [
     buildBlock({ flows: week, prior: priorWeek, allLinks: links, nodeById, gen: anchor,
-      id: 'week', title: 'За неделю', sub: weekSub, unit: 'неделей' }),
+      id: 'week', title: enSub ? 'This week' : 'За неделю', sub: weekSub, unit: 'неделей' }),
     buildBlock({ flows: month, prior: priorMonth, allLinks: links, nodeById, gen: anchor,
-      id: 'month', title: 'За месяц', sub: monthSub, unit: 'месяцем' }),
+      id: 'month', title: enSub ? 'This month' : 'За месяц', sub: monthSub, unit: 'месяцем' }),
     buildBlock({ flows: links, prior: null, allLinks: links, nodeById, gen: anchor,
-      id: 'all', title: 'Вся карта', sub: 'Весь отслеживаемый стек на текущий цикл', unit: null }),
+      id: 'all', title: enSub ? 'Whole map' : 'Вся карта',
+      sub: enSub ? 'The entire tracked stack as of this cycle' : 'Весь отслеживаемый стек на текущий цикл', unit: null }),
   ];
 
   // Fired signals, windowed like everything else. Each signal now ships

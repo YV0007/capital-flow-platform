@@ -13,15 +13,27 @@
 // Vehicle type below is separate and structural (from `cls`, 100% coverage).
 // ══════════════════════════════════════════════════════════════════════════
 
-import { ruSubsector } from '../../../data/capitalMap.js';
+import { ruSubsector, bi } from '../../../data/capitalMap.js';
+import { getLang } from '../../../lib/i18n.jsx';
 
 // ── Vehicle type — structural, from the engine's own `cls`. 100% coverage,
 // zero inference. Matters because a fund/SPV raising money is not a company
 // raising money, and the two get summed into the same sector total.
 export const VEHICLE_META = {
-  company: { label: 'Операционные компании', blurb: 'Реальный бизнес, привлекающий капитал.', color: '#9D8FD8' },
-  fund:    { label: 'Фонды и SPV', blurb: 'Фонды и SPV, привлекающие деньги, чтобы инвестировать дальше, — не операционный бизнес. В основном заявки Form D.', color: '#C9985F' },
-  project: { label: 'Проекты и активы',   blurb: 'Именованные стройки, программы и физические активы, а не компании.', color: '#C99B72' },
+  company: bi({
+    label: ['Операционные компании', 'Operating companies'],
+    blurb: ['Реальный бизнес, привлекающий капитал.', 'Real businesses raising capital.'],
+  }, { color: '#9D8FD8' }),
+  fund: bi({
+    label: ['Фонды и SPV', 'Funds & SPVs'],
+    blurb: ['Фонды и SPV, привлекающие деньги, чтобы инвестировать дальше, — не операционный бизнес.',
+            'Funds and SPVs raising money in order to invest onward — not operating businesses.'],
+  }, { color: '#C9985F' }),
+  project: bi({
+    label: ['Проекты и активы', 'Projects & assets'],
+    blurb: ['Именованные стройки, программы и физические активы, а не компании.',
+            'Named builds, programmes and physical assets rather than companies.'],
+  }, { color: '#C99B72' }),
 };
 
 export function vehicleOf(node) {
@@ -65,7 +77,7 @@ function hashColor(key) {
  */
 export function subsectorOf(node) {
   const key = node?.subsector || null;
-  if (!key) return { key: null, label: 'Без категории', color: '#52525b', basis: null };
+  if (!key) return { key: null, label: getLang() === 'en' ? 'Uncategorised' : 'Без категории', color: '#52525b', basis: null };
   return { key, label: deslug(key), color: hashColor(key), basis: 'engine' };
 }
 
