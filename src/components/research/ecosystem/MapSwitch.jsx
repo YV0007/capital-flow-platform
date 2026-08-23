@@ -1,10 +1,14 @@
-// MapSwitch — the «Потоки | Экосистема» control.
+// MapSwitch — the «Потоки | Экосистема | Фонды» control.
 //
-// Rendered INSIDE each map's own top bar (both accept it as a `mapSwitch`
+// Rendered INSIDE each view's own top bar (all three accept it as a `mapSwitch`
 // node), but owned by CapitalFlowSection one level up. That split is the point:
 // the switch is shared chrome, the state behind it is not. Flipping it unmounts
-// one map and mounts the other, so filters, panels, selections and searches
+// one view and mounts the next, so filters, panels, selections and searches
 // can never leak across.
+//
+// The third entry is NOT a third map. Трекер фондов renders a fixed set of
+// independent funds and their books — no edges, no graph — and lives in this
+// dropdown only because that is where the user goes to change section.
 //
 // A dropdown, not a segmented pair: the top bar carries enough controls of its
 // own, and a two-line label ("Экосистема ИИ") made the segmented control wide
@@ -18,6 +22,7 @@ const MONO = 'ui-monospace, monospace';
 export const MAPS = [
   { key: 'flows',     label: 'Потоки',    hint: 'Куда пошли деньги — события с датой, обновление раз в неделю' },
   { key: 'ecosystem', label: 'Экосистема ИИ', hint: 'Сеть ключевых узлов ИИ-инфраструктуры: влияние, подграфы, точки отказа — стоящие позиции, обновление раз в месяц' },
+  { key: 'funds',     label: 'Трекер фондов', hint: 'Четырнадцать фондов и их книги: позиции, движение за период, доли 13D, шорты — без связей между фондами' },
 ];
 
 export default function MapSwitch({ value, onChange }) {
@@ -48,7 +53,7 @@ export default function MapSwitch({ value, onChange }) {
       </button>
       {open && (
         <div role="listbox" aria-label="Карта" style={{
-          position: 'absolute', top: 'calc(100% + 6px)', left: 0, zIndex: 50, width: 260,
+          position: 'absolute', top: 'calc(100% + 6px)', left: 0, zIndex: 50, width: 268,
           background: 'var(--cf-popover)', border: '1px solid var(--cf-border)', borderRadius: 9,
           overflow: 'hidden', boxShadow: '0 16px 40px -12px var(--cf-shadow)',
         }}>
