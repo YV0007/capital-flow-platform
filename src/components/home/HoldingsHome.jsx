@@ -10,6 +10,7 @@
 
 import { useState } from 'react';
 import { TOP_HOLDINGS, HOLDINGS_NEWS } from './homeData.js';
+import { useT, useL } from '../../lib/i18n.jsx';
 import { SectionHeader, LogoTile, Reveal, MONO, EASE } from './ui.jsx';
 
 // Deeper green/red than the zinc-dark originals — hold contrast on both themes.
@@ -53,6 +54,8 @@ function Sparkline({ points, down, id }) {
 }
 
 function HoldingRow({ h, index, onOpen }) {
+  const t = useT();
+  const L = useL();
   const [hovered, setHovered] = useState(false);
   return (
     <Reveal delay={index * 80}>
@@ -83,7 +86,7 @@ function HoldingRow({ h, index, onOpen }) {
               {h.name}
             </span>
             <span style={{ display: 'block', fontSize: 10, fontFamily: MONO, color: 'var(--hm-text5)', letterSpacing: '0.04em', marginTop: 2 }}>
-              {h.ticker} · {h.type}
+              {h.ticker} · {L(h.type)}
             </span>
           </span>
           <Sparkline points={h.points} down={h.down} id={h.id} />
@@ -97,7 +100,7 @@ function HoldingRow({ h, index, onOpen }) {
               color: h.down ? DOWN : UP,
               background: (h.down ? DOWN : UP) + '14',
             }}>
-              {h.change} · год
+              {h.change} · {t('год', '1Y')}
             </span>
           </span>
         </div>
@@ -174,15 +177,18 @@ function NewsItem({ n, onOpenHoldings }) {
 }
 
 export default function HoldingsHome({ onOpen }) {
+  const t = useT();
   return (
     <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px' }}>
       <Reveal>
         <SectionHeader
-          eyebrow="Холдинги · пульс портфеля"
-          title="Пять ключевых холдингов"
-          sub="Что лежит в портфеле — одним взглядом, плюс общая лента новостей по всем девяти холдингам. Свежие обновления появляются здесь первыми."
+          eyebrow={t('Холдинги · пульс портфеля', 'Holdings · portfolio pulse')}
+          title={t('Пять ключевых холдингов', 'Five core holdings')}
+          sub={t(
+            'Что лежит в портфеле — одним взглядом, плюс общая лента новостей по всем девяти холдингам. Свежие обновления появляются здесь первыми.',
+            'What sits in the portfolio at a glance, plus one merged news feed across all nine holdings. Fresh updates land here first.')}
           accent="#2FD9C4"
-          actionLabel="Открыть холдинги"
+          actionLabel={t('Открыть холдинги', 'Open holdings')}
           onAction={onOpen}
         />
       </Reveal>
@@ -212,11 +218,11 @@ export default function HoldingsHome({ onOpen }) {
                   animation: 'hmPulse 2.2s ease-in-out infinite',
                 }} />
                 <span style={{ fontSize: 10, fontFamily: MONO, fontWeight: 700, color: 'var(--hm-text3)', textTransform: 'uppercase', letterSpacing: '0.16em' }}>
-                  Лента новостей
+                  {t('Лента новостей', 'News feed')}
                 </span>
               </span>
               <span style={{ fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text6)' }}>
-                все холдинги
+                {t('все холдинги', 'all holdings')}
               </span>
             </div>
 
@@ -245,7 +251,7 @@ export default function HoldingsHome({ onOpen }) {
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#2FD9C490'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#2FD9C440'; }}
               >
-                Все обновления →
+                {t('Все обновления', 'All updates')} →
               </button>
             </div>
           </div>

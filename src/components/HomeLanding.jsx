@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import CapitalFlowsHome from './home/CapitalFlowsHome.jsx';
 import HoldingsHome from './home/HoldingsHome.jsx';
 import SupplyChainHome from './home/SupplyChainHome.jsx';
+import { useT } from '../lib/i18n.jsx';
 import { WEEK_STATS } from './home/homeData.js';
 import { fmtUSD } from './research/capitalflow/format.js';
 import { Reveal, MONO, EASE } from './home/ui.jsx';
@@ -178,6 +179,7 @@ function FooterTile({ mark, title, desc, accent, onClick, delay }) {
 const SECTION_GAP = 110;
 
 export default function HomeLanding({ onChoose, onOpenResearch, theme = 'dark' }) {
+  const t = useT();
   const openResearch = (id, context) =>
     (onOpenResearch ? onOpenResearch(id, context || null) : onChoose('research'));
 
@@ -211,28 +213,28 @@ export default function HomeLanding({ onChoose, onOpenResearch, theme = 'dark' }
           animation: `hmFloatIn 700ms ${EASE} 260ms backwards`,
         }}>
           <HeroStat
-            label="Объём за неделю"
+            label={t('Объём за неделю', 'Tracked this week')}
             value={WEEK_STATS.trackedUSD}
             format={(v) => fmtUSD(v)}
             accent="#38BDF8"
             delay={300}
           />
           <HeroStat
-            label="Потоков капитала"
+            label={t('Потоков капитала', 'Capital flows')}
             value={WEEK_STATS.flowCount}
             format={(v) => Math.round(v)}
             accent="#2FD9C4"
             delay={420}
           />
           <HeroStat
-            label="Секторов в движении"
+            label={t('Секторов в движении', 'Sectors in motion')}
             value={WEEK_STATS.sectorCount}
             format={(v) => Math.round(v)}
             accent="#8E9BE6"
             delay={540}
           />
           <HeroStat
-            label="Активных сигналов"
+            label={t('Активных сигналов', 'Live signals')}
             value={WEEK_STATS.signalCount}
             format={(v) => Math.round(v)}
             accent="#F5B942"
@@ -246,12 +248,12 @@ export default function HomeLanding({ onChoose, onOpenResearch, theme = 'dark' }
           marginTop: 46,
           animation: `hmFloatIn 700ms ${EASE} 380ms backwards`,
         }}>
-          <NavChip label="Карта потоков" color="#38BDF8" filled onClick={() => openResearch('capital-flow-map')} />
-          <NavChip label="Холдинги" color="#2FD9C4" onClick={() => openResearch('holdings')} />
-          <NavChip label="Цепочка поставок" color="#22D3EE" onClick={() => openResearch('data-centers-ai')} />
-          <NavChip label="Прокси" color="#F59E0B" onClick={() => openResearch('proxy')} />
-          <NavChip label="VC-трекер" color="#9A8FD2" onClick={() => onChoose('tracker')} />
-          <NavChip label="Исследования" color="#8E9BE6" onClick={() => onChoose('research')} />
+          <NavChip label={t('Карта потоков', 'Flow map')} color="#38BDF8" filled onClick={() => openResearch('capital-flow-map')} />
+          <NavChip label={t('Холдинги', 'Holdings')} color="#2FD9C4" onClick={() => openResearch('holdings')} />
+          <NavChip label={t('Цепочка поставок', 'Supply chain')} color="#22D3EE" onClick={() => openResearch('data-centers-ai')} />
+          <NavChip label={t('Прокси', 'Proxies')} color="#F59E0B" onClick={() => openResearch('proxy')} />
+          <NavChip label={t('VC-трекер', 'VC tracker')} color="#9A8FD2" onClick={() => onChoose('tracker')} />
+          <NavChip label={t('Исследования', 'Research')} color="#8E9BE6" onClick={() => onChoose('research')} />
         </div>
       </div>
 
@@ -281,24 +283,30 @@ export default function HomeLanding({ onChoose, onOpenResearch, theme = 'dark' }
         }}>
           <FooterTile
             mark={<TrackerMark />}
-            title="VC-трекер"
-            desc="Живой мониторинг венчурной позиции — сигналы, скоринг, коммуникации синдиката."
+            title={t('VC-трекер', 'VC tracker')}
+            desc={t(
+              'Живой мониторинг венчурной позиции — сигналы, скоринг, коммуникации синдиката.',
+              'Live monitoring of a venture position — signals, scoring, syndicate communications.')}
             accent="#9A8FD2"
             onClick={() => onChoose('tracker')}
             delay={0}
           />
           <FooterTile
             mark={<LibraryMark />}
-            title="Библиотека исследований"
-            desc="Все глубокие отчёты — секторы, тезисы и полная карта портфеля."
+            title={t('Библиотека исследований', 'Research library')}
+            desc={t(
+              'Все глубокие отчёты — секторы, тезисы и полная карта портфеля.',
+              'Every deep report — sectors, theses and the full portfolio map.')}
             accent="#8E9BE6"
             onClick={() => onChoose('research')}
             delay={90}
           />
           <FooterTile
             mark={<ProxyMark />}
-            title="Прокси"
-            desc="Доступ к частному AI через публичные холдинги — окна входа, концентрация, проекции."
+            title={t('Прокси', 'Proxies')}
+            desc={t(
+              'Доступ к частному AI через публичные холдинги — окна входа, концентрация, проекции.',
+              'Exposure to private AI through public holdings — entry windows, concentration, projections.')}
             accent="#F59E0B"
             onClick={() => openResearch('proxy')}
             delay={180}

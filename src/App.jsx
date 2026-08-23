@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 
 import Header from './components/Header.jsx';
+import { useLang } from './lib/i18n.jsx';
 import HomeLanding from './components/HomeLanding.jsx';
 import ResearchLanding from './components/research/ResearchLanding.jsx';
 import ResearchDetail from './components/research/ResearchDetail.jsx';
@@ -86,6 +87,11 @@ function loadInitialMode() {
 }
 
 export default function App() {
+  // Switching language remounts the section body (`key={lang}` below) so a
+  // component that renders a taxonomy label without subscribing to the
+  // language context still repaints. App's own state lives ABOVE that key, so
+  // the flip does not throw you back to the home page.
+  const { lang } = useLang();
   const [mode, setMode] = useState(loadInitialMode);
   const [activeResearchId, setActiveResearchId] = useState(null);
   const [researchContext, setResearchContext] = useState(null);
@@ -414,7 +420,9 @@ export default function App() {
         transition: 'background 300ms',
       }}>
         <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
-        <HomeLanding onChoose={updateMode} onOpenResearch={openResearchPage} theme={uiTheme} />
+        <div key={lang}>
+          <HomeLanding onChoose={updateMode} onOpenResearch={openResearchPage} theme={uiTheme} />
+        </div>
       </div>
     );
   }
@@ -423,6 +431,7 @@ export default function App() {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--hm-bg)', color: 'var(--hm-text)', transition: 'background 300ms' }}>
         <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
+        <div key={lang}>
         {activeResearchId
           ? <ResearchDetail
               researchId={activeResearchId}
@@ -443,6 +452,7 @@ export default function App() {
                 setResearchContext(null);
               }} />
           : <ResearchLanding onOpen={(id) => setActiveResearchId(id)} />}
+        </div>
       </div>
     );
   }
@@ -454,7 +464,7 @@ export default function App() {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--hm-bg)', color: 'var(--hm-text)', transition: 'background 300ms' }}>
         <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
-        <TrackerLanding onOpen={openTrackerFor} />
+        <div key={lang}><TrackerLanding onOpen={openTrackerFor} /></div>
       </div>
     );
   }
@@ -481,7 +491,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen text-zinc-200" style={{ background: 'var(--hm-bg)' }}>
+    <div key={lang} className="min-h-screen text-zinc-200" style={{ background: 'var(--hm-bg)' }}>
       {/* App-level focus modal — listens for window event from any Open button */}
       {appFocusedItem && (() => {
         const sev = severityFromImportance(appFocusedItem.importance);

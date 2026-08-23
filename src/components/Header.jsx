@@ -6,14 +6,15 @@
 // sun/moon toggle (passed only where the light theme is supported — home).
 
 import { useState } from 'react';
+import { useT, useLang, LANGS } from '../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 const EASE = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
 
 const MODES = [
-  { id: 'home', label: 'Главная', accent: '#38BDF8' },
-  { id: 'tracker', label: 'Трекер', accent: '#9A8FD2' },
-  { id: 'research', label: 'Исследования', accent: '#8E9BE6' },
+  { id: 'home',     ru: 'Главная',      en: 'Home',     accent: '#38BDF8' },
+  { id: 'tracker',  ru: 'Трекер',       en: 'Tracker',  accent: '#9A8FD2' },
+  { id: 'research', ru: 'Исследования', en: 'Research', accent: '#8E9BE6' },
 ];
 
 const CHROME = {
@@ -41,6 +42,7 @@ const CHROME = {
 
 export default function Header({ mode, onChangeMode, theme = 'dark', onToggleTheme }) {
   const c = CHROME[theme] || CHROME.dark;
+  const t = useT();
   return (
     <div
       style={{
@@ -66,7 +68,7 @@ export default function Header({ mode, onChangeMode, theme = 'dark', onToggleThe
         {/* Brand mark — clicking returns home */}
         <button
           onClick={() => onChangeMode('home')}
-          title="На главную"
+          title={t('На главную', 'Home')}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -110,17 +112,20 @@ export default function Header({ mode, onChangeMode, theme = 'dark', onToggleThe
 
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
           {/* Pill mode switcher */}
-          <nav role="tablist" aria-label="Разделы" style={{ display: 'inline-flex', gap: 6 }}>
+          <nav role="tablist" aria-label={t('Разделы', 'Sections')} style={{ display: 'inline-flex', gap: 6 }}>
             {MODES.map((opt) => (
               <ModePill
                 key={opt.id}
-                opt={opt}
+                opt={{ ...opt, label: t(opt.ru, opt.en) }}
                 chrome={c}
                 active={mode === opt.id}
                 onClick={() => { if (mode !== opt.id) onChangeMode(opt.id); }}
               />
             ))}
           </nav>
+
+          {/* Language — RU | EN, everywhere, always. */}
+          <LangToggle chrome={c} />
 
           {/* Theme toggle — only where the light theme is wired up */}
           {onToggleTheme && (
@@ -182,14 +187,48 @@ function ModePill({ opt, chrome, active, onClick }) {
   );
 }
 
+// Two letters, not a globe icon and not a dropdown: there are exactly two
+// languages, the current one has to be readable at a glance, and the switch is
+// used often enough that it should not cost a click to open.
+function LangToggle({ chrome }) {
+  const { lang, setLang } = useLang();
+  return (
+    <div style={{
+      display: 'inline-flex', gap: 2, padding: 2, borderRadius: 999,
+      border: `1px solid ${chrome.pillBorder}`,
+    }}>
+      {LANGS.map((l) => {
+        const on = lang === l.id;
+        return (
+          <button key={l.id} onClick={() => setLang(l.id)}
+            title={l.full} aria-label={l.full} aria-pressed={on}
+            style={{
+              padding: '4px 9px', borderRadius: 999, border: 'none', cursor: 'pointer',
+              font: 'inherit', fontSize: 10, fontFamily: MONO, fontWeight: 700,
+              letterSpacing: '0.08em',
+              background: on ? '#38BDF816' : 'transparent',
+              color: on ? '#38BDF8' : chrome.pillIdle,
+              transition: `all 200ms ${EASE}`,
+            }}
+            onMouseEnter={(e) => { if (!on) e.currentTarget.style.color = chrome.pillHover; }}
+            onMouseLeave={(e) => { if (!on) e.currentTarget.style.color = chrome.pillIdle; }}>
+            {l.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 function ThemeToggle({ theme, chrome, onToggle }) {
   const [hovered, setHovered] = useState(false);
+  const t = useT();
   const dark = theme === 'dark';
   return (
     <button
       onClick={onToggle}
-      title={dark ? 'Светлая тема' : 'Тёмная тема'}
-      aria-label={dark ? 'Светлая тема' : 'Тёмная тема'}
+      title={dark ? t('Светлая тема', 'Light theme') : t('Тёмная тема', 'Dark theme')}
+      aria-label={dark ? t('Светлая тема', 'Light theme') : t('Тёмная тема', 'Dark theme')}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{

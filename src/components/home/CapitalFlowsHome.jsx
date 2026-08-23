@@ -11,7 +11,8 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useMemo, useState } from 'react';
-import { HOME_FLOWS, SECTOR_SURGES, ruPlural } from './homeData.js';
+import { HOME_FLOWS, SECTOR_SURGES } from './homeData.js';
+import { useT, useL, usePlural } from '../../lib/i18n.jsx';
 import { fmtUSD } from '../research/capitalflow/format.js';
 import { SectionHeader, LogoTile, Reveal, MONO, EASE } from './ui.jsx';
 
@@ -78,6 +79,8 @@ function WaveField({ surges, hovered, onHover }) {
 }
 
 function SurgeChip({ surge, hovered, onHover, onOpen }) {
+  const L = useL();
+  const p = usePlural();
   const active = hovered === surge.key;
   return (
     <button
@@ -99,12 +102,12 @@ function SurgeChip({ surge, hovered, onHover, onOpen }) {
         flexShrink: 0,
       }} />
       <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--hm-text2)', letterSpacing: '-0.01em' }}>
-        {surge.label}
+        {L(surge.label)}
       </span>
       <span style={{ fontSize: 11, fontFamily: MONO, color: surge.color, fontWeight: 700 }}>
         {surge.total > 0
           ? fmtUSD(surge.total)
-          : `${surge.count} ${ruPlural(surge.count, ['сделка', 'сделки', 'сделок'])}`}
+          : `${surge.count} ${p(surge.count, ['сделка', 'сделки', 'сделок'], ['deal', 'deals'])}`}
       </span>
       {surge.signalLabel && (
         <span style={{
@@ -112,7 +115,7 @@ function SurgeChip({ surge, hovered, onHover, onOpen }) {
           textTransform: 'uppercase', letterSpacing: '0.08em',
           borderLeft: '1px solid var(--hm-border4)', paddingLeft: 9,
         }}>
-          {surge.signalLabel}
+          {L(surge.signalLabel)}
         </span>
       )}
     </button>
@@ -179,6 +182,8 @@ function FlowStream({ flow, index, hovered }) {
 }
 
 function FlowRow({ flow, index, onOpen }) {
+  const t = useT();
+  const L = useL();
   const [hovered, setHovered] = useState(false);
   return (
     <Reveal delay={index * 90}>
@@ -222,7 +227,7 @@ function FlowRow({ flow, index, onOpen }) {
                 {flow.allocator.name}
               </span>
               <span style={{ display: 'block', fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                {flow.allocator.clsLabel}
+                {L(flow.allocator.clsLabel)}
               </span>
             </span>
           </span>
@@ -243,7 +248,7 @@ function FlowRow({ flow, index, onOpen }) {
                 {flow.target.name}
               </span>
               <span style={{ display: 'block', fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                {flow.eventLabel}
+                {L(flow.eventLabel)}
               </span>
             </span>
           </span>
@@ -254,13 +259,13 @@ function FlowRow({ flow, index, onOpen }) {
               display: 'block', fontSize: 16, fontWeight: 700, fontFamily: MONO,
               color: flow.disclosed ? 'var(--hm-text)' : 'var(--hm-text5)', letterSpacing: '-0.02em',
             }}>
-              {flow.disclosed ? fmtUSD(flow.amountUSD) : 'н/д'}
+              {flow.disclosed ? fmtUSD(flow.amountUSD) : t('н/д', 'n/d')}
             </span>
             <span style={{
               display: 'inline-block', marginTop: 3, fontSize: 9, fontFamily: MONO, fontWeight: 700,
               color: flow.sectorColor, textTransform: 'uppercase', letterSpacing: '0.09em',
             }}>
-              {flow.sectorLabel}
+              {L(flow.sectorLabel)}
             </span>
           </span>
         </div>
@@ -279,15 +284,15 @@ function FlowRow({ flow, index, onOpen }) {
                 fontSize: 9, fontFamily: MONO, fontWeight: 700, color: flow.statusColor,
                 textTransform: 'uppercase', letterSpacing: '0.09em', marginRight: 10,
               }}>
-                {flow.statusLabel} · {flow.date}
+                {L(flow.statusLabel)} · {flow.date}
               </span>
-              {flow.read}
+              {L(flow.read)}
             </span>
             <span style={{
               fontSize: 10, fontFamily: MONO, fontWeight: 700, color: flow.sectorColor,
               textTransform: 'uppercase', letterSpacing: '0.1em', whiteSpace: 'nowrap',
             }}>
-              Смотреть на карте →
+              {t('Смотреть на карте', 'See it on the map')} →
             </span>
           </div>
         </div>
@@ -297,6 +302,7 @@ function FlowRow({ flow, index, onOpen }) {
 }
 
 export default function CapitalFlowsHome({ onOpen }) {
+  const t = useT();
   const [hoveredSector, setHoveredSector] = useState(null);
   const surges = SECTOR_SURGES.slice(0, 5);
 
@@ -304,11 +310,13 @@ export default function CapitalFlowsHome({ onOpen }) {
     <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px' }}>
       <Reveal>
         <SectionHeader
-          eyebrow="Потоки капитала · эта неделя"
-          title="Куда пошли деньги"
-          sub="Пять ключевых сделок недели — корпорации, фонды и частные инвесторы. Каждая волна ниже — это сектор: чем выше волна, тем сильнее туда идёт капитал."
+          eyebrow={t('Потоки капитала · эта неделя', 'Capital flows · this week')}
+          title={t('Куда пошли деньги', 'Where the money went')}
+          sub={t(
+            'Пять ключевых сделок недели — корпорации, фонды и частные инвесторы. Каждая волна ниже — это сектор: чем выше волна, тем сильнее туда идёт капитал.',
+            'The week\'s five pivotal deals — corporates, funds and individuals. Each wave below is a sector: the taller the wave, the harder capital is running into it.')}
           accent="#38BDF8"
-          actionLabel="Открыть карту потоков"
+          actionLabel={t('Открыть карту потоков', 'Open the flow map')}
           onAction={onOpen}
         />
       </Reveal>

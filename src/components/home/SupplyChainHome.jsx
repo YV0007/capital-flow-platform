@@ -8,7 +8,8 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { SUPPLY_CHAIN_CARDS, ruPlural } from './homeData.js';
+import { SUPPLY_CHAIN_CARDS } from './homeData.js';
+import { useT, useL, usePlural } from '../../lib/i18n.jsx';
 import { SectionHeader, Reveal, MONO, EASE } from './ui.jsx';
 
 const CARD_W = 300;
@@ -17,6 +18,9 @@ const STEP = CARD_W + GAP;
 const ADVANCE_MS = 4200;
 
 function BucketCard({ card, active, onOpen }) {
+  const t = useT();
+  const L = useL();
+  const p = usePlural();
   const [hovered, setHovered] = useState(false);
   const lift = hovered || active;
   return (
@@ -48,10 +52,10 @@ function BucketCard({ card, active, onOpen }) {
           display: 'block', fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
           color: card.color, textTransform: 'uppercase', letterSpacing: '0.14em', marginBottom: 8,
         }}>
-          Цепочка поставок
+          {t('Цепочка поставок', 'Supply chain')}
         </span>
         <span style={{ display: 'block', fontSize: 17, fontWeight: 700, color: 'var(--hm-text)', letterSpacing: '-0.015em', lineHeight: 1.2, marginBottom: 12 }}>
-          {card.name}
+          {L(card.name)}
         </span>
 
         {card.companies.map((c) => (
@@ -66,7 +70,7 @@ function BucketCard({ card, active, onOpen }) {
         ))}
 
         <span style={{ display: 'block', fontSize: 11, color: '#8b8b95', lineHeight: 1.55, marginTop: 10 }}>
-          {card.teaser}
+          {L(card.teaser)}
         </span>
       </span>
       <span style={{
@@ -75,9 +79,9 @@ function BucketCard({ card, active, onOpen }) {
         fontSize: 9.5, fontFamily: MONO, color: 'var(--hm-text5)', letterSpacing: '0.05em',
       }}>
         <span>
-          {card.companyCount} {ruPlural(card.companyCount, ['компания', 'компании', 'компаний'])}
+          {card.companyCount} {p(card.companyCount, ['компания', 'компании', 'компаний'], ['company', 'companies'])}
           {' · '}
-          {card.sectorCount} {ruPlural(card.sectorCount, ['подсектор', 'подсектора', 'подсекторов'])}
+          {card.sectorCount} {p(card.sectorCount, ['подсектор', 'подсектора', 'подсекторов'], ['subsector', 'subsectors'])}
         </span>
         <span style={{ color: card.color, fontWeight: 700, opacity: hovered ? 1 : 0.5, transition: 'opacity 200ms' }}>→</span>
       </span>
@@ -86,6 +90,7 @@ function BucketCard({ card, active, onOpen }) {
 }
 
 export default function SupplyChainHome({ onOpen }) {
+  const t = useT();
   const cards = SUPPLY_CHAIN_CARDS;
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -143,11 +148,13 @@ export default function SupplyChainHome({ onOpen }) {
     <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px' }}>
       <Reveal>
         <SectionHeader
-          eyebrow="Дата-центры · цепочка поставок"
-          title="AI-инфраструктура, слой за слоем"
-          sub="Девять слоёв — от электроэнергии до софта, который всё это окупает. Откройте карточку, чтобы увидеть полный разбор: компании, зависимости, узкие места."
+          eyebrow={t('Дата-центры · цепочка поставок', 'Data centers · supply chain')}
+          title={t('AI-инфраструктура, слой за слоем', 'AI infrastructure, layer by layer')}
+          sub={t(
+            'Девять слоёв — от электроэнергии до софта, который всё это окупает. Откройте карточку, чтобы увидеть полный разбор: компании, зависимости, узкие места.',
+            'Nine layers, from the electricity to the software that pays for all of it. Open a card for the full breakdown: companies, dependencies, bottlenecks.')}
           accent="#22D3EE"
-          actionLabel="Открыть цепочку поставок"
+          actionLabel={t('Открыть цепочку поставок', 'Open the supply chain')}
           onAction={onOpen}
         />
       </Reveal>
