@@ -157,5 +157,14 @@
   "alloc:Palmer Luckey": "/logos/alloc_Palmer_Luckey.png",
   "target:SpaceX": "/logos/target_SpaceX.ico",
   "target:Performance Drone Works": "/logos/target_Performance_Drone_Works.svg",
-  "target:Erebor": "/logos/target_Erebor.svg"
+  "target:Erebor": "/logos/target_Erebor.svg",
+  "target:BlackRock (El Paso Data Center JV)": "/logos/alloc_BlackRock.ico",
+  "target:Amazon.com Inc.": "/logos/alloc_Amazon.png",
+  "target:Aeluma Inc.": "/logos/target_Aeluma.svg",
+  "target:AI Compute Infrastructure Financing Platform (NVIDIA-anchored)": "/logos/alloc_NVIDIA.svg",
+  "target:NextEra-Brookfield Paducah AI Data Center Campus": "/logos/alloc_Brookfield.png",
+  "target:NVIDIA AI Compute Infrastructure Financing Platform": "/logos/alloc_NVIDIA.svg",
+  "target:Valar Atomics Inc.": "/logos/target_Valar_Atomics.png",
+  "target:Thrive Holdings Inc": "/logos/target_Thrive_Holdings.png",
+  "target:Khosla Ventures (new fund family, unnamed)": "/logos/alloc_Khosla_Ventures.png"
 }
