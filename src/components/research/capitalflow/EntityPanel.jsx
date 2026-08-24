@@ -719,16 +719,20 @@ function Stat({ label, value, sub, color }) {
 // inspection + tuning surface for the two-rank framework (classification.js).
 // Players and targets render different factor sets. Pending factors (dark
 // until the engine ships deeper data) are shown greyed, never faked as strong.
-const PLAYER_RANKS = {
+// Built from `t` on each render, never frozen at module scope: a t() call in a
+// module-level const runs at IMPORT time, before any component can supply `t`,
+// and the ReferenceError takes the whole bundle down — a blank page rather than
+// a broken panel.
+const playerRanks = (t) => ({
   core:  { label: t('Ядро — ключевой инвестор', 'Core — a defining allocator'), color: 'var(--cf-gold)' },
   key:   { label: t('Ключевой — стоит следить', 'Key — worth following'),  color: 'var(--cf-warn)' },
   watch: { label: t('Наблюдение', 'Watch'),                color: 'var(--cf-text5)' },
-};
-const DEAL_RANKS = {
+});
+const dealRanks = (t) => ({
   flagged:  { label: t('Флаг — интересная сделка', 'Flagged — an interesting deal'), color: 'var(--cf-gold)' },
   emerging: { label: t('Зарождается', 'Emerging'),              color: 'var(--cf-warn)' },
-};
-const PLAYER_FACTORS = [
+});
+const playerFactors = (t) => [
   ['bellwether', t('Ведёт за собой', 'Leads the way')],
   ['leadTime', t('Опережает толпу', 'Ahead of the crowd')],
   ['focus', t('Фокус / отбор', 'Focus / selection')],
@@ -736,7 +740,7 @@ const PLAYER_FACTORS = [
   ['overlap', t('Доступность сделок', 'Deal access')],
   ['trackRecord', t('Доказанный результат', 'Proven outcome')],
 ];
-const DEAL_FACTORS = [
+const dealFactors = (t) => [
   ['convergence', t('Схождение капитала', 'Capital convergence')],
   ['early', t('Поймано рано', 'Caught early')],
   ['backerQuality', t('Качество инвесторов', 'Backer quality')],
@@ -820,8 +824,8 @@ function ClassificationBlock({ node }) {
   const parts = isPlayer ? node.playerParts : node.dealParts;
   const score = isPlayer ? node.playerScore : node.dealScore;
   const rank = isPlayer ? node.playerRank : node.dealRank;
-  const meta = (isPlayer ? PLAYER_RANKS : DEAL_RANKS)[rank] || { label: t('В отслеживании', 'Tracked'), color: 'var(--cf-text6)' };
-  const factors = isPlayer ? PLAYER_FACTORS : DEAL_FACTORS;
+  const meta = (isPlayer ? playerRanks(t) : dealRanks(t))[rank] || { label: t('В отслеживании', 'Tracked'), color: 'var(--cf-text6)' };
+  const factors = isPlayer ? playerFactors(t) : dealFactors(t);
   const kicker = isPlayer ? t('Инвестор для отслеживания', 'An allocator worth tracking') : t('Сделка · где искать возможность', 'Deal · where the opportunity sits');
 
   return (

@@ -61,7 +61,10 @@ function EntityLogo({ node, size = 20 }) {
 // ── Section model ────────────────────────────────────────────────────────
 // Role = the dimension monitored. Subsection = what kind of entity it is.
 // Both derive 1:1 from the payload's `kind` + `cls` — nothing is inferred.
-const ROLES = [
+// A function of `t`, not a frozen const: t() evaluated at module scope runs at
+// IMPORT time, before any component exists to provide it, and the resulting
+// ReferenceError takes the whole bundle down — a blank page, not a broken table.
+const roles = (t) => [
   {
     key: 'allocator',
     label: t('Инвесторы', 'Allocators'),
@@ -217,7 +220,9 @@ function Lead({ label, value, detail, color, basis, runnersUp = [] }) {
   );
 }
 
-function statusOf(n) {
+// `t` is passed in, not pulled from useT: this is a plain helper, not a
+// component, so a hook call here is illegal.
+function statusOf(n, t) {
   if (n.stale) return { label: t('Остыл', 'Cold'), color: 'var(--cf-muted)', title: t('Нет активности 180 дней — остаётся в памяти, приглушён.', 'No activity for 180 days — kept on the map, muted.') };
   if (n.watchOnly) return { label: t('Наблюдение', 'Watch'), color: 'var(--cf-text5)', title: t('Только потоки-кандидаты — не подтверждено.', 'Candidate flows only — unconfirmed.') };
   return { label: t('Активен', 'Active'), color: 'var(--cf-good)', title: t('Подтверждённая активность в текущем окне.', 'Confirmed activity in the current window.') };
@@ -244,7 +249,11 @@ function scoreDriver(n) {
   };
 }
 
-const COLS = [
+// Built per render from the active language, NOT frozen at module scope. As a
+// module-level const with t() inside it, this ran at IMPORT time — before any
+// component existed to provide `t` — and the ReferenceError it threw took the
+// whole bundle down with it: a blank page, not a broken table.
+const columns = (t) => [
   { key: 'name',    label: t('Объект', 'Entity'),         sort: (n) => n.name.toLowerCase() },
   { key: 'tier',    label: t('Уровень', 'Tier'),        sort: (n) => (n.type === 'player' ? n.playerScore : n.dealScore) ?? -1, num: true },
   { key: 'sector',  label: t('Сектор', 'Sector'),         sort: (n) => (n.sector ? sectorLabel(n.sector) : '~') },
@@ -256,6 +265,7 @@ const COLS = [
 
 export default function EntityTable({ nodes, matchedNodes, query, activeList, wl, onOpenEntity, kind = 'all', onKind, onOpenTheses, topInset = 0 }) {
   const t = useT();
+  const COLS = useMemo(() => columns(t), [t]);
   const [sortKey, setSortKey] = useState('capital');
   const [sortDir, setSortDir] = useState(-1);         // -1 desc · 1 asc
   const [collapsed, setCollapsed] = useState(() => new Set());
@@ -289,7 +299,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
       return (va < vb ? -1 : va > vb ? 1 : 0) * sortDir;
     };
 
-    const out = ROLES
+    const out = roles(t)
       .filter(role => kind === 'all' || kind === role.key)
       .map(role => {
         const mine = rows.filter(n => n.kind === role.key);
@@ -318,7 +328,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
       .filter(role => role.count > 0);
 
     return { sections: out, shown: rows.length };
-  }, [nodes, matchedNodes, query, kind, activeList, sortKey, sortDir]);
+  }, [nodes, matchedNodes, query, kind, activeList, sortKey, sortDir, COLS, t]);
 
   const header = (c) => {
     const on = sortKey === c.key;
@@ -447,7 +457,7 @@ export default function EntityTable({ nodes, matchedNodes, query, activeList, wl
                       </tr>
 
                       {!shut && g.rows.map(n => {
-                        const st = statusOf(n);
+                        const st = statusOf(n, t);
                         const sd = scoreDriver(n);
                         const sec = n.sector ? SECTOR_META[n.sector] : null;
                         return (
