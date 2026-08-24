@@ -11,8 +11,14 @@ target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbou
 target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
+target:Poolside	Poolside
+alloc:Elon Musk	Elon Musk
+target:APR Energy	APR Energy
+target:Kepler	Kepler
+target:Gravis Robotics	Gravis Robotics
 target:Flourish	Flourish
 target:Strategic Bauxite USA, LLC (SBX)	Strategic Bauxite USA, LLC (SBX)
+target:Strategic Bauxite USA	Strategic Bauxite USA
 target:Standard Bauxite	Standard Bauxite
 alloc:Vinod Khosla	Vinod Khosla
 target:Nippon Gateway Infrastructure (NGI)	Nippon Gateway Infrastructure (NGI)
@@ -28,5 +34,20 @@ target:Paducah AI/HPC innovation campus	Paducah AI/HPC innovation campus
 target:Savannah River Site AI data center	Savannah River Site AI data center
 target:Kuwait Oil Company Pipeline JV (Project Peregrine)	Kuwait Oil Company Pipeline JV (Project Peregrine)
 target:TotalEnergies European renewables portfolio (Germany/Spain/France/Poland)	TotalEnergies European renewables portfolio (Germany/Spain/France/Poland)
+target:Paducah DOE Site AI Data Center Campus	Paducah DOE Site AI Data Center Campus
+target:Mexico private credit / infrastructure market	Mexico private credit / infrastructure market
+target:Stack Infrastructure (Melbourne data center)	Stack Infrastructure (Melbourne data center)
+target:Blacksmith	Blacksmith
+target:Point2 Technology	Point2 Technology
+target:Mate Security	Mate Security
+target:Mesh Optical Technologies	Mesh Optical Technologies
+target:Gradium	Gradium
+target:Akita AI Data Center (BitGrid / S2 JV)	Akita AI Data Center (BitGrid / S2 JV)
+target:Neros Technologies	Neros Technologies
+target:Veeda AI	Veeda AI
+target:Volta AI Infra Holdings	Volta AI Infra Holdings
+target:Castelion	Castelion
+target:Rillet	Rillet
+target:Network Bio	Network Bio
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
 target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure
