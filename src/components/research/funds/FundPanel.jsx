@@ -135,12 +135,16 @@ function Positioning({ fund, onOpenSecurity }) {
   if (!rows.length) return null;
   return (
     <Section title="Книга" caption={`${rows.length} ${plural(rows.length, ['позиция', 'позиции', 'позиций'])} · по весу`}>
+      {/* Шапка. До неё колонки читались только по догадке: «62%» — это вес или
+          доля класса? «5к» — что именно? Подписи снимают вопрос, не отнимая
+          места у строк: 9px, разрядка, приглушённый цвет. */}
+      <ColumnHeads />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         {rows.map(p => (
           <button key={p.ticker + p.instrument} onClick={() => onOpenSecurity?.(p.ticker)}
             title={`${p.issuer}\n${sectorLabel(p.sector)} · ${themeLabel(p.theme)}\nОткрыть таблицу держателей`}
             style={{
-              display: 'grid', gridTemplateColumns: '62px 1fr 52px 62px 66px 40px',
+              display: 'grid', gridTemplateColumns: '62px 1fr 96px 52px 62px 66px 34px',
               alignItems: 'center', gap: 8, padding: '7px 8px',
               background: 'transparent', border: 'none', borderRadius: 6,
               cursor: 'pointer', textAlign: 'left', width: '100%',
@@ -160,6 +164,12 @@ function Positioning({ fund, onOpenSecurity }) {
               fontSize: 10.5, color: 'var(--cf-text4)', overflow: 'hidden',
               textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>{p.issuer}</span>
+            {/* Сектор эмитента. Пусто — значит слой идентичности его не разрешил;
+                прочерк честнее подставленного «прочее». */}
+            <span style={{
+              fontSize: 9.5, color: 'var(--cf-text5)', overflow: 'hidden',
+              textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>{p.sector ? sectorLabel(p.sector) : '—'}</span>
             <span style={{
               fontSize: 11, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text0)',
               textAlign: 'right', fontVariantNumeric: 'tabular-nums',
@@ -193,6 +203,31 @@ function Positioning({ fund, onOpenSecurity }) {
     </Section>
   );
 }
+
+// ── column heads — the grid template is duplicated below on purpose: the
+// header and the rows must move together, and a shared constant that one of
+// them silently stops using is worse than two lines that diff side by side.
+function ColumnHeads() {
+  const cells = [
+    ['Тикер', 'left'], ['Эмитент', 'left'], ['Сектор', 'left'],
+    ['Вес', 'right'], ['Акций', 'right'], ['Стоимость', 'right'], ['Кв.', 'right'],
+  ];
+  return (
+    <div style={{
+      display: 'grid', gridTemplateColumns: '62px 1fr 96px 52px 62px 66px 34px',
+      gap: 8, padding: '0 8px 5px', borderBottom: '1px solid var(--cf-line)',
+      marginBottom: 3,
+    }}>
+      {cells.map(([label, align]) => (
+        <span key={label} style={{
+          fontSize: 8.5, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.09em',
+          textTransform: 'uppercase', color: 'var(--cf-text7)', textAlign: align,
+        }}>{label}</span>
+      ))}
+    </div>
+  );
+}
+
 
 // ── activity — four groups, counts AND names ─────────────────────────────
 function Activity({ fund, onOpenSecurity }) {
