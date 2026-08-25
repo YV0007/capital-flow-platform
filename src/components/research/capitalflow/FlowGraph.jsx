@@ -20,7 +20,7 @@ import ForceGraph2D from 'react-force-graph-2d';
 import { fmtUSD, linkWidth } from './format.js';
 import { SECTOR_META, CLASS_META, TIER_META, STATUS_META } from '../../../data/capitalMap.js';
 import { useThemeMode, canvasTokens, tone } from './canvasTheme.js';
-import { getLang } from '../../../lib/i18n.jsx';
+import { useT } from '../../../lib/i18n.jsx';
 
 // Surfaces come from canvasTheme (a JS mirror of the --cf-* CSS variables,
 // which a canvas cannot read). `tone()` adapts the SEMANTIC palette — sector
@@ -38,6 +38,10 @@ export default function FlowGraph({
 }) {
   const mode = useThemeMode();
   const T = canvasTokens(mode);
+  // Named `tr`, not `t`: the canvas tooltips already use `t` for the target
+  // node of a link, and shadowing the translator inside one of them is exactly
+  // the kind of silent half-translation this pass is fixing.
+  const tr = useT();
   const wrapRef = useRef(null);
   // Which cluster title the pointer is over. A ref, not state: the canvas
   // already repaints every frame for the particles, so the painter picks the
@@ -510,18 +514,16 @@ export default function FlowGraph({
     const isPlayer = n.type === 'player';
     // The new classification — the one bit worth surfacing on hover.
     const pivot = isPlayer
-      ? (n.playerRank === 'core' ? 'Ключевой инвестор' : n.playerRank === 'key' ? 'Стоит следить' : null)
-      : (n.dealRank === 'flagged' ? 'Интересная сделка' : n.dealRank === 'emerging' ? 'Зарождается' : null);
-    const sideLabel = getLang() === 'en'
-      ? (isPlayer ? 'Deployed' : 'Received')
-      : (isPlayer ? 'Вложено' : 'Получено');
+      ? (n.playerRank === 'core' ? tr('Ключевой инвестор', 'Key allocator') : n.playerRank === 'key' ? tr('Стоит следить', 'Worth following') : null)
+      : (n.dealRank === 'flagged' ? tr('Интересная сделка', 'Interesting deal') : n.dealRank === 'emerging' ? tr('Зарождается', 'Emerging') : null);
+    const sideLabel = isPlayer ? tr('Вложено', 'Deployed') : tr('Получено', 'Received');
     const sideVal = isPlayer ? n.totalOutflow : n.totalInflow;
     const sideColor = isPlayer ? tone('#C2A36B', mode) : tone('#82B98D', mode);
     const row = (k, v, vc) => `<span style="color:${T.tipText4}">${k}</span><span style="color:${vc};text-align:right">${v}</span>`;
     return tip(T, `
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:${pivot ? 6 : 9}px">
         <span style="font-weight:700;font-size:12px;color:${T.tipText};letter-spacing:-0.01em">${esc(n.name)}</span>
-        ${n.stale ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">ОСТЫЛ</span>` : ''}
+        ${n.stale ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${tr('ОСТЫЛ', 'COLD')}</span>` : ''}
       </div>
       ${pivot ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:9px">
         <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
@@ -533,21 +535,21 @@ export default function FlowGraph({
         ${sec ? `<span style="color:${T.tipRule}">·</span><span style="color:${T.tipText4}">${esc(sec.label)}</span>` : ''}
       </div>
       <div style="border-top:1px solid ${T.tipBorder};padding-top:9px;display:grid;grid-template-columns:auto 1fr;gap:5px 16px">
-        ${row('Капитал', fmtUSD(n.capital), T.tipText2)}
+        ${row(tr('Капитал', 'Capital'), fmtUSD(n.capital), T.tipText2)}
         ${row(sideLabel, fmtUSD(sideVal), sideColor)}
-        ${row('Сделки', n.deals, T.tipText3)}
-        ${row('Активность', esc(n.last_activity || '—'), T.tipText3)}
+        ${row(tr('Сделки', 'Deals'), n.deals, T.tipText3)}
+        ${row(tr('Активность', 'Activity'), esc(n.last_activity || '—'), T.tipText3)}
       </div>
-      <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">Клик → панель разбора</div>
+      <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">${tr('Клик → панель разбора', 'Click → breakdown panel')}</div>
     `);
-  }, [mode, T]);
+  }, [mode, T, tr]);
 
   const linkTooltip = useCallback((l) => {
     const s = typeof l.source === 'object' ? l.source.name : l.sourceId;
     const t = typeof l.target === 'object' ? l.target.name : l.targetId;
     const st = STATUS_META[l.status] || {};
     return tip(T, `
-      <div style="font-weight:700;font-size:12.5px;color:${T.tipText};margin-bottom:4px">${l.disclosed ? fmtUSD(l.amount) : 'Не раскрыто'}</div>
+      <div style="font-weight:700;font-size:12.5px;color:${T.tipText};margin-bottom:4px">${l.disclosed ? fmtUSD(l.amount) : tr('Не раскрыто', 'Undisclosed')}</div>
       <div style="color:${T.tipText2};margin-bottom:5px">${esc(s)} <span style="color:${tone(l.color, mode)}">→</span> ${esc(t)}</div>
       <div style="display:flex;gap:6px;align-items:center">
         <span style="width:7px;height:7px;border-radius:2px;background:${tone(l.color, mode)}"></span>
@@ -557,9 +559,9 @@ export default function FlowGraph({
         <span style="color:${T.tipRule}">·</span>
         <span style="color:${T.tipText4}">${esc(l.date)}</span>
       </div>
-      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Клик → карточка сделки</div>
+      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">${tr('Клик → карточка сделки', 'Click → deal card')}</div>
     `);
-  }, [mode, T]);
+  }, [mode, T, tr]);
 
   return (
     <div ref={wrapRef} style={{ position: 'absolute', inset: 0 }}
