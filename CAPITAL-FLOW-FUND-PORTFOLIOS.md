@@ -245,6 +245,112 @@ picks up only new funds and those that drifted below the floor.
 
 ---
 
+## 6b. TASK C-2 — CONVICTION HOLDINGS, NOT TRADES
+
+**Rule: `positions[]` and `holdings[]` answer one question — *what does this fund
+own, and believe in, right now?* Not what it traded last quarter, and not what it
+has notional exposure to.**
+
+This section is the single most important constraint in the handoff. The whole
+point of the portfolio block is following conviction: real ownership, held on the
+balance sheet, sized meaningfully. A trade log answers a different question and
+does not belong in the same array.
+
+Two things must be filtered out, for two different reasons.
+
+### 1. Trades are not holdings
+
+**The fixture already gets this wrong: 16 rows inside `positions[]` carry
+`shares: 0, value_usd: 0, weight: 0` with `action: "exited"`.** A position the
+fund sold is, by definition, not a holding. It is currently rendered as one.
+
+- **`shares > 0` is a hard gate.** An `exited` row never appears in
+  `positions[]`. Zero shares means zero ownership.
+- **Rank by weight.** Size *is* the conviction signal — a 27% position and a 0.1%
+  position are not the same claim, and the array order should say so.
+- **`quarters_held` and `action` stay, but as context on a position that is
+  still held** — "held 7 quarters, added into this one" is useful colour about a
+  conviction. They are adjectives, never the subject.
+- **Trade flow belongs elsewhere.** If new/added/trimmed/exited is wanted as its
+  own view, give it its own array (`activity[]`). Do not mix a quarter's churn
+  into the list of what is owned.
+- **Consider a conviction floor.** Positions under a small weight held for a
+  single quarter are trading noise, not belief. Worth excluding, or at least
+  ranking below everything else, so the top of the list is always real
+  conviction.
+- **Multi-strategy shops are a known trap.** Citadel, Millennium, Point72 and
+  Balyasny file 13Fs with thousands of rows of pure flow and no conviction
+  signal at all. A "portfolio" view of those is misleading no matter how it is
+  filtered — either mark them explicitly as flow-driven or leave the block off.
+
+### 2. Derivatives are not ownership
+
+**Rule: only shares the fund actually owns.** No futures, options, warrants or
+debt. This is correctness, not preference — breaking it makes every number on the
+card wrong, not just imprecise.
+
+Also already broken in the fixture: **two positions carry `instrument: "put"`
+inside the same `positions[]` array as common stock.** A put is a bet that the
+stock **falls**. Rendered in a portfolio list it says the exact opposite of the
+truth — the strongest possible version of "a trade is not a conviction holding".
+
+### Why it corrupts everything downstream, not just one row
+
+13F reports an option at the **notional value of the underlying shares**, not the
+premium paid. So one call position on a large-cap can dwarf every real holding in
+the file. That single row then poisons:
+
+- `value_usd` on that row — notional, not money at risk;
+- `total_value_usd` for the fund;
+- **every `weight`**, because they are all shares of that inflated total;
+- the ranking, so "top holdings" surfaces a derivative above real ownership;
+- `action` / `share_delta_pct` / `quarters_held`, which compare option contracts
+  against share counts as if they were the same unit.
+
+### The filter — mechanical, straight off the 13F XML
+
+Each `infoTable` row in a 13F-HR carries the three fields you need:
+
+| field | keep | drop |
+|---|---|---|
+| `putCall` | **absent** — plain share ownership | `Put` or `Call` — a derivative |
+| `sshPrnamtType` | `SH` — share count | `PRN` — debt principal, a bond not equity |
+| `titleOfClass` | `COM`, `CL A`, `SPONSORED ADR` | `NOTE`, `DBCV` (convertible debt), `WT` (warrant), `RT` (right), `UNIT` |
+
+**Keep as real ownership:** common stock, share classes (A/B/C), and **ADRs** — a
+depositary receipt is genuine ownership of the underlying foreign shares, so the
+15 `adr` rows in the fixture are correct and should stay.
+
+**Exclude from `positions[]` entirely:** puts, calls, warrants, rights,
+convertible notes, SPAC units, and anything reported as `PRN`.
+
+### If you want derivatives at all, they go somewhere else
+
+Do not delete the information — a fund's options book is genuinely interesting.
+Put it in a **separate `derivatives[]` array** with its own notional total, never
+folded into `positions[]` and **never summed into `total_value_usd` or any
+weight**. The existing `shorts[]` array is the right precedent: the Fund Tracker
+already keeps shorts apart from longs, and derivatives deserve the same treatment.
+
+### Same rule for the private book
+
+For `holdings-profiler`, "holding" means **an equity stake the fund still owns**.
+Exclude:
+
+- **realised exits** — a company that IPO'd or was acquired and the fund sold is
+  history, not a holding. (A stake still held through an IPO *is* a holding.)
+
+- LP commitments *into another fund* (that is an allocation, not a portfolio
+  company — and it is already on the map as a flow);
+- debt, credit facilities and venture-debt lines;
+- announced-but-unclosed deals — "in talks to invest" is not a holding;
+- SPV participation where the fund is a pass-through rather than the owner.
+
+A stake with an undisclosed size is still a holding — keep it with `stake: null`.
+A commitment that has not closed is not.
+
+---
+
 ## 7. TASK D — contract addition
 
 Purely additive to the existing node. Nothing already shipped changes.
@@ -267,14 +373,22 @@ Purely additive to the existing node. Nothing already shipped changes.
     "source_url": "https://www.sec.gov/Archives/edgar/...",
     "position_count": 63,           // TRUE total, may exceed the array
     "total_value_usd": 24700000000,
-    "positions": [                  // top N by weight; fund-tracker/1 shape
+    "positions": [                  // OWNED SHARES ONLY — see Task C-2
       {
         "ticker": "NVDA", "issuer": "NVIDIA", "cusip": "67066G104",
         "weight": 0.184, "shares": 12400000, "value_usd": 4550000000,
-        "instrument": "common", "action": "add",
+        "instrument": "common",       // common | adr | class_a … NEVER put/call/warrant
+        "action": "add",
         "share_delta_pct": 0.12, "prior_shares": 11071428, "quarters_held": 7,
         "sector": "semiconductors"
       }
+    ],
+    // Optional, and kept OUT of positions[]/weights/total_value_usd. Notional,
+    // not money at risk — label it as such wherever it is shown.
+    "derivatives": [
+      { "ticker": "SPY", "issuer": "SPDR S&P 500 ETF", "put_call": "put",
+        "notional_usd": 220000000, "shares_underlying": 400000,
+        "as_of": "2026-06-30" }
     ]
   }
 }
@@ -305,6 +419,12 @@ Purely additive to the existing node. Nothing already shipped changes.
    populated `holdings[]` with real `source_url`s and a `portfolio_url`.
 3. **No fund with `holdings_count > 25` ships fewer than 25 holdings.** Coatue is
    no longer 16 of 250.
+3b. **`positions[]` is conviction holdings only.** Every row has `shares > 0` —
+   the 16 `exited` zero-share rows currently in `fundTracker.json` are gone. No
+   row has `instrument` of `put`/`call`/`warrant` and none is reported as `PRN`;
+   the two `put` rows are gone or moved to `derivatives[]`. Every `weight` and
+   `total_value_usd` is computed over owned shares only, and the array is ranked
+   by weight so the top of the list is the strongest conviction.
 4. Zero W7 warnings in `audit.warnings`.
 5. At least one node carries a `public_book` whose `as_of` is the most recent
    completed quarter.
