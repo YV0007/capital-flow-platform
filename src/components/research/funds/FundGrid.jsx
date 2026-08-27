@@ -209,7 +209,7 @@ function WatchBand({ watch, selectedId, onSelect }) {
 }
 
 function ActivityLegend() {
-  const t = useTone();
+  const tint = useTone();
   return (
     <div style={{
       marginTop: 40, paddingTop: 18, borderTop: '1px solid var(--cf-border-hair)',
@@ -221,7 +221,7 @@ function ActivityLegend() {
       }}>Цвет узла · движение книги</span>
       {ACTIVITY_LEGEND.map(l => (
         <span key={l.label} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ width: 9, height: 9, borderRadius: '50%', background: t(activityColor(l.t)) }} />
+          <span style={{ width: 9, height: 9, borderRadius: '50%', background: tint(activityColor(l.t)) }} />
           <span style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text5)' }}>{l.label}</span>
         </span>
       ))}

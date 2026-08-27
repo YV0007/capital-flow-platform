@@ -191,7 +191,7 @@ function ModeSwitch({ mode, onMode, funds, positions }) {
 const cellR = { fontSize: 10.5, fontFamily: MONO, color: 'var(--cf-text2)', textAlign: 'right', fontVariantNumeric: 'tabular-nums' };
 
 function FundRow({ f, grid, selected, onSelect }) {
-  const t = useTone();
+  const tint = useTone();
   const a = f.activity;
   return (
     <div onClick={() => onSelect(f.id)}
@@ -204,7 +204,7 @@ function FundRow({ f, grid, selected, onSelect }) {
       onMouseEnter={(e) => { if (!selected) e.currentTarget.style.background = 'var(--cf-hover)'; }}
       onMouseLeave={(e) => { if (!selected) e.currentTarget.style.background = 'transparent'; }}>
       <span style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
-        <span style={{ width: 7, height: 7, borderRadius: '50%', background: t(f.activityColor), flexShrink: 0 }}
+        <span style={{ width: 7, height: 7, borderRadius: '50%', background: tint(f.activityColor), flexShrink: 0 }}
           title="Движение книги за период" />
         <span style={{
           fontSize: 11.5, fontWeight: 700, color: 'var(--cf-text0)',
@@ -217,7 +217,7 @@ function FundRow({ f, grid, selected, onSelect }) {
       <span style={cellR}>{f.position_count}</span>
       <span style={cellR}>{f.conviction ? fmtPct(f.conviction.top10_concentration, 0) : '—'}</span>
       {['new', 'added', 'trimmed', 'exited'].map(k => (
-        <span key={k} style={{ ...cellR, color: a?.[k]?.length ? t(ACTION_META[k].color) : 'var(--cf-text8)' }}>
+        <span key={k} style={{ ...cellR, color: a?.[k]?.length ? tint(ACTION_META[k].color) : 'var(--cf-text8)' }}>
           {a ? a[k].length : '—'}
         </span>
       ))}

@@ -15,8 +15,10 @@
 import { useCallback } from 'react';
 import { ExternalLink, AlertTriangle, EyeOff } from 'lucide-react';
 import { useThemeMode, tone } from '../capitalflow/canvasTheme.js';
+import { getLang } from '../../../lib/i18n.jsx';
 import { latencyBand, deltaSuppressedNote, formMeta as formMetaOf } from '../../../data/fundTracker.js';
 import { fmtDelta, fmtLatency, fmtDate } from './fundFormat.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 export const MONO = 'ui-monospace, monospace';
 
@@ -43,13 +45,13 @@ export function hexA(hex, a) {
 
 /** Latency badge — mandatory wherever a filing-sourced number is rendered. */
 export function LatencyBadge({ days, asOf, size = 'sm', form }) {
-  const t = useTone();
+  const tint = useTone();
   const band = latencyBand(days);
-  const b = { ...band, color: t(band.color) };
+  const b = { ...band, color: tint(band.color) };
   const big = size === 'lg';
   const tip = [
     `${b.label} · ${fmtLatency(days)}`,
-    asOf ? `Срез на ${fmtDate(asOf)}` : null,
+    asOf ? (getLang() === 'en' ? `As of ${fmtDate(asOf)}` : `Срез на ${fmtDate(asOf)}`) : null,
     form ? `${formMetaOf(form).label}: ${formMetaOf(form).lag || ''}`.trim() : null,
     b.blurb,
   ].filter(Boolean).join('\n');
@@ -70,9 +72,9 @@ export function LatencyBadge({ days, asOf, size = 'sm', form }) {
 
 /** Which filing layer this row came from. Freshness differs wildly by form. */
 export function FormBadge({ form, small = false }) {
-  const t = useTone();
+  const tint = useTone();
   const raw = formMetaOf(form);
-  const m = { ...raw, color: t(raw.color) };
+  const m = { ...raw, color: tint(raw.color) };
   return (
     <span title={m.lag ? `${form} — ${m.lag}` : form} style={{
       display: 'inline-block', padding: small ? '1px 5px' : '2px 6px',
@@ -111,7 +113,7 @@ export function Delta({ value, shown = true, weight }) {
         color: 'var(--cf-text8)', fontFamily: MONO, fontSize: 10,
         cursor: 'help', letterSpacing: '0.04em',
       }}>
-        <EyeOff size={9} style={{ verticalAlign: -1, marginRight: 3 }} />скрыто
+        <EyeOff size={9} style={{ verticalAlign: -1, marginRight: 3 }} />{getLang() === 'en' ? 'withheld' : 'скрыто'}
       </span>
     );
   }
@@ -125,10 +127,11 @@ export function Delta({ value, shown = true, weight }) {
 }
 
 /** Every figure traceable to its filing. */
-export function SourceLink({ url, children = 'форма', title }) {
-  if (!url) return <span style={{ color: 'var(--cf-text8)', fontSize: 9, fontFamily: MONO }}>без ссылки</span>;
+export function SourceLink({ url, children = t('форма', 'form'), title }) {
+  const t = useT();
+  if (!url) return <span style={{ color: 'var(--cf-text8)', fontSize: 9, fontFamily: MONO }}>{t('без ссылки', 'no link')}</span>;
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" title={title || 'Открыть первоисточник'}
+    <a href={url} target="_blank" rel="noopener noreferrer" title={title || t('Открыть первоисточник', 'Open the primary source')}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 3,
         color: 'var(--cf-link)', fontSize: 9.5, fontFamily: MONO, fontWeight: 600,
@@ -143,8 +146,9 @@ export function SourceLink({ url, children = 'форма', title }) {
 
 /** Family offices file below thresholds — thin is not the same as quiet. */
 export function SparseFlag({ inline = false }) {
+  const t = useT();
   return (
-    <span title={'Раскрытие структурно неполное. Family office не обязан показывать позиции ниже порогов 13F, деривативы и долг. Пустая строка здесь означает «не видно», а не «нет позиции».'}
+    <span title={t('Раскрытие структурно неполное. Family office не обязан показывать позиции ниже порогов 13F, деривативы и долг. Пустая строка здесь означает «не видно», а не «нет позиции».', 'Disclosure is structurally incomplete. A family office need not show positions below the 13F thresholds, nor derivatives, nor debt. An empty row here means "not visible", not "no position".')}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 5,
         padding: inline ? '1px 6px' : '5px 9px',
@@ -154,7 +158,7 @@ export function SparseFlag({ inline = false }) {
         letterSpacing: '0.04em', cursor: 'help',
       }}>
       <AlertTriangle size={inline ? 9 : 11} />
-      {inline ? 'НЕПОЛНО' : 'Раскрытие неполное по построению'}
+      {inline ? t('НЕПОЛНО', 'PARTIAL') : t('Раскрытие неполное по построению', 'Disclosure incomplete by construction')}
     </span>
   );
 }
@@ -188,11 +192,11 @@ export function Stat({ label, value, sub, color, title, align = 'left' }) {
 
 /** Monogram tile — funds have no logo pipeline, so initials on a plate. */
 export function FundMark({ fund, size = 34, radius = 8 }) {
-  const t = useTone();
+  const tint = useTone();
   const initials = (fund.short_name || fund.name || '?')
     .replace(/[^A-Za-zА-Яа-яЁё0-9 ]/g, ' ')
     .split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
-  const c = t(fund.styleMeta?.color || 'var(--cf-text5)');
+  const c = tint(fund.styleMeta?.color || 'var(--cf-text5)');
   return (
     <div style={{
       width: size, height: size, borderRadius: radius, flexShrink: 0,

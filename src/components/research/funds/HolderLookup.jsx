@@ -19,7 +19,7 @@ import { fmtUSD, fmtPct, fmtShares, fmtDate, plural } from './fundFormat.js';
 import { MONO, hexA, LatencyBadge, FormBadge, Chip, Delta, useTone } from './FundBits.jsx';
 
 export default function HolderLookup({ ticker, onClose, onSelect }) {
-  const t = useTone();
+  const tint = useTone();
   const cross = CROSSING[ticker];
   if (!cross) return null;
   const sec = cross.security;

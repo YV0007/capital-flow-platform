@@ -25,9 +25,9 @@ import {
 } from './FundBits.jsx';
 
 export default function FundPanel({ fund, onClose, onOpenSecurity, width = 560, top = 0 }) {
-  const t = useTone();
+  const tint = useTone();
   if (!fund) return null;
-  const c = t(fund.styleMeta?.color || 'var(--cf-text3)');
+  const c = tint(fund.styleMeta?.color || 'var(--cf-text3)');
 
   return (
     // Starts BELOW the top bar rather than over it: the view switch, search
@@ -231,11 +231,11 @@ function ColumnHeads() {
 
 // ── activity — four groups, counts AND names ─────────────────────────────
 function Activity({ fund, onOpenSecurity }) {
-  const t = useTone();
+  const tint = useTone();
   const a = fund.activity;
   if (!a) return null;
   const groups = ['new', 'added', 'trimmed', 'exited'].map(k => ({
-    key: k, meta: { ...ACTION_META[k], color: t(ACTION_META[k].color) }, list: a[k] || [],
+    key: k, meta: { ...ACTION_META[k], color: tint(ACTION_META[k].color) }, list: a[k] || [],
   }));
   const byTicker = Object.fromEntries(fund.positions.map(p => [p.ticker, p]));
 
@@ -411,14 +411,14 @@ function Conviction({ fund, onOpenSecurity }) {
 
 // ── stakes & intent — the highest-information rows in the section ────────
 function Stakes({ fund }) {
-  const t = useTone();
+  const tint = useTone();
   const list = fund.stakes || [];
   if (!list.length) return null;
   return (
     <Section title="Доли и намерение" caption={`${list.length} ${plural(list.length, ['форма', 'формы', 'форм'])} 13D/13G`}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
         {list.map((s, i) => {
-          const col = t(s.activist ? '#FF6B6B' : '#C2A36B');
+          const col = tint(s.activist ? '#FF6B6B' : '#C2A36B');
           return (
             <div key={i} style={{
               padding: '11px 12px',
@@ -456,7 +456,7 @@ function Stakes({ fund }) {
 
 // ── named shorts — rare, and therefore not buried ────────────────────────
 function Shorts({ fund }) {
-  const t = useTone();
+  const tint = useTone();
   const list = fund.shorts || [];
   if (!list.length) return null;
   const DIR = {

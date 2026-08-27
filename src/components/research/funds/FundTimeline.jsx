@@ -16,9 +16,11 @@ import { Zap } from 'lucide-react';
 import { EVENT_TYPE_META } from '../../../data/fundTracker.js';
 import { fmtUSD, fmtDate, fmtLatency } from './fundFormat.js';
 import { MONO, hexA, LatencyBadge, FormBadge, SourceLink, useTone } from './FundBits.jsx';
+import { useT } from '../../../lib/i18n.jsx';
 
 export default function FundTimeline({ events, onSelect, onOpenSecurity, topInset = 0 }) {
-  const t = useTone();
+  const t = useT();
+  const tint = useTone();
   const [types, setTypes] = useState(new Set());
   const [loudOnly, setLoudOnly] = useState(false);
 
@@ -59,7 +61,7 @@ export default function FundTimeline({ events, onSelect, onOpenSecurity, topInse
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '16px 24px 80px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 18 }}>
           <button onClick={() => setLoudOnly(v => !v)}
-            title="Только самые редкие и информативные события: поправки 13F, 13D, TR-1, реестры шортов, триггеры наблюдения."
+            title={t('Только самые редкие и информативные события: поправки 13F, 13D, TR-1, реестры шортов, триггеры наблюдения.', 'Only the rarest, highest-information events: 13F amendments, 13Ds, TR-1s, short registers, watch triggers.')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 5, padding: '4px 9px',
               background: loudOnly ? hexA('#FF4A55', 0.12) : 'var(--cf-surface2)',
@@ -68,11 +70,11 @@ export default function FundTimeline({ events, onSelect, onOpenSecurity, topInse
               color: loudOnly ? '#FF4A55' : 'var(--cf-text4)',
               fontSize: 9.5, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em',
             }}>
-            <Zap size={10} /> ТОЛЬКО СИГНАЛ
+            <Zap size={10} /> {t('ТОЛЬКО СИГНАЛ', 'SIGNAL ONLY')}
           </button>
           {present.map(ty => {
             const on = types.has(ty.key);
-            const tc = t(ty.meta.color);
+            const tc = tint(ty.meta.color);
             return (
               <button key={ty.key} onClick={() => toggle(ty.key)}
                 style={{
@@ -92,7 +94,7 @@ export default function FundTimeline({ events, onSelect, onOpenSecurity, topInse
 
         {days.length === 0 && (
           <div style={{ padding: '60px 0', textAlign: 'center', color: 'var(--cf-text6)', fontFamily: MONO, fontSize: 12 }}>
-            Нет событий под выбранными фильтрами.
+            {t('Нет событий под выбранными фильтрами.', 'No events match the selected filters.')}
           </div>
         )}
 
@@ -117,6 +119,7 @@ export default function FundTimeline({ events, onSelect, onOpenSecurity, topInse
 }
 
 function EventRow({ e, onSelect, onOpenSecurity }) {
+  const t = useT();
   const loud = e.meta.loud;
   const c = useTone()(e.meta.color);
   return (
@@ -140,7 +143,7 @@ function EventRow({ e, onSelect, onOpenSecurity }) {
             }}>{e.fund}</button>
           {e.ticker && (
             <button onClick={() => onOpenSecurity?.(e.ticker)}
-              title="Открыть таблицу держателей"
+              title={t('Открыть таблицу держателей', 'Open the holder table')}
               style={{
                 background: 'none', border: 'none', padding: 0, cursor: 'pointer',
                 fontSize: 10, fontFamily: MONO, fontWeight: 800, color: 'var(--cf-link)',
@@ -161,7 +164,7 @@ function EventRow({ e, onSelect, onOpenSecurity }) {
           <LatencyBadge days={e.latency_days} form={e.source_form} />
           <FormBadge form={e.source_form} small />
           <span style={{ fontSize: 9, fontFamily: MONO, color: 'var(--cf-text7)' }}>
-            {fmtLatency(e.latency_days)} от события
+            {fmtLatency(e.latency_days)} {t('от события', 'from the event')}
           </span>
           <span style={{ marginLeft: 'auto' }}><SourceLink url={e.source_url} /></span>
         </div>
