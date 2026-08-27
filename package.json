@@ -12,7 +12,8 @@
     "reads:stats": "node scripts/generate_reads.mjs stats",
     "reads:briefs": "node scripts/generate_reads.mjs briefs",
     "reads:save": "node scripts/generate_reads.mjs save",
-    "cf:ru": "node scripts/capitalflow_ru_status.mjs"
+    "cf:ru": "node scripts/capitalflow_ru_status.mjs",
+    "i18n:check": "node scripts/i18n_audit.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.396.0",

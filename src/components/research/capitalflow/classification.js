@@ -27,7 +27,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 // ── CONFIG — the tuning surface ────────────────────────────────────────────
-import { biMap } from '../../../data/capitalMap.js';
+import { biMap } from '../../../lib/bi.js';
 
 export const CLASSIFY_CONFIG = {
   // Investable universe. A deal only counts if the TARGET is a company a

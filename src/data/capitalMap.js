@@ -56,28 +56,12 @@ import { classifyGraph } from '../components/research/capitalflow/classification
 // its body on a language change, so everything repaints.
 import { getLang } from '../lib/i18n.jsx';
 
-export function bi(pairs, rest = {}) {
-  const o = { ...rest };
-  for (const [k, v] of Object.entries(pairs)) {
-    const [ru, en] = v;
-    Object.defineProperty(o, k, {
-      enumerable: true,
-      get: () => (getLang() === 'en' ? (en ?? ru) : ru),
-    });
-  }
-  return o;
-}
-/** Same idea for a flat `{ key: 'строка' }` dictionary. */
-export function biMap(entries) {
-  const o = {};
-  for (const [k, [ru, en]] of Object.entries(entries)) {
-    Object.defineProperty(o, k, {
-      enumerable: true,
-      get: () => (getLang() === 'en' ? (en ?? ru) : ru),
-    });
-  }
-  return o;
-}
+// `bi`/`biMap` now live in `../lib/bi.js` — they depend on nothing but the
+// language mirror, and keeping them here closed an import cycle with
+// `classification.js`, which imports `biMap` while this module imports
+// `classifyGraph`. Re-exported so every existing import keeps working.
+import { bi, biMap } from '../lib/bi.js';
+export { bi, biMap };
 
 export const SECTOR_META = {
   'ai-labs': bi({

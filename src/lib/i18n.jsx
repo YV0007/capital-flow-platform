@@ -37,6 +37,12 @@ export const LANGS = [
 let current = 'ru';
 export const getLang = () => current;
 
+// Set the mirror WITHOUT a React tree. Only for build-time tooling — the
+// translation audit loads the data modules twice, once per language, and needs
+// the `bi()` getters to answer as they would in the browser. The provider still
+// owns the mirror at runtime; nothing in the app should call this.
+export const setLangForTooling = (l) => { current = l === 'en' ? 'en' : 'ru'; };
+
 function readInitial() {
   try {
     const v = window.localStorage.getItem(KEY);
