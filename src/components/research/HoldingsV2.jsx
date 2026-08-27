@@ -552,9 +552,9 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
       const portIdx = pi >= 0 ? pi : null;
       if (portfolio.allocation) {
         (portfolio.allocation.bySector || []).forEach((s) => push(s.name + ' — ' + (s.plain || ''), portIdx, t('Портфель · секторы', 'Portfolio · sectors')));
-        (portfolio.allocation.byTheme || []).forEach((t) => {
-          push(t.theme + ' — ' + (t.plain || ''), portIdx, t('Портфель · ', 'Portfolio · ') + t.theme);
-          (t.items || []).forEach((item) => push(item, portIdx, t('Портфель · ', 'Portfolio · ') + t.theme));
+        (portfolio.allocation.byTheme || []).forEach((th) => {
+          push(th.theme + ' — ' + (th.plain || ''), portIdx, t('Портфель · ', 'Portfolio · ') + th.theme);
+          (th.items || []).forEach((item) => push(item, portIdx, t('Портфель · ', 'Portfolio · ') + th.theme));
         });
       }
       (portfolio.sectors || []).forEach((sector) => {

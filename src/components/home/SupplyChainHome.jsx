@@ -120,8 +120,8 @@ export default function SupplyChainHome({ onOpen }) {
 
   useEffect(() => {
     if (paused) return;
-    const t = setInterval(() => go((i) => i + 1), ADVANCE_MS);
-    return () => clearInterval(t);
+    const timer = setInterval(() => go((i) => i + 1), ADVANCE_MS);
+    return () => clearInterval(timer);
   }, [paused, go]);
 
   useEffect(() => { if (index > maxIndex) setIndex(maxIndex); }, [index, maxIndex]);

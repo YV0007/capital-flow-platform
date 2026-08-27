@@ -36,6 +36,13 @@ from urllib.parse import urlparse, urljoin
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MAP = os.path.join(ROOT, "src/data/capitalMap.json")
 REF = os.path.join(ROOT, "src/data/entityReference.json")
+# The ecosystem map is a SECOND map with its own entities and its own domain
+# side-car. It used to be outside this script entirely, so 76 of its 107
+# entities had no resolved domain and therefore no «Сайт» link in the panel —
+# the side-car was a hand-written leftover from the NVIDIA pilot. Same walk,
+# same verification, different store.
+ECO_MAP = os.path.join(ROOT, "src/data/aiEcosystemNetwork.json")
+ECO_DOMAINS = os.path.join(ROOT, "src/data/nvidiaEcosystemLogos.json")
 OUT_DIR = os.path.join(ROOT, "public/logos")
 MANIFEST = os.path.join(ROOT, "src/data/logoManifest.json")
 MISSES = os.path.join(ROOT, "scripts/logo-misses.txt")   # a TODO list, not shipped
@@ -357,6 +364,30 @@ def entities():
             out.append({"id": nid, "name": meta.get("label") or nid.split(":", 1)[-1],
                         "sector": None, "links": meta.get("links") or [],
                         "domain": None, "ref": meta})
+
+    # ── The ecosystem map ────────────────────────────────────────────────
+    # Its ids never collide with the flow map's (`nvidia` vs `alloc:NVIDIA`),
+    # so both live in one manifest. `store` says which side-car a newly
+    # resolved domain belongs in.
+    for e in out:
+        e["store"] = "ref"
+    eco_domains = json.load(open(ECO_DOMAINS)) if os.path.exists(ECO_DOMAINS) else {}
+    for n in json.load(open(ECO_MAP)).get("entities", []):
+        dom = eco_domains.get(n["id"])
+        out.append({
+            "id": n["id"],
+            "name": n.get("name") or n["id"],
+            # The sector is a slug on this map (`gpu_platform`); the verifier
+            # only uses it for keyword hints, so underscores become spaces.
+            "sector": (n.get("sector") or "").replace("_", " ") or None,
+            # A known domain enters as a website link, exactly like a curated
+            # one on the flow map, so the icon fetch treats both the same.
+            "links": ([{"kind": "website", "label": dom, "url": f"https://{dom}"}]
+                      if dom else []),
+            "domain": dom,
+            "ref": {},
+            "store": "eco",
+        })
     return out
 
 
@@ -389,6 +420,8 @@ def main():
 
     all_entities = entities()
     name_by_id = {e["id"]: e["name"] for e in all_entities}
+    eco_domains = json.load(open(ECO_DOMAINS)) if os.path.exists(ECO_DOMAINS) else {}
+    eco_auto = []
 
     ok = skipped = miss = resolved = inherited = 0
     low, unresolved, still_missing = [], [], []
@@ -451,14 +484,21 @@ def main():
             manifest[nid] = f"/logos/{fname}"
             # Fold an auto-resolved site back into the reference file, so the
             # entity panel gains a link too — flagged for human review.
-            if found_domain:
+            if found_domain and e["store"] != "eco":
                 entry = ref.setdefault(nid, {"type": "org"})
                 if not entry.get("links"):
                     entry["links"] = [{"kind": "website", "label": found_domain,
                                        "url": f"https://{found_domain}"}]
                     entry["auto_resolved"] = True
+            if found_domain and e["store"] == "eco":
+                # The ecosystem side-car is a flat id -> domain map, and the
+                # adapter reads it for BOTH the logo and the panel's «Сайт»
+                # chip.
+                eco_domains[nid] = found_domain
         if found_domain:
             resolved += 1
+            if e["store"] == "eco":
+                eco_auto.append((nid, name, found_domain))
         ok += 1
         label = "vector" if score == 10_000 else f"{score}px"
         if score < LOW_RES:
@@ -497,6 +537,16 @@ def main():
     if not dry:
         json.dump(manifest, open(MANIFEST, "w"), indent=2, ensure_ascii=False)
         json.dump(ref, open(REF, "w"), indent=2, ensure_ascii=False)
+        json.dump(dict(sorted(eco_domains.items())), open(ECO_DOMAINS, "w"),
+                  indent=2, ensure_ascii=False)
+
+    # Every guessed domain, listed. A verified page is good evidence but not
+    # proof, and this side-car is what the panel links to — so the guesses are
+    # printed for a human to glance over rather than buried in a diff.
+    if eco_auto:
+        print(f"\nЭкосистема — домены подобраны автоматически ({len(eco_auto)}), проверьте:")
+        for nid, name, dom in eco_auto:
+            print(f"  {nid:28s} {name[:30]:30s} -> {dom}")
     print(f"\n{ok + inherited} logos ({resolved} via auto-resolved domain, "
           f"{inherited} inherited from a sponsor), {skipped} already had one, "
           f"{miss} missing -> monogram")

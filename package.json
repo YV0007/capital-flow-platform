@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/i18n_audit.mjs",
+    "prebuild": "node scripts/i18n_audit.mjs && node scripts/i18n_lint.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "logos": "python3 scripts/fetch_logos.py",
@@ -14,7 +14,8 @@
     "reads:briefs": "node scripts/generate_reads.mjs briefs",
     "reads:save": "node scripts/generate_reads.mjs save",
     "cf:ru": "node scripts/capitalflow_ru_status.mjs",
-    "i18n:check": "node scripts/i18n_audit.mjs"
+    "i18n:check": "node scripts/i18n_audit.mjs",
+    "i18n:lint": "node scripts/i18n_lint.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.396.0",
