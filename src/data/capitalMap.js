@@ -267,7 +267,9 @@ export const CLASS_META = {
 // colour, the legend, and the event-type filter.
 export const EVENT_TYPE_META = {
   equity:               bi({ label: ['Доля', 'Equity'] },                        { family: 'equity',      color: '#7C8FD0' }),
-  minority_stake:       bi({ label: ['Миноритарная доля', 'Minority stake'] },   { family: 'equity',      color: '#7C8FD0' }),
+  // Не «миноритарная доля»: термин, который надо знать заранее. Тот же смысл
+  // словами, понятными с первого раза — купили часть, но не управляют.
+  minority_stake:       bi({ label: ['Доля без контроля', 'Minority stake'] },   { family: 'equity',      color: '#7C8FD0' }),
   funding_round:        bi({ label: ['Раунд', 'Round'] },                        { family: 'equity',      color: '#7C8FD0' }),
   corporate_investment: bi({ label: ['Корп. инвестиция', 'Corp. investment'] },  { family: 'equity',      color: '#7C8FD0' }),
   follow_on:            bi({ label: ['Повторный чек', 'Follow-on'] },            { family: 'equity',      color: '#7C8FD0' }),

@@ -82,7 +82,10 @@ const CLASS_L = {
 
 const EVENT_L = {
   equity:               pair('Покупка доли', 'Equity stake'),
-  minority_stake:       pair('Миноритарная доля', 'Minority stake'),
+  // «Миноритарная доля» — термин, который приходится знать заранее. Тот же
+  // смысл словами, которые понятны с первого раза: купили часть, но не
+  // управляют. Английское minority stake — обиходное, его не трогаем.
+  minority_stake:       pair('Доля без контроля', 'Minority stake'),
   funding_round:        pair('Раунд финансирования', 'Funding round'),
   corporate_investment: pair('Корпоративная инвестиция', 'Corporate investment'),
   follow_on:            pair('Доинвестирование', 'Follow-on'),
