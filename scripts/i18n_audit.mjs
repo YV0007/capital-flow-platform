@@ -31,9 +31,26 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 import { createServer } from 'vite';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
 const CYR = /[А-Яа-яЁё]/;
 const LIST = process.argv.includes('--list');
+const UPDATE = process.argv.includes('--update-baseline');
+
+// KNOWN, ACCEPTED GAPS. Some prose is owned by the engine and only becomes
+// bilingual when a new payload lands — blocking every deploy until then would
+// make the gate something to switch off rather than something to trust. So the
+// baseline records what is already outstanding, and the audit fails only on
+// gaps that are NOT in it: a regression, or a newly-added Russian-only label.
+//
+// The baseline shrinks on its own as deliveries arrive — a path that stops
+// being a gap is reported as fixed and should be removed with
+// `--update-baseline`. It never grows silently: adding to it is an explicit,
+// reviewable commit.
+const BASELINE_PATH = new URL('../src/data/i18n-baseline.json', import.meta.url);
+const baseline = existsSync(BASELINE_PATH)
+  ? new Set(JSON.parse(readFileSync(BASELINE_PATH, 'utf8')).knownGaps)
+  : new Set();
 
 // Each entry: the module to load and the exports worth walking. `build` names
 // a zero-argument function whose RESULT should be walked too — that is how the
@@ -140,35 +157,65 @@ for (const target of TARGETS) {
   const gaps = [];
   for (const [path, value] of en) {
     if (!CYR.test(value)) continue;
-    gaps.push({ path, ru: ru.get(path) ?? '', en: value });
+    const key = `${target.file}#${path}`;
+    gaps.push({ path, key, ru: ru.get(path) ?? '', en: value, known: baseline.has(key) });
   }
 
-  totalGaps += gaps.length;
+  totalGaps += gaps.filter(g => !g.known).length;
   report.push({ file: target.file, checked: en.size, gaps });
 }
 
 await vite.close();
 
-console.log('\nПеревод интерфейса — аудит\n');
-for (const r of report) {
-  const mark = r.gaps.length ? '•' : '✓';
-  const pct = r.checked ? Math.round(((r.checked - r.gaps.length) / r.checked) * 100) : 100;
-  console.log(`${mark} ${r.file.padEnd(34)} ${String(r.checked - r.gaps.length).padStart(5)}/${String(r.checked).padEnd(5)} (${pct}%)`);
-}
+const allGaps = report.flatMap(r => r.gaps);
 
-if (!totalGaps) {
-  console.log('\nВсё двуязычно — английская версия нигде не показывает русский текст.\n');
+if (UPDATE) {
+  const knownGaps = allGaps.map(g => g.key).sort();
+  writeFileSync(BASELINE_PATH, JSON.stringify({
+    _note: 'Prose that is still Russian-only, by path. The i18n audit fails on any '
+      + 'gap NOT listed here, so this file is the line between accepted debt — mostly '
+      + 'engine payloads awaiting a bilingual delivery — and a regression. Regenerate '
+      + 'with `npm run i18n:check -- --update-baseline` when a delivery shrinks it.',
+    generated: new Date().toISOString().slice(0, 10),
+    knownGaps,
+  }, null, 2) + '\n');
+  console.log(`\nБаза известных пропусков обновлена — ${knownGaps.length}.\n`);
   process.exit(0);
 }
 
-console.log(`\nБез английской версии — ${totalGaps}:\n`);
+console.log('\nПеревод интерфейса — аудит\n');
 for (const r of report) {
-  if (!r.gaps.length) continue;
+  const fresh = r.gaps.filter(g => !g.known).length;
+  const mark = fresh ? '✗' : (r.gaps.length ? '•' : '✓');
+  const pct = r.checked ? Math.round(((r.checked - r.gaps.length) / r.checked) * 100) : 100;
+  const known = r.gaps.length - fresh;
+  const tail = known ? `  (${known} в базе)` : '';
+  console.log(`${mark} ${r.file.padEnd(34)} ${String(r.checked - r.gaps.length).padStart(5)}/${String(r.checked).padEnd(5)} (${pct}%)${tail}`);
+}
+
+// A baseline entry that no longer reports as a gap has been fixed — say so, so
+// the file gets trimmed instead of quietly accumulating dead paths.
+const live = new Set(allGaps.map(g => g.key));
+const healed = [...baseline].filter(k => !live.has(k));
+if (healed.length) {
+  console.log(`\n✓ Переведено с прошлого раза — ${healed.length}. Обновите базу:`);
+  console.log('  npm run i18n:check -- --update-baseline');
+}
+
+if (!totalGaps) {
+  console.log('\nНовых пропусков нет — английская версия не показывает русский текст'
+    + (baseline.size ? ' сверх того, что уже записано в базе.' : '.') + '\n');
+  process.exit(0);
+}
+
+console.log(`\nБез английской версии и НЕ в базе — ${totalGaps}:\n`);
+for (const r of report) {
+  if (!r.gaps.some(g => !g.known)) continue;
   console.log(`  ${r.file}`);
   // Group by the object the value sits on, so a whole untranslated META table
   // reads as one line instead of forty.
   const groups = new Map();
-  for (const g of r.gaps) {
+  for (const g of r.gaps.filter(x => !x.known)) {
     const head = g.path.split(/[.[]/).slice(0, 2).join('.');
     if (!groups.has(head)) groups.set(head, []);
     groups.get(head).push(g);
@@ -180,5 +227,7 @@ for (const r of report) {
   console.log('');
 }
 console.log('Эти строки английский читатель видит по-русски.');
-console.log('Подробный список — npm run i18n:check -- --list\n');
+console.log('Подробный список — npm run i18n:check -- --list');
+console.log('Если это осознанный долг (ждём поставку движка), внесите в базу:');
+console.log('  npm run i18n:check -- --update-baseline\n');
 process.exit(1);

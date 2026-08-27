@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/i18n_audit.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "logos": "python3 scripts/fetch_logos.py",

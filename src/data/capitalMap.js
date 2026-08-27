@@ -54,7 +54,7 @@ import { classifyGraph } from '../components/research/capitalflow/classification
 // `SECTOR_META[k].label`, `meta.blurb`, sorts, spreads — keep reading a plain
 // string and simply start speaking English when the toggle flips. App remounts
 // its body on a language change, so everything repaints.
-import { getLang } from '../lib/i18n.jsx';
+import { getLang, L } from '../lib/i18n.jsx';
 
 // `bi`/`biMap` now live in `../lib/bi.js` — they depend on nothing but the
 // language mirror, and keeping them here closed an import cycle with
@@ -784,9 +784,13 @@ export function buildGraph(data = raw) {
       engineSectors: engineAlloc?.sectors || null,
       thesisShares: engineAlloc?.thesis_shares || null,
       confirmedDeals: typeof engineAlloc?.confirmed_deals === 'number' ? engineAlloc.confirmed_deals : null,
-      knownAs: allocNote?.knownAs || null,
-      sectorsFallback: allocNote?.sectorsFallback || null,
-      thesisFallback: allocNote?.thesisFallback || null,
+      // allocatorNotes is dashboard-curated and bilingual: its prose fields are
+      // { ru, en } pairs, so they go through L() like any taxonomy label. `L`
+      // passes a bare string straight through, so a note that has not been
+      // converted yet still renders.
+      knownAs: L(allocNote?.knownAs) || null,
+      sectorsFallback: L(allocNote?.sectorsFallback) || null,
+      thesisFallback: L(allocNote?.thesisFallback) || null,
       monogram: monogramOf(displayName),
       searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(displayName)}`,
       // FlowGraph role encoding: 'player' deploys · 'target' receives.
