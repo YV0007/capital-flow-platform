@@ -615,8 +615,8 @@
     {
       "key": "compiler",
       "label": {
-        "ru": "Компиляторы",
-        "en": "Compilers"
+        "ru": "Оптимизация под GPU",
+        "en": "GPU optimization"
       },
       "layer": "L10"
     },
@@ -4042,7 +4042,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.005212
       }
     },
@@ -4129,7 +4129,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1994",
-      "revenueUsdB": 638.0,
+      "revenueUsdB": 638,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -4436,7 +4436,7 @@
       "publicPrivate": "private",
       "geo": "US",
       "founded": "2021",
-      "revenueUsdB": 5.0,
+      "revenueUsdB": 5,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -4560,7 +4560,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -4640,7 +4640,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2004",
-      "revenueUsdB": 7.0,
+      "revenueUsdB": 7,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -4743,7 +4743,7 @@
       "publicPrivate": "public",
       "geo": "GB",
       "founded": "1990",
-      "revenueUsdB": 4.0,
+      "revenueUsdB": 4,
       "techNodes": [
         "arm-isa"
       ],
@@ -4848,7 +4848,7 @@
       "publicPrivate": "public",
       "geo": "TW",
       "founded": "1984",
-      "revenueUsdB": 20.0,
+      "revenueUsdB": 20,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -4950,7 +4950,7 @@
       "publicPrivate": "public",
       "geo": "NL",
       "founded": "1984",
-      "revenueUsdB": 32.0,
+      "revenueUsdB": 32,
       "techNodes": [
         "euv"
       ],
@@ -4974,7 +4974,7 @@
       "pivotal": true,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.005515
       }
     },
@@ -5054,7 +5054,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2017",
-      "revenueUsdB": 1.0,
+      "revenueUsdB": 1,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -5179,7 +5179,7 @@
       "pivotal": true,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -5261,7 +5261,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1988",
-      "revenueUsdB": 20.0,
+      "revenueUsdB": 20,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -5283,7 +5283,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004582
       }
     },
@@ -5363,7 +5363,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1985",
-      "revenueUsdB": 13.0,
+      "revenueUsdB": 13,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -5487,7 +5487,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.006236
       }
     },
@@ -5589,7 +5589,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -5782,7 +5782,7 @@
       "publicPrivate": "public",
       "geo": "CA",
       "founded": "1899",
-      "revenueUsdB": 25.0,
+      "revenueUsdB": 25,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -5906,7 +5906,7 @@
       "pivotal": true,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -6111,7 +6111,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.012161
       }
     },
@@ -6213,7 +6213,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 9e-05,
+        "betweenness": 0.00009,
         "pagerank": 0.011838
       }
     },
@@ -6293,7 +6293,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1984",
-      "revenueUsdB": 56.0,
+      "revenueUsdB": 56,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -6315,7 +6315,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 9e-05,
+        "betweenness": 0.00009,
         "pagerank": 0.004062
       }
     },
@@ -6418,7 +6418,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -6498,7 +6498,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2022",
-      "revenueUsdB": 24.0,
+      "revenueUsdB": 24,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -6520,7 +6520,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004582
       }
     },
@@ -6600,7 +6600,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2017",
-      "revenueUsdB": 5.0,
+      "revenueUsdB": 5,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -7015,7 +7015,7 @@
       "publicPrivate": "private",
       "geo": "US",
       "founded": "2013",
-      "revenueUsdB": 3.0,
+      "revenueUsdB": 3,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -7241,7 +7241,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -7326,7 +7326,7 @@
       "publicPrivate": "public",
       "geo": "TW",
       "founded": "1971",
-      "revenueUsdB": 13.0,
+      "revenueUsdB": 13,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -7348,7 +7348,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -7553,7 +7553,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.00933
       }
     },
@@ -8044,7 +8044,7 @@
       "publicPrivate": "public",
       "geo": "TW",
       "founded": "1974",
-      "revenueUsdB": 215.0,
+      "revenueUsdB": 215,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -8066,7 +8066,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.009116
       }
     },
@@ -8146,7 +8146,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2024",
-      "revenueUsdB": 35.0,
+      "revenueUsdB": 35,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -8168,7 +8168,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004582
       }
     },
@@ -8260,7 +8260,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1998",
-      "revenueUsdB": 350.0,
+      "revenueUsdB": 350,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -8363,7 +8363,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2008",
-      "revenueUsdB": 50.0,
+      "revenueUsdB": 50,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -8567,7 +8567,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2015",
-      "revenueUsdB": 30.0,
+      "revenueUsdB": 30,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -8589,7 +8589,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -8772,7 +8772,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1968",
-      "revenueUsdB": 53.0,
+      "revenueUsdB": 53,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -8896,7 +8896,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.010203
       }
     },
@@ -9078,7 +9078,7 @@
       "publicPrivate": "public",
       "geo": "JP",
       "founded": "2017",
-      "revenueUsdB": 11.0,
+      "revenueUsdB": 11,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -9100,7 +9100,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -9203,7 +9203,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.005515
       }
     },
@@ -9306,7 +9306,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 3,
-        "betweenness": 9e-05,
+        "betweenness": 0.00009,
         "pagerank": 0.01331
       }
     },
@@ -9386,7 +9386,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1980",
-      "revenueUsdB": 18.0,
+      "revenueUsdB": 18,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -9510,7 +9510,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -9612,7 +9612,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004765
       }
     },
@@ -9692,7 +9692,7 @@
       "publicPrivate": "public",
       "geo": "TW",
       "founded": "1975",
-      "revenueUsdB": 7.0,
+      "revenueUsdB": 7,
       "techNodes": [],
       "hops": 2,
       "firstSeen": "2026-08",
@@ -9714,7 +9714,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.005788
       }
     },
@@ -9821,7 +9821,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -10344,7 +10344,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -10446,7 +10446,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -10548,7 +10548,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.008947
       }
     },
@@ -10651,7 +10651,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004582
       }
     },
@@ -10753,7 +10753,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.010203
       }
     },
@@ -10856,7 +10856,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -10958,7 +10958,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004582
       }
     },
@@ -11258,7 +11258,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2013",
-      "revenueUsdB": 0.0,
+      "revenueUsdB": 0,
       "techNodes": [],
       "hops": 2,
       "firstSeen": "2026-08",
@@ -11280,7 +11280,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 9e-05,
+        "betweenness": 0.00009,
         "pagerank": 0.015932
       }
     },
@@ -11361,7 +11361,7 @@
       "publicPrivate": "private",
       "geo": "US",
       "founded": "2015",
-      "revenueUsdB": 13.0,
+      "revenueUsdB": 13,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -11667,7 +11667,7 @@
       "publicPrivate": "public",
       "geo": "TW",
       "founded": "1988",
-      "revenueUsdB": 45.0,
+      "revenueUsdB": 45,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -11689,7 +11689,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -11792,7 +11792,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -11894,7 +11894,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -11974,7 +11974,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1999",
-      "revenueUsdB": 38.0,
+      "revenueUsdB": 38,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -11996,7 +11996,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -12082,7 +12082,7 @@
       "publicPrivate": "public",
       "geo": "KR",
       "founded": "1969",
-      "revenueUsdB": 200.0,
+      "revenueUsdB": 200,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -12184,7 +12184,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1988",
-      "revenueUsdB": 7.0,
+      "revenueUsdB": 7,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -12206,7 +12206,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -12286,7 +12286,7 @@
       "publicPrivate": "public",
       "geo": "FR",
       "founded": "1836",
-      "revenueUsdB": 41.0,
+      "revenueUsdB": 41,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -12410,7 +12410,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -12512,7 +12512,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.005732
       }
     },
@@ -12592,7 +12592,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2004",
-      "revenueUsdB": 11.0,
+      "revenueUsdB": 11,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -12614,7 +12614,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004582
       }
     },
@@ -12716,7 +12716,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -12796,7 +12796,7 @@
       "publicPrivate": "public",
       "geo": "JP",
       "founded": "1926",
-      "revenueUsdB": 16.0,
+      "revenueUsdB": 16,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -12818,7 +12818,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.005515
       }
     },
@@ -12898,7 +12898,7 @@
       "publicPrivate": "public",
       "geo": "DE",
       "founded": "1847",
-      "revenueUsdB": 83.0,
+      "revenueUsdB": 83,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -12920,7 +12920,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -13023,7 +13023,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -13103,7 +13103,7 @@
       "publicPrivate": "public",
       "geo": "DE",
       "founded": "2020",
-      "revenueUsdB": 38.0,
+      "revenueUsdB": 38,
       "techNodes": [],
       "hops": 2,
       "firstSeen": "2026-08",
@@ -13125,7 +13125,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.00881
       }
     },
@@ -13227,7 +13227,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -13308,7 +13308,7 @@
       "publicPrivate": "public",
       "geo": "KR",
       "founded": "1983",
-      "revenueUsdB": 45.0,
+      "revenueUsdB": 45,
       "techNodes": [
         "hbm"
       ],
@@ -13412,7 +13412,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2012",
-      "revenueUsdB": 4.0,
+      "revenueUsdB": 4,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -13434,7 +13434,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     },
@@ -13640,7 +13640,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 9.6e-05,
+        "betweenness": 0.000096,
         "pagerank": 0.009513
       }
     },
@@ -13721,7 +13721,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "1993",
-      "revenueUsdB": 22.0,
+      "revenueUsdB": 22,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -14049,7 +14049,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 2,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -14151,7 +14151,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.005732
       }
     },
@@ -14232,7 +14232,7 @@
       "publicPrivate": "public",
       "geo": "JP",
       "founded": "1963",
-      "revenueUsdB": 15.0,
+      "revenueUsdB": 15,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -14254,7 +14254,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.005515
       }
     },
@@ -14437,7 +14437,7 @@
       "publicPrivate": "public",
       "geo": "TW",
       "founded": "1987",
-      "revenueUsdB": 90.0,
+      "revenueUsdB": 90,
       "techNodes": [
         "cowos",
         "n3",
@@ -14651,7 +14651,7 @@
       "publicPrivate": "public",
       "geo": "US",
       "founded": "2016",
-      "revenueUsdB": 8.0,
+      "revenueUsdB": 8,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -14855,7 +14855,7 @@
       "publicPrivate": "public",
       "geo": "TW",
       "founded": "2001",
-      "revenueUsdB": 35.0,
+      "revenueUsdB": 35,
       "techNodes": [],
       "hops": 1,
       "firstSeen": "2026-08",
@@ -14877,7 +14877,7 @@
       "pivotal": false,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.007695
       }
     },
@@ -14957,7 +14957,7 @@
       "publicPrivate": "private",
       "geo": "US",
       "founded": "2023",
-      "revenueUsdB": 1.0,
+      "revenueUsdB": 1,
       "techNodes": [],
       "hops": 0,
       "firstSeen": "2026-08",
@@ -14979,7 +14979,7 @@
       "pivotal": true,
       "centrality": {
         "degree": 1,
-        "betweenness": 0.0,
+        "betweenness": 0,
         "pagerank": 0.004062
       }
     }

@@ -23,7 +23,7 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { ChevronLeft, SlidersHorizontal, Search, X, LayoutGrid, Table2, Radio, AlertTriangle } from 'lucide-react';
 import {
   TRACKED, WATCH, FUND_BY_ID, EVENTS, GENERATED, CYCLE, TOTALS,
-  IS_FIXTURE, FIXTURE_NOTE, CROWDED, CROSSING, POSITION_ROWS,
+  IS_FIXTURE, fixtureNote, CROWDED, CROSSING, POSITION_ROWS,
 } from '../../../data/fundTracker.js';
 import { fmtUSD, fmtDate, plural } from './fundFormat.js';
 import { MONO } from './FundBits.jsx';
@@ -280,7 +280,7 @@ export default function FundTracker({ onBack, mapSwitch }) {
           <span style={{
             fontSize: 10, fontFamily: MONO, color: 'var(--cf-text4)',
             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-          }}>{FIXTURE_NOTE}</span>
+          }}>{fixtureNote()}</span>
         </div>
       )}
 

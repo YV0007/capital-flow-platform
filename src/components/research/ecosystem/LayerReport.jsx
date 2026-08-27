@@ -172,8 +172,17 @@ export default function LayerReport({
                   </span>
                 )}
               </span>
-              <span style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, flexShrink: 0 }}>
-                {n.roleMeta?.short}
+              {/* The tag is the SECTOR, not the role. Inside one layer the role
+                  is almost always the same word for every member («ОПЕРАТ.» seven
+                  times over), so it separates nothing; the sector is exactly what
+                  distinguishes them — «ИИ для бизнеса» vs «Отраслевой ИИ». The role
+                  stays on the hover title, where it costs no width. */}
+              <span title={n.roleMeta?.label ? `Роль: ${n.roleMeta.label}` : undefined}
+                style={{
+                  maxWidth: 108, fontSize: 9.5, color: 'var(--cf-text6)',
+                  flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                }}>
+                {n.sectorLabel}
               </span>
               <span style={{ width: 46, height: 4, borderRadius: 2, background: 'var(--cf-surface2)', overflow: 'hidden', flexShrink: 0 }}>
                 <span style={{ display: 'block', height: '100%', width: `${c}%`, background: n.color }} />

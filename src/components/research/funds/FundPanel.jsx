@@ -14,7 +14,7 @@
 
 import { X, Flame, Layers } from 'lucide-react';
 import {
-  ACTION_META, DELTA_SUPPRESSED_NOTE, MIN_WEIGHT_FOR_DELTA,
+  ACTION_META, deltaSuppressedNote, MIN_WEIGHT_FOR_DELTA,
   sectorLabel, themeLabel,
 } from '../../../data/fundTracker.js';
 import {
@@ -315,7 +315,7 @@ function Activity({ fund, onOpenSecurity }) {
       <FootNote>
         Доборы и сокращения считаются <b>по числу акций</b>, а не по деньгам — иначе движение цены
         читалось бы как сделка. Изменение на позиции легче {fmtPct(MIN_WEIGHT_FOR_DELTA, 1)} книги
-        не показывается: {DELTA_SUPPRESSED_NOTE.toLowerCase()}
+        не показывается: {deltaSuppressedNote().toLowerCase()}
       </FootNote>
     </Section>
   );

@@ -223,6 +223,49 @@ export const META = bi({
 // that remount ever goes away, this has to move to `useL()` at the render
 // sites — which is why the dependency is written down here and not left to be
 // rediscovered.
+// ── Plain-Russian lexicon — DISPLAY ONLY ─────────────────────────────────
+// The engine's agents occasionally reach for a calque that reads as English
+// wearing a Russian coat. «Ров» is the one that keeps coming back — a literal
+// translation of "moat" that nobody says in Russian business prose and that
+// stops the sentence dead for anyone who has not read the English original.
+//
+// Patching the payload would be pointless: the next monthly run rewrites it.
+// So the swap lives HERE, at the single point where a Russian string is
+// chosen — the same "dashboard owns the Russian rendering" pattern the flow
+// map uses for capitalMapRu.json.
+//
+// Two rules keep this honest:
+//   1. It is a CURATED WORD LIST, never a paraphrase. Meaning is the engine's.
+//   2. The replacement is masculine, like «ров», so every case form swaps
+//      one-for-one and the surrounding agreement survives («главный ров» →
+//      «главный барьер», not «главный защита»).
+// No lookbehind: Safari < 16.4 has none, and this repo avoids it elsewhere —
+// the leading character is captured and put back instead.
+//
+// The durable fix is upstream, in the agents' style rules. This keeps the map
+// readable until then.
+const RU_PLAIN = [
+  [/(^|[^А-Яа-яЁё])ров(?![А-Яа-яЁё-])/g, '$1барьер'],
+  [/(^|[^А-Яа-яЁё])рва(?![А-Яа-яЁё-])/g, '$1барьера'],
+  [/(^|[^А-Яа-яЁё])рву(?![А-Яа-яЁё-])/g, '$1барьеру'],
+  [/(^|[^А-Яа-яЁё])рвом(?![А-Яа-яЁё-])/g, '$1барьером'],
+  [/(^|[^А-Яа-яЁё])рве(?![А-Яа-яЁё-])/g, '$1барьере'],
+  [/(^|[^А-Яа-яЁё])рвы(?![А-Яа-яЁё-])/g, '$1барьеры'],
+  [/(^|[^А-Яа-яЁё])рвов(?![А-Яа-яЁё-])/g, '$1барьеров'],
+];
+
+/**
+ * Applies the lexicon, but only to the RUSSIAN string. `pair` is the original
+ * { ru, en } — if the resolved value is the English half (the language is en),
+ * it is returned untouched, because these are Russian word forms.
+ */
+function plainRu(picked, pair) {
+  if (typeof picked !== 'string' || picked !== pair.ru) return picked;
+  let out = picked;
+  for (const [re, to] of RU_PLAIN) out = out.replace(re, to);
+  return out;
+}
+
 const resolveProse = (v) => {
   if (v == null || typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') return v;
   if (Array.isArray(v)) return v.map(resolveProse);
@@ -231,7 +274,7 @@ const resolveProse = (v) => {
     // normal object and is walked. `quote` fields never arrive as pairs — the
     // engine leaves source quotes in the language of the document they came
     // from — so they fall through this branch untouched.
-    if ('ru' in v && 'en' in v && Object.keys(v).length === 2) return L(v);
+    if ('ru' in v && 'en' in v && Object.keys(v).length === 2) return plainRu(L(v), v);
     const out = {};
     for (const k of Object.keys(v)) out[k] = resolveProse(v[k]);
     return out;

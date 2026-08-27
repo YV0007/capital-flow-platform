@@ -56,43 +56,18 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
       animation: 'cfmRise 200ms cubic-bezier(0.2,0.8,0.2,1)',
       transition: 'left 220ms cubic-bezier(0.2,0.8,0.2,1), width 220ms cubic-bezier(0.2,0.8,0.2,1)',
     }}>
-      {/* ── Кто кому, чем и в какую сторону ───────────────────────────── */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '13px 14px 11px' }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap' }}>
-            <Party entity={source} onOpenEntity={onOpenEntity} />
-            <span style={{
-              fontSize: 9, fontFamily: MONO, fontWeight: 700, color: edge.color,
-              textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap',
-            }}>
-              —{verb}→
-            </span>
-            <Party entity={target} onOpenEntity={onOpenEntity} />
-            {edge.directionMeta && (
-              <span title={edge.directionMeta.blurb} style={{
-                fontSize: 10, fontFamily: MONO, color: 'var(--cf-text6)', cursor: 'help', whiteSpace: 'nowrap',
-              }}>
-                {edge.directionMeta.short} {edge.directionMeta.label}
-              </span>
-            )}
-          </div>
-
-          {/* Что физически идёт по связи. Это и есть ответ на «что это»:
-              не сумма, а предмет — EUV, CoWoS, HBM3E, CUDA. */}
-          {edge.techMeta ? (
-            <div style={{ marginTop: 7, display: 'flex', alignItems: 'baseline', gap: 7, flexWrap: 'wrap' }}>
-              <span style={{
-                padding: '2px 7px', borderRadius: 5, background: edge.color + '1a',
-                border: `1px solid ${edge.color}44`, color: edge.color,
-                fontSize: 9.5, fontFamily: MONO, fontWeight: 700, whiteSpace: 'nowrap',
-              }}>{edge.techMeta.label}</span>
-              <span style={{ fontSize: 11.5, color: 'var(--cf-text3)' }}>{edge.techMeta.note}</span>
-            </div>
-          ) : (
-            <div style={{ marginTop: 7, fontSize: 11.5, color: 'var(--cf-text5)' }}>
-              {edge.typeMeta?.blurb}
-            </div>
-          )}
+      {/* ── Кто кому: два имени и стрелка между ними ─────────────────────
+             Шапка была свалкой из четырёх кеглей в одну строку — имена 14px,
+             слои 8.5px, глагол 9px капсом, направление 10px. Теперь имена
+             набраны одинаково, слой стоит подписью ПОД именем, а связь несёт
+             нарисованная стрелка, а не капсовый ярлык между слов. Тип связи
+             ушёл вниз, к остальным чипам происхождения: он таксономия, а не
+             заголовок. ────────────────────────────────────────────────── */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '14px 14px 10px' }}>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+          <Party entity={source} onOpenEntity={onOpenEntity} />
+          <Arrow color={edge.color} title={sentence} />
+          <Party entity={target} onOpenEntity={onOpenEntity} />
         </div>
 
         <button onClick={onClose} title="Закрыть (Esc)"
@@ -102,6 +77,31 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
           <X size={15} />
         </button>
       </div>
+
+      {/* ── Чем они связаны ПО СУЩЕСТВУ ──────────────────────────────────
+             Здесь стояло описание ТИПА связи — «показывает, что на этом
+             зарабатывает не только продавец». Это определение рубрики, одно и
+             то же у всех рёбер этого типа, и о конкретной паре компаний оно не
+             говорит ничего. Ведёт конкретика: что физически идёт по связи
+             (тех-узел) и собственный комментарий ребра. Определение типа
+             осталось — в подсказке на чипе типа внизу. ──────────────── */}
+      {(edge.techMeta || edge.note) && (
+        <div style={{ padding: '0 14px 11px' }}>
+          {edge.techMeta && (
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, flexWrap: 'wrap', marginBottom: edge.note ? 6 : 0 }}>
+              <span style={{
+                padding: '2px 7px', borderRadius: 5, background: edge.color + '1a',
+                border: `1px solid ${edge.color}44`, color: edge.color,
+                fontSize: 9.5, fontFamily: MONO, fontWeight: 700, whiteSpace: 'nowrap',
+              }}>{edge.techMeta.label}</span>
+              <span style={{ fontSize: 11.5, color: 'var(--cf-text3)' }}>{edge.techMeta.note}</span>
+            </div>
+          )}
+          {edge.note && (
+            <div style={{ fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.5 }}>{edge.note}</div>
+          )}
+        </div>
+      )}
 
       {/* ── Насколько связь существенна — «объём» этой карты ──────────── */}
       <div style={{ padding: '0 14px 10px', display: 'flex', alignItems: 'center', gap: 11 }}>
@@ -267,16 +267,42 @@ function Party({ entity, onOpenEntity }) {
   return (
     <button onClick={() => onOpenEntity?.(entity.id)} title={entity.oneLiner || entity.name}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 6,
+        display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3,
         background: 'none', border: 'none', padding: 0, cursor: 'pointer',
-        color: 'var(--cf-text0)', fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em',
+        minWidth: 0, textAlign: 'left',
       }}>
-      <span style={{ width: 8, height: 8, borderRadius: 2, background: entity.color, flexShrink: 0 }} />
-      {entity.name}
-      <span style={{ fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text7)' }}>
-        {entity.primaryLayerLabel || entity.primaryLayer}
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
+        <span style={{ width: 8, height: 8, borderRadius: 2, background: entity.color, flexShrink: 0 }} />
+        <span style={{
+          fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--cf-text0)',
+          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+        }}>{entity.name}</span>
       </span>
+      <span style={{
+        fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text7)',
+        textTransform: 'uppercase', letterSpacing: '0.08em', paddingLeft: 14,
+        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%',
+      }}>{entity.primaryLayerLabel || entity.primaryLayer}</span>
     </button>
+  );
+}
+
+/** The relation, drawn rather than written: a plain shaft with a head on it. */
+function Arrow({ color, title }) {
+  return (
+    <span title={title} aria-hidden="true" style={{
+      display: 'inline-flex', alignItems: 'center', flex: '0 0 auto',
+      height: 20, cursor: 'help',
+    }}>
+      <span style={{ display: 'block', width: 26, height: 1.5, background: color, opacity: 0.9 }} />
+      <span style={{
+        display: 'block', width: 0, height: 0,
+        borderLeft: `6px solid ${color}`,
+        borderTop: '4px solid transparent',
+        borderBottom: '4px solid transparent',
+        opacity: 0.9,
+      }} />
+    </span>
   );
 }
 

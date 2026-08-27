@@ -80,18 +80,41 @@ const SKIP_KEYS = new Set([
   'co_investors', 'seen_with', 'top', 'members', 'nodeIds', 'edgeIds',
 ]);
 
-/** Walk any structure, collecting [path, value] for every string it holds. */
-function collect(node, path, out, seen) {
+/** Is this a `{ ru, en }` translation pair rather than a container of prose? */
+function isPair(node) {
+  if (!node || typeof node !== 'object' || Array.isArray(node)) return false;
+  const keys = Object.keys(node);
+  return keys.length > 0 && keys.length <= 2
+    && keys.every(k => k === 'ru' || k === 'en')
+    && keys.some(k => typeof node[k] === 'string');
+}
+
+/**
+ * Walk any structure, collecting [path, value] for every string it holds.
+ *
+ * `lang` is the language this snapshot is speaking. A `{ ru, en }` pair is
+ * COLLAPSED to that side rather than walked, because a pair is the translated
+ * shape — walking it would report its own Russian half as an untranslated
+ * string in the English pass, which is the opposite of what it means. A pair
+ * with the English side missing still collapses to the Russian one and is
+ * therefore still reported, which is the case we actually want to catch.
+ */
+function collect(node, path, out, seen, lang) {
   if (node == null) return;
   if (typeof node === 'string') { out.set(path, node); return; }
   if (typeof node !== 'object') return;
+  if (isPair(node)) {
+    const v = (lang === 'en' ? node.en : node.ru) ?? node.ru ?? node.en;
+    if (typeof v === 'string') out.set(path, v);
+    return;
+  }
   if (seen.has(node)) return;
   seen.add(node);
 
-  if (node instanceof Map) { collect([...node.values()], path, out, seen); return; }
+  if (node instanceof Map) { collect([...node.values()], path, out, seen, lang); return; }
   if (node instanceof Set) return;                    // id sets — never prose
   if (Array.isArray(node)) {
-    node.forEach((v, i) => collect(v, `${path}[${i}]`, out, seen));
+    node.forEach((v, i) => collect(v, `${path}[${i}]`, out, seen, lang));
     return;
   }
   for (const k of Object.keys(node)) {
@@ -99,7 +122,7 @@ function collect(node, path, out, seen) {
     let v;
     try { v = node[k]; } catch { continue; }          // bi() getters can throw
     if (typeof v === 'function') continue;
-    collect(v, path ? `${path}.${k}` : k, out, seen);
+    collect(v, path ? `${path}.${k}` : k, out, seen, lang);
   }
 }
 
@@ -119,11 +142,11 @@ async function snapshot(vite, target, lang) {
   const skip = new Set(target.skipExports || []);
   for (const [k, v] of Object.entries(mod)) {
     if (typeof v === 'function' || skip.has(k)) continue;
-    collect(v, k, out, seen);
+    collect(v, k, out, seen, lang);
   }
   if (target.build && typeof mod[target.build] === 'function') {
     try {
-      collect(mod[target.build](), target.build + '()', out, seen);
+      collect(mod[target.build](), target.build + '()', out, seen, lang);
     } catch (e) {
       console.warn(`  ! ${target.file} → ${target.build}() threw: ${e.message}`);
     }

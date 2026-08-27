@@ -15,7 +15,7 @@
 import { useCallback } from 'react';
 import { ExternalLink, AlertTriangle, EyeOff } from 'lucide-react';
 import { useThemeMode, tone } from '../capitalflow/canvasTheme.js';
-import { latencyBand, DELTA_SUPPRESSED_NOTE, formMeta as formMetaOf } from '../../../data/fundTracker.js';
+import { latencyBand, deltaSuppressedNote, formMeta as formMetaOf } from '../../../data/fundTracker.js';
 import { fmtDelta, fmtLatency, fmtDate } from './fundFormat.js';
 
 export const MONO = 'ui-monospace, monospace';
@@ -107,7 +107,7 @@ export function Delta({ value, shown = true, weight }) {
   if (value == null) return <span style={{ color: 'var(--cf-text8)' }}>—</span>;
   if (!shown) {
     return (
-      <span title={DELTA_SUPPRESSED_NOTE} style={{
+      <span title={deltaSuppressedNote()} style={{
         color: 'var(--cf-text8)', fontFamily: MONO, fontSize: 10,
         cursor: 'help', letterSpacing: '0.04em',
       }}>

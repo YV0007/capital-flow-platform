@@ -1,9 +1,18 @@
 {
- "schema": "fund-tracker/1",
- "version": "1.0",
+ "schema": {
+  "ru": "fund-tracker/1",
+  "en": "fund-tracker/1"
+ },
+ "version": {
+  "ru": "1.0",
+  "en": "1.0"
+ },
  "generated": "2026-08-21",
  "fixture": true,
- "fixture_note": "Синтетические данные. Все числа выдуманы и не являются реальными формами. Файл заменяется поставкой движка (fixture: false) без правки кода.",
+ "fixture_note": {
+  "ru": "Синтетические данные. Все числа выдуманы и не являются реальными формами. Файл заменяется поставкой движка (fixture: false) без правки кода.",
+  "en": "Synthetic data. Every number is invented and none of it is a real filing. The file is replaced by an engine delivery (fixture: false) with no code changes."
+ },
  "cycle": {
   "period": "2026Q2",
   "period_end": "2026-06-30",
@@ -11,81 +20,222 @@
  },
  "guards": {
   "min_weight_for_delta": 0.005,
-  "min_weight_note": "Процентное изменение на позиции легче 0,5% книги не показывается: крупный процент на крошечной строке драматичен и ничего не значит.",
+  "min_weight_note": {
+   "ru": "Процентное изменение на позиции легче 0,5% книги не показывается: крупный процент на крошечной строке драматичен и ничего не значит.",
+   "en": "Percentage change is not shown on a position lighter than 0.5% of the book: a large percentage on a tiny line is dramatic and means nothing."
+  },
   "stale_after_days": 45,
   "very_stale_after_days": 90
  },
  "style_tags": {
   "activist": {
-   "label": "Активист",
-   "blurb": "Берёт долю и требует изменений — 13D с Item 4, места в совете, разделение бизнеса."
+   "label": {
+    "ru": "Активист",
+    "en": "Activist"
+   },
+   "blurb": {
+    "ru": "Берёт долю и требует изменений — 13D с Item 4, места в совете, разделение бизнеса.",
+    "en": "Takes a stake and demands change — a 13D with an Item 4, board seats, a break-up."
+   }
   },
   "constructivist": {
-   "label": "Конструктивист",
-   "blurb": "Тот же рычаг, но за закрытой дверью — 13D без публичной кампании, часто место в совете по согласию."
+   "label": {
+    "ru": "Конструктивист",
+    "en": "Constructivist"
+   },
+   "blurb": {
+    "ru": "Тот же рычаг, но за закрытой дверью — 13D без публичной кампании, часто место в совете по согласию.",
+    "en": "The same leverage, applied behind a closed door — a 13D with no public campaign, often a board seat by agreement."
+   }
   },
   "deep_value": {
-   "label": "Глубокая стоимость",
-   "blurb": "Мало имён, долгий срок, покупка на разломе. Книга меняется медленно."
+   "label": {
+    "ru": "Глубокая стоимость",
+    "en": "Deep value"
+   },
+   "blurb": {
+    "ru": "Мало имён, долгий срок, покупка на разломе. Книга меняется медленно.",
+    "en": "Few names, long horizons, buying at the break. The book changes slowly."
+   }
   },
   "macro_equity": {
-   "label": "Макро в акциях",
-   "blurb": "Направленная ставка на цикл через ликвидные имена. Оборот высокий, срок держания короткий."
+   "label": {
+    "ru": "Макро в акциях",
+    "en": "Macro in equities"
+   },
+   "blurb": {
+    "ru": "Направленная ставка на цикл через ликвидные имена. Оборот высокий, срок держания короткий.",
+    "en": "A directional bet on the cycle through liquid names. High turnover, short holding periods."
+   }
   },
   "growth_equity": {
-   "label": "Рост",
-   "blurb": "Крупные компаундеры и вторичный рост. Книга широкая, концентрация в топ-10."
+   "label": {
+    "ru": "Рост",
+    "en": "Growth"
+   },
+   "blurb": {
+    "ru": "Крупные компаундеры и вторичный рост. Книга широкая, концентрация в топ-10.",
+    "en": "Large compounders and second-order growth. A wide book, concentrated in the top 10."
+   }
   },
   "long_short": {
-   "label": "Long/short",
-   "blurb": "13F показывает только длинную ногу — короткая видна лишь через европейские реестры."
+   "label": {
+    "ru": "Long/short",
+    "en": "Long/short"
+   },
+   "blurb": {
+    "ru": "13F показывает только длинную ногу — короткая видна лишь через европейские реестры.",
+    "en": "A 13F shows only the long leg — the short one is visible solely through the European registers."
+   }
   },
   "contrarian": {
-   "label": "Контрарианец",
-   "blurb": "Маленькая книга, крупные ставки против консенсуса, регулярно через путы."
+   "label": {
+    "ru": "Контрарианец",
+    "en": "Contrarian"
+   },
+   "blurb": {
+    "ru": "Маленькая книга, крупные ставки против консенсуса, регулярно через путы.",
+    "en": "A small book, big bets against consensus, routinely through puts."
+   }
   },
   "thematic": {
-   "label": "Тематический",
-   "blurb": "Раскрывает сделки ежедневно, а не раз в квартал. Самый быстрый источник в разделе."
+   "label": {
+    "ru": "Тематический",
+    "en": "Thematic"
+   },
+   "blurb": {
+    "ru": "Раскрывает сделки ежедневно, а не раз в квартал. Самый быстрый источник в разделе.",
+    "en": "Discloses trades daily rather than quarterly. The fastest source in the section."
+   }
   },
   "family_office": {
-   "label": "Family office",
-   "blurb": "Личный капитал. Раскрытие структурно неполное — порогов ниже 13F не видно."
+   "label": {
+    "ru": "Family office",
+    "en": "Family office"
+   },
+   "blurb": {
+    "ru": "Личный капитал. Раскрытие структурно неполное — порогов ниже 13F не видно.",
+    "en": "Personal capital. Disclosure is structurally incomplete — nothing below the 13F thresholds is visible."
+   }
   },
   "multi_strategy": {
-   "label": "Мульти-стратегия",
-   "blurb": "Сотни pod-ов, книга — инвентарь, а не мнение. Только под наблюдением."
+   "label": {
+    "ru": "Мульти-стратегия",
+    "en": "Multi-strategy"
+   },
+   "blurb": {
+    "ru": "Сотни pod-ов, книга — инвентарь, а не мнение. Только под наблюдением.",
+    "en": "Hundreds of pods; the book is inventory, not opinion. Watch-only."
+   }
   }
  },
  "sectors": {
-  "semis": "Полупроводники",
-  "software": "Софт",
-  "internet": "Интернет",
-  "consumer": "Потребитель",
-  "financials": "Финансы",
-  "healthcare": "Здравоохранение",
-  "energy": "Энергия",
-  "industrials": "Промышленность",
-  "materials": "Материалы",
-  "real_estate": "Недвижимость",
-  "comms": "Телеком и медиа",
-  "utilities": "Коммунальные"
+  "semis": {
+   "ru": "Полупроводники",
+   "en": "Semiconductors"
+  },
+  "software": {
+   "ru": "Софт",
+   "en": "Software"
+  },
+  "internet": {
+   "ru": "Интернет",
+   "en": "Internet"
+  },
+  "consumer": {
+   "ru": "Потребитель",
+   "en": "Consumer"
+  },
+  "financials": {
+   "ru": "Финансы",
+   "en": "Financials"
+  },
+  "healthcare": {
+   "ru": "Здравоохранение",
+   "en": "Healthcare"
+  },
+  "energy": {
+   "ru": "Энергия",
+   "en": "Energy"
+  },
+  "industrials": {
+   "ru": "Промышленность",
+   "en": "Industrials"
+  },
+  "materials": {
+   "ru": "Материалы",
+   "en": "Materials"
+  },
+  "real_estate": {
+   "ru": "Недвижимость",
+   "en": "Real estate"
+  },
+  "comms": {
+   "ru": "Телеком и медиа",
+   "en": "Telecom & media"
+  },
+  "utilities": {
+   "ru": "Коммунальные",
+   "en": "Utilities"
+  }
  },
  "themes": {
-  "ai_infra": "ИИ-инфраструктура",
-  "ai_apps": "ИИ-приложения",
-  "data_centers": "Дата-центры",
-  "power": "Питание ИИ",
-  "consumer_brands": "Потребительские бренды",
-  "payments": "Платежи",
-  "housing": "Жильё",
-  "energy_transition": "Энергопереход",
-  "defense": "Оборона",
-  "biotech": "Биотех",
-  "crypto": "Крипто",
-  "china": "Китай",
-  "deep_value": "Разлом стоимости",
-  "space": "Космос"
+  "ai_infra": {
+   "ru": "ИИ-инфраструктура",
+   "en": "AI infrastructure"
+  },
+  "ai_apps": {
+   "ru": "ИИ-приложения",
+   "en": "AI applications"
+  },
+  "data_centers": {
+   "ru": "Дата-центры",
+   "en": "Data centers"
+  },
+  "power": {
+   "ru": "Питание ИИ",
+   "en": "Powering AI"
+  },
+  "consumer_brands": {
+   "ru": "Потребительские бренды",
+   "en": "Consumer brands"
+  },
+  "payments": {
+   "ru": "Платежи",
+   "en": "Payments"
+  },
+  "housing": {
+   "ru": "Жильё",
+   "en": "Housing"
+  },
+  "energy_transition": {
+   "ru": "Энергопереход",
+   "en": "Energy transition"
+  },
+  "defense": {
+   "ru": "Оборона",
+   "en": "Defense"
+  },
+  "biotech": {
+   "ru": "Биотех",
+   "en": "Biotech"
+  },
+  "crypto": {
+   "ru": "Крипто",
+   "en": "Crypto"
+  },
+  "china": {
+   "ru": "Китай",
+   "en": "China"
+  },
+  "deep_value": {
+   "ru": "Разлом стоимости",
+   "en": "Value break"
+  },
+  "space": {
+   "ru": "Космос",
+   "en": "Space"
+  }
  },
  "totals": {
   "funds": 14,
@@ -114,9 +264,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Одиннадцать имён на $13 млрд и публичная кампания за каждым. Единственный в разделе, кто раскрывает намерение до того, как рынок его отыграет.",
-   "focus": "Североамериканские компании с предсказуемым денежным потоком, где смена управления или структуры видна заранее.",
-   "strategy": "Концентрированный long, 8–12 позиций, срок держания измеряется годами. Хедж макро-риска через опционы на ставки — вне 13F.",
+   "why_tracked": {
+    "ru": "Одиннадцать имён на $13 млрд и публичная кампания за каждым. Единственный в разделе, кто раскрывает намерение до того, как рынок его отыграет.",
+    "en": "Eleven names carrying $13B, with a public campaign behind each one. The only fund here that states its intent before the market has priced it."
+   },
+   "focus": {
+    "ru": "Североамериканские компании с предсказуемым денежным потоком, где смена управления или структуры видна заранее.",
+    "en": "North American companies with predictable cash flow, where a change of management or structure is visible in advance."
+   },
+   "strategy": {
+    "ru": "Концентрированный long, 8–12 позиций, срок держания измеряется годами. Хедж макро-риска через опционы на ставки — вне 13F.",
+    "en": "A concentrated long book, 8–12 positions, held for years. Macro risk is hedged with rates options — outside the 13F."
+   },
    "conviction": {
     "score": 84,
     "top10_concentration": 1,
@@ -409,7 +568,10 @@
      "event_date": "2026-05-07",
      "latency_days": 106,
      "activist": true,
-     "intent": "Увеличение доли до контрольной через подписку на новые акции; заявлено намерение превратить компанию в диверсифицированный холдинг и назначить исполнительного председателя.",
+     "intent": {
+      "ru": "Увеличение доли до контрольной через подписку на новые акции; заявлено намерение превратить компанию в диверсифицированный холдинг и назначить исполнительного председателя.",
+      "en": "Increasing the stake to control through a subscription for new shares; stated intent to turn the company into a diversified holding and appoint an executive chairman."
+     },
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001336528&type=SC%2013D%2FA&dateb=&owner=include&count=40"
     },
     {
@@ -421,7 +583,10 @@
      "event_date": "2026-06-30",
      "latency_days": 52,
      "activist": false,
-     "intent": "Пассивная форма. Позиция заявлена как инвестиционная, без намерения влиять на контроль.",
+     "intent": {
+      "ru": "Пассивная форма. Позиция заявлена как инвестиционная, без намерения влиять на контроль.",
+      "en": "A passive form. The position is stated as an investment, with no intent to influence control."
+     },
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001336528&type=SC%2013G&dateb=&owner=include&count=40"
     }
    ],
@@ -489,9 +654,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Событийный активизм с быстрым оборотом: заходит на разломе, публикует письмо, выходит через 4–6 кварталов. По нему читается, где в рынке сейчас есть событие.",
-   "focus": "Разделения, спин-оффы, смена CEO, дисконт холдинговой структуры.",
-   "strategy": "Событийно-ориентированный long с кредитной ногой вне 13F. 25–40 имён, топ-10 держит около половины книги.",
+   "why_tracked": {
+    "ru": "Событийный активизм с быстрым оборотом: заходит на разломе, публикует письмо, выходит через 4–6 кварталов. По нему читается, где в рынке сейчас есть событие.",
+    "en": "Event-driven activism with fast turnover: enters at the break, publishes a letter, exits in 4–6 quarters. A good read on where the events currently are."
+   },
+   "focus": {
+    "ru": "Разделения, спин-оффы, смена CEO, дисконт холдинговой структуры.",
+    "en": "Break-ups, spin-offs, CEO changes, holding-structure discounts."
+   },
+   "strategy": {
+    "ru": "Событийно-ориентированный long с кредитной ногой вне 13F. 25–40 имён, топ-10 держит около половины книги.",
+    "en": "An event-driven long book with a credit leg outside the 13F. 25–40 names; the top 10 hold about half of it."
+   },
    "conviction": {
     "score": 71,
     "top10_concentration": 0.8483,
@@ -898,7 +1072,10 @@
      "event_date": "2026-06-12",
      "latency_days": 70,
      "activist": true,
-     "intent": "Заявлено намерение добиваться разделения портфеля брендов и обновления состава совета директоров; ведутся переговоры с менеджментом.",
+     "intent": {
+      "ru": "Заявлено намерение добиваться разделения портфеля брендов и обновления состава совета директоров; ведутся переговоры с менеджментом.",
+      "en": "Stated intent to push for a separation of the brand portfolio and a refresh of the board; discussions with management are under way."
+     },
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001040273&type=SC%2013D&dateb=&owner=include&count=40"
     }
    ],
@@ -966,9 +1143,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Самая быстрая макро-нога в разделе. Книга разворачивается за квартал, поэтому 13F читается не как позиция, а как след уже сделанной ставки.",
-   "focus": "Ликвидные крупные капитализации, китайский интернет, ИИ-комплекс.",
-   "strategy": "Направленная макро-ставка, выраженная в акциях. Оборот выше 50% за квартал — латентность 13F здесь калечит сигнал сильнее всего.",
+   "why_tracked": {
+    "ru": "Самая быстрая макро-нога в разделе. Книга разворачивается за квартал, поэтому 13F читается не как позиция, а как след уже сделанной ставки.",
+    "en": "The fastest macro leg in the section. The book turns over within a quarter, so the 13F reads not as a position but as the trace of a bet already made."
+   },
+   "focus": {
+    "ru": "Ликвидные крупные капитализации, китайский интернет, ИИ-комплекс.",
+    "en": "Liquid large caps, the Chinese internet, the AI complex."
+   },
+   "strategy": {
+    "ru": "Направленная макро-ставка, выраженная в акциях. Оборот выше 50% за квартал — латентность 13F здесь калечит сигнал сильнее всего.",
+    "en": "A directional macro bet expressed in equities. Turnover above 50% a quarter — 13F latency damages the signal here more than anywhere else."
+   },
    "conviction": {
     "score": 63,
     "top10_concentration": 0.7608,
@@ -1479,9 +1665,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": true,
-   "why_tracked": "Публичная книга — меньше пятой части капитала: остальное в долге, недвижимости и частных сделках, которых 13F не видит. Ценность в том, ЧТО он держит, а не сколько.",
-   "focus": "Активы с судебным или структурным дисконтом, где цена не отражает исход.",
-   "strategy": "Абсолютная доходность, крупный кэш, срок держания без ограничения. Книга обновляется на 1–2 имени за квартал.",
+   "why_tracked": {
+    "ru": "Публичная книга — меньше пятой части капитала: остальное в долге, недвижимости и частных сделках, которых 13F не видит. Ценность в том, ЧТО он держит, а не сколько.",
+    "en": "The public book is under a fifth of the capital: the rest sits in debt, real estate and private deals a 13F cannot see. The value is in WHAT he holds, not how much."
+   },
+   "focus": {
+    "ru": "Активы с судебным или структурным дисконтом, где цена не отражает исход.",
+    "en": "Assets carrying a legal or structural discount, where the price does not reflect the outcome."
+   },
+   "strategy": {
+    "ru": "Абсолютная доходность, крупный кэш, срок держания без ограничения. Книга обновляется на 1–2 имени за квартал.",
+    "en": "Absolute return, a large cash balance, no fixed holding period. The book changes by one or two names a quarter."
+   },
    "conviction": {
     "score": 79,
     "top10_concentration": 0.8826,
@@ -1899,9 +2094,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Единственный в разделе, чья короткая нога частично видна — через европейские реестры. Длинная книга дешёвая и скучная; интерес в том, против чего он стоит.",
-   "focus": "Дешёвые компании с обратным выкупом; короткая нога — «пузыри второго эшелона».",
-   "strategy": "Long/short с валовой экспозицией около 150%. Длинная нога в 13F, короткая — только там, где регулятор заставляет раскрыть.",
+   "why_tracked": {
+    "ru": "Единственный в разделе, чья короткая нога частично видна — через европейские реестры. Длинная книга дешёвая и скучная; интерес в том, против чего он стоит.",
+    "en": "The only fund here whose short leg is partly visible, through the European registers. The long book is cheap and dull; the interest is in what he is short."
+   },
+   "focus": {
+    "ru": "Дешёвые компании с обратным выкупом; короткая нога — «пузыри второго эшелона».",
+    "en": "Cheap companies buying back stock; the short leg is second-tier bubbles."
+   },
+   "strategy": {
+    "ru": "Long/short с валовой экспозицией около 150%. Длинная нога в 13F, короткая — только там, где регулятор заставляет раскрыть.",
+    "en": "Long/short at roughly 150% gross. The long leg is in the 13F; the short one appears only where a regulator forces disclosure."
+   },
    "conviction": {
     "score": 68,
     "top10_concentration": 0.8437,
@@ -2375,9 +2579,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": true,
-   "why_tracked": "Самая маленькая книга в разделе и самая громкая. Держит путы напрямую в 13F — редкость, потому что почти никто не обязан их показывать так явно.",
-   "focus": "Ставки против консенсуса, часто через опционы; китайский интернет как длинная нога.",
-   "strategy": "Крайняя концентрация, полный разворот книги за 2–3 квартала. Номинал путов в 13F — это страйк × 100 × контракты, а не риск.",
+   "why_tracked": {
+    "ru": "Самая маленькая книга в разделе и самая громкая. Держит путы напрямую в 13F — редкость, потому что почти никто не обязан их показывать так явно.",
+    "en": "The smallest book in the section and the loudest. Holds puts openly in the 13F — a rarity, because almost nobody is required to show them that plainly."
+   },
+   "focus": {
+    "ru": "Ставки против консенсуса, часто через опционы; китайский интернет как длинная нога.",
+    "en": "Bets against consensus, often through options; the Chinese internet as the long leg."
+   },
+   "strategy": {
+    "ru": "Крайняя концентрация, полный разворот книги за 2–3 квартала. Номинал путов в 13F — это страйк × 100 × контракты, а не риск.",
+    "en": "Extreme concentration, a full book turnover in 2–3 quarters. Put notional in a 13F is strike × 100 × contracts, not risk."
+   },
    "conviction": {
     "score": 52,
     "top10_concentration": 1,
@@ -2675,9 +2888,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Публичная книга — витрина частного портфеля. Что выходит на биржу из их венчурной части, появляется здесь первым.",
-   "focus": "Интернет и софт глобально, включая Латинскую Америку и Юго-Восточную Азию.",
-   "strategy": "Широкий long на компаундеры, 30–40 имён. Топ-10 держит около 60% книги.",
+   "why_tracked": {
+    "ru": "Публичная книга — витрина частного портфеля. Что выходит на биржу из их венчурной части, появляется здесь первым.",
+    "en": "The public book is a shop window onto the private portfolio. Whatever lists out of their venture side shows up here first."
+   },
+   "focus": {
+    "ru": "Интернет и софт глобально, включая Латинскую Америку и Юго-Восточную Азию.",
+    "en": "Internet and software globally, including Latin America and South-East Asia."
+   },
+   "strategy": {
+    "ru": "Широкий long на компаундеры, 30–40 имён. Топ-10 держит около 60% книги.",
+    "en": "A broad long book of compounders, 30–40 names. The top 10 hold about 60% of it."
+   },
    "conviction": {
     "score": 66,
     "top10_concentration": 0.7541,
@@ -3184,9 +3406,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Крупнейшая раскрытая книга в разделе и самая чистая ставка на ИИ-комплекс целиком — от кремния до питания стойки.",
-   "focus": "Технологии, медиа, телеком; ИИ-инфраструктура сверху донизу.",
-   "strategy": "Long/short с длинной ногой в 13F. Книга широкая, но топ-5 держит треть.",
+   "why_tracked": {
+    "ru": "Крупнейшая раскрытая книга в разделе и самая чистая ставка на ИИ-комплекс целиком — от кремния до питания стойки.",
+    "en": "The largest disclosed book in the section and the cleanest bet on the entire AI complex — from the silicon to the power at the rack."
+   },
+   "focus": {
+    "ru": "Технологии, медиа, телеком; ИИ-инфраструктура сверху донизу.",
+    "en": "Technology, media, telecom; AI infrastructure top to bottom."
+   },
+   "strategy": {
+    "ru": "Long/short с длинной ногой в 13F. Книга широкая, но топ-5 держит треть.",
+    "en": "Long/short with the long leg in the 13F. A wide book, but the top 5 hold a third of it."
+   },
    "conviction": {
     "score": 70,
     "top10_concentration": 0.7648,
@@ -3699,9 +3930,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Классическая «тигриная» книга без венчурного хвоста: только публичные компаундеры, держатся долго, срез книги читается как список качества.",
-   "focus": "Софт, платежи, потребитель премиального сегмента.",
-   "strategy": "Концентрированный long/short, 20–28 имён в длинной ноге.",
+   "why_tracked": {
+    "ru": "Классическая «тигриная» книга без венчурного хвоста: только публичные компаундеры, держатся долго, срез книги читается как список качества.",
+    "en": "A classic Tiger-cub book with no venture tail: public compounders only, held long, and the snapshot reads like a quality list."
+   },
+   "focus": {
+    "ru": "Софт, платежи, потребитель премиального сегмента.",
+    "en": "Software, payments, premium consumer."
+   },
+   "strategy": {
+    "ru": "Концентрированный long/short, 20–28 имён в длинной ноге.",
+    "en": "Concentrated long/short, 20–28 names in the long leg."
+   },
    "conviction": {
     "score": 69,
     "top10_concentration": 0.8177,
@@ -4176,9 +4416,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Самая широкая книга в разделе и самый ровный процесс. Когда Viking одновременно с двумя другими заходит в имя — это не совпадение, а насыщенность.",
-   "focus": "Здравоохранение и финансы как ядро, технологии как надстройка.",
-   "strategy": "Long/short, длинная нога 60–80 имён. Оборот средний, но хвост книги меняется каждый квартал.",
+   "why_tracked": {
+    "ru": "Самая широкая книга в разделе и самый ровный процесс. Когда Viking одновременно с двумя другими заходит в имя — это не совпадение, а насыщенность.",
+    "en": "The widest book in the section and the steadiest process. When Viking enters a name alongside two others, that is not coincidence — it is crowding."
+   },
+   "focus": {
+    "ru": "Здравоохранение и финансы как ядро, технологии как надстройка.",
+    "en": "Healthcare and financials as the core, technology layered on top."
+   },
+   "strategy": {
+    "ru": "Long/short, длинная нога 60–80 имён. Оборот средний, но хвост книги меняется каждый квартал.",
+    "en": "Long/short, 60–80 names in the long leg. Middling turnover, but the tail of the book changes every quarter."
+   },
    "conviction": {
     "score": 67,
     "top10_concentration": 0.7514,
@@ -4711,9 +4960,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Больше кампаний одновременно, чем у кого-либо в разделе. 13F показывает лишь ту часть, что уже стала публичной — реальный список целей всегда длиннее.",
-   "focus": "Крупные капитализации с отставанием от аналогов; технологии, энергия, промышленность.",
-   "strategy": "Мульти-стратегия с активистской ногой в акциях. Позиции часто строятся через опционы до перехода в акции.",
+   "why_tracked": {
+    "ru": "Больше кампаний одновременно, чем у кого-либо в разделе. 13F показывает лишь ту часть, что уже стала публичной — реальный список целей всегда длиннее.",
+    "en": "More simultaneous campaigns than anyone else here. The 13F shows only the part that has already gone public — the real target list is always longer."
+   },
+   "focus": {
+    "ru": "Крупные капитализации с отставанием от аналогов; технологии, энергия, промышленность.",
+    "en": "Large caps trailing their peers; technology, energy, industrials."
+   },
+   "strategy": {
+    "ru": "Мульти-стратегия с активистской ногой в акциях. Позиции часто строятся через опционы до перехода в акции.",
+    "en": "A multi-strategy firm with an activist leg in equities. Positions are often built through options before converting to stock."
+   },
    "conviction": {
     "score": 76,
     "top10_concentration": 0.7568,
@@ -5171,7 +5429,10 @@
      "event_date": "2026-06-29",
      "latency_days": 53,
      "activist": true,
-     "intent": "Заявлено намерение добиваться пересмотра плана капитальных затрат и возврата капитала акционерам; запрошена встреча с советом директоров.",
+     "intent": {
+      "ru": "Заявлено намерение добиваться пересмотра плана капитальных затрат и возврата капитала акционерам; запрошена встреча с советом директоров.",
+      "en": "Stated intent to push for a revised capital-expenditure plan and returns of capital to shareholders; a meeting with the board has been requested."
+     },
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001791786&type=SC%2013D&dateb=&owner=include&count=40"
     },
     {
@@ -5183,7 +5444,10 @@
      "event_date": "2026-04-16",
      "latency_days": 127,
      "activist": true,
-     "intent": "Требование о выделении аптечного сегмента и назначении двух независимых директоров; переписка с советом приложена к форме.",
+     "intent": {
+      "ru": "Требование о выделении аптечного сегмента и назначении двух независимых директоров; переписка с советом приложена к форме.",
+      "en": "A demand to spin off the pharmacy segment and appoint two independent directors; correspondence with the board is attached to the form."
+     },
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001791786&type=SC%2013D&dateb=&owner=include&count=40"
     },
     {
@@ -5195,7 +5459,10 @@
      "event_date": "2026-07-24",
      "latency_days": 28,
      "activist": true,
-     "intent": "Дополнение: согласовано назначение двух директоров и создание комитета по стратегическому пересмотру.",
+     "intent": {
+      "ru": "Дополнение: согласовано назначение двух директоров и создание комитета по стратегическому пересмотру.",
+      "en": "Amendment: two director appointments and a strategic review committee have been agreed."
+     },
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001791786&type=SC%2013D%2FA&dateb=&owner=include&count=40"
     }
    ],
@@ -5263,9 +5530,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Активист, который не шумит: 13D без кампании, место в совете по согласию, срок держания 3–5 лет. Заход ValueAct — самый тихий сигнал в разделе и самый долгий.",
-   "focus": "Софт и промышленные компании в середине перестройки бизнес-модели.",
-   "strategy": "Концентрированный long, 10–14 имён, вход через переговоры, а не через письмо.",
+   "why_tracked": {
+    "ru": "Активист, который не шумит: 13D без кампании, место в совете по согласию, срок держания 3–5 лет. Заход ValueAct — самый тихий сигнал в разделе и самый долгий.",
+    "en": "An activist that does not shout: a 13D with no campaign, a board seat by agreement, a 3–5 year hold. A ValueAct entry is the quietest signal in the section, and the longest-lived."
+   },
+   "focus": {
+    "ru": "Софт и промышленные компании в середине перестройки бизнес-модели.",
+    "en": "Software and industrial companies midway through rebuilding their business model."
+   },
+   "strategy": {
+    "ru": "Концентрированный long, 10–14 имён, вход через переговоры, а не через письмо.",
+    "en": "A concentrated long book, 10–14 names, entered through negotiation rather than a letter."
+   },
    "conviction": {
     "score": 81,
     "top10_concentration": 0.9605,
@@ -5578,7 +5854,10 @@
      "event_date": "2026-05-21",
      "latency_days": 92,
      "activist": false,
-     "intent": "Позиция заявлена как конструктивная: обсуждение структуры капитала и управления с советом директоров, публичной кампании не заявлено.",
+     "intent": {
+      "ru": "Позиция заявлена как конструктивная: обсуждение структуры капитала и управления с советом директоров, публичной кампании не заявлено.",
+      "en": "The position is stated as constructive: discussions on capital structure and governance with the board, with no public campaign declared."
+     },
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001418814&type=SC%2013D&dateb=&owner=include&count=40"
     }
    ],
@@ -5646,9 +5925,18 @@
    "source_form": "N-PORT",
    "latency_days": 1,
    "sparse_coverage": false,
-   "why_tracked": "Единственный источник в разделе с ежедневным раскрытием. Латентность — один день, а не сто. Всё остальное здесь читается на его фоне.",
-   "focus": "Разрушительные инновации: ИИ, геномика, крипто, космос, робототехника.",
-   "strategy": "Тематические ETF с ежедневной публикацией сделок. Оборот высокий по построению — ребалансировка идёт непрерывно.",
+   "why_tracked": {
+    "ru": "Единственный источник в разделе с ежедневным раскрытием. Латентность — один день, а не сто. Всё остальное здесь читается на его фоне.",
+    "en": "The only source here with daily disclosure. Latency is one day, not a hundred. Everything else in the section reads against it."
+   },
+   "focus": {
+    "ru": "Разрушительные инновации: ИИ, геномика, крипто, космос, робототехника.",
+    "en": "Disruptive innovation: AI, genomics, crypto, space, robotics."
+   },
+   "strategy": {
+    "ru": "Тематические ETF с ежедневной публикацией сделок. Оборот высокий по построению — ребалансировка идёт непрерывно.",
+    "en": "Thematic ETFs publishing trades daily. Turnover is high by construction — rebalancing never stops."
+   },
    "conviction": {
     "score": 44,
     "top10_concentration": 0.7721,
@@ -6111,7 +6399,10 @@
      "event_date": "2026-06-30",
      "latency_days": 52,
      "activist": false,
-     "intent": "Пассивная форма. Порог 5% пройден за счёт покупок в тематических ETF, намерения влиять на управление не заявлено.",
+     "intent": {
+      "ru": "Пассивная форма. Порог 5% пройден за счёт покупок в тематических ETF, намерения влиять на управление не заявлено.",
+      "en": "A passive form. The 5% threshold was crossed through purchases inside the thematic ETFs; no intent to influence management is declared."
+     },
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001697748&type=SC%2013G%2FA&dateb=&owner=include&count=40"
     }
    ],
@@ -6179,9 +6470,18 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": true,
-   "why_tracked": "Личный капитал без внешних денег и без обязанности объяснять. Раскрытие структурно неполное — то, чего в файле нет, чаще всего важнее того, что есть.",
-   "focus": "Макро-выражение через акции; смена лидерства цикла видна раньше, чем в индексах.",
-   "strategy": "Family office. Позиции ниже порогов 13F не раскрываются вовсе, деривативы и облигации — тем более.",
+   "why_tracked": {
+    "ru": "Личный капитал без внешних денег и без обязанности объяснять. Раскрытие структурно неполное — то, чего в файле нет, чаще всего важнее того, что есть.",
+    "en": "Personal capital, no outside money and no duty to explain. Disclosure is structurally incomplete — what is missing from the file usually matters more than what is in it."
+   },
+   "focus": {
+    "ru": "Макро-выражение через акции; смена лидерства цикла видна раньше, чем в индексах.",
+    "en": "Macro expressed through equities; a change of cycle leadership shows here before it shows in the indices."
+   },
+   "strategy": {
+    "ru": "Family office. Позиции ниже порогов 13F не раскрываются вовсе, деривативы и облигации — тем более.",
+    "en": "A family office. Positions below the 13F thresholds are not disclosed at all, and derivatives and bonds still less."
+   },
    "conviction": {
     "score": 72,
     "top10_concentration": 0.8312,
@@ -6644,7 +6944,10 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Книга — инвентарь маркет-мейкера, а не мнение. В разделе появляется только тогда, когда сработало правило: пересечение 5%, необычная концентрация в одном имени или редкая форма.",
+   "why_tracked": {
+    "ru": "Книга — инвентарь маркет-мейкера, а не мнение. В разделе появляется только тогда, когда сработало правило: пересечение 5%, необычная концентрация в одном имени или редкая форма.",
+    "en": "The book is market-maker inventory, not opinion. Appears here only when a rule fires: a 5% crossing, unusual concentration in a single name, or a rare form."
+   },
    "focus": null,
    "strategy": null,
    "conviction": null,
@@ -6670,7 +6973,10 @@
      "filed": "2026-07-14",
      "event_date": "2026-06-30",
      "latency_days": 14,
-     "headline": "Пересечение 5% в Vertiv — редкая для маркет-мейкера концентрация в одном имени питания стоек.",
+     "headline": {
+      "ru": "Пересечение 5% в Vertiv — редкая для маркет-мейкера концентрация в одном имени питания стоек.",
+      "en": "A 5% crossing in Vertiv — concentration in a single rack-power name that is rare for a market maker."
+     },
      "magnitude_usd": 1940000000,
      "pct_outstanding": 0.052,
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001423053&type=SC%2013G%2FA&dateb=&owner=include&count=40"
@@ -6683,7 +6989,10 @@
      "filed": "2026-08-18",
      "event_date": "2026-03-31",
      "latency_days": 140,
-     "headline": "Поправка к 13F за I квартал: раскрыты позиции, ранее закрытые режимом конфиденциальности.",
+     "headline": {
+      "ru": "Поправка к 13F за I квартал: раскрыты позиции, ранее закрытые режимом конфиденциальности.",
+      "en": "An amendment to the Q1 13F: positions previously held under confidential treatment are now disclosed."
+     },
      "magnitude_usd": 3100000000,
      "pct_outstanding": null,
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001423053&type=13F-HR%2FA&dateb=&owner=include&count=40"
@@ -6706,7 +7015,10 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Тот же случай: тысячи pod-ов, книга не читается как позиция. Интересна только там, где регулятор заставил показать концентрацию.",
+   "why_tracked": {
+    "ru": "Тот же случай: тысячи pod-ов, книга не читается как позиция. Интересна только там, где регулятор заставил показать концентрацию.",
+    "en": "The same case: thousands of pods, and a book that does not read as a position. Interesting only where a regulator forced the concentration into the open."
+   },
    "focus": null,
    "strategy": null,
    "conviction": null,
@@ -6732,7 +7044,10 @@
      "filed": "2026-08-11",
      "event_date": "2026-08-07",
      "latency_days": 4,
-     "headline": "TR-1: пересечение 5% голосующих прав в Rolls-Royce — позиция, которой 13F не видит вовсе.",
+     "headline": {
+      "ru": "TR-1: пересечение 5% голосующих прав в Rolls-Royce — позиция, которой 13F не видит вовсе.",
+      "en": "TR-1: a 5% voting-rights crossing in Rolls-Royce — a position a 13F cannot see at all."
+     },
      "magnitude_usd": 2450000000,
      "pct_outstanding": 0.051,
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001273087&type=TR-1&dateb=&owner=include&count=40"
@@ -6755,7 +7070,10 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Появляется в разделе, когда переходит порог 10% и становится инсайдером по Section 16 — тогда сделки видны через Form 4 за два дня, а не за квартал.",
+   "why_tracked": {
+    "ru": "Появляется в разделе, когда переходит порог 10% и становится инсайдером по Section 16 — тогда сделки видны через Form 4 за два дня, а не за квартал.",
+    "en": "Enters the section on crossing 10% and becoming a Section 16 insider — at which point trades are visible via Form 4 in two days rather than a quarter."
+   },
    "focus": null,
    "strategy": null,
    "conviction": null,
@@ -6781,7 +7099,10 @@
      "filed": "2026-08-19",
      "event_date": "2026-08-17",
      "latency_days": 2,
-     "headline": "Form 4: покупка после перехода порога 10% — сделка видна через два дня, а не через квартал.",
+     "headline": {
+      "ru": "Form 4: покупка после перехода порога 10% — сделка видна через два дня, а не через квартал.",
+      "en": "Form 4: a purchase after crossing the 10% threshold — the trade is visible in two days rather than a quarter."
+     },
      "magnitude_usd": 186000000,
      "pct_outstanding": 0.104,
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001603466&type=4&dateb=&owner=include&count=40"
@@ -6804,7 +7125,10 @@
    "source_form": "13F-HR",
    "latency_days": 52,
    "sparse_coverage": false,
-   "why_tracked": "Мульти-стратегия под наблюдением. Сработало одно правило — необычно крупная концентрация в одном имени относительно средней позиции по книге.",
+   "why_tracked": {
+    "ru": "Мульти-стратегия под наблюдением. Сработало одно правило — необычно крупная концентрация в одном имени относительно средней позиции по книге.",
+    "en": "A multi-strategy firm on watch. One rule fired — unusually large concentration in a single name relative to the average position in the book."
+   },
    "focus": null,
    "strategy": null,
    "conviction": null,
@@ -6830,7 +7154,10 @@
      "filed": "2026-08-14",
      "event_date": "2026-06-30",
      "latency_days": 52,
-     "headline": "Одна позиция весит в 34 раза больше средней по книге — для pod-структуры это не инвентарь.",
+     "headline": {
+      "ru": "Одна позиция весит в 34 раза больше средней по книге — для pod-структуры это не инвентарь.",
+      "en": "One position weighs 34× the book average — for a pod structure that is not inventory."
+     },
      "magnitude_usd": 1120000000,
      "pct_outstanding": null,
      "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001560385&type=13F-HR&dateb=&owner=include&count=40"
@@ -6958,7 +7285,10 @@
    "fund": "Point72",
    "type": "form4",
    "ticker": "RKLB",
-   "headline": "Form 4: покупка после перехода порога 10% — сделка видна через два дня, а не через квартал.",
+   "headline": {
+    "ru": "Form 4: покупка после перехода порога 10% — сделка видна через два дня, а не через квартал.",
+    "en": "Form 4: a purchase after crossing the 10% threshold — the trade is visible in two days rather than a quarter."
+   },
    "magnitude_usd": 186000000,
    "latency_days": 2,
    "source_form": "4",
@@ -7000,7 +7330,10 @@
    "fund": "Citadel",
    "type": "13f_amendment",
    "ticker": null,
-   "headline": "Поправка к 13F за I квартал: раскрыты позиции, ранее закрытые режимом конфиденциальности.",
+   "headline": {
+    "ru": "Поправка к 13F за I квартал: раскрыты позиции, ранее закрытые режимом конфиденциальности.",
+    "en": "An amendment to the Q1 13F: positions previously held under confidential treatment are now disclosed."
+   },
    "magnitude_usd": 3100000000,
    "latency_days": 140,
    "source_form": "13F-HR/A",
@@ -7042,7 +7375,10 @@
    "fund": "Baupost",
    "type": "13f_amendment",
    "ticker": "GRAL",
-   "headline": "Поправка 13F-HR/A: снят режим конфиденциальности с позиции, накопленной в I квартале",
+   "headline": {
+    "ru": "Поправка 13F-HR/A: снят режим конфиденциальности с позиции, накопленной в I квартале",
+    "en": "Поправка 13F-HR/A: снят режим конфиденциальности с позиции, накопленной в I квартале"
+   },
    "magnitude_usd": 340000000,
    "latency_days": 139,
    "source_form": "13F-HR/A",
@@ -7238,7 +7574,10 @@
    "fund": "Balyasny",
    "type": "watch_trigger",
    "ticker": "GEV",
-   "headline": "Одна позиция весит в 34 раза больше средней по книге — для pod-структуры это не инвентарь.",
+   "headline": {
+    "ru": "Одна позиция весит в 34 раза больше средней по книге — для pod-структуры это не инвентарь.",
+    "en": "One position weighs 34× the book average — for a pod structure that is not inventory."
+   },
    "magnitude_usd": 1120000000,
    "latency_days": 52,
    "source_form": "13F-HR",
@@ -7294,7 +7633,10 @@
    "fund": "Millennium",
    "type": "tr1",
    "ticker": "RR.L",
-   "headline": "TR-1: пересечение 5% голосующих прав в Rolls-Royce — позиция, которой 13F не видит вовсе.",
+   "headline": {
+    "ru": "TR-1: пересечение 5% голосующих прав в Rolls-Royce — позиция, которой 13F не видит вовсе.",
+    "en": "TR-1: a 5% voting-rights crossing in Rolls-Royce — a position a 13F cannot see at all."
+   },
    "magnitude_usd": 2450000000,
    "latency_days": 4,
    "source_form": "TR-1",
@@ -7308,7 +7650,10 @@
    "fund": "Pershing Square",
    "type": "form4",
    "ticker": "HHH",
-   "headline": "Form 4: докупка HHH как 10%-владельцем — два дня от сделки до раскрытия",
+   "headline": {
+    "ru": "Form 4: докупка HHH как 10%-владельцем — два дня от сделки до раскрытия",
+    "en": "Form 4: докупка HHH как 10%-владельцем — два дня от сделки до раскрытия"
+   },
    "magnitude_usd": 118000000,
    "latency_days": 2,
    "source_form": "4",
@@ -7336,7 +7681,10 @@
    "fund": "ValueAct",
    "type": "tr1",
    "ticker": "GRFS",
-   "headline": "TR-1 (CNMV): пересечение 5% голосующих прав в Grifols — вне периметра 13F",
+   "headline": {
+    "ru": "TR-1 (CNMV): пересечение 5% голосующих прав в Grifols — вне периметра 13F",
+    "en": "TR-1 (CNMV): пересечение 5% голосующих прав в Grifols — вне периметра 13F"
+   },
    "magnitude_usd": 214000000,
    "latency_days": 3,
    "source_form": "TR-1",
@@ -7350,7 +7698,10 @@
    "fund": "Citadel",
    "type": "watch_trigger",
    "ticker": "VRT",
-   "headline": "Пересечение 5% в Vertiv — редкая для маркет-мейкера концентрация в одном имени питания стоек.",
+   "headline": {
+    "ru": "Пересечение 5% в Vertiv — редкая для маркет-мейкера концентрация в одном имени питания стоек.",
+    "en": "A 5% crossing in Vertiv — concentration in a single rack-power name that is rare for a market maker."
+   },
    "magnitude_usd": 1940000000,
    "latency_days": 14,
    "source_form": "SC 13G/A",

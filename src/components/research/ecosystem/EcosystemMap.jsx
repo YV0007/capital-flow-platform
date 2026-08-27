@@ -32,6 +32,7 @@ import {
 import EcoGraph from './EcoGraph.jsx';
 import EcoEntityPanel, { ECO_PANEL_W } from './EcoEntityPanel.jsx';
 import LayerReport from './LayerReport.jsx';
+import SubgraphBrief from './SubgraphBrief.jsx';
 import ChainCrumbs from './ChainCrumbs.jsx';
 import EcoEdgeCard from './EcoEdgeCard.jsx';
 import EcoFilterBar from './EcoFilterBar.jsx';
@@ -192,19 +193,33 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   }, [cycleMode, cycleNodeSet, fgRef]);
 
   // ── The chain ──────────────────────────────────────────────────────────
+  // A subgraph lens is a boundary, not a dimmer: while one is active, the
+  // chain must never be OFFERED a hop outside it — not just have that hop
+  // hidden after the fact. Offering it would mean "ещё N" quietly walks the
+  // user out of the subgraph they picked. So the walk itself runs on an
+  // adjacency built only from the subgraph's own edges; nothing outside it
+  // exists as far as buildChain is concerned, for the walk, the branch cap,
+  // and the "ещё N" counts alike.
+  const chainAdjacency = useMemo(
+    () => (subgraphLens
+      ? buildAdjacency(graph.edges.filter(e => subgraphLens.edgeSet.has(e.id)))
+      : adjacency),
+    [subgraphLens, adjacency, graph]
+  );
+
   const chain = useMemo(() => buildChain(chainRoot, {
-    adjacency,
+    adjacency: chainAdjacency,
     depth: chainDepth,
     direction: chainDir,
     kind: chainKind,
     branch: DEFAULT_BRANCH,
     minStrength,
     expanded,
-  }), [chainRoot, adjacency, chainDepth, chainDir, chainKind, minStrength, expanded]);
+  }), [chainRoot, chainAdjacency, chainDepth, chainDir, chainKind, minStrength, expanded]);
 
   const crumbs = useMemo(() => (chainRoot ? principalPath(chainRoot, {
-    adjacency, chain, entityById: graph.entityById, kind: chainKind, minStrength,
-  }) : []), [chainRoot, adjacency, chain, graph, chainKind, minStrength]);
+    adjacency: chainAdjacency, chain, entityById: graph.entityById, kind: chainKind, minStrength,
+  }) : []), [chainRoot, chainAdjacency, chain, graph, chainKind, minStrength]);
 
   // ── Interaction ────────────────────────────────────────────────────────
   const focusEntity = useCallback((id) => {
@@ -218,7 +233,13 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     setSelectedEdgeId(null);
     setCycleMode(false);
     setCycleId(null);
-    setSubgraphId(null);               // a chain and a subgraph are two answers
+    // A subgraph lens is a standing boundary, not a one-shot filter: clicking
+    // a company INSIDE it starts a chain that stays fenced to it (see
+    // chainAdjacency above), and the lens itself stays on — same lens, next
+    // question. It only comes off when the entity clicked lives outside it
+    // (reached via search, say), which reads as leaving the subgraph on
+    // purpose, or when the user removes/switches the lens explicitly.
+    setSubgraphId(prev => (prev && !subgraphLens?.nodeSet.has(id) ? null : prev));
     const fg = fgRef.current;
     if (fg && Number.isFinite(n.x)) {
       fg.centerAt(n.x, n.y, 500);
@@ -793,6 +814,21 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           onOpenEntity={focusEntity}
           onOpenLayer={(id) => setOpenLayer(id)}
           onClose={() => { setSelectedNodeId(null); setChainRoot(null); }}
+        />
+      )}
+
+      {/* The subgraph brief — what this sub-ecosystem IS, so the lens answers
+          "how does this work" and not only "which tiles light up". Yields to an
+          open entity or layer panel: they occupy the same edge, and the one the
+          reader asked for most recently wins. */}
+      {view === 'map' && subgraphLens && !selectedEntity && !layerOpen && (
+        <SubgraphBrief
+          topInset={TOPBAR_H}
+          subgraph={subgraphLens}
+          entityById={graph.entityById}
+          layerById={graph.layerById}
+          onOpenEntity={focusEntity}
+          onClose={() => setSubgraphId(null)}
         />
       )}
 
