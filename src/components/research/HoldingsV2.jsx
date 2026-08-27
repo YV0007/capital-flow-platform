@@ -20,6 +20,7 @@ import SectionDeep from './SectionDeep.jsx';
 const { META, GROUPS, HOLDING_COMPANIES_ORDER, companies: HOLD } = holdingsData;
 // Theme-reactive palette (CSS vars) — switches with the app-wide toggle.
 import { C } from './holdingsC.js';
+import { useT } from '../../lib/i18n.jsx';
 
 // ── load migrated v2 dossiers ──────────────────────────────────────────────
 const modules = import.meta.glob('../../data/holdings-v2/*.json', { eager: true });
@@ -37,10 +38,10 @@ const FIN = {};
 for (const p in finModules) { const d = finModules[p].default || finModules[p]; if (d && d.id) FIN[d.id] = d; }
 
 const TIERS = [
-  { id: 'substance', label: 'Факты', color: C.teal },
-  { id: 'context', label: 'Проверки и риски', color: C.blue },
-  { id: 'voice', label: 'Что говорит менеджмент', color: C.gold },
-  { id: 'signals', label: 'Выводы и наблюдение', color: C.violet },
+  { id: 'substance', label: t('Факты', 'Facts'), color: C.teal },
+  { id: 'context', label: t('Проверки и риски', 'Checks and risks'), color: C.blue },
+  { id: 'voice', label: t('Что говорит менеджмент', 'What management says'), color: C.gold },
+  { id: 'signals', label: t('Выводы и наблюдение', 'Conclusions and watch'), color: C.violet },
 ];
 const tierColor = (t) => (TIERS.find((x) => x.id === t) || {}).color || C.teal;
 
@@ -137,6 +138,7 @@ function Md({ md }) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function PreviewCard({ sec, onOpen }) {
+  const t = useT();
   const col = tierColor(sec.tier);
   const pv = sec.preview || {};
   return (
@@ -147,7 +149,7 @@ function PreviewCard({ sec, onOpen }) {
         {sec.sub && <span style={{ fontSize: 12.5, color: C.inkFaint, fontStyle: 'italic' }}>— {sec.sub}</span>}
         {sec.hasDeep && (
           <button onClick={onOpen} style={{ marginLeft: 'auto', background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: col, fontSize: 13, fontFamily: 'var(--sans)', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap' }}>
-            Раскрыть полностью <span>→</span>
+            {t('Раскрыть полностью', 'Show in full')} <span>→</span>
           </button>
         )}
       </div>
@@ -306,11 +308,12 @@ function OverviewBlock({ overview }) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function TopBets({ data }) {
+  const t = useT();
   const items = data.items || [];
   return (
     <div style={{ marginBottom: 24 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14 }}>
-        <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint }}>Флагманские ставки · 5 имён</div>
+        <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint }}>{t('Флагманские ставки · 5 имён', 'Flagship bets · 5 names')}</div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 12 }}>
         {items.map((b, i) => {
@@ -339,10 +342,11 @@ function TopBets({ data }) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function RecentMoves({ items }) {
+  const t = useT();
   const [open, setOpen] = useState(null);
   return (
     <div style={{ marginBottom: 22, background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px' }}>
-      <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>Ключевые ходы (12 мес) · клик — зачем это</div>
+      <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>{t('Ключевые ходы', 'Key moves')} (12 мес) · клик — зачем это</div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {items.map((m, i) => {
           const has = !!(m.detail || m.signal);
@@ -365,7 +369,7 @@ function RecentMoves({ items }) {
                     {m.detail && <div style={{ fontSize: 13, color: C.ink, lineHeight: 1.6, marginBottom: m.signal ? 10 : 0 }}>{m.detail}</div>}
                     {m.signal && (
                       <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55 }}>
-                        <span style={{ fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: C.teal, fontWeight: 600, marginRight: 8 }}>Стратегический смысл</span>
+                        <span style={{ fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: C.teal, fontWeight: 600, marginRight: 8 }}>{t('Стратегический смысл', 'Strategic meaning')}</span>
                         {m.signal}
                       </div>
                     )}
@@ -385,16 +389,17 @@ function RecentMoves({ items }) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 const NEWS_META = {
-  news:         { label: 'Новость',   glyph: '✦', color: C.teal },
-  insider:      { label: 'Инсайдеры', glyph: '↓', color: C.clay },
-  announcement: { label: 'Анонс',     glyph: '◎', color: C.blue },
-  dividend:     { label: 'Дивиденд',  glyph: '$', color: C.gold },
+  news:         { label: t('Новость', 'News'),   glyph: '✦', color: C.teal },
+  insider:      { label: t('Инсайдеры', 'Insiders'), glyph: '↓', color: C.clay },
+  announcement: { label: t('Анонс', 'Announcement'),     glyph: '◎', color: C.blue },
+  dividend:     { label: t('Дивиденд', 'Dividend'),  glyph: '$', color: C.gold },
 };
 
 function NewsBlock({ items }) {
+  const t = useT();
   return (
     <div style={{ marginBottom: 24 }}>
-      <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 12 }}>Новости и события</div>
+      <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 12 }}>{t('Новости и события', 'News and events')}</div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
         {items.map((n, i) => {
           const m = NEWS_META[n.type] || NEWS_META.news;
@@ -413,7 +418,7 @@ function NewsBlock({ items }) {
                 <div style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, lineHeight: 1.32, marginBottom: 7 }}>{n.title}</div>
                 <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: n.url ? 12 : 0 }}>{n.text}</div>
                 {n.url && (
-                  <a href={n.url} target="_blank" rel="noopener noreferrer" style={{ marginTop: 'auto', alignSelf: 'flex-start', fontSize: 11.5, color: m.color, fontWeight: 600, textDecoration: 'none' }}>Читать подробнее →</a>
+                  <a href={n.url} target="_blank" rel="noopener noreferrer" style={{ marginTop: 'auto', alignSelf: 'flex-start', fontSize: 11.5, color: m.color, fontWeight: 600, textDecoration: 'none' }}>{t('Читать', 'Read')} подробнее →</a>
                 )}
               </div>
             </div>
@@ -429,6 +434,7 @@ function NewsBlock({ items }) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide, onOpenCompany, focus }) {
+  const t = useT();
   const secs = data.sections;
   const sec = secs[idx];
   const col = tierColor(sec.tier);
@@ -447,7 +453,7 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide, onOpe
   return (
     <main className="rise" style={{ padding: '36px 40px 80px', maxWidth: wide ? (['changes', 'financial'].includes(sec.id) ? 'none' : 1080) : 880, margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 22 }}>
-        <button onClick={onBack} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: C.teal, fontSize: 13, fontFamily: 'var(--sans)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>← {data.name} · профиль</button>
+        <button onClick={onBack} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: C.teal, fontSize: 13, fontFamily: 'var(--sans)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>← {data.name} · {t('профиль', 'profile')}</button>
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{idx + 1} / {secs.length}</span>
       </div>
 
@@ -495,6 +501,7 @@ function blockTexts(block) {
 }
 
 function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
+  const t = useT();
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
   const wrapRef = useRef(null);
@@ -533,10 +540,10 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
       if (sec.bodyMarkdown) push(sec.bodyMarkdown, i, sec.title);
     });
 
-    (data.recentMoves || []).forEach((m) => { push(m.title, null, 'Ключевые ходы'); push(m.detail, null, 'Ключевые ходы'); push(m.signal, null, 'Ключевые ходы'); });
+    (data.recentMoves || []).forEach((m) => { push(m.title, null, t('Ключевые ходы', 'Key moves')); push(m.detail, null, t('Ключевые ходы', 'Key moves')); push(m.signal, null, t('Ключевые ходы', 'Key moves')); });
 
     if (data.snapshot) ['businessModel', 'ownership'].forEach((key) => {
-      const lbl = key === 'businessModel' ? 'Ключевые данные' : 'Собственность';
+      const lbl = key === 'businessModel' ? t('Ключевые данные', 'Key data') : t('Собственность', 'Ownership');
       (data.snapshot[key] || []).forEach((r) => push([r.label, r.value, r.note].filter(Boolean).join(' — '), null, lbl));
     });
 
@@ -544,24 +551,24 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
       const pi = sections.findIndex((s) => s.id === 'portfolio');
       const portIdx = pi >= 0 ? pi : null;
       if (portfolio.allocation) {
-        (portfolio.allocation.bySector || []).forEach((s) => push(s.name + ' — ' + (s.plain || ''), portIdx, 'Портфель · секторы'));
+        (portfolio.allocation.bySector || []).forEach((s) => push(s.name + ' — ' + (s.plain || ''), portIdx, t('Портфель · секторы', 'Portfolio · sectors')));
         (portfolio.allocation.byTheme || []).forEach((t) => {
-          push(t.theme + ' — ' + (t.plain || ''), portIdx, 'Портфель · ' + t.theme);
-          (t.items || []).forEach((item) => push(item, portIdx, 'Портфель · ' + t.theme));
+          push(t.theme + ' — ' + (t.plain || ''), portIdx, t('Портфель · ', 'Portfolio · ') + t.theme);
+          (t.items || []).forEach((item) => push(item, portIdx, t('Портфель · ', 'Portfolio · ') + t.theme));
         });
       }
       (portfolio.sectors || []).forEach((sector) => {
-        push(sector.name + ' — ' + (sector.plain || ''), portIdx, 'Портфель · ' + sector.name);
+        push(sector.name + ' — ' + (sector.plain || ''), portIdx, t('Портфель · ', 'Portfolio · ') + sector.name);
         (sector.companies || []).forEach((c) => {
           const d = c.detail || {};
-          push([c.name, c.what, d.why, d.thesis, d.edge].filter(Boolean).join(' · '), portIdx, 'Портфель · ' + sector.name);
+          push([c.name, c.what, d.why, d.thesis, d.edge].filter(Boolean).join(' · '), portIdx, t('Портфель · ', 'Portfolio · ') + sector.name);
         });
       });
     }
 
-    (data.news || []).forEach((n) => push(n.title + ' — ' + (n.text || ''), null, 'Новости'));
-    push(data.summary, null, 'О компании');
-    push(data.about, null, 'О компании');
+    (data.news || []).forEach((n) => push(n.title + ' — ' + (n.text || ''), null, t('Новости', 'News')));
+    push(data.summary, null, t('О компании', 'About the company'));
+    push(data.about, null, t('О компании', 'About the company'));
     return entries;
   }, [data, portfolio, sections]);
 
@@ -599,7 +606,7 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
     <div ref={wrapRef} style={{ marginLeft: 'auto', position: 'relative' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: C.card, border: `1px solid ${focused ? C.teal : C.line}`, borderRadius: 8, padding: '5px 10px', transition: 'border-color .2s, width .25s', width: focused ? 320 : 180 }}>
         <span style={{ color: C.inkFaint, fontSize: 13, flexShrink: 0 }}>⌕</span>
-        <input ref={inputRef} value={query} onChange={(e) => setQuery(e.target.value)} onFocus={() => setFocused(true)} placeholder="Поиск по холдингу…"
+        <input ref={inputRef} value={query} onChange={(e) => setQuery(e.target.value)} onFocus={() => setFocused(true)} placeholder={t('Поиск по холдингу…', 'Search this holding…')}
           style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.ink, fontFamily: 'var(--sans)', fontSize: 12.5, padding: 0, minWidth: 0 }} />
         {!focused && <span style={{ fontSize: 10, color: C.inkFaint, fontFamily: 'var(--mono)', flexShrink: 0 }}>⌘K</span>}
         {query && <span onClick={() => { setQuery(''); inputRef.current?.focus(); }} style={{ cursor: 'pointer', color: C.inkFaint, fontSize: 11, flexShrink: 0 }}>✕</span>}
@@ -607,7 +614,7 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
       {showDrop && (
         <div style={{ position: 'absolute', top: 'calc(100% + 6px)', right: 0, width: 440, maxHeight: '70vh', overflowY: 'auto', background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, boxShadow: '0 12px 40px rgba(0,0,0,.5)', zIndex: 60 }}>
           {results.length === 0 ? (
-            <div style={{ padding: '20px 16px', textAlign: 'center', color: C.inkFaint, fontSize: 12.5 }}>Ничего не найдено по «{query}»</div>
+            <div style={{ padding: '20px 16px', textAlign: 'center', color: C.inkFaint, fontSize: 12.5 }}>{t('Ничего не найдено по', 'Nothing found for')} «{query}»</div>
           ) : results.map((r, i) => {
             const q = query.toLowerCase();
             const mPos = r.snippet.toLowerCase().indexOf(q);
@@ -637,6 +644,7 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export default function HoldingsV2({ onBack }) {
+  const t = useT();
   const order = HOLDING_COMPANIES_ORDER.filter((id) => V2[id]);
   const [cid, setCid] = useState(order[0] || 'brookfield');
   const [deepIdx, setDeepIdx] = useState(null); // null = profile (L0), number = L2 section index
@@ -667,7 +675,7 @@ export default function HoldingsV2({ onBack }) {
   const showNav = !!(data && data.sections && data.sections.length);
   const openSection = (i) => { setDeepIdx(i); setFocusCompany(null); setMenuOpen(false); window.scrollTo({ top: 0 }); };
 
-  if (!data) return <div style={{ padding: 64, color: C.inkSoft }}>Нет мигрированных холдингов.</div>;
+  if (!data) return <div style={{ padding: 64, color: C.inkSoft }}>{t('Нет мигрированных холдингов.', 'No migrated holdings.')}</div>;
 
   const FONTS = (
     <style>{`@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
@@ -713,7 +721,7 @@ export default function HoldingsV2({ onBack }) {
       <div style={{ position: 'sticky', top: 0, zIndex: 50, background: `color-mix(in srgb, ${C.paper} 95%, transparent)`, backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.line}` }}>
         <div onMouseLeave={() => setMenuOpen(null)} style={{ maxWidth: 'none', margin: '0 auto', padding: '0 40px', minHeight: 56, display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
           {onBack && (
-            <button onClick={onBack} title="Назад к исследованиям" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, background: C.card, border: `1px solid ${C.line}`, borderRadius: 8, cursor: 'pointer', color: C.inkSoft, fontSize: 14, flexShrink: 0, transition: 'border-color .15s, color .15s' }}
+            <button onClick={onBack} title={t('Назад к исследованиям', 'Back to research')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, background: C.card, border: `1px solid ${C.line}`, borderRadius: 8, cursor: 'pointer', color: C.inkSoft, fontSize: 14, flexShrink: 0, transition: 'border-color .15s, color .15s' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = C.teal; e.currentTarget.style.color = C.teal; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = C.line; e.currentTarget.style.color = C.inkSoft; }}>
               ←
@@ -743,7 +751,7 @@ export default function HoldingsV2({ onBack }) {
                         <span style={{ width: 26, height: 26, flexShrink: 0, borderRadius: 6, background: META[id]?.color || C.line, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: (META[id]?.mono || '').length > 2 ? 9 : 11, fontWeight: 600, color: '#fff' }}>{META[id]?.mono}</span>
                         <span style={{ flex: 1, minWidth: 0 }}>
                           <span style={{ display: 'block', fontSize: 13, fontWeight: on ? 600 : 500, color: C.ink, whiteSpace: 'nowrap' }}>{nameOf(id)}</span>
-                          {!migrated && <span style={{ display: 'block', fontSize: 10, color: C.inkFaint }}>готовится</span>}
+                          {!migrated && <span style={{ display: 'block', fontSize: 10, color: C.inkFaint }}>{t('готовится', 'in preparation')}</span>}
                         </span>
                         {on && <span style={{ color: C.teal, fontSize: 12 }}>✓</span>}
                       </button>
@@ -758,7 +766,7 @@ export default function HoldingsV2({ onBack }) {
               <button onClick={() => { setDeepIdx(null); setMenuOpen(null); window.scrollTo({ top: 0 }); }}
                 onMouseEnter={() => setMenuOpen(null)}
                 style={{ display: 'flex', alignItems: 'center', height: '100%', background: 'transparent', border: 'none', padding: '0 12px', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: deepIdx == null ? 600 : 500, color: deepIdx == null ? C.ink : C.inkSoft, borderBottom: `2px solid ${deepIdx == null ? C.teal : 'transparent'}`, transition: 'color .15s', whiteSpace: 'nowrap' }}>
-                Обзор
+                {t('Обзор', 'Overview')}
               </button>
               {TIERS.map((tier) => {
                 const secs = data.sections.map((s, i) => ({ s, i })).filter(({ s }) => s.tier === tier.id);
@@ -851,7 +859,7 @@ export default function HoldingsV2({ onBack }) {
             <div style={{ marginBottom: 22, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 14 }}>
               {['businessModel', 'ownership'].filter((k) => data.snapshot[k] && data.snapshot[k].length > 0).map((key) => (
                 <div key={key} style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '14px 16px' }}>
-                  <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>{key === 'businessModel' ? 'Ключевые данные' : 'Собственность и оценка'}</div>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 10 }}>{key === 'businessModel' ? t('Ключевые данные', 'Key data') : 'Собственность и оценка'}</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {data.snapshot[key].map((r, i) => (
                       <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 12, alignItems: 'baseline', paddingBottom: 8, borderBottom: i < data.snapshot[key].length - 1 ? `1px solid ${C.lineSoft}` : 'none' }}>

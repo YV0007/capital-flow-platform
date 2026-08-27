@@ -7,6 +7,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import holdingsData from '../../data/holdings.json';
+import { useT } from '../../lib/i18n.jsx';
 
 // Reconstitute the named consts the original code expects. holdings.json was
 // produced from those consts during Phase 3 extraction; here we read them back
@@ -49,12 +50,13 @@ function Bar({ C, label, note, pct, color, display }) {
 }
 
 function Drawer({ C, rows }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const preview = rows.map((r) => r[0]).join(" · ");
   return (
     <div style={{ marginTop: 18, borderTop: `1px solid ${C.line}`, paddingTop: 12 }}>
       <button onClick={() => setOpen(!open)} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", display: "flex", alignItems: "baseline", gap: 8, fontFamily: "var(--sans)", color: C.teal, maxWidth: "100%" }}>
-        <span style={{ fontSize: 13, fontWeight: 600, flexShrink: 0 }}>{open ? "− Скрыть детали" : "+ Подробнее"}</span>
+        <span style={{ fontSize: 13, fontWeight: 600, flexShrink: 0 }}>{open ? t('− Скрыть детали', '− Hide details') : t('+ Подробнее', '+ Show more')}</span>
         {!open && <span style={{ fontSize: 12, color: C.inkFaint, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{preview}</span>}
       </button>
       {open && <div style={{ marginTop: 12 }}>{rows.map((r, i) => (
@@ -85,6 +87,7 @@ function SectionHead({ C, n, title, sub, action }) {
 // ═════════════════════════════════════════════════════════════════════════════
 
 function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
+  const t = useT();
   const d = DIMENSIONS.find((x) => x.id === dim);
   const mono = (c) => (
     <span style={{ width: 26, height: 26, flexShrink: 0, borderRadius: 6, background: META[c.id].color, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: META[c.id].mono.length > 2 ? 8.5 : 10.5, fontWeight: 600, color: "#fff" }}>{META[c.id].mono}</span>
@@ -124,7 +127,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18, padding: "12px 16px", background: C.card, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.teal}`, borderRadius: 8 }}>
         <div style={{ flexShrink: 0 }}>
-          <div style={{ fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: C.inkFaint, marginBottom: 2 }}>Сравниваем</div>
+          <div style={{ fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: C.inkFaint, marginBottom: 2 }}>{t('Сравниваем', 'Comparing')}</div>
           <div style={{ fontSize: 16, fontWeight: 600, color: C.ink, lineHeight: 1.1 }}>{d.measures}</div>
         </div>
         {d.axis && <div style={{ flexShrink: 0, fontFamily: "var(--mono)", fontSize: 11.5, color: C.teal, background: C.isDark ? "#16241F" : "#E2EFE9", padding: "4px 9px", borderRadius: 5 }}>{d.axis}</div>}
@@ -133,7 +136,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
 
       {/* asset include/exclude chips */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 26, paddingBottom: 18, borderBottom: `1px solid ${C.line}` }}>
-        <span style={{ fontSize: 11, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkFaint, alignSelf: "center", marginRight: 4 }}>Холдинги:</span>
+        <span style={{ fontSize: 11, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkFaint, alignSelf: "center", marginRight: 4 }}>{t('Холдинги:', 'Holdings:')}</span>
         {HOLDING_COMPANIES.map((c) => {
           const off = excluded.includes(c.id);
           return (
@@ -148,7 +151,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
       {/* ── BAR dimensions ── */}
       {d.kind === "bar" && (
         applicable.length === 0
-          ? <div style={{ fontSize: 14, color: C.inkSoft, padding: "40px 0", textAlign: "center" }}>Ни один из выбранных холдингов не раскрывает этот показатель.</div>
+          ? <div style={{ fontSize: 14, color: C.inkSoft, padding: "40px 0", textAlign: "center" }}>{t('Ни один из выбранных холдингов не раскрывает этот показатель.', 'None of the selected holdings disclose this metric.')}</div>
           : (() => {
             const max = Math.max(...applicable.map(valueFor));
             const ranked = [...applicable].sort((a, b) => valueFor(b) - valueFor(a));
@@ -156,7 +159,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10, paddingBottom: 8, borderBottom: `1px solid ${C.lineSoft}` }}>
                   <div style={{ width: 26 }} />
-                  <div style={{ width: 150, flexShrink: 0, fontSize: 10.5, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkFaint }}>Холдинг</div>
+                  <div style={{ width: 150, flexShrink: 0, fontSize: 10.5, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkFaint }}>{t('Холдинг', 'Holding')}</div>
                   <div style={{ flex: 1, display: "flex", justifyContent: "space-between", fontSize: 10.5, letterSpacing: ".08em", textTransform: "uppercase", color: C.inkFaint }}><span>{d.measures} →</span><span style={{ fontFamily: "var(--mono)", textTransform: "none", letterSpacing: "normal" }}>0 — {fmtVal(max)}</span></div>
                   <div style={{ width: 70, textAlign: "right", fontSize: 10.5, letterSpacing: ".08em", textTransform: "uppercase", color: C.inkFaint }}>{d.unit === "%" ? "%" : "$B"}</div>
                 </div>
@@ -181,7 +184,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
                   </div>
                 )}
                 {notApplicable.length > 0 && (
-                  <div style={{ marginTop: 22, fontSize: 12, color: C.inkFaint }}>Неприменимо: {notApplicable.map((c) => c.name).join(", ")} — {dim === "fees" ? "не управляющие активами / нет сопоставимого показателя fee-капитала" : dim === "concentration" ? "диверсифицированы, нет концентрации топ-2" : dim === "discount" ? "не торгуются с дисконтом к NAV / расчётной стоимости" : "нет данных"}.</div>
+                  <div style={{ marginTop: 22, fontSize: 12, color: C.inkFaint }}>{t('Неприменимо', 'Not applicable')}: {notApplicable.map((c) => c.name).join(", ")} — {dim === "fees" ? "не управляющие активами / нет сопоставимого показателя fee-капитала" : dim === "concentration" ? "диверсифицированы, нет концентрации топ-2" : dim === "discount" ? "не торгуются с дисконтом к NAV / расчётной стоимости" : "нет данных"}.</div>
                 )}
               </div>
             );
@@ -217,7 +220,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
               </div>
             );
           })}
-          <div style={{ fontSize: 11.5, color: C.inkFaint, fontStyle: "italic", marginTop: 6 }}>Полосы показывают вложенный / заявленный капитал в AI-инфраструктуру. Уровни отражают, насколько AI централен для тезиса каждого холдинга.</div>
+          <div style={{ fontSize: 11.5, color: C.inkFaint, fontStyle: "italic", marginTop: 6 }}>{t('Полосы показывают вложенный / заявленный капитал в AI-инфраструктуру. Уровни отражают, насколько AI централен для тезиса каждого холдинга.', 'The bars show capital deployed or committed to AI infrastructure. The tiers reflect how central AI is to each holding\'s thesis.')}</div>
         </div>
       )}
 
@@ -240,7 +243,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
             <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 560 }}>
               <thead>
                 <tr>
-                  <th style={{ textAlign: "left", padding: "0 12px 10px 0", fontSize: 11, letterSpacing: ".08em", textTransform: "uppercase", color: C.inkFaint, fontWeight: 500 }}>Холдинг</th>
+                  <th style={{ textAlign: "left", padding: "0 12px 10px 0", fontSize: 11, letterSpacing: ".08em", textTransform: "uppercase", color: C.inkFaint, fontWeight: 500 }}>{t('Холдинг', 'Holding')}</th>
                   {HEATMAP_THEMES.map((t) => <th key={t.id} style={{ padding: "0 6px 10px", fontSize: 11, letterSpacing: ".04em", textTransform: "uppercase", color: C.inkFaint, fontWeight: 500, textAlign: "center" }}>{t.label}</th>)}
                 </tr>
               </thead>
@@ -252,7 +255,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
                     </td>
                     {HEATMAP_THEMES.map((t) => {
                       const v = c.compare.themes[t.id];
-                      const map = { in: { bg: C.teal, tx: C.isDark ? "#0B130F" : "#fff", lab: "В фокусе" }, neutral: { bg: C.track, tx: C.inkSoft, lab: "Нейтрально" }, avoid: { bg: C.clay, tx: "#fff", lab: "Избегает" } };
+                      const map = { in: { bg: C.teal, tx: C.isDark ? "#0B130F" : "#fff", lab: t('В фокусе', 'In focus') }, neutral: { bg: C.track, tx: C.inkSoft, lab: t('Нейтрально', 'Neutral') }, avoid: { bg: C.clay, tx: "#fff", lab: t('Избегает', 'Avoiding') } };
                       const cell = v ? map[v] : { bg: "transparent", tx: C.inkFaint, lab: "—" };
                       return (
                         <td key={t.id} style={{ padding: 4, textAlign: "center" }}>
@@ -266,10 +269,10 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
             </table>
           </div>
           <div style={{ display: "flex", gap: 16, marginTop: 16, fontSize: 11.5, color: C.inkSoft, flexWrap: "wrap" }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 12, height: 12, borderRadius: 3, background: C.teal }} /> В фокусе</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 12, height: 12, borderRadius: 3, background: C.track }} /> Нейтрально</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 12, height: 12, borderRadius: 3, background: C.clay }} /> Избегает</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 12, height: 12, borderRadius: 3, border: `1px dashed ${C.line}` }} /> н/д</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 12, height: 12, borderRadius: 3, background: C.teal }} />{' '}{t('В фокусе', 'In focus')}</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 12, height: 12, borderRadius: 3, background: C.track }} />{' '}{t('Нейтрально', 'Neutral')}</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 12, height: 12, borderRadius: 3, background: C.clay }} />{' '}{t('Избегает', 'Avoiding')}</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 12, height: 12, borderRadius: 3, border: `1px dashed ${C.line}` }} />{' '}{t('н/д', 'n/d')}</span>
           </div>
         </div>
       )}
@@ -283,6 +286,7 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
 // company has an `extendedHoldings` field on its data object.
 
 function ExtendedHoldings({ C, company, onBack }) {
+  const t = useT();
   const eh = company.extendedHoldings;
   const [openRow, setOpenRow] = useState(null);  // "gIdx-rIdx" string
   const [filterTier, setFilterTier] = useState("all");      // all | ring1 | ring2
@@ -320,8 +324,8 @@ function ExtendedHoldings({ C, company, onBack }) {
   const totalVisible = visibleGroups.reduce((sum, g) => sum + g.rows.length, 0);
 
   const tierBadge = (tier) => {
-    if (tier === "ring1" || tier === "ring1-aggregated") return { label: "С опубликованной оценкой", bg: C.teal + "22", fg: C.teal, border: C.teal };
-    if (tier === "ring2") return { label: "Без опубликованной оценки", bg: C.gold + "22", fg: C.gold, border: C.gold };
+    if (tier === "ring1" || tier === "ring1-aggregated") return { label: t('С опубликованной оценкой', 'With a published valuation'), bg: C.teal + "22", fg: C.teal, border: C.teal };
+    if (tier === "ring2") return { label: t('Без опубликованной оценки', 'Without a published valuation'), bg: C.gold + "22", fg: C.gold, border: C.gold };
     return null;
   };
 
@@ -330,7 +334,7 @@ function ExtendedHoldings({ C, company, onBack }) {
     return null;
   };
 
-  const listingLabel = (l) => l === "public" ? "Публ." : l === "private" ? "Частн." : (l || "—");
+  const listingLabel = (l) => l === "public" ? t('Публ.', 'Pub.') : l === "private" ? t('Частн.', 'Priv.') : (l || "—");
 
   const chip = (active, onClick, label, count) => (
     <button onClick={onClick} style={{
@@ -350,27 +354,27 @@ function ExtendedHoldings({ C, company, onBack }) {
         background: "none", border: "none", padding: 0, cursor: "pointer",
         color: C.teal, fontSize: 13, fontFamily: "var(--sans)", marginBottom: 20,
         display: "inline-flex", alignItems: "center", gap: 6,
-      }}>← Назад к профилю {company.name}</button>
+      }}>← {t('Назад к профилю', 'Back to the profile of')} {company.name}</button>
 
       <div style={{ marginBottom: 28 }}>
         <h1 style={{ fontFamily: "var(--serif)", fontSize: 36, fontWeight: 500, lineHeight: 1.1, letterSpacing: "-.01em", margin: "0 0 10px", color: C.ink }}>
-          Все позиции — {company.name}
+          {t('Все позиции', 'All positions')} — {company.name}
         </h1>
         <p style={{ fontSize: 13, color: C.inkSoft, margin: "0 0 16px", lineHeight: 1.55, maxWidth: 720 }}>
-          {ring1Count + ring2Count} названных холдингов на {eh.asOf}.
+          {ring1Count + ring2Count} {t('названных холдингов на', 'named holdings as of')} {eh.asOf}.
         </p>
 
         <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
           <div style={{ padding: "10px 16px", border: `1px solid ${C.teal}`, borderRadius: 8, background: C.teal + "10" }}>
-            <div style={{ fontSize: 10.5, letterSpacing: ".12em", textTransform: "uppercase", color: C.teal, marginBottom: 3 }}>С опубликованной оценкой</div>
+            <div style={{ fontSize: 10.5, letterSpacing: ".12em", textTransform: "uppercase", color: C.teal, marginBottom: 3 }}>{t('С опубликованной оценкой', 'With a published valuation')}</div>
             <div style={{ fontFamily: "var(--mono)", fontSize: 22, fontWeight: 500, color: C.ink }}>{ring1Count}</div>
           </div>
           <div style={{ padding: "10px 16px", border: `1px solid ${C.gold}`, borderRadius: 8, background: C.gold + "10" }}>
-            <div style={{ fontSize: 10.5, letterSpacing: ".12em", textTransform: "uppercase", color: C.gold, marginBottom: 3 }}>Без опубликованной оценки</div>
+            <div style={{ fontSize: 10.5, letterSpacing: ".12em", textTransform: "uppercase", color: C.gold, marginBottom: 3 }}>{t('Без опубликованной оценки', 'Without a published valuation')}</div>
             <div style={{ fontFamily: "var(--mono)", fontSize: 22, fontWeight: 500, color: C.ink }}>{ring2Count}</div>
           </div>
           <div style={{ padding: "10px 16px", border: `1px solid ${C.line}`, borderRadius: 8 }}>
-            <div style={{ fontSize: 10.5, letterSpacing: ".12em", textTransform: "uppercase", color: C.inkSoft, marginBottom: 3 }}>Покрытие NAV</div>
+            <div style={{ fontSize: 10.5, letterSpacing: ".12em", textTransform: "uppercase", color: C.inkSoft, marginBottom: 3 }}>{t('Покрытие NAV', 'NAV coverage')}</div>
             <div style={{ fontFamily: "var(--mono)", fontSize: 22, fontWeight: 500, color: C.ink }}>{eh.totals.navCovered}</div>
           </div>
         </div>
@@ -379,20 +383,20 @@ function ExtendedHoldings({ C, company, onBack }) {
       <div style={{ marginBottom: 10, padding: "12px 16px", background: C.card, border: `1px solid ${C.line}`, borderRadius: 10 }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", rowGap: 10 }}>
           {/* Tier group */}
-          {chip(filterTier === "all", () => setFilterTier("all"), "Все", ring1Count + ring2Count)}
-          {chip(filterTier === "ring1", () => setFilterTier("ring1"), "С оценкой", ring1Count)}
-          {chip(filterTier === "ring2", () => setFilterTier("ring2"), "Без оценки", ring2Count)}
+          {chip(filterTier === "all", () => setFilterTier("all"), t('Все', 'All'), ring1Count + ring2Count)}
+          {chip(filterTier === "ring1", () => setFilterTier("ring1"), t('С оценкой', 'Valued'), ring1Count)}
+          {chip(filterTier === "ring2", () => setFilterTier("ring2"), t('Без оценки', 'Unvalued'), ring2Count)}
 
           {/* Divider */}
           <span style={{ width: 1, height: 20, background: C.line, margin: "0 4px" }} />
 
           {/* Listing group */}
-          {chip(filterListing === "public", () => setFilterListing(filterListing === "public" ? "all" : "public"), "Публичные")}
-          {chip(filterListing === "private", () => setFilterListing(filterListing === "private" ? "all" : "private"), "Частные")}
+          {chip(filterListing === "public", () => setFilterListing(filterListing === "public" ? "all" : "public"), t('Публичные', 'Public'))}
+          {chip(filterListing === "private", () => setFilterListing(filterListing === "private" ? "all" : "private"), t('Частные', 'Private'))}
 
           {/* Search pushed right */}
           <div style={{ marginLeft: "auto" }}>
-            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск по имени…" style={{
+            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t('Поиск по имени…', 'Search by name…')} style={{
               padding: "7px 12px", borderRadius: 16, border: `1px solid ${C.line}`,
               background: C.paper, color: C.ink, fontSize: 12, fontFamily: "var(--sans)",
               width: 200, outline: "none",
@@ -404,8 +408,8 @@ function ExtendedHoldings({ C, company, onBack }) {
       {/* Counter + Vehicle dropdown sit OUTSIDE the card so the card stays compact */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, padding: "0 4px" }}>
         <div style={{ fontSize: 11.5, color: C.inkFaint }}>
-          Показано <span style={{ fontFamily: "var(--mono)", color: C.ink }}>{totalVisible}</span> из <span style={{ fontFamily: "var(--mono)" }}>{ring1Count + ring2Count}</span>
-          {filterVehicle !== "all" && <span> · фильтр vehicle: <span style={{ color: C.teal }}>{filterVehicle}</span></span>}
+          {t('Показано', 'Showing')} <span style={{ fontFamily: "var(--mono)", color: C.ink }}>{totalVisible}</span> {t('из', 'of')} <span style={{ fontFamily: "var(--mono)" }}>{ring1Count + ring2Count}</span>
+          {filterVehicle !== "all" && <span> · {t('фильтр vehicle', 'vehicle filter')}: <span style={{ color: C.teal }}>{filterVehicle}</span></span>}
         </div>
         <div ref={vehicleRef} style={{ position: "relative" }}>
           <button onClick={() => setVehicleOpen(!vehicleOpen)} style={{
@@ -432,7 +436,7 @@ function ExtendedHoldings({ C, company, onBack }) {
                     color: active ? C.teal : C.ink, fontSize: 12.5, fontFamily: "var(--sans)",
                     cursor: "pointer", fontWeight: active ? 600 : 400, marginBottom: 1,
                   }}>
-                    {v === "all" ? "Все vehicles" : v}
+                    {v === "all" ? t('Все vehicles', 'All vehicles') : v}
                   </button>
                 );
               })}
@@ -454,7 +458,7 @@ function ExtendedHoldings({ C, company, onBack }) {
                 background: tb.bg, color: tb.fg, fontWeight: 600, letterSpacing: ".08em",
               }}>{tb.label}</span>}
               <h3 style={{ fontFamily: "var(--sans)", fontSize: 14, fontWeight: 600, color: C.ink, margin: 0, letterSpacing: ".02em" }}>{g.label}</h3>
-              <span style={{ fontFamily: "var(--mono)", fontSize: 11.5, color: C.inkFaint }}>{g.rows.length} {g.rows.length === 1 ? "имя" : g.rows.length < 5 ? "имени" : "имён"}</span>
+              <span style={{ fontFamily: "var(--mono)", fontSize: 11.5, color: C.inkFaint }}>{g.rows.length} {g.rows.length === 1 ? t('имя', 'name') : g.rows.length < 5 ? t('имени', 'names') : t('имён', 'names')}</span>
               {g.aggregatedValue && <span style={{ marginLeft: "auto", fontFamily: "var(--mono)", fontSize: 12, color: C.teal }}>{g.aggregatedValue}</span>}
             </div>
             {g.subLabel && <div style={{ fontSize: 12, color: C.inkSoft, marginBottom: 10, fontStyle: "italic" }}>{g.subLabel}</div>}
@@ -517,13 +521,13 @@ function ExtendedHoldings({ C, company, onBack }) {
                             )}
                             {r.qoq && (
                               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "5px 10px", borderRadius: 6, background: r.qoqDir === "up" ? C.teal + "12" : C.clay + "12", border: `1px solid ${r.qoqDir === "up" ? C.teal + "44" : C.clay + "44"}`, marginBottom: r.holdings ? 12 : 0 }}>
-                                <span style={{ fontSize: 10.5, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkFaint }}>Изм. за квартал</span>
+                                <span style={{ fontSize: 10.5, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkFaint }}>{t('Изм. за квартал', 'Change this quarter')}</span>
                                 <span style={{ fontFamily: "var(--mono)", fontSize: 13, fontWeight: 500, color: r.qoqDir === "up" ? C.teal : C.clay }}>{r.qoq}</span>
                               </div>
                             )}
                             {r.holdings && r.holdings.length > 0 && (
                               <div style={{ marginTop: 4, padding: "10px 14px", background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 8 }}>
-                                <div style={{ fontSize: 10.5, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkSoft, marginBottom: 8 }}>Известные компании внутри фонда</div>
+                                <div style={{ fontSize: 10.5, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkSoft, marginBottom: 8 }}>{t('Известные компании внутри фонда', 'Known companies inside the fund')}</div>
                                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                                   {r.holdings.map((h, hi) => (
                                     <span key={hi} style={{ fontSize: 12, padding: "4px 10px", borderRadius: 14, border: `1px solid ${C.line}`, color: C.ink, background: C.card }}>{h}</span>
@@ -545,14 +549,14 @@ function ExtendedHoldings({ C, company, onBack }) {
 
       {totalVisible === 0 && (
         <div style={{ padding: "30px", textAlign: "center", color: C.inkSoft, fontSize: 13, border: `1px dashed ${C.line}`, borderRadius: 8 }}>
-          Нет позиций под текущие фильтры. <button onClick={() => { setFilterTier("all"); setFilterVehicle("all"); setFilterListing("all"); setSearch(""); }} style={{ background: "none", border: "none", color: C.teal, cursor: "pointer", fontSize: 13, padding: 0, textDecoration: "underline" }}>Сбросить фильтры</button>
+          {t('Нет позиций под текущие фильтры.', 'No positions match the current filters.')} <button onClick={() => { setFilterTier("all"); setFilterVehicle("all"); setFilterListing("all"); setSearch(""); }} style={{ background: "none", border: "none", color: C.teal, cursor: "pointer", fontSize: 13, padding: 0, textDecoration: "underline" }}>Сбросить фильтры</button>
         </div>
       )}
 
       <footer style={{ marginTop: 40, paddingTop: 20, borderTop: `1px solid ${C.line}` }}>
         {eh.unnameable && (
           <div style={{ padding: "12px 14px", background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 8, fontSize: 12, color: C.inkSoft, lineHeight: 1.6 }}>
-            <span style={{ fontWeight: 600, color: C.ink }}>Чего здесь нет: </span>{eh.unnameable}
+            <span style={{ fontWeight: 600, color: C.ink }}>{t('Чего здесь нет', 'What is not here')}: </span>{eh.unnameable}
           </div>
         )}
       </footer>
@@ -561,6 +565,7 @@ function ExtendedHoldings({ C, company, onBack }) {
 }
 
 export default function HoldingsTab() {
+  const t = useT();
   const [mode, setMode] = useState("dark");
   const [view, setView] = useState("profile"); // "profile" | "compare"
   const [showHoldings, setShowHoldings] = useState(false); // Extended Holdings sub-view
@@ -607,14 +612,14 @@ export default function HoldingsTab() {
         <aside style={{ position: "sticky", top: 0, height: "100vh", padding: "36px 22px 36px 30px", borderRight: `1px solid ${C.line}` }}>
           {/* mode toggle: Profile / Compare */}
           <div style={{ display: "flex", gap: 0, marginBottom: 24, background: C.track, borderRadius: 9, padding: 3 }}>
-            {[["profile", "Профиль"], ["compare", "Сравнение"]].map(([v, lab]) => {
+            {[["profile", t('Профиль', 'Profile')], ["compare", t('Сравнение', 'Comparison')]].map(([v, lab]) => {
               const on = view === v;
               return <button key={v} onClick={() => { setView(v); setShowHoldings(false); }} style={{ flex: 1, fontSize: 12.5, fontWeight: on ? 600 : 500, padding: "7px 0", borderRadius: 7, border: "none", background: on ? C.card : "transparent", color: on ? C.ink : C.inkSoft, cursor: "pointer", boxShadow: on ? "0 1px 4px rgba(0,0,0,.18)" : "none", transition: "all .15s" }}>{lab}</button>;
             })}
           </div>
 
           {view === "profile" && <>
-          <div style={{ fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: C.inkFaint, marginBottom: 8 }}>Холдинг</div>
+          <div style={{ fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: C.inkFaint, marginBottom: 8 }}>{t('Холдинг', 'Holding')}</div>
           <div style={{ position: "relative", marginBottom: 18, zIndex: 50 }}>
             {/* current selection — click to open */}
             <button onClick={() => setSwitcherOpen(!switcherOpen)} style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, background: C.card, border: `1px solid ${switcherOpen ? C.teal : C.line}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer", textAlign: "left", transition: "border-color .15s" }}>
@@ -672,9 +677,9 @@ export default function HoldingsTab() {
 
           {view === "compare" && (
             <div>
-              <div style={{ fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: C.inkFaint, marginBottom: 10 }}>Сравнение</div>
-              <div style={{ fontFamily: "var(--serif)", fontSize: 17, fontWeight: 500, color: C.ink, lineHeight: 1.3, marginBottom: 12 }}>Все холдинги, по одному измерению за раз</div>
-              <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.6 }}>Выберите измерение над графиком. Включайте и исключайте холдинги с помощью чипов. Холдинги, к которым показатель неприменим, исчезают автоматически.</div>
+              <div style={{ fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: C.inkFaint, marginBottom: 10 }}>{t('Сравнение', 'Comparison')}</div>
+              <div style={{ fontFamily: "var(--serif)", fontSize: 17, fontWeight: 500, color: C.ink, lineHeight: 1.3, marginBottom: 12 }}>{t('Все холдинги, по одному измерению за раз', 'All holdings, one dimension at a time')}</div>
+              <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.6 }}>{t('Выберите измерение над графиком. Включайте и исключайте холдинги с помощью чипов. Холдинги, к которым показатель неприменим, исчезают автоматически.', 'Pick a dimension above the chart. Toggle holdings in and out with the chips. Holdings the metric does not apply to drop out automatically.')}</div>
             </div>
           )}
         </aside>
@@ -682,8 +687,8 @@ export default function HoldingsTab() {
         {view === "compare" ? (
           <main style={{ padding: "40px 44px 80px" }}>
             <header className="rise" style={{ marginBottom: 28 }}>
-              <div style={{ fontSize: 11.5, letterSpacing: ".08em", textTransform: "uppercase", color: C.inkSoft, marginBottom: 14 }}>Сравнение холдингов</div>
-              <h1 style={{ fontFamily: "var(--serif)", fontSize: 40, fontWeight: 500, lineHeight: 1.05, letterSpacing: "-.02em", margin: "0 0 10px" }}>Как {included.length} холдингов смотрятся друг против друга</h1>
+              <div style={{ fontSize: 11.5, letterSpacing: ".08em", textTransform: "uppercase", color: C.inkSoft, marginBottom: 14 }}>{t('Сравнение холдингов', 'Holdings comparison')}</div>
+              <h1 style={{ fontFamily: "var(--serif)", fontSize: 40, fontWeight: 500, lineHeight: 1.05, letterSpacing: "-.02em", margin: "0 0 10px" }}>{t(`Как ${included.length} холдингов смотрятся друг против друга`, `How ${included.length} holdings stack up against each other`)}</h1>
             </header>
             <div className="rise"><CompareView C={C} META={META} dim={dim} setDim={setDim} excluded={excluded} toggle={toggleExcluded} included={included} /></div>
           </main>
@@ -710,14 +715,14 @@ export default function HoldingsTab() {
 
           {/* 01 SNAPSHOT */}
           <section id="snapshot" ref={(e) => (refs.current.snapshot = e)} style={{ marginBottom: 54, scrollMarginTop: 24 }}>
-            <SectionHead C={C} n="01" title="Текущий портфель" sub={SUBS.snapshot} action={
+            <SectionHead C={C} n="01" title={t('Текущий портфель', 'Current portfolio')} sub={SUBS.snapshot} action={
               s.extendedHoldings ? (
                 <button onClick={() => { setShowHoldings(true); window.scrollTo({ top: 0 }); }} style={{
                   background: "none", border: "none", padding: 0, cursor: "pointer",
                   color: C.teal, fontSize: 13, fontFamily: "var(--sans)", fontWeight: 500,
                   display: "inline-flex", alignItems: "center", gap: 6,
                 }}>
-                  Все позиции
+                  {t('Все позиции', 'All positions')}
                   <span style={{ fontFamily: "var(--mono)", fontSize: 11.5, color: C.inkFaint, fontWeight: 400 }}>({s.extendedHoldings.totals.ring1 + s.extendedHoldings.totals.ring2})</span>
                   <span>→</span>
                 </button>
@@ -741,7 +746,7 @@ export default function HoldingsTab() {
                     <div style={{ width: 48, textAlign: "right", fontFamily: "var(--mono)", fontSize: 12, color: C.ink }}>{fmt(h.value, s.snapshot.unit)}</div>
                   </div>
                   {ex && isOpen && (<div style={{ margin: "0 58px 12px 18px", padding: "10px 14px", background: C.cardAlt, border: `1px solid ${C.line}`, borderRadius: 8 }}>
-                    <div style={{ fontSize: 11, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkSoft, marginBottom: 8 }}>Что внутри</div>
+                    <div style={{ fontSize: 11, letterSpacing: ".1em", textTransform: "uppercase", color: C.inkSoft, marginBottom: 8 }}>{t('Что внутри', 'What is inside')}</div>
                     {h.breakdown.map((b, j) => (b[0] === "— note —"
                       ? (<div key={j} style={{ fontSize: 11, fontStyle: "italic", color: C.inkFaint, paddingTop: 8, marginTop: 4, borderTop: `1px solid ${C.lineSoft}`, lineHeight: 1.5 }}>{b[1]}</div>)
                       : (<div key={j} style={{ display: "flex", justifyContent: "space-between", gap: 12, padding: "4px 0", borderTop: j ? `1px solid ${C.lineSoft}` : "none" }}><span style={{ fontSize: 13, color: C.ink }}>{b[0]}</span><span style={{ fontFamily: "var(--mono)", fontSize: 12, color: C.inkSoft }}>{b[1]}</span></div>)))}
@@ -749,7 +754,7 @@ export default function HoldingsTab() {
                 </div>);
               })}
               <div style={{ fontSize: 12.5, color: C.inkSoft, marginTop: 8 }}>
-                {s.snapshot.concentration ? <>Концентрация — топ-2 <b style={{ fontFamily: "var(--mono)", color: C.ink }}>{s.snapshot.concentration.top2}</b>, топ-5 <b style={{ fontFamily: "var(--mono)", color: C.ink }}>{s.snapshot.concentration.top5}</b>.</> : s.snapshot.concentrationNote}
+                {s.snapshot.concentration ? <>{t('Концентрация — топ-2', 'Concentration — top 2')} <b style={{ fontFamily: "var(--mono)", color: C.ink }}>{s.snapshot.concentration.top2}</b>, топ-5 <b style={{ fontFamily: "var(--mono)", color: C.ink }}>{s.snapshot.concentration.top5}</b>.</> : s.snapshot.concentrationNote}
               </div>
             </div>
 
@@ -766,13 +771,13 @@ export default function HoldingsTab() {
                 })}
                 <div style={{ fontSize: 11.5, color: C.inkFaint, marginTop: 6, fontStyle: "italic" }}>{s.snapshot.geo.note}</div></SecondaryBlock>)}
 
-              {s.snapshot.listed && (<SecondaryBlock><div style={subLabel}>Публичные и непубличные активы</div>
+              {s.snapshot.listed && (<SecondaryBlock><div style={subLabel}>{t('Публичные и непубличные активы', 'Public and private assets')}</div>
                 <div style={{ display: "flex", alignItems: "flex-end", gap: 12, height: 96 }}>{s.snapshot.listed.items.map((l, i) => (
                   <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <div style={{ width: "100%", height: 78, background: C.unlisted, borderRadius: "3px 3px 0 0", display: "flex", flexDirection: "column-reverse", overflow: "hidden", border: `1px solid ${C.line}` }}>
                       <div style={{ height: `${l.pct}%`, background: C.blue, display: "flex", justifyContent: "center", paddingTop: 3 }}><span style={{ fontFamily: "var(--mono)", fontSize: 11.5, fontWeight: 500, color: "#fff" }}>{l.pct}%</span></div></div>
                     <span style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 4 }}>{l.period}</span></div>))}</div>
-                <div style={{ display: "flex", gap: 14, fontSize: 11, color: C.inkSoft, marginTop: 8 }}><span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: C.blue }} /> публичные</span><span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: C.unlisted, border: `1px solid ${C.line}` }} /> непубличные</span></div>
+                <div style={{ display: "flex", gap: 14, fontSize: 11, color: C.inkSoft, marginTop: 8 }}><span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: C.blue }} />{' '}{t('публичные', 'public')}</span><span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: C.unlisted, border: `1px solid ${C.line}` }} />{' '}{t('непубличные', 'private')}</span></div>
                 <div style={{ fontSize: 11.5, color: C.inkFaint, marginTop: 6, fontStyle: "italic", lineHeight: 1.5 }}>{s.snapshot.listed.note}</div></SecondaryBlock>)}
 
               {s.snapshot.mix && (<SecondaryBlock><div style={subLabel}>{s.snapshot.mix.label}</div>
@@ -788,7 +793,7 @@ export default function HoldingsTab() {
 
           {/* 02 CHANGES */}
           <section id="changes" ref={(e) => (refs.current.changes = e)} style={{ marginBottom: 54, scrollMarginTop: 24 }}>
-            <SectionHead C={C} n="02" title="Недавние изменения" sub={SUBS.changes} />
+            <SectionHead C={C} n="02" title={t('Недавние изменения', 'Recent changes')} sub={SUBS.changes} />
             {s.changes.bigStat && (<div style={{ ...card, marginBottom: 22 }}><div style={subLabel}>{s.changes.bigStat.label}</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}><span style={{ fontFamily: "var(--mono)", fontSize: 24, color: C.inkFaint }}>{s.changes.bigStat.from}</span><span style={{ color: C.inkFaint }}>→</span><span style={{ fontFamily: "var(--mono)", fontSize: 40, fontWeight: 500, color: C.teal, lineHeight: 1 }}>{s.changes.bigStat.to}</span><span style={{ fontSize: 13, color: C.inkSoft, fontStyle: "italic" }}>{s.changes.bigStat.period}</span></div></div>)}
 
@@ -809,7 +814,7 @@ export default function HoldingsTab() {
 
           {/* 03 STRATEGY */}
           <section id="strategy" ref={(e) => (refs.current.strategy = e)} style={{ marginBottom: 54, scrollMarginTop: 24 }}>
-            <SectionHead C={C} n="03" title="Заявленная стратегия" sub={SUBS.strategy} />
+            <SectionHead C={C} n="03" title={t('Заявленная стратегия', 'Stated strategy')} sub={SUBS.strategy} />
             <p style={{ fontFamily: "var(--serif)", fontSize: 16, lineHeight: 1.55, color: C.inkSoft, margin: "0 0 18px", maxWidth: 620 }}>{s.strategy.edge}</p>
             <div style={{ marginBottom: 20 }}>{s.strategy.stack.map((row, i) => (<div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "11px 16px", background: i % 2 ? C.cardAlt : C.card, border: `1px solid ${C.line}`, borderRadius: 8, marginBottom: 4 }}><div style={{ width: 170, fontSize: 13, fontWeight: 600, color: C.teal }}>{row.layer}</div><div style={{ flex: 1, fontSize: 13.5, color: C.ink }}>{row.items}</div></div>))}</div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{s.strategy.rules.map((r, i) => <span key={i} style={{ fontSize: 12.5, padding: "7px 13px", borderRadius: 8, border: `1px solid ${C.line}`, background: C.card, color: C.ink }}>{r}</span>)}</div>
@@ -818,8 +823,8 @@ export default function HoldingsTab() {
 
           {/* 04 PIPELINE */}
           <section id="pipeline" ref={(e) => (refs.current.pipeline = e)} style={{ marginBottom: 54, scrollMarginTop: 24 }}>
-            <SectionHead C={C} n="04" title="Будущие сделки" sub={SUBS.pipeline} />
-            <div style={subLabel}>Календарь сделок</div>
+            <SectionHead C={C} n="04" title={t('Будущие сделки', 'Future deals')} sub={SUBS.pipeline} />
+            <div style={subLabel}>{t('Календарь сделок', 'Deal calendar')}</div>
             <div style={{ position: "relative", marginBottom: 24, paddingLeft: 4 }}>{s.pipeline.timeline.map((t, i) => (
               <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start", marginBottom: 14 }}>
                 <div style={{ width: 64, textAlign: "right", fontFamily: "var(--mono)", fontSize: 11.5, fontWeight: 500, color: C.inkSoft, paddingTop: 1 }}>{t.when}</div>
@@ -831,15 +836,15 @@ export default function HoldingsTab() {
 
           {/* 05 WORLDVIEW */}
           <section id="worldview" ref={(e) => (refs.current.worldview = e)} style={{ marginBottom: 40, scrollMarginTop: 24 }}>
-            <SectionHead C={C} n="05" title="Взгляд на рынок" sub={SUBS.worldview} />
+            <SectionHead C={C} n="05" title={t('Взгляд на рынок', 'Market view')} sub={SUBS.worldview} />
             {s.worldview.thesis && (<><div style={subLabel}>{s.worldview.thesisLabel}</div>
               <div style={{ display: "flex", gap: 10, marginBottom: 22, flexWrap: "wrap" }}>{s.worldview.thesis.map((t, i) => (<div key={i} style={{ flex: 1, minWidth: 150, ...card, padding: "13px 15px" }}><div style={{ fontFamily: "var(--mono)", fontSize: 13, fontWeight: 500, color: C.blue }}>{t.when}</div><div style={{ fontSize: 13, color: C.inkSoft, marginTop: 4 }}>{t.what}</div></div>))}</div></>)}
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
-              <div style={card}><div style={{ fontSize: 12, fontWeight: 600, color: C.teal, marginBottom: 8 }}>В фокусе</div><div style={{ fontSize: 13.5, lineHeight: 1.7, color: C.ink }}>{s.worldview.leaningInto}</div></div>
-              <div style={card}><div style={{ fontSize: 12, fontWeight: 600, color: C.clay, marginBottom: 8 }}>Избегает / выходит</div><div style={{ fontSize: 13.5, lineHeight: 1.7, color: C.ink }}>{s.worldview.avoiding}</div></div>
+              <div style={card}><div style={{ fontSize: 12, fontWeight: 600, color: C.teal, marginBottom: 8 }}>{t('В фокусе', 'In focus')}</div><div style={{ fontSize: 13.5, lineHeight: 1.7, color: C.ink }}>{s.worldview.leaningInto}</div></div>
+              <div style={card}><div style={{ fontSize: 12, fontWeight: 600, color: C.clay, marginBottom: 8 }}>{t('Избегает / выходит', 'Avoiding / exiting')}</div><div style={{ fontSize: 13.5, lineHeight: 1.7, color: C.ink }}>{s.worldview.avoiding}</div></div>
             </div>
-            <div style={{ ...card, marginBottom: 18 }}><div style={{ fontSize: 12, fontWeight: 600, color: C.gold, marginBottom: 8 }}>⚑ Под наблюдением</div><div style={{ fontSize: 13.5, lineHeight: 1.7, color: C.ink }}>{s.worldview.watching}</div></div>
+            <div style={{ ...card, marginBottom: 18 }}><div style={{ fontSize: 12, fontWeight: 600, color: C.gold, marginBottom: 8 }}>{t('⚑ Под наблюдением', '⚑ On watch')}</div><div style={{ fontSize: 13.5, lineHeight: 1.7, color: C.ink }}>{s.worldview.watching}</div></div>
             {s.worldview.quote && (<blockquote style={{ borderLeft: `3px solid ${C.teal}`, margin: 0, padding: "6px 0 6px 18px" }}><div style={{ fontFamily: "var(--serif)", fontSize: 20, fontStyle: "italic", lineHeight: 1.45, color: C.ink }}>“{s.worldview.quote.text}”</div><div style={{ fontSize: 12, color: C.inkFaint, marginTop: 6 }}>— {s.worldview.quote.who}</div></blockquote>)}
             {s.worldview.details && <Drawer C={C} rows={s.worldview.details} />}
           </section>
