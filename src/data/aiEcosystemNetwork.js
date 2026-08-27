@@ -39,6 +39,7 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 import raw from './aiEcosystemNetwork.json';
+import { L } from '../lib/i18n.jsx';
 import {
   buildGraphFrom, buildAdjacency, buildLayers, critIn, monthsSince,
   criticalityBand, strengthBand, substitutabilityRead,
@@ -166,10 +167,41 @@ export const META = {
 };
 
 // ══════════════════════════════════════════════════════════════════════════
+// BILINGUAL PROSE — contract ai-ecosystem-network/2.
+//
+// From /2 the engine ships every prose field as { ru, en } instead of a bare
+// string. Both shapes are accepted on purpose: a bare string is read as "the
+// same text in both languages", so a payload can be converted field by field
+// without the live map going dark in between.
+//
+// Resolved ONCE, in buildGraph, rather than at each of the ~40 render sites.
+// That is safe here for a specific reason: buildGraph runs inside
+// `useMemo(..., [])` in EcosystemMap, and App remounts its whole body on a
+// language flip (`key={lang}`), so a fresh mount re-resolves everything. If
+// that remount ever goes away, this has to move to `useL()` at the render
+// sites — which is why the dependency is written down here and not left to be
+// rediscovered.
+const resolveProse = (v) => {
+  if (v == null || typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') return v;
+  if (Array.isArray(v)) return v.map(resolveProse);
+  if (typeof v === 'object') {
+    // A { ru, en } pair collapses to the active language; anything else is a
+    // normal object and is walked. `quote` fields never arrive as pairs — the
+    // engine leaves source quotes in the language of the document they came
+    // from — so they fall through this branch untouched.
+    if ('ru' in v && 'en' in v && Object.keys(v).length === 2) return L(v);
+    const out = {};
+    for (const k of Object.keys(v)) out[k] = resolveProse(v[k]);
+    return out;
+  }
+  return v;
+};
+
+// ══════════════════════════════════════════════════════════════════════════
 // buildGraph — the v2 builder, then the network decoration on top.
 // ══════════════════════════════════════════════════════════════════════════
 export function buildGraph() {
-  const graph = buildGraphFrom(raw);
+  const graph = buildGraphFrom(resolveProse(raw));
 
   // Generalize the anchor: v2 gave exactly one entity the centre privilege;
   // here every pivot gets it, and no single entity is "the" anchor.
