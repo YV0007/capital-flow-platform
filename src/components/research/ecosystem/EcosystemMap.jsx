@@ -399,7 +399,11 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
         height: TOPBAR_H, boxSizing: 'border-box',
         display: 'flex', alignItems: 'center', gap: 10,
         padding: '0 16px', pointerEvents: 'none',
-        background: 'var(--cf-scrim)',
+        // Over the map the bar is a scrim, so the canvas reads as continuous
+        // underneath it. Over the table there is no canvas to show through —
+        // only stray edges bleeding past the table's own top edge — so the bar
+        // goes fully opaque, exactly as the flow map's does.
+        background: view === 'map' ? 'var(--cf-scrim)' : 'var(--cf-canvas)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, pointerEvents: 'auto', minWidth: 0 }}>
           <button onClick={() => (view !== 'map' ? setView('map') : onBack())}
