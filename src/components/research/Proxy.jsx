@@ -16,6 +16,7 @@ import TopProxiesBlock from './proxy/TopProxiesBlock.jsx';
 import ProjectionBlock from './proxy/ProjectionBlock.jsx';
 import LateBlock from './proxy/LateBlock.jsx';
 import CircularBlock from './proxy/CircularBlock.jsx';
+import { useT } from '../../lib/i18n.jsx';
 
 // ─── Theme tokens ────────────────────────────────────────────────
 // Mirror Holdings' dark palette token-for-token so the Proxy report reads
@@ -65,6 +66,7 @@ export const subLabel = { fontSize: 11, letterSpacing: '.12em', textTransform: '
 export const card = { background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px' };
 
 export default function Proxy() {
+  const t = useT();
   const [active, setActive] = useState(proxyBlocks.sections[0].id);
   const refs = useRef({});
 
@@ -93,9 +95,9 @@ export default function Proxy() {
       <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '224px 1fr' }}>
         {/* Sticky section nav */}
         <aside style={{ position: 'sticky', top: 0, height: '100vh', padding: '36px 22px 36px 30px', borderRight: `1px solid ${C.line}` }}>
-          <div style={{ fontSize: 10.5, letterSpacing: '.16em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 8 }}>Отчёт</div>
+          <div style={{ fontSize: 10.5, letterSpacing: '.16em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 8 }}>{t('Отчёт', 'Report')}</div>
           <div style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: C.ink, lineHeight: 1.2, marginBottom: 6 }}>Proxy</div>
-          <div style={{ fontSize: 11, color: C.inkFaint, marginBottom: 26, lineHeight: 1.4 }}>Данные на {proxyBlocks.asOf}</div>
+          <div style={{ fontSize: 11, color: C.inkFaint, marginBottom: 26, lineHeight: 1.4 }}>{t('Данные на', 'Data as of')} {proxyBlocks.asOf}</div>
 
           <nav>
             {proxyBlocks.sections.map((sec) => {
@@ -117,14 +119,14 @@ export default function Proxy() {
         <main style={{ padding: '40px 44px 80px' }}>
           <header className="rise" style={{ marginBottom: 40 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11.5, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 14 }}>
-              <span>Конгломераты / Прокси</span>
+              <span>{t('Конгломераты / Прокси', 'Conglomerates / Proxies')}</span>
               <span style={{ color: C.inkFaint }}>·</span>
               <span>{proxyBlocks.asOf}</span>
             </div>
             <h1 style={{ fontFamily: 'var(--serif)', fontSize: 44, fontWeight: 500, lineHeight: 1.05, letterSpacing: '-.02em', margin: '0 0 14px' }}>Proxy</h1>
             <p style={{ fontFamily: 'var(--serif)', fontSize: 18, lineHeight: 1.55, color: C.inkSoft, maxWidth: 760, margin: '0 0 26px' }}>
-              Карта публичных прокси на SpaceX, OpenAI и Anthropic накануне трёх IPO 2026 года.
-              Окно дисконта, концентрация, конгломератный налог и круговые денежные потоки между стратегами и стартапами.
+              {t(`Карта публичных прокси на SpaceX, OpenAI и Anthropic накануне трёх IPO 2026 года. Окно дисконта, концентрация, конгломератный налог и круговые денежные потоки между стратегами и стартапами.`,
+                 `A map of the public proxies on SpaceX, OpenAI and Anthropic ahead of three 2026 IPOs. The discount window, concentration, the conglomerate tax and the circular cash flows between strategics and startups.`)}
             </p>
           </header>
 

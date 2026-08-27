@@ -5,11 +5,12 @@
 // краткий вердикт.
 
 import windowData from '../../../data/proxy-window.json';
+import { useT, plural } from '../../../lib/i18n.jsx';
 
 const STATUS_TONE = {
-  open:      { label: 'Открыто',       bg: 'rgba(70,194,155,0.16)', fg: '#46C29B', border: 'rgba(70,194,155,0.4)' },
-  narrowing: { label: 'Сужается',      bg: 'rgba(203,170,82,0.16)', fg: '#CBAA52', border: 'rgba(203,170,82,0.4)' },
-  dead:      { label: 'Окно закрыто',  bg: 'rgba(239,111,111,0.14)', fg: '#EF6F6F', border: 'rgba(239,111,111,0.4)' },
+  open:      { label: t('Открыто', 'Open'),       bg: 'rgba(70,194,155,0.16)', fg: '#46C29B', border: 'rgba(70,194,155,0.4)' },
+  narrowing: { label: t('Сужается', 'Narrowing'),      bg: 'rgba(203,170,82,0.16)', fg: '#CBAA52', border: 'rgba(203,170,82,0.4)' },
+  dead:      { label: t('Окно закрыто', 'Window closed'),  bg: 'rgba(239,111,111,0.14)', fg: '#EF6F6F', border: 'rgba(239,111,111,0.4)' },
 };
 
 const TRACK_TONE = {
@@ -19,6 +20,7 @@ const TRACK_TONE = {
 };
 
 function Row({ C, company, horizonDays }) {
+  const t = useT();
   const tone = STATUS_TONE[company.status];
   const trackColor = TRACK_TONE[company.status];
   // ширина "съеденной" части = (horizon - days) / horizon. Чем ближе IPO,
@@ -33,7 +35,7 @@ function Row({ C, company, horizonDays }) {
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint, letterSpacing: '.06em' }}>{company.ticker}</span>
         <span style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.inkSoft }}>
-            <span style={{ color: C.ink, fontSize: 16, fontWeight: 500 }}>{company.daysToIpo}</span> {company.daysToIpo === 1 ? 'день' : company.daysToIpo < 5 ? 'дня' : 'дней'} до IPO
+            <span style={{ color: C.ink, fontSize: 16, fontWeight: 500 }}>{company.daysToIpo}</span> {plural(company.daysToIpo, ['день', 'дня', 'дней'], ['day', 'days'])} {t('до IPO', 'to IPO')}
           </span>
           <span style={{
             padding: '3px 10px', borderRadius: 12,
@@ -72,18 +74,18 @@ function Row({ C, company, horizonDays }) {
         }}>IPO · {company.ipoDate}</div>
         {/* Концевая метка справа: +180 дней */}
         <div style={{ position: 'absolute', right: 0, top: '100%', transform: 'translateY(4px)', fontFamily: 'var(--mono)', fontSize: 9.5, color: C.inkFaint }}>
-          +{horizonDays}д
+          +{horizonDays}{t('д', 'd')}
         </div>
         {/* Левая метка: Сегодня */}
         <div style={{ position: 'absolute', left: 0, top: '100%', transform: 'translateY(4px)', fontFamily: 'var(--mono)', fontSize: 9.5, color: C.inkFaint }}>
-          Сегодня
+          {t('Сегодня', 'Today')}
         </div>
       </div>
 
       {/* Best proxy + verdict */}
       <div style={{ marginTop: 28 }}>
         <div style={{ display: 'flex', gap: 16, marginBottom: 8, flexWrap: 'wrap' }}>
-          <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint }}>Лучший прокси</div>
+          <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint }}>{t('Лучший прокси', 'Best proxy')}</div>
           <div style={{ fontSize: 13, color: C.ink, flex: 1, minWidth: 200 }}>{company.bestProxy}</div>
         </div>
         <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, fontStyle: 'italic' }}>{company.verdict}</div>
@@ -95,7 +97,7 @@ function Row({ C, company, horizonDays }) {
 export default function WindowBlock({ C, subLabel }) {
   return (
     <div>
-      <div style={subLabel}>Горизонт {windowData.horizonDays} дней · окно дисконта по компаниям</div>
+      <div style={subLabel}>{t('Горизонт', 'Horizon')} {windowData.horizonDays} {t('дней · окно дисконта по компаниям', 'days · the discount window by company')}</div>
       <div>
         {windowData.companies.map((co) => (
           <Row key={co.id} C={C} company={co} horizonDays={windowData.horizonDays} />
@@ -103,13 +105,13 @@ export default function WindowBlock({ C, subLabel }) {
       </div>
       <div style={{ display: 'flex', gap: 18, fontSize: 11.5, color: C.inkSoft, flexWrap: 'wrap', marginTop: 6 }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ width: 10, height: 10, borderRadius: 2, background: TRACK_TONE.open }} /> Открыто
+          <span style={{ width: 10, height: 10, borderRadius: 2, background: TRACK_TONE.open }} /> {t('Открыто', 'Open')}
         </span>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ width: 10, height: 10, borderRadius: 2, background: TRACK_TONE.narrowing }} /> Сужается
+          <span style={{ width: 10, height: 10, borderRadius: 2, background: TRACK_TONE.narrowing }} /> {t('Сужается', 'Narrowing')}
         </span>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ width: 10, height: 10, borderRadius: 2, background: TRACK_TONE.dead }} /> Закрыто
+          <span style={{ width: 10, height: 10, borderRadius: 2, background: TRACK_TONE.dead }} /> {t('Закрыто', 'Closed')}
         </span>
       </div>
     </div>

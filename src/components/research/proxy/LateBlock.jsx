@@ -8,8 +8,10 @@ import {
   Tooltip, Cell, ReferenceLine,
 } from 'recharts';
 import lateData from '../../../data/proxy-late.json';
+import { useT } from '../../../lib/i18n.jsx';
 
 function CustomTooltip({ active, payload, C }) {
+  const t = useT();
   if (!active || !payload || !payload.length) return null;
   const r = payload[0].payload;
   const sign = r.ret >= 0 ? '+' : '';
@@ -21,20 +23,21 @@ function CustomTooltip({ active, payload, C }) {
       <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.ink, marginBottom: 2 }}>{r.ticker}</div>
       <div style={{ fontSize: 13, color: C.ink, marginBottom: 6 }}>{r.name}</div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, color: C.inkSoft, marginBottom: 4 }}>
-        <span>6 мес</span>
+        <span>{t('6 мес', '6 mo')}</span>
         <span style={{ fontFamily: 'var(--mono)', color: r.ret >= 0 ? C.emerald : C.rose, fontWeight: 600 }}>{sign}{r.ret}%</span>
       </div>
-      <div style={{ fontSize: 11.5, color: C.inkFaint, marginBottom: 4 }}>Базовый актив · {r.underlying}</div>
+      <div style={{ fontSize: 11.5, color: C.inkFaint, marginBottom: 4 }}>{t('Базовый актив', 'Underlying asset')} · {r.underlying}</div>
       <div style={{ fontSize: 11.5, color: C.inkSoft, fontStyle: 'italic', lineHeight: 1.5 }}>{r.trigger}</div>
     </div>
   );
 }
 
 export default function LateBlock({ C, card, subLabel }) {
+  const t = useT();
   const data = lateData.data;
   return (
     <div>
-      <div style={subLabel}>Декабрь 2025 → июнь 2026 · 6-месячная доходность</div>
+      <div style={subLabel}>{t('Декабрь 2025 → июнь 2026 · 6-месячная доходность', 'December 2025 → June 2026 · six-month return')}</div>
 
       <div style={{ ...card, padding: '18px 18px 8px' }}>
         <div style={{ width: '100%', height: 360 }}>
@@ -66,22 +69,23 @@ export default function LateBlock({ C, card, subLabel }) {
         background: C.cardAlt, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.teal}`,
         borderRadius: 8, fontSize: 12.5, color: C.ink, lineHeight: 1.55,
       }}>
-        <span style={{ fontWeight: 600, color: C.teal }}>Рынок уже нашёл эти имена. </span>
-        SKM, SATS, MNTN, SoftBank и SMT отыграли свои дисконты ещё до S-1 файлингов. К моменту, когда о прокси-трейде пишут в мейнстрим-аналитике, основной impulse уже отыгран. Salesforce — единственное обратное исключение: $5B доля в Anthropic не спасла слабость core-бизнеса.
+        <span style={{ fontWeight: 600, color: C.teal }}>{t('Рынок уже нашёл эти имена. ', 'The market has already found these names. ')}</span>
+        {t(`SKM, SATS, MNTN, SoftBank и SMT отыграли свои дисконты ещё до S-1 файлингов. К моменту, когда о прокси-трейде пишут в мейнстрим-аналитике, основной impulse уже отыгран. Salesforce — единственное обратное исключение: $5B доля в Anthropic не спасла слабость core-бизнеса.`,
+           `SKM, SATS, MNTN, SoftBank and SMT had already closed their discounts before the S-1 filings. By the time a proxy trade is being written about, the entry is gone.`)}
       </div>
 
       {/* Lost-entry timeline */}
       <div style={{ marginTop: 26 }}>
-        <div style={subLabel}>Хронология потерянных входов</div>
+        <div style={subLabel}>{t('Хронология потерянных входов', 'A chronology of the entries that were missed')}</div>
         <div style={{ ...card, padding: '16px 18px' }}>
           {[
-            { when: 'Декабрь 2025',  what: 'SKM @ $22 · EchoStar @ $24 · MNTN @ $1.05',                              tag: 'идеальный вход' },
-            { when: 'Январь 2026',   what: 'Anthropic Series G $380B · SpaceX IPO talks',                            tag: 'первый сигнал'   },
-            { when: 'Февраль 2026',  what: 'Anthropic Series H starts · MNTN re-rating · уже +30%',                  tag: 'половина пути'   },
-            { when: 'Апрель 2026',   what: 'SKM @ $30 · публичные bull-тезисы в мейнстриме',                          tag: 'осталось ~30%'   },
-            { when: 'Май 2026',      what: 'SpaceX S-1 · EchoStar @ $40',                                            tag: 'осталось ~20%'   },
-            { when: 'Июнь 2026',     what: 'Anthropic S-1 · SKM @ $44 · MNTN торгуется по NAV',                       tag: 'сейчас'           },
-            { when: '12 июня 2026',  what: 'SpaceX IPO',                                                              tag: 'окно закрыто'     },
+            { when: t('Декабрь 2025', 'December 2025'),  what: 'SKM @ $22 · EchoStar @ $24 · MNTN @ $1.05',                              tag: t('идеальный вход', 'the ideal entry') },
+            { when: t('Январь 2026', 'January 2026'),   what: 'Anthropic Series G $380B · SpaceX IPO talks',                            tag: t('первый сигнал', 'the first signal')   },
+            { when: t('Февраль 2026', 'February 2026'),  what: 'Anthropic Series H starts · MNTN re-rating · уже +30%',                  tag: t('половина пути', 'halfway')   },
+            { when: t('Апрель 2026', 'April 2026'),   what: 'SKM @ $30 · публичные bull-тезисы в мейнстриме',                          tag: 'осталось ~30%'   },
+            { when: t('Май 2026', 'May 2026'),      what: 'SpaceX S-1 · EchoStar @ $40',                                            tag: 'осталось ~20%'   },
+            { when: t('Июнь 2026', 'June 2026'),     what: 'Anthropic S-1 · SKM @ $44 · MNTN торгуется по NAV',                       tag: t('сейчас', 'now')           },
+            { when: t('12 июня 2026', '12 June 2026'),  what: 'SpaceX IPO',                                                              tag: t('окно закрыто', 'the window closed')     },
           ].map((row, i, arr) => (
             <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', marginBottom: i < arr.length - 1 ? 12 : 0 }}>
               <div style={{ width: 110, textAlign: 'right', fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint, paddingTop: 2 }}>{row.when}</div>

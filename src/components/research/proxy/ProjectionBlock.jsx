@@ -9,6 +9,7 @@ import {
   Tooltip, ResponsiveContainer, ReferenceArea, Legend,
 } from 'recharts';
 import projection from '../../../data/proxy-projection.json';
+import { useT } from '../../../lib/i18n.jsx';
 
 function CustomTooltip({ active, payload, label, C }) {
   if (!active || !payload || !payload.length) return null;
@@ -19,7 +20,7 @@ function CustomTooltip({ active, payload, label, C }) {
       padding: '10px 12px', fontFamily: 'var(--sans)', minWidth: 180,
     }}>
       <div style={{ fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 6 }}>
-        Сценарий · {item?.scenarioLabel}
+        {t('Сценарий', 'Scenario')} · {item?.scenarioLabel}
       </div>
       <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: C.ink, marginBottom: 4 }}>
         OpenAI · <span style={{ color: C.emerald }}>+{label}%</span>
@@ -32,7 +33,7 @@ function CustomTooltip({ active, payload, label, C }) {
       ))}
       {item && item.gap > 0 && (
         <div style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${C.lineSoft}`, fontSize: 11, color: C.inkSoft }}>
-          Налог за прокси: <span style={{ fontFamily: 'var(--mono)', color: C.rose }}>−{item.gap} п.п.</span>
+          {t('Налог за прокси', 'Proxy tax')}: <span style={{ fontFamily: 'var(--mono)', color: C.rose }}>−{item.gap} {t('п.п.', 'pp')}</span>
         </div>
       )}
     </div>
@@ -40,9 +41,10 @@ function CustomTooltip({ active, payload, label, C }) {
 }
 
 export default function ProjectionBlock({ C, card, subLabel }) {
+  const t = useT();
   return (
     <div>
-      <div style={subLabel}>OpenAI прямой vs SoftBank · базовый конгломератный дисконт 40%</div>
+      <div style={subLabel}>{t('OpenAI прямой vs SoftBank · базовый конгломератный дисконт 40%', 'OpenAI direct vs SoftBank · base conglomerate discount 40%')}</div>
 
       <div style={{ ...card, padding: '18px 18px 8px' }}>
         <div style={{ width: '100%', height: 360 }}>
@@ -54,13 +56,13 @@ export default function ProjectionBlock({ C, card, subLabel }) {
                   напрямую, поэтому подсвечиваем правую часть графика как зону усиливающегося разрыва. */}
               <ReferenceArea x1={100} x2={300} fill={C.rose} fillOpacity={0.05} stroke="none" />
               <XAxis dataKey="openaiGrowth" stroke={C.inkFaint} tick={{ fill: C.inkFaint, fontSize: 11, fontFamily: 'var(--mono)' }}
-                tickFormatter={(v) => `+${v}%`} label={{ value: 'рост OpenAI', position: 'insideBottom', offset: -6, fill: C.inkFaint, fontSize: 11, fontFamily: 'var(--sans)' }} />
+                tickFormatter={(v) => `+${v}%`} label={{ value: t('рост OpenAI', 'OpenAI growth'), position: 'insideBottom', offset: -6, fill: C.inkFaint, fontSize: 11, fontFamily: 'var(--sans)' }} />
               <YAxis stroke={C.inkFaint} tick={{ fill: C.inkFaint, fontSize: 11, fontFamily: 'var(--mono)' }}
-                tickFormatter={(v) => `+${v}%`} label={{ value: 'доходность', angle: -90, position: 'insideLeft', offset: 18, fill: C.inkFaint, fontSize: 11, fontFamily: 'var(--sans)' }} />
+                tickFormatter={(v) => `+${v}%`} label={{ value: t('доходность', 'return'), angle: -90, position: 'insideLeft', offset: 18, fill: C.inkFaint, fontSize: 11, fontFamily: 'var(--sans)' }} />
               <Tooltip content={<CustomTooltip C={C} />} cursor={{ stroke: C.inkFaint, strokeDasharray: '3 3' }} />
               <Legend wrapperStyle={{ fontFamily: 'var(--sans)', fontSize: 12, color: C.inkSoft, paddingTop: 8 }} />
-              <Line type="monotone" dataKey="direct"   stroke={C.emerald} strokeWidth={2.4} dot={{ r: 4, fill: C.emerald }} name="OpenAI напрямую" />
-              <Line type="monotone" dataKey="softBank" stroke={C.teal}    strokeWidth={2.4} dot={{ r: 4, fill: C.teal    }} name="SoftBank (прокси)" />
+              <Line type="monotone" dataKey="direct"   stroke={C.emerald} strokeWidth={2.4} dot={{ r: 4, fill: C.emerald }} name={t('OpenAI напрямую', 'OpenAI directly')} />
+              <Line type="monotone" dataKey="softBank" stroke={C.teal}    strokeWidth={2.4} dot={{ r: 4, fill: C.teal    }} name={t('SoftBank (прокси)', 'SoftBank (proxy)')} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -72,14 +74,14 @@ export default function ProjectionBlock({ C, card, subLabel }) {
         background: C.cardAlt, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.teal}`,
         borderRadius: 8, fontSize: 12.5, color: C.ink, lineHeight: 1.55,
       }}>
-        <span style={{ fontWeight: 600, color: C.teal }}>Конгломератный налог: </span>
-        при росте OpenAI на +200% прямой инвестор получает 2.0x, держатель SoftBank — только ~1.25x.
-        Разрыв расширяется нелинейно вместе с ростом базового актива. Это плата за владение через холдинг.
+        <span style={{ fontWeight: 600, color: C.teal }}>{t('Конгломератный налог: ', 'The conglomerate tax: ')}</span>
+        {t(`при росте OpenAI на +200% прямой инвестор получает 2.0x, держатель SoftBank — только ~1.25x. Разрыв расширяется нелинейно вместе с ростом базового актива. Это плата за владение через холдинг.`,
+           `if OpenAI grows +200%, a direct investor gets 2.0x while a SoftBank holder gets only ~1.25x. The gap widens non-linearly with the underlying — that is the price of owning through a holding company.`)}
       </div>
 
       {/* Capture ratio matrix */}
       <div style={{ marginTop: 26 }}>
-        <div style={subLabel}>Capture ratio · что прокси реально передаёт держателю</div>
+        <div style={subLabel}>{t('Capture ratio · что прокси реально передаёт держателю', 'Capture ratio · what the proxy actually passes to the holder')}</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 12 }}>
           {projection.captureRatios.map((r) => (
             <div key={r.proxy} style={{ ...card, padding: '14px 16px' }}>
@@ -88,8 +90,8 @@ export default function ProjectionBlock({ C, card, subLabel }) {
                 <span style={{ fontFamily: 'var(--mono)', fontSize: 13, color: C.teal }}>{r.captureRatio}</span>
               </div>
               <div style={{ fontSize: 11.5, color: C.inkSoft, marginBottom: 6 }}>
-                <span style={{ color: C.inkFaint }}>актив: </span>{r.asset}
-                <span style={{ color: C.inkFaint }}> · концентрация: </span>{r.concentration}
+                <span style={{ color: C.inkFaint }}>{t('актив: ', 'asset: ')}</span>{r.asset}
+                <span style={{ color: C.inkFaint }}>{t(' · концентрация: ', ' · concentration: ')}</span>{r.concentration}
               </div>
               <div style={{ fontSize: 11.5, color: C.inkSoft, fontStyle: 'italic', lineHeight: 1.5 }}>{r.verdict}</div>
             </div>

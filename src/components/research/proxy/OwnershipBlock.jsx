@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { PieChart, Pie, Cell, Sector, ResponsiveContainer } from 'recharts';
 import ownership from '../../../data/proxy-ownership.json';
 import proxyTable from '../../../data/proxy-table.json';
+import { useT } from '../../../lib/i18n.jsx';
 
 // id блока ownership.json → asset name в proxy-table.json
 const ASSET_MAP = { spacex: 'SpaceX', openai: 'OpenAI', anthropic: 'Anthropic' };
@@ -122,7 +123,7 @@ function Donut({ C, company }) {
           ) : (
             <>
               <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkFaint, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 4 }}>
-                оценка
+                {t('оценка', 'estimate')}
               </span>
               <span style={{ fontFamily: 'var(--mono)', fontSize: 15, color: C.ink }}>
                 {total}%
@@ -178,7 +179,7 @@ function Top3List({ C, items }) {
     // SpaceX/Anthropic), Top 3 у всех карточек оказываются на одном уровне.
     <div style={{ marginTop: 'auto', paddingTop: 14, borderTop: `1px solid ${C.lineSoft}`, display: 'flex', flexDirection: 'column', gap: 7 }}>
       <div style={{ fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: C.inkFaint, fontWeight: 600, marginBottom: 2 }}>
-        Top 3 держателей · по размеру стейка
+        Top 3 {t('держателей · по размеру стейка', 'holders · by stake size')}
       </div>
       {items.map((row, i) => {
         const accent = rankColors[i] || C.inkFaint;
@@ -231,6 +232,7 @@ function Top3List({ C, items }) {
 }
 
 export default function OwnershipBlock({ C, subLabel }) {
+  const t = useT();
   return (
     <div>
       {/* Kill default SVG focus outline (the blue rectangle that appears on
@@ -246,12 +248,13 @@ export default function OwnershipBlock({ C, subLabel }) {
         .proxy-donut .recharts-pie-sector,
         .proxy-donut .recharts-sector { outline: none; }
       `}</style>
-      <div style={subLabel}>Три cap-table, нормализованные к 100% (оценочно) · наведите курсор на сектор</div>
+      <div style={subLabel}>{t('Три cap-table, нормализованные к 100% (оценочно) · наведите курсор на сектор', 'Three cap tables normalised to 100% (estimated) · hover a segment')}</div>
       <div className="proxy-donut" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, alignItems: 'stretch' }}>
         {ownership.companies.map((c) => <Donut key={c.id} C={C} company={c} />)}
       </div>
       <div style={{ marginTop: 16, fontSize: 11.5, color: C.inkFaint, fontStyle: 'italic', lineHeight: 1.55 }}>
-        Доли сотрудников и фондов VC/PE официально не раскрываются и приведены как наиболее устойчивые оценки из публичных источников. Категория «Маск и инсайдеры» для SpaceX — equity, не голосующая доля (Маск контролирует {'>'}82% голосов после IPO).
+        {t(`Доли сотрудников и фондов VC/PE официально не раскрываются и приведены как наиболее устойчивые оценки из публичных источников. Категория «Маск и инсайдеры» для SpaceX — equity, не голосующая доля (Маск контролирует {'>'}82% голосов после IPO).`,
+           `Employee and VC/PE fund stakes are not officially disclosed and are given here as the most defensible estimates from public sources. The “Musk and insiders” category for SpaceX is equity, not voting control (Musk holds {'>'}82% of the votes after the IPO).`)}
       </div>
     </div>
   );

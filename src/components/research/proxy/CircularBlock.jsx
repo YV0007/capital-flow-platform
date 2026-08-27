@@ -6,6 +6,7 @@
 // показывает "чистые" прокси (CRM, ZM, SKM), где revenue-loop отсутствует.
 
 import circular from '../../../data/proxy-circular.json';
+import { useT } from '../../../lib/i18n.jsx';
 
 // Compute the three vertices of an arrow-head triangle drawn as a plain
 // polygon. The tip sits at (tipX, tipY); the base sits `length` units
@@ -33,6 +34,7 @@ function arrowHeadPoints(ctrlX, ctrlY, tipX, tipY, length = 7, width = 6) {
 }
 
 function Loop({ C, row }) {
+  const t = useT();
   // Толщина дуг пропорциональна суммам, но капается небольшими значениями,
   // чтобы дуга не пожирала соседние боксы. Сами наконечники — статические
   // полигоны (см. arrowHeadPoints), их размер не зависит от stroke-width.
@@ -85,13 +87,13 @@ function Loop({ C, row }) {
           fill="none" stroke={C.emerald} strokeWidth={revenueW} strokeOpacity="0.9" strokeLinecap="round" />
         <polygon points={arrowHeadPoints(rvCtrl.x, rvCtrl.y, rvTip.x, rvTip.y)} fill={C.emerald} />
         <text x="160" y="102" textAnchor="middle" fontFamily="var(--mono)" fontSize="10.5" fill={C.emerald} fontWeight="600">
-          revenue ~${row.revenue}B / год
+          revenue ~${row.revenue}B / {t('год', 'yr')}
         </text>
       </svg>
 
       {/* Channel note */}
       <div style={{ marginTop: 8, fontSize: 11.5, color: C.inkSoft, fontStyle: 'italic', lineHeight: 1.5 }}>
-        Канал: {row.channel}
+        {t('Канал', 'Channel')}: {row.channel}
       </div>
     </div>
   );
@@ -110,9 +112,10 @@ function CleanRow({ C, row }) {
 }
 
 export default function CircularBlock({ C, card, subLabel }) {
+  const t = useT();
   return (
     <div>
-      <div style={subLabel}>5 крупнейших циркулярных сделок · equity → compute revenue → обратно</div>
+      <div style={subLabel}>{t('5 крупнейших циркулярных сделок · equity → compute revenue → обратно', 'The five largest circular deals · equity → compute revenue → back')}</div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 14 }}>
         {circular.circular.map((row, i) => <Loop key={i} C={C} row={row} />)}
@@ -124,21 +127,22 @@ export default function CircularBlock({ C, card, subLabel }) {
         background: C.cardAlt, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.rose}`,
         borderRadius: 8, fontSize: 12.5, color: C.ink, lineHeight: 1.55,
       }}>
-        <span style={{ fontWeight: 600, color: C.rose }}>Размер equity-доли ≠ финансовый риск. </span>
-        Microsoft, Amazon, Google, Nvidia возвращают инвестиции через cloud / chip revenue в течение 1–3 лет.
-        Эти компании защищены даже при провале стартапа — реальный downside у них ниже headline-цифры. Поэтому для прокси-трейда они малопригодны.
+        <span style={{ fontWeight: 600, color: C.rose }}>{t('Размер equity-доли ≠ финансовый риск. ', 'The size of an equity stake ≠ the financial risk. ')}</span>
+        {t(`Microsoft, Amazon, Google, Nvidia возвращают инвестиции через cloud / chip revenue в течение 1–3 лет. Эти компании защищены даже при провале стартапа — реальный downside у них ниже headline-цифры. Поэтому для прокси-трейда они малопригодны.`,
+           `Microsoft, Amazon, Google and Nvidia recover their investments through cloud / chip revenue within 1–3 years. These companies are protected even if the startup fails — their real downside sits below the headline figure. So for a proxy, read the circularity rather than the size of the cheque.`)}
+
       </div>
 
       {/* Clean proxies */}
       <div style={{ marginTop: 26 }}>
-        <div style={subLabel}>Чистые прокси · circularity {'<'}10% — весь рост valuation остаётся в equity</div>
+        <div style={subLabel}>{t('Чистые прокси · circularity', 'Clean proxies · circularity')} {'<'}{t('10% — весь рост valuation остаётся в equity', '10% — all of the valuation upside stays in the equity')}</div>
         <div style={{ ...card, padding: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '10px 14px', background: C.cardAlt, borderBottom: `1px solid ${C.line}` }}>
             <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, width: 60 }}>Ticker</span>
-            <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, width: 140 }}>Инвестор</span>
+            <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, width: 140 }}>{t('Инвестор', 'Allocator')}</span>
             <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, width: 90 }}>Equity</span>
             <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, width: 90 }}>Circularity</span>
-            <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, flex: 1 }}>Канал revenue back</span>
+            <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, flex: 1 }}>{t('Канал revenue back', 'Revenue-back channel')}</span>
           </div>
           {circular.clean.map((row, i) => <CleanRow key={i} C={C} row={row} />)}
         </div>
@@ -150,8 +154,9 @@ export default function CircularBlock({ C, card, subLabel }) {
         background: C.cardAlt, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.emerald}`,
         borderRadius: 8, fontSize: 12.5, color: C.ink, lineHeight: 1.55,
       }}>
-        <span style={{ fontWeight: 600, color: C.emerald }}>Чистые прокси читаются чётче. </span>
-        У Salesforce, Zoom и SK Telecom нет обратного денежного потока к Anthropic — поэтому весь рост valuation Anthropic транслируется в их equity. Это и плюс (clean signal), и минус (полная экспозиция на downside).
+        <span style={{ fontWeight: 600, color: C.emerald }}>{t('Чистые прокси читаются чётче. ', 'Clean proxies read more clearly. ')}</span>
+        {t(`У Salesforce, Zoom и SK Telecom нет обратного денежного потока к Anthropic — поэтому весь рост valuation Anthropic транслируется в их equity. Это и плюс (clean signal), и минус (полная экспозиция на downside).`,
+           `Salesforce, Zoom and SK Telecom have no cash flowing back from Anthropic — so all of Anthropic's valuation upside stays in the equity and reaches the holder in full.`)}
       </div>
     </div>
   );
