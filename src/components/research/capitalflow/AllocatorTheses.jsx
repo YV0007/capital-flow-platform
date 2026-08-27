@@ -19,6 +19,7 @@ import { useState } from 'react';
 import { X, Sparkles, ShieldCheck } from 'lucide-react';
 import { fmtUSD, plural } from './format.js';
 import { CLASS_META, SECTOR_META, sectorLabel } from '../../../data/capitalMap.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -41,6 +42,7 @@ function thesisOf(node) {
 }
 
 export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset = 0 }) {
+  const t = useT();
   const [clsFilter, setClsFilter] = useState(null);   // null = все классы
 
   const all = nodes
@@ -82,13 +84,14 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 4 }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em' }}>
-              Тезисы инвесторов
+              {t('Тезисы инвесторов', 'Allocator theses')}
             </div>
             <div style={{ fontSize: 11, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 4 }}>
-              Кто вкладывает, в каком статусе и почему — вся отслеживаемая вселенная инвесторов на одном экране
+              {t('Кто вкладывает, в каком статусе и почему — вся отслеживаемая вселенная инвесторов на одном экране',
+             'Who deploys, at what standing and why — the whole tracked allocator universe on one screen')}
             </div>
           </div>
-          <button onClick={onClose} title="Закрыть"
+          <button onClick={onClose} title={t('Закрыть', 'Close')}
             style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 4, lineHeight: 0 }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -106,33 +109,41 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
             textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8,
             display: 'flex', alignItems: 'center', gap: 6,
           }}>
-            <Sparkles size={11} color="var(--cf-warn)" /> Как отбирали
+            <Sparkles size={11} color="var(--cf-warn)" /> {t('Как отбирали', 'How they were selected')}
           </div>
           <p style={{ margin: 0, fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>
-            Закрываем весь круг инвесторов — от ангелов до государств: ангелы (Gil, Tan) → венчур (a16z, Sequoia)
+            {t(`Закрываем весь круг инвесторов — от ангелов до государств: ангелы (Gil, Tan) → венчур (a16z, Sequoia)
             → поздние раунды (Coatue, Thrive) → инфраструктура и долг (Brookfield, Blackstone) → корпорации (NVIDIA)
-            → государства (США, PIF).
+            → государства (США, PIF).`,
+               `We cover the full circle of allocators, from angels to states: angels (Gil, Tan) → venture (a16z, Sequoia)
+            → late rounds (Coatue, Thrive) → infrastructure and debt (Brookfield, Blackstone) → corporates (NVIDIA)
+            → states (the US, PIF).`)}
           </p>
           <p style={{ margin: '8px 0 0', fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>
-            В каждом звене берём <strong style={{ color: 'var(--cf-text0)' }}>ключевых</strong> аллокаторов — тех,
-            кто задаёт цену и условия раунда, а не добирает по чужой оценке, и за чьим входом подтягиваются остальные.
+            {t('В каждом звене берём', 'In every link we take the')} <strong style={{ color: 'var(--cf-text0)' }}>{t('ключевых', 'key')}</strong>{' '}
+            {t(`аллокаторов — тех, кто задаёт цену и условия раунда, а не добирает по чужой оценке, и за чьим входом подтягиваются остальные.
             Плюс проверяемая история: они находили компании рано, до того как те стали очевидными — Тиль в PayPal и
-            Palantir, Sequoia в Apple и NVIDIA, Founders Fund в SpaceX и Anduril.
+            Palantir, Sequoia в Apple и NVIDIA, Founders Fund в SpaceX и Anduril.`,
+               `allocators — the ones who set the price and the terms of a round rather than topping up at someone else's mark, and whose entry pulls the rest in.
+            Plus a checkable history: they found companies early, before those companies were obvious — Thiel in PayPal and
+            Palantir, Sequoia in Apple and NVIDIA, Founders Fund in SpaceX and Anduril.`)}
           </p>
           <p style={{ margin: '8px 0 0', fontSize: 12.5, color: 'var(--cf-text4)', lineHeight: 1.65 }}>
-            Смысл в том, что одна тема проходит этот круг снизу вверх: сначала заходит ангел, через год — венчур,
-            ещё через год — инфраструктурный фонд.
+            {t(`Смысл в том, что одна тема проходит этот круг снизу вверх: сначала заходит ангел, через год — венчур,
+            ещё через год — инфраструктурный фонд.`,
+               `The point is that one theme travels this circle from the bottom up: the angel goes in first, venture a year later,
+            an infrastructure fund a year after that.`)}
           </p>
         </div>
 
         {/* Mini metrics */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 8, marginBottom: 20 }}>
           <div style={{ padding: '9px 11px', background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 8 }}>
-            <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em' }}>Всего инвесторов</div>
+            <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em' }}>{t('Всего инвесторов', 'Allocators in total')}</div>
             <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--cf-text0)', marginTop: 3 }}>{allocators.length}</div>
           </div>
           <div style={{ padding: '9px 11px', background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 8, gridColumn: 'span 3' }}>
-            <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 5 }}>Топ секторов — куда вкладывают</div>
+            <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 5 }}>{t('Топ секторов — куда вкладывают', 'Top sectors — where they deploy')}</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
               {topAggSectors.map(([key, cap]) => (
                 <span key={key} style={{ fontSize: 11.5, color: 'var(--cf-text2)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
@@ -149,7 +160,7 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
           <span style={{
             fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
             textTransform: 'uppercase', letterSpacing: '0.09em', marginRight: 2,
-          }}>Класс инвестора</span>
+          }}>{t('Класс инвестора', 'Allocator class')}</span>
           <button onClick={() => setClsFilter(null)}
             style={{
               padding: '4px 10px', borderRadius: 7, cursor: 'pointer',
@@ -158,7 +169,7 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
               color: clsFilter === null ? 'var(--cf-accent)' : 'var(--cf-text3)',
               fontSize: 10, fontFamily: MONO, fontWeight: 600,
             }}>
-            Все · {all.length}
+            {t('Все', 'All')} · {all.length}
           </button>
           {classChips.map(([cls, count]) => {
             const on = clsFilter === cls;
@@ -184,7 +195,7 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid var(--cf-border)' }}>
-                {['Инвестор', 'Тип', 'Во что вкладывает', 'Тезис'].map(h => (
+                {[t('Инвестор', 'Allocator'), t('Тип', 'Type'), t('Во что вкладывает', 'What it backs'), t('Тезис', 'Thesis')].map(h => (
                   <th key={h} style={{
                     textAlign: 'left', padding: '7px 10px', fontSize: 9.5, color: 'var(--cf-text6)',
                     fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em',
@@ -199,7 +210,7 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
                 const thesis = thesisOf(n);
                 return (
                   <tr key={n.id} onClick={() => onOpenEntity(n.id)}
-                    title={`Открыть ${n.name} на карте`}
+                    title={t(`Открыть ${n.name} на карте`, `Open ${n.name} on the map`)}
                     style={{ cursor: 'pointer', borderBottom: '1px solid var(--cf-border-hair)' }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-surface1)')}
                     onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
@@ -220,7 +231,7 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
                     <td style={{ padding: '9px 10px', minWidth: 320, verticalAlign: 'top' }}>
                       {thesis
                         ? <span style={{ fontSize: 11.5, color: 'var(--cf-text2)', lineHeight: 1.5 }}>{thesis}</span>
-                        : <span style={{ fontSize: 11, color: 'var(--cf-text8)', fontStyle: 'italic' }}>Тезис в данных пока не описан</span>}
+                        : <span style={{ fontSize: 11, color: 'var(--cf-text8)', fontStyle: 'italic' }}>{t('Тезис в данных пока не описан', 'No thesis described in the data yet')}</span>}
                     </td>
                   </tr>
                 );
@@ -242,31 +253,47 @@ export default function AllocatorTheses({ nodes, onOpenEntity, onClose, topInset
             textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8,
             display: 'flex', alignItems: 'center', gap: 6,
           }}>
-            <ShieldCheck size={11} color="var(--cf-warn)" /> Что попадает на карту
+            <ShieldCheck size={11} color="var(--cf-warn)" /> {t('Что попадает на карту', 'What reaches the map')}
           </div>
           <p style={{ margin: 0, fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>
-            На карту идёт только реальная инвестиция — деньги вложены или твёрдо обещаны: раунд, докупка доли,
+            {t(`На карту идёт только реальная инвестиция — деньги вложены или твёрдо обещаны: раунд, докупка доли,
             покупка компании, запуск фонда, госгрант, проектное финансирование. Запуск продукта, наём, партнёрство
-            без денег или соглашение о намерениях на карту не попадают — это новость, а не вложение.
+            без денег или соглашение о намерениях на карту не попадают — это новость, а не вложение.`,
+               `Only a real investment reaches the map — money deployed or firmly committed: a round, a top-up, an
+            acquisition, a fund launch, a state grant, project finance. A product launch, a hire, a partnership
+            with no money behind it or a memorandum of intent do not — those are news, not an investment.`)}
           </p>
           <p style={{ margin: '10px 0 0', fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>
-            Каждая инвестиция получает статус по источнику:
+            {t('Каждая инвестиция получает статус по источнику:', 'Every investment is given a status by its source:')}
           </p>
           <ul style={{ margin: '6px 0 0', paddingLeft: 18, fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>
-            <li><strong style={{ color: 'var(--cf-text0)' }}>Подтверждённая</strong> — есть первоисточник: отчётность в SEC, официальный релиз, страница инвестора, госбаза.</li>
-            <li><strong style={{ color: 'var(--cf-text0)' }}>Вероятная</strong> — первоисточника нет, но два независимых издания говорят одно и то же.</li>
-            <li><strong style={{ color: 'var(--cf-text0)' }}>Кандидат</strong> — один источник или слух. Кандидаты видны на карте, но в сигналы не идут: неподтверждённая сделка не должна двигать статистику.</li>
+            <li><strong style={{ color: 'var(--cf-text0)' }}>{t('Подтверждённая', 'Verified')}</strong>{' '}
+              {t('— есть первоисточник: отчётность в SEC, официальный релиз, страница инвестора, госбаза.',
+                 '— a primary source exists: an SEC filing, an official release, the allocator\'s own page, a government database.')}</li>
+            <li><strong style={{ color: 'var(--cf-text0)' }}>{t('Вероятная', 'Probable')}</strong>{' '}
+              {t('— первоисточника нет, но два независимых издания говорят одно и то же.',
+                 '— no primary source, but two independent outlets say the same thing.')}</li>
+            <li><strong style={{ color: 'var(--cf-text0)' }}>{t('Кандидат', 'Candidate')}</strong>{' '}
+              {t('— один источник или слух. Кандидаты видны на карте, но в сигналы не идут: неподтверждённая сделка не должна двигать статистику.',
+                 '— a single source or a rumour. Candidates are visible on the map but never feed a signal: an unconfirmed deal must not move the statistics.')}</li>
           </ul>
           <p style={{ margin: '10px 0 0', fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.65 }}>
-            Ссылка ведёт на конкретный документ, который доказывает факт инвестиции. Сумма — та, что вложил
+            {t(`Ссылка ведёт на конкретный документ, который доказывает факт инвестиции. Сумма — та, что вложил
             конкретный инвестор; если раскрыт только весь раунд, это помечается отдельно. Оценка компании никогда
-            не превращается в сумму сделки, и если раунд вели двое, сумма не удваивается.
+            не превращается в сумму сделки, и если раунд вели двое, сумма не удваивается.`,
+               `The link points at the specific document that proves the investment. The amount is what that particular
+            allocator put in; where only the whole round is disclosed, that is flagged separately. A valuation never
+            becomes a deal size, and where two parties co-led a round the amount is not double-counted.`)}
           </p>
           <p style={{ margin: '10px 0 0', fontSize: 12.5, color: 'var(--cf-text4)', lineHeight: 1.65 }}>
-            Сигнал — это не одна сделка, а сходимость: когда несколько ключевых аллокаторов независимо заходят в
+            {t(`Сигнал — это не одна сделка, а сходимость: когда несколько ключевых аллокаторов независимо заходят в
             один сектор за короткий срок, движок фиксирует это и показывает, кто именно и когда. Перед публикацией
             всё проходит проверку — если у подтверждённой сделки нет источника или сумма противоречит раунду,
-            выгрузка не уходит, пока не исправлено.
+            выгрузка не уходит, пока не исправлено.`,
+               `A signal is not one deal but a convergence: when several key allocators independently enter one sector
+            inside a short window, the engine records it and shows exactly who and when. Everything is checked before
+            publication — if a confirmed deal has no source, or an amount contradicts the round, the delivery does not
+            ship until it is fixed.`)}
           </p>
         </div>
       </div>
