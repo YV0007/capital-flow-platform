@@ -48,7 +48,10 @@ const TOLOKA = { deployedUsd: 1_400_000, avgCheckUsd: 66_700 };
 // Funding-based filters (replace the old sector filter). Each tests a
 // company's investment record. A company matches the active set if it
 // satisfies ANY selected filter.
-const FUNDING_FILTERS = [
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const fundingFilters = (t) => ([
   { key: 'external', label: t('С внешними инвесторами', 'With external investors'),
     match: (inv) => inv?.tier === 'external' && (inv.external_investors || []).length > 0 },
   { key: 'yconly', label: t('Только сделка YC', 'YC deal only'),
@@ -59,7 +62,7 @@ const FUNDING_FILTERS = [
     match: (inv) => (inv?.non_equity || []).length > 0 },
   { key: 'nocap', label: t('Оценка не зафиксирована', 'Valuation not recorded'),
     match: (inv) => inv?.cap === t('не зафиксирована', 'not recorded') },
-];
+]);
 
 export default function YCLanding({ companies, onOpen }) {
   const t = useT();
@@ -84,7 +87,7 @@ export default function YCLanding({ companies, onOpen }) {
       }
       if (activeFunding.size > 0) {
         const inv = investmentData.companies?.[c.id];
-        const ok = FUNDING_FILTERS.some(f => activeFunding.has(f.key) && f.match(inv));
+        const ok = fundingFilters(t).some(f => activeFunding.has(f.key) && f.match(inv));
         if (!ok) return false;
       }
       return true;
@@ -252,7 +255,7 @@ function FundingFilter({ active, onToggle, onClear }) {
         letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase',
         marginRight: 2,
       }}>{t('Финансирование', 'Funding')}</span>
-      {FUNDING_FILTERS.map(f => {
+      {fundingFilters(t).map(f => {
         const on = active.has(f.key);
         return (
           <button

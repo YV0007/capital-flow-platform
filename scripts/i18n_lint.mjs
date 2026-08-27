@@ -48,11 +48,59 @@ function closeParen(s, from) {
 const CALLS_T = /[^A-Za-z0-9_.]t\(['"`]/;
 const problems = [];
 
+/**
+ * `t(…)` inside a top-level `const X = …` INITIALIZER.
+ *
+ * Everything at module scope is evaluated at import time, when `t` does not
+ * exist — the file throws a ReferenceError and takes the bundle down before a
+ * single component renders. A declaration whose initializer is itself a
+ * function (`const cols = (t) => […]`) is fine: the call happens later, with
+ * `t` supplied, which is exactly the fix for this bug.
+ */
+function moduleScopeCalls(src) {
+  const out = [];
+  const re = /^(?:export )?const [A-Za-z_$][\w$]* =\s*/gm;
+  let m;
+  while ((m = re.exec(src))) {
+    const start = m.index + m[0].length;
+    // A function initializer defers evaluation — not a problem.
+    if (/^(?:\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>/.test(src.slice(start, start + 120))) continue;
+    if (/^(?:async\s+)?function\b/.test(src.slice(start, start + 20))) continue;
+
+    // Walk the initializer to its terminating semicolon at depth 0.
+    let i = start, depth = 0;
+    while (i < src.length) {
+      const c = src[i];
+      if (c === '\'' || c === '"' || c === '`') {
+        const q = c; i++;
+        while (i < src.length && src[i] !== q) { if (src[i] === '\\') i++; i++; }
+      } else if ('{[('.includes(c)) depth++;
+      else if ('}])'.includes(c)) depth--;
+      else if (c === ';' && depth <= 0) break;
+      i++;
+    }
+    const body = src.slice(start, i);
+    if (/[^A-Za-z0-9_.$]t\(['"`]/.test(' ' + body)) {
+      out.push(src.slice(0, m.index).split('\n').length);
+    }
+  }
+  return out;
+}
+
+
 for (const file of walk(ROOT)) {
   const s = readFileSync(file, 'utf8');
   const rel = file.slice(ROOT.length - 3);
 
   if (s.includes('t(t(')) problems.push([rel, 'nested t(t(...))']);
+
+  // Module-scope evaluation is checked BEFORE the useT() gate: a file can
+  // import the translator, never call the hook, and still blow up at import
+  // because a const table calls t(). That is exactly YCDetailHero, 2026-08-24.
+  for (const line of moduleScopeCalls(s)) {
+    problems.push([rel, `line ${line}: t(…) is called at module scope, where the translator does not exist yet — make the table a function of \`t\`, or use bi()/biMap() getters`]);
+  }
+
   if (!s.includes('useT()')) continue;
 
   // A callback parameter named `t`, in a body that also translates.

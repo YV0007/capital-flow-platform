@@ -7,11 +7,14 @@
 import windowData from '../../../data/proxy-window.json';
 import { useT, plural } from '../../../lib/i18n.jsx';
 
-const STATUS_TONE = {
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const statusTone = (t) => ({
   open:      { label: t('Открыто', 'Open'),       bg: 'rgba(70,194,155,0.16)', fg: '#46C29B', border: 'rgba(70,194,155,0.4)' },
   narrowing: { label: t('Сужается', 'Narrowing'),      bg: 'rgba(203,170,82,0.16)', fg: '#CBAA52', border: 'rgba(203,170,82,0.4)' },
   dead:      { label: t('Окно закрыто', 'Window closed'),  bg: 'rgba(239,111,111,0.14)', fg: '#EF6F6F', border: 'rgba(239,111,111,0.4)' },
-};
+});
 
 const TRACK_TONE = {
   open:      '#46C29B',
@@ -21,7 +24,7 @@ const TRACK_TONE = {
 
 function Row({ C, company, horizonDays }) {
   const t = useT();
-  const tone = STATUS_TONE[company.status];
+  const tone = statusTone(t)[company.status];
   const trackColor = TRACK_TONE[company.status];
   // ширина "съеденной" части = (horizon - days) / horizon. Чем ближе IPO,
   // тем сильнее заполнен трек.

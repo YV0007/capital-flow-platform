@@ -17,12 +17,15 @@ const ASSETS = ['SpaceX', 'OpenAI', 'Anthropic'];
 // "Лучшие" удалены как отдельный фильтр — теперь это синоним Top Picks.
 // На уровне данных Top Picks всё ещё имеют rating='best' (зелёная полоса),
 // но фильтр-чип "Лучшие" не показывается, чтобы не дублировать "Top Picks".
-const RATINGS = [
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const ratings = (t) => ([
   { id: 'top',      label: 'Top Picks' },
   { id: 'moderate', label: t('Средние', 'Moderate')   },
   { id: 'avoid',    label: t('Избегать', 'Avoid')  },
   { id: 'all',      label: t('Все', 'All')       },
-];
+]);
 
 const RATING_BORDER = {
   best:     '#46C29B',
@@ -30,13 +33,16 @@ const RATING_BORDER = {
   avoid:    '#EF6F6F',
 };
 
-const HEAD_COLS = [
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const headCols = (t) => ([
   { id: 'ticker',       label: 'Ticker',     align: 'left',  width: 90  },
   { id: 'name',         label: t('Название', 'Name'),   align: 'left',  width: 210 },
   { id: 'sector',       label: t('Сектор', 'Sector'),     align: 'left',  width: 150 },
   { id: 'asset',        label: t('Актив', 'Asset'),      align: 'left',  width: 110 },
   { id: 'stakeUsdNum',  label: t('Стейк USD', 'Stake USD'),  align: 'right', width: 130 },
-];
+]);
 
 export default function TopProxiesBlock({ C, subLabel }) {
   const t = useT();
@@ -108,7 +114,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
           {ASSETS.map((a) => chip(asset === a, () => { setAsset(a); setOpenRow(null); }, a, assetCounts[a]))}
           <span style={{ width: 1, height: 20, background: C.line, margin: '0 6px' }} />
           <span style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkFaint, marginRight: 4 }}>{t('Точка входа:', 'Entry point:')}</span>
-          {RATINGS.map((r) => chip(rating === r.id, () => { setRating(r.id); setOpenRow(null); }, r.label))}
+          {ratings(t).map((r) => chip(rating === r.id, () => { setRating(r.id); setOpenRow(null); }, r.label))}
           <div style={{ marginLeft: 'auto' }}>
             <input value={search} onChange={(e) => { setSearch(e.target.value); setOpenRow(null); }} placeholder={t('Поиск ticker / название…', 'Search ticker / name…')}
               style={{
@@ -127,7 +133,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
             <tr>
               {/* gutter for rating stripe */}
               <th style={{ width: 4, padding: 0, background: C.card, borderBottom: `1px solid ${C.line}` }} />
-              {HEAD_COLS.map((col) => {
+              {headCols(t).map((col) => {
                 const active = sortCol === col.id;
                 return (
                   <th key={col.id} onClick={() => onSort(col.id)}
@@ -165,7 +171,7 @@ export default function TopProxiesBlock({ C, subLabel }) {
             })}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={HEAD_COLS.length + 2} style={{ padding: 28, textAlign: 'center', color: C.inkFaint, fontSize: 12.5, fontStyle: 'italic' }}>
+                <td colSpan={headCols(t).length + 2} style={{ padding: 28, textAlign: 'center', color: C.inkFaint, fontSize: 12.5, fontStyle: 'italic' }}>
                   {t('Нет строк под текущие фильтры.', 'No rows match the current filters.')}
                 </td>
               </tr>

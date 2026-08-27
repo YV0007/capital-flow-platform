@@ -37,13 +37,16 @@ const finModules = import.meta.glob('../../data/holdings-v2/financial/*.json', {
 const FIN = {};
 for (const p in finModules) { const d = finModules[p].default || finModules[p]; if (d && d.id) FIN[d.id] = d; }
 
-const TIERS = [
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const tiers = (t) => ([
   { id: 'substance', label: t('Факты', 'Facts'), color: C.teal },
   { id: 'context', label: t('Проверки и риски', 'Checks and risks'), color: C.blue },
   { id: 'voice', label: t('Что говорит менеджмент', 'What management says'), color: C.gold },
   { id: 'signals', label: t('Выводы и наблюдение', 'Conclusions and watch'), color: C.violet },
-];
-const tierColor = (t) => (TIERS.find((x) => x.id === t) || {}).color || C.teal;
+]);
+const tierColor = (t) => (tiers(t).find((x) => x.id === t) || {}).color || C.teal;
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Lightweight markdown renderer (headers, bold, code, links, lists, tables,
@@ -388,12 +391,15 @@ function RecentMoves({ items }) {
 //  News block — recent news / insider moves / corporate events, 2-col grid
 // ═══════════════════════════════════════════════════════════════════════════
 
-const NEWS_META = {
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const newsMeta = (t) => ({
   news:         { label: t('Новость', 'News'),   glyph: '✦', color: C.teal },
   insider:      { label: t('Инсайдеры', 'Insiders'), glyph: '↓', color: C.clay },
   announcement: { label: t('Анонс', 'Announcement'),     glyph: '◎', color: C.blue },
   dividend:     { label: t('Дивиденд', 'Dividend'),  glyph: '$', color: C.gold },
-};
+});
 
 function NewsBlock({ items }) {
   const t = useT();
@@ -402,7 +408,7 @@ function NewsBlock({ items }) {
       <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 12 }}>{t('Новости и события', 'News and events')}</div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
         {items.map((n, i) => {
-          const m = NEWS_META[n.type] || NEWS_META.news;
+          const m = newsMeta(t)[n.type] || newsMeta(t).news;
           return (
             <div key={i} style={{ display: 'flex', flexDirection: 'column', background: C.card, border: `1px solid ${C.line}`, borderRadius: 6, overflow: 'hidden', height: '100%' }}>
               {n.image && (
@@ -457,7 +463,7 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide, onOpe
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{idx + 1} / {secs.length}</span>
       </div>
 
-      <div style={{ marginBottom: 8, fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: col }}>{sec.n} · {(TIERS.find((t) => t.id === sec.tier) || {}).label}</div>
+      <div style={{ marginBottom: 8, fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: col }}>{sec.n} · {(tiers(t).find((t) => t.id === sec.tier) || {}).label}</div>
       <h1 style={{ fontFamily: 'var(--serif)', fontSize: 34, fontWeight: 500, lineHeight: 1.1, letterSpacing: '-.02em', margin: '0 0 6px', color: C.ink }}>{sec.title}</h1>
       {sec.sub && <p style={{ fontSize: 14, color: C.inkSoft, fontStyle: 'italic', margin: '0 0 22px' }}>{sec.sub}</p>}
       <div style={{ height: 1, background: C.line, margin: '0 0 22px' }} />
@@ -768,7 +774,7 @@ export default function HoldingsV2({ onBack }) {
                 style={{ display: 'flex', alignItems: 'center', height: '100%', background: 'transparent', border: 'none', padding: '0 12px', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: deepIdx == null ? 600 : 500, color: deepIdx == null ? C.ink : C.inkSoft, borderBottom: `2px solid ${deepIdx == null ? C.teal : 'transparent'}`, transition: 'color .15s', whiteSpace: 'nowrap' }}>
                 {t('Обзор', 'Overview')}
               </button>
-              {TIERS.map((tier) => {
+              {tiers(t).map((tier) => {
                 const secs = data.sections.map((s, i) => ({ s, i })).filter(({ s }) => s.tier === tier.id);
                 if (!secs.length) return null;
                 const activeInTier = deepIdx != null && secs.some(({ i }) => i === deepIdx);
@@ -897,7 +903,7 @@ export default function HoldingsV2({ onBack }) {
             {data.sections.map((sec) => {
               const cfg = bentoLayout[sec.id] || { span: 'col-span-1', accent: C.teal, preview: 'number' };
               if (cfg.span === 'hidden') return null;
-              const tier = TIERS.find((t) => t.id === sec.tier);
+              const tier = tiers(t).find((t) => t.id === sec.tier);
               const idx = data.sections.indexOf(sec);
               return (
                 <div key={sec.id} className={`tile ${cfg.span}`} onClick={() => setDeepIdx(idx)} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `2px solid ${cfg.accent}`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', minHeight: 140 }}>

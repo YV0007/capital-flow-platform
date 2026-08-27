@@ -34,14 +34,20 @@ const fmtDate = (s) => {
   } catch { return s; }
 };
 
-const INVESTOR_TYPE = {
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const investorType = (t) => ({
   fund:        { label: t('фонд', 'fund'),     color: '#34d399', bg: 'rgba(52,211,153,0.10)',  border: 'rgba(52,211,153,0.35)' },
   vc:          { label: t('фонд', 'fund'),     color: '#34d399', bg: 'rgba(52,211,153,0.10)',  border: 'rgba(52,211,153,0.35)' },
   angel:       { label: t('ангел', 'angel'),    color: '#f59e0b', bg: 'rgba(245,158,11,0.10)',  border: 'rgba(245,158,11,0.35)' },
   accelerator: { label: t('акселератор', 'accelerator'), color: '#a78bfa', bg: 'rgba(167,139,250,0.10)', border: 'rgba(167,139,250,0.35)' },
-};
+});
 
-const MOMENTUM_TYPE = {
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const momentumType = (t) => ({
   product:     { label: t('продукт', 'product'),    color: '#22D3EE' },
   funding:     { label: t('раунд', 'round'),      color: '#10b981' },
   hiring:      { label: t('найм', 'hiring'),       color: '#ec4899' },
@@ -49,7 +55,7 @@ const MOMENTUM_TYPE = {
   partnership: { label: t('партнёрство', 'partnership'), color: '#a78bfa' },
   press:       { label: t('пресса', 'press'),     color: '#f59e0b' },
   milestone:   { label: t('веха', 'milestone'),       color: '#60a5fa' },
-};
+});
 
 // ─────────────────────────────────────────────────────────────────────────
 export default function YCResearchSections({ research, company }) {
@@ -219,7 +225,7 @@ function InvestmentSection({ invest, meta }) {
           <SubBlock label={t('Внешние инвесторы (сверх YC)', 'External investors (beyond YC)')}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {external.map((inv, i) => {
-                const kind = INVESTOR_TYPE[inv.type] || INVESTOR_TYPE.fund;
+                const kind = investorType(t)[inv.type] || investorType(t).fund;
                 return (
                   <div key={i} style={{
                     display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap',
@@ -518,7 +524,7 @@ function MomentumSection({ events }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {sorted.map((e, i) => {
-        const kind = MOMENTUM_TYPE[e.type] || { label: e.type, color: '#a1a1aa' };
+        const kind = momentumType(t)[e.type] || { label: e.type, color: '#a1a1aa' };
         return (
           <div key={i} style={{
             display: 'flex', gap: 14, alignItems: 'stretch',

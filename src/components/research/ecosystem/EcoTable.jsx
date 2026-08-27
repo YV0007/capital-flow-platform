@@ -22,7 +22,9 @@ import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
-const COLUMNS = [
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it. Same failure as 2026-08-24.
+const columns = (t) => [
   { key: 'name',        label: t('Сущность', 'Entity'),  w: '1.3fr', align: 'left'  },
   { key: 'role',        label: t('Роль', 'Role'),      w: '76px',  align: 'left'  },
   { key: 'sector',      label: t('Функция', 'Function'),   w: '1fr',   align: 'left'  },
@@ -39,7 +41,7 @@ const COLUMNS = [
   { key: 'risk',        label: t('Риск', 'Risk'),      w: '74px',  align: 'left'  },
   { key: 'links',       label: t('Связей', 'Links'),    w: '82px',  align: 'right', num: true },
 ];
-const GRID = COLUMNS.map(c => c.w).join(' ');
+
 const FACTOR_BY_KEY = Object.fromEntries(CRITICALITY_FACTORS.map(f => [f.key, f]));
 
 const RISK_ORDER = { critical: 3, high: 2, medium: 1, low: 0 };
@@ -68,6 +70,8 @@ export default function EcoTable({
   entities, layers, layerById, query, visibleEntities, onOpenEntity, topInset = 0,
 }) {
   const t = useT();
+  const COLS = useMemo(() => columns(t), [t]);
+  const GRID = useMemo(() => COLS.map(c => c.w).join(' '), [COLS]);
   const [sort, setSort] = useState({ key: 'criticality', dir: -1 });
   const [grouped, setGrouped] = useState(true);
   const [onlyVisible, setOnlyVisible] = useState(false);
@@ -149,7 +153,7 @@ export default function EcoTable({
         padding: '8px 18px', borderBottom: '1px solid var(--cf-border)',
         flexShrink: 0, background: 'var(--cf-canvas)',
       }}>
-        {COLUMNS.map(c => {
+        {COLS.map(c => {
           const active = sort.key === c.key;
           const f = c.factor ? FACTOR_BY_KEY[c.factor] : null;
           return (
@@ -207,7 +211,7 @@ export default function EcoTable({
                 <span style={{ fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO }}>{g.rows.length}</span>
               </div>
             )}
-            {g.rows.map(n => <Row key={n.id} n={n} layerById={layerById} onOpen={onOpenEntity} />)}
+            {g.rows.map(n => <Row key={n.id} n={n} grid={GRID} layerById={layerById} onOpen={onOpenEntity} />)}
           </div>
         ))}
       </div>
@@ -215,13 +219,13 @@ export default function EcoTable({
   );
 }
 
-function Row({ n, layerById, onOpen }) {
+function Row({ n, grid, layerById, onOpen }) {
   const t = useT();
   const cb = criticalityBand(n.criticality);
   return (
     <button onClick={() => onOpen(n.id)}
       style={{
-        display: 'grid', gridTemplateColumns: GRID, gap: 8, width: '100%',
+        display: 'grid', gridTemplateColumns: grid, gap: 8, width: '100%',
         padding: '7px 18px', alignItems: 'center',
         background: 'transparent', border: 'none',
         borderTop: '1px solid var(--cf-border-hair)',

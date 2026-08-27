@@ -3,19 +3,21 @@
 import React from 'react';
 import { Logo, domainFromUrl } from './YCCompanyCard.jsx';
 import { iconForSector } from './yc-sector-colors.js';
-import { useT } from '../../../lib/i18n.jsx';
+import { biMap } from '../../../data/capitalMap.js';
 
-const STATUS_LABELS = {
-  Active:   t('Работает', 'Operating'),
-  Inactive: t('Закрылась', 'Shut down'),
-  Acquired: t('Куплена', 'Acquired'),
-};
+// Module-level tables: evaluated at import, with no React context around
+// them, so they use the getter-based `biMap` rather than the hook.
+const STATUS_LABELS = biMap({
+  Active:   ['Работает', 'Operating'],
+  Inactive: ['Закрылась', 'Shut down'],
+  Acquired: ['Куплена', 'Acquired'],
+});
 
-const STATUS_HINTS = {
-  Active:   t('Компания работает — не закрылась и не куплена', 'The company is operating — neither shut down nor acquired'),
-  Inactive: t('Компания прекратила работу', 'The company has ceased operations'),
-  Acquired: t('Компанию купили', 'The company was acquired'),
-};
+const STATUS_HINTS = biMap({
+  Active:   ['Компания работает — не закрылась и не куплена', 'The company is operating — neither shut down nor acquired'],
+  Inactive: ['Компания прекратила работу', 'The company has ceased operations'],
+  Acquired: ['Компанию купили', 'The company was acquired'],
+});
 
 const STATUS_STYLES = {
   Active:   { color: '#10b981', bg: 'rgba(16,185,129,0.10)',  border: 'rgba(16,185,129,0.30)' },

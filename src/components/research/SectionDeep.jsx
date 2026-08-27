@@ -640,12 +640,15 @@ function Mix({ b }) {
 // ── posgrid: strategic positioning heatmap (segments × players) ─────────────
 // Shows at a glance where each manager leads vs lags across asset classes —
 // the real "moat map". Optional catalysts strip highlights the unique edge.
-const POS_LEVELS = {
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const posLevels = (t) => ({
   lead:    { label: t('Лидер', 'Leader'),   bg: C.teal,         fg: '#0b0b0c', bd: C.teal },
   strong:  { label: t('Сильный', 'Strong'), bg: `color-mix(in srgb, ${C.teal} 18%, transparent)`,  fg: C.teal,    bd: `color-mix(in srgb, ${C.teal} 33%, transparent)` },
   present: { label: t('Есть', 'Present'),    bg: C.track,        fg: C.inkSoft, bd: C.line },
   lag:     { label: t('Слабо', 'Weak'),   bg: 'transparent',  fg: C.clay,    bd: `color-mix(in srgb, ${C.clay} 33%, transparent)` },
-};
+});
 function PosGrid({ b }) {
   const t = useT();
   const [hov, setHov] = useState(null);
@@ -675,7 +678,7 @@ function PosGrid({ b }) {
                 {seg.sub && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 2 }}>{seg.sub}</div>}
               </div>
               {seg.cells.map((c, ci) => {
-                const lv = POS_LEVELS[c.level] || POS_LEVELS.present;
+                const lv = posLevels(t)[c.level] || posLevels(t).present;
                 const key = ri + '-' + ci;
                 const on = hov === key;
                 return (
@@ -699,8 +702,8 @@ function PosGrid({ b }) {
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginTop: 12 }}>
         {['lead', 'strong', 'present', 'lag'].map((k) => (
           <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 11, height: 11, borderRadius: 3, background: POS_LEVELS[k].bg === 'transparent' ? 'transparent' : POS_LEVELS[k].bg, border: `1px solid ${POS_LEVELS[k].bd}` }} />
-            <span style={{ fontSize: 10.5, color: C.inkSoft }}>{POS_LEVELS[k].label}</span>
+            <span style={{ width: 11, height: 11, borderRadius: 3, background: posLevels(t)[k].bg === 'transparent' ? 'transparent' : posLevels(t)[k].bg, border: `1px solid ${posLevels(t)[k].bd}` }} />
+            <span style={{ fontSize: 10.5, color: C.inkSoft }}>{posLevels(t)[k].label}</span>
           </div>
         ))}
         <span style={{ fontSize: 10.5, color: C.inkFaint, fontStyle: 'italic' }}>{t('наведите на ячейку — детали', 'hover a cell for details')}</span>
@@ -779,11 +782,14 @@ function Moat({ b }) {
 }
 
 // ── heat: risk rows with level chip + trigger ───────────────────────────────
-const LEVELS = {
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const levels = (t) => ({
   high: { label: t('ВЫСОКИЙ', 'HIGH'), color: C.clay },
   med: { label: t('СРЕДНИЙ', 'MEDIUM'), color: C.gold },
   low: { label: t('НИЗКИЙ', 'LOW'), color: C.teal },
-};
+});
 
 // ── risksplit: the risk map — two origins, side by side ─────────────────────
 // Answers "what are the risks and where do they come from" in one screen.
@@ -803,7 +809,7 @@ function RiskSplit({ b }) {
         {g.sub && <div style={{ fontSize: 11.5, color: C.inkFaint, lineHeight: 1.45, marginBottom: 12, paddingLeft: 12 }}>{g.sub}</div>}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {g.items.map((it, i) => {
-            const lv = LEVELS[it.level] || LEVELS.med;
+            const lv = levels(t)[it.level] || levels(t).med;
             const key = gi + '-' + i;
             const on = hov === key;
             return (
@@ -911,7 +917,7 @@ function Heat({ b }) {
       <Title note={b.note}>{b.title}</Title>
       <div style={{ border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden' }}>
         {b.items.map((r, i) => {
-          const lv = LEVELS[r.level] || LEVELS.med;
+          const lv = levels(t)[r.level] || levels(t).med;
           return (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '92px 1fr', gap: 14, padding: '13px 16px', borderTop: i ? `1px solid ${C.lineSoft}` : 'none', background: i % 2 ? C.card : 'transparent' }}>
               <div><span style={{ fontSize: 9.5, padding: '3px 8px', borderRadius: 10, background: `color-mix(in srgb, ${lv.color} 13%, transparent)`, color: lv.color, border: `1px solid color-mix(in srgb, ${lv.color} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>{lv.label}</span></div>
@@ -1166,7 +1172,7 @@ function RadarHeat({ b }) {
         </div>
         <div style={{ borderTop: `1px solid ${C.line}` }}>
           {(b.items || []).map((r, i) => {
-            const lv = LEVELS[r.level] || LEVELS.med;
+            const lv = levels(t)[r.level] || levels(t).med;
             return (
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '92px 1fr', gap: 14, padding: '13px 16px', borderTop: i ? `1px solid ${C.lineSoft}` : 'none', background: i % 2 ? 'transparent' : C.card }}>
                 <div><span style={{ fontSize: 9.5, padding: '3px 8px', borderRadius: 10, background: `color-mix(in srgb, ${lv.color} 13%, transparent)`, color: lv.color, border: `1px solid color-mix(in srgb, ${lv.color} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>{lv.label}</span></div>

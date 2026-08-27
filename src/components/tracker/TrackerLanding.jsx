@@ -13,7 +13,10 @@ import { useT, getLang } from '../../lib/i18n.jsx';
 
 // Descriptor per tracker — kept tiny and inline since there are only
 // three; if we add more, lift into src/data/tracker-meta.json.
-const TRACKERS = [
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const trackers = (t) => [
   {
     id: 'zeely',
     name: 'Zeely.ai',
@@ -71,7 +74,10 @@ const TRACKERS = [
 // in motion"), and a stats override (e.g. show Exit / Сумма / Дата instead
 // of Стадия / Меморандум when the position has been realised).
 // ─────────────────────────────────────────────────────────────────────────
-const LIFECYCLE_STYLES = {
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const lifecycleStyles = (t) => ({
   active: {
     // Default — no overrides. Card uses the tracker's own accent & stats.
   },
@@ -102,11 +108,12 @@ const LIFECYCLE_STYLES = {
     desaturate: true,
     statsOverride: () => [],
   },
-};
+});
 
-function lifecycleStyle(tracker) {
+function lifecycleStyle(tracker, t) {
   const status = tracker.lifecycle?.status || 'active';
-  return LIFECYCLE_STYLES[status] || LIFECYCLE_STYLES.active;
+  const styles = lifecycleStyles(t);
+  return styles[status] || styles.active;
 }
 
 export default function TrackerLanding({ onOpen }) {
@@ -115,12 +122,12 @@ export default function TrackerLanding({ onOpen }) {
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return TRACKERS;
-    return TRACKERS.filter(t =>
-      t.name.toLowerCase().includes(q) ||
-      t.subtitle.toLowerCase().includes(q) ||
-      t.typeLabel.toLowerCase().includes(q));
-  }, [query]);
+    if (!q) return trackers(t);
+    return trackers(t).filter(tr =>
+      tr.name.toLowerCase().includes(q) ||
+      tr.subtitle.toLowerCase().includes(q) ||
+      tr.typeLabel.toLowerCase().includes(q));
+  }, [query, t]);
 
   return (
     <div style={{
@@ -222,12 +229,13 @@ export default function TrackerLanding({ onOpen }) {
 }
 
 function TrackerCard({ tracker, index, onOpen }) {
+  const t = useT();
   const [hover, setHover] = useState(false);
   const [logoFailed, setLogoFailed] = useState(false);
   const showLogo = !!tracker.domain && !logoFailed;
 
   // Lifecycle — drives pill, ribbon, desaturation, and stats override.
-  const lcStyle = lifecycleStyle(tracker);
+  const lcStyle = lifecycleStyle(tracker, t);
   const lc = tracker.lifecycle || { status: 'active' };
   const accent = lcStyle.accentOverride || tracker.accent;
   const pillLabel = lcStyle.pillLabel ? lcStyle.pillLabel(lc) : tracker.typeLabel;

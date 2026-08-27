@@ -8,11 +8,14 @@ import { Globe, Linkedin, Twitter, Briefcase } from 'lucide-react';
 import investmentData from '../../../data/yc-investment.json';
 import { useT } from '../../../lib/i18n.jsx';
 
-const STATUS_LABELS = {
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it, and the ReferenceError takes the
+// whole bundle down — a blank page, not a missing label.
+const statusLabels = (t) => ({
   Active:   t('Работает', 'Operating'),
   Inactive: t('Закрылась', 'Shut down'),
   Acquired: t('Куплена', 'Acquired'),
-};
+});
 
 const isBlank = (v) =>
   v === null || v === undefined || (typeof v === 'string' && v.trim() === '');
@@ -31,7 +34,7 @@ export default function YCMetadataCard({ company, research }) {
     { label: t('Основана', 'Founded'),   value: company.founded_year ? String(company.founded_year) : null },
     { label: t('Батч', 'Batch'),       value: company.batch },
     { label: t('Команда', 'Team'),    value: headcount != null ? String(headcount) : null },
-    { label: t('Статус', 'Status'),     value: STATUS_LABELS[company.status] || company.status,
+    { label: t('Статус', 'Status'),     value: statusLabels(t)[company.status] || company.status,
       hint: company.status === 'Active' ? t('Компания работает — не закрылась и не куплена', 'The company is operating — neither shut down nor acquired') : undefined },
     { label: t('Локация', 'Location'),    value: company.location },
     { label: t('Партнёр YC', 'YC partner'), value: company.primary_partner },

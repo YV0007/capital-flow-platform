@@ -136,20 +136,22 @@ function Sankey({ sankey }) {
 // TimelineItem — single deal / event card
 // ─────────────────────────────────────────────────────────────────────────
 
-const TYPE_META = {
-  acquisition: { label: t('Покупка', 'Purchase'),        color: C.teal },
-  divestment:  { label: t('Продажа', 'Sale'),        color: C.gold },
-  deal:        { label: t('Контракт', 'Contract'),       color: C.teal },
-  program:     { label: t('Программа', 'Programme'),      color: C.violet },
-  internal:    { label: t('Корп-действие', 'Corporate action'),  color: C.blue },
-  earnings:    { label: t('Отчёт', 'Report'),          color: C.inkSoft },
-  ipo:         { label: 'IPO',            color: C.teal },
-};
+// A function of `t`, not a frozen const: t() at module scope runs at import
+// time, before any component can supply it. Same failure as 2026-08-24.
+const typeMeta = (t) => ({
+  acquisition: { label: t('Покупка', 'Purchase'),               color: C.teal },
+  divestment:  { label: t('Продажа', 'Sale'),                   color: C.gold },
+  deal:        { label: t('Контракт', 'Contract'),              color: C.teal },
+  program:     { label: t('Программа', 'Programme'),            color: C.violet },
+  internal:    { label: t('Корп-действие', 'Corporate action'), color: C.blue },
+  earnings:    { label: t('Отчёт', 'Report'),                   color: C.inkSoft },
+  ipo:         { label: 'IPO',                                  color: C.teal },
+});
 
 function TimelineItem({ ev, forward }) {
   const t = useT();
   const [open, setOpen] = useState(false);
-  const meta = TYPE_META[ev.type] || { label: ev.type, color: C.inkSoft };
+  const meta = typeMeta(t)[ev.type] || { label: ev.type, color: C.inkSoft };
   const isHigh = ev.importance === 'high';
   const det = ev.detail && typeof ev.detail === 'object' ? ev.detail : null;
   return (
