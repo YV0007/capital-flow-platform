@@ -127,8 +127,11 @@ export function Delta({ value, shown = true, weight }) {
 }
 
 /** Every figure traceable to its filing. */
-export function SourceLink({ url, children = t('форма', 'form'), title }) {
+export function SourceLink({ url, children, title }) {
   const t = useT();
+  // NOT a default parameter: `children = t(...)` would evaluate before the hook
+  // above has run, so `t` is not yet defined at that point.
+  const label = children ?? t('форма', 'form');
   if (!url) return <span style={{ color: 'var(--cf-text8)', fontSize: 9, fontFamily: MONO }}>{t('без ссылки', 'no link')}</span>;
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" title={title || t('Открыть первоисточник', 'Open the primary source')}
@@ -139,7 +142,7 @@ export function SourceLink({ url, children = t('форма', 'form'), title }) {
       }}
       onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-link-hover)')}
       onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-link)')}>
-      {children}<ExternalLink size={9} />
+      {label}<ExternalLink size={9} />
     </a>
   );
 }

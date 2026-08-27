@@ -17,7 +17,10 @@ import { fmtUSD, fmtPct, fmtShares, fmtDate, fmtQuarters } from './fundFormat.js
 import { MONO, hexA, LatencyBadge, FormBadge, Chip, Delta, SparseFlag, useTone } from './FundBits.jsx';
 import { useT } from '../../../lib/i18n.jsx';
 
-const FUND_COLS = [
+// Functions of `t`, not frozen consts: t() at module scope runs at IMPORT time,
+// before any component can supply it, and the ReferenceError takes the whole
+// bundle down — a blank page, not a broken table. Same failure as 2026-08-24.
+const fundCols = (t) => [
   { key: 'name',    label: t('Фонд', 'Fund'),        w: '1.5fr', align: 'left' },
   { key: 'style',   label: t('Стиль', 'Style'),       w: '110px', align: 'left' },
   { key: 'book',    label: t('Книга', 'Book'),       w: '86px',  align: 'right', num: true },
@@ -32,7 +35,7 @@ const FUND_COLS = [
   { key: 'latency', label: t('Латентность', 'Latency'), w: '92px',  align: 'right', num: true },
 ];
 
-const POS_COLS = [
+const posCols = (t) => [
   { key: 'fund',    label: t('Фонд', 'Fund'),        w: '128px', align: 'left' },
   { key: 'ticker',  label: t('Тикер', 'Ticker'),       w: '74px',  align: 'left' },
   { key: 'issuer',  label: t('Эмитент', 'Issuer'),     w: '1.4fr', align: 'left' },
@@ -91,7 +94,7 @@ export default function FundTable({
 }) {
   const t = useT();
   const byFund = mode === 'funds';
-  const cols = byFund ? FUND_COLS : POS_COLS;
+  const cols = useMemo(() => (byFund ? fundCols(t) : posCols(t)), [byFund, t]);
   const [sort, setSort] = useState({ key: byFund ? 'book' : 'weight', dir: -1 });
 
   const key = sort.key;
