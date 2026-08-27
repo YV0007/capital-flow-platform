@@ -34,6 +34,8 @@
 // `techNodes[].label`, all from the payload.
 // ══════════════════════════════════════════════════════════════════════════
 
+import { getLang } from '../../../lib/i18n.jsx';
+
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const isWordChar = (c) => !!c && /[\p{L}\p{N}]/u.test(c);
 
@@ -102,7 +104,7 @@ export default function Glossed({ text, glossary, selfId, onOpenEntity, style })
 
 function Term({ raw, entry, onOpenEntity }) {
   const title = entry.kind === 'tech'
-    ? `${entry.term}${entry.hint ? ` — ${entry.hint}` : ''}${entry.owner ? `. Владелец: ${entry.owner}` : ''}`
+    ? `${entry.term}${entry.hint ? ` — ${entry.hint}` : ''}${entry.owner ? `. ${getLang() === 'en' ? 'Owner' : 'Владелец'}: ${entry.owner}` : ''}`
     : (entry.hint ? `${entry.term} — ${entry.hint}` : entry.term);
 
   if (!onOpenEntity || !entry.id) return <span title={title}>{raw}</span>;
