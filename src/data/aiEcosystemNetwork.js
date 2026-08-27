@@ -48,6 +48,7 @@ import {
   DIRECTION_META, BAND_META, PLANE_META, CONCENTRATION_META, TYPE_META,
   PUBLIC_PRIVATE_META, CRITICALITY_FACTORS, DEFAULT_MIN_STRENGTH,
 } from './nvidiaEcosystem.js';
+import { bi } from '../lib/bi.js';
 
 // ── Re-export the frozen v2 taxonomy verbatim ────────────────────────────
 // The components import these from whichever adapter they render, so the
@@ -70,15 +71,23 @@ export const EDGE_TYPE_META = {
   ...BASE_EDGE_TYPE_META,
   // rivalry family — a viable REPLACEMENT PATH, not a market fight. JAX is an
   // alternative to PyTorch though it does not "compete" with it commercially.
-  is_alternative_to: {
-    label: 'альтернатива', verb: 'альтернатива для', spine: 'rivalry', color: '#8478A8', order: 43,
-    blurb: 'Жизнеспособный путь-замена: другая дорога к тому же результату, а не рыночный конкурент.',
-  },
+  is_alternative_to: bi({
+    label: ['альтернатива', 'alternative to'],
+    verb:  ['альтернатива для', 'is an alternative to'],
+    up:    ['альтернативный путь', 'alternative path'],
+    down:  ['альтернативный путь', 'alternative path'],
+    blurb: ['Жизнеспособный путь-замена: другая дорога к тому же результату, а не рыночный конкурент.',
+            'A viable replacement path: another road to the same result, not a commercial rival.'],
+  }, { spine: 'rivalry', color: '#8478A8', order: 43 }),
   // physical family — a standard that lets two otherwise-separate stacks talk.
-  enables_interop: {
-    label: 'связывает стеки', verb: 'связывает', spine: 'physical', color: '#3FBFB0', order: 8,
-    blurb: 'Стандарт, позволяющий двум иначе раздельным стекам разговаривать (ONNX между разными инференсами).',
-  },
+  enables_interop: bi({
+    label: ['связывает стеки', 'bridges stacks'],
+    verb:  ['связывает', 'bridges'],
+    up:    ['связывает стеки', 'bridges the stacks'],
+    down:  ['связывает стеки', 'bridges the stacks'],
+    blurb: ['Стандарт, позволяющий двум иначе раздельным стекам разговаривать (ONNX между разными инференсами).',
+            'A standard letting two otherwise separate stacks talk (ONNX between different inference runtimes).'],
+  }, { spine: 'physical', color: '#3FBFB0', order: 8 }),
 };
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -95,14 +104,16 @@ export const PIVOTS = new Set(
 
 // How to read the two centrality numbers, in plain Russian, for the panel.
 export const CENTRALITY_META = {
-  degree: {
-    label: 'Степень',
-    blurb: 'Со сколькими сущностями есть прямая связь. Насколько узел «людный».',
-  },
-  betweenness: {
-    label: 'Посредничество',
-    blurb: 'На скольких кратчайших путях между другими лежит эта сущность. Насколько через неё «всё проходит».',
-  },
+  degree: bi({
+    label: ['Степень', 'Degree'],
+    blurb: ['Со сколькими сущностями есть прямая связь. Насколько узел «людный».',
+            'How many entities it is directly linked to. How crowded the node is.'],
+  }),
+  betweenness: bi({
+    label: ['Посредничество', 'Betweenness'],
+    blurb: ['На скольких кратчайших путях между другими лежит эта сущность. Насколько через неё «всё проходит».',
+            'How many shortest paths between other entities run through it. How much passes through it.'],
+  }),
 };
 
 // Subgraph → accent colour for the lens. The LABEL and DESCRIPTION come from
@@ -110,10 +121,10 @@ export const CENTRALITY_META = {
 // known id, distinct from the five spine colours. An unknown id falls back to
 // a neutral accent.
 export const SUBGRAPH_META = {
-  'gpu-ecosystem':          { color: '#6C8EF5', fallbackLabel: 'GPU-стек' },
-  'tpu-ecosystem':          { color: '#F5A25D', fallbackLabel: 'TPU-стек' },
-  'infrastructure-backbone':{ color: '#9AA7B8', fallbackLabel: 'Хребет инфраструктуры' },
-  _default:                 { color: '#8E9BE6', fallbackLabel: 'Подграф' },
+  'gpu-ecosystem':          bi({ fallbackLabel: ['GPU-стек', 'GPU stack'] },   { color: '#6C8EF5' }),
+  'tpu-ecosystem':          bi({ fallbackLabel: ['TPU-стек', 'TPU stack'] },   { color: '#F5A25D' }),
+  'infrastructure-backbone':bi({ fallbackLabel: ['Хребет инфраструктуры', 'Infrastructure backbone'] }, { color: '#9AA7B8' }),
+  _default:                 bi({ fallbackLabel: ['Подграф', 'Subgraph'] },     { color: '#8E9BE6' }),
 };
 
 // Spare hues for subgraphs the engine adds that this file has never heard of.
@@ -139,19 +150,52 @@ export const subgraphMeta = (id) => SUBGRAPH_META[id] || {
 
 // Labels + one-liners for the network-summary aggregates.
 export const NETWORK_META = {
-  totalNodes:    { label: 'Узлов',        blurb: 'Всего сущностей в сети.' },
-  totalEdges:    { label: 'Связей',       blurb: 'Всего рёбер в сети.' },
-  pivotalNodes:  { label: 'Ключевых',     blurb: 'Сущностей-центров, вокруг которых собрана сеть.' },
-  secondaryNodes:{ label: 'Остальных',    blurb: 'Попали в карту, потому что стоят в двух шагах от ключевого узла.' },
-  density:       { label: 'Плотность',    blurb: 'Доля реально существующих рёбер от всех возможных. Ближе к 0 — разреженная сеть.' },
-  averageDegree: { label: 'Средняя степень', blurb: 'Сколько прямых связей в среднем у сущности.' },
-  clusteringCoefficient: { label: 'Кластеризация', blurb: 'Насколько соседи узла связаны и между собой. Ближе к 1 — плотные «клики».' },
+  totalNodes: bi({
+    label: ['Узлов', 'Nodes'],
+    blurb: ['Всего сущностей в сети.', 'Total entities in the network.'],
+  }),
+  totalEdges: bi({
+    label: ['Связей', 'Links'],
+    blurb: ['Всего рёбер в сети.', 'Total edges in the network.'],
+  }),
+  pivotalNodes: bi({
+    label: ['Ключевых', 'Key nodes'],
+    blurb: ['Сущностей-центров, вокруг которых собрана сеть.',
+            'The centre entities the network is assembled around.'],
+  }),
+  secondaryNodes: bi({
+    label: ['Остальных', 'The rest'],
+    blurb: ['Попали в карту, потому что стоят в двух шагах от ключевого узла.',
+            'On the map because they sit within two steps of a key node.'],
+  }),
+  density: bi({
+    label: ['Плотность', 'Density'],
+    blurb: ['Доля реально существующих рёбер от всех возможных. Ближе к 0 — разреженная сеть.',
+            'The share of possible edges that actually exist. Closer to 0 means a sparse network.'],
+  }),
+  averageDegree: bi({
+    label: ['Средняя степень', 'Average degree'],
+    blurb: ['Сколько прямых связей в среднем у сущности.',
+            'How many direct links an entity has on average.'],
+  }),
+  clusteringCoefficient: bi({
+    label: ['Кластеризация', 'Clustering'],
+    blurb: ['Насколько соседи узла связаны и между собой. Ближе к 1 — плотные «клики».',
+            "How far a node's neighbours are also linked to each other. Closer to 1 means tight cliques."],
+  }),
 };
 
 // ══════════════════════════════════════════════════════════════════════════
 // META — the header the shell reads before anything is drawn.
 // ══════════════════════════════════════════════════════════════════════════
-export const META = {
+export const META = bi({
+  disclaimer: [
+      'Сеть показывает позиции и зависимости 26 равноправных центров ИИ-инфраструктуры, а не сделки. '
+        + 'Каждая связь подтверждена цитатой; центральность и точки отказа посчитаны движком по графу. Не является инвестиционной рекомендацией.',
+      'The network shows the positions and dependencies of 26 co-equal AI-infrastructure centres, not transactions. '
+        + 'Every link is backed by a quote; centrality and points of failure are computed by the engine over the graph. Not investment advice.',
+    ],
+}, {
   schema: raw.schema || null,
   generated: raw.generated || null,
   asOf: raw.asOf || null,
@@ -162,9 +206,7 @@ export const META = {
   pivots: [...PIVOTS],
   totals: raw.totals || null,
   changelog: raw.changelog || null,
-  disclaimer: 'Сеть показывает позиции и зависимости 26 равноправных центров ИИ-инфраструктуры, а не сделки. '
-    + 'Каждая связь подтверждена цитатой; центральность и точки отказа посчитаны движком по графу. Не является инвестиционной рекомендацией.',
-};
+});
 
 // ══════════════════════════════════════════════════════════════════════════
 // BILINGUAL PROSE — contract ai-ecosystem-network/2.
@@ -201,7 +243,8 @@ const resolveProse = (v) => {
 // buildGraph — the v2 builder, then the network decoration on top.
 // ══════════════════════════════════════════════════════════════════════════
 export function buildGraph() {
-  const graph = buildGraphFrom(resolveProse(raw));
+  const src = resolveProse(raw);
+  const graph = buildGraphFrom(src);
 
   // Generalize the anchor: v2 gave exactly one entity the centre privilege;
   // here every pivot gets it, and no single entity is "the" anchor.
@@ -210,7 +253,7 @@ export function buildGraph() {
     e.isAnchor = false;                 // the privilege is collective now
   });
   graph.pivots = PIVOTS;
-  graph.network = resolveNetwork(raw.network, graph);
+  graph.network = resolveNetwork(src.network, graph);
 
   // One extra roll-up the summary line reads.
   graph.stats.pivotalCount = graph.entities.filter(e => e.isPivotal).length;

@@ -60,6 +60,10 @@
 import raw from './nvidiaEcosystem.json';
 import logoDomains from './nvidiaEcosystemLogos.json';
 import logoManifest from './logoManifest.json';
+// Every label below is declared in BOTH languages and resolved on access, so
+// call sites keep reading a plain `.label`. `npm run i18n:check` fails the
+// build if a pair is ever left half-filled.
+import { bi, biMap } from '../lib/bi.js';
 
 // ── Roles — the second dimension, orthogonal to the layer ────────────────
 // Told apart by SHAPE as well as colour (colour alone carries the layer band),
@@ -67,18 +71,42 @@ import logoManifest from './logoManifest.json';
 // the legend draws; on the canvas the tile itself is frozen, so the role rides
 // the tile's RIM STYLE — see ROLE_DASH in EcoGraph.
 export const ROLE_META = {
-  producer: { label: 'Производитель', short: 'ПРОИЗВ.', color: '#6F93DE', shape: 'square', order: 0,
-              blurb: 'Делает физическую вещь: станок, пластину, чип, память, стойку, коммутатор.' },
-  platform: { label: 'Платформа',     short: 'ПЛАТФ.',  color: '#A46FD6', shape: 'hex', order: 1,
-              blurb: 'Стандарт, софт или лицензия внутри чужого продукта — власть без выручки с железа.' },
-  operator: { label: 'Оператор',      short: 'ОПЕРАТ.', color: '#49C2AE', shape: 'rounded', order: 2,
-              blurb: 'Эксплуатирует актив: площадки, облака, станции. Владеет тем, что уже построено.' },
-  demand:   { label: 'Спрос',         short: 'СПРОС',   color: '#8E9BE6', shape: 'circle', order: 3,
-              blurb: 'Тот, ради кого построено остальное: лаборатории и бизнес, который за это платит.' },
-  capital:  { label: 'Капитал',       short: 'КАПИТАЛ', color: '#C99B72', shape: 'diamond', order: 4,
-              blurb: 'Владеет стеком и финансирует его, сам в нём не стоя. Ядро молекулы.' },
-  state:    { label: 'Государство',   short: 'ГОСУД.',  color: '#B4707A', shape: 'star', order: 5,
-              blurb: 'Юрисдикция, ведомство или консорциум стандартов: не участник стека, а его шлюз.' },
+  producer: bi({
+    label: ['Производитель', 'Maker'],
+    short: ['ПРОИЗВ.', 'MAKER'],
+    blurb: ['Делает физическую вещь: станок, пластину, чип, память, стойку, коммутатор.',
+            'Makes a physical thing: a tool, a wafer, a chip, memory, a rack, a switch.'],
+  }, { color: '#6F93DE', shape: 'square', order: 0 }),
+  platform: bi({
+    label: ['Платформа', 'Platform'],
+    short: ['ПЛАТФ.', 'PLATF.'],
+    blurb: ['Стандарт, софт или лицензия внутри чужого продукта — власть без выручки с железа.',
+            "A standard, software or licence inside someone else's product — power without hardware revenue."],
+  }, { color: '#A46FD6', shape: 'hex', order: 1 }),
+  operator: bi({
+    label: ['Оператор', 'Operator'],
+    short: ['ОПЕРАТ.', 'OPER.'],
+    blurb: ['Эксплуатирует актив: площадки, облака, станции. Владеет тем, что уже построено.',
+            'Runs the asset: sites, clouds, plants. Owns what has already been built.'],
+  }, { color: '#49C2AE', shape: 'rounded', order: 2 }),
+  demand: bi({
+    label: ['Спрос', 'Demand'],
+    short: ['СПРОС', 'DEMAND'],
+    blurb: ['Тот, ради кого построено остальное: лаборатории и бизнес, который за это платит.',
+            'The reason the rest exists: the labs, and the businesses paying for it.'],
+  }, { color: '#8E9BE6', shape: 'circle', order: 3 }),
+  capital: bi({
+    label: ['Капитал', 'Capital'],
+    short: ['КАПИТАЛ', 'CAPITAL'],
+    blurb: ['Владеет стеком и финансирует его, сам в нём не стоя. Ядро молекулы.',
+            'Owns and funds the stack without standing in it. The nucleus of the molecule.'],
+  }, { color: '#C99B72', shape: 'diamond', order: 4 }),
+  state: bi({
+    label: ['Государство', 'State'],
+    short: ['ГОСУД.', 'STATE'],
+    blurb: ['Юрисдикция, ведомство или консорциум стандартов: не участник стека, а его шлюз.',
+            'A jurisdiction, agency or standards body: not a participant in the stack but its gate.'],
+  }, { color: '#B4707A', shape: 'star', order: 5 }),
 };
 
 // ── Edge types — THIRTY-ONE, on FIVE spines ──────────────────────────────
@@ -108,123 +136,298 @@ export const ROLE_META = {
 // both, because there is no direction to disambiguate.
 export const EDGE_TYPE_META = {
   // ── physical ──────────────────────────────────────────────────────────
-  manufactures:   { label: 'производит',        verb: 'производит',          spine: 'physical', color: '#5A93DE', order: 0,
-                    up: 'производит по заказу', down: 'заказывает производство',
-                    blurb: 'Физически изготавливает продукт другой стороны на своих линиях.' },
-  supplies:       { label: 'поставляет',        verb: 'поставляет',          spine: 'physical', color: '#6F93DE', order: 1,
-                    up: 'поставляет сюда', down: 'получает поставки',
-                    blurb: 'Критический физический вход: без него продукт получателя не выпускается.' },
-  packages:       { label: 'упаковывает',       verb: 'упаковывает',         spine: 'physical', color: '#58ABCB', order: 2,
-                    up: 'упаковывает чипы', down: 'отдаёт на упаковку',
-                    blurb: 'Сажает кристалл и память на одну подложку — отдельный дефицитный этап.' },
-  integrates:     { label: 'собирает',          verb: 'собирает',            spine: 'physical', color: '#4FB4C9', order: 3,
-                    up: 'собирает системы', down: 'отдаёт на сборку',
-                    blurb: 'Собирает из чужих компонентов готовую систему под конкретного заказчика.' },
-  delivers_to:    { label: 'отгружает',         verb: 'отгружает',           spine: 'physical', color: '#45C0D0', order: 4,
-                    up: 'отгружает сюда', down: 'принимает отгрузки',
-                    blurb: 'Прямая поставка продукта покупателю.' },
-  enables:        { label: 'делает возможным',  verb: 'делает возможным',    spine: 'physical', color: '#49C2AE', order: 5,
-                    up: 'делает это возможным', down: 'работает благодаря этому',
-                    blurb: 'Без этого другая сторона не может ни спроектировать, ни включить свой продукт.' },
-  co_designs:     { label: 'проектирует вместе',verb: 'проектирует вместе с',spine: 'physical', color: '#3FA9C4', order: 6,
-                    up: 'проектирует вместе', down: 'проектирует вместе',
-                    blurb: 'Обе стороны вкладывают инженерию: продукт спроектирован под другого.' },
-  optimizes_for:  { label: 'затачивает под',    verb: 'затачивает под',      spine: 'physical', color: '#52C6BC', order: 7,
-                    up: 'заточен под это', down: 'целевая платформа',
-                    blurb: 'Продукт подогнан под чужую платформу и на другой работает хуже.' },
+  manufactures: bi({
+    label: ['производит', 'manufactures'],
+    verb:  ['производит', 'manufactures'],
+    up:    ['производит по заказу', 'builds to order'],
+    down:  ['заказывает производство', 'orders production'],
+    blurb: ['Физически изготавливает продукт другой стороны на своих линиях.',
+            "Physically builds the other side's product on its own lines."],
+  }, { spine: 'physical', color: '#5A93DE', order: 0 }),
+  supplies: bi({
+    label: ['поставляет', 'supplies'],
+    verb:  ['поставляет', 'supplies'],
+    up:    ['поставляет сюда', 'supplies this'],
+    down:  ['получает поставки', 'is supplied by'],
+    blurb: ['Критический физический вход: без него продукт получателя не выпускается.',
+            "A critical physical input: without it the recipient's product does not ship."],
+  }, { spine: 'physical', color: '#6F93DE', order: 1 }),
+  packages: bi({
+    label: ['упаковывает', 'packages'],
+    verb:  ['упаковывает', 'packages'],
+    up:    ['упаковывает чипы', 'packages the dies'],
+    down:  ['отдаёт на упаковку', 'sends out for packaging'],
+    blurb: ['Сажает кристалл и память на одну подложку — отдельный дефицитный этап.',
+            'Seats die and memory on one substrate — a scarce step of its own.'],
+  }, { spine: 'physical', color: '#58ABCB', order: 2 }),
+  integrates: bi({
+    label: ['собирает', 'integrates'],
+    verb:  ['собирает', 'integrates'],
+    up:    ['собирает системы', 'builds the systems'],
+    down:  ['отдаёт на сборку', 'has systems built'],
+    blurb: ['Собирает из чужих компонентов готовую систему под конкретного заказчика.',
+            "Assembles others' components into a finished system for a named buyer."],
+  }, { spine: 'physical', color: '#4FB4C9', order: 3 }),
+  delivers_to: bi({
+    label: ['отгружает', 'ships to'],
+    verb:  ['отгружает', 'ships to'],
+    up:    ['отгружает сюда', 'ships here'],
+    down:  ['принимает отгрузки', 'receives shipments'],
+    blurb: ['Прямая поставка продукта покупателю.',
+            'Direct delivery of the product to the buyer.'],
+  }, { spine: 'physical', color: '#45C0D0', order: 4 }),
+  enables: bi({
+    label: ['делает возможным', 'enables'],
+    verb:  ['делает возможным', 'enables'],
+    up:    ['делает это возможным', 'makes this possible'],
+    down:  ['работает благодаря этому', 'works because of this'],
+    blurb: ['Без этого другая сторона не может ни спроектировать, ни включить свой продукт.',
+            'Without it the other side can neither design nor switch on its product.'],
+  }, { spine: 'physical', color: '#49C2AE', order: 5 }),
+  co_designs: bi({
+    label: ['проектирует вместе', 'co-designs'],
+    verb:  ['проектирует вместе с', 'co-designs with'],
+    up:    ['проектирует вместе', 'co-designed'],
+    down:  ['проектирует вместе', 'co-designed'],
+    blurb: ['Обе стороны вкладывают инженерию: продукт спроектирован под другого.',
+            'Both sides put engineering in: the product is designed around the other.'],
+  }, { spine: 'physical', color: '#3FA9C4', order: 6 }),
+  optimizes_for: bi({
+    label: ['затачивает под', 'optimised for'],
+    verb:  ['затачивает под', 'is optimised for'],
+    up:    ['заточен под это', 'tuned for this'],
+    down:  ['целевая платформа', 'is the target platform'],
+    blurb: ['Продукт подогнан под чужую платформу и на другой работает хуже.',
+            "The product is fitted to someone else's platform and runs worse anywhere else."],
+  }, { spine: 'physical', color: '#52C6BC', order: 7 }),
 
   // ── capital ───────────────────────────────────────────────────────────
-  invests_in:        { label: 'вкладывается',     verb: 'вкладывается в',    spine: 'capital', color: '#E0A340', order: 10,
-                       up: 'вкладывает сюда', down: 'получает вложения',
-                       blurb: 'Доля в капитале — с контролем или без.' },
-  funded_by:         { label: 'финансируется',    verb: 'получает деньги от',spine: 'capital', color: '#E8975E', order: 11,
-                       up: 'финансируется отсюда', down: 'даёт финансирование',
-                       blurb: 'Долг или проектное финансирование под стройку.' },
-  board_seat:        { label: 'место в совете',   verb: 'сидит в совете',    spine: 'capital', color: '#D98C55', order: 12,
-                       up: 'занимает место в совете', down: 'отдаёт место в совете',
-                       blurb: 'Прямое участие в решениях, а не только в доходе.' },
-  strategic_partner: { label: 'стратегический союз', verb: 'в союзе с',      spine: 'capital', color: '#C99B72', order: 13,
-                       up: 'стратегический союз', down: 'стратегический союз',
-                       blurb: 'Дорожные карты согласованы на годы вперёд, а не разовый заказ.' },
-  hedges_against:    { label: 'страхуется',       verb: 'страхуется от',     spine: 'capital', color: '#D9B36A', order: 14,
-                       up: 'страхуется через это', down: 'служит страховкой',
-                       blurb: 'Вложение не ради дохода, а чтобы дыра в обороне не открылась.' },
-  diversifies_supply:{ label: 'второй источник',  verb: 'страхует поставку', spine: 'capital', color: '#C2A36B', order: 15,
-                       up: 'второй источник', down: 'второй источник',
-                       blurb: 'Поставщик, заведённый ради переговорной позиции, а не ради объёма.' },
-  customer_of:       { label: 'покупает',         verb: 'покупает у',        spine: 'capital', color: '#E8B268', order: 16,
-                       up: 'покупает здесь', down: 'продаёт сюда',
-                       blurb: 'Платит деньги — то есть кормит другую сторону выручкой.' },
+  invests_in: bi({
+    label: ['вкладывается', 'invests'],
+    verb:  ['вкладывается в', 'invests in'],
+    up:    ['вкладывает сюда', 'invests here'],
+    down:  ['получает вложения', 'takes investment from'],
+    blurb: ['Доля в капитале — с контролем или без.',
+            'An equity stake, controlling or not.'],
+  }, { spine: 'capital', color: '#E0A340', order: 10 }),
+  funded_by: bi({
+    label: ['финансируется', 'funded by'],
+    verb:  ['получает деньги от', 'is funded by'],
+    up:    ['финансирует', 'funds this'],
+    down:  ['получает финансирование', 'is funded by'],
+    blurb: ['Долг или проектное финансирование под стройку.',
+            'Debt or project finance behind the build-out.'],
+  }, { spine: 'capital', color: '#E8975E', order: 11 }),
+  board_seat: bi({
+    label: ['место в совете', 'board seat'],
+    verb:  ['сидит в совете', 'sits on the board of'],
+    up:    ['занимает место в совете', 'holds a board seat'],
+    down:  ['отдаёт место в совете', 'gives up a board seat'],
+    blurb: ['Прямое участие в решениях, а не только в доходе.',
+            'A direct say in decisions, not only a share of the return.'],
+  }, { spine: 'capital', color: '#D98C55', order: 12 }),
+  strategic_partner: bi({
+    label: ['стратегический союз', 'strategic alliance'],
+    verb:  ['в союзе с', 'is allied with'],
+    up:    ['стратегический союз', 'strategic alliance'],
+    down:  ['стратегический союз', 'strategic alliance'],
+    blurb: ['Дорожные карты согласованы на годы вперёд, а не разовый заказ.',
+            'Roadmaps aligned years ahead, not a one-off order.'],
+  }, { spine: 'capital', color: '#C99B72', order: 13 }),
+  hedges_against: bi({
+    label: ['страхуется', 'hedges'],
+    verb:  ['страхуется от', 'hedges against'],
+    up:    ['страхуется через это', 'hedges through this'],
+    down:  ['служит страховкой', 'serves as the hedge'],
+    blurb: ['Вложение не ради дохода, а чтобы дыра в обороне не открылась.',
+            'An investment made not for return but to keep a gap from opening.'],
+  }, { spine: 'capital', color: '#D9B36A', order: 14 }),
+  diversifies_supply: bi({
+    label: ['второй источник', 'second source'],
+    verb:  ['страхует поставку', 'second-sources'],
+    up:    ['второй источник', 'second source'],
+    down:  ['второй источник', 'second source'],
+    blurb: ['Поставщик, заведённый ради переговорной позиции, а не ради объёма.',
+            'A supplier kept for negotiating leverage rather than for volume.'],
+  }, { spine: 'capital', color: '#C2A36B', order: 15 }),
+  customer_of: bi({
+    label: ['покупает', 'buys from'],
+    verb:  ['покупает у', 'buys from'],
+    up:    ['покупает здесь', 'buys here'],
+    down:  ['продаёт сюда', 'sells here'],
+    blurb: ['Платит деньги — то есть кормит другую сторону выручкой.',
+            'Pays money — that is, feeds the other side revenue.'],
+  }, { spine: 'capital', color: '#E8B268', order: 16 }),
 
   // ── moat ──────────────────────────────────────────────────────────────
-  validates_demand:    { label: 'доказывает спрос',     verb: 'доказывает спрос на',     spine: 'moat', color: '#3FB984', order: 20,
-                         up: 'доказывает спрос', down: 'выигрывает от спроса',
-                         blurb: 'Своим результатом доказал, что вычисления такого масштаба вообще нужны.' },
-  proves_roi:          { label: 'доказывает окупаемость',verb: 'доказывает окупаемость', spine: 'moat', color: '#4FC49A', order: 21,
-                         up: 'доказывает окупаемость', down: 'выигрывает от окупаемости',
-                         blurb: 'Показывает, что на этом зарабатывает не только продавец.' },
-  proves_use_case:     { label: 'доказывает применимость',verb: 'показывает, зачем нужен',spine: 'moat', color: '#5CCFA6', order: 22,
-                         up: 'показывает применение', down: 'получает применение',
-                         blurb: 'Доводит спрос до обычных рабочих процессов, а не только лабораторий.' },
-  locks_in_developers: { label: 'запирает разработчиков',verb: 'запирает разработчиков на',spine: 'moat', color: '#2FA873', order: 23,
-                         up: 'запирает разработчиков', down: 'разработчики заперты',
-                         blurb: 'Написанный код по умолчанию зовёт этот слой, и переписывать его никто не станет.' },
-  locks_in_platforms:  { label: 'запирает платформы',   verb: 'запирает платформы на',   spine: 'moat', color: '#37B07C', order: 24,
-                         up: 'запирает платформы', down: 'платформа заперта',
-                         blurb: 'Уйти значит потерять доступ ко всему, что уже собрано вокруг.' },
-  path_dependent_on:   { label: 'завязан на',           verb: 'завязан на',              spine: 'moat', color: '#46BE8E', order: 25,
-                         up: 'завязан на это', down: 'на него завязаны',
-                         blurb: 'Накопленное решение прошлого не отыгрывается назад без переписывания всего.' },
-  standardizes_on:     { label: 'стандартизован на',    verb: 'стандартизован на',       spine: 'moat', color: '#63D0B0', order: 26,
-                         up: 'общий стандарт', down: 'общий стандарт',
-                         blurb: 'Выбрал одну платформу по умолчанию и строит вокруг неё.' },
-  sets_benchmark:      { label: 'задаёт планку',        verb: 'задаёт планку для',       spine: 'moat', color: '#7AD9B6', order: 27,
-                         up: 'задаёт планку', down: 'по нему меряют',
-                         blurb: 'Определяет, чем меряются все остальные, — а значит, во многом и ответ.' },
-  defines_category:    { label: 'определяет категорию', verb: 'определяет категорию',    spine: 'moat', color: '#8FE0C0', order: 28,
-                         up: 'определяет категорию', down: 'живёт в этой категории',
-                         blurb: 'Сам класс продукта появился потому, что появилось что в него ставить.' },
+  validates_demand: bi({
+    label: ['доказывает спрос', 'validates demand'],
+    verb:  ['доказывает спрос на', 'validates demand for'],
+    up:    ['доказывает спрос', 'validates the demand'],
+    down:  ['выигрывает от спроса', 'benefits from that demand'],
+    blurb: ['Своим результатом доказал, что вычисления такого масштаба вообще нужны.',
+            'Its results proved compute at this scale is needed at all.'],
+  }, { spine: 'moat', color: '#3FB984', order: 20 }),
+  proves_roi: bi({
+    label: ['доказывает окупаемость', 'proves the returns'],
+    verb:  ['доказывает окупаемость', 'proves the returns on'],
+    up:    ['доказывает окупаемость', 'proves the returns'],
+    down:  ['выигрывает от окупаемости', 'benefits from proven returns'],
+    blurb: ['Показывает, что на этом зарабатывает не только продавец.',
+            'Shows that someone other than the seller is making money on it.'],
+  }, { spine: 'moat', color: '#4FC49A', order: 21 }),
+  proves_use_case: bi({
+    label: ['доказывает применимость', 'proves the use case'],
+    verb:  ['показывает, зачем нужен', 'shows what it is for'],
+    up:    ['показывает применение', 'proves the use case'],
+    down:  ['получает применение', 'gains the use case'],
+    blurb: ['Доводит спрос до обычных рабочих процессов, а не только лабораторий.',
+            'Carries demand into ordinary workflows, not just labs.'],
+  }, { spine: 'moat', color: '#5CCFA6', order: 22 }),
+  locks_in_developers: bi({
+    label: ['запирает разработчиков', 'locks in developers'],
+    verb:  ['запирает разработчиков на', 'locks developers into'],
+    up:    ['запирает разработчиков', 'locks developers in'],
+    down:  ['разработчики заперты', 'its developers are locked in'],
+    blurb: ['Написанный код по умолчанию зовёт этот слой, и переписывать его никто не станет.',
+            'Code written defaults to this layer, and nobody will rewrite it.'],
+  }, { spine: 'moat', color: '#2FA873', order: 23 }),
+  locks_in_platforms: bi({
+    label: ['запирает платформы', 'locks in platforms'],
+    verb:  ['запирает платформы на', 'locks platforms into'],
+    up:    ['запирает платформы', 'locks platforms in'],
+    down:  ['платформа заперта', 'the platform is locked in'],
+    blurb: ['Уйти значит потерять доступ ко всему, что уже собрано вокруг.',
+            'Leaving means losing access to everything already built around it.'],
+  }, { spine: 'moat', color: '#37B07C', order: 24 }),
+  path_dependent_on: bi({
+    label: ['завязан на', 'path-dependent on'],
+    verb:  ['завязан на', 'is path-dependent on'],
+    up:    ['завязан на это', 'depends on this path'],
+    down:  ['на него завязаны', 'others depend on this path'],
+    blurb: ['Накопленное решение прошлого не отыгрывается назад без переписывания всего.',
+            'A past decision that cannot be undone without rewriting everything.'],
+  }, { spine: 'moat', color: '#46BE8E', order: 25 }),
+  standardizes_on: bi({
+    label: ['стандартизован на', 'standardised on'],
+    verb:  ['стандартизован на', 'is standardised on'],
+    up:    ['общий стандарт', 'shared standard'],
+    down:  ['общий стандарт', 'shared standard'],
+    blurb: ['Выбрал одну платформу по умолчанию и строит вокруг неё.',
+            'Picked one platform as the default and builds around it.'],
+  }, { spine: 'moat', color: '#63D0B0', order: 26 }),
+  sets_benchmark: bi({
+    label: ['задаёт планку', 'sets the benchmark'],
+    verb:  ['задаёт планку для', 'sets the benchmark for'],
+    up:    ['задаёт планку', 'sets the benchmark'],
+    down:  ['по нему меряют', 'is measured against it'],
+    blurb: ['Определяет, чем меряются все остальные, — а значит, во многом и ответ.',
+            'Defines what everyone else is measured against — and so, largely, the answer.'],
+  }, { spine: 'moat', color: '#7AD9B6', order: 27 }),
+  defines_category: bi({
+    label: ['определяет категорию', 'defines the category'],
+    verb:  ['определяет категорию', 'defines the category'],
+    up:    ['определяет категорию', 'defines the category'],
+    down:  ['живёт в этой категории', 'lives in that category'],
+    blurb: ['Сам класс продукта появился потому, что появилось что в него ставить.',
+            'The product class exists because there was finally something to put in it.'],
+  }, { spine: 'moat', color: '#8FE0C0', order: 28 }),
 
   // ── control ───────────────────────────────────────────────────────────
-  controls_access_to:     { label: 'шлюзует',              verb: 'шлюзует доступ к',      spine: 'control', color: '#E5484D', order: 30,
-                            up: 'контролирует доступ', down: 'доступ под контролем',
-                            blurb: 'Решает, кому и что можно продать. Не участник стека, а рубильник над ним.' },
-  subject_to_restriction: { label: 'под ограничением',     verb: 'ограничен в',           spine: 'control', color: '#E06A6E', order: 31,
-                            up: 'закрытый рынок', down: 'ограничен в продажах',
-                            blurb: 'Рынок или продукт закрыт решением, а не отсутствием спроса.' },
-  export_controlled_by:   { label: 'экспорт под контролем',verb: 'экспортно подконтролен',spine: 'control', color: '#CF3B45', order: 32,
-                            up: 'контролирует экспорт', down: 'экспорт ограничен',
-                            blurb: 'Каждая поставка требует разрешения, которое выдают по одному случаю за раз.' },
-  geopolitically_dependent:{ label: 'геополитически зависит',verb: 'геополитически зависит от',spine: 'control', color: '#EC8A80', order: 33,
-                            up: 'ключевая география', down: 'зависит от географии',
-                            blurb: 'Позиция держится на географии, которую нельзя переставить в разумный срок.' },
+  controls_access_to: bi({
+    label: ['шлюзует', 'gates'],
+    verb:  ['шлюзует доступ к', 'gates access to'],
+    up:    ['контролирует доступ', 'controls access'],
+    down:  ['доступ под контролем', 'its access is controlled'],
+    blurb: ['Решает, кому и что можно продать. Не участник стека, а рубильник над ним.',
+            'Decides who may be sold what. Not a participant in the stack but a switch above it.'],
+  }, { spine: 'control', color: '#E5484D', order: 30 }),
+  subject_to_restriction: bi({
+    label: ['под ограничением', 'under restriction'],
+    verb:  ['ограничен в', 'is restricted in'],
+    up:    ['закрытый рынок', 'closed market'],
+    down:  ['ограничен в продажах', 'restricted from selling'],
+    blurb: ['Рынок или продукт закрыт решением, а не отсутствием спроса.',
+            'A market or product closed by decision, not by absent demand.'],
+  }, { spine: 'control', color: '#E06A6E', order: 31 }),
+  export_controlled_by: bi({
+    label: ['экспорт под контролем', 'export-controlled'],
+    verb:  ['экспортно подконтролен', 'is export-controlled by'],
+    up:    ['контролирует экспорт', 'controls the exports'],
+    down:  ['экспорт ограничен', 'its exports are controlled'],
+    blurb: ['Каждая поставка требует разрешения, которое выдают по одному случаю за раз.',
+            'Every shipment needs a licence, granted one case at a time.'],
+  }, { spine: 'control', color: '#CF3B45', order: 32 }),
+  geopolitically_dependent: bi({
+    label: ['геополитически зависит', 'geopolitically dependent'],
+    verb:  ['геополитически зависит от', 'is geopolitically dependent on'],
+    up:    ['ключевая география', 'critical geography'],
+    down:  ['зависит от географии', 'depends on that geography'],
+    blurb: ['Позиция держится на географии, которую нельзя переставить в разумный срок.',
+            'The position rests on geography that cannot be moved in any reasonable time.'],
+  }, { spine: 'control', color: '#EC8A80', order: 33 }),
 
   // ── rivalry ───────────────────────────────────────────────────────────
-  competes_with: { label: 'конкурирует',    verb: 'конкурирует с',  spine: 'rivalry', color: '#9A8FB8', order: 40,
-                   up: 'прямой конкурент', down: 'прямой конкурент',
-                   blurb: 'Прямо борется за ту же долю тем же продуктом.' },
-  threatens:     { label: 'угрожает',       verb: 'угрожает',       spine: 'rivalry', color: '#8A7EAE', order: 41,
-                   up: 'угрожает', down: 'находится под угрозой',
-                   blurb: 'Готовит замену, которой пока нет, но которая уже финансируется.' },
-  could_disrupt: { label: 'может подорвать',verb: 'может подорвать',spine: 'rivalry', color: '#AFA4C8', order: 42,
-                   up: 'может подорвать', down: 'может быть подорван',
-                   blurb: 'Достаточно велик, чтобы его собственное решение переписало рынок.' },
+  competes_with: bi({
+    label: ['конкурирует', 'competes'],
+    verb:  ['конкурирует с', 'competes with'],
+    up:    ['прямой конкурент', 'direct competitor'],
+    down:  ['прямой конкурент', 'direct competitor'],
+    blurb: ['Прямо борется за ту же долю тем же продуктом.',
+            'Fights head-on for the same share with the same product.'],
+  }, { spine: 'rivalry', color: '#9A8FB8', order: 40 }),
+  threatens: bi({
+    label: ['угрожает', 'threatens'],
+    verb:  ['угрожает', 'threatens'],
+    up:    ['угрожает', 'threatens this'],
+    down:  ['находится под угрозой', 'is under threat from it'],
+    blurb: ['Готовит замену, которой пока нет, но которая уже финансируется.',
+            'Preparing a replacement that does not exist yet but is already funded.'],
+  }, { spine: 'rivalry', color: '#8A7EAE', order: 41 }),
+  could_disrupt: bi({
+    label: ['может подорвать', 'could disrupt'],
+    verb:  ['может подорвать', 'could disrupt'],
+    up:    ['может подорвать', 'could disrupt this'],
+    down:  ['может быть подорван', 'could be disrupted by it'],
+    blurb: ['Достаточно велик, чтобы его собственное решение переписало рынок.',
+            'Big enough that its own decision could rewrite the market.'],
+  }, { spine: 'rivalry', color: '#AFA4C8', order: 42 }),
 };
 
 // ── Spines — five colour families. The FIRST filter on the map. ──────────
 // The two first gammas are v1's, character for character: the map has to stay
 // recognisable as the same map.
 export const SPINE_META = {
-  physical: { label: 'Физика',          short: 'ФИЗ.',  color: '#5A93DE', order: 0,
-              blurb: 'Что физически движется: материалы, станки, чипы, память, ток, стойки.' },
-  capital:  { label: 'Капитал',         short: 'КАП.',  color: '#E0A340', order: 1,
-              blurb: 'Кто платит и кто владеет: доли, долг, контракты, места в советах.' },
-  moat:     { label: 'Ров',             short: 'РОВ',   color: '#3FB984', order: 2,
-              blurb: 'Что запирает и что доказывает спрос: код, привычка, окупаемость.' },
-  control:  { label: 'Контроль',        short: 'КОНТР.',color: '#E5484D', order: 3,
-              blurb: 'Кто шлюзует доступ: экспортные правила, юрисдикции, проверки сделок.' },
-  rivalry:  { label: 'Соперничество',   short: 'СОПЕРН.',color: '#9A8FB8', order: 4,
-              blurb: 'Кто откусывает: прямые конкуренты и те, кто готовит замену.' },
+  physical: bi({
+    label: ['Физика', 'Physical'],
+    short: ['ФИЗ.', 'PHYS.'],
+    blurb: ['Что физически движется: материалы, станки, чипы, память, ток, стойки.',
+            'What physically moves: materials, tools, chips, memory, power, racks.'],
+  }, { color: '#5A93DE', order: 0 }),
+  capital: bi({
+    label: ['Капитал', 'Capital'],
+    short: ['КАП.', 'CAP.'],
+    blurb: ['Кто платит и кто владеет: доли, долг, контракты, места в советах.',
+            'Who pays and who owns: stakes, debt, contracts, board seats.'],
+  }, { color: '#E0A340', order: 1 }),
+  moat: bi({
+    label: ['Ров', 'Moat'],
+    short: ['РОВ', 'MOAT'],
+    blurb: ['Что запирает и что доказывает спрос: код, привычка, окупаемость.',
+            'What locks in and what proves demand: code, habit, returns.'],
+  }, { color: '#3FB984', order: 2 }),
+  control: bi({
+    label: ['Контроль', 'Control'],
+    short: ['КОНТР.', 'CTRL'],
+    blurb: ['Кто шлюзует доступ: экспортные правила, юрисдикции, проверки сделок.',
+            'Who gates access: export rules, jurisdictions, deal reviews.'],
+  }, { color: '#E5484D', order: 3 }),
+  rivalry: bi({
+    label: ['Соперничество', 'Rivalry'],
+    short: ['СОПЕРН.', 'RIVAL'],
+    blurb: ['Кто откусывает: прямые конкуренты и те, кто готовит замену.',
+            'Who takes a bite: direct competitors and those preparing a replacement.'],
+  }, { color: '#9A8FB8', order: 4 }),
 };
 
 // ── Source tiers 1–6 — «насколько твёрдо» СЛОВАМИ, не цифрой ─────────────
@@ -232,83 +435,172 @@ export const SPINE_META = {
 // them, but a "тир 4" on screen tells a reader nothing, so the number is only
 // ever a sort key — what the panel shows is the sentence.
 export const TIER_META = {
-  1: { label: 'Отчётность самой NVIDIA', short: '10-K · звонок · релиз', rank: 1, color: '#34D399',
-       blurb: 'Годовой и квартальный отчёт, стенограммы звонков, пресс-релизы, патенты, презентации для инвесторов.' },
-  2: { label: 'Официально от контрагента', short: 'релиз · документация', rank: 2, color: '#7FD8A8',
-       blurb: 'Пресс-релизы и звонки другой стороны, документация продукта, партнёрские каталоги.' },
-  3: { label: 'Прямая речь руководителей', short: 'сцена · интервью', rank: 3, color: '#A7D9BE',
-       blurb: 'Выступления на конференциях, интервью, показания в Конгрессе — сказано принципалом, не пересказано.' },
-  4: { label: 'Исследования и данные', short: 'статьи · базы', rank: 4, color: '#C7D89A',
-       blurb: 'Научные статьи, лидерборды, отчёты аналитиков, базы данных о сделках.' },
-  5: { label: 'Деловая пресса', short: 'Reuters · Bloomberg', rank: 5, color: '#FBBF24',
-       blurb: 'Качественная деловая пресса и отраслевые рассылки — со слов источников, не из документа.' },
-  6: { label: 'Третичное и сигналы', short: 'соцсети · блоги', rank: 6, color: '#94A3B8',
-       blurb: 'Соцсети, форумы, блоги, видео. Годится как признак, не как доказательство.' },
+  1: bi({
+    label: ['Отчётность самой NVIDIA', "The company's own filings"],
+    short: ['10-K · звонок · релиз', '10-K · call · release'],
+    blurb: ['Годовой и квартальный отчёт, стенограммы звонков, пресс-релизы, патенты, презентации для инвесторов.',
+            'Annual and quarterly reports, call transcripts, press releases, patents, investor decks.'],
+  }, { rank: 1, color: '#34D399' }),
+  2: bi({
+    label: ['Официально от контрагента', 'Official, from the counterparty'],
+    short: ['релиз · документация', 'release · product docs'],
+    blurb: ['Пресс-релизы и звонки другой стороны, документация продукта, партнёрские каталоги.',
+            "The other side's releases and calls, product documentation, partner directories."],
+  }, { rank: 2, color: '#7FD8A8' }),
+  3: bi({
+    label: ['Прямая речь руководителей', 'Executives on the record'],
+    short: ['сцена · интервью', 'stage · interview'],
+    blurb: ['Выступления на конференциях, интервью, показания в Конгрессе — сказано принципалом, не пересказано.',
+            'Conference talks, interviews, congressional testimony — said by the principal, not relayed.'],
+  }, { rank: 3, color: '#A7D9BE' }),
+  4: bi({
+    label: ['Исследования и данные', 'Research and data'],
+    short: ['статьи · базы', 'papers · databases'],
+    blurb: ['Научные статьи, лидерборды, отчёты аналитиков, базы данных о сделках.',
+            'Academic papers, leaderboards, analyst reports, deal databases.'],
+  }, { rank: 4, color: '#C7D89A' }),
+  5: bi({
+    label: ['Деловая пресса', 'Business press'],
+    short: ['Reuters · Bloomberg', 'Reuters · Bloomberg'],
+    blurb: ['Качественная деловая пресса и отраслевые рассылки — со слов источников, не из документа.',
+            'Quality business press and trade newsletters — sourced from people, not from a document.'],
+  }, { rank: 5, color: '#FBBF24' }),
+  6: bi({
+    label: ['Третичное и сигналы', 'Tertiary and signals'],
+    short: ['соцсети · блоги', 'social · blogs'],
+    blurb: ['Соцсети, форумы, блоги, видео. Годится как признак, не как доказательство.',
+            'Social media, forums, blogs, video. Good as an indication, not as proof.'],
+  }, { rank: 6, color: '#94A3B8' }),
 };
 
 // ── Confirmation status — the two-source rule, in words ──────────────────
 export const STATUS_META = {
-  confirmed:       { label: 'Подтверждено',        short: 'ПОДТВ.',   color: '#34D399', rank: 0,
-                     blurb: 'Два и более источника высших тиров, либо отчётность плюс прямая речь.' },
-  high_confidence: { label: 'Высокая уверенность', short: 'ВЫС. УВ.', color: '#A7D9BE', rank: 1,
-                     blurb: 'Один источник высшего тира, либо два источника второго и третьего.' },
-  signal:          { label: 'Сигнал',              short: 'СИГНАЛ',   color: '#94A3B8', rank: 2,
-                     blurb: 'Один источник четвёртого тира и ниже, либо только косвенные признаки.' },
+  confirmed: bi({
+    label: ['Подтверждено', 'Confirmed'],
+    short: ['ПОДТВ.', 'CONF.'],
+    blurb: ['Два и более источника высших тиров, либо отчётность плюс прямая речь.',
+            'Two or more top-tier sources, or a filing plus an on-the-record statement.'],
+  }, { color: '#34D399', rank: 0 }),
+  high_confidence: bi({
+    label: ['Высокая уверенность', 'High confidence'],
+    short: ['ВЫС. УВ.', 'HIGH'],
+    blurb: ['Один источник высшего тира, либо два источника второго и третьего.',
+            'One top-tier source, or two second- and third-tier ones.'],
+  }, { color: '#A7D9BE', rank: 1 }),
+  signal: bi({
+    label: ['Сигнал', 'Signal'],
+    short: ['СИГНАЛ', 'SIGNAL'],
+    blurb: ['Один источник четвёртого тира и ниже, либо только косвенные признаки.',
+            'A single fourth-tier or lower source, or circumstantial evidence only.'],
+  }, { color: '#94A3B8', rank: 2 }),
 };
 
 // ── Entity phase — where in its own life the position sits ───────────────
 export const PHASE_META = {
-  emerging:  { label: 'Зарождается',  short: 'ЗАРОЖД.', color: '#45C0D0', order: 0,
-               blurb: 'Позиция только складывается: подтверждена, но ещё не проверена объёмом.' },
-  scaling:   { label: 'Растёт',       short: 'РАСТЁТ',  color: '#49C2AE', order: 1,
-               blurb: 'Позиция расширяется — доля и число связей растут прогон за прогоном.' },
-  mature:    { label: 'Зрелая',       short: 'ЗРЕЛАЯ',  color: '#8E9BE6', order: 2,
-               blurb: 'Позиция устоялась: меняется медленно и предсказуемо.' },
-  at_risk:   { label: 'Под угрозой',  short: 'УГРОЗА',  color: '#E0A340', order: 3,
-               blurb: 'Позиция под давлением: есть названная замена или названный риск.' },
-  declining: { label: 'Уходит',       short: 'УХОДИТ',  color: '#E5484D', order: 4,
-               blurb: 'Позиция сокращается — по объёму, по доступу или по значению.' },
+  emerging: bi({
+    label: ['Зарождается', 'Emerging'],
+    short: ['ЗАРОЖД.', 'EMERG.'],
+    blurb: ['Позиция только складывается: подтверждена, но ещё не проверена объёмом.',
+            'The position is only forming: confirmed, but not yet tested at volume.'],
+  }, { color: '#45C0D0', order: 0 }),
+  scaling: bi({
+    label: ['Растёт', 'Scaling'],
+    short: ['РАСТЁТ', 'SCALING'],
+    blurb: ['Позиция расширяется — доля и число связей растут прогон за прогоном.',
+            'The position is widening — share and link count grow run after run.'],
+  }, { color: '#49C2AE', order: 1 }),
+  mature: bi({
+    label: ['Зрелая', 'Mature'],
+    short: ['ЗРЕЛАЯ', 'MATURE'],
+    blurb: ['Позиция устоялась: меняется медленно и предсказуемо.',
+            'The position has settled: it changes slowly and predictably.'],
+  }, { color: '#8E9BE6', order: 2 }),
+  at_risk: bi({
+    label: ['Под угрозой', 'At risk'],
+    short: ['УГРОЗА', 'AT RISK'],
+    blurb: ['Позиция под давлением: есть названная замена или названный риск.',
+            'The position is under pressure: a named replacement or a named risk exists.'],
+  }, { color: '#E0A340', order: 3 }),
+  declining: bi({
+    label: ['Уходит', 'Declining'],
+    short: ['УХОДИТ', 'DECLIN.'],
+    blurb: ['Позиция сокращается — по объёму, по доступу или по значению.',
+            'The position is shrinking — in volume, in access or in significance.'],
+  }, { color: '#E5484D', order: 4 }),
 };
 
 // ── Risk level — the colour is restrained on purpose ─────────────────────
 // A border or a dot, never a fill: half the entities carry a risk, and filling
 // them would turn the panel into a traffic light.
 export const RISK_META = {
-  critical: { label: 'Критический', short: 'КРИТ.', color: '#E5484D', order: 0,
-              blurb: 'Реализация обнуляет позицию, а не ухудшает её.' },
-  high:     { label: 'Высокий',     short: 'ВЫС.',  color: '#E0A340', order: 1,
-              blurb: 'Реализация заметно ослабляет позицию в пределах нескольких лет.' },
-  medium:   { label: 'Средний',     short: 'СРЕД.', color: '#58ABCB', order: 2,
-              blurb: 'Риск назван и управляем, срок отдалённый.' },
-  low:      { label: 'Низкий',      short: 'НИЗК.', color: '#49C2AE', order: 3,
-              blurb: 'Специфического риска в данных нет.' },
+  critical: bi({
+    label: ['Критический', 'Critical'],
+    short: ['КРИТ.', 'CRIT.'],
+    blurb: ['Реализация обнуляет позицию, а не ухудшает её.',
+            'If it lands, the position goes to zero rather than merely worsening.'],
+  }, { color: '#E5484D', order: 0 }),
+  high: bi({
+    label: ['Высокий', 'High'],
+    short: ['ВЫС.', 'HIGH'],
+    blurb: ['Реализация заметно ослабляет позицию в пределах нескольких лет.',
+            'If it lands, the position weakens markedly within a few years.'],
+  }, { color: '#E0A340', order: 1 }),
+  medium: bi({
+    label: ['Средний', 'Medium'],
+    short: ['СРЕД.', 'MED.'],
+    blurb: ['Риск назван и управляем, срок отдалённый.',
+            'The risk is named and manageable, and the horizon is distant.'],
+  }, { color: '#58ABCB', order: 2 }),
+  low: bi({
+    label: ['Низкий', 'Low'],
+    short: ['НИЗК.', 'LOW'],
+    blurb: ['Специфического риска в данных нет.',
+            'No specific risk appears in the data.'],
+  }, { color: '#49C2AE', order: 3 }),
 };
 
 // Kind of risk on an edge, and its horizon.
-export const RISK_TYPE_META = {
-  geopolitical: 'геополитика',
-  substitution: 'замещение',
-  market:       'рынок',
-  regulatory:   'регулирование',
-  technical:    'технология',
-  none:         null,
-};
+// No `none` key: a missing lookup already yields undefined, and every call
+// site reads `RISK_TYPE_META[x] || null`. Spreading a biMap would invoke its
+// getters at module load and freeze the labels in one language.
+export const RISK_TYPE_META = biMap({
+  geopolitical: ['геополитика', 'geopolitics'],
+  substitution: ['замещение', 'substitution'],
+  market:       ['рынок', 'market'],
+  regulatory:   ['регулирование', 'regulation'],
+  technical:    ['технология', 'technology'],
+});
 
-export const RISK_TIMELINE_META = {
-  immediate: 'прямо сейчас',
-  '1-2y':    'один-два года',
-  '2-5y':    'два-пять лет',
-  '5y+':     'пять лет и дальше',
-  ongoing:   'постоянно',
-  none:      null,
-};
+export const RISK_TIMELINE_META = biMap({
+  immediate: ['прямо сейчас', 'right now'],
+  '1-2y':    ['один-два года', 'one to two years'],
+  '2-5y':    ['два-пять лет', 'two to five years'],
+  '5y+':     ['пять лет и дальше', 'five years and beyond'],
+  ongoing:   ['постоянно', 'ongoing'],
+});
 
 // ── Direction — where the source sits relative to the target ─────────────
 export const DIRECTION_META = {
-  upstream:      { label: 'вверх по стеку',  short: '↑',  blurb: 'Источник стоит выше по цепочке: получатель от него зависит.' },
-  downstream:    { label: 'вниз по стеку',   short: '↓',  blurb: 'Источник кормит получателя: тот стоит ниже по цепочке.' },
-  lateral:       { label: 'вбок',            short: '↔',  blurb: 'Стороны стоят на одном уровне — партнёры или соперники.' },
-  bidirectional: { label: 'в обе стороны',   short: '⇄',  blurb: 'Зависимость взаимная: каждая сторона держит другую.' },
+  upstream: bi({
+    label: ['вверх по стеку', 'upstream'],
+    blurb: ['Источник стоит выше по цепочке: получатель от него зависит.',
+            'The source sits higher up the chain: the recipient depends on it.'],
+  }, { short: '↑' }),
+  downstream: bi({
+    label: ['вниз по стеку', 'downstream'],
+    blurb: ['Источник кормит получателя: тот стоит ниже по цепочке.',
+            'The source feeds the recipient, which sits lower down the chain.'],
+  }, { short: '↓' }),
+  lateral: bi({
+    label: ['вбок', 'lateral'],
+    blurb: ['Стороны стоят на одном уровне — партнёры или соперники.',
+            'Both sides sit at the same level — partners or rivals.'],
+  }, { short: '↔' }),
+  bidirectional: bi({
+    label: ['в обе стороны', 'both ways'],
+    blurb: ['Зависимость взаимная: каждая сторона держит другую.',
+            'The dependency runs both ways: each side holds the other.'],
+  }, { short: '⇄' }),
 };
 
 // ── Layer bands — five colour families over the orbit ────────────────────
@@ -316,11 +608,11 @@ export const DIRECTION_META = {
 // Layers on the nucleus and control planes have no band at all — they take
 // their colour from PLANE_META instead.
 export const BAND_META = {
-  1: { label: 'Вход',              color: '#6F93DE' },
-  2: { label: 'Кремний',           color: '#5A93DE' },
-  3: { label: 'Железо и ток',      color: '#49C2AE' },
-  4: { label: 'Инфраструктура',    color: '#58ABCB' },
-  5: { label: 'Софт и спрос',      color: '#8E9BE6' },
+  1: bi({ label: ['Вход', 'Inputs'] },                 { color: '#6F93DE' }),
+  2: bi({ label: ['Кремний', 'Silicon'] },             { color: '#5A93DE' }),
+  3: bi({ label: ['Железо и ток', 'Hardware & power'] },{ color: '#49C2AE' }),
+  4: bi({ label: ['Инфраструктура', 'Infrastructure'] },{ color: '#58ABCB' }),
+  5: bi({ label: ['Софт и спрос', 'Software & demand'] },{ color: '#8E9BE6' }),
 };
 
 // ── Planes — the one geometric novelty over v1 ───────────────────────────
@@ -328,40 +620,68 @@ export const BAND_META = {
 // gates the whole thing, and putting it in the ring would lie about the nature
 // of the relation. Hence three planes rather than one.
 export const PLANE_META = {
-  nucleus: { label: 'Ядро',           short: 'ЯДРО',   color: '#C99B72', order: 0,
-             blurb: 'Капитал: владеет стеком и финансирует его, сам в нём не стоя.' },
-  orbit:   { label: 'Орбита',         short: 'ОРБИТА', color: null,      order: 1,
-             blurb: 'Сам стек: по кольцу от сырья к приложениям, цвет — полоса слоя.' },
-  control: { label: 'Внешняя дуга',   short: 'ДУГА',   color: '#B4707A', order: 2,
-             blurb: 'Государства, ведомства и стандарты: они не стоят в стеке, они его шлюзуют.' },
+  nucleus: bi({
+    label: ['Ядро', 'Nucleus'],
+    short: ['ЯДРО', 'NUCLEUS'],
+    blurb: ['Капитал: владеет стеком и финансирует его, сам в нём не стоя.',
+            'Capital: owns and funds the stack without standing in it.'],
+  }, { color: '#C99B72', order: 0 }),
+  orbit: bi({
+    label: ['Орбита', 'Orbit'],
+    short: ['ОРБИТА', 'ORBIT'],
+    blurb: ['Сам стек: по кольцу от сырья к приложениям, цвет — полоса слоя.',
+            'The stack itself: round the ring from raw inputs to applications, coloured by layer band.'],
+  }, { color: null, order: 1 }),
+  control: bi({
+    label: ['Внешняя дуга', 'Outer arc'],
+    short: ['ДУГА', 'ARC'],
+    blurb: ['Государства, ведомства и стандарты: они не стоят в стеке, они его шлюзуют.',
+            'States, agencies and standards bodies: they do not stand in the stack, they gate it.'],
+  }, { color: '#B4707A', order: 2 }),
 };
 
 // ── Layer concentration ──────────────────────────────────────────────────
 export const CONCENTRATION_META = {
-  monopoly:    { label: 'Монополия',    short: 'МОНОП.', color: '#E5484D', order: 0,
-                 blurb: 'Один игрок держит слой. Отказ здесь останавливает всё, что выше.' },
-  duopoly:     { label: 'Дуополия',     short: 'ДУОП.',  color: '#E8975E', order: 1,
-                 blurb: 'Двое делят слой. Второй источник есть, но выбор из двух — это не рынок.' },
-  oligopoly:   { label: 'Олигополия',   short: 'ОЛИГ.',  color: '#E0A340', order: 2,
-                 blurb: 'Три-четыре игрока делят слой. Переключение возможно и стоит времени.' },
-  competitive: { label: 'Конкурентный', short: 'КОНК.',  color: '#49C2AE', order: 3,
-                 blurb: 'Много поставщиков, замена дешёвая. Узкого места здесь нет.' },
+  monopoly: bi({
+    label: ['Монополия', 'Monopoly'],
+    short: ['МОНОП.', 'MONOP.'],
+    blurb: ['Один игрок держит слой. Отказ здесь останавливает всё, что выше.',
+            'One player holds the layer. A failure here stops everything above it.'],
+  }, { color: '#E5484D', order: 0 }),
+  duopoly: bi({
+    label: ['Дуополия', 'Duopoly'],
+    short: ['ДУОП.', 'DUOP.'],
+    blurb: ['Двое делят слой. Второй источник есть, но выбор из двух — это не рынок.',
+            'Two split the layer. A second source exists, but a choice of two is not a market.'],
+  }, { color: '#E8975E', order: 1 }),
+  oligopoly: bi({
+    label: ['Олигополия', 'Oligopoly'],
+    short: ['ОЛИГ.', 'OLIG.'],
+    blurb: ['Три-четыре игрока делят слой. Переключение возможно и стоит времени.',
+            'Three or four players split the layer. Switching is possible and costs time.'],
+  }, { color: '#E0A340', order: 2 }),
+  competitive: bi({
+    label: ['Конкурентный', 'Competitive'],
+    short: ['КОНК.', 'COMPET.'],
+    blurb: ['Много поставщиков, замена дешёвая. Узкого места здесь нет.',
+            'Many suppliers, cheap to switch. There is no bottleneck here.'],
+  }, { color: '#49C2AE', order: 3 }),
 };
 
 // ── Entity types — what kind of thing this is at all ─────────────────────
 export const TYPE_META = {
-  company:        { label: 'Компания' },
-  geopolitical:   { label: 'Юрисдикция' },
-  agency:         { label: 'Ведомство' },
-  research_org:   { label: 'Исследовательская организация' },
-  standards_body: { label: 'Консорциум стандартов' },
+  company:        bi({ label: ['Компания', 'Company'] }),
+  geopolitical:   bi({ label: ['Юрисдикция', 'Jurisdiction'] }),
+  agency:         bi({ label: ['Ведомство', 'Agency'] }),
+  research_org:   bi({ label: ['Исследовательская организация', 'Research organisation'] }),
+  standards_body: bi({ label: ['Консорциум стандартов', 'Standards body'] }),
 };
 
 export const PUBLIC_PRIVATE_META = {
-  public:     { label: 'ПУБЛИЧНАЯ' },
-  private:    { label: 'ЧАСТНАЯ' },
-  government: { label: 'ГОСУДАРСТВО' },
-  academic:   { label: 'НЕКОММЕРЧЕСКАЯ' },
+  public:     bi({ label: ['ПУБЛИЧНАЯ', 'PUBLIC'] }),
+  private:    bi({ label: ['ЧАСТНАЯ', 'PRIVATE'] }),
+  government: bi({ label: ['ГОСУДАРСТВО', 'GOVERNMENT'] }),
+  academic:   bi({ label: ['НЕКОММЕРЧЕСКАЯ', 'NON-PROFIT'] }),
 };
 
 // ── Criticality rubric — four inputs, FIXED weights ──────────────────────
@@ -375,18 +695,34 @@ export const PUBLIC_PRIVATE_META = {
 // ships one line of reasoning per factor in `criticalityWhy` and the panel
 // prints it right next to the digit.
 export const CRITICALITY_FACTORS = [
-  { key: 'irreplaceability', label: 'Незаменимость', weight: 0.30,
-    question: 'Сколько компаний в мире реально могут сделать то же самое',
-    blurb: '95+ монополия со рвом на семь лет и больше · 85+ дуополия · 75+ замены есть, но упираются во время и капитал · 50+ альтернативы ясны, преимущество в инерции · ниже 30 полные близнецы.' },
-  { key: 'lockInDepth', label: 'Глубина замка', weight: 0.30,
-    question: 'Сколько слоёв стека задевает эта зависимость',
-    blurb: '95+ четыре слоя и больше · 85+ три · 75+ два · 65+ один-два с сильной зависимостью · ниже 30 один слой, меняется на лету.' },
-  { key: 'timeToReplace', label: 'Срок замены', weight: 0.25,
-    question: 'Если она исчезнет — за какой срок отрасль поднимет замену',
-    blurb: '95+ семь лет и больше · 85+ пять-семь · 75+ три-пять · 65+ два-три · 50+ год-два · ниже 30 замена немедленная.' },
-  { key: 'strategicControl', label: 'Рычаг контроля', weight: 0.15,
-    question: 'Насколько NVIDIA может влиять на решения этой стороны',
-    blurb: '95+ дочерняя структура или место в совете плюс крупные вложения · 85+ вложения от миллиарда плюс соглашение · 75+ сотни миллионов плюс совместная разработка · 50+ публичное партнёрство без денег · ниже 30 отношений нет или они враждебны.' },
+  bi({
+    label:    ['Незаменимость', 'Irreplaceability'],
+    question: ['Сколько компаний в мире реально могут сделать то же самое',
+               'How many companies in the world could genuinely do the same'],
+    blurb:    ['95+ монополия со рвом на семь лет и больше · 85+ дуополия · 75+ замены есть, но упираются во время и капитал · 50+ альтернативы ясны, преимущество в инерции · ниже 30 полные близнецы.',
+               '95+ a monopoly with a seven-year moat or longer · 85+ a duopoly · 75+ replacements exist but run into time and capital · 50+ alternatives are clear and the edge is inertia · below 30 outright twins.'],
+  }, { key: 'irreplaceability', weight: 0.30 }),
+  bi({
+    label:    ['Глубина замка', 'Lock-in depth'],
+    question: ['Сколько слоёв стека задевает эта зависимость',
+               'How many layers of the stack this dependency touches'],
+    blurb:    ['95+ четыре слоя и больше · 85+ три · 75+ два · 65+ один-два с сильной зависимостью · ниже 30 один слой, меняется на лету.',
+               '95+ four layers or more · 85+ three · 75+ two · 65+ one or two with a strong dependency · below 30 a single layer, swappable on the fly.'],
+  }, { key: 'lockInDepth', weight: 0.30 }),
+  bi({
+    label:    ['Срок замены', 'Time to replace'],
+    question: ['Если она исчезнет — за какой срок отрасль поднимет замену',
+               'If it vanished, how long the industry would take to stand up a replacement'],
+    blurb:    ['95+ семь лет и больше · 85+ пять-семь · 75+ три-пять · 65+ два-три · 50+ год-два · ниже 30 замена немедленная.',
+               '95+ seven years or more · 85+ five to seven · 75+ three to five · 65+ two to three · 50+ one to two · below 30 replacement is immediate.'],
+  }, { key: 'timeToReplace', weight: 0.25 }),
+  bi({
+    label:    ['Рычаг контроля', 'Control leverage'],
+    question: ['Насколько NVIDIA может влиять на решения этой стороны',
+               "How far NVIDIA can shape this side's decisions"],
+    blurb:    ['95+ дочерняя структура или место в совете плюс крупные вложения · 85+ вложения от миллиарда плюс соглашение · 75+ сотни миллионов плюс совместная разработка · 50+ публичное партнёрство без денег · ниже 30 отношений нет или они враждебны.',
+               '95+ a subsidiary, or a board seat plus major investment · 85+ a billion-plus stake plus an agreement · 75+ hundreds of millions plus joint development · 50+ a public partnership with no money · below 30 no relationship, or a hostile one.'],
+  }, { key: 'strategicControl', weight: 0.15 }),
 ];
 
 /** Plain-Russian band for a 0–100 criticality score. Contract's own cuts. */
@@ -481,7 +817,14 @@ function logoUrlsFor(e) {
 // ══════════════════════════════════════════════════════════════════════════
 // META — the header the shell reads before anything is drawn.
 // ══════════════════════════════════════════════════════════════════════════
-export const META = {
+export const META = bi({
+  disclaimer: [
+      'Карта показывает позиции и зависимости, а не сделки. Каждая связь подтверждена дословной цитатой из источника; '
+        + 'критичность и гравитация посчитаны движком по фиксированной рубрике. Не является инвестиционной рекомендацией.',
+      'The map shows positions and dependencies, not transactions. Every link is backed by a verbatim quote from its source; '
+        + 'criticality and gravity are computed by the engine against a fixed rubric. Not investment advice.',
+    ],
+}, {
   schema: raw.schema || null,
   generated: raw.generated || null,
   asOf: raw.asOf || null,
@@ -500,9 +843,7 @@ export const META = {
     techNodes: (raw.techNodes || []).length,
   },
   changelog: raw.changelog || null,
-  disclaimer: 'Карта показывает позиции и зависимости, а не сделки. Каждая связь подтверждена дословной цитатой из источника; '
-    + 'критичность и гравитация посчитаны движком по фиксированной рубрике. Не является инвестиционной рекомендацией.',
-};
+});
 
 // ══════════════════════════════════════════════════════════════════════════
 // buildLayers — read layers straight from a payload. NOTHING here is
@@ -702,9 +1043,9 @@ export function buildGraphFrom(raw) {
 
   // ── Cycles. Engine-detected; we only resolve the ids it named. ─────────
   const CYCLE_META = {
-    sales:     { label: 'Контур сбыта',          color: '#E5484D' },
-    financing: { label: 'Контур финансирования', color: '#E0A340' },
-    lockin:    { label: 'Контур замка',          color: '#3FB984' },
+    sales:     bi({ label: ['Контур сбыта', 'Sales circuit'] },       { color: '#E5484D' }),
+    financing: bi({ label: ['Контур финансирования', 'Financing circuit'] }, { color: '#E0A340' }),
+    lockin:    bi({ label: ['Контур замка', 'Lock-in circuit'] },     { color: '#3FB984' }),
   };
   const cycles = (raw.cycles || []).map(c => {
     const meta = CYCLE_META[c.type] || CYCLE_META.sales;

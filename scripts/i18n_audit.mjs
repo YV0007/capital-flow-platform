@@ -44,7 +44,9 @@ const LIST = process.argv.includes('--list');
 // payload (the NVIDIA pilot) is a reserve map that nothing renders. Auditing
 // that payload buries the real gaps under ~2,800 lines nobody will ever read.
 const TARGETS = [
-  { file: '/src/data/nvidiaEcosystem.js' },
+  // `LAYERS` is built from the pilot's own payload rather than declared here,
+  // so it is skipped for the same reason its graph is.
+  { file: '/src/data/nvidiaEcosystem.js', skipExports: ['LAYERS'] },
   { file: '/src/data/aiEcosystemNetwork.js', build: 'buildGraph' },
   { file: '/src/data/capitalMap.js',         build: 'buildGraph' },
   { file: '/src/data/fundTracker.js' },
@@ -97,8 +99,9 @@ async function snapshot(vite, target, lang) {
 
   const out = new Map();
   const seen = new WeakSet();
+  const skip = new Set(target.skipExports || []);
   for (const [k, v] of Object.entries(mod)) {
-    if (typeof v === 'function') continue;
+    if (typeof v === 'function' || skip.has(k)) continue;
     collect(v, k, out, seen);
   }
   if (target.build && typeof mod[target.build] === 'function') {
