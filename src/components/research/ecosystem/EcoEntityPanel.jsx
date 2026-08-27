@@ -36,6 +36,7 @@ import {
   CRITICALITY_FACTORS, criticalityBand, substitutabilityRead, critIn,
 } from '../../../data/aiEcosystemNetwork.js';
 import Glossed from './Glossed.jsx';
+import { useT, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 export const ECO_PANEL_W = 400;
@@ -47,6 +48,7 @@ export default function EcoEntityPanel({
   selectedEdgeId, onSelectEdge, onOpenEntity, onOpenLayer, onClose,
   topInset = 0,
 }) {
+  const t = useT();
   const [openEvidence, setOpenEvidence] = useState(null);   // edge id
   const [showAllUp, setShowAllUp] = useState(false);
   const [showAllDown, setShowAllDown] = useState(false);
@@ -125,23 +127,23 @@ export default function EcoEntityPanel({
                 {entity.name}
               </span>
               {entity.isAnchor && (
-                <span title="Якорь экосистемы — вопрос, вокруг которого построена вся карта" style={{
+                <span title={t('Якорь экосистемы — вопрос, вокруг которого построена вся карта', 'The ecosystem anchor — the question the whole map is built around')} style={{
                   fontSize: 8.5, color: 'var(--cf-accent)', fontFamily: MONO, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.09em', cursor: 'help',
-                }}>якорь</span>
+                }}>{t('якорь', 'anchor')}</span>
               )}
               {entity.isPivotal && !entity.isAnchor && (
-                <span title="Ключевой узел сети — один из центров, вокруг которых собрана вся карта" style={{
+                <span title={t('Ключевой узел сети — один из центров, вокруг которых собрана вся карта', 'A key node of the network — one of the centres the whole map is built around')} style={{
                   fontSize: 8.5, color: '#FDE047', fontFamily: MONO, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.09em', cursor: 'help',
-                }}>ключевой</span>
+                }}>{t('ключевой', 'key')}</span>
               )}
             </div>
             <div style={{ fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
               {entity.sectorLabel} · {entity.primaryLayerLabel || entity.primaryLayer}
             </div>
           </div>
-          <button onClick={onClose} title="Закрыть панель"
+          <button onClick={onClose} title={t('Закрыть панель', 'Close the panel')}
             style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -151,11 +153,11 @@ export default function EcoEntityPanel({
 
         <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
           {entity.publicMeta && <Chip title={entity.typeMeta?.label}>{entity.publicMeta.label}</Chip>}
-          {entity.ticker && <Chip title="Биржевой тикер">{entity.ticker}</Chip>}
-          {entity.geo && <Chip title="Юрисдикция штаб-квартиры">{entity.geo}</Chip>}
+          {entity.ticker && <Chip title={t('Биржевой тикер', 'Stock ticker')}>{entity.ticker}</Chip>}
+          {entity.geo && <Chip title={t('Юрисдикция штаб-квартиры', 'Headquarters jurisdiction')}>{entity.geo}</Chip>}
           {entity.faded && (
-            <Chip dashed color="#E0A340" title={`Данные не подтверждались с ${entity.lastConfirmed || '—'}`}>
-              Данные устарели · {entity.lastConfirmed || '—'}
+            <Chip dashed color="#E0A340" title={t(`Данные не подтверждались с ${entity.lastConfirmed || '—'}`, `Not re-confirmed since ${entity.lastConfirmed || '—'}`)}>
+              {t('Данные устарели', 'Data is stale')} · {entity.lastConfirmed || '—'}
             </Chip>
           )}
         </div>
@@ -171,9 +173,9 @@ export default function EcoEntityPanel({
             entity to see what it hangs off and what hangs off it, and only go
             down to the scoring if the answer is not obvious. */}
         <RelationList
-          title="Вверх — от кого зависит"
+          title={t('Вверх — от кого зависит', 'Upstream — what it depends on')}
           icon={<ArrowDownLeft size={11} />}
-          empty="Ни одной входящей зависимости в карте."
+          empty={t('Ни одной входящей зависимости в карте.', 'No inbound dependency in the map.')}
           edges={up} entity={entity} entityById={entityById} side="source"
           showAll={showAllUp} onShowAll={() => setShowAllUp(true)}
           selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
@@ -181,9 +183,9 @@ export default function EcoEntityPanel({
           onOpenEntity={onOpenEntity} glossary={glossary} isFixture={isFixture}
         />
         <RelationList
-          title="Вниз — кто зависит"
+          title={t('Вниз — кто зависит', 'Downstream — what depends on it')}
           icon={<ArrowUpRight size={11} />}
-          empty="Никто в карте не зависит от этой сущности напрямую."
+          empty={t('Никто в карте не зависит от этой сущности напрямую.', 'Nothing in the map depends on this entity directly.')}
           edges={down} entity={entity} entityById={entityById} side="target"
           showAll={showAllDown} onShowAll={() => setShowAllDown(true)}
           selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
@@ -192,14 +194,14 @@ export default function EcoEntityPanel({
         />
 
         {/* 3. Criticality — the score AND the reasoning behind each input */}
-        <Section title="Критичность" icon={<CircleDot size={11} />}>
+        <Section title={t('Критичность', 'Criticality')} icon={<CircleDot size={11} />}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 12, padding: `0 ${PAD}px` }}>
             <span style={{ fontSize: 30, fontWeight: 700, color: cb.color, lineHeight: 1, fontFamily: MONO }}>
               {entity.criticality}
             </span>
             <span style={{ fontSize: 11.5, color: 'var(--cf-text3)', fontWeight: 600 }}>{cb.label}</span>
             <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>
-              из 100 · насколько трудно заменить
+              {t('из 100 · насколько трудно заменить', 'out of 100 · how hard it is to replace')}
             </span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: `0 ${PAD}px` }}>
@@ -213,7 +215,7 @@ export default function EcoEntityPanel({
                     <span title={f.question} style={{ fontSize: 10.5, color: 'var(--cf-text3)', cursor: 'help', flexShrink: 0 }}>
                       {f.label}
                     </span>
-                    <span title={`Вес этого фактора в итоговой оценке — ${Math.round(f.weight * 100)}%`} style={{
+                    <span title={t(`Вес этого фактора в итоговой оценке — ${Math.round(f.weight * 100)}%`, `This factor's weight in the final score — ${Math.round(f.weight * 100)}%`)} style={{
                       fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, cursor: 'help', flexShrink: 0,
                     }}>×{f.weight.toFixed(2)}</span>
                     <span style={{ flex: 1 }} />
@@ -239,7 +241,7 @@ export default function EcoEntityPanel({
 
         {/* 4. Why it cannot be replaced */}
         {entity.whyIrreplaceable && (
-          <Section title="Почему незаменима" icon={<Lock size={11} />}>
+          <Section title={t('Почему незаменима', 'Why it cannot be replaced')} icon={<Lock size={11} />}>
             <div style={{ padding: `0 ${PAD}px`, fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.6 }}>
               {gloss(entity.whyIrreplaceable)}
             </div>
@@ -248,7 +250,7 @@ export default function EcoEntityPanel({
 
         {/* 5. Risk — restrained colour: a border and a dot, never a fill */}
         {hasRisk && (
-          <Section title="Риск" icon={<ShieldAlert size={11} />}>
+          <Section title={t('Риск', 'Risk')} icon={<ShieldAlert size={11} />}>
             <div style={{ padding: `0 ${PAD}px` }}>
               {entity.riskMeta && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
@@ -263,7 +265,7 @@ export default function EcoEntityPanel({
                     {entity.riskMeta.label}
                   </span>
                   <span title={entity.riskMeta.blurb} style={{ fontSize: 10, color: 'var(--cf-text6)', cursor: 'help' }}>
-                    геополитический
+                    {t('геополитический', 'geopolitical')}
                   </span>
                 </div>
               )}
@@ -274,13 +276,13 @@ export default function EcoEntityPanel({
               )}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {risk.exportRegime && (
-                  <Chip color="#E5484D" title="Режим экспортного контроля, под который подпадает эта сущность">
+                  <Chip color="#E5484D" title={t('Режим экспортного контроля, под который подпадает эта сущность', 'The export-control regime this entity falls under')}>
                     {risk.exportRegime}
                   </Chip>
                 )}
                 {risk.concentration != null && (
-                  <Chip title="Насколько позиция сосредоточена в одной юрисдикции, 0–100">
-                    концентрация {risk.concentration}
+                  <Chip title={t('Насколько позиция сосредоточена в одной юрисдикции, 0–100', 'How concentrated the position is in one jurisdiction, 0–100')}>
+                    {t('концентрация', 'concentration')} {risk.concentration}
                   </Chip>
                 )}
               </div>
@@ -290,7 +292,7 @@ export default function EcoEntityPanel({
 
         {/* 6. What breaks it */}
         {entity.whatBreaksIt && (
-          <Section title="Что сломает позицию" icon={<AlertTriangle size={11} />}>
+          <Section title={t('Что сломает позицию', 'What breaks the position')} icon={<AlertTriangle size={11} />}>
             <div style={{ padding: `0 ${PAD}px`, fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
               {gloss(entity.whatBreaksIt)}
             </div>
@@ -299,19 +301,20 @@ export default function EcoEntityPanel({
 
         {/* 7. Gravity — structural weight, straight from the engine */}
         {g && (
-          <Section title="Гравитация" icon={<Orbit size={11} />}
-            caption="Насколько сущность вплетена в граф: со сколькими связана, сколько слоёв задевает, сколько разных механик власти на ней сходится.">
+          <Section title={t('Гравитация', 'Gravity')} icon={<Orbit size={11} />}
+            caption={t('Насколько сущность вплетена в граф: со сколькими связана, сколько слоёв задевает, сколько разных механик власти на ней сходится.',
+                       'How woven into the graph the entity is: how many it links to, how many layers it touches, how many distinct mechanics of power meet on it.')}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 10, padding: `0 ${PAD}px` }}>
               <span style={{ fontSize: 24, fontWeight: 700, color: 'var(--cf-text1)', lineHeight: 1, fontFamily: MONO }}>
                 {g.score}
               </span>
-              <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>из 100</span>
+              <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>{t('из 100', 'out of 100')}</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, padding: `0 ${PAD}px` }}>
-              <StatRow label="Связана с" value={g.reach} unit="сущностями" />
-              <StatRow label="Задевает" value={g.layers} unit="слоёв" />
-              <StatRow label="Разных типов связи" value={g.edgeTypes} />
-              {g.cycles > 0 && <StatRow label="Стоит на контурах" value={g.cycles} accent="#E5484D" />}
+              <StatRow label={t('Связана с', 'Linked to')} value={g.reach} unit={t('сущностями', 'entities')} />
+              <StatRow label={t('Задевает', 'Touches')} value={g.layers} unit={t('слоёв', 'layers')} />
+              <StatRow label={t('Разных типов связи', 'Distinct link types')} value={g.edgeTypes} />
+              {g.cycles > 0 && <StatRow label={t('Стоит на контурах', 'Sits on loops')} value={g.cycles} accent="#E5484D" />}
             </div>
             {/* Network centrality — the v3 addition. Engine-computed measures
                 over the whole graph: how "crowded" the node is (degree), how
@@ -323,15 +326,15 @@ export default function EcoEntityPanel({
             {entity.centrality && (
               <div style={{ marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)', display: 'flex', flexDirection: 'column', gap: 5, padding: `9px ${PAD}px 0` }}>
                 <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>
-                  Центральность в сети
+                  {t('Центральность в сети', 'Centrality in the network')}
                 </div>
                 {entity.centrality.degree != null && (
-                  <StatRow label="Степень" value={entity.centrality.degree} unit="прямых связей"
-                    hint="Со сколькими сущностями есть прямое ребро. Насколько узел «людный»." />
+                  <StatRow label={t('Степень', 'Degree')} value={entity.centrality.degree} unit={t('прямых связей', 'direct links')}
+                    hint={t('Со сколькими сущностями есть прямое ребро. Насколько узел «людный».', 'How many entities it shares a direct edge with. How busy the node is.')} />
                 )}
                 {entity.centrality.betweenness != null && (
-                  <StatRow label="Посредничество" value={entity.centrality.betweenness}
-                    hint="Доля кратчайших путей между другими, проходящих через эту сущность. Насколько через неё «всё идёт»." />
+                  <StatRow label={t('Посредничество', 'Betweenness')} value={entity.centrality.betweenness}
+                    hint={t('Доля кратчайших путей между другими, проходящих через эту сущность. Насколько через неё «всё идёт».', 'The share of shortest paths between others that run through this entity. How much passes through it.')} />
                 )}
                 {/* PageRank — engine-computed, present only once the engine ships
                     it. Raw pagerank (≈1/N average) is meaningless to read, so it
@@ -341,10 +344,11 @@ export default function EcoEntityPanel({
                     arithmetic, not metric computation — the number itself is the
                     engine's. */}
                 {entity.centrality.pagerank != null && entityById.size > 0 && (
-                  <StatRow label="Влияние"
+                  <StatRow label={t('Влияние', 'Influence')}
                     value={`${(entity.centrality.pagerank * entityById.size).toFixed(1)}×`}
-                    unit="среднего"
-                    hint="PageRank: важность тем выше, чем больше на неё опираются ВАЖНЫЕ узлы — как ранг страницы у Google. Показано в разах от среднего влияния по сети (1× — среднее)." />
+                    unit={t('среднего', 'of average')}
+                    hint={t('PageRank: важность тем выше, чем больше на неё опираются ВАЖНЫЕ узлы — как ранг страницы у Google. Показано в разах от среднего влияния по сети (1× — среднее).',
+                            'PageRank: importance rises the more IMPORTANT nodes lean on it — the same idea as a page rank at Google. Shown as a multiple of the network-average influence (1× is the average).')} />
                 )}
               </div>
             )}
@@ -352,8 +356,8 @@ export default function EcoEntityPanel({
         )}
 
         {/* 8. Where in the stack */}
-        <Section title="Где стоит в стеке" icon={<Layers size={11} />}>
-          <ColHeads left="Слой" right="Критичность в слое" />
+        <Section title={t('Где стоит в стеке', 'Where it sits in the stack')} icon={<Layers size={11} />}>
+          <ColHeads left={t('Слой', 'Layer')} right={t('Критичность в слое', 'Criticality in the layer')} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {entity.segments.map(s => {
               const l = layerById.get(s.layer);
@@ -368,10 +372,10 @@ export default function EcoEntityPanel({
                     fontWeight: s.primary ? 600 : 400,
                   }}>
                     {l?.label || s.layer}
-                    {s.primary && <span style={{ color: 'var(--cf-text7)', fontSize: 9, fontFamily: MONO, fontWeight: 400 }}> · основной</span>}
+                    {s.primary && <span style={{ color: 'var(--cf-text7)', fontSize: 9, fontFamily: MONO, fontWeight: 400 }}> · {t('основной', 'primary')}</span>}
                   </span>
                   <Meter value={s.criticality} color={entity.color} />
-                  <span title={`Критичность в слое «${l?.label || s.layer}»: ${s.criticality} из 100`} style={{
+                  <span title={t(`Критичность в слое «${l?.label || s.layer}»: ${s.criticality} из 100`, `Criticality in the ${l?.label || s.layer} layer: ${s.criticality} out of 100`)} style={{
                     width: 26, fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
                     color: 'var(--cf-text3)', textAlign: 'right',
                   }}>{s.criticality}</span>
@@ -382,7 +386,7 @@ export default function EcoEntityPanel({
         </Section>
 
         {/* 9. Who else does this */}
-        <Section title="Кто ещё в этом секторе" icon={<Users size={11} />} count={rivals.length || null}>
+        <Section title={t('Кто ещё в этом секторе', 'Who else is in this sector')} icon={<Users size={11} />} count={rivals.length || null}>
           <div style={{ padding: `0 ${PAD}px 2px`, fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
             {rivalRead(entity, rivals, rank)}
           </div>
@@ -433,7 +437,7 @@ export default function EcoEntityPanel({
                 fontSize: 9, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em', flexShrink: 0,
               }}>{conc.label}</span>
               <span style={{ flex: 1, fontSize: 11, color: 'var(--cf-text4)', textAlign: 'left' }}>
-весь слой «{primaryLayer.label}»
+{t('весь слой', 'the whole')} «{primaryLayer.label}»{t('', ' layer')}
               </span>
               <ChevronRight size={12} color="var(--cf-text7)" />
             </button>
@@ -442,7 +446,7 @@ export default function EcoEntityPanel({
 
         {/* 10. Tech nodes owned */}
         {entity.tech?.length > 0 && (
-          <Section title="Тех-узлы во владении">
+          <Section title={t('Тех-узлы во владении', 'Tech nodes owned')}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, padding: `0 ${PAD}px` }}>
               {entity.tech.map(t => (
                 <span key={t.id} title={t.note} style={{
@@ -461,16 +465,16 @@ export default function EcoEntityPanel({
         )}
 
         {/* 12. Facts of record, only those that arrived */}
-        <Section title="Дальше">
+        <Section title={t('Дальше', 'Further')}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, padding: `0 ${PAD}px 8px` }}>
-            {entity.founded && <Chip title="Год основания">осн. {entity.founded}</Chip>}
+            {entity.founded && <Chip title={t('Год основания', 'Year founded')}>осн. {entity.founded}</Chip>}
             {entity.revenueUsdB != null && (
-              <Chip title="Годовая выручка, млрд долларов">{entity.revenueUsdB} млрд $</Chip>
+              <Chip title={t('Годовая выручка, млрд долларов', 'Annual revenue, USD billions')}>{entity.revenueUsdB} млрд $</Chip>
             )}
-            {entity.typeMeta && <Chip title="Тип сущности в карте">{entity.typeMeta.label}</Chip>}
+            {entity.typeMeta && <Chip title={t('Тип сущности в карте', 'The entity\'s type in the map')}>{entity.typeMeta.label}</Chip>}
           </div>
           <div style={{ padding: `0 ${PAD}px`, fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO, lineHeight: 1.5 }}>
-            Впервые в карте: {entity.firstSeen || '—'} · подтверждено: {entity.lastConfirmed || '—'}
+            {t('Впервые в карте', 'First seen in the map')}: {entity.firstSeen || '—'} · {t('подтверждено', 'confirmed')}: {entity.lastConfirmed || '—'}
           </div>
         </Section>
       </div>
@@ -484,6 +488,7 @@ function RelationList({
   selectedEdgeId, onSelectEdge, openEvidence, onToggleEvidence,
   onOpenEntity, glossary, isFixture,
 }) {
+  const t = useT();
   // Who performs the verb flips with the direction of the list, and that was
   // the whole confusion: «ПРОИЗВОДИТ» next to TSMC on NVIDIA's panel could be
   // read either way round. Said once, in words, per row's tooltip.
@@ -553,6 +558,20 @@ function RelationList({
                     fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600,
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                   }}>{other.name}</span>
+                  {/* A pivot among the counterparties is the answer to "which
+                      of these actually matters" — the same mark the header puts
+                      on the entity itself, so «ключевой» means one thing
+                      everywhere on the map. Anchors outrank pivots. */}
+                  {(other.isAnchor || other.isPivotal) && (
+                    <span title={other.isAnchor
+                      ? t('Якорь экосистемы', 'The ecosystem anchor')
+                      : t('Ключевой узел сети — один из центров, вокруг которых собрана вся карта', 'A key node of the network — one of the centres the whole map is built around')}
+                      style={{
+                        fontSize: 8, color: '#FDE047', fontFamily: MONO, fontWeight: 700,
+                        textTransform: 'uppercase', letterSpacing: '0.07em',
+                        flexShrink: 0, cursor: 'help',
+                      }}>{other.isAnchor ? t('якорь', 'anchor') : t('ключ', 'key')}</span>
+                  )}
                   <span style={{
                     fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
                     flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
@@ -564,13 +583,13 @@ function RelationList({
                   fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: e.color,
                   textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'help', flexShrink: 0,
                 }}>{(up ? e.typeMeta?.up : e.typeMeta?.down) || e.verb || e.typeLabel}</span>
-                <span title={`Существенность этой связи для получателя — ${e.strength} из 100`} style={{
+                <span title={t(`Существенность этой связи для получателя — ${e.strength} из 100`, `This link's materiality to the recipient — ${e.strength} out of 100`)} style={{
                   width: 24, fontSize: 10, fontFamily: MONO, fontWeight: 700,
                   color: 'var(--cf-text4)', textAlign: 'right', cursor: 'help', flexShrink: 0,
                 }}>{e.strength}</span>
                 <button
                   onClick={() => { onSelectEdge?.(e.id); onToggleEvidence(e.id); }}
-                  title="Разбор связи и цитаты"
+                  title={t('Разбор связи и цитаты', 'The link breakdown and its quotes')}
                   style={{
                     background: 'none', border: 'none', cursor: 'pointer', padding: 2, lineHeight: 0,
                     color: open ? 'var(--cf-accent)' : 'var(--cf-text7)', flexShrink: 0,
@@ -589,36 +608,36 @@ function RelationList({
                   {/* The three numbers that describe HOW the dependency holds */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 8 }}>
                     {e.lockInDepth != null && (
-                      <StatRow label="Глубина замка" value={e.lockInDepth} unit="из 100" />
+                      <StatRow label={t('Глубина замка', 'Lock-in depth')} value={e.lockInDepth} unit={t('из 100', 'out of 100')} />
                     )}
                     {sub && (
                       <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, fontSize: 10.5 }}>
-                        <span style={{ color: 'var(--cf-text5)' }}>Замена</span>
+                        <span style={{ color: 'var(--cf-text5)' }}>{t('Замена', 'Substitution')}</span>
                         <span style={{ flex: 1 }} />
                         <span style={{ color: sub.color, fontWeight: 600 }}>{sub.label}</span>
-                        <span title="Обратная шкала: 0 — заменить нечем, 100 — меняется свободно" style={{
+                        <span title={t('Обратная шкала: 0 — заменить нечем, 100 — меняется свободно', 'An inverted scale: 0 means nothing can replace it, 100 means it swaps freely')} style={{
                           fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text7)', cursor: 'help',
-                        }}>{e.substitutability} из 100</span>
+                        }}>{e.substitutability} {t('из 100', 'out of 100')}</span>
                       </div>
                     )}
                     {e.isReversible === false && (
                       <div style={{ fontSize: 10.5, color: 'var(--cf-text5)' }}>
-                        Связь не отыгрывается назад: один раз принятое решение переписывает всё, что построено поверх.
+                        {t('Связь не отыгрывается назад: один раз принятое решение переписывает всё, что построено поверх.', 'The link does not unwind: once the decision is taken it rewrites everything built on top of it.')}
                       </div>
                     )}
                   </div>
                   <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 8 }}>
                     <Chip color={e.spineMeta?.color} title={e.spineMeta?.blurb}>{e.spineMeta?.label}</Chip>
                     <Chip color={e.statusMeta?.color} title={e.statusMeta?.blurb}>
-                      {e.confirmedSources} {plural(e.confirmedSources, ['источник', 'источника', 'источников'])} · {e.tierMeta?.short}
+                      {e.confirmedSources} {plural(e.confirmedSources, [t('источник', 'source'), 'источника', 'источников'])} · {e.tierMeta?.short}
                     </Chip>
                     {e.riskMeta && e.risk?.level !== 'low' && (
                       <Chip color={e.riskMeta.color} title={riskSentence(e)}>
-                        риск {e.riskMeta.label.toLowerCase()}
+                        {t('риск', 'risk')} {e.riskMeta.label.toLowerCase()}
                       </Chip>
                     )}
-                    {e.formed && <Chip title="Год возникновения связи">с {e.formed}</Chip>}
-                    {e.strengthened && <Chip title="Год, когда связь резко углубилась">углубилась {e.strengthened}</Chip>}
+                    {e.formed && <Chip title={t('Год возникновения связи', 'The year the link formed')}>с {e.formed}</Chip>}
+                    {e.strengthened && <Chip title={t('Год, когда связь резко углубилась', 'The year the link deepened sharply')}>углубилась {e.strengthened}</Chip>}
                   </div>
                   {(e.evidence || []).map((ev, i) => (
                     <Evidence key={i} ev={ev} accent={e.color} isFixture={isFixture} />
@@ -632,7 +651,7 @@ function RelationList({
   return (
     <Section title={title} icon={icon} count={edges.length}>
       {!edges.length && <Note>{empty}</Note>}
-      {!!edges.length && !showHeaders && <ColHeads left="Контрагент" right="Связь · существенность" />}
+      {!!edges.length && !showHeaders && <ColHeads left={t('Контрагент', 'Counterparty')} right={t('Связь · существенность', 'Link · materiality')} />}
       {groups.map(g => {
         const open = openGroups.has(g.key);
         const rows = open ? g.rows : g.rows.slice(0, PER_GROUP);
@@ -657,7 +676,7 @@ function RelationList({
                 </span>
                 <div style={{ flex: 1 }} />
                 <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text8)' }}>
-                  СУЩЕСТВ.
+                  {t('СУЩЕСТВ.', 'MATERIAL.')}
                 </span>
               </div>
             )}
@@ -674,7 +693,7 @@ function RelationList({
                   color: 'var(--cf-text4)', fontSize: 9.5, fontFamily: MONO, fontWeight: 600,
                   textTransform: 'uppercase', letterSpacing: '0.07em',
                 }}>
-                Ещё {hidden} · {g.label.toLowerCase()}
+                {t('Ещё', 'Another')} {hidden} · {g.label.toLowerCase()}
               </button>
             )}
           </div>
@@ -686,9 +705,10 @@ function RelationList({
 
 /** Sources behind the ENTITY itself (edges carry their own, per relation). */
 function SourceList({ sources, isFixture, accent }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   return (
-    <Section title="Источники" icon={<Quote size={11} />} count={sources.length}>
+    <Section title={t('Источники', 'Sources')} icon={<Quote size={11} />} count={sources.length}>
       <button onClick={() => setOpen(o => !o)}
         style={{
           display: 'flex', alignItems: 'center', gap: 6, width: `calc(100% - ${PAD * 2}px)`,
@@ -696,7 +716,7 @@ function SourceList({ sources, isFixture, accent }) {
           cursor: 'pointer', color: 'var(--cf-text5)', fontSize: 10, fontFamily: MONO, textAlign: 'left',
         }}>
         {open ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-        {open ? 'Свернуть' : 'Показать цитаты'}
+        {open ? t('Свернуть', 'Collapse') : t('Показать цитаты', 'Show the quotes')}
       </button>
       {open && (
         <div style={{ padding: `4px ${PAD}px 0` }}>
@@ -709,6 +729,7 @@ function SourceList({ sources, isFixture, accent }) {
 
 /** One source: quote, tier IN WORDS, publication, date, link. */
 function Evidence({ ev, accent, isFixture }) {
+  const t = useT();
   return (
     <div style={{ borderLeft: `2px solid ${accent}66`, paddingLeft: 9, marginBottom: 9 }}>
       {ev.quote && (
@@ -729,17 +750,17 @@ function Evidence({ ev, accent, isFixture }) {
               display: 'inline-flex', alignItems: 'center', gap: 3,
               fontSize: 9.5, color: 'var(--cf-accent)', fontFamily: MONO, textDecoration: 'none',
             }}>
-            источник <ExternalLink size={9} />
+            {t('источник', 'source')} <ExternalLink size={9} />
           </a>
         )}
         {ev.alive === false && (
-          <span style={{ fontSize: 9, color: 'var(--cf-muted)', fontFamily: MONO }}>ссылка не отвечает</span>
+          <span style={{ fontSize: 9, color: 'var(--cf-muted)', fontFamily: MONO }}>{t('ссылка не отвечает', 'link does not respond')}</span>
         )}
         {isFixture && (
-          <span title="Данные пока черновые — настоящие цитаты придут с первым прогоном движка" style={{
+          <span title={t('Данные пока черновые — настоящие цитаты придут с первым прогоном движка', 'The data is still a draft — real quotes arrive with the first engine run')} style={{
             fontSize: 8.5, color: 'var(--cf-warn)', fontFamily: MONO, fontWeight: 700,
             textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
-          }}>черновик</span>
+          }}>{t('черновик', 'draft')}</span>
         )}
       </div>
     </div>
@@ -759,6 +780,7 @@ function Evidence({ ev, accent, isFixture }) {
 // appear when there is no entry; a search chip is always there as the honest
 // fallback, and it is the ONLY thing left when neither field arrived.
 function ProfileBlock({ entity, gloss }) {
+  const t = useT();
   const what = entity.oneLiner || null;
   const more = entity.description || null;
   return (
@@ -771,14 +793,14 @@ function ProfileBlock({ entity, gloss }) {
           fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 7,
         }}>
-          {entity.role === 'state' ? 'Что это' : entity.role === 'capital' ? 'Кто это' : 'Чем занимается'}
+          {entity.role === 'state' ? t('Что это', 'What this is') : entity.role === 'capital' ? t('Кто это', 'Who this is') : t('Чем занимается', 'What it does')}
         </div>
         <div style={{
           fontSize: 12.5, lineHeight: 1.55, fontWeight: 600,
           color: what ? 'var(--cf-text1)' : 'var(--cf-text6)',
           fontStyle: what ? 'normal' : 'italic',
         }}>
-          {what ? gloss(what) : 'Описания в данных пока нет — найдите через поиск ниже.'}
+          {what ? gloss(what) : t('Описания в данных пока нет — найдите через поиск ниже.', 'No description in the data yet — use the search below.')}
         </div>
         {more && (
           <div style={{
@@ -789,8 +811,8 @@ function ProfileBlock({ entity, gloss }) {
           </div>
         )}
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginTop: 10 }}>
-          {entity.site && <LinkChip url={entity.site} icon={<Globe size={12} />} label="Сайт" external />}
-          <LinkChip url={entity.searchUrl} icon={<Search size={12} />} label={`Искать «${entity.name}»`} />
+          {entity.site && <LinkChip url={entity.site} icon={<Globe size={12} />} label={t('Сайт', 'Website')} external />}
+          <LinkChip url={entity.searchUrl} icon={<Search size={12} />} label={t(`Искать «${entity.name}»`, `Search for “${entity.name}”`)} />
         </div>
       </div>
     </div>
@@ -825,11 +847,13 @@ function sentence(e, entity, other, up) {
 
 /** The edge's risk, as one readable line for a tooltip. */
 function riskSentence(e) {
+  const en = getLang() === 'en';
   const bits = [e.riskMeta?.label];
   if (e.riskTypeLabel) bits.push(e.riskTypeLabel);
-  if (e.riskTimelineLabel) bits.push(`горизонт: ${e.riskTimelineLabel}`);
+  if (e.riskTimelineLabel) bits.push(`${en ? 'horizon' : 'горизонт'}: ${e.riskTimelineLabel}`);
   const head = bits.filter(Boolean).join(' · ');
-  return e.risk?.mitigation ? `${head}. Чем крыть: ${e.risk.mitigation}` : head;
+  if (!e.risk?.mitigation) return head;
+  return `${head}. ${en ? 'How to cover it' : 'Чем крыть'}: ${e.risk.mitigation}`;
 }
 
 /** Column labels over a list, so a bare 0-100 column is never unexplained. */
@@ -943,21 +967,31 @@ function sameFamily(a, b) {
  * derived percentage that looks like a market share but isn't one.
  */
 function rivalRead(entity, rivals, rank) {
-  const sector = entity.sectorLabel || entity.sector || 'своей функции';
+  const en = getLang() === 'en';
+  const sector = entity.sectorLabel || entity.sector || (en ? 'its own function' : 'своей функции');
   if (!rivals.length) {
-    return `${entity.name} — единственная в карте в секторе «${sector}». Второго источника здесь просто нет.`;
+    return en
+      ? `${entity.name} is the only entity in the ${sector} sector on this map. There simply is no second source here.`
+      : `${entity.name} — единственная в карте в секторе «${sector}». Второго источника здесь просто нет.`;
   }
   const total = rivals.length + 1;
   const own = critIn(entity, entity.primaryLayer) || entity.criticality || 0;
   const leader = rivals[0];
   if (rank === 1) {
     const gap = own - leader.c;
+    if (en) {
+      return gap > 0
+        ? `First of ${total} in the ${sector} sector — the next one (${leader.n.name}) trails by ${gap} ${gap === 1 ? 'point' : 'points'} of criticality.`
+        : `Shares first place in the ${sector} sector with ${leader.n.name} — both at ${own}.`;
+    }
     return gap > 0
       ? `Первая из ${total} в секторе «${sector}» — следующий (${leader.n.name}) отстаёт на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])} критичности.`
       : `Делит первое место в секторе «${sector}» с ${leader.n.name} — оба на ${own}.`;
   }
   const gap = leader.c - own;
-  return `${rank}-я из ${total} в секторе «${sector}»; лидер ${leader.n.name} впереди на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])}.`;
+  return en
+    ? `${rank}${rank === 2 ? 'nd' : rank === 3 ? 'rd' : 'th'} of ${total} in the ${sector} sector; the leader ${leader.n.name} is ahead by ${gap} ${gap === 1 ? 'point' : 'points'}.`
+    : `${rank}-я из ${total} в секторе «${sector}»; лидер ${leader.n.name} впереди на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])}.`;
 }
 
 function plural(n, [one, few, many]) {

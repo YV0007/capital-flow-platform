@@ -44,6 +44,7 @@ import {
   buildChain, principalPath, CHAIN_KINDS, CHAIN_DIRECTIONS, CHAIN_DEPTHS, DEFAULT_BRANCH,
 } from './chain.js';
 import { buildGraph, buildAdjacency, META, DEFAULT_MIN_STRENGTH } from '../../../data/aiEcosystemNetwork.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 const BG = 'var(--cf-canvas)';
@@ -51,6 +52,7 @@ const TOPBAR_H = 56;
 const EMPTY_SET = new Set();
 
 export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
+  const t = useT();
   // Built once; the layout pins fx/fy — no simulation, no per-reload drift.
   const graph = useMemo(() => buildGraph(), []);
   const regions = useMemo(() => applyEcoLayout(graph), [graph]);
@@ -428,7 +430,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, pointerEvents: 'auto', minWidth: 0 }}>
           <button onClick={() => (view !== 'map' ? setView('map') : onBack())}
-            title={view !== 'map' ? 'Назад к карте' : 'К библиотеке исследований'}
+            title={view !== 'map' ? t('Назад к карте', 'Back to the map') : t('К библиотеке исследований', 'Back to the research library')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 3,
               padding: '6px 10px 6px 6px',
@@ -438,18 +440,18 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text0)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--cf-text3)'; }}>
-            <ChevronLeft size={13} /> {view !== 'map' ? 'К карте' : 'Назад'}
+            <ChevronLeft size={13} /> {view !== 'map' ? t('К карте', 'To the map') : t('Назад', 'Back')}
           </button>
           {mapSwitch}
           <div style={{ minWidth: 0, overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, minWidth: 0 }}>
-              <span title="Сеть ключевых узлов ИИ-инфраструктуры (в v2 карта была якорной на NVIDIA)"
+              <span title={t('Сеть ключевых узлов ИИ-инфраструктуры (в v2 карта была якорной на NVIDIA)', 'The network of key AI-infrastructure nodes (in v2 the map was anchored on NVIDIA)')}
                 style={{ fontSize: 14, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
-                Экосистема ИИ
+                {t('Экосистема ИИ', 'AI Ecosystem')}
               </span>
-              <span title="Месяц прогона месячного конвейера движка"
+              <span title={t('Месяц прогона месячного конвейера движка', 'The month of the engine\'s monthly pipeline run')}
                 style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                НА {META.asOf || META.generated || '—'}
+                {t('НА', 'AS OF')} {META.asOf || META.generated || '—'}
               </span>
               {/* The ONE behavioural difference between draft and real data.
                   It reads `source` straight out of the payload, so the day the
@@ -460,7 +462,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                   with an ellipsis rather than wrapping — a second line is what
                   used to escape the bar's fixed height and overlap the canvas. */}
               {META.isFixture && (
-                <span title="Данные пока черновые: цифры и цитаты правдоподобны, но не проверены. Плашка исчезнет сама, когда придёт первый прогон движка."
+                <span title={t('Данные пока черновые: цифры и цитаты правдоподобны, но не проверены. Плашка исчезнет сама, когда придёт первый прогон движка.', 'The data is still a draft: the numbers and quotes are plausible but unverified. This banner disappears on its own once the first engine run lands.')}
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 5,
                     padding: '2px 7px', borderRadius: 5,
@@ -471,7 +473,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                     minWidth: 0,
                   }}>
                   <AlertTriangle size={9} style={{ flexShrink: 0 }} />
-                  Черновые данные
+                  {t('Черновые данные', 'Draft data')}
                 </span>
               )}
             </div>
@@ -479,17 +481,17 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                 SPOF, density, degree, clustering) now lives ONLY in NetworkSummary
                 — this stays one short line that never wraps into the canvas. */}
             <button onClick={() => setSummaryOpen(o => !o)}
-              title="Сводка сети: ключевые узлы, подграфы, точки отказа, плотность, средняя степень, кластеризация"
+              title={t('Сводка сети: ключевые узлы, подграфы, точки отказа, плотность, средняя степень, кластеризация', 'Network summary: key nodes, subgraphs, points of failure, density, average degree, clustering')}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 4,
                 background: 'none', border: 'none', padding: 0, marginTop: 2, cursor: 'pointer', font: 'inherit',
               }}>
               <span style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, whiteSpace: 'nowrap' }}>
-                {visibleNodes.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.entityCount}</span> сущ.
+                {visibleNodes.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.entityCount}</span> {t('сущ.', 'ent.')}
                 <span style={{ color: 'var(--cf-text9)' }}> · </span>
-                {visibleEdges.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.edgeCount}</span> связ.
+                {visibleEdges.size}<span style={{ color: 'var(--cf-text7)' }}>/{graph.stats.edgeCount}</span> {t('связ.', 'links')}
                 <span style={{ color: 'var(--cf-text9)' }}> · </span>
-                {graph.stats.layerCount} слоёв
+                {graph.stats.layerCount} {t('слоёв', 'layers')}
               </span>
               <Waypoints size={10} style={{ color: summaryOpen ? 'var(--cf-accent)' : 'var(--cf-text7)', flexShrink: 0 }} />
             </button>
@@ -509,7 +511,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
               if (e.key === 'Enter' && suggestions[0]) { focusEntity(suggestions[0].id); setSearchOpen(false); }
               if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
             }}
-            placeholder={view === 'table' ? 'Поиск по таблице…' : 'Найти в экосистеме…'}
+            placeholder={view === 'table' ? t('Поиск по таблице…', 'Search the table…') : t('Найти в экосистеме…', 'Find in the ecosystem…')}
             style={{
               width: '100%', padding: '7px 26px 7px 27px',
               background: 'var(--cf-topbar)', border: '1px solid var(--cf-border)', borderRadius: 8,
@@ -563,9 +565,9 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
               setCycleListOpen(true);
               if (turningOn) { setChainRoot(null); setSubgraphId(null); setSubgraphMenuOpen(false); }
             }}
-            label="Круги — замкнутые контуры сбыта, финансирования и лок-ина. Карта показывает один контур за раз; выберите любой в списке."
+            label={t('Круги — замкнутые контуры сбыта, финансирования и лок-ина. Карта показывает один контур за раз; выберите любой в списке.', 'Loops — closed circuits of sales, funding and lock-in. The map shows one loop at a time; pick any from the list.')}
             active={cycleMode} wide>
-            <Sparkles size={12} /> {activeCycle ? activeCycle.typeLabel : 'Круги'}
+            <Sparkles size={12} /> {activeCycle ? activeCycle.typeLabel : t('Круги', 'Loops')}
             {!activeCycle && graph.stats.cycleCount ? ` · ${graph.stats.cycleCount}` : ''}
           </TopBtn>
           {/* Subgraph lens — a third lens beside Круги. Picks one of the three
@@ -575,9 +577,9 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
             <div style={{ position: 'relative' }}>
               <TopBtn
                 onClick={() => setSubgraphMenuOpen(o => !o)}
-                label="Подграфы — три стека сети: GPU, TPU и общий хребет инфраструктуры. Выбор подсвечивает один, остальное гаснет."
+                label={t('Подграфы — три стека сети: GPU, TPU и общий хребет инфраструктуры. Выбор подсвечивает один, остальное гаснет.', 'Subgraphs — the network\'s three stacks: GPU, TPU and the shared infrastructure spine. Selecting one lights it and dims the rest.')}
                 active={!!subgraphId || subgraphMenuOpen} wide>
-                <Network size={12} /> {subgraphLens ? subgraphLens.label : 'Подграфы'}
+                <Network size={12} /> {subgraphLens ? subgraphLens.label : t('Подграфы', 'Subgraphs')}
                 {subgraphLens && <X size={11} onClick={(e) => { e.stopPropagation(); setSubgraphId(null); setSubgraphMenuOpen(false); }} />}
               </TopBtn>
               {subgraphMenuOpen && (
@@ -605,12 +607,12 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                         <span style={{ width: 8, height: 8, borderRadius: 2, background: sg.color, flexShrink: 0 }} />
                         <span style={{ fontSize: 11.5, fontWeight: 700, color: 'var(--cf-text1)' }}>{sg.label}</span>
                         <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text7)' }}>
-                          {sg.nodeCount} узл. · {sg.edgeCount} св.
+                          {sg.nodeCount} {t('узл.', 'nodes')} · {sg.edgeCount} {t('св.', 'links')}
                         </span>
                         {sg.degenerate && (
-                          <span title="Подграф вырожден: структурно это почти один узел со своими частями, а не самостоятельный ландшафт."
+                          <span title={t('Подграф вырожден: структурно это почти один узел со своими частями, а не самостоятельный ландшафт.', 'The subgraph is degenerate: structurally it is almost one node with its parts, not a landscape of its own.')}
                             style={{ marginLeft: 'auto', fontSize: 8, fontFamily: MONO, color: 'var(--cf-warn)', fontWeight: 700, cursor: 'help' }}>
-                            вырожден
+                            {t('вырожден', 'degenerate')}
                           </span>
                         )}
                       </div>
@@ -622,23 +624,23 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
             </div>
           )}
           <TopBtn onClick={() => (view === 'table' ? setView('map') : (setView('table'), setDrawerOpen(false)))}
-            label={view === 'table' ? 'Назад к карте' : 'Таблица — вся экосистема списком, с сортировкой по любому столбцу'}
+            label={view === 'table' ? t('Назад к карте', 'Back to the map') : t('Таблица — вся экосистема списком, с сортировкой по любому столбцу', 'Table — the whole ecosystem as a list, sortable on every column')}
             active={view === 'table'} wide>
             {view === 'table' ? <Share2 size={12} /> : <Table2 size={12} />}
-            {view === 'table' ? 'Карта' : 'Таблица'}
+            {view === 'table' ? t('Карта', 'Map') : t('Таблица', 'Table')}
           </TopBtn>
           <TopBtn onClick={() => setDrawerOpen(o => !o)}
-            label="Фильтры: роль, хребет, тип связи, слой, порог существенности"
+            label={t('Фильтры: роль, хребет, тип связи, слой, порог существенности', 'Filters: role, spine, link type, layer, materiality threshold')}
             active={drawerOpen || activeFilterCount > 0} wide>
             <SlidersHorizontal size={12} />
-            Фильтры{activeFilterCount ? ` · ${activeFilterCount}` : ''}
+            {t('Фильтры', 'Filters')}{activeFilterCount ? ` · ${activeFilterCount}` : ''}
           </TopBtn>
           {/* Vid settings — tech-node visibility, labels, reset-to-home, all
               merged into one gear menu so the bar doesn't carry three
               icon-only buttons whose meaning only a tooltip explains. */}
           {view === 'map' && (
             <div style={{ position: 'relative' }}>
-              <TopBtn onClick={() => setSettingsOpen(o => !o)} label="Вид карты: тех-узлы, подписи, сброс позиций" active={settingsOpen}>
+              <TopBtn onClick={() => setSettingsOpen(o => !o)} label={t('Вид карты: тех-узлы, подписи, сброс позиций', 'Map view: tech nodes, labels, reset positions')} active={settingsOpen}>
                 <Settings2 size={12} />
               </TopBtn>
               {settingsOpen && (
@@ -648,9 +650,9 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                   overflow: 'hidden', boxShadow: '0 16px 40px -12px var(--cf-shadow)', animation: 'cfmDrop 140ms ease-out',
                   padding: 4,
                 }}>
-                  <SettingsToggle icon={Cpu} label="Тех-узлы" hint="EUV, CUDA, CoWoS — спутники при владельце"
+                  <SettingsToggle icon={Cpu} label={t('Тех-узлы', 'Tech nodes')} hint={t('EUV, CUDA, CoWoS — спутники при владельце', 'EUV, CUDA, CoWoS — satellites around their owner')}
                     checked={showTech} onClick={() => setShowTech(s => !s)} />
-                  <SettingsToggle icon={Tag} label="Подписи" hint="Названия компаний на карте"
+                  <SettingsToggle icon={Tag} label={t('Подписи', 'Labels')} hint={t('Названия компаний на карте', 'Company names on the map')}
                     checked={showLabels} onClick={() => setShowLabels(s => !s)} />
                   <div style={{ height: 1, background: 'var(--cf-border-hair)', margin: '4px 6px' }} />
                   <button onClick={() => { resetView(); setSettingsOpen(false); }}
@@ -662,15 +664,15 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                     onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
                     onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
                     <Maximize2 size={12} style={{ color: 'var(--cf-text6)' }} />
-                    Восстановить вид
+                    {t('Восстановить вид', 'Restore the view')}
                   </button>
                 </div>
               )}
             </div>
           )}
           {(selectedNodeId || chainRoot || openLayer) && (
-            <TopBtn onClick={clearSelection} label="Снять выделение (Esc)" wide>
-              Сброс · Esc
+            <TopBtn onClick={clearSelection} label={t('Снять выделение (Esc)', 'Clear the selection (Esc)')} wide>
+              {t('Сброс', 'Reset')} · Esc
             </TopBtn>
           )}
         </div>
@@ -738,14 +740,14 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           }}>
             {graph.stats.edgeCount === 0 ? (
               <>
-                <span style={{ color: 'var(--cf-accent)', fontWeight: 700, letterSpacing: '0.08em' }}>ПУСТО</span><br />
-                <span style={{ display: 'inline-block', marginTop: 6 }}>Карта экосистемы ещё не наполнена.</span><br />
-                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>Ждём месячный прогон движка с <code>aiEcosystemNetwork.json</code>.</span>
+                <span style={{ color: 'var(--cf-accent)', fontWeight: 700, letterSpacing: '0.08em' }}>{t('ПУСТО', 'EMPTY')}</span><br />
+                <span style={{ display: 'inline-block', marginTop: 6 }}>{t('Карта экосистемы ещё не наполнена.', 'The ecosystem map has not been populated yet.')}</span><br />
+                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>{t('Ждём месячный прогон движка с', 'Waiting on the engine\'s monthly run with')} <code>aiEcosystemNetwork.json</code>.</span>
               </>
             ) : (
               <>
-                Под эти фильтры не попала ни одна связь.<br />
-                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>Опустите порог существенности или снимите фильтр.</span>
+                {t('Под эти фильтры не попала ни одна связь.', 'No link matches these filters.')}<br />
+                <span style={{ color: 'var(--cf-text7)', fontSize: 11 }}>{t('Опустите порог существенности или снимите фильтр.', 'Lower the materiality threshold or drop a filter.')}</span>
               </>
             )}
           </div>
@@ -849,6 +851,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
 
 // ── Chain controls — depth · direction · relation kind, plus "ещё N" ─────
 function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, entityById, onExpand, top }) {
+  const t = useT();
   return (
     <div style={{
       position: 'absolute', top, left: 14, zIndex: 24,
@@ -860,19 +863,19 @@ function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, entityB
       <div style={{
         fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 8,
-      }}>Цепочка</div>
+      }}>{t('Цепочка', 'Chain')}</div>
 
-      <Segmented label="Глубина" value={depth} onChange={onDepth}
+      <Segmented label={t('Глубина', 'Depth')} value={depth} onChange={onDepth}
         options={CHAIN_DEPTHS.map(d => ({ value: d.value, label: d.label }))} />
-      <Segmented label="Направление" value={dir} onChange={onDir}
+      <Segmented label={t('Направление', 'Direction')} value={dir} onChange={onDir}
         options={Object.entries(CHAIN_DIRECTIONS).map(([k, v]) => ({ value: k, label: v.short, title: v.label }))} />
-      <Segmented label="Тип связи" value={kind} onChange={onKind}
+      <Segmented label={t('Тип связи', 'Link type')} value={kind} onChange={onKind}
         options={Object.entries(CHAIN_KINDS).map(([k, v]) => ({ value: k, label: v.short, title: `${v.label} — ${v.blurb}` }))} />
 
       {more.length > 0 && (
         <div style={{ marginTop: 9, paddingTop: 8, borderTop: '1px solid var(--cf-border-soft)' }}>
           <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, marginBottom: 5 }}>
-            Ветвление обрезано до топ-{DEFAULT_BRANCH} по существенности
+            {t(`Ветвление обрезано до топ-${DEFAULT_BRANCH} по существенности`, `Branching trimmed to the top ${DEFAULT_BRANCH} by materiality`)}
           </div>
           {more.slice(0, 5).map(m => (
             <button key={m.key} onClick={() => onExpand(m.key)}
@@ -883,7 +886,7 @@ function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, entityB
                 color: 'var(--cf-text3)', fontSize: 9.5, fontFamily: MONO, textAlign: 'left',
               }}>
               <RefreshCw size={9} />
-              {entityById.get(m.nodeId)?.name || m.nodeId}: ещё {m.hidden} {m.dir === 'up' ? '↑' : '↓'}
+              {entityById.get(m.nodeId)?.name || m.nodeId}: {t('ещё', 'plus')} {m.hidden} {m.dir === 'up' ? '↑' : '↓'}
             </button>
           ))}
         </div>
@@ -920,6 +923,7 @@ function Segmented({ label, value, onChange, options }) {
 // list is for choosing the next one, not for clearing the map — and the lens
 // opens with the first circuit already lit rather than on a blank canvas.
 function CycleLegend({ cycles, activeCycleId, listOpen, onSelect, onBack, onClose, entityById, onOpenEntity }) {
+  const t = useT();
   const lit = activeCycleId ? cycles.find(c => c.id === activeCycleId) : null;
   const active = listOpen ? null : lit;      // null → render the list
 
@@ -933,7 +937,7 @@ function CycleLegend({ cycles, activeCycleId, listOpen, onSelect, onBack, onClos
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 9 }}>
         {active && (
-          <button onClick={onBack} title="Ко всем контурам"
+          <button onClick={onBack} title={t('Ко всем контурам', 'Back to all loops')}
             style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'var(--cf-text6)', display: 'flex' }}>
             <ChevronLeft size={13} />
           </button>
@@ -942,10 +946,10 @@ function CycleLegend({ cycles, activeCycleId, listOpen, onSelect, onBack, onClos
           fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
         }}>
-          {active ? active.typeLabel : `Контуры · ${cycles.length}`}
+          {active ? active.typeLabel : `${t('Контуры', 'Loops')} · ${cycles.length}`}
         </div>
         <div style={{ flex: 1 }} />
-        <button onClick={onClose} title="Закрыть (Esc)"
+        <button onClick={onClose} title={t('Закрыть (Esc)', 'Close (Esc)')}
           style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 2, lineHeight: 0 }}
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -954,7 +958,7 @@ function CycleLegend({ cycles, activeCycleId, listOpen, onSelect, onBack, onClos
       </div>
 
       {!cycles.length && (
-        <div style={{ fontSize: 11, color: 'var(--cf-text6)' }}>Движок пока не нашёл ни одного круга.</div>
+        <div style={{ fontSize: 11, color: 'var(--cf-text6)' }}>{t('Движок пока не нашёл ни одного круга.', 'The engine has not found a single loop yet.')}</div>
       )}
 
       {(active ? [active] : cycles).map(c => {
@@ -974,7 +978,7 @@ function CycleLegend({ cycles, activeCycleId, listOpen, onSelect, onBack, onClos
                   <span style={{
                     marginLeft: 'auto', fontSize: 8, fontFamily: MONO, fontWeight: 700,
                     color: 'var(--cf-accent)', textTransform: 'uppercase', letterSpacing: '0.08em',
-                  }}>на карте</span>
+                  }}>{t('на карте', 'on the map')}</span>
                 )}
               </div>
             )}
