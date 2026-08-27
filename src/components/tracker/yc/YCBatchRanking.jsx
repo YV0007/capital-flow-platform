@@ -6,8 +6,10 @@
 //   3) where Toloka's 21 positions land.
 import React from 'react';
 import data from '../../../data/yc-batch-ranking.json';
+import { useT } from '../../../lib/i18n.jsx';
 
 export default function YCBatchRanking() {
+  const t = useT();
   const accent = '#fbbf24';
   return (
     <section style={{
@@ -22,7 +24,7 @@ export default function YCBatchRanking() {
           fontSize: 10.5, color: accent, fontWeight: 700,
           fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em',
           textTransform: 'uppercase',
-        }}>полный рейтинг</span>
+        }}>{t('полный рейтинг', 'full ranking')}</span>
         <h2 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: '#fafafa', letterSpacing: '-0.02em' }}>
           Рейтинг всего батча
         </h2>
@@ -35,7 +37,7 @@ export default function YCBatchRanking() {
       <Methodology accent={accent} />
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <SubHead>Таблица рейтинга</SubHead>
+        <SubHead>{t('Таблица рейтинга', 'Ranking table')}</SubHead>
         {data.tiers.map(t => <TierRow key={t.id} t={t} />)}
       </div>
 
@@ -46,10 +48,11 @@ export default function YCBatchRanking() {
 
 // ── How the ranking is built ────────────────────────────────────────────────
 function Methodology({ accent }) {
+  const t = useT();
   const { factors, how_it_works: h } = data;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <SubHead>Как считается</SubHead>
+      <SubHead>{t('Как считается', 'How it is calculated')}</SubHead>
 
       {/* 4 equal-weight factors */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px,1fr))', gap: 10 }}>

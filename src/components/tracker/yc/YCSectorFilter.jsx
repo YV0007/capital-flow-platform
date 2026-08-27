@@ -1,8 +1,10 @@
 // Horizontal multi-select sector chips. Scrollable on narrow viewports.
 import React from 'react';
 import { iconForSector } from './yc-sector-colors.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
+  const t = useT();
   if (!sectors || sectors.length === 0) return null;
 
   return (
@@ -25,7 +27,7 @@ export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
         letterSpacing: '0.12em', fontWeight: 700,
         flexShrink: 0, marginRight: 4,
       }}>
-        СЕКТОР
+        {t('СЕКТОР', 'SECTOR')}
       </div>
       {sectors.map(s => {
         const isActive = active.has(s);
@@ -82,7 +84,7 @@ export default function YCSectorFilter({ sectors, active, onToggle, onClear }) {
           onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
           onMouseLeave={e => e.currentTarget.style.color = '#71717a'}
         >
-          ОЧИСТИТЬ
+          {t('ОЧИСТИТЬ', 'CLEAR')}
         </button>
       )}
     </div>

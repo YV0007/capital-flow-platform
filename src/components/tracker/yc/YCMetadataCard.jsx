@@ -6,17 +6,19 @@
 import React from 'react';
 import { Globe, Linkedin, Twitter, Briefcase } from 'lucide-react';
 import investmentData from '../../../data/yc-investment.json';
+import { useT } from '../../../lib/i18n.jsx';
 
 const STATUS_LABELS = {
-  Active:   'Работает',
-  Inactive: 'Закрылась',
-  Acquired: 'Куплена',
+  Active:   t('Работает', 'Operating'),
+  Inactive: t('Закрылась', 'Shut down'),
+  Acquired: t('Куплена', 'Acquired'),
 };
 
 const isBlank = (v) =>
   v === null || v === undefined || (typeof v === 'string' && v.trim() === '');
 
 export default function YCMetadataCard({ company, research }) {
+  const t = useT();
   const team    = research?.team;
   const market  = research?.market;
   const invest  = investmentData.companies?.[company.id] || null;
@@ -26,22 +28,22 @@ export default function YCMetadataCard({ company, research }) {
 
   // YC-style info rows.
   const rows = [
-    { label: 'Основана',   value: company.founded_year ? String(company.founded_year) : null },
-    { label: 'Батч',       value: company.batch },
-    { label: 'Команда',    value: headcount != null ? String(headcount) : null },
-    { label: 'Статус',     value: STATUS_LABELS[company.status] || company.status,
-      hint: company.status === 'Active' ? 'Компания работает — не закрылась и не куплена' : undefined },
-    { label: 'Локация',    value: company.location },
-    { label: 'Партнёр YC', value: company.primary_partner },
-    { label: 'Сектор',     value: sector },
+    { label: t('Основана', 'Founded'),   value: company.founded_year ? String(company.founded_year) : null },
+    { label: t('Батч', 'Batch'),       value: company.batch },
+    { label: t('Команда', 'Team'),    value: headcount != null ? String(headcount) : null },
+    { label: t('Статус', 'Status'),     value: STATUS_LABELS[company.status] || company.status,
+      hint: company.status === 'Active' ? t('Компания работает — не закрылась и не куплена', 'The company is operating — neither shut down nor acquired') : undefined },
+    { label: t('Локация', 'Location'),    value: company.location },
+    { label: t('Партнёр YC', 'YC partner'), value: company.primary_partner },
+    { label: t('Сектор', 'Sector'),     value: sector },
   ].filter(r => !isBlank(r.value));
 
   // Compact investment summary — the detail page has the full block, this is
   // the at-a-glance version.
   const external = invest?.external_investors || [];
   const hasExternal = invest?.tier === 'external' && external.length > 0;
-  const capSet = !isBlank(invest?.cap) && invest?.cap !== 'не зафиксирована';
-  const capDisplay = capSet ? invest.cap : 'не зафиксирована';
+  const capSet = !isBlank(invest?.cap) && invest?.cap !== t('не зафиксирована', 'not recorded');
+  const capDisplay = capSet ? invest.cap : t('не зафиксирована', 'not recorded');
 
   const links = [
     { url: company.website,    icon: Globe,     label: 'Website' },
@@ -59,7 +61,7 @@ export default function YCMetadataCard({ company, research }) {
       borderRadius: 12,
       padding: '18px 20px',
     }}>
-      <SectionLabel>Карточка</SectionLabel>
+      <SectionLabel>{t('Карточка', 'Card')}</SectionLabel>
 
       {rows.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
@@ -69,12 +71,12 @@ export default function YCMetadataCard({ company, research }) {
 
       {invest && (
         <div style={{ marginTop: 18, paddingTop: 16, borderTop: '1px solid #18181b' }}>
-          <SectionLabel small>Инвестиция</SectionLabel>
+          <SectionLabel small>{t('Инвестиция', 'Investment')}</SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
-            <Row label="Потолок оценки" hint="Максимум оценки в сделке (SAFE), не текущая стоимость компании." value={capDisplay} mono={capSet} accent={capSet ? '#34d399' : '#a1a1aa'} />
+            <Row label={t('Потолок оценки', 'Valuation cap')} hint={t('Максимум оценки в сделке (SAFE), не текущая стоимость компании.', 'The cap in the SAFE, not the company\'s current value.')} value={capDisplay} mono={capSet} accent={capSet ? '#34d399' : '#a1a1aa'} />
             <Row
-              label="Инвесторы"
-              value={hasExternal ? 'внешние + YC' : 'только YC'}
+              label={t('Инвесторы', 'Investors')}
+              value={hasExternal ? t('внешние + YC', 'external + YC') : t('только YC', 'YC only')}
               accent={hasExternal ? '#34d399' : '#a1a1aa'}
             />
           </div>

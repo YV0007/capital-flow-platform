@@ -6,8 +6,10 @@ import YCDetailHero from './YCDetailHero.jsx';
 import YCMetadataCard from './YCMetadataCard.jsx';
 import YCFoundersStrip from './YCFoundersStrip.jsx';
 import YCResearchSections from './YCResearchSections.jsx';
+import { useT } from '../../../lib/i18n.jsx';
 
 export default function YCDetail({ company, research, onBack }) {
+  const t = useT();
   // Show the legacy founders strip only when the basic company record has
   // founders AND the research bundle doesn't (the research has its own
   // richer pedigree block).
@@ -38,7 +40,7 @@ export default function YCDetail({ company, research, onBack }) {
         onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
         onMouseLeave={e => e.currentTarget.style.color = '#a1a1aa'}
       >
-        ← К списку
+        {t('← К списку', '← Back to the list')}
       </button>
 
       {/* Hero */}
@@ -61,7 +63,7 @@ export default function YCDetail({ company, research, onBack }) {
             marginBottom: 14,
             textTransform: 'uppercase',
           }}>
-            О компании
+            {t('О компании', 'About the company')}
           </div>
           <div style={{
             fontSize: 15, color: '#e4e4e7', lineHeight: 1.75,
@@ -85,7 +87,7 @@ export default function YCDetail({ company, research, onBack }) {
             marginBottom: 14,
             textTransform: 'uppercase',
           }}>
-            Основатели
+            {t('Основатели', 'Founders')}
           </div>
           <YCFoundersStrip founders={company.founders} />
         </div>

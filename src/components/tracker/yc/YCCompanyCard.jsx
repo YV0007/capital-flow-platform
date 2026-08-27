@@ -13,6 +13,7 @@ import {
 } from './yc-sector-colors.js';
 import ycResearchData from '../../../data/yc-research.json';
 import investmentData from '../../../data/yc-investment.json';
+import { useT } from '../../../lib/i18n.jsx';
 
 // Lookup founders by company name so the listing card can show a compact
 // founder line without plumbing through props.
@@ -30,9 +31,10 @@ function shortFounder(fullName) {
 }
 
 export default function YCCompanyCard({ company, onClick }) {
+  const t = useT();
   const [hover, setHover] = useState(false);
   const visibleSectors = (company.sectors || []).slice(0, 3);
-  const statusLabel = YC_STATUS_LABELS[company.status] || company.status || 'Активна';
+  const statusLabel = YC_STATUS_LABELS[company.status] || company.status || t('Активна', 'Active');
 
   // Pull just-enough research for the card footer.
   const research = RESEARCH_BY_NAME[company.name.trim().toLowerCase()];
@@ -205,7 +207,7 @@ export default function YCCompanyCard({ company, onClick }) {
               background: hasExternal ? '#10b981' : '#52525b',
               boxShadow: hasExternal ? '0 0 5px rgba(16,185,129,0.7)' : 'none',
             }} />
-            {hasExternal ? 'Внешние инвесторы' : 'Только YC'}
+            {hasExternal ? t('Внешние инвесторы', 'External investors') : t('Только YC', 'YC only')}
           </span>
           {investorLine && (
             <span style={{ color: '#a1a1aa', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

@@ -3,17 +3,18 @@
 import React from 'react';
 import { Logo, domainFromUrl } from './YCCompanyCard.jsx';
 import { iconForSector } from './yc-sector-colors.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const STATUS_LABELS = {
-  Active:   'Работает',
-  Inactive: 'Закрылась',
-  Acquired: 'Куплена',
+  Active:   t('Работает', 'Operating'),
+  Inactive: t('Закрылась', 'Shut down'),
+  Acquired: t('Куплена', 'Acquired'),
 };
 
 const STATUS_HINTS = {
-  Active:   'Компания работает — не закрылась и не куплена',
-  Inactive: 'Компания прекратила работу',
-  Acquired: 'Компанию купили',
+  Active:   t('Компания работает — не закрылась и не куплена', 'The company is operating — neither shut down nor acquired'),
+  Inactive: t('Компания прекратила работу', 'The company has ceased operations'),
+  Acquired: t('Компанию купили', 'The company was acquired'),
 };
 
 const STATUS_STYLES = {
