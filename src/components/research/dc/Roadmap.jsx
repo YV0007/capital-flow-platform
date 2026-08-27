@@ -10,9 +10,11 @@ import dcCompaniesData from '../../../data/dc-companies.json';
 import dcBucketsData from '../../../data/dc-buckets.json';
 import dcDetailsData from '../../../data/dc-details.json';
 import dcCompanyProfilesData from '../../../data/dc-company-profiles.json';
+import { useT, getLang } from '../../../lib/i18n.jsx';
+import { bi, biMap } from '../../../data/capitalMap.js';
 
 const DC_COMPANIES = dcCompaniesData;
-const DC_PROFILES = dcCompanyProfilesData; // rich company overviews keyed by ticker (for the 'Подробнее' modal)
+const DC_PROFILES = dcCompanyProfilesData; // rich company overviews keyed by ticker (for the t('Подробнее', 'More') modal)
 const { DC_BUCKETS } = dcBucketsData;
 // Deep-dive content keyed by node id (keys starting with "_" are ignored). Empty
 // for most nodes today – the detail page falls back to a placeholder + base copy.
@@ -31,30 +33,30 @@ const BIG_NODE_W     = 210;
 const BIG_NODE_H     = 64;
 
 // ─ Bucket short-codes – shown on every node for instant group recognition.
-const BUCKET_TAGS = {
-  'Power & Grid':             'ЭНЕРГО',
-  'Compute & Silicon':        'ЧИПЫ',
-  'Materials & Chemicals':    'СЫРЬЁ',
-  'Connectivity & Photonics': 'СЕТЬ',
-  'Construction & Labor':     'СТРОЙ',
-  'Cooling & Thermal':        'ХОЛОД',
-  'Fab & Test Equipment':     'СТАНКИ',
-  'Software & Apps':          'СОФТ',
-  'Memory & Storage':         'ПАМЯТЬ',
-};
+const BUCKET_TAGS = biMap({
+  'Power & Grid': ['ЭНЕРГО', 'POWER'],
+  'Compute & Silicon': ['ЧИПЫ', 'CHIPS'],
+  'Materials & Chemicals': ['СЫРЬЁ', 'RAW MATERIALS'],
+  'Connectivity & Photonics': ['СЕТЬ', 'NETWORK'],
+  'Construction & Labor': ['СТРОЙ', 'BUILD'],
+  'Cooling & Thermal': ['ХОЛОД', 'COOLING'],
+  'Fab & Test Equipment': ['СТАНКИ', 'TOOLS'],
+  'Software & Apps': ['СОФТ', 'SOFTWARE'],
+  'Memory & Storage': ['ПАМЯТЬ', 'MEMORY'],
+});
 
 // ─ Russian display names for buckets (keys stay English for data joins).
-const BUCKET_RU = {
-  'Power & Grid':             'Энергетика и сети',
-  'Compute & Silicon':        'Чипы и вычисления',
-  'Materials & Chemicals':    'Материалы и химия',
-  'Connectivity & Photonics': 'Связь и фотоника',
-  'Construction & Labor':     'Стройка и люди',
-  'Cooling & Thermal':        'Охлаждение',
-  'Fab & Test Equipment':     'Оборудование для чипов',
-  'Software & Apps':          'Софт и приложения',
-  'Memory & Storage':         'Память и хранение',
-};
+const BUCKET_RU = biMap({
+  'Power & Grid': ['Энергетика и сети', 'Power & grid'],
+  'Compute & Silicon': ['Чипы и вычисления', 'Chips & compute'],
+  'Materials & Chemicals': ['Материалы и химия', 'Materials & chemicals'],
+  'Connectivity & Photonics': ['Связь и фотоника', 'Connectivity & photonics'],
+  'Construction & Labor': ['Стройка и люди', 'Construction & labour'],
+  'Cooling & Thermal': ['Охлаждение', 'Cooling'],
+  'Fab & Test Equipment': ['Оборудование для чипов', 'Chip equipment'],
+  'Software & Apps': ['Софт и приложения', 'Software & apps'],
+  'Memory & Storage': ['Память и хранение', 'Memory & storage'],
+});
 
 // ─ Russian plural: pick the right form for a count (1 узел / 2 узла / 5 узлов)
 function plural(n, one, few, many) {
@@ -66,18 +68,18 @@ function plural(n, one, few, many) {
 
 // ─ Layer definitions ──────────────────────────────────────────────────────
 const LAYERS = [
-  { id: 'L1',  label: 'СЫРЬЁ',          caption: 'материалы · химия' },
-  { id: 'L2',  label: 'ОБОРУДОВАНИЕ',   caption: 'станки · софт · тесты' },
-  { id: 'L3',  label: 'ЧИПЫ',           caption: 'логика · силовые · кастомные' },
-  { id: 'L4',  label: 'ПАМЯТЬ',         caption: 'HBM · DRAM · SSD' },
-  { id: 'L5',  label: 'СБОРКА',         caption: 'упаковка · платы' },
-  { id: 'L6',  label: 'ГЕНЕРАЦИЯ',      caption: 'источники · топливо' },
-  { id: 'L7',  label: 'ПЕРЕДАЧА ТОКА',  caption: 'сеть → стойка' },
-  { id: 'L8',  label: 'СВЯЗЬ',          caption: 'сеть · оптика' },
-  { id: 'L9',  label: 'СИСТЕМЫ',        caption: 'серверы · охлаждение · стройка' },
-  { id: 'L10', label: 'ВЫЧИСЛЕНИЯ',     caption: 'стойка' },
-  { id: 'L11', label: 'ИНФЕРЕНС',       caption: 'работа моделей · цена ответа' },
-  { id: 'L12', label: 'РЕЗУЛЬТАТ',      caption: 'модели · ИИ для бизнеса' },
+  bi({ label: ['СЫРЬЁ', 'RAW MATERIALS'], caption: ['материалы · химия', 'materials · chemicals'] }, { id: 'L1' }),
+  bi({ label: ['ОБОРУДОВАНИЕ', 'EQUIPMENT'], caption: ['станки · софт · тесты', 'tools · software · test'] }, { id: 'L2' }),
+  bi({ label: ['ЧИПЫ', 'CHIPS'], caption: ['логика · силовые · кастомные', 'logic · power · custom'] }, { id: 'L3' }),
+  bi({ label: ['ПАМЯТЬ', 'MEMORY'] }, { id: 'L4', caption: 'HBM · DRAM · SSD' }),
+  bi({ label: ['СБОРКА', 'ASSEMBLY'], caption: ['упаковка · платы', 'packaging · boards'] }, { id: 'L5' }),
+  bi({ label: ['ГЕНЕРАЦИЯ', 'GENERATION'], caption: ['источники · топливо', 'sources · fuel'] }, { id: 'L6' }),
+  bi({ label: ['ПЕРЕДАЧА ТОКА', 'POWER TRANSMISSION'] }, { id: 'L7', caption: 'сеть → стойка' }),
+  bi({ label: ['СВЯЗЬ', 'CONNECTIVITY'], caption: ['сеть · оптика', 'network · optics'] }, { id: 'L8' }),
+  bi({ label: ['СИСТЕМЫ', 'SYSTEMS'], caption: ['серверы · охлаждение · стройка', 'servers · cooling · build'] }, { id: 'L9' }),
+  bi({ label: ['ВЫЧИСЛЕНИЯ', 'COMPUTE'], caption: ['стойка', 'rack'] }, { id: 'L10' }),
+  bi({ label: ['ИНФЕРЕНС', 'INFERENCE'], caption: ['работа моделей · цена ответа', 'running models · cost per answer'] }, { id: 'L11' }),
+  bi({ label: ['РЕЗУЛЬТАТ', 'OUTCOME'], caption: ['модели · ИИ для бизнеса', 'models · AI for business'] }, { id: 'L12' }),
 ];
 
 // ─ Nodes (sub-sectors) ────────────────────────────────────────────────────
@@ -85,70 +87,70 @@ const LAYERS = [
 // `bucket` matches a key in DC_BUCKETS for colour + parent grouping.
 const NODES_RAW = [
   // L1 – Raw Inputs
-  { id: 'goes',        label: 'Электросталь',     sector: 'GOES Steel',     bucket: 'Materials & Chemicals',    layer: 0 },
-  { id: 'resist',      label: 'Фоторезист',       sector: 'Photoresist',    bucket: 'Materials & Chemicals',    layer: 0 },
-  { id: 'chem',        label: 'Химия для чипов',  sector: 'Specialty Chem', bucket: 'Materials & Chemicals',    layer: 0 },
+  bi({ label: ['Электросталь', 'Electrical steel'] }, { id: 'goes', sector: 'GOES Steel', bucket: 'Materials & Chemicals', layer: 0 }),
+  bi({ label: ['Фоторезист', 'Photoresist'] }, { id: 'resist', sector: 'Photoresist', bucket: 'Materials & Chemicals', layer: 0 }),
+  bi({ label: ['Химия для чипов', 'Chip chemicals'] }, { id: 'chem', sector: 'Specialty Chem', bucket: 'Materials & Chemicals', layer: 0 }),
   { id: 'inpgaas',     label: 'InP / GaAs',       sector: 'InP/GaAs',       bucket: 'Materials & Chemicals',    layer: 0 },
-  { id: 'titanium',    label: 'Титановые сплавы', sector: 'Titanium',       bucket: 'Materials & Chemicals',    layer: 0 },
-  { id: 'hbmmat',      label: 'Материалы для HBM', sector: 'HBM Materials',  bucket: 'Materials & Chemicals',    layer: 0 },
+  bi({ label: ['Титановые сплавы', 'Titanium alloys'] }, { id: 'titanium', sector: 'Titanium', bucket: 'Materials & Chemicals', layer: 0 }),
+  bi({ label: ['Материалы для HBM', 'HBM materials'] }, { id: 'hbmmat', sector: 'HBM Materials', bucket: 'Materials & Chemicals', layer: 0 }),
 
   // L2 – Equipment & Design
-  { id: 'litho',       label: 'Станки для чипов', sector: 'Litho Tools',    bucket: 'Fab & Test Equipment',     layer: 1 },
-  { id: 'test',        label: 'Тестирование',     sector: 'Test',           bucket: 'Fab & Test Equipment',     layer: 1 },
-  { id: 'eda',         label: 'Софт для чипов',   sector: 'EDA',            bucket: 'Compute & Silicon',        layer: 1 },
-  { id: 'ip',          label: 'Лицензии / склейка', sector: 'IP/Bonding',   bucket: 'Compute & Silicon',        layer: 1 },
+  bi({ label: ['Станки для чипов', 'Chip tools'] }, { id: 'litho', sector: 'Litho Tools', bucket: 'Fab & Test Equipment', layer: 1 }),
+  bi({ label: ['Тестирование', 'Test'] }, { id: 'test', sector: 'Test', bucket: 'Fab & Test Equipment', layer: 1 }),
+  bi({ label: ['Софт для чипов', 'Chip software'] }, { id: 'eda', sector: 'EDA', bucket: 'Compute & Silicon', layer: 1 }),
+  bi({ label: ['Лицензии / склейка', 'Licensing / integration'] }, { id: 'ip', sector: 'IP/Bonding', bucket: 'Compute & Silicon', layer: 1 }),
 
   // L3 – Chips
-  { id: 'silicon',     label: 'AI-чипы',          sector: 'AI Silicon',     bucket: 'Compute & Silicon',        layer: 2 },
-  { id: 'wbg',         label: 'Силовые чипы',     sector: 'Wide-Bandgap',   bucket: 'Compute & Silicon',        layer: 2 },
-  { id: 'asic',        label: 'Кастомные AI-чипы', sector: 'Custom ASIC',   bucket: 'Compute & Silicon',        layer: 2 },
+  bi({ label: ['AI-чипы', 'AI chips'] }, { id: 'silicon', sector: 'AI Silicon', bucket: 'Compute & Silicon', layer: 2 }),
+  bi({ label: ['Силовые чипы', 'Power chips'] }, { id: 'wbg', sector: 'Wide-Bandgap', bucket: 'Compute & Silicon', layer: 2 }),
+  bi({ label: ['Кастомные AI-чипы', 'Custom AI chips'] }, { id: 'asic', sector: 'Custom ASIC', bucket: 'Compute & Silicon', layer: 2 }),
 
   // L4 – Memory
-  { id: 'hbm',         label: 'HBM-память',       sector: 'HBM',            bucket: 'Memory & Storage',         layer: 3 },
+  bi({ label: ['HBM-память', 'HBM memory'] }, { id: 'hbm', sector: 'HBM', bucket: 'Memory & Storage', layer: 3 }),
   { id: 'dram',        label: 'DRAM',             sector: 'DRAM',           bucket: 'Memory & Storage',         layer: 3 },
   { id: 'nand',        label: 'NAND / SSD',       sector: 'NAND/SSD',       bucket: 'Memory & Storage',         layer: 3 },
 
   // L5 – Assembly
-  { id: 'pkg',         label: 'Упаковка чипов',   sector: 'Adv Packaging',  bucket: 'Compute & Silicon',        layer: 4 },
-  { id: 'pcb',         label: 'Платы / подложки', sector: 'PCB',            bucket: 'Compute & Silicon',        layer: 4 },
+  bi({ label: ['Упаковка чипов', 'Chip packaging'] }, { id: 'pkg', sector: 'Adv Packaging', bucket: 'Compute & Silicon', layer: 4 }),
+  bi({ label: ['Платы / подложки', 'Boards / substrates'] }, { id: 'pcb', sector: 'PCB', bucket: 'Compute & Silicon', layer: 4 }),
 
   // L6 – Power Origin
-  { id: 'nuc',         label: 'Атомная энергия',  sector: 'Nuclear',        bucket: 'Power & Grid',             layer: 5 },
-  { id: 'smr',         label: 'Малые реакторы',   sector: 'SMR',            bucket: 'Power & Grid',             layer: 5 },
-  { id: 'fuel',        label: 'Топливные элементы', sector: 'Fuel Cells',   bucket: 'Power & Grid',             layer: 5 },
-  { id: 'gaspipe',     label: 'Газопроводы',      sector: 'Gas Pipelines',  bucket: 'Power & Grid',             layer: 5 },
-  { id: 'gasturbines', label: 'Газовые турбины',  sector: 'Gas Turbines',   bucket: 'Power & Grid',             layer: 5 },
-  { id: 'renewables',  label: 'Возобновляемая энергия', sector: 'Renewables', bucket: 'Power & Grid',           layer: 5 },
+  bi({ label: ['Атомная энергия', 'Nuclear power'] }, { id: 'nuc', sector: 'Nuclear', bucket: 'Power & Grid', layer: 5 }),
+  bi({ label: ['Малые реакторы', 'Small reactors'] }, { id: 'smr', sector: 'SMR', bucket: 'Power & Grid', layer: 5 }),
+  bi({ label: ['Топливные элементы', 'Fuel cells'] }, { id: 'fuel', sector: 'Fuel Cells', bucket: 'Power & Grid', layer: 5 }),
+  bi({ label: ['Газопроводы', 'Gas pipelines'] }, { id: 'gaspipe', sector: 'Gas Pipelines', bucket: 'Power & Grid', layer: 5 }),
+  bi({ label: ['Газовые турбины', 'Gas turbines'] }, { id: 'gasturbines', sector: 'Gas Turbines', bucket: 'Power & Grid', layer: 5 }),
+  bi({ label: ['Возобновляемая энергия', 'Renewable power'] }, { id: 'renewables', sector: 'Renewables', bucket: 'Power & Grid', layer: 5 }),
 
   // L7 – Power Delivery
-  { id: 'power',       label: 'Электроэнергия',   sector: 'Power',          bucket: 'Power & Grid',             layer: 6 },
-  { id: 'transformers', label: 'Трансформаторы',  sector: 'Transformers',   bucket: 'Power & Grid',             layer: 6 },
-  { id: 'switchgear',  label: 'Электрощиты',      sector: 'Switchgear',     bucket: 'Power & Grid',             layer: 6 },
-  { id: 'pmgmt',       label: 'Питание стоек',    sector: 'Power Mgmt',     bucket: 'Power & Grid',             layer: 6 },
+  bi({ label: ['Электроэнергия', 'Electricity'] }, { id: 'power', sector: 'Power', bucket: 'Power & Grid', layer: 6 }),
+  bi({ label: ['Трансформаторы', 'Transformers'] }, { id: 'transformers', sector: 'Transformers', bucket: 'Power & Grid', layer: 6 }),
+  bi({ label: ['Электрощиты', 'Switchgear'] }, { id: 'switchgear', sector: 'Switchgear', bucket: 'Power & Grid', layer: 6 }),
+  bi({ label: ['Питание стоек', 'Rack power'] }, { id: 'pmgmt', sector: 'Power Mgmt', bucket: 'Power & Grid', layer: 6 }),
 
   // L8 – Interconnect / Networking
-  { id: 'photonics',   label: 'Фотоника',         sector: 'Photonics',      bucket: 'Connectivity & Photonics', layer: 7 },
-  { id: 'netsilicon',  label: 'Сетевые чипы',     sector: 'Network Silicon', bucket: 'Connectivity & Photonics', layer: 7 },
-  { id: 'fabric',      label: 'Сетевая фабрика',  sector: 'Interconnect Fabric', bucket: 'Connectivity & Photonics', layer: 7 },
-  { id: 'transceivers', label: 'Оптические модули', sector: 'Optical Modules', bucket: 'Connectivity & Photonics', layer: 7 },
-  { id: 'darkfiber',   label: 'Тёмное волокно',   sector: 'Dark Fiber',     bucket: 'Connectivity & Photonics', layer: 7 },
-  { id: 'fiber',       label: 'Оптоволокно',      sector: 'Fiber/Cable',    bucket: 'Connectivity & Photonics', layer: 7 },
+  bi({ label: ['Фотоника', 'Photonics'] }, { id: 'photonics', sector: 'Photonics', bucket: 'Connectivity & Photonics', layer: 7 }),
+  bi({ label: ['Сетевые чипы', 'Network chips'] }, { id: 'netsilicon', sector: 'Network Silicon', bucket: 'Connectivity & Photonics', layer: 7 }),
+  bi({ label: ['Сетевая фабрика', 'Network fabric'] }, { id: 'fabric', sector: 'Interconnect Fabric', bucket: 'Connectivity & Photonics', layer: 7 }),
+  bi({ label: ['Оптические модули', 'Optical modules'] }, { id: 'transceivers', sector: 'Optical Modules', bucket: 'Connectivity & Photonics', layer: 7 }),
+  bi({ label: ['Тёмное волокно', 'Dark fibre'] }, { id: 'darkfiber', sector: 'Dark Fiber', bucket: 'Connectivity & Photonics', layer: 7 }),
+  bi({ label: ['Оптоволокно', 'Optical fibre'] }, { id: 'fiber', sector: 'Fiber/Cable', bucket: 'Connectivity & Photonics', layer: 7 }),
 
   // L9 – Systems / Site Buildout
-  { id: 'server',      label: 'Сборка серверов',  sector: 'Server Systems', bucket: 'Compute & Silicon',        layer: 8 },
-  { id: 'liquid',      label: 'Охлаждение',       sector: 'Liquid Cooling', bucket: 'Cooling & Thermal',        layer: 8 },
-  { id: 'mep',         label: 'Инженерные системы', sector: 'MEP',          bucket: 'Construction & Labor',     layer: 8 },
-  { id: 'contracting', label: 'Строительство',    sector: 'Contracting',    bucket: 'Construction & Labor',     layer: 8 },
+  bi({ label: ['Сборка серверов', 'Server assembly'] }, { id: 'server', sector: 'Server Systems', bucket: 'Compute & Silicon', layer: 8 }),
+  bi({ label: ['Охлаждение', 'Cooling'] }, { id: 'liquid', sector: 'Liquid Cooling', bucket: 'Cooling & Thermal', layer: 8 }),
+  bi({ label: ['Инженерные системы', 'Building systems'] }, { id: 'mep', sector: 'MEP', bucket: 'Construction & Labor', layer: 8 }),
+  bi({ label: ['Строительство', 'Construction'] }, { id: 'contracting', sector: 'Contracting', bucket: 'Construction & Labor', layer: 8 }),
 
   // L10 – Compute Convergence
-  { id: 'rack',        label: 'AI-ВЫЧИСЛЕНИЯ',    sector: 'AI Compute Infra', bucket: 'Compute & Silicon',      layer: 9, big: true, secondarySector: 'AI Compute Infra (pivot)' },
+  bi({ label: ['AI-ВЫЧИСЛЕНИЯ', 'AI COMPUTE'] }, { id: 'rack', sector: 'AI Compute Infra', bucket: 'Compute & Silicon', layer: 9, big: true, secondarySector: 'AI Compute Infra (pivot)' }),
 
   // L11 – Inference (serving trained models; where AI earns per answer)
-  { id: 'inference',   label: 'Инференс',         sector: 'Inference',      bucket: 'Compute & Silicon',        layer: 10 },
+  bi({ label: ['Инференс', 'Inference'] }, { id: 'inference', sector: 'Inference', bucket: 'Compute & Silicon', layer: 10 }),
 
   // L12 – Output
-  { id: 'lab',         label: 'AI-лаборатории',   sector: 'Frontier Lab',   bucket: 'Compute & Silicon',        layer: 11 },
-  { id: 'apps',        label: 'Внедрение ИИ',     sector: 'AI Apps',        bucket: 'Software & Apps',          layer: 11 },
+  bi({ label: ['AI-лаборатории', 'AI labs'] }, { id: 'lab', sector: 'Frontier Lab', bucket: 'Compute & Silicon', layer: 11 }),
+  bi({ label: ['Внедрение ИИ', 'AI deployment'] }, { id: 'apps', sector: 'AI Apps', bucket: 'Software & Apps', layer: 11 }),
 ];
 
 // ─ Node intel – plain-Russian "what is this" per sub-sector ────────────────
@@ -513,6 +515,7 @@ function SearchBar({ query, setQuery, results, onPick }) {
 }
 
 export default function Roadmap({ initialNode = null }) {
+  const t = useT();
   const [selected, setSelected] = useState(() => (initialNode && NODES[initialNode] ? initialNode : null));
   const [hovered,  setHovered]  = useState(null);
   const [bucketFilter, setBucketFilter] = useState(null);
@@ -599,9 +602,9 @@ export default function Roadmap({ initialNode = null }) {
           fontSize: 13.5, color: 'var(--hm-text3)', lineHeight: 1.65,
           maxWidth: 640, margin: '0 auto',
         }}>
-          {Object.keys(NODES).length} {plural(Object.keys(NODES).length, 'подсектор', 'подсектора', 'подсекторов')} ·{' '}
-          {EDGES_RAW.length} {plural(EDGES_RAW.length, 'связь', 'связи', 'связей')} ·{' '}
-          {totalCompanies} {plural(totalCompanies, 'компания', 'компании', 'компаний')} · нажмите на узел, чтобы открыть карточку.
+          {Object.keys(NODES).length} {plural(Object.keys(NODES).length, t('подсектор', 'subsector'), t('подсектора', 'subsectors'), t('подсекторов', 'subsectors'))} ·{' '}
+          {EDGES_RAW.length} {plural(EDGES_RAW.length, t('связь', 'link'), t('связи', 'links'), t('связей', 'links'))} ·{' '}
+          {totalCompanies} {plural(totalCompanies, t('компания', 'company'), t('компании', 'companies'), t('компаний', 'companies'))} · нажмите на узел, чтобы открыть карточку.
         </div>
         <SearchBar query={query} setQuery={setQuery} results={searchResults}
           onPick={(id, target) => { setNavStack([]); setScrollRestore(null); setJumpTarget(target); setDetailNode(id); setQuery(''); }} />
@@ -772,7 +775,7 @@ export default function Roadmap({ initialNode = null }) {
                       fontFamily: 'ui-monospace,monospace',
                       letterSpacing: '0.05em', marginTop: 2,
                     }}>
-                      {companyCount} {plural(companyCount, 'компания', 'компании', 'компаний')}
+                      {companyCount} {plural(companyCount, t('компания', 'company'), t('компании', 'companies'), t('компаний', 'companies'))}
                     </div>
                   )}
                 </div>
@@ -919,6 +922,7 @@ export default function Roadmap({ initialNode = null }) {
 // chain neighbour chips, then companies grouped by conviction.
 // ──────────────────────────────────────────────────────────────────────────
 function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies, upstream, downstream, onClose, onJump, onOpenDetail, scrollOnMount }) {
+  const t = useT();
   const c = bucket?.color || 'var(--hm-text3)';
   // On a deep-link (opened from a Capital Flow sector report), bring the panel
   // into view — the chain sits below the hero, so otherwise it lands off-screen.
@@ -998,7 +1002,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
           fontFamily: 'ui-monospace,monospace',
           letterSpacing: '0.04em',
         }}>
-          {BUCKET_RU[node.bucket] || node.bucket} · {companies.length} {plural(companies.length, 'компания', 'компании', 'компаний')}
+          {BUCKET_RU[node.bucket] || node.bucket} · {companies.length} {plural(companies.length, t('компания', 'company'), t('компании', 'companies'), t('компаний', 'companies'))}
         </div>
 
         {/* chain position rail */}
@@ -1127,7 +1131,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
           fontFamily: 'ui-monospace,monospace',
           letterSpacing: '0.16em', fontWeight: 700,
           marginBottom: 6,
-        }}>КЛЮЧЕВЫЕ ИГРОКИ</div>
+        }}>{t('КЛЮЧЕВЫЕ ИГРОКИ', 'KEY PLAYERS')}</div>
         <div style={{
           fontSize: 10.5, color: 'var(--hm-text5)', lineHeight: 1.55, marginBottom: 14,
         }}>
@@ -1156,7 +1160,7 @@ function InspectorPanel({ node, layer, layerIdx, totalLayers, bucket, companies,
                     <span>{co.ticker}</span>
                     <span style={{ color: 'var(--hm-rank)' }}>·</span>
                     <span style={{ color: co.ppr === 'Pub' ? '#10b981' : '#a78bfa' }}>
-                      {co.ppr === 'Pub' ? 'ПУБЛИЧНАЯ' : 'ЧАСТНАЯ'}
+                      {co.ppr === 'Pub' ? t('ПУБЛИЧНАЯ', 'PUBLIC') : t('ЧАСТНАЯ', 'PRIVATE')}
                     </span>
                     <span style={{ color: 'var(--hm-rank)' }}>·</span>
                     <span>{co.geo}</span>
@@ -1288,6 +1292,7 @@ function ScoreBar({ label, value, accent }) {
 }
 
 function PurePlay({ v, c }) {
+  const t = useT();
   const n = Number(v) || 0;
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -1299,27 +1304,50 @@ function PurePlay({ v, c }) {
   );
 }
 
+/** `{ key: [[ruLabel, enLabel], [ruDesc, enDesc]] }` → objects with getters. */
+function biMap2(spec) {
+  const out = {};
+  for (const [k, [lab, desc]] of Object.entries(spec)) {
+    const o = {};
+    Object.defineProperty(o, 'label', { enumerable: true, get: () => (getLang() === 'en' ? lab[1] : lab[0]) });
+    Object.defineProperty(o, 'desc',  { enumerable: true, get: () => (getLang() === 'en' ? desc[1] : desc[0]) });
+    out[k] = o;
+  }
+  return out;
+}
+
 // ─ Verdict hero (decision summary) ─────────────────────────────────────────
 // The four canonical scoring dimensions. Each is scored 1–10, higher = better.
 // Plain-Russian labels + a one-line "what it measures / what a high score means"
 // so the reader never has to guess what a number implies.
-const VERDICT_DIMS = {
-  growth:      { label: 'Потенциал роста',          desc: 'Как быстро растёт спрос и сам рынок звена. Выше балл – сильнее рост впереди.' },
-  moat:        { label: 'Защита от конкурентов',    desc: 'Трудно ли новым игрокам войти и отнять долю: барьеры входа, издержки переключения, контроль над ключевым звеном отрасли. Выше – крепче и долговечнее позиция.' },
-  cyclicality: { label: 'Устойчивость к циклу',     desc: 'Насколько цены и прибыль устойчивы, когда предложение догоняет спрос. Выше – ровный бизнес; ниже – циклический: прибыль взлетает в дефицит и обваливается в переизбыток.' },
-  valuation:   { label: 'Привлекательность цены',   desc: 'Насколько дёшевы акции к прибыли и к своей истории. Выше – дешевле, больше запас прочности.' },
-  // legacy Russian keys (fallback so old data still renders)
-  'Рост': { label: 'Потенциал роста', desc: '' },
-  'Ров': { label: 'Защита от конкурентов', desc: '' },
-  'Цикличность': { label: 'Устойчивость к циклу', desc: '' },
-  'Оценка': { label: 'Привлекательность цены', desc: '' },
-};
+const VERDICT_DIMS = biMap2({
+  growth:      [['Потенциал роста', 'Growth potential'],
+                ['Как быстро растёт спрос и сам рынок звена. Выше балл – сильнее рост.',
+                 'How fast demand and the link\'s own market are growing. A higher score means stronger growth.']],
+  moat:        [['Защита от конкурентов', 'Defence against competitors'],
+                ['Трудно ли новым игрокам войти и отнять долю: барьеры, патенты, переключение.',
+                 'How hard it is for newcomers to enter and take share: barriers, patents, switching costs.']],
+  cyclicality: [['Устойчивость к циклу', 'Cycle resilience'],
+                ['Насколько цены и прибыль устойчивы, когда предложение догоняет спрос.',
+                 'How well prices and profits hold up once supply catches demand.']],
+  valuation:   [['Привлекательность цены', 'Price attractiveness'],
+                ['Насколько дёшевы акции к прибыли и к своей истории.',
+                 'How cheap the shares are against earnings and against their own history.']],
+  // Legacy Russian keys — DATA keys from older payloads, never translated:
+  // translating a key would stop it matching the data it exists to match.
+  'Рост':        [['Потенциал роста', 'Growth potential'], ['', '']],
+  'Ров':         [['Защита от конкурентов', 'Defence against competitors'], ['', '']],
+  'Цикличность': [['Устойчивость к циклу', 'Cycle resilience'], ['', '']],
+  'Оценка':      [['Привлекательность цены', 'Price attractiveness'], ['', '']],
+});
+
 
 function VerdictHero({ v, c, asOf }) {
+  const t = useT();
   const subs = v.subScores ? Object.entries(v.subScores) : [];
   const score = v.score != null ? Number(v.score) : (subs.length ? Math.round(subs.reduce((a, [, x]) => a + Number(x), 0) / subs.length) : null);
   const scoreCol = score == null ? 'var(--hm-text3)' : score >= 7 ? '#10b981' : score >= 5 ? '#f59e0b' : '#ef4444';
-  const scoreWord = score == null ? '' : score >= 7 ? 'Привлекательно' : score >= 5 ? 'Средне' : 'Слабо';
+  const scoreWord = score == null ? '' : score >= 7 ? t('Привлекательно', 'Attractive') : score >= 5 ? t('Средне', 'Medium') : t('Слабо', 'Weak');
   return (
     <div style={{ background: `linear-gradient(180deg, color-mix(in srgb, ${c} 11%, transparent) 0%, var(--hm-bg2) 65%)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 16, padding: '26px 28px', marginBottom: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6, flexWrap: 'wrap', gap: 8 }}>
@@ -1340,7 +1368,7 @@ function VerdictHero({ v, c, asOf }) {
             const dim = VERDICT_DIMS[k] || { label: k, desc: '' };
             const n = Number(val) || 0;
             const col = n >= 7 ? '#10b981' : n >= 5 ? '#f59e0b' : '#ef4444';
-            const word = n >= 7 ? 'сильно' : n >= 5 ? 'средне' : 'слабо';
+            const word = n >= 7 ? t('сильно', 'strong') : n >= 5 ? t('средне', 'medium') : t('слабо', 'weak');
             return (
               <div key={k} style={{ marginBottom: 15 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 10 }}>
@@ -1362,8 +1390,8 @@ function VerdictHero({ v, c, asOf }) {
       {v.summary && <div style={{ marginTop: 10, fontSize: 13, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{v.summary}</div>}
       {(v.horizon || v.sizing) && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 12, marginTop: 16 }}>
-          {v.horizon && <MetaCell label="ГОРИЗОНТ" value={v.horizon} />}
-          {v.sizing && <MetaCell label="РАЗМЕР РЫНКА" value={v.sizing} />}
+          {v.horizon && <MetaCell label={t('ГОРИЗОНТ', 'HORIZON')} value={v.horizon} />}
+          {v.sizing && <MetaCell label={t('РАЗМЕР РЫНКА', 'MARKET SIZE')} value={v.sizing} />}
         </div>
       )}
     </div>
@@ -1425,16 +1453,17 @@ function TamChart({ rows, c }) {
 }
 
 function MarketSizingBlock({ d, c }) {
+  const t = useT();
   return (
-    <Block id="market" takeaway={d.takeaway} accent={c} kicker="01 · РАЗМЕР РЫНКА И ТРАЕКТОРИЯ" lead={d.cagr}>
+    <Block id="market" takeaway={d.takeaway} accent={c} kicker={t('01 · РАЗМЕР РЫНКА И ТРАЕКТОРИЯ', '01 · MARKET SIZE AND TRAJECTORY')} lead={d.cagr}>
       {d.tam?.length > 0 && (
         <div style={{ ...cardBg, padding: '16px 18px', marginBottom: 14 }}>
-          <div style={{ ...miniKicker, marginBottom: 2 }}>{d.chartTitle || 'РАЗМЕР РЫНКА ПО ГОДАМ ($ МЛРД)'}</div>
+          <div style={{ ...miniKicker, marginBottom: 2 }}>{d.chartTitle || t('РАЗМЕР РЫНКА ПО ГОДАМ ($ МЛРД)', 'MARKET SIZE BY YEAR ($BN)')}</div>
           <TamChart rows={d.tam} c={c} />
         </div>
       )}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))', gap: 12 }}>
-        {d.bomShare && <StatCard label="ДОЛЯ В СТОИМОСТИ AI-ЧИПА" value={d.bomShare.value} note={d.bomShare.note} accent={c} src={d.bomShare.source} />}
+        {d.bomShare && <StatCard label={t('ДОЛЯ В СТОИМОСТИ AI-ЧИПА', 'SHARE OF AN AI CHIP’S COST')} value={d.bomShare.value} note={d.bomShare.note} accent={c} src={d.bomShare.source} />}
         {typeof d.volumeVsPrice === 'string' && <div style={miniCard}><div style={miniKicker}>ЧТО ДВИЖЕТ РОСТ · ОБЪЁМ ИЛИ ЦЕНА</div><div style={miniBody}>{d.volumeVsPrice}</div></div>}
         {d.volumeVsPrice?.volume && <div style={miniCard}><div style={miniKicker}>ОБЪЁМ</div><div style={miniBody}>{d.volumeVsPrice.volume}</div></div>}
         {d.volumeVsPrice?.price && <div style={miniCard}><div style={miniKicker}>ЦЕНА</div><div style={miniBody}>{d.volumeVsPrice.price}</div></div>}
@@ -1446,8 +1475,9 @@ function MarketSizingBlock({ d, c }) {
 
 // ─ Block 2 – Value capture ─────────────────────────────────────────────────
 function ValueCaptureBlock({ d, c }) {
+  const t = useT();
   return (
-    <Block id="value" takeaway={d.takeaway} accent={c} kicker="02 · КТО ЗАБИРАЕТ МАРЖУ">
+    <Block id="value" takeaway={d.takeaway} accent={c} kicker={t('02 · КТО ЗАБИРАЕТ МАРЖУ', '02 · WHO TAKES THE MARGIN')}>
       {d.margins?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
@@ -1472,12 +1502,13 @@ function ValueCaptureBlock({ d, c }) {
 
 // ─ Block 3 – Competition ───────────────────────────────────────────────────
 function CompetitionBlock({ d, c }) {
+  const t = useT();
   const traj = d.shareTrajectory || [];
   const isPlayerFmt = traj.length > 0 && ('player' in traj[0]);
   const cols = (traj.length > 0 && !isPlayerFmt) ? Object.keys(traj[0]).filter(k => k !== 'period' && k !== 'source') : [];
   const dirCol = s => /↑|раст[её]т|рост|усил/i.test(s || '') ? '#10b981' : /↓|паден|сниж|слабе/i.test(s || '') ? '#ef4444' : 'var(--hm-text3)';
   return (
-    <Block id="competition" takeaway={d.takeaway} accent={c} kicker="03 · КОНКУРЕНТНАЯ СТРУКТУРА" lead={d.concentration}>
+    <Block id="competition" takeaway={d.takeaway} accent={c} kicker={t('03 · КОНКУРЕНТНАЯ СТРУКТУРА', '03 · COMPETITIVE STRUCTURE')} lead={d.concentration}>
       {traj.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
           <div style={{ ...miniKicker, marginBottom: 8 }}>ДОЛЯ РЫНКА · КТО НАБИРАЕТ, КТО ТЕРЯЕТ</div>
@@ -1541,8 +1572,9 @@ function CompetitionBlock({ d, c }) {
 
 // ─ Block 4 – Demand ────────────────────────────────────────────────────────
 function DemandBlock({ d, c }) {
+  const t = useT();
   return (
-    <Block id="demand" takeaway={d.takeaway} accent={c} kicker="05 · СПРОС · НАСКОЛЬКО ЗАКОНТРАКТОВАН">
+    <Block id="demand" takeaway={d.takeaway} accent={c} kicker={t('05 · СПРОС · НАСКОЛЬКО ЗАКОНТРАКТОВАН', '05 · DEMAND · HOW FAR CONTRACTED')}>
       {d.soldOut?.length > 0 && (
         <div style={{ ...cardBg, padding: '16px 18px', marginBottom: 14 }}>
           <div style={{ ...miniKicker, marginBottom: 10 }}>РАСПРОДАНО / ЗАКОНТРАКТОВАНО ПО ГОДАМ</div>
@@ -1569,12 +1601,13 @@ function DemandBlock({ d, c }) {
 
 // ─ Block 5 – Supply / balance (the key cyclical output) ────────────────────
 function SupplyBlock({ d, c }) {
-  const sm = { deficit: { t: 'Дефицит', col: '#10b981' }, tight: { t: 'Напряжённо', col: '#22d3ee' }, balanced: { t: 'Баланс', col: 'var(--hm-text3)' }, surplus: { t: 'Профицит', col: '#ef4444' }, unknown: { t: 'Неясно', col: 'var(--hm-text6)' } };
+  const t = useT();
+  const sm = { deficit: { t: t('Дефицит', 'Shortage'), col: '#10b981' }, tight: { t: t('Напряжённо', 'Tight'), col: '#22d3ee' }, balanced: { t: t('Баланс', 'Balanced'), col: 'var(--hm-text3)' }, surplus: { t: t('Профицит', 'Surplus'), col: '#ef4444' }, unknown: { t: t('Неясно', 'Unclear'), col: 'var(--hm-text6)' } };
   const hasBalance = d.balance?.length > 0 && !d.balance.every(b => b.state === 'unknown');
   const hasAnything = hasBalance || d.leadTime || d.utilization || d.crowdingOut || d.capacityAdds?.length > 0;
   if (!hasAnything && !d.takeaway) return null;
   return (
-    <Block id="supply" takeaway={d.takeaway} accent={c} kicker="06 · ПРЕДЛОЖЕНИЕ · ДЕФИЦИТ ИЛИ ПЕРЕИЗБЫТОК" lead="главный вопрос для цикла">
+    <Block id="supply" takeaway={d.takeaway} accent={c} kicker="06 · ПРЕДЛОЖЕНИЕ · ДЕФИЦИТ ИЛИ ПЕРЕИЗБЫТОК" lead={t('главный вопрос для цикла', 'the key question for the cycle')}>
       {hasBalance && (
         <div style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -1607,8 +1640,9 @@ function SupplyBlock({ d, c }) {
 
 // ─ Block 6 – Unit economics ────────────────────────────────────────────────
 function UnitEconBlock({ d, c }) {
+  const t = useT();
   return (
-    <Block id="unit" takeaway={d.takeaway} accent={c} kicker="07 · ЦЕНА · МАРЖА · БРАК">
+    <Block id="unit" takeaway={d.takeaway} accent={c} kicker={t('07 · ЦЕНА · МАРЖА · БРАК', '07 · PRICE · MARGIN · DEFECTS')}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
         {d.pricePerUnit && <div style={miniCard}><div style={miniKicker}>ЦЕНА ЗА ЕДИНИЦУ</div><div style={miniBody}>{d.pricePerUnit}</div></div>}
         {d.grossMargin && <div style={miniCard}><div style={miniKicker}>ВАЛОВАЯ МАРЖА</div><div style={miniBody}>{d.grossMargin}</div></div>}
@@ -1628,8 +1662,9 @@ function UnitEconBlock({ d, c }) {
 
 // ─ Block 7 – Roadmap + disruption ──────────────────────────────────────────
 function RoadmapBlock({ d, c }) {
+  const t = useT();
   return (
-    <Block id="roadmap" takeaway={d.takeaway} accent={c} kicker="08 · ПОКОЛЕНИЯ ТЕХНОЛОГИИ И УГРОЗЫ">
+    <Block id="roadmap" takeaway={d.takeaway} accent={c} kicker={t('08 · ПОКОЛЕНИЯ ТЕХНОЛОГИИ И УГРОЗЫ', '08 · TECHNOLOGY GENERATIONS AND THREATS')}>
       {d.generations?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: d.disruption?.length ? 16 : 0 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 520 }}>
@@ -1670,8 +1705,9 @@ function RoadmapBlock({ d, c }) {
 
 // ─ Block 8 – Dependencies ──────────────────────────────────────────────────
 function DependenciesBlock({ d, c }) {
+  const t = useT();
   return (
-    <Block id="deps" takeaway={d.takeaway} accent={c} kicker="09 · ОТ КОГО ЗАВИСИТ И КТО ПОКУПАЕТ">
+    <Block id="deps" takeaway={d.takeaway} accent={c} kicker={t('09 · ОТ КОГО ЗАВИСИТ И КТО ПОКУПАЕТ', '09 · WHO IT DEPENDS ON AND WHO BUYS')}>
       {d.upstream?.length > 0 && (
         <div style={{ marginBottom: 14 }}>
           <div style={miniKicker}>ЧТО НУЖНО ДЛЯ ПРОИЗВОДСТВА – И КТО ЭТО ПОСТАВЛЯЕТ</div>
@@ -1698,9 +1734,10 @@ function DependenciesBlock({ d, c }) {
 
 // ─ Block 9 – Risk register (heat) ──────────────────────────────────────────
 function RiskMatrixBlock({ rows, c }) {
-  const lvl = x => { const s = (x || '').toLowerCase(); return s.includes('выс') ? '#ef4444' : s.includes('сред') ? '#f59e0b' : s.includes('низ') ? '#10b981' : 'var(--hm-text3)'; };
+  const t = useT();
+  const lvl = x => { const s = (x || '').toLowerCase(); return s.includes(t('выс', 'high')) ? '#ef4444' : s.includes(t('сред', 'mid')) ? '#f59e0b' : s.includes(t('низ', 'low')) ? '#10b981' : 'var(--hm-text3)'; };
   return (
-    <Block id="risks" accent={c} kicker="10 · РИСКИ · ВЕРОЯТНОСТЬ × ПОСЛЕДСТВИЯ">
+    <Block id="risks" accent={c} kicker={t('10 · РИСКИ · ВЕРОЯТНОСТЬ × ПОСЛЕДСТВИЯ', '10 · RISKS · LIKELIHOOD × IMPACT')}>
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 560 }}>
           <thead><tr style={thRow}><th style={thCell}>РИСК</th><th style={thCell}>ВЕРОЯТ.</th><th style={thCell}>ПОСЛЕДСТВИЯ</th><th style={thCell}>ОЦЕНКА</th></tr></thead>
@@ -1719,8 +1756,9 @@ function RiskMatrixBlock({ rows, c }) {
 
 // ─ Block 10 – Investable universe ──────────────────────────────────────────
 function UniverseBlock({ rows, c }) {
+  const t = useT();
   return (
-    <Block id="universe" accent={c} kicker="11 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ">
+    <Block id="universe" accent={c} kicker={t('11 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ', '11 · WHO TO INVEST THROUGH')}>
       <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', lineHeight: 1.55, marginBottom: 12 }}>
         «Чистота ставки» (1–10) – насколько выручка компании зависит именно от этого звена: 10 = почти вся, 1 = крошечная доля большого бизнеса.
       </div>
@@ -1756,6 +1794,7 @@ function ProfileBlock({ title, color, children }) {
 
 // Rich company overview shown over the picks (DC_PROFILES keyed by ticker).
 function CompanyProfileModal({ profile, c, onClose, onJump }) {
+  const t = useT();
   if (!profile) return null;
   const fin = profile.financials || [];
   const jump = id => { onClose(); if (onJump) onJump(id); };
@@ -1767,7 +1806,7 @@ function CompanyProfileModal({ profile, c, onClose, onJump }) {
             <div style={{ fontSize: 20, color: 'var(--hm-text)', fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.2 }}>{profile.company}</div>
             <div style={{ fontSize: 11.5, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', marginTop: 4 }}>{profile.ticker}</div>
           </div>
-          <button onClick={onClose} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--hm-text3)', fontSize: 24, lineHeight: 1, padding: 0 }} aria-label="Закрыть">×</button>
+          <button onClick={onClose} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--hm-text3)', fontSize: 24, lineHeight: 1, padding: 0 }} aria-label={t('Закрыть', 'Close')}>×</button>
         </div>
         {profile.website && (
           <a href={profile.website} target="_blank" rel="noopener noreferrer"
@@ -1785,15 +1824,15 @@ function CompanyProfileModal({ profile, c, onClose, onJump }) {
             ))}
           </div>
         )}
-        {profile.target && <ProfileBlock title="ЦЕЛЬ" color={c}>{profile.target}</ProfileBlock>}
-        {profile.whyMargins && <ProfileBlock title="ПОЧЕМУ ТАКАЯ МАРЖА" color={c}>{profile.whyMargins}</ProfileBlock>}
+        {profile.target && <ProfileBlock title={t('ЦЕЛЬ', 'TARGET')} color={c}>{profile.target}</ProfileBlock>}
+        {profile.whyMargins && <ProfileBlock title={t('ПОЧЕМУ ТАКАЯ МАРЖА', 'WHY THE MARGIN IS WHAT IT IS')} color={c}>{profile.whyMargins}</ProfileBlock>}
         {profile.moat?.length > 0 && (
           <div style={{ marginTop: 16 }}>
             <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>БАРЬЕР</div>
             <ul style={{ margin: '8px 0 0', paddingLeft: 18, color: 'var(--hm-text2)', fontSize: 12.5, lineHeight: 1.7 }}>{profile.moat.map((m, i) => <li key={i} style={{ marginBottom: 3 }}>{m}</li>)}</ul>
           </div>
         )}
-        {profile.risk && <ProfileBlock title="ГЛАВНЫЙ РИСК" color="#ef4444">{profile.risk}</ProfileBlock>}
+        {profile.risk && <ProfileBlock title={t('ГЛАВНЫЙ РИСК', 'KEY RISK')} color="#ef4444">{profile.risk}</ProfileBlock>}
         {profile.verdict && (
           <div style={{ marginTop: 18, padding: '14px 16px', background: `color-mix(in srgb, ${c} 7%, transparent)`, border: `1px solid color-mix(in srgb, ${c} 20%, transparent)`, borderRadius: 12 }}>
             <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700 }}>ВЕРДИКТ</div>
@@ -1814,9 +1853,10 @@ function CompanyProfileModal({ profile, c, onClose, onJump }) {
 }
 
 function PicksBlock({ groups, c, takeaway, onJump }) {
+  const t = useT();
   const [openTicker, setOpenTicker] = useState(null);
   return (
-    <Block id="universe" accent={c} kicker="11 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ" takeaway={takeaway}>
+    <Block id="universe" accent={c} kicker={t('11 · ЧЕРЕЗ КОГО ИНВЕСТИРОВАТЬ', '11 · WHO TO INVEST THROUGH')} takeaway={takeaway}>
       {groups.map((g, gi) => {
         const gc = g.tone === 'emerging' ? '#22d3ee' : c;
         return (
@@ -1876,21 +1916,22 @@ function PicksBlock({ groups, c, takeaway, onJump }) {
 
 // ─ Block 11 – Monitoring + canary ──────────────────────────────────────────
 function MonitoringBlock({ d, c }) {
+  const t = useT();
   const ladder = d.ladder;
   const ladderCols = ladder ? [
-    { key: 'intact', title: 'ТЕЗИС В СИЛЕ', col: '#10b981' },
-    { key: 'watch', title: 'СМОТРЕТЬ ВНИМАТЕЛЬНО', col: '#f59e0b' },
-    { key: 'broken', title: 'ТЕЗИС СЛОМАН – ВЫХОД', col: '#ef4444' },
+    bi({ title: ['ТЕЗИС В СИЛЕ', 'THESIS INTACT'] }, { key: 'intact', col: '#10b981' }),
+    bi({ title: ['СМОТРЕТЬ ВНИМАТЕЛЬНО', 'WATCH CLOSELY'] }, { key: 'watch', col: '#f59e0b' }),
+    bi({ title: ['ТЕЗИС СЛОМАН – ВЫХОД', 'THESIS BROKEN — EXIT'] }, { key: 'broken', col: '#ef4444' }),
   ].filter(x => ladder[x.key]?.length) : [];
   return (
-    <Block id="monitor" accent={c} kicker="14 · ЧТО ОТСЛЕЖИВАТЬ · КОГДА ВЫХОДИТЬ">
+    <Block id="monitor" accent={c} kicker={t('14 · ЧТО ОТСЛЕЖИВАТЬ · КОГДА ВЫХОДИТЬ', '14 · WHAT TO WATCH · WHEN TO EXIT')}>
       {d.metrics?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: 14 }}>
           {typeof d.metrics[0] === 'string' ? (
             <ul style={{ margin: 0, paddingLeft: 16, color: 'var(--hm-text2)', fontSize: 12.5, lineHeight: 1.7 }}>{d.metrics.map((m, i) => <li key={i} style={{ marginBottom: 4 }}>{m}</li>)}</ul>
           ) : (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
-              <thead><tr style={thRow}><th style={thCell}>МЕТРИКА</th><th style={thCell}>ИСТОЧНИК / ЧАСТОТА</th></tr></thead>
+              <thead><tr style={thRow}><th style={thCell}>{t('МЕТРИКА', 'METRIC')}</th><th style={thCell}>ИСТОЧНИК / ЧАСТОТА</th></tr></thead>
               <tbody>{d.metrics.map((m, i) => <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}><td style={{ ...tdCell, color: 'var(--hm-text2)' }}>{m.metric}</td><td style={{ ...tdCell, color: 'var(--hm-text3)' }}>{m.source}</td></tr>)}</tbody>
             </table>
           )}
@@ -1917,6 +1958,7 @@ function MonitoringBlock({ d, c }) {
 
 // ─ Block 12 – Scenarios (bull / bear) ──────────────────────────────────────
 function BullBear({ v, c }) {
+  const t = useT();
   const Col = ({ title, items, color }) => (
     <div style={{ background: `${color}0c`, border: `1px solid color-mix(in srgb, ${color} 19%, transparent)`, borderRadius: 10, padding: '16px 18px' }}>
       <div style={{ fontSize: 9.5, color, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700, marginBottom: 12 }}>{title}</div>
@@ -1935,10 +1977,10 @@ function BullBear({ v, c }) {
     </div>
   );
   return (
-    <Block id="cases" accent={c} kicker="12 · СЦЕНАРИИ">
+    <Block id="cases" accent={c} kicker={t('12 · СЦЕНАРИИ', '12 · SCENARIOS')}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 14 }}>
-        {v.bull && <Col title="БЫЧИЙ СЦЕНАРИЙ" items={v.bull} color="#10b981" />}
-        {v.bear && <Col title="МЕДВЕЖИЙ СЦЕНАРИЙ" items={v.bear} color="#ef4444" />}
+        {v.bull && <Col title={t('БЫЧИЙ СЦЕНАРИЙ', 'BULL CASE')} items={v.bull} color="#10b981" />}
+        {v.bear && <Col title={t('МЕДВЕЖИЙ СЦЕНАРИЙ', 'BEAR CASE')} items={v.bear} color="#ef4444" />}
       </div>
     </Block>
   );
@@ -1947,9 +1989,10 @@ function BullBear({ v, c }) {
 // ─ NodeDetail – assembles the memo ─────────────────────────────────────────
 // Dated "recent developments" block – current debate / news, verdict per story.
 function UpdateBlock({ d, c, news }) {
+  const t = useT();
   const toneCol = t => ({ calm: '#10b981', positive: '#10b981', watch: '#f59e0b', mixed: '#f59e0b', negative: '#ef4444' }[t] || 'var(--hm-text3)');
   return (
-    <Block id="update" accent={c} kicker="СВЕЖИЙ РАЗБОР · ЧТО ПРОИСХОДИТ И НОВОСТИ" lead={d.asOf}>
+    <Block id="update" accent={c} kicker={t('СВЕЖИЙ РАЗБОР · ЧТО ПРОИСХОДИТ И НОВОСТИ', 'FRESH READ · WHAT IS HAPPENING AND THE NEWS')} lead={d.asOf}>
       {d.headline && <div style={{ fontSize: 15.5, color: 'var(--hm-text)', fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>{d.headline}</div>}
       {d.summary && <div style={{ fontSize: 13, color: 'var(--hm-text2)', lineHeight: 1.7, marginBottom: 14 }}>{d.summary}</div>}
       {d.stories?.length > 0 && (
@@ -1998,8 +2041,9 @@ function UpdateBlock({ d, c, news }) {
 
 // News feed – dated headlines with source + short blurb.
 function NewsBlock({ items, c }) {
+  const t = useT();
   return (
-    <Block id="news" accent={c} kicker="НОВОСТИ ЗВЕНА">
+    <Block id="news" accent={c} kicker={t('НОВОСТИ ЗВЕНА', 'LINK NEWS')}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {items.map((n, i) => (
           <div key={i} style={{ padding: '14px 0', borderTop: i ? '1px solid var(--hm-border4)' : 'none', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
@@ -2020,9 +2064,10 @@ function NewsBlock({ items, c }) {
 
 // ─ Mental model – the one causal chain + earnings driver the reader remembers ─
 function MentalModelBlock({ d, c }) {
+  const t = useT();
   const chain = d.chain || [];
   return (
-    <Block id="model" accent={c} kicker="МОДЕЛЬ ЗВЕНА · КАК ЗДЕСЬ ЗАРАБАТЫВАЮТ">
+    <Block id="model" accent={c} kicker={t('МОДЕЛЬ ЗВЕНА · КАК ЗДЕСЬ ЗАРАБАТЫВАЮТ', 'LINK MODEL · HOW MONEY IS MADE HERE')}>
       {chain.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: d.framework || d.revenueFormula ? 16 : 0 }}>
           {chain.map((s, i) => (
@@ -2124,6 +2169,7 @@ function MoatBreakdownBlock({ d, c }) {
 
 // ─ What's priced in – variant perception: market's belief vs. ours ──────────
 function ExpectationsBlock({ d, c }) {
+  const t = useT();
   const vk = (d.verdict || '').toLowerCase();
   const vCol = /дёшев|дешев|недооц/.test(vk) ? '#10b981' : /дорог|переоц/.test(vk) ? '#ef4444' : '#f59e0b';
   return (
@@ -2138,7 +2184,7 @@ function ExpectationsBlock({ d, c }) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 12, marginBottom: 14 }}>
           {d.marketBelieves && (
             <div style={{ background: 'var(--hm-surface)', border: '1px solid var(--hm-border5)', borderRadius: 10, padding: '14px 16px' }}>
-              <div style={{ ...miniKicker, marginBottom: 7 }}>РЫНОК СЧИТАЕТ</div>
+              <div style={{ ...miniKicker, marginBottom: 7 }}>{t('РЫНОК СЧИТАЕТ', 'THE MARKET THINKS')}</div>
               <div style={{ fontSize: 12.5, color: 'var(--hm-text2)', lineHeight: 1.65 }}>{d.marketBelieves}</div>
             </div>
           )}
@@ -2153,7 +2199,7 @@ function ExpectationsBlock({ d, c }) {
       {d.metrics?.length > 0 && (
         <div style={{ overflowX: 'auto', marginBottom: d.verdict ? 14 : 0 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 420 }}>
-            <thead><tr style={thRow}><th style={thCell}>МЕТРИКА</th><th style={thCell}>СЕЙЧАС</th><th style={thCell}>ИСТОРИЯ / НОРМА</th><th style={thCell}>ЧТО ЭТО ЗНАЧИТ</th></tr></thead>
+            <thead><tr style={thRow}><th style={thCell}>{t('МЕТРИКА', 'METRIC')}</th><th style={thCell}>СЕЙЧАС</th><th style={thCell}>ИСТОРИЯ / НОРМА</th><th style={thCell}>ЧТО ЭТО ЗНАЧИТ</th></tr></thead>
             <tbody>{d.metrics.map((m, i) => (
               <tr key={i} style={{ borderTop: '1px solid var(--hm-border4)' }}>
                 <td style={{ ...tdCell, color: 'var(--hm-text)', fontWeight: 600 }}>{m.label}</td>
@@ -2166,7 +2212,7 @@ function ExpectationsBlock({ d, c }) {
       )}
       {d.verdict && (
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: `color-mix(in srgb, ${vCol} 7%, transparent)`, border: `1px solid color-mix(in srgb, ${vCol} 27%, transparent)`, borderRadius: 10, padding: '10px 16px' }}>
-          <span style={{ fontSize: 9, color: vCol, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>ВЕРДИКТ ПО ЦЕНЕ</span>
+          <span style={{ fontSize: 9, color: vCol, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>{t('ВЕРДИКТ ПО ЦЕНЕ', 'PRICE VERDICT')}</span>
           <span style={{ fontSize: 14, color: 'var(--hm-text)', fontWeight: 700 }}>{d.verdict}</span>
         </div>
       )}
@@ -2176,6 +2222,7 @@ function ExpectationsBlock({ d, c }) {
 
 // ─ Quantified scenarios – bear/base/bull with return math + qual drivers ────
 function ScenariosBlock({ scenarios, bull, bear, c }) {
+  const t = useT();
   const cases = scenarios?.cases || [];
   const rows = [
     { key: 'prob', label: 'Вероятность' },
@@ -2226,14 +2273,14 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
                 </tr>
               ))}
               <tr style={{ borderTop: '1px solid var(--hm-border4)' }}>
-                <td style={{ ...tdCell, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', fontSize: 10.5 }}>Драйвер</td>
+                <td style={{ ...tdCell, color: 'var(--hm-text5)', fontFamily: 'ui-monospace,monospace', fontSize: 10.5 }}>{t('Драйвер', 'Driver')}</td>
                 {cases.map((cs, i) => <td key={i} style={{ ...tdCell, color: 'var(--hm-text3)', fontSize: 11 }}>{cs.note || '–'}</td>)}
               </tr>
             </tbody>
           </table>
           {scenarios?.expectedReturn && (
             <div style={{ marginTop: 12, display: 'inline-flex', alignItems: 'center', gap: 10, background: `color-mix(in srgb, ${c} 7%, transparent)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 10, padding: '10px 16px' }}>
-              <span style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>ВЗВЕШЕННАЯ ДОХОДНОСТЬ</span>
+              <span style={{ fontSize: 9, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.14em', fontWeight: 700 }}>{t('ВЗВЕШЕННАЯ ДОХОДНОСТЬ', 'WEIGHTED RETURN')}</span>
               <span style={{ fontSize: 14, color: 'var(--hm-text)', fontWeight: 700 }}>{scenarios.expectedReturn}</span>
             </div>
           )}
@@ -2251,6 +2298,7 @@ function ScenariosBlock({ scenarios, bull, bear, c }) {
 
 // ─ Thesis / narrative mode – one flowing, data-proven argument per sector ────
 function ThesisHero({ bigIdea, c, highlight, originLabel, onBackOrigin }) {
+  const t = useT();
   const [hover, setHover] = useState(false);
   const cid = String(c).replace(/[^a-z0-9]/gi, '');
   // Large rounded box → a scaleX sweep looks janky and overflows the corners. Instead: a glow ring
@@ -2268,7 +2316,7 @@ function ThesisHero({ bigIdea, c, highlight, originLabel, onBackOrigin }) {
       <div style={{ position: 'relative', overflow: 'hidden', background: `linear-gradient(180deg, ${c}1e 0%, var(--hm-bg2) 72%)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 16, padding: '26px 30px', animation: highlight ? `hero-glow-${cid} 5200ms ease forwards` : undefined }}>
         {highlight && <div style={{ position: 'absolute', inset: 0, background: c, borderRadius: 16, pointerEvents: 'none', zIndex: 0, animation: 'hero-tint 5200ms ease forwards' }} />}
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС</div>
+          <div style={{ fontSize: 9.5, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.16em', fontWeight: 700, marginBottom: 12 }}>{t('ГЛАВНАЯ ИДЕЯ · ЕДИНЫЙ ТЕЗИС', 'THE BIG IDEA · ONE THESIS')}</div>
           <div style={{ fontSize: 19, color: 'var(--hm-text)', fontWeight: 700, lineHeight: 1.5, letterSpacing: '-0.01em' }}>{bigIdea}</div>
         </div>
       </div>
@@ -2404,6 +2452,7 @@ function NarrativeView({ stream, c, onJump, highlightIdx, setElRef, originLabel,
 }
 
 function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLabel, onBackOrigin }) {
+  const t = useT();
   const bucket = DC_BUCKETS[node.bucket];
   const c = bucket?.color || 'var(--hm-text3)';
   const layer = LAYERS[node.layer];
@@ -2419,8 +2468,8 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
     if (scrollRestore != null) {
       setHighlightKey(null);
       const y = scrollRestore;
-      const t = setTimeout(() => window.scrollTo({ top: y, behavior: 'smooth' }), 60);
-      return () => clearTimeout(t);
+      const timer = setTimeout(() => window.scrollTo({ top: y, behavior: 'smooth' }), 60);
+      return () => clearTimeout(timer);
     }
     const stream = detail?.thesis?.stream;
     if (!jumpTarget || !stream) { setHighlightKey(null); window.scrollTo({ top: 0 }); return; }
@@ -2472,7 +2521,7 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
         <NarrativeView stream={detail.thesis.stream} c={c} onJump={onJump} highlightIdx={typeof highlightKey === 'number' ? highlightKey : -1} setElRef={(i, n) => { elRefs.current[i] = n; }} originLabel={originLabel} onBackOrigin={onBackOrigin} />
         {detail?.picks?.length > 0 && <PicksBlock groups={detail.picks} c={c} takeaway={detail.picksTakeaway} onJump={onJump} />}
         {(upstream.length > 0 || downstream.length > 0) && (
-          <Block id="chain" accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
+          <Block id="chain" accent={c} kicker={t('ПОЛОЖЕНИЕ В ЦЕПОЧКЕ', 'POSITION IN THE CHAIN')}>
             {upstream.length > 0 && <div style={{ marginBottom: downstream.length > 0 ? 16 : 0 }}><div style={{ ...miniKicker, marginBottom: 9 }}>↑ ОТКУДА ПРИХОДИТ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{upstream.map(u => <ChainPill key={u.id} node={u} onClick={() => onJump(u.id)} />)}</div></div>}
             {downstream.length > 0 && <div><div style={{ ...miniKicker, marginBottom: 9 }}>↓ КУДА ИДЁТ ДАЛЬШЕ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{downstream.map(dn => <ChainPill key={dn.id} node={dn} onClick={() => onJump(dn.id)} />)}</div></div>}
           </Block>
@@ -2515,7 +2564,7 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
       <div style={{ background: `linear-gradient(180deg, color-mix(in srgb, ${c} 9%, transparent) 0%, transparent 100%)`, border: `1px solid color-mix(in srgb, ${c} 19%, transparent)`, borderRadius: 14, padding: '26px 28px 24px', marginBottom: 18 }}>
         <div style={{ fontSize: 10, color: c, fontFamily: 'ui-monospace,monospace', letterSpacing: '0.18em', fontWeight: 700, marginBottom: 10 }}>ЭТАП {String(layerIdx + 1).padStart(2, '0')} / {String(totalLayers).padStart(2, '0')} · {layer.label}</div>
         <div style={{ fontSize: 30, color: 'var(--hm-text)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 8 }}>{node.label}</div>
-        <div style={{ fontSize: 12, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket} · {baseCompanies.length} {plural(baseCompanies.length, 'компания', 'компании', 'компаний')}</div>
+        <div style={{ fontSize: 12, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', letterSpacing: '0.04em' }}>{BUCKET_RU[node.bucket] || node.bucket} · {baseCompanies.length} {plural(baseCompanies.length, t('компания', 'company'), t('компании', 'companies'), t('компаний', 'companies'))}</div>
         <div style={{ marginTop: 18, display: 'flex', gap: 3, alignItems: 'center' }}>{Array.from({ length: totalLayers }).map((_, i) => <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i === layerIdx ? c : i < layerIdx ? `color-mix(in srgb, ${c} 33%, transparent)` : 'var(--hm-border4)' }} />)}</div>
       </div>
 
@@ -2528,7 +2577,7 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
           detail.intro replaces the base copy entirely when present (the base
           ЧТО ЭТО / РОЛЬ already appeared in the inspector – don't repeat it). */}
       {(detail?.intro || NODE_INTEL[node.id] || NODE_ROLE[node.id]) && (
-        <Block id="about" accent={c} kicker="КАК УСТРОЕНО ЭТО ЗВЕНО">
+        <Block id="about" accent={c} kicker={t('КАК УСТРОЕНО ЭТО ЗВЕНО', 'HOW THIS LINK WORKS')}>
           {detail?.intro ? (
             <div style={{ fontSize: 14, color: 'var(--hm-text2)', lineHeight: 1.8 }}>
               <Paragraphs text={detail.intro} />
@@ -2564,7 +2613,7 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
 
       {/* Chain position */}
       {(upstream.length > 0 || downstream.length > 0) && (
-        <Block id="chain" accent={c} kicker="ПОЛОЖЕНИЕ В ЦЕПОЧКЕ">
+        <Block id="chain" accent={c} kicker={t('ПОЛОЖЕНИЕ В ЦЕПОЧКЕ', 'POSITION IN THE CHAIN')}>
           {upstream.length > 0 && <div style={{ marginBottom: downstream.length > 0 ? 16 : 0 }}><div style={{ ...miniKicker, marginBottom: 9 }}>↑ ОТКУДА ПРИХОДИТ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{upstream.map(u => <ChainPill key={u.id} node={u} onClick={() => onJump(u.id)} />)}</div></div>}
           {downstream.length > 0 && <div><div style={{ ...miniKicker, marginBottom: 9 }}>↓ КУДА ИДЁТ ДАЛЬШЕ</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{downstream.map(dn => <ChainPill key={dn.id} node={dn} onClick={() => onJump(dn.id)} />)}</div></div>}
         </Block>
@@ -2580,7 +2629,7 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
                 <div style={{ fontSize: 13, color: 'var(--hm-text)', fontWeight: 600 }}>{co.company}</div>
                 <div style={{ fontSize: 10.5, color: 'var(--hm-text3)', fontFamily: 'ui-monospace,monospace', marginTop: 4, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <span>{co.ticker}</span><span style={{ color: 'var(--hm-rank)' }}>·</span>
-                  <span style={{ color: co.ppr === 'Pub' ? '#10b981' : '#a78bfa' }}>{co.ppr === 'Pub' ? 'ПУБЛИЧНАЯ' : 'ЧАСТНАЯ'}</span>
+                  <span style={{ color: co.ppr === 'Pub' ? '#10b981' : '#a78bfa' }}>{co.ppr === 'Pub' ? t('ПУБЛИЧНАЯ', 'PUBLIC') : t('ЧАСТНАЯ', 'PRIVATE')}</span>
                   <span style={{ color: 'var(--hm-rank)' }}>·</span><span>{co.geo}</span>
                 </div>
                 {co.note && <div style={{ fontSize: 11.5, color: 'var(--hm-text2)', lineHeight: 1.6, marginTop: 8, paddingTop: 8, borderTop: '1px solid var(--hm-border4)' }}>{co.note}</div>}
