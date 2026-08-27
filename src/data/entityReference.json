@@ -1085,5 +1085,16 @@
       }
     ],
     "auto_resolved": true
+  },
+  "alloc:Elon Musk": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "elonmusk.ai",
+        "url": "https://elonmusk.ai"
+      }
+    ],
+    "auto_resolved": true
   }
 }
