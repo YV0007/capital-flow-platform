@@ -1,0 +1,28 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .bg {
+    fill: black;
+  }
+  .fg {
+    fill: white;
+  }
+  @media (prefers-color-scheme: dark) {
+    .bg {
+      fill: white;
+    }
+    .fg {
+      fill: black;
+    }
+  }
+</style>
+<g clip-path="url(#clip0_992_112402)">
+<rect class="bg" width="32" height="32"/>
+<rect class="bg" width="32" height="32"/>
+<path class="fg" d="M9.23145 10.667V21.333H7.67969V10.667H9.23145ZM20.501 16L17.3926 21.333H14.5352L11.4258 16L14.5352 10.667H17.3926L20.501 16ZM24.2949 21.333H22.7422V10.667H24.2949V21.333Z"/>
+</g>
+<defs>
+<clipPath id="clip0_992_112402">
+<rect class="fg" width="32" height="32"/>
+</clipPath>
+</defs>
+</svg>

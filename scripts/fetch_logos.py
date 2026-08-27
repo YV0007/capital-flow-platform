@@ -450,6 +450,16 @@ def main():
         # No link on file — resolve one, trusting only a verified page. The
         # engine's own `domain` (authoritative) is tried FIRST, then name-guesses.
         # It is still run through page_is, so a wrong emit can't sneak a bad logo in.
+        # A STATUTE has no vendor site. The verifier only asks "does this page
+        # call itself the CHIPS Act", which a consultancy landing page passes
+        # happily — so `chips-act` resolved to chipsact.com, a private site, and
+        # the panel would have linked a US law to it. Policy entities are
+        # excluded from guessing outright; if one ever needs a link it gets a
+        # hand-written one.
+        if not domains and (e.get("sector") or "").strip().lower() == "policy":
+            unresolved.append((nid, name))
+            continue
+
         if not domains:
             node_domain = clean_domain(e.get("domain"))
             candidates = ([node_domain] if node_domain else []) + guess_domains(name)
