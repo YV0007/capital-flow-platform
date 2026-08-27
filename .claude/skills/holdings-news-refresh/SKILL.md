@@ -1,22 +1,29 @@
 ---
 name: holdings-news-refresh
 description: >
-  Refresh the hand-maintained Holdings news feed. Run WEEKLY. For each of the 9
-  holdings in src/data/holdings-v2/, research genuinely NEW public news (dated
-  after the holding's newest existing item), grounded in real fetched sources
-  only, append it to news[], and bump asOf. Feeds both the full Holdings pages
-  and the home-page news feed. Use when: "refresh the holdings news", "update
-  the holdings", "the holdings news is stale", or as the weekly holdings step.
+  Refresh the hand-maintained Holdings section — news AND stock prices. Run
+  WEEKLY. For each of the 9 holdings in src/data/holdings-v2/, research genuinely
+  NEW public news (dated after the holding's newest existing item), grounded in
+  real fetched sources only, append it to news[], bump asOf, and refresh every
+  priceChart from live quotes via scripts/refresh_prices.mjs. Feeds the full
+  Holdings pages and the home-page cards and news feed. Use when: "refresh the
+  holdings news", "update the holdings", "update the holdings prices", "the
+  holdings news is stale", or as the weekly holdings step.
 ---
 
-# Holdings — news refresh (weekly)
+# Holdings — news + price refresh (weekly)
 
 ## What this is and the one rule
 
 The Holdings section is the ONLY part of the dashboard with no upstream engine —
-each holding's `news[]`, `asOf`, and price snapshot are hand-maintained in
-`src/data/holdings-v2/<id>.json`. Left alone they go stale (the home-page news
-feed and the full Holdings pages both read straight from these files).
+each holding's `news[]`, `asOf`, and `priceChart` live in
+`src/data/holdings-v2/<id>.json`. Left alone they go stale (the home-page cards
+and news feed and the full Holdings pages all read straight from these files).
+
+The two halves are refreshed differently on purpose. **News is researched** —
+judgement, sources, prose. **Prices are computed** — `scripts/refresh_prices.mjs`
+pulls the real series and rewrites the chart, so no number here is ever typed by
+a model.
 
 **The one rule: every fact must come from a source you actually fetched.** This
 skill is the OPPOSITE of `capital-flow-reads` (which is payload-only, no web).
@@ -80,16 +87,34 @@ files like `_softbank_upgrade.json` are working scraps — ignore them.)
    are 200–400 KB — edit only the `news[` region and the `asOf` line; never read
    or rewrite the whole file.
 
-5. **Prices (optional, separate concern).** `priceChart.current` / `change` are
-   coupled to the `points[]` sparkline (change is period-relative to the first
-   point). Only touch them if you refresh the whole `points[]` series from a real
-   quote source — a lone `current` edit desyncs the chart. Default: leave prices,
-   refresh news + asOf only.
+5. **Prices — always, and by script, never by hand:**
+   ```bash
+   node scripts/refresh_prices.mjs          # add --dry-run to preview
+   ```
+   Rewrites `priceChart` in all 9 files from real Yahoo Finance quotes (1-year
+   weekly series) and touches nothing else. Run it every week alongside the news.
+
+   Do NOT edit `current`, `change` or `points[]` by hand, and do NOT research
+   prices with the web tools. The three are one object — `change` is measured
+   from the first weekly close to the price shown, and the chart's last point IS
+   that price — so a lone `current` edit silently desyncs all three. The script
+   is also the only way the number stays exact: prices are arithmetic over a
+   public series, not a research question.
+
+   The script exits non-zero and names any holding whose fetch failed; that
+   holding keeps its previous block. Report failures rather than patching the
+   number by hand. Symbols are mapped in the script (`SYMBOLS`) — a company with
+   several listings is pinned to the one the card has always shown, so the
+   figure stays comparable week to week.
+
+   Expect occasional large jumps that are correct: the series is split-adjusted,
+   so a stock split shows up as a step change against the old hand-entered
+   value. Check the split before assuming the script is wrong.
 
 6. **Build + deploy:**
    ```bash
    npm run build   # build-gate; do NOT commit if it fails
-   git add src/data/holdings-v2 && git commit -m "Holdings: weekly news refresh (<date>)" && git push
+   git add src/data/holdings-v2 && git commit -m "Holdings: weekly news + price refresh (<date>)" && git push
    ```
    Vercel auto-deploys on push. The home-page feed and Holdings pages update with
    no code change — they derive from these files at build time.
@@ -99,3 +124,5 @@ files like `_softbank_upgrade.json` are working scraps — ignore them.)
 - Never rewrite existing items or restyle old news — only append new, and bump
   `asOf`. Preserve everything already in the file.
 - If a source can't be confirmed, drop the item. Honest gap > fabricated news.
+- Prices come from `scripts/refresh_prices.mjs` and nowhere else. A price a model
+  typed is a fabricated figure like any other, even when it happens to be right.
