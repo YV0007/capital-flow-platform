@@ -11,6 +11,7 @@ import {
   Rocket, Award, AlertCircle, Link2,
 } from 'lucide-react';
 import investmentData from '../../../data/yc-investment.json';
+import { useT } from '../../../lib/i18n.jsx';
 
 // ─ Empty helpers ──────────────────────────────────────────────────────────
 const isNil   = (v) => v === null || v === undefined;
@@ -34,24 +35,25 @@ const fmtDate = (s) => {
 };
 
 const INVESTOR_TYPE = {
-  fund:        { label: 'фонд',     color: '#34d399', bg: 'rgba(52,211,153,0.10)',  border: 'rgba(52,211,153,0.35)' },
-  vc:          { label: 'фонд',     color: '#34d399', bg: 'rgba(52,211,153,0.10)',  border: 'rgba(52,211,153,0.35)' },
-  angel:       { label: 'ангел',    color: '#f59e0b', bg: 'rgba(245,158,11,0.10)',  border: 'rgba(245,158,11,0.35)' },
-  accelerator: { label: 'акселератор', color: '#a78bfa', bg: 'rgba(167,139,250,0.10)', border: 'rgba(167,139,250,0.35)' },
+  fund:        { label: t('фонд', 'fund'),     color: '#34d399', bg: 'rgba(52,211,153,0.10)',  border: 'rgba(52,211,153,0.35)' },
+  vc:          { label: t('фонд', 'fund'),     color: '#34d399', bg: 'rgba(52,211,153,0.10)',  border: 'rgba(52,211,153,0.35)' },
+  angel:       { label: t('ангел', 'angel'),    color: '#f59e0b', bg: 'rgba(245,158,11,0.10)',  border: 'rgba(245,158,11,0.35)' },
+  accelerator: { label: t('акселератор', 'accelerator'), color: '#a78bfa', bg: 'rgba(167,139,250,0.10)', border: 'rgba(167,139,250,0.35)' },
 };
 
 const MOMENTUM_TYPE = {
-  product:     { label: 'продукт',    color: '#22D3EE' },
-  funding:     { label: 'раунд',      color: '#10b981' },
-  hiring:      { label: 'найм',       color: '#ec4899' },
-  customer:    { label: 'клиент',     color: '#0ea5e9' },
-  partnership: { label: 'партнёрство', color: '#a78bfa' },
-  press:       { label: 'пресса',     color: '#f59e0b' },
-  milestone:   { label: 'веха',       color: '#60a5fa' },
+  product:     { label: t('продукт', 'product'),    color: '#22D3EE' },
+  funding:     { label: t('раунд', 'round'),      color: '#10b981' },
+  hiring:      { label: t('найм', 'hiring'),       color: '#ec4899' },
+  customer:    { label: t('клиент', 'customer'),     color: '#0ea5e9' },
+  partnership: { label: t('партнёрство', 'partnership'), color: '#a78bfa' },
+  press:       { label: t('пресса', 'press'),     color: '#f59e0b' },
+  milestone:   { label: t('веха', 'milestone'),       color: '#60a5fa' },
 };
 
 // ─────────────────────────────────────────────────────────────────────────
 export default function YCResearchSections({ research, company }) {
+  const t = useT();
   const invest = company ? investmentData.companies?.[company.id] : null;
 
   if (!research && !invest) {
@@ -62,7 +64,7 @@ export default function YCResearchSections({ research, company }) {
         borderRadius: 12, textAlign: 'center',
         color: '#71717a', fontSize: 13,
       }}>
-        Исследование по этой компании ещё не подгружено.
+        {t('Исследование по этой компании ещё не подгружено.', 'Research on this company has not been loaded yet.')}
       </div>
     );
   }
@@ -75,31 +77,31 @@ export default function YCResearchSections({ research, company }) {
   return (
     <div style={{ marginTop: 56, display: 'flex', flexDirection: 'column', gap: 60 }}>
       {invest && (
-        <Group title="Инвестиция">
+        <Group title={t('Инвестиция', 'Investment')}>
           <FullWidth><InvestmentSection invest={invest} meta={investmentData._meta} /></FullWidth>
         </Group>
       )}
 
       {founders.length > 0 && (
-        <Group title="Основатели">
+        <Group title={t('Основатели', 'Founders')}>
           <FullWidth><FoundersBlock founders={founders} /></FullWidth>
         </Group>
       )}
 
       {launch && (
-        <Group title="Запуск на YC">
+        <Group title={t('Запуск на YC', 'YC launch')}>
           <FullWidth><LaunchSection launch={launch} /></FullWidth>
         </Group>
       )}
 
       {momentum.length > 0 && (
-        <Group title="Активность">
+        <Group title={t('Активность', 'Activity')}>
           <FullWidth><MomentumSection events={momentum} /></FullWidth>
         </Group>
       )}
 
       {sources.length > 0 && (
-        <Group title="Источники">
+        <Group title={t('Источники', 'Sources')}>
           <FullWidth><SourcesSection sources={sources} /></FullWidth>
         </Group>
       )}
@@ -142,6 +144,7 @@ function FullWidth({ children }) {
 // and how confident we are in it.
 // ─────────────────────────────────────────────────────────────────────────
 function InvestmentSection({ invest, meta }) {
+  const t = useT();
   const external = invest.external_investors || [];
   const nonEquity = invest.non_equity || [];
   const flags = invest.flags || [];
@@ -149,10 +152,10 @@ function InvestmentSection({ invest, meta }) {
   const hasExternal = invest.tier === 'external' && external.length > 0;
 
   const tierBadge = hasExternal
-    ? { text: 'Есть внешние инвесторы', color: '#34d399', bg: 'rgba(52,211,153,0.12)', border: 'rgba(52,211,153,0.40)' }
-    : { text: 'Только сделка YC', color: '#a1a1aa', bg: 'rgba(161,161,170,0.10)', border: 'rgba(161,161,170,0.30)' };
+    ? { text: t('Есть внешние инвесторы', 'Has external investors'), color: '#34d399', bg: 'rgba(52,211,153,0.12)', border: 'rgba(52,211,153,0.40)' }
+    : { text: t('Только сделка YC', 'YC deal only'), color: '#a1a1aa', bg: 'rgba(161,161,170,0.10)', border: 'rgba(161,161,170,0.30)' };
 
-  const capIsSet = !isBlank(invest.cap) && invest.cap !== 'не зафиксирована';
+  const capIsSet = !isBlank(invest.cap) && invest.cap !== t('не зафиксирована', 'not recorded');
 
   return (
     <section style={{
@@ -179,9 +182,9 @@ function InvestmentSection({ invest, meta }) {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <span style={{ fontSize: 15, color: '#fafafa', fontWeight: 700, letterSpacing: '-0.01em' }}>
-            Кто вложился
+            {t('Кто вложился', 'Who invested')}
           </span>
-          <span style={{ fontSize: 11.5, color: '#71717a' }}>деньги на счету компании</span>
+          <span style={{ fontSize: 11.5, color: '#71717a' }}>{t('деньги на счету компании', 'money in the company’s account')}</span>
         </div>
         <span style={{ flex: 1 }} />
         <span style={{
@@ -195,28 +198,28 @@ function InvestmentSection({ invest, meta }) {
         {/* Plain-language money summary — no confusing single "raised" number */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <FactRow
-            label="Базовая сделка"
-            value={<span>$500K · <span style={{ color: '#a1a1aa' }}>Y Combinator + синдикат Toloka.VC</span></span>}
+            label={t('Базовая сделка', 'Base deal')}
+            value={<span>$500K · <span style={{ color: '#a1a1aa' }}>{t('Y Combinator + синдикат Toloka.VC', 'Y Combinator + the Toloka.VC syndicate')}</span></span>}
           />
           <FactRow
-            label="Сверх базы"
+            label={t('Сверх базы', 'Above the base')}
             value={<span style={{ color: hasExternal ? '#e4e4e7' : '#a1a1aa' }}>{invest.raised_note}</span>}
           />
           <FactRow
-            label="Потолок оценки"
-            hint="Максимальная оценка, зашитая в сделку (SAFE): по ней деньги инвесторов превратятся в долю в следующем раунде. Это не текущая стоимость компании — её на этой стадии не раскрывают."
+            label={t('Потолок оценки', 'Valuation cap')}
+            hint={t('Максимальная оценка, зашитая в сделку (SAFE): по ней деньги инвесторов превратятся в долю в следующем раунде. Это не текущая стоимость компании — её на этой стадии не раскрывают.', 'The maximum valuation written into the SAFE: it is the price at which investors’ money converts to equity in the next round. It is not the company’s current value — that is not disclosed at this stage.')}
             value={capIsSet
               ? <span style={{ color: '#34d399', fontWeight: 700 }}>{invest.cap}</span>
-              : <span style={{ color: '#a1a1aa' }}>ещё не зафиксирована — определится в следующем раунде</span>}
+              : <span style={{ color: '#a1a1aa' }}>{t('ещё не зафиксирована — определится в следующем раунде', 'not set yet — it will be fixed in the next round')}</span>}
           />
         </div>
 
         {/* External investors — with website + source links */}
         {hasExternal && (
-          <SubBlock label="Внешние инвесторы (сверх YC)">
+          <SubBlock label={t('Внешние инвесторы (сверх YC)', 'External investors (beyond YC)')}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {external.map((inv, i) => {
-                const t = INVESTOR_TYPE[inv.type] || INVESTOR_TYPE.fund;
+                const kind = INVESTOR_TYPE[inv.type] || INVESTOR_TYPE.fund;
                 return (
                   <div key={i} style={{
                     display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap',
@@ -237,10 +240,10 @@ function InvestmentSection({ invest, meta }) {
                       <span style={{ fontSize: 13.5, color: '#fafafa', fontWeight: 700 }}>{inv.name}</span>
                     )}
                     <span style={{
-                      fontSize: 9.5, fontWeight: 700, color: t.color, background: t.bg,
+                      fontSize: 9.5, fontWeight: 700, color: kind.color, background: kind.bg,
                       border: `1px solid ${t.border}`, borderRadius: 4, padding: '2px 7px',
                       textTransform: 'uppercase', letterSpacing: '0.06em',
-                    }}>{t.label}</span>
+                    }}>{kind.label}</span>
                     {!isBlank(inv.note) && (
                       <span style={{ fontSize: 11.5, color: '#71717a' }}>{inv.note}</span>
                     )}
@@ -259,7 +262,7 @@ function InvestmentSection({ invest, meta }) {
 
         {/* Grants / accelerators — no equity given up */}
         {nonEquity.length > 0 && (
-          <SubBlock label="Гранты и поддержка (без доли в компании)">
+          <SubBlock label={t('Гранты и поддержка (без доли в компании)', 'Grants and support (no equity)')}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {nonEquity.map((n, i) => (
                 <span key={i} style={{
@@ -279,7 +282,7 @@ function InvestmentSection({ invest, meta }) {
 
         {/* Progress (was "traction") */}
         {!isBlank(invest.traction_note) && (
-          <SubBlock label="Как идут дела">
+          <SubBlock label={t('Как идут дела', 'How things are going')}>
             <div style={{ fontSize: 12.5, color: '#e4e4e7', lineHeight: 1.65 }}>{invest.traction_note}</div>
           </SubBlock>
         )}
@@ -322,7 +325,7 @@ function InvestmentSection({ invest, meta }) {
             <span style={{
               fontSize: 9.5, color: '#52525b', fontFamily: 'ui-monospace,monospace',
               letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase',
-            }}>Источники</span>
+            }}>{t('Источники', 'Sources')}</span>
             {sources.map((s, i) => <SourceLink key={i} url={s.url} label={s.label} />)}
           </div>
         )}
@@ -362,6 +365,7 @@ function FactRow({ label, value, hint }) {
 
 // Small "source ↗" pill link.
 function SourceLink({ url, label }) {
+  const t = useT();
   if (isBlank(url)) return null;
   return (
     <a href={url} target="_blank" rel="noopener noreferrer"
@@ -373,7 +377,7 @@ function SourceLink({ url, label }) {
       onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
       onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
       <Link2 size={11} style={{ flexShrink: 0, color: '#3f6fb0' }} />
-      {label || 'источник'}
+      {label || t('источник', 'source')}
     </a>
   );
 }
@@ -484,7 +488,7 @@ function LaunchSection({ launch }) {
       )}
       {!isBlank(tldr) && (
         <p style={{ margin: 0, fontSize: 13, color: '#d4d4d8', lineHeight: 1.7 }}>
-          <span style={{ color: '#FF6600', fontWeight: 700, fontFamily: 'ui-monospace,monospace', fontSize: 11 }}>Кратко&nbsp;</span>
+          <span style={{ color: '#FF6600', fontWeight: 700, fontFamily: 'ui-monospace,monospace', fontSize: 11 }}>{t('Кратко', 'In brief')}&nbsp;</span>
           {tldr}
         </p>
       )}
@@ -499,7 +503,7 @@ function LaunchSection({ launch }) {
           onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
           onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
         >
-          Смотреть лонч <ArrowUpRight size={13} />
+          {t('Смотреть лонч', 'View the launch')} <ArrowUpRight size={13} />
         </a>
       )}
     </section>
@@ -514,12 +518,12 @@ function MomentumSection({ events }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {sorted.map((e, i) => {
-        const t = MOMENTUM_TYPE[e.type] || { label: e.type, color: '#a1a1aa' };
+        const kind = MOMENTUM_TYPE[e.type] || { label: e.type, color: '#a1a1aa' };
         return (
           <div key={i} style={{
             display: 'flex', gap: 14, alignItems: 'stretch',
             background: '#0d0d0e', border: '1px solid #18181b',
-            borderLeft: `3px solid ${t.color}`,
+            borderLeft: `3px solid ${kind.color}`,
             borderRadius: 10, padding: '14px 16px',
           }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0, minWidth: 92 }}>
@@ -530,12 +534,12 @@ function MomentumSection({ events }) {
               {e.type && (
                 <span style={{
                   alignSelf: 'flex-start',
-                  fontSize: 9.5, fontWeight: 700, color: t.color,
-                  background: `${t.color}18`, border: `1px solid ${t.color}44`,
+                  fontSize: 9.5, fontWeight: 700, color: kind.color,
+                  background: `${kind.color}18`, border: `1px solid ${kind.color}44`,
                   borderRadius: 4, padding: '2px 7px',
                   fontFamily: 'ui-monospace,monospace', textTransform: 'uppercase',
                   letterSpacing: '0.06em', whiteSpace: 'nowrap',
-                }}>{t.label}</span>
+                }}>{kind.label}</span>
               )}
             </div>
             <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center' }}>
