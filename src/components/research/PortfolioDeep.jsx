@@ -71,7 +71,7 @@ function AllCompaniesTable({ companies, search }) {
     <div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>
-          {search ? `${filtered.length} найдено из ${companies.length}` : `${companies.length} компаний`}
+          {search ? t(`${filtered.length} найдено из ${companies.length}`, `${filtered.length} found of ${companies.length}`) : t(`${companies.length} компаний`, `${companies.length} companies`)}
         </span>
       </div>
       <div style={{ border: `1px solid ${C.line}`, borderRadius: 10, overflow: 'hidden', background: C.card }}>
@@ -88,7 +88,7 @@ function AllCompaniesTable({ companies, search }) {
         ))}
       </div>
       {!showAll && filtered.length > 30 && (
-        <button onClick={() => setShowAll(true)} style={{ marginTop: 10, fontSize: 12, padding: '7px 16px', borderRadius: 16, border: `1px solid ${C.line}`, background: 'transparent', color: C.teal, cursor: 'pointer' }}>Показать все {filtered.length}</button>
+        <button onClick={() => setShowAll(true)} style={{ marginTop: 10, fontSize: 12, padding: '7px 16px', borderRadius: 16, border: `1px solid ${C.line}`, background: 'transparent', color: C.teal, cursor: 'pointer' }}>{t('Показать все', 'Show all')} {filtered.length}</button>
       )}
       {showAll && filtered.length > 30 && (
         <button onClick={() => setShowAll(false)} style={{ marginTop: 10, fontSize: 12, padding: '7px 16px', borderRadius: 16, border: `1px solid ${C.line}`, background: 'transparent', color: C.teal, cursor: 'pointer' }}>{t('Свернуть', 'Collapse')}</button>
@@ -167,10 +167,10 @@ function CompanyRow({ r, open, onToggle, focused }) {
           {r.detail.summary && <p style={{ fontSize: 13, color: C.inkSoft, lineHeight: 1.65, margin: '0 0 8px' }}>{r.detail.summary}</p>}
           {r.detail.whyMatters && (
             <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.55, padding: '8px 12px', background: `color-mix(in srgb, ${C.teal} 6%, transparent)`, border: `1px solid color-mix(in srgb, ${C.teal} 20%, transparent)`, borderRadius: 7 }}>
-              <span style={{ fontWeight: 600, color: C.teal }}>Почему важно. </span>{r.detail.whyMatters}
+              <span style={{ fontWeight: 600, color: C.teal }}>{t('Почему важно', 'Why it matters')}. </span>{r.detail.whyMatters}
             </div>
           )}
-          {r.source && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 8, fontStyle: 'italic' }}>Источник: {r.source}</div>}
+          {r.source && <div style={{ fontSize: 10.5, color: C.inkFaint, marginTop: 8, fontStyle: 'italic' }}>{t('Источник', 'Source')}: {r.source}</div>}
         </div>
       )}
     </div>
@@ -274,7 +274,7 @@ function RailItem({ b, active, onClick, filtering }) {
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
         <span style={{ fontFamily: 'var(--serif)', fontSize: 15.5, fontWeight: 500, color: active ? C.ink : C.inkSoft, lineHeight: 1.25, flex: 1, minWidth: 0 }}>{b.name}</span>
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: active ? C.teal : C.inkFaint, flexShrink: 0 }}>
-          {filtering ? `${b.total} найдено` : b.total}
+          {filtering ? t(`${b.total} найдено`, `${b.total} found`) : b.total}
         </span>
       </div>
       {b.plain && <div style={{ fontSize: 11, color: C.inkFaint, marginTop: 3, lineHeight: 1.4, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{b.plain}</div>}
@@ -294,7 +294,7 @@ function SectorPane({ b, filtering, focus }) {
       <div style={{ padding: '2px 2px 16px' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: b.plain ? 7 : 0 }}>
           <h3 style={{ fontFamily: 'var(--serif)', fontSize: 23, fontWeight: 500, color: C.ink, margin: 0, letterSpacing: '-.01em' }}>{b.name}</h3>
-          <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{b.total} {filtering ? 'найдено' : 'позиций'}</span>
+          <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{b.total} {filtering ? t('найдено', 'found') : t('позиций', 'positions')}</span>
         </div>
         {b.plain && <p style={{ fontSize: 13, color: C.inkSoft, lineHeight: 1.55, margin: '0 0 10px', maxWidth: 680 }}>{b.plain}</p>}
         {b.stat && <div style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: C.teal, lineHeight: 1.5 }}>{b.stat}</div>}
@@ -403,7 +403,7 @@ function Holdings13F({ h, only }) {
       {show('holdings') && (<>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
         <h3 style={{ fontFamily: 'var(--serif)', fontSize: 21, fontWeight: 500, color: C.ink, margin: 0 }}>{t('Публичный портфель (13F)', 'Public portfolio (13F)')}</h3>
-        <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{h.positions || (h.rows || []).length} позиций · {h.totalValue || ''}</span>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{h.positions || (h.rows || []).length} {t('позиций', 'positions')} · {h.totalValue || ''}</span>
       </div>
       {h.note && <p style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, margin: '0 0 16px', maxWidth: 720 }}>{h.note}</p>}
 
@@ -429,11 +429,14 @@ function Holdings13F({ h, only }) {
 
       {/* holdings — grouped by sector (BlackRock ~1000) or a flat top list */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10, flexWrap: 'wrap' }}>
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Поиск по компании…" style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, width: 200, outline: 'none' }} />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t('Поиск по компании…', 'Search by company…')} style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, width: 200, outline: 'none' }} />
         <span style={{ fontSize: 11, color: C.inkFaint }}>
           {grouped
-            ? (q ? t('поиск по всем секторам', 'search across all sectors') : `${h.sectors.length} секторов · ${h.sectors.reduce((s, x) => s + (x.count || (x.rows || []).length), 0)} компаний — раскройте сектор`)
-            : (q ? `${rows.length} найдено` : `топ ${Math.min(shown.length, rows.length)} из ${(h.rows || []).length} по стоимости`)}
+            ? (q ? t('поиск по всем секторам', 'search across all sectors') : t(`${h.sectors.length} секторов · ${h.sectors.reduce((s, x) => s + (x.count || (x.rows || []).length), 0)} компаний — раскройте сектор`,
+                     `${h.sectors.length} sectors · ${h.sectors.reduce((s, x) => s + (x.count || (x.rows || []).length), 0)} companies — open a sector to see the names`))
+            : (q ? t(`${rows.length} найдено`, `${rows.length} found`)
+                 : t(`топ ${Math.min(shown.length, rows.length)} из ${(h.rows || []).length} по стоимости`,
+                     `top ${Math.min(shown.length, rows.length)} of ${(h.rows || []).length} by value`))}
         </span>
       </div>
       {grouped ? <SectorAccordion sectors={h.sectors} q={q} /> : (
@@ -458,7 +461,7 @@ function Holdings13F({ h, only }) {
       {show('filings') && h.filings13DG && h.filings13DG.rows && h.filings13DG.rows.length > 0 && (
         <div style={{ marginTop: 18, border: `1px solid ${C.line}`, borderRadius: 10, background: C.card, overflow: 'hidden' }}>
           <div style={{ padding: '12px 16px 8px' }}>
-            <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink }}>Крупные доли &gt;5% (13D/G)</div>
+            <div style={{ fontSize: 13.5, fontWeight: 600, color: C.ink }}>{t('Крупные доли', 'Large stakes')} &gt;5% (13D/G)</div>
             {h.filings13DG.note && <div style={{ fontSize: 11.5, color: C.inkFaint, marginTop: 3, lineHeight: 1.45, maxWidth: 720 }}>{h.filings13DG.note}</div>}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '78px 56px 1fr 92px', gap: 10, padding: '7px 16px', background: C.cardAlt, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}` }}>
@@ -609,10 +612,11 @@ export default function PortfolioDeep({ data, focus }) {
       )}
 
       {showSegments && (<>
-      {bigFiler && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5, margin: '0 0 14px', maxWidth: 720 }}>Как устроен сам бизнес BlackRock — по типам мандатов (ETF, частные рынки, институциональные, розница, деньги, технологии). Это про источники комиссий, а не про то, какие акции держат клиентские фонды (см. вкладку «Портфель по секторам»).</div>}
+      {bigFiler && <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5, margin: '0 0 14px', maxWidth: 720 }}>{t('Как устроен сам бизнес BlackRock — по типам мандатов (ETF, частные рынки, институциональные, розница, деньги, технологии). Это про источники комиссий, а не про то, какие акции держат клиентские фонды (см. вкладку «Портфель по секторам»).',
+        'How BlackRock\'s own business is built — by mandate type (ETFs, private markets, institutional, retail, cash, technology). This is about where the fees come from, not about which stocks client funds hold (see the “Portfolio by sector” tab).')}</div>}
       {/* ── Filters ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
-        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск по компании…" style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, fontFamily: 'var(--sans)', width: 220, outline: 'none' }} />
+        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t('Поиск по компании…', 'Search by company…')} style={{ padding: '7px 12px', borderRadius: 16, border: `1px solid ${C.line}`, background: C.paper, color: C.ink, fontSize: 12.5, fontFamily: 'var(--sans)', width: 220, outline: 'none' }} />
         <span style={{ fontSize: 11.5, color: C.inkFaint, marginLeft: 'auto' }}>{t('Сектор слева → компания → клик для деталей', 'Sector on the left → company → click for details')}</span>
       </div>
 
