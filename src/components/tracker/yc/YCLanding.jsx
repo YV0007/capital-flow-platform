@@ -5,6 +5,7 @@ import React, { useMemo, useState } from 'react';
 import YCCompanyCard from './YCCompanyCard.jsx';
 import YCBatchStats from './YCBatchStats.jsx';
 import investmentData from '../../../data/yc-investment.json';
+import { useT, plural } from '../../../lib/i18n.jsx';
 
 // Roll up the investment layer into headline numbers for the strip.
 function computeInvestorStats() {
@@ -17,7 +18,7 @@ function computeInvestorStats() {
     const ext = (c.external_investors || []);
     const hasExt = c.tier === 'external' && ext.length > 0;
     if (hasExt) withExternal++; else ycOnly++;
-    if (c.cap === 'не зафиксирована') mfn++;
+    if (c.cap === t('не зафиксирована', 'not recorded')) mfn++;
     ext.forEach(inv => {
       investorCount[inv.name] = (investorCount[inv.name] || 0) + 1;
     });
@@ -48,19 +49,20 @@ const TOLOKA = { deployedUsd: 1_400_000, avgCheckUsd: 66_700 };
 // company's investment record. A company matches the active set if it
 // satisfies ANY selected filter.
 const FUNDING_FILTERS = [
-  { key: 'external', label: 'С внешними инвесторами',
+  { key: 'external', label: t('С внешними инвесторами', 'With external investors'),
     match: (inv) => inv?.tier === 'external' && (inv.external_investors || []).length > 0 },
-  { key: 'yconly', label: 'Только сделка YC',
+  { key: 'yconly', label: t('Только сделка YC', 'YC deal only'),
     match: (inv) => !(inv?.tier === 'external' && (inv.external_investors || []).length > 0) },
-  { key: 'angel', label: 'Есть ангелы',
+  { key: 'angel', label: t('Есть ангелы', 'Has angels'),
     match: (inv) => (inv?.external_investors || []).some(x => x.type === 'angel') },
-  { key: 'grants', label: 'Есть гранты',
+  { key: 'grants', label: t('Есть гранты', 'Has grants'),
     match: (inv) => (inv?.non_equity || []).length > 0 },
-  { key: 'nocap', label: 'Оценка не зафиксирована',
-    match: (inv) => inv?.cap === 'не зафиксирована' },
+  { key: 'nocap', label: t('Оценка не зафиксирована', 'Valuation not recorded'),
+    match: (inv) => inv?.cap === t('не зафиксирована', 'not recorded') },
 ];
 
 export default function YCLanding({ companies, onOpen }) {
+  const t = useT();
   const [query, setQuery] = useState('');
   const [activeFunding, setActiveFunding] = useState(new Set());
 
@@ -111,11 +113,11 @@ export default function YCLanding({ companies, onOpen }) {
             fontSize: 14, color: '#a1a1aa', fontWeight: 500,
             fontFamily: 'ui-monospace,monospace',
           }}>
-            · {batch || 'Весна 2026'}
+            · {batch || t('Весна 2026', 'Spring 2026')}
           </span>
         </div>
         <div style={{ fontSize: 13, color: '#71717a' }}>
-          {companies.length} компаний в портфеле наблюдения
+          {companies.length} {t('компаний в портфеле наблюдения', 'companies in the watch portfolio')}
         </div>
       </div>
 
@@ -126,7 +128,7 @@ export default function YCLanding({ companies, onOpen }) {
       <div style={{ marginBottom: 14 }}>
         <input
           type="text"
-          placeholder="Поиск по компаниям"
+          placeholder={t('Поиск по компаниям', 'Search companies')}
           value={query}
           onChange={e => setQuery(e.target.value)}
           style={{
@@ -156,7 +158,7 @@ export default function YCLanding({ companies, onOpen }) {
           background: '#0d0d0e', border: '1px solid #18181b',
           borderRadius: 10, marginTop: 20,
         }}>
-          Ничего не найдено
+          {t('Ничего не найдено', 'Nothing found')}
         </div>
       ) : (
         <div style={{
@@ -179,19 +181,17 @@ export default function YCLanding({ companies, onOpen }) {
         marginTop: 28, paddingTop: 16, borderTop: '1px solid #18181b',
         fontSize: 11.5, color: '#52525b', lineHeight: 1.6,
       }}>
-        Данные по компаниям — с их страниц на Y Combinator. Данные по инвесторам собраны из открытых
-        источников (Extruct, PitchBook, Tracxn, посты фондов). Обновлено: август 2026.
+        {t(`Данные по компаниям — с их страниц на Y Combinator. Данные по инвесторам собраны из открытых источников (Extruct, PitchBook, Tracxn, посты фондов). Обновлено: август 2026.`,
+           `Company data comes from their own Y Combinator pages. Investor data is compiled from public sources (Extruct, PitchBook, Tracxn, fund posts). Updated: August 2026.`)}
       </div>
     </div>
   );
 }
 
-// Correct Russian plural for "компания".
+// A plain helper, not a component — the shared `plural` reads the module
+// language mirror and gives Russian three forms and English two.
 function companiesWord(n) {
-  const d = n % 10, dd = n % 100;
-  if (d === 1 && dd !== 11) return 'компания';
-  if (d >= 2 && d <= 4 && (dd < 12 || dd > 14)) return 'компании';
-  return 'компаний';
+  return plural(n, ['компания', 'компании', 'компаний'], ['company', 'companies']);
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -199,6 +199,7 @@ function companiesWord(n) {
 // deeper batch/Toloka comparison lives in the big block below the grid.
 // ─────────────────────────────────────────────────────────────────────────
 function InvestorStatsStrip({ stats }) {
+  const t = useT();
   const pct = Math.round((stats.withExternal / stats.total) * 100);
   return (
     <div style={{
@@ -206,11 +207,11 @@ function InvestorStatsStrip({ stats }) {
       gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
       gap: 12, marginBottom: 22,
     }}>
-      <BigMetric value={stats.total} unit={companiesWord(stats.total)} label="у Toloka в портфеле" accent="#fafafa" />
+      <BigMetric value={stats.total} unit={companiesWord(stats.total)} label={t('у Toloka в портфеле', 'in Toloka’s portfolio')} accent="#fafafa" />
       <BigMetric value={stats.withExternal} unit={companiesWord(stats.withExternal)}
-        label={`с внешними инвесторами · ${pct}%`} accent="#34d399" />
-      <BigMetric value={`~$${Math.round(TOLOKA.avgCheckUsd / 1000)}K`} label="средний чек Toloka" accent="#60a5fa" />
-      <BigMetric value={stats.medianCap != null ? `$${stats.medianCap}M` : '—'} label="медианный потолок оценки" accent="#a78bfa" />
+        label={t(`с внешними инвесторами · ${pct}%`, `with external investors · ${pct}%`)} accent="#34d399" />
+      <BigMetric value={`~$${Math.round(TOLOKA.avgCheckUsd / 1000)}K`} label={t('средний чек Toloka', 'Toloka’s average cheque')} accent="#60a5fa" />
+      <BigMetric value={stats.medianCap != null ? `$${stats.medianCap}M` : '—'} label={t('медианный потолок оценки', 'median valuation cap')} accent="#a78bfa" />
     </div>
   );
 }
@@ -240,6 +241,7 @@ function BigMetric({ value, unit, label, accent = '#fafafa' }) {
 // company is funded.
 // ─────────────────────────────────────────────────────────────────────────
 function FundingFilter({ active, onToggle, onClear }) {
+  const t = useT();
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
@@ -249,7 +251,7 @@ function FundingFilter({ active, onToggle, onClear }) {
         fontSize: 10, color: '#52525b', fontFamily: 'ui-monospace,monospace',
         letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase',
         marginRight: 2,
-      }}>Финансирование</span>
+      }}>{t('Финансирование', 'Funding')}</span>
       {FUNDING_FILTERS.map(f => {
         const on = active.has(f.key);
         return (
@@ -282,7 +284,7 @@ function FundingFilter({ active, onToggle, onClear }) {
           onMouseEnter={e => e.currentTarget.style.color = '#fafafa'}
           onMouseLeave={e => e.currentTarget.style.color = '#71717a'}
         >
-          сбросить
+          {t('сбросить', 'reset')}
         </button>
       )}
     </div>

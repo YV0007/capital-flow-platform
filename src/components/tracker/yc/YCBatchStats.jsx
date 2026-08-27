@@ -9,6 +9,7 @@ import React from 'react';
 import { ExternalLink, Star, Trophy } from 'lucide-react';
 import data from '../../../data/yc-batch-stats.json';
 import YCBatchRanking from './YCBatchRanking.jsx';
+import { useT } from '../../../lib/i18n.jsx';
 
 const fmtUsd = (n) => {
   if (n == null) return null;
@@ -121,10 +122,11 @@ function HBar({ label, valueText, ratio, color = '#34d399' }) {
 
 // ── Block 1: the batch ─────────────────────────────────────────────────────
 function BatchBlock({ d }) {
+  const t = useT();
   const maxRaise = Math.max(...d.top_raises.map(r => r.usd));
   return (
     <Block accent="#FF6600" tint="rgba(255,102,0,0.07)">
-      <BlockHeader eyebrow="весь батч" title={d.title} subtitle={d.subtitle} accent="#FF6600" />
+      <BlockHeader eyebrow={t('весь батч', 'whole batch')} title={d.title} subtitle={d.subtitle} accent="#FF6600" />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px,1fr))', gap: 12 }}>
         {d.headline_stats.map((s, i) => (
@@ -133,7 +135,7 @@ function BatchBlock({ d }) {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <SubHead>Топ-5 кейсов батча</SubHead>
+        <SubHead>{t('Топ-5 кейсов батча', 'Top 5 cases in the batch')}</SubHead>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px,1fr))', gap: 12 }}>
           {d.top5.map((c) => <StandoutCard key={c.rank} c={c} />)}
         </div>
@@ -141,7 +143,7 @@ function BatchBlock({ d }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px,1fr))', gap: 24 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <SubHead>Крупнейшие внешние раунды</SubHead>
+          <SubHead>{t('Крупнейшие внешние раунды', 'Largest external rounds')}</SubHead>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {d.top_raises.map((r, i) => (
               <HBar key={i} label={`${r.name} · ${r.lead}`} valueText={fmtUsd(r.usd)} ratio={r.usd / maxRaise} color="#34d399" />
@@ -151,7 +153,7 @@ function BatchBlock({ d }) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <SubHead>Кто из фондов заходил</SubHead>
+          <SubHead>{t('Кто из фондов заходил', 'Which funds went in')}</SubHead>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {d.top_investors.map((inv, i) => (
               <div key={i} style={{
@@ -176,12 +178,12 @@ function BatchBlock({ d }) {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <SubHead>Из чего состоит батч</SubHead>
+        <SubHead>{t('Из чего состоит батч', 'What the batch is made of')}</SubHead>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
           {d.sectors.map((s, i) => (
             <HBar key={i} label={s.label} valueText={`${s.pct}%`} ratio={s.pct / 100} color="#60a5fa" />
           ))}
-          <HBar label="Штаб-квартира в Сан-Франциско" valueText={`${d.geo_sf_pct}%`} ratio={d.geo_sf_pct / 100} color="#a78bfa" />
+          <HBar label={t('Штаб-квартира в Сан-Франциско', 'Headquartered in San Francisco')} valueText={`${d.geo_sf_pct}%`} ratio={d.geo_sf_pct / 100} color="#a78bfa" />
         </div>
       </div>
 
@@ -227,9 +229,10 @@ function StandoutCard({ c }) {
 
 // ── Block 2: Toloka portfolio ──────────────────────────────────────────────
 function TolokaBlock({ d }) {
+  const t = useT();
   return (
     <Block accent="#34d399" tint="rgba(52,211,153,0.07)">
-      <BlockHeader eyebrow="портфель" title={d.title} subtitle={d.subtitle} accent="#34d399" />
+      <BlockHeader eyebrow={t('портфель', 'portfolio')} title={d.title} subtitle={d.subtitle} accent="#34d399" />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px,1fr))', gap: 12 }}>
         {d.headline_stats.map((s, i) => (
@@ -238,7 +241,7 @@ function TolokaBlock({ d }) {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <SubHead>Топ-5 компаний Toloka</SubHead>
+        <SubHead>{t('Топ-5 компаний Toloka', 'Toloka’s top 5 companies')}</SubHead>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px,1fr))', gap: 12 }}>
           {d.top5.map((c, i) => (
             <article key={i} style={{
@@ -249,7 +252,7 @@ function TolokaBlock({ d }) {
                 <span style={{ fontSize: 15, fontWeight: 800, color: '#fafafa' }}>{c.name}</span>
                 <span style={{ fontSize: 11, color: '#71717a' }}>· {c.tag}</span>
                 {c.star && (
-                  <span title="В списке заметных стартапов TechCrunch" style={{
+                  <span title={t('В списке заметных стартапов TechCrunch', 'On TechCrunch’s list of standout startups')} style={{
                     display: 'inline-flex', alignItems: 'center', gap: 4,
                     fontSize: 9.5, fontWeight: 700, color: '#f59e0b',
                     background: 'rgba(245,158,11,0.10)', border: '1px solid rgba(245,158,11,0.35)',
@@ -265,7 +268,7 @@ function TolokaBlock({ d }) {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <SubHead>Известные фонды рядом в сделках</SubHead>
+        <SubHead>{t('Известные фонды рядом в сделках', 'Known funds alongside in deals')}</SubHead>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {d.notable_funds.map((f, i) => (
             <span key={i} style={{
@@ -284,17 +287,18 @@ function TolokaBlock({ d }) {
 
 // ── Block 3: comparison / verdict ──────────────────────────────────────────
 function ComparisonBlock({ d }) {
+  const t = useT();
   return (
     <Block accent="#a78bfa" tint="rgba(167,139,250,0.08)">
-      <BlockHeader eyebrow="сравнение" title={d.title} accent="#a78bfa" Icon={Trophy} />
+      <BlockHeader eyebrow={t('сравнение', 'comparison')} title={d.title} accent="#a78bfa" Icon={Trophy} />
 
       {/* The headline chart: hit-rate on consensus favorites vs random */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <SubHead>Попадание в заметные стартапы батча</SubHead>
-        <HBar label={`Toloka — ${d.standouts_held} из ${d.standouts_total} заметных`} valueText={`${d.standouts_pct}%`} ratio={d.standouts_pct / 100} color="#34d399" />
-        <HBar label="Случайное попадание (в среднем по батчу)" valueText={`~${d.base_rate_pct}%`} ratio={d.base_rate_pct / 100} color="#52525b" />
+        <SubHead>{t('Попадание в заметные стартапы батча', 'Hit rate into the batch’s standouts')}</SubHead>
+        <HBar label={t(`Toloka — ${d.standouts_held} из ${d.standouts_total} заметных`, `Toloka — ${d.standouts_held} of ${d.standouts_total} standouts`)} valueText={`${d.standouts_pct}%`} ratio={d.standouts_pct / 100} color="#34d399" />
+        <HBar label={t('Случайное попадание (в среднем по батчу)', 'Random hit rate (batch average)')} valueText={`~${d.base_rate_pct}%`} ratio={d.base_rate_pct / 100} color="#52525b" />
         <div style={{ fontSize: 12.5, color: '#e4e4e7' }}>
-          → Toloka попадает в консенсус-фаворитов примерно <span style={{ color: '#34d399', fontWeight: 700 }}>{d.over_index} чаще</span> случайного.
+          {t('→ Toloka попадает в консенсус-фаворитов примерно', '→ Toloka lands in the consensus favourites roughly')} <span style={{ color: '#34d399', fontWeight: 700 }}>{d.over_index} {t('чаще', 'more often')}</span> {t('случайного отбора.', 'than random selection.')}
         </div>
       </div>
 
@@ -313,14 +317,14 @@ function ComparisonBlock({ d }) {
 
       {/* Where Toloka buys on the valuation ladder */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <SubHead>В каком сегменте по оценке заходит Toloka</SubHead>
+        <SubHead>{t('В каком сегменте по оценке заходит Toloka', 'Which valuation segment Toloka enters at')}</SubHead>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <HBar label="Рынок: медианная AI-оценка на seed" valueText={`$${d.market_median_m}M`} ratio={d.market_median_m / d.top_mark_m} color="#60a5fa" />
-          <HBar label="Toloka: медианный потолок оценки" valueText={`$${d.median_cap_m}M`} ratio={d.median_cap_m / d.top_mark_m} color="#34d399" />
-          <HBar label="Топ-марки батча (9 Mothers, Tasklet)" valueText={`$${d.top_mark_m}M`} ratio={1} color="#FF7a33" />
+          <HBar label={t('Рынок: медианная AI-оценка на seed', 'Market: median AI seed valuation')} valueText={`$${d.market_median_m}M`} ratio={d.market_median_m / d.top_mark_m} color="#60a5fa" />
+          <HBar label={t('Toloka: медианный потолок оценки', 'Toloka: median valuation cap')} valueText={`$${d.median_cap_m}M`} ratio={d.median_cap_m / d.top_mark_m} color="#34d399" />
+          <HBar label={t('Топ-марки батча (9 Mothers, Tasklet)', 'Batch top marks (9 Mothers, Tasklet)')} valueText={`$${d.top_mark_m}M`} ratio={1} color="#FF7a33" />
         </div>
         <div style={{ fontSize: 11.5, color: '#71717a', lineHeight: 1.55 }}>
-          Toloka заходит в средний сегмент — выше рынка, но ниже самых дорогих имён батча.
+          {t('Toloka заходит в средний сегмент — выше рынка, но ниже самых дорогих имён батча.', 'Toloka enters in the middle segment — above the market, below the batch’s priciest names.')}
         </div>
       </div>
 
