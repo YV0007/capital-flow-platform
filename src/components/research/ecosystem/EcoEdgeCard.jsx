@@ -41,6 +41,10 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
   const sub = substitutabilityRead(edge.substitutability);
   const ev = edge.evidence || [];
   const verb = edge.verb || edge.typeLabel;
+  // The arrow carries the relation now that the capsed verb between the two
+  // names is gone, so the sentence it used to say out loud lives in the
+  // arrow's tooltip instead — in the direction the edge actually runs.
+  const sentence = [source?.name, verb, target?.name].filter(Boolean).join(' ');
   const risk = edge.risk || null;
   const showRisk = !!(risk && risk.level && risk.level !== 'low');
 
