@@ -426,7 +426,12 @@ function layoutNodes() {
       const y = PAD_Y_TOP + parseInt(layerIdx, 10) * LAYER_GAP;
       const w = n.big ? BIG_NODE_W : NODE_W;
       const h = n.big ? BIG_NODE_H : NODE_H;
-      result[n.id] = { ...n, x, y, w, h, cx: x, cy: y, topY: y - h/2, bottomY: y + h/2 };
+      // `n.label` is a bilingual GETTER (see bi()). A plain spread would
+      // read it once, here at module load, and freeze the Russian string into
+      // the layout — so the getter is re-attached to the laid-out copy.
+      const laid = { ...n, x, y, w, h, cx: x, cy: y, topY: y - h/2, bottomY: y + h/2 };
+      Object.defineProperty(laid, 'label', { enumerable: true, get: () => n.label });
+      result[n.id] = laid;
     });
   });
   return result;
