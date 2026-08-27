@@ -15,36 +15,37 @@ import { ChevronDown, ChevronUp, Users } from 'lucide-react';
 import { ACTION_META, sectorLabel } from '../../../data/fundTracker.js';
 import { fmtUSD, fmtPct, fmtShares, fmtDate, fmtQuarters } from './fundFormat.js';
 import { MONO, hexA, LatencyBadge, FormBadge, Chip, Delta, SparseFlag, useTone } from './FundBits.jsx';
+import { useT } from '../../../lib/i18n.jsx';
 
 const FUND_COLS = [
-  { key: 'name',    label: 'Фонд',        w: '1.5fr', align: 'left' },
-  { key: 'style',   label: 'Стиль',       w: '110px', align: 'left' },
-  { key: 'book',    label: 'Книга',       w: '86px',  align: 'right', num: true },
-  { key: 'count',   label: 'Позиций',     w: '62px',  align: 'right', num: true },
-  { key: 'top10',   label: 'Топ-10',      w: '62px',  align: 'right', num: true },
-  { key: 'new',     label: 'Нов',         w: '44px',  align: 'right', num: true },
-  { key: 'added',   label: 'Доб',         w: '44px',  align: 'right', num: true },
-  { key: 'trimmed', label: 'Сокр',        w: '44px',  align: 'right', num: true },
-  { key: 'exited',  label: 'Закр',        w: '44px',  align: 'right', num: true },
-  { key: 'score',   label: 'Убежд.',      w: '58px',  align: 'right', num: true },
-  { key: 'filed',   label: 'Подано',      w: '86px',  align: 'left' },
-  { key: 'latency', label: 'Латентность', w: '92px',  align: 'right', num: true },
+  { key: 'name',    label: t('Фонд', 'Fund'),        w: '1.5fr', align: 'left' },
+  { key: 'style',   label: t('Стиль', 'Style'),       w: '110px', align: 'left' },
+  { key: 'book',    label: t('Книга', 'Book'),       w: '86px',  align: 'right', num: true },
+  { key: 'count',   label: t('Позиций', 'Positions'),     w: '62px',  align: 'right', num: true },
+  { key: 'top10',   label: t('Топ-10', 'Top 10'),      w: '62px',  align: 'right', num: true },
+  { key: 'new',     label: t('Нов', 'New'),         w: '44px',  align: 'right', num: true },
+  { key: 'added',   label: t('Доб', 'Add'),         w: '44px',  align: 'right', num: true },
+  { key: 'trimmed', label: t('Сокр', 'Trim'),        w: '44px',  align: 'right', num: true },
+  { key: 'exited',  label: t('Закр', 'Exit'),        w: '44px',  align: 'right', num: true },
+  { key: 'score',   label: t('Убежд.', 'Conv.'),      w: '58px',  align: 'right', num: true },
+  { key: 'filed',   label: t('Подано', 'Filed'),      w: '86px',  align: 'left' },
+  { key: 'latency', label: t('Латентность', 'Latency'), w: '92px',  align: 'right', num: true },
 ];
 
 const POS_COLS = [
-  { key: 'fund',    label: 'Фонд',        w: '128px', align: 'left' },
-  { key: 'ticker',  label: 'Тикер',       w: '74px',  align: 'left' },
-  { key: 'issuer',  label: 'Эмитент',     w: '1.4fr', align: 'left' },
-  { key: 'weight',  label: 'Вес',         w: '58px',  align: 'right', num: true },
-  { key: 'value',   label: 'Стоимость',   w: '80px',  align: 'right', num: true },
-  { key: 'shares',  label: 'Акций',       w: '72px',  align: 'right', num: true },
-  { key: 'action',  label: 'Действие',    w: '68px',  align: 'left' },
-  { key: 'delta',   label: 'Δ акций',     w: '74px',  align: 'right', num: true },
-  { key: 'quarters',label: 'Кварт.',      w: '58px',  align: 'right', num: true },
-  { key: 'crowd',   label: 'Фондов',      w: '58px',  align: 'right', num: true },
-  { key: 'score',   label: 'Убежд.',      w: '58px',  align: 'right', num: true },
-  { key: 'form',    label: 'Форма',       w: '72px',  align: 'left' },
-  { key: 'latency', label: 'Латентность', w: '92px',  align: 'right', num: true },
+  { key: 'fund',    label: t('Фонд', 'Fund'),        w: '128px', align: 'left' },
+  { key: 'ticker',  label: t('Тикер', 'Ticker'),       w: '74px',  align: 'left' },
+  { key: 'issuer',  label: t('Эмитент', 'Issuer'),     w: '1.4fr', align: 'left' },
+  { key: 'weight',  label: t('Вес', 'Weight'),         w: '58px',  align: 'right', num: true },
+  { key: 'value',   label: t('Стоимость', 'Value'),   w: '80px',  align: 'right', num: true },
+  { key: 'shares',  label: t('Акций', 'Shares'),       w: '72px',  align: 'right', num: true },
+  { key: 'action',  label: t('Действие', 'Action'),    w: '68px',  align: 'left' },
+  { key: 'delta',   label: t('Δ акций', 'Δ shares'),     w: '74px',  align: 'right', num: true },
+  { key: 'quarters',label: t('Кварт.', 'Qtrs'),      w: '58px',  align: 'right', num: true },
+  { key: 'crowd',   label: t('Фондов', 'Funds'),      w: '58px',  align: 'right', num: true },
+  { key: 'score',   label: t('Убежд.', 'Conv.'),      w: '58px',  align: 'right', num: true },
+  { key: 'form',    label: t('Форма', 'Form'),       w: '72px',  align: 'left' },
+  { key: 'latency', label: t('Латентность', 'Latency'), w: '92px',  align: 'right', num: true },
 ];
 
 const fundValue = (f, k) => {
@@ -88,6 +89,7 @@ const posValue = (p, k) => {
 export default function FundTable({
   mode, onMode, funds, positions, selectedId, onSelect, onOpenSecurity, topInset = 0,
 }) {
+  const t = useT();
   const byFund = mode === 'funds';
   const cols = byFund ? FUND_COLS : POS_COLS;
   const [sort, setSort] = useState({ key: byFund ? 'book' : 'weight', dir: -1 });
@@ -144,7 +146,7 @@ export default function FundTable({
 
         {rows.length === 0 && (
           <div style={{ padding: '60px 0', textAlign: 'center', color: 'var(--cf-text6)', fontFamily: MONO, fontSize: 12 }}>
-            Ничего не проходит текущие фильтры.
+            {t('Ничего не проходит текущие фильтры.', 'Nothing matches the current filters.')}
           </div>
         )}
 
@@ -160,9 +162,10 @@ export default function FundTable({
 }
 
 function ModeSwitch({ mode, onMode, funds, positions }) {
+  const t = useT();
   const opts = [
-    { key: 'funds', label: 'По фондам', n: funds, hint: 'Одна строка на фонд — форма вселенной целиком.' },
-    { key: 'positions', label: 'По позициям', n: positions, hint: 'Одна строка на фонд×бумагу. Сортируется по любому столбцу.' },
+    { key: 'funds', label: t('По фондам', 'By fund'), n: funds, hint: t('Одна строка на фонд — форма вселенной целиком.', 'One row per fund — the shape of the whole universe.') },
+    { key: 'positions', label: t('По позициям', 'By position'), n: positions, hint: t('Одна строка на фонд×бумагу. Сортируется по любому столбцу.', 'One row per fund × security. Sortable on every column.') },
   ];
   return (
     <div style={{ display: 'flex', gap: 7, marginBottom: 12 }}>
@@ -191,6 +194,7 @@ function ModeSwitch({ mode, onMode, funds, positions }) {
 const cellR = { fontSize: 10.5, fontFamily: MONO, color: 'var(--cf-text2)', textAlign: 'right', fontVariantNumeric: 'tabular-nums' };
 
 function FundRow({ f, grid, selected, onSelect }) {
+  const t = useT();
   const tint = useTone();
   const a = f.activity;
   return (
@@ -205,7 +209,7 @@ function FundRow({ f, grid, selected, onSelect }) {
       onMouseLeave={(e) => { if (!selected) e.currentTarget.style.background = 'transparent'; }}>
       <span style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
         <span style={{ width: 7, height: 7, borderRadius: '50%', background: tint(f.activityColor), flexShrink: 0 }}
-          title="Движение книги за период" />
+          title={t('Движение книги за период', 'How much of the book moved this period')} />
         <span style={{
           fontSize: 11.5, fontWeight: 700, color: 'var(--cf-text0)',
           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
@@ -233,6 +237,7 @@ function FundRow({ f, grid, selected, onSelect }) {
 }
 
 function PosRow({ p, grid, selected, onSelect, onOpenSecurity }) {
+  const t = useT();
   return (
     <div onClick={() => onSelect(p.fundId)}
       style={{
@@ -250,7 +255,7 @@ function PosRow({ p, grid, selected, onSelect, onOpenSecurity }) {
       }}>{p.fund}</span>
       <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         <button onClick={(e) => { e.stopPropagation(); onOpenSecurity?.(p.ticker); }}
-          title="Открыть таблицу держателей"
+          title={t('Открыть таблицу держателей', 'Open the holder table')}
           style={{
             background: 'none', border: 'none', padding: 0, cursor: 'pointer',
             fontSize: 11, fontFamily: MONO, fontWeight: 800, color: 'var(--cf-link)',
@@ -271,7 +276,7 @@ function PosRow({ p, grid, selected, onSelect, onOpenSecurity }) {
       <span style={{ textAlign: 'right' }}><Delta value={p.share_delta_pct} shown={p.deltaShown} /></span>
       <span style={cellR}>{p.quarters_held}</span>
       <span style={{ ...cellR, color: p.crowded ? 'var(--cf-accent)' : 'var(--cf-text7)' }}
-        title={p.crowded ? `Держат ${p.crowdCount} отслеживаемых фонда` : 'Единственный отслеживаемый держатель'}>
+        title={p.crowded ? `Держат ${p.crowdCount} отслеживаемых фонда` : t('Единственный отслеживаемый держатель', 'The only tracked holder')}>
         {p.crowded ? <><Users size={9} style={{ verticalAlign: -1 }} /> {p.crowdCount}</> : '1'}
       </span>
       <span style={{ ...cellR, color: 'var(--cf-accent)' }}>{p.fundConviction ?? '—'}</span>

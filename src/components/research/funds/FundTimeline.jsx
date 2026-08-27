@@ -16,7 +16,7 @@ import { Zap } from 'lucide-react';
 import { EVENT_TYPE_META } from '../../../data/fundTracker.js';
 import { fmtUSD, fmtDate, fmtLatency } from './fundFormat.js';
 import { MONO, hexA, LatencyBadge, FormBadge, SourceLink, useTone } from './FundBits.jsx';
-import { useT } from '../../../lib/i18n.jsx';
+import { useT, useL } from '../../../lib/i18n.jsx';
 
 export default function FundTimeline({ events, onSelect, onOpenSecurity, topInset = 0 }) {
   const t = useT();
@@ -120,6 +120,7 @@ export default function FundTimeline({ events, onSelect, onOpenSecurity, topInse
 
 function EventRow({ e, onSelect, onOpenSecurity }) {
   const t = useT();
+  const L = useL();
   const loud = e.meta.loud;
   const c = useTone()(e.meta.color);
   return (
@@ -159,7 +160,7 @@ function EventRow({ e, onSelect, onOpenSecurity }) {
         <div style={{
           fontSize: loud ? 11.5 : 11, color: loud ? 'var(--cf-text1)' : 'var(--cf-text3)',
           lineHeight: 1.55, marginBottom: 7,
-        }}>{e.headline}</div>
+        }}>{L(e.headline)}</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <LatencyBadge days={e.latency_days} form={e.source_form} />
           <FormBadge form={e.source_form} small />

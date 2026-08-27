@@ -17,8 +17,10 @@ import { X, Users, ArrowRight } from 'lucide-react';
 import { CROSSING } from '../../../data/fundTracker.js';
 import { fmtUSD, fmtPct, fmtShares, fmtDate, plural } from './fundFormat.js';
 import { MONO, hexA, LatencyBadge, FormBadge, Chip, Delta, useTone } from './FundBits.jsx';
+import { useT } from '../../../lib/i18n.jsx';
 
 export default function HolderLookup({ ticker, onClose, onSelect }) {
+  const t = useT();
   const tint = useTone();
   const cross = CROSSING[ticker];
   if (!cross) return null;
@@ -52,19 +54,19 @@ export default function HolderLookup({ ticker, onClose, onSelect }) {
                 <span style={{ fontSize: 13, color: 'var(--cf-text3)' }}>{cross.issuer}</span>
                 <Chip color={crowded ? '#38BDF8' : '#8B8B95'}
                   title={crowded
-                    ? 'Насыщенное имя: держат несколько отслеживаемых фондов.'
-                    : 'Одиночная ставка: из отслеживаемых держит только один фонд.'}>
-                  <Users size={9} />{crowded ? `${cross.holders} фонда` : 'одиночная ставка'}
+                    ? t('Насыщенное имя: держат несколько отслеживаемых фондов.', 'A crowded name: several tracked funds hold it.')
+                    : t('Одиночная ставка: из отслеживаемых держит только один фонд.', 'A lone bet: only one tracked fund holds it.')}>
+                  <Users size={9} />{crowded ? `${cross.holders} фонда` : t('одиночная ставка', 'lone bet')}
                 </Chip>
               </div>
               {sec && (
                 <div style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text6)', marginTop: 6 }}>
-                  {fmtShares(sec.shares_outstanding)} акций в обращении ·
-                  {' '}{sec.holders.length} {plural(sec.holders.length, ['держатель', 'держателя', 'держателей'])} в таблице
+                  {fmtShares(sec.shares_outstanding)} {t('акций в обращении', 'shares outstanding')} ·
+                  {' '}{sec.holders.length} {plural(sec.holders.length, ['держатель', 'держателя', 'держателей'], ['holder', 'holders'])} {t('в таблице', 'in the table')}
                 </div>
               )}
             </div>
-            <button onClick={onClose} aria-label="Закрыть"
+            <button onClick={onClose} aria-label={t('Закрыть', 'Close')}
               style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 2, lineHeight: 0 }}>
               <X size={16} />
             </button>
@@ -74,7 +76,7 @@ export default function HolderLookup({ ticker, onClose, onSelect }) {
         <div style={{ padding: '16px 18px 26px', display: 'flex', flexDirection: 'column', gap: 22 }}>
           {/* ── direction 1: which tracked funds hold it ── */}
           <section>
-            <Head>Кто из отслеживаемых держит</Head>
+            <Head>{t('Кто из отслеживаемых держит', 'Which tracked funds hold it')}</Head>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {tracked.map(p => (
                 <button key={p.fundId + p.instrument} onClick={() => { onSelect?.(p.fundId); onClose(); }}
@@ -93,7 +95,7 @@ export default function HolderLookup({ ticker, onClose, onSelect }) {
                       <Chip color={p.instrumentMeta.color} small title={p.instrumentMeta.blurb}>{p.instrumentMeta.short}</Chip>
                     )}
                   </span>
-                  <span style={{ ...num, color: 'var(--cf-text0)', fontWeight: 700 }} title="Вес в книге фонда">
+                  <span style={{ ...num, color: 'var(--cf-text0)', fontWeight: 700 }} title={t('Вес в книге фонда', 'Weight in the fund\'s book')}>
                     {fmtPct(p.weight)}
                   </span>
                   <span style={num}>{fmtUSD(p.value_usd)}</span>
@@ -107,8 +109,9 @@ export default function HolderLookup({ ticker, onClose, onSelect }) {
             </div>
             <Note>
               {crowded
-                ? `Имя держат ${cross.holders} отслеживаемых ${plural(cross.holders, ['фонд', 'фонда', 'фондов'])}; чистое направление за период — ${cross.netDirection > 0 ? 'к покупке' : cross.netDirection < 0 ? 'к сокращению' : 'разнонаправленно'}.`
-                : 'Из отслеживаемых имя держит только один фонд — дифференцированная ставка, а не консенсус.'}
+                ? t(`Имя держат ${cross.holders} отслеживаемых ${plural(cross.holders, ['фонд', 'фонда', 'фондов'])}; чистое направление за период — ${cross.netDirection > 0 ? 'к покупке' : cross.netDirection < 0 ? 'к сокращению' : 'разнонаправленно'}.`,
+                     `${cross.holders} tracked funds hold this name; the net direction this period is ${cross.netDirection > 0 ? 'buying' : cross.netDirection < 0 ? 'trimming' : 'mixed'}.`)
+                : t('Из отслеживаемых имя держит только один фонд — дифференцированная ставка, а не консенсус.', 'Only one tracked fund holds this name — a differentiated bet, not consensus.')}
             </Note>
           </section>
 
@@ -116,9 +119,9 @@ export default function HolderLookup({ ticker, onClose, onSelect }) {
           {sec && (
             <section>
               <Head>
-                Все институциональные держатели
+                {t('Все институциональные держатели', 'All institutional holders')}
                 <span style={{ color: 'var(--cf-text7)', fontWeight: 600, marginLeft: 8 }}>
-                  отслеживаемые выделены
+                  {t('отслеживаемые выделены', 'tracked ones highlighted')}
                 </span>
               </Head>
               <div style={{
@@ -126,7 +129,7 @@ export default function HolderLookup({ ticker, onClose, onSelect }) {
                 gap: 9, padding: '7px 10px', marginBottom: 2,
                 background: 'var(--cf-surface0)', borderRadius: '6px 6px 0 0',
               }}>
-                {['Держатель', 'Акций', '% выпуска', 'Δ акций', 'Подано'].map((h, i) => (
+                {[t('Держатель', 'Holder'), t('Акций', 'Shares'), t('% выпуска', '% outstanding'), t('Δ акций', 'Δ shares'), t('Подано', 'Filed')].map((h, i) => (
                   <span key={h} style={{
                     fontSize: 8.5, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text6)',
                     textTransform: 'uppercase', letterSpacing: '0.08em',
@@ -169,10 +172,13 @@ export default function HolderLookup({ ticker, onClose, onSelect }) {
                 ))}
               </div>
               <Note>
-                Таблица целиком собрана из квартальных форм — она такая же несвежая, как и всё
-                остальное на этом экране. Ранний вход отслеживаемого фонда виден по знаку
+                {t(`Таблица целиком собрана из квартальных форм — она такая же несвежая, как и всё
+                остальное на этом экране. Ранний вход отслеживаемого фонда виден по знаку`,
+                   `The whole table is built from quarterly filings — it is exactly as stale as everything else
+                on this screen. A tracked fund's early entry shows up by comparing`)}
                 <ArrowRight size={9} style={{ verticalAlign: -1, margin: '0 3px' }} />
-                колонке «Δ акций» относительно крупных пассивных держателей: они меняются медленно.
+                {t('колонке «Δ акций» относительно крупных пассивных держателей: они меняются медленно.',
+                   'the Δ shares column against the large passive holders: they move slowly.')}
               </Note>
             </section>
           )}

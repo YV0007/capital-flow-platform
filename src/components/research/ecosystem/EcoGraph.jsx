@@ -573,11 +573,14 @@ export default function EcoGraph({
 
   const particles = useCallback((e) => {
     // Motion only on focus, so the map is still when idle — movement is a
-    // reward for clicking in, not constant noise.
-    if (e.id === selectedEdgeId) return 6;
-    if (e.id === hoverEdgeId) return 4;
-    if (cycleMode) return cycleEdges.has(e.id) ? 5 : 0;
-    if (hasChain) return chain.edges.has(e.id) ? 5 : 0;
+    // reward for clicking in, not constant noise. Counts bumped up from the
+    // first pass: at the old 4-6 the flow was too sparse to read as motion
+    // at a glance, and reading the flow's direction is the whole point of a
+    // lit chain — a thin trickle of dots undersold it.
+    if (e.id === selectedEdgeId) return 8;
+    if (e.id === hoverEdgeId) return 5;
+    if (cycleMode) return cycleEdges.has(e.id) ? 7 : 0;
+    if (hasChain) return chain.edges.has(e.id) ? 7 : 0;
     return 0;
   }, [selectedEdgeId, hoverEdgeId, hasChain, chain, cycleMode, cycleEdges]);
 
@@ -663,8 +666,14 @@ export default function EcoGraph({
           linkDirectionalArrowLength={(e) => (hasChain ? 3.2 : 1.9) + 1.2 * Math.sqrt((e.strength || 0) / 100)}
           linkDirectionalArrowRelPos={0.92}
           linkDirectionalParticles={particles}
-          linkDirectionalParticleWidth={(e) => (hasChain ? 2 : 1.1) + 1.2 * Math.sqrt((e.strength || 0) / 100)}
-          linkDirectionalParticleSpeed={() => 0.004}
+          // Bigger and faster than the first pass — a hairline edge with a
+          // 1-2px dot crawling along it at 0.004/frame read as "maybe
+          // something is moving" rather than as a flow. Understanding the
+          // direction and pace of dependency IS what this animation is for,
+          // so it gets to be the loudest moving thing on an otherwise static
+          // canvas, not a barely-there accent.
+          linkDirectionalParticleWidth={(e) => (hasChain ? 3.4 : 2.4) + 1.8 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalParticleSpeed={() => 0.008}
           linkDirectionalParticleColor={(e) => {
             const cyc = cycleMode ? cycleEdges.get(e.id) : null;
             return tone(cyc ? cyc.color : e.color, mode);

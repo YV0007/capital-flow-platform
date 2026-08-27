@@ -23,6 +23,7 @@ import {
 import {
   MONO, hexA, LatencyBadge, FormBadge, Chip, Delta, SourceLink, SparseFlag, Label, Stat, FundMark, useTone,
 } from './FundBits.jsx';
+import { useT, useL, localeOf } from '../../../lib/i18n.jsx';
 
 export default function FundPanel({ fund, onClose, onOpenSecurity, width = 560, top = 0 }) {
   const tint = useTone();
@@ -65,6 +66,7 @@ export default function FundPanel({ fund, onClose, onOpenSecurity, width = 560, 
 
 // ── identity strip — the latency badge is the loudest thing on it ────────
 function Identity({ fund, color, onClose }) {
+  const t = useT();
   return (
     <div style={{
       position: 'sticky', top: 0, zIndex: 2,
@@ -81,7 +83,7 @@ function Identity({ fund, color, onClose }) {
             {fund.name}
           </div>
         </div>
-        <button onClick={onClose} aria-label="Закрыть"
+        <button onClick={onClose} aria-label={t('Закрыть', 'Close')}
           style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 2, lineHeight: 0 }}
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -94,7 +96,7 @@ function Identity({ fund, color, onClose }) {
           <span style={{ fontSize: 10.5, fontFamily: MONO, color: 'var(--cf-text3)' }}>{fund.principal}</span>
         )}
         <Chip color={color} title={fund.styleMeta?.blurb}>{fund.styleMeta?.label}</Chip>
-        {fund.isWatch && <Chip color="#64748B" title="Не отслеживается целиком — только сработавшие правила.">Наблюдение</Chip>}
+        {fund.isWatch && <Chip color="#64748B" title={t('Не отслеживается целиком — только сработавшие правила.', 'Not tracked in full — fired rules only.')}>{t('Наблюдение', 'Watch')}</Chip>}
         {fund.sparse_coverage && <SparseFlag inline />}
       </div>
 
@@ -106,7 +108,7 @@ function Identity({ fund, color, onClose }) {
       }}>
         <LatencyBadge days={fund.latency_days} asOf={fund.as_of} form={fund.source_form} size="lg" />
         <span style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text5)' }}>
-          срез на {fmtDate(fund.as_of)} · подано {fmtDate(fund.filed)}
+          {t('срез на', 'as of')} {fmtDate(fund.as_of)} · {t('подано', 'filed')} {fmtDate(fund.filed)}
         </span>
         <span style={{ marginLeft: 'auto' }}><FormBadge form={fund.source_form} /></span>
       </div>
@@ -114,16 +116,16 @@ function Identity({ fund, color, onClose }) {
       <div style={{
         display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginTop: 13,
       }}>
-        <Stat label="Книга" value={fmtUSD(fund.book_value_usd)}
-          sub={`${fund.position_count} ${plural(fund.position_count, ['позиция', 'позиции', 'позиций'])}`}
-          title="Стоимость раскрытой книги на дату среза." />
+        <Stat label={t('Книга', 'Book')} value={fmtUSD(fund.book_value_usd)}
+          sub={`${fund.position_count} ${plural(fund.position_count, ['позиция', 'позиции', 'позиций'], ['position', 'positions'])}`}
+          title={t('Стоимость раскрытой книги на дату среза.', 'The value of the disclosed book at the snapshot date.')} />
         <Stat label="AUM" value={fund.aum_usd ? fmtUSD(fund.aum_usd) : '—'}
-          sub={fund.aum_usd ? 'под управлением' : 'не раскрывается'}
-          title="Капитал фирмы. Раскрытая книга почти всегда меньше: долг, частные сделки и деривативы в 13F не попадают." />
-        <Stat label="Убеждённость" value={fund.conviction ? fund.conviction.score : '—'}
-          sub={fund.conviction ? 'из 100' : 'не считается'}
+          sub={fund.aum_usd ? t('под управлением', 'under management') : t('не раскрывается', 'not disclosed')}
+          title={t('Капитал фирмы. Раскрытая книга почти всегда меньше: долг, частные сделки и деривативы в 13F не попадают.', 'The firm\'s capital. The disclosed book is almost always smaller: debt, private deals and derivatives never reach a 13F.')} />
+        <Stat label={t('Убеждённость', 'Conviction')} value={fund.conviction ? fund.conviction.score : '—'}
+          sub={fund.conviction ? t('из 100', 'out of 100') : t('не считается', 'not scored')}
           color={fund.conviction ? 'var(--cf-accent)' : undefined}
-          title="Оценка движка: концентрация, срок держания, оборот и доборы на просадке — в одном числе." />
+          title={t('Оценка движка: концентрация, срок держания, оборот и доборы на просадке — в одном числе.', 'The engine\'s score: concentration, holding period, turnover and adds into weakness, in one number.')} />
       </div>
     </div>
   );
@@ -131,10 +133,11 @@ function Identity({ fund, color, onClose }) {
 
 // ── positioning ──────────────────────────────────────────────────────────
 function Positioning({ fund, onOpenSecurity }) {
+  const t = useT();
   const rows = fund.livePositions.slice().sort((a, b) => b.weight - a.weight);
   if (!rows.length) return null;
   return (
-    <Section title="Книга" caption={`${rows.length} ${plural(rows.length, ['позиция', 'позиции', 'позиций'])} · по весу`}>
+    <Section title={t('Книга', 'Book')} caption={`${rows.length} ${plural(rows.length, ['позиция', 'позиции', 'позиций'])} · по весу`}>
       {/* Шапка. До неё колонки читались только по догадке: «62%» — это вес или
           доля класса? «5к» — что именно? Подписи снимают вопрос, не отнимая
           места у строк: 9px, разрядка, приглушённый цвет. */}
@@ -142,7 +145,7 @@ function Positioning({ fund, onOpenSecurity }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         {rows.map(p => (
           <button key={p.ticker + p.instrument} onClick={() => onOpenSecurity?.(p.ticker)}
-            title={`${p.issuer}\n${sectorLabel(p.sector)} · ${themeLabel(p.theme)}\nОткрыть таблицу держателей`}
+            title={`${p.issuer}\n${sectorLabel(p.sector)} · ${themeLabel(p.theme)}\n${t('Открыть таблицу держателей', 'Open the holder table')}`}
             style={{
               display: 'grid', gridTemplateColumns: '62px 1fr 96px 52px 62px 66px 34px',
               alignItems: 'center', gap: 8, padding: '7px 8px',
@@ -157,7 +160,7 @@ function Positioning({ fund, onOpenSecurity }) {
                 overflow: 'hidden', textOverflow: 'ellipsis',
               }}>{p.ticker}</span>
               {p.jurisdiction !== 'US' && (
-                <span title={`${p.jurMeta.label} — вне периметра 13F`} style={{ fontSize: 9, cursor: 'help' }}>{p.jurMeta.flag}</span>
+                <span title={t(`${p.jurMeta.label} — вне периметра 13F`, `${p.jurMeta.label} — outside the 13F perimeter`)} style={{ fontSize: 9, cursor: 'help' }}>{p.jurMeta.flag}</span>
               )}
             </span>
             <span style={{
@@ -188,17 +191,20 @@ function Positioning({ fund, onOpenSecurity }) {
                   {p.instrumentMeta.short}
                 </Chip>
               )}
-              <span title={`${p.quarters_held} ${plural(p.quarters_held, ['квартал', 'квартала', 'кварталов'])} в книге`}
+              <span title={t(`${p.quarters_held} ${plural(p.quarters_held, ['квартал', 'квартала', 'кварталов'])} в книге`,
+                             `${p.quarters_held} ${p.quarters_held === 1 ? 'quarter' : 'quarters'} in the book`)}
                 style={{ fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text7)', cursor: 'help' }}>
-                {p.quarters_held}к
+                {p.quarters_held}{t('к', 'q')}
               </span>
             </span>
           </button>
         ))}
       </div>
       <FootNote>
-        Строка кликается — откроется полная таблица институциональных держателей имени.
-        Все веса — на дату среза; о сделках после неё фонд сообщать не обязан.
+        {t(`Строка кликается — откроется полная таблица институциональных держателей имени.
+        Все веса — на дату среза; о сделках после неё фонд сообщать не обязан.`,
+           `Rows are clickable — they open the full institutional holder table for the name.
+        Every weight is as of the snapshot date; the fund owes no notice of trades made since.`)}
       </FootNote>
     </Section>
   );
@@ -208,9 +214,10 @@ function Positioning({ fund, onOpenSecurity }) {
 // header and the rows must move together, and a shared constant that one of
 // them silently stops using is worse than two lines that diff side by side.
 function ColumnHeads() {
+  const t = useT();
   const cells = [
-    ['Тикер', 'left'], ['Эмитент', 'left'], ['Сектор', 'left'],
-    ['Вес', 'right'], ['Акций', 'right'], ['Стоимость', 'right'], ['Кв.', 'right'],
+    [t('Тикер', 'Ticker'), 'left'], [t('Эмитент', 'Issuer'), 'left'], [t('Сектор', 'Sector'), 'left'],
+    [t('Вес', 'Weight'), 'right'], [t('Акций', 'Shares'), 'right'], [t('Стоимость', 'Value'), 'right'], [t('Кв.', 'Qtr'), 'right'],
   ];
   return (
     <div style={{
@@ -231,6 +238,7 @@ function ColumnHeads() {
 
 // ── activity — four groups, counts AND names ─────────────────────────────
 function Activity({ fund, onOpenSecurity }) {
+  const t = useT();
   const tint = useTone();
   const a = fund.activity;
   if (!a) return null;
@@ -240,7 +248,7 @@ function Activity({ fund, onOpenSecurity }) {
   const byTicker = Object.fromEntries(fund.positions.map(p => [p.ticker, p]));
 
   return (
-    <Section title="Движение за период" caption={`${fmtDate(fund.as_of)} · ${fmtLatency(fund.latency_days)}`}>
+    <Section title={t('Движение за период', 'Movement this period')} caption={`${fmtDate(fund.as_of)} · ${fmtLatency(fund.latency_days)}`}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
         {groups.map(g => (
           <div key={g.key} style={{
@@ -265,7 +273,8 @@ function Activity({ fund, onOpenSecurity }) {
                     const p = byTicker[t];
                     return (
                       <button key={t} onClick={() => onOpenSecurity?.(t)}
-                        title={p ? `${p.issuer}\nВес ${fmtPct(p.weight)}${p.deltaShown && p.share_delta_pct != null ? ` · по акциям ${fmtPct(p.share_delta_pct, 1)}` : ''}` : t}
+                        title={p ? t(`${p.issuer}\nВес ${fmtPct(p.weight)}${p.deltaShown && p.share_delta_pct != null ? ` · по акциям ${fmtPct(p.share_delta_pct, 1)}` : ''}`,
+                             `${p.issuer}\nWeight ${fmtPct(p.weight)}${p.deltaShown && p.share_delta_pct != null ? ` · by shares ${fmtPct(p.share_delta_pct, 1)}` : ''}`) : ''}
                         style={{
                           padding: '2px 6px', background: hexA(g.meta.color, 0.10),
                           border: `1px solid ${hexA(g.meta.color, 0.28)}`, borderRadius: 4,
@@ -297,7 +306,7 @@ function Activity({ fund, onOpenSecurity }) {
                 overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
               }}>
                 {p.action === 'exited'
-                  ? `было ${fmtShares(p.prior_shares)}`
+                  ? t(`было ${fmtShares(p.prior_shares)}`, `was ${fmtShares(p.prior_shares)}`)
                   : p.action === 'new'
                     ? `${fmtShares(p.shares)} · ${fmtPct(p.weight)}`
                     : `${fmtShares(p.prior_shares)} → ${fmtShares(p.shares)}`}
@@ -313,9 +322,10 @@ function Activity({ fund, onOpenSecurity }) {
           ))}
       </div>
       <FootNote>
-        Доборы и сокращения считаются <b>по числу акций</b>, а не по деньгам — иначе движение цены
-        читалось бы как сделка. Изменение на позиции легче {fmtPct(MIN_WEIGHT_FOR_DELTA, 1)} книги
-        не показывается: {deltaSuppressedNote().toLowerCase()}
+        {t('Доборы и сокращения считаются', 'Adds and trims are measured')} <b>{t('по числу акций', 'in shares')}</b>
+        {t(', а не по деньгам — иначе движение цены читалось бы как сделка. Изменение на позиции легче',
+           ', never in dollars — otherwise a price move would read as a trade. Change on a position lighter than')}
+        {' '}{fmtPct(MIN_WEIGHT_FOR_DELTA, 1)} {t('книги не показывается:', 'of the book is not shown:')} {deltaSuppressedNote().toLowerCase()}
       </FootNote>
     </Section>
   );
@@ -323,6 +333,7 @@ function Activity({ fund, onOpenSecurity }) {
 
 // ── conviction ───────────────────────────────────────────────────────────
 function Conviction({ fund, onOpenSecurity }) {
+  const t = useT();
   const hot = useTone()('#FF6B6B');
   const c = fund.conviction;
   if (!c) return null;
@@ -330,20 +341,20 @@ function Conviction({ fund, onOpenSecurity }) {
   const byTicker = Object.fromEntries(fund.positions.map(p => [p.ticker, p]));
 
   return (
-    <Section title="Убеждённость">
+    <Section title={t('Убеждённость', 'Conviction')}>
       <div style={{
         display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12,
         padding: '12px 13px', background: 'var(--cf-surface1)',
         border: '1px solid var(--cf-border-soft)', borderRadius: 9,
       }}>
-        <Stat label="Оценка" value={c.score} color="var(--cf-accent)"
-          title="Сводная оценка движка, 0–100." />
-        <Stat label="Топ-10" value={fmtPct(c.top10_concentration, 0)}
-          title="Доля книги в десяти крупнейших позициях." />
-        <Stat label="Срок" value={fmtQuarters(c.avg_persistence_quarters)}
-          title="Средний срок держания позиции, в кварталах." />
-        <Stat label="Оборот" value={fmtPct(c.turnover, 0)}
-          title="Доля книги, сменившаяся за период." />
+        <Stat label={t('Оценка', 'Score')} value={c.score} color="var(--cf-accent)"
+          title={t('Сводная оценка движка, 0–100.', 'The engine\'s composite score, 0–100.')} />
+        <Stat label={t('Топ-10', 'Top 10')} value={fmtPct(c.top10_concentration, 0)}
+          title={t('Доля книги в десяти крупнейших позициях.', 'Share of the book in the ten largest positions.')} />
+        <Stat label={t('Срок', 'Tenure')} value={fmtQuarters(c.avg_persistence_quarters)}
+          title={t('Средний срок держания позиции, в кварталах.', 'Average holding period per position, in quarters.')} />
+        <Stat label={t('Оборот', 'Turnover')} value={fmtPct(c.turnover, 0)}
+          title={t('Доля книги, сменившаяся за период.', 'Share of the book that changed this period.')} />
       </div>
 
       {/* The strongest single tell in the dataset — so it gets real weight. */}
@@ -357,7 +368,7 @@ function Conviction({ fund, onOpenSecurity }) {
           <span style={{
             fontSize: 10, fontFamily: MONO, fontWeight: 800, color: hot,
             textTransform: 'uppercase', letterSpacing: '0.1em',
-          }}>Добор на просадке</span>
+          }}>{t('Добор на просадке', 'Added into weakness')}</span>
           <span style={{
             marginLeft: 'auto', fontSize: 13, fontFamily: MONO, fontWeight: 700,
             color: 'var(--cf-text0)',
@@ -365,7 +376,7 @@ function Conviction({ fund, onOpenSecurity }) {
         </div>
         {weak.length === 0
           ? <div style={{ fontSize: 10.5, color: 'var(--cf-text6)', fontFamily: MONO }}>
-              Ни одной позиции не докупали, пока она падала.
+              {t('Ни одной позиции не докупали, пока она падала.', 'No position was added to while it was falling.')}
             </div>
           : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -392,7 +403,7 @@ function Conviction({ fund, onOpenSecurity }) {
                     <span style={{
                       textAlign: 'right', fontSize: 10, fontFamily: MONO, fontWeight: 700,
                       color: 'var(--cf-bad)', fontVariantNumeric: 'tabular-nums',
-                    }} title="Изменение цены за период">
+                    }} title={t('Изменение цены за период', 'Price change over the period')}>
                       {p ? fmtPct(p.price_change_pct_in_period, 0) : '—'}
                     </span>
                   </button>
@@ -401,8 +412,10 @@ function Conviction({ fund, onOpenSecurity }) {
             </div>
           )}
         <FootNote style={{ marginTop: 9 }}>
-          Позиции, которые фонд увеличивал, пока они падали. Единственное движение в этих данных,
-          которое нельзя объяснить инерцией или ребалансировкой.
+          {t(`Позиции, которые фонд увеличивал, пока они падали. Единственное движение в этих данных,
+          которое нельзя объяснить инерцией или ребалансировкой.`,
+             `Positions the fund added to while they were falling. The one move in this data that
+          cannot be explained by momentum or rebalancing.`)}
         </FootNote>
       </div>
     </Section>
@@ -411,11 +424,13 @@ function Conviction({ fund, onOpenSecurity }) {
 
 // ── stakes & intent — the highest-information rows in the section ────────
 function Stakes({ fund }) {
+  const t = useT();
+  const L = useL();
   const tint = useTone();
   const list = fund.stakes || [];
   if (!list.length) return null;
   return (
-    <Section title="Доли и намерение" caption={`${list.length} ${plural(list.length, ['форма', 'формы', 'форм'])} 13D/13G`}>
+    <Section title={t('Доли и намерение', 'Stakes and intent')} caption={`${list.length} ${plural(list.length, ['форма', 'формы', 'форм'])} 13D/13G`}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
         {list.map((s, i) => {
           const col = tint(s.activist ? '#FF6B6B' : '#C2A36B');
@@ -428,21 +443,21 @@ function Stakes({ fund }) {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 7 }}>
                 <FormBadge form={s.form} />
-                {s.activist && <Chip color={col} small title="Заявлено намерение по Item 4 — активная форма.">АКТИВИСТ</Chip>}
+                {s.activist && <Chip color={col} small title={t('Заявлено намерение по Item 4 — активная форма.', 'An Item 4 intent is stated — the active form.')}>{t('АКТИВИСТ', 'ACTIVIST')}</Chip>}
                 <span style={{ fontSize: 11.5, fontWeight: 700, color: 'var(--cf-text0)' }}>{s.issuer}</span>
                 {s.ticker && <span style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text5)' }}>{s.ticker}</span>}
                 <span style={{
                   marginLeft: 'auto', fontSize: 13, fontFamily: MONO, fontWeight: 700,
                   color: col, fontVariantNumeric: 'tabular-nums',
-                }} title="Доля выпуска">{fmtPct(s.pct_outstanding)}</span>
+                }} title={t('Доля выпуска', 'Share of the issue')}>{fmtPct(s.pct_outstanding)}</span>
               </div>
               <div style={{ fontSize: 11, color: 'var(--cf-text2)', lineHeight: 1.55, marginBottom: 8 }}>
-                {s.intent}
+                {L(s.intent)}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexWrap: 'wrap' }}>
                 <LatencyBadge days={s.latency_days} asOf={s.event_date} form={s.form} />
                 <span style={{ fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text6)' }}>
-                  событие {fmtDate(s.event_date)} · подано {fmtDate(s.filed)}
+                  {t('событие', 'event')} {fmtDate(s.event_date)} · {t('подано', 'filed')} {fmtDate(s.filed)}
                 </span>
                 <span style={{ marginLeft: 'auto' }}><SourceLink url={s.source_url} /></span>
               </div>
@@ -456,18 +471,19 @@ function Stakes({ fund }) {
 
 // ── named shorts — rare, and therefore not buried ────────────────────────
 function Shorts({ fund }) {
+  const t = useT();
   const tint = useTone();
   const list = fund.shorts || [];
   if (!list.length) return null;
   const DIR = {
-    new:       { label: 'открыта',   color: '#F87171' },
-    increased: { label: 'увеличена', color: '#F87171' },
-    decreased: { label: 'снижена',   color: '#34D399' },
-    closed:    { label: 'закрыта',   color: '#34D399' },
+    new:       { label: t('открыта', 'opened'),   color: '#F87171' },
+    increased: { label: t('увеличена', 'increased'), color: '#F87171' },
+    decreased: { label: t('снижена', 'reduced'),   color: '#34D399' },
+    closed:    { label: t('закрыта', 'closed'),   color: '#34D399' },
   };
   return (
-    <Section title="Названные шорты"
-      caption="реестры EU/UK — то, чего 13F не показывает вовсе">
+    <Section title={t('Названные шорты', 'Named shorts')}
+      caption={t('реестры EU/UK — то, чего 13F не показывает вовсе', 'EU/UK registers — what a 13F does not show at all')}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         {list.map((s, i) => {
           const d = DIR[s.direction] || { label: s.direction, color: '#8B8B95' };
@@ -488,7 +504,7 @@ function Shorts({ fund }) {
               <span style={{
                 fontSize: 12, fontFamily: MONO, fontWeight: 700, color: t('#F472B6'),
                 textAlign: 'right', fontVariantNumeric: 'tabular-nums',
-              }} title="Доля выпуска в короткой позиции">{fmtPct(s.pct_short, 2)}</span>
+              }} title={t('Доля выпуска в короткой позиции', 'Share of the issue held short')}>{fmtPct(s.pct_short, 2)}</span>
               <Chip color={d.color} small title={`${s.register} · ${fmtDate(s.as_of)}`}>{d.label}</Chip>
               <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <LatencyBadge days={s.latency_days} asOf={s.as_of} form="Short register" />
@@ -498,8 +514,10 @@ function Shorts({ fund }) {
         })}
       </div>
       <FootNote>
-        Реестры обновляются ежедневно и раскрывают только позиции выше порога. Короткая нога
-        в США не раскрывается вовсе — то, что здесь пусто, не означает, что шортов нет.
+        {t(`Реестры обновляются ежедневно и раскрывают только позиции выше порога. Короткая нога
+        в США не раскрывается вовсе — то, что здесь пусто, не означает, что шортов нет.`,
+           `The registers update daily and disclose only positions above the threshold. The short leg
+        is not disclosed in the US at all — an empty space here does not mean there are no shorts.`)}
       </FootNote>
     </Section>
   );
@@ -507,11 +525,12 @@ function Shorts({ fund }) {
 
 // ── track record ─────────────────────────────────────────────────────────
 function TrackRecord({ fund }) {
+  const t = useT();
   const list = fund.returns || [];
   if (!list.length) return null;
   const max = Math.max(...list.map(r => Math.abs(r.pct || 0)), 1);
   return (
-    <Section title="Доходность по годам">
+    <Section title={t('Доходность по годам', 'Return by year')}>
       <div style={{ display: 'flex', gap: 6, alignItems: 'flex-end' }}>
         {list.map(r => {
           const up = (r.pct || 0) >= 0;
@@ -524,7 +543,7 @@ function TrackRecord({ fund }) {
                 fontVariantNumeric: 'tabular-nums',
               }}>{fmtReturn(r.pct)}</div>
               <div style={{ height: 56, display: 'flex', alignItems: 'flex-end', width: '100%' }}>
-                <div title={r.provisional ? 'Год не закончен — цифра предварительная.' : `${r.year}: ${fmtReturn(r.pct)}`}
+                <div title={r.provisional ? t('Год не закончен — цифра предварительная.', 'The year is not over — the figure is provisional.') : `${r.year}: ${fmtReturn(r.pct)}`}
                   style={{
                     width: '100%', height: h, borderRadius: 3,
                     background: up ? hexA('#34D399', r.provisional ? 0.30 : 0.72) : hexA('#F87171', r.provisional ? 0.30 : 0.72),
@@ -534,7 +553,7 @@ function TrackRecord({ fund }) {
               </div>
               <div style={{ fontSize: 9, fontFamily: MONO, color: 'var(--cf-text6)' }}>
                 {String(r.year).slice(2)}
-                {r.provisional && <span title="Предварительно — год не закончен" style={{ color: 'var(--cf-warn)' }}>*</span>}
+                {r.provisional && <span title={t('Предварительно — год не закончен', 'Provisional — the year is not over')} style={{ color: 'var(--cf-warn)' }}>*</span>}
               </div>
             </div>
           );
@@ -542,8 +561,9 @@ function TrackRecord({ fund }) {
       </div>
       {fund.ytd && (
         <FootNote>
-          <b style={{ color: 'var(--cf-warn)' }}>* {fund.ytd.year} — предварительно.</b> Год не закончен,
-          цифра меняется до его конца и не сопоставима с закрытыми годами.
+          <b style={{ color: 'var(--cf-warn)' }}>* {fund.ytd.year} — {t('предварительно.', 'provisional.')}</b>{' '}
+          {t('Год не закончен, цифра меняется до его конца и не сопоставима с закрытыми годами.',
+             'The year is not over; the figure moves until it is, and does not compare with closed years.')}
         </FootNote>
       )}
     </Section>
@@ -552,52 +572,55 @@ function TrackRecord({ fund }) {
 
 // ── watch-only: triggers and nothing else ────────────────────────────────
 function Triggers({ fund, onOpenSecurity }) {
+  const t = useT();
+  const L = useL();
   const hot = useTone()('#FF4A55');
   return (
-    <Section title="Сработавшие правила"
-      caption={`${fund.triggers.length} ${plural(fund.triggers.length, ['триггер', 'триггера', 'триггеров'])}`}>
+    <Section title={t('Сработавшие правила', 'Rules fired')}
+      caption={`${fund.triggers.length} ${plural(fund.triggers.length, ['триггер', 'триггера', 'триггеров'], ['trigger', 'triggers'])}`}>
       <div style={{
         padding: '10px 12px', marginBottom: 11,
         background: 'var(--cf-surface1)', border: '1px dashed var(--cf-border-dashed)', borderRadius: 8,
         fontSize: 10.5, color: 'var(--cf-text5)', lineHeight: 1.55,
       }}>
-        Книга целиком не отслеживается: {fmtUSD(fund.book_value_usd)} в {fund.position_count.toLocaleString('ru-RU')} позициях —
-        это инвентарь маркет-мейкера, а не мнение. Ниже только то, что прошло правило.
+        {t('Книга целиком не отслеживается:', 'The book is not tracked in full:')} {fmtUSD(fund.book_value_usd)}{' '}
+        {t('в', 'across')} {fund.position_count.toLocaleString(localeOf())} {t('позициях — это инвентарь маркет-мейкера, а не мнение. Ниже только то, что прошло правило.',
+          'positions — market-maker inventory, not an opinion. Below is only what cleared a rule.')}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-        {fund.triggers.map((t, i) => (
+        {fund.triggers.map((tg, i) => (
           <div key={i} style={{
             padding: '11px 12px', background: hexA(hot, 0.05),
             border: '1px solid ' + hexA(hot, 0.30), borderRadius: 9,
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 7 }}>
-              <FormBadge form={t.form} />
-              {t.ticker && (
-                <button onClick={() => onOpenSecurity?.(t.ticker)}
+              <FormBadge form={tg.form} />
+              {tg.ticker && (
+                <button onClick={() => onOpenSecurity?.(tg.ticker)}
                   style={{
                     background: 'none', border: 'none', cursor: 'pointer', padding: 0,
                     fontSize: 11, fontFamily: MONO, fontWeight: 800, color: 'var(--cf-link)',
-                  }}>{t.ticker}</button>
+                  }}>{tg.ticker}</button>
               )}
-              {t.issuer && <span style={{ fontSize: 10.5, color: 'var(--cf-text4)' }}>{t.issuer}</span>}
-              {t.magnitude_usd != null && (
+              {tg.issuer && <span style={{ fontSize: 10.5, color: 'var(--cf-text4)' }}>{tg.issuer}</span>}
+              {tg.magnitude_usd != null && (
                 <span style={{
                   marginLeft: 'auto', fontSize: 12, fontFamily: MONO, fontWeight: 700,
                   color: 'var(--cf-text1)', fontVariantNumeric: 'tabular-nums',
-                }}>{fmtUSD(t.magnitude_usd)}</span>
+                }}>{fmtUSD(tg.magnitude_usd)}</span>
               )}
             </div>
             <div style={{ fontSize: 11, color: 'var(--cf-text2)', lineHeight: 1.55, marginBottom: 8 }}>
-              {t.headline}
+              {L(tg.headline)}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexWrap: 'wrap' }}>
-              <LatencyBadge days={t.latency_days} asOf={t.event_date} form={t.form} />
-              {t.pct_outstanding != null && (
+              <LatencyBadge days={tg.latency_days} asOf={tg.event_date} form={tg.form} />
+              {tg.pct_outstanding != null && (
                 <span style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text3)' }}>
-                  {fmtPct(t.pct_outstanding)} выпуска
+                  {fmtPct(tg.pct_outstanding)} {t('выпуска', 'of the issue')}
                 </span>
               )}
-              <span style={{ marginLeft: 'auto' }}><SourceLink url={t.source_url} /></span>
+              <span style={{ marginLeft: 'auto' }}><SourceLink url={tg.source_url} /></span>
             </div>
           </div>
         ))}
@@ -608,18 +631,20 @@ function Triggers({ fund, onOpenSecurity }) {
 
 // ── the stored prose, verbatim ───────────────────────────────────────────
 function WhyTracked({ fund, color }) {
+  const t = useT();
+  const L = useL();
   if (!fund.why_tracked && !fund.focus && !fund.strategy) return null;
   return (
-    <Section title="Почему отслеживаем">
+    <Section title={t('Почему отслеживаем', 'Why we track it')}>
       <div style={{
         padding: '12px 13px', background: hexA(color, 0.05),
         border: `1px solid ${hexA(color, 0.26)}`, borderRadius: 9,
         fontSize: 11.5, color: 'var(--cf-text1)', lineHeight: 1.6,
-      }}>{fund.why_tracked}</div>
+      }}>{L(fund.why_tracked)}</div>
       {(fund.focus || fund.strategy) && (
         <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 9 }}>
-          {fund.focus && <Field label="Фокус" text={fund.focus} />}
-          {fund.strategy && <Field label="Стратегия" text={fund.strategy} />}
+          {fund.focus && <Field label={t('Фокус', 'Focus')} text={L(fund.focus)} />}
+          {fund.strategy && <Field label={t('Стратегия', 'Strategy')} text={L(fund.strategy)} />}
         </div>
       )}
     </Section>
@@ -640,6 +665,7 @@ function Field({ label, text }) {
 // appear three times at a third of its real size, so the child entities are a
 // drill-down, not separate nodes.
 function Rollup({ fund }) {
+  const t = useT();
   const list = fund.entities || [];
   if (list.length <= 1) {
     return (
@@ -648,12 +674,12 @@ function Rollup({ fund }) {
         fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text7)',
       }}>
         <Layers size={10} />
-        Одна отчитывающаяся сущность · CIK {fund.cik || '—'}
+        {t('Одна отчитывающаяся сущность', 'A single reporting entity')} · CIK {fund.cik || '—'}
       </div>
     );
   }
   return (
-    <Section title="Отчитывающиеся сущности" caption="позиции сведены к управляющему">
+    <Section title={t('Отчитывающиеся сущности', 'Reporting entities')} caption={t('позиции сведены к управляющему', 'positions rolled up to the manager')}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         {list.map((e, i) => (
           <div key={i} style={{
@@ -665,7 +691,7 @@ function Rollup({ fund }) {
               CIK {e.cik}
             </span>
             <Chip color={e.role === 'parent' ? '#38BDF8' : '#8B8B95'} small>
-              {e.role === 'parent' ? 'родитель' : 'дочерняя'}
+              {e.role === 'parent' ? t('родитель', 'parent') : t('дочерняя', 'subsidiary')}
             </Chip>
           </div>
         ))}

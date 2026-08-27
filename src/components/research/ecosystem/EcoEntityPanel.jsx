@@ -72,11 +72,20 @@ export default function EcoEntityPanel({
   // Who else does the same job. The SECTOR is the comparison set, not the
   // layer: a layer holds several functions, while the sector is exactly what
   // the rubric's «незаменимость» factor is measured against.
+  //
+  // Same sector does not always mean "competes" — CUDA and NVIDIA both sit in
+  // `gpu_platform`, but CUDA is NVIDIA's own product, not a second vendor.
+  // The engine models it as its own entity (it needs its own criticality and
+  // edges), so the exclusion has to happen here, on display, not upstream.
+  // Detected from the payload itself — one entity's name sits as a whole word
+  // inside the other's name/aliases ("NVIDIA CUDA" contains "NVIDIA") — so
+  // this is not a hardcoded id pair and generalises to any future sub-brand.
   const rivals = useMemo(() => {
     if (!entity?.sector) return [];
     const out = [];
     entityById.forEach(n => {
       if (n.id === entity.id || n.sector !== entity.sector) return;
+      if (sameFamily(entity, n)) return;
       out.push({ n, c: critIn(n, n.primaryLayer) || n.criticality || 0 });
     });
     return out.sort((a, b) => b.c - a.c);
@@ -841,6 +850,23 @@ function Meter({ value, color, width = 44 }) {
       <span style={{ display: 'block', height: '100%', width: `${Math.max(0, Math.min(100, value))}%`, background: color, borderRadius: 2 }} />
     </span>
   );
+}
+
+/**
+ * Is `b` a sub-brand of `a` (or vice versa) rather than a competitor? True
+ * when one's name/alias contains the other's name/alias as a whole word —
+ * e.g. "NVIDIA CUDA" contains "NVIDIA". Data-driven, not an id lookup: any
+ * future entity named after its parent gets the same treatment for free.
+ */
+function sameFamily(a, b) {
+  const namesOf = (e) => [e.name, ...(e.aliases || [])].filter(Boolean).map(s => s.toLowerCase());
+  const containsWord = (haystack, needle) => {
+    if (!needle || needle.length < 3) return false;
+    const re = new RegExp(`(^|\\s)${needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s|$)`, 'i');
+    return re.test(haystack);
+  };
+  const aNames = namesOf(a), bNames = namesOf(b);
+  return aNames.some(an => bNames.some(bn => an !== bn && (containsWord(bn, an) || containsWord(an, bn))));
 }
 
 /**

@@ -33,12 +33,14 @@ import FundTable from './FundTable.jsx';
 import FundTimeline from './FundTimeline.jsx';
 import FundFilters from './FundFilters.jsx';
 import HolderLookup from './HolderLookup.jsx';
+import { useT } from '../../../lib/i18n.jsx';
 
 const TOPBAR_H = 58;
 const FIXTURE_BAR_H = 30;
 const EMPTY = new Set();
 
 export default function FundTracker({ onBack, mapSwitch }) {
+  const t = useT();
   const [view, setView] = useState('nodes');
   const [tableMode, setTableMode] = useState('funds');
   const [selectedId, setSelectedId] = useState(null);
@@ -190,35 +192,36 @@ export default function FundTracker({ onBack, mapSwitch }) {
         display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px',
         background: 'var(--cf-canvas)', borderBottom: '1px solid var(--cf-border-hair)',
       }}>
-        <button onClick={onBack} title="К библиотеке исследований"
+        <button onClick={onBack} title={t('К библиотеке исследований', 'Back to the research library')}
           style={btn}
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cf-text0)'; e.currentTarget.style.borderColor = 'var(--cf-text9)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--cf-text3)'; e.currentTarget.style.borderColor = 'var(--cf-border)'; }}>
-          <ChevronLeft size={13} /> Назад
+          <ChevronLeft size={13} /> {t('Назад', 'Back')}
         </button>
         {mapSwitch}
 
         <div style={{ minWidth: 0 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
             <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>
-              Трекер фондов
+              {t('Трекер фондов', 'Fund Tracker')}
             </span>
-            <span title={`Дата сборки файла. Возраст каждой строки считается от неё.\nОтчётный период: ${CYCLE?.period} · конец ${fmtDate(CYCLE?.period_end)}`}
+            <span title={t(`Дата сборки файла. Возраст каждой строки считается от неё.\nОтчётный период: ${CYCLE?.period} · конец ${fmtDate(CYCLE?.period_end)}`,
+                           `The file's build date. Every row's age is measured from it.\nReporting period: ${CYCLE?.period} · ending ${fmtDate(CYCLE?.period_end)}`)}
               style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap', cursor: 'help' }}>
-              НА {GENERATED}
+              {t('НА', 'AS OF')} {GENERATED}
             </span>
           </div>
           <div style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2, whiteSpace: 'nowrap' }}>
             <span style={{ color: 'var(--cf-accent)', fontWeight: 700 }}>{fmtUSD(visibleBook)}</span>
-            {activeCount || q ? ' в выборке' : ' раскрыто'}
+            {activeCount || q ? t(' в выборке', ' in selection') : t(' раскрыто', ' disclosed')}
             <span style={{ color: 'var(--cf-text9)' }}> · </span>
-            {funds.length}<span style={{ color: 'var(--cf-text7)' }}>/{TOTALS.funds}</span> {plural(funds.length, ['фонд', 'фонда', 'фондов'])}
+            {funds.length}<span style={{ color: 'var(--cf-text7)' }}>/{TOTALS.funds}</span> {plural(funds.length, ['фонд', 'фонда', 'фондов'], ['fund', 'funds'])}
             <span style={{ color: 'var(--cf-text9)' }}> · </span>
-            {positions.length}<span style={{ color: 'var(--cf-text7)' }}>/{POSITION_ROWS}</span> {plural(positions.length, ['позиция', 'позиции', 'позиций'])}
+            {positions.length}<span style={{ color: 'var(--cf-text7)' }}>/{POSITION_ROWS}</span> {plural(positions.length, ['позиция', 'позиции', 'позиций'], ['position', 'positions'])}
             {watch.length > 0 && (
               <>
                 <span style={{ color: 'var(--cf-text9)' }}> · </span>
-                <span style={{ color: 'var(--cf-muted)' }}>{watch.length} под наблюдением</span>
+                <span style={{ color: 'var(--cf-muted)' }}>{watch.length} {t('под наблюдением', 'on watch')}</span>
               </>
             )}
           </div>
@@ -235,7 +238,7 @@ export default function FundTracker({ onBack, mapSwitch }) {
               }}>
                 <Search size={12} style={{ color: 'var(--cf-text6)' }} />
                 <input autoFocus value={query} onChange={(e) => setQuery(e.target.value)}
-                  placeholder="фонд, управляющий, тикер…"
+                  placeholder={t('фонд, управляющий, тикер…', 'fund, principal, ticker…')}
                   style={{
                     width: 190, background: 'none', border: 'none', outline: 'none',
                     color: 'var(--cf-text1)', fontSize: 11, fontFamily: MONO,
@@ -246,19 +249,19 @@ export default function FundTracker({ onBack, mapSwitch }) {
                 </button>
               </div>
             ) : (
-              <button onClick={() => setSearchOpen(true)} title="Поиск" style={{ ...btn, padding: '6px 9px' }}>
+              <button onClick={() => setSearchOpen(true)} title={t('Поиск', 'Search')} style={{ ...btn, padding: '6px 9px' }}>
                 <Search size={13} />{q && <span style={{ color: 'var(--cf-accent)' }}>{q}</span>}
               </button>
             )}
           </div>
 
-          <button onClick={() => setFiltersOpen(o => !o)} title="Фильтры"
+          <button onClick={() => setFiltersOpen(o => !o)} title={t('Фильтры', 'Filters')}
             style={{
               ...btn, padding: '6px 10px',
               borderColor: activeCount ? 'var(--cf-accent-bd)' : 'var(--cf-border)',
               color: activeCount ? 'var(--cf-accent)' : 'var(--cf-text3)',
             }}>
-            <SlidersHorizontal size={13} /> Фильтры
+            <SlidersHorizontal size={13} /> {t('Фильтры', 'Filters')}
             {activeCount > 0 && <span style={{ fontWeight: 700 }}>{activeCount}</span>}
           </button>
         </div>
@@ -276,7 +279,7 @@ export default function FundTracker({ onBack, mapSwitch }) {
           <span style={{
             fontSize: 9.5, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-warn)',
             textTransform: 'uppercase', letterSpacing: '0.09em',
-          }}>Демо-данные</span>
+          }}>{t('Демо-данные', 'Demo data')}</span>
           <span style={{
             fontSize: 10, fontFamily: MONO, color: 'var(--cf-text4)',
             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
@@ -318,10 +321,11 @@ const btn = {
 };
 
 function ViewSwitch({ view, onView }) {
+  const t = useT();
   const opts = [
-    { key: 'nodes', label: 'Узлы',    icon: LayoutGrid, hint: 'Фонды как узлы: размер — книга, цвет — движение за период.' },
-    { key: 'table', label: 'Таблица', icon: Table2,     hint: 'Всё строками: по фондам или по позициям, сортировка по любому столбцу.' },
-    { key: 'feed',  label: 'Лента',   icon: Radio,      hint: 'Все события раскрытия, новые сверху.' },
+    { key: 'nodes', label: t('Узлы', 'Nodes'),    icon: LayoutGrid, hint: t('Фонды как узлы: размер — книга, цвет — движение за период.', 'Funds as nodes: size is the book, colour is how much moved this period.') },
+    { key: 'table', label: t('Таблица', 'Table'), icon: Table2,     hint: t('Всё строками: по фондам или по позициям, сортировка по любому столбцу.', 'Everything as rows: by fund or by position, sortable on every column.') },
+    { key: 'feed',  label: t('Лента', 'Feed'),   icon: Radio,      hint: t('Все события раскрытия, новые сверху.', 'Every disclosure event, newest first.') },
   ];
   return (
     <div style={{

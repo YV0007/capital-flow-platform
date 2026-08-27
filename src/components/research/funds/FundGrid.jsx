@@ -26,10 +26,12 @@ import { Radio } from 'lucide-react';
 import { STYLE_META, ACTIVITY_LEGEND, activityColor } from '../../../data/fundTracker.js';
 import { fmtUSD, fmtPct } from './fundFormat.js';
 import { MONO, hexA, LatencyBadge, FundMark, SparseFlag, Chip, useTone } from './FundBits.jsx';
+import { useT, useL } from '../../../lib/i18n.jsx';
 
 export default function FundGrid({
   funds, watch, selectedId, onSelect, topInset = 0,
 }) {
+  const t = useT();
   // Deterministic: group by style tag in the taxonomy's own order, funds by
   // book value inside each. Same payload → same picture, every reload.
   const clusters = useMemo(() => {
@@ -70,7 +72,7 @@ export default function FundGrid({
             padding: '80px 0', textAlign: 'center',
             color: 'var(--cf-text6)', fontFamily: MONO, fontSize: 12,
           }}>
-            Ни один фонд не проходит текущие фильтры.
+            {t('Ни один фонд не проходит текущие фильтры.', 'No fund matches the current filters.')}
           </div>
         )}
 
@@ -104,12 +106,15 @@ function ClusterHead({ meta: raw, count }) {
 }
 
 function FundNode({ fund, selected, onSelect }) {
+  const t = useT();
   const side = Math.round(104 + 78 * (fund.sizeShare || 0));
   const heat = useTone()(fund.activityColor);
   return (
     <button
       onClick={() => onSelect(fund.id)}
-      title={`${fund.name}\n${fund.principal || ''}\nКнига ${fmtUSD(fund.book_value_usd)} · ${fund.position_count} позиций\nЗа период сдвинуто ${fmtPct(fund.movedShare, 0)} книги — ${fmtPct(fund.intensity, 0)} от самого активного фонда в файле`}
+      title={t(
+        `${fund.name}\n${fund.principal || ''}\nКнига ${fmtUSD(fund.book_value_usd)} · ${fund.position_count} позиций\nЗа период сдвинуто ${fmtPct(fund.movedShare, 0)} книги — ${fmtPct(fund.intensity, 0)} от самого активного фонда в файле`,
+        `${fund.name}\n${fund.principal || ''}\nBook ${fmtUSD(fund.book_value_usd)} · ${fund.position_count} positions\n${fmtPct(fund.movedShare, 0)} of the book moved this period — ${fmtPct(fund.intensity, 0)} of the most active fund in the file`)}
       style={{
         width: side, minHeight: side, padding: '13px 13px 11px',
         display: 'flex', flexDirection: 'column', gap: 8, textAlign: 'left',
@@ -127,7 +132,7 @@ function FundNode({ fund, selected, onSelect }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <FundMark fund={fund} size={Math.round(side * 0.26)} />
         {/* Activity pip — colour IS the status signal, so it gets a swatch. */}
-        <span title={`За период сдвинуто ${fmtPct(fund.movedShare, 0)} книги`}
+        <span title={t(`За период сдвинуто ${fmtPct(fund.movedShare, 0)} книги`, `${fmtPct(fund.movedShare, 0)} of the book moved this period`)}
           style={{ marginLeft: 'auto', width: 8, height: 8, borderRadius: '50%', background: heat, flexShrink: 0 }} />
       </div>
 
@@ -157,6 +162,8 @@ function FundNode({ fund, selected, onSelect }) {
 // A different class of object, so a different visual class: muted, outlined,
 // no fill, no heat colour, and a header that says why they are here at all.
 function WatchBand({ watch, selectedId, onSelect }) {
+  const t = useT();
+  const L = useL();
   return (
     <section style={{
       marginTop: 14, paddingTop: 22,
@@ -166,19 +173,22 @@ function WatchBand({ watch, selectedId, onSelect }) {
         <span style={{
           fontSize: 11.5, fontFamily: MONO, fontWeight: 800, color: 'var(--cf-muted)',
           textTransform: 'uppercase', letterSpacing: '0.13em',
-        }}>Под наблюдением</span>
+        }}>{t('Под наблюдением', 'On watch')}</span>
         <span style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text7)' }}>{watch.length}</span>
         <div style={{ flex: 1, height: 1, background: 'var(--cf-border-soft)' }} />
       </div>
       <div style={{ fontSize: 10.5, color: 'var(--cf-text6)', lineHeight: 1.5, maxWidth: 660, marginBottom: 16 }}>
-        Мульти-стратегии и маркет-мейкеры. Их книга — инвентарь сотен pod-ов, а не мнение,
+        {t(`Мульти-стратегии и маркет-мейкеры. Их книга — инвентарь сотен pod-ов, а не мнение,
         поэтому целиком она здесь не отслеживается. Появляются в разделе только тогда, когда
-        сработало правило: пересечение порога, редкая форма, необычная концентрация.
+        сработало правило: пересечение порога, редкая форма, необычная концентрация.`,
+           `Multi-strategy firms and market makers. Their book is the inventory of hundreds of pods rather than
+        an opinion, so it is not tracked in full here. They enter the section only when a rule fires:
+        a threshold crossing, a rare form, unusual concentration.`)}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
         {watch.map(w => (
           <button key={w.id} onClick={() => onSelect(w.id)}
-            title={`${w.name} — только сработавшие триггеры`}
+            title={t(`${w.name} — только сработавшие триггеры`, `${w.name} — fired triggers only`)}
             style={{
               width: 250, padding: '12px 13px', textAlign: 'left', cursor: 'pointer',
               display: 'flex', flexDirection: 'column', gap: 9,
@@ -192,7 +202,7 @@ function WatchBand({ watch, selectedId, onSelect }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <FundMark fund={w} size={26} radius={7} />
               <span style={{ fontSize: 11.5, fontWeight: 700, color: 'var(--cf-text2)' }}>{w.short_name}</span>
-              <Chip color="#FF4A55" small title="Сработавшие правила">
+              <Chip color="#FF4A55" small title={t('Сработавшие правила', 'Rules fired')}>
                 <Radio size={8} />{w.triggers.length}
               </Chip>
             </div>
@@ -200,7 +210,7 @@ function WatchBand({ watch, selectedId, onSelect }) {
               fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text6)',
               lineHeight: 1.45, display: '-webkit-box', WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical', overflow: 'hidden',
-            }}>{w.triggers[0]?.headline}</div>
+            }}>{L(w.triggers[0]?.headline)}</div>
           </button>
         ))}
       </div>
@@ -209,6 +219,7 @@ function WatchBand({ watch, selectedId, onSelect }) {
 }
 
 function ActivityLegend() {
+  const t = useT();
   const tint = useTone();
   return (
     <div style={{
@@ -218,7 +229,7 @@ function ActivityLegend() {
       <span style={{
         fontSize: 9, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text6)',
         textTransform: 'uppercase', letterSpacing: '0.12em',
-      }}>Цвет узла · движение книги</span>
+      }}>{t('Цвет узла · движение книги', 'Node colour · book movement')}</span>
       {ACTIVITY_LEGEND.map(l => (
         <span key={l.label} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
           <span style={{ width: 9, height: 9, borderRadius: '50%', background: tint(activityColor(l.t)) }} />
@@ -227,7 +238,7 @@ function ActivityLegend() {
       ))}
       <span style={{
         marginLeft: 'auto', fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text7)',
-      }}>Размер узла · размер книги</span>
+      }}>{t('Размер узла · размер книги', 'Node size · book size')}</span>
     </div>
   );
 }
