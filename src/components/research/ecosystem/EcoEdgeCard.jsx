@@ -28,10 +28,12 @@
 import { useState } from 'react';
 import { X, ChevronDown, ChevronRight, ExternalLink, Quote } from 'lucide-react';
 import { strengthBand, substitutabilityRead } from '../../../data/aiEcosystemNetwork.js';
+import { useT, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
 export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntity, isFixture, rightInset = 0 }) {
+  const t = useT();
   const [sourcesOpen, setSourcesOpen] = useState(false);
   if (!edge) return null;
 
@@ -70,7 +72,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
           <Party entity={target} onOpenEntity={onOpenEntity} />
         </div>
 
-        <button onClick={onClose} title="Закрыть (Esc)"
+        <button onClick={onClose} title={t('Закрыть (Esc)', 'Close (Esc)')}
           style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -116,7 +118,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
           }} />
         </span>
         <span style={{ fontSize: 10.5, color: 'var(--cf-text4)', whiteSpace: 'nowrap' }}>
-          существенность {sb.label}
+          {t('существенность', 'materiality')} {sb.label}
         </span>
       </div>
 
@@ -124,15 +126,15 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
       {(edge.lockInDepth != null || sub) && (
         <div style={{ padding: '0 14px 10px', display: 'flex', gap: 18, flexWrap: 'wrap' }}>
           {edge.lockInDepth != null && (
-            <Gauge label="Глубина замка" value={edge.lockInDepth}
-              read={`${edge.lockInDepth} из 100`} color={edge.color}
-              title="Сколько слоёв стека задевает зависимость: чем глубже, тем больше придётся переделать при разрыве." />
+            <Gauge label={t('Глубина замка', 'Lock-in depth')} value={edge.lockInDepth}
+              read={t(`${edge.lockInDepth} из 100`, `${edge.lockInDepth} out of 100`)} color={edge.color}
+              title={t('Сколько слоёв стека задевает зависимость: чем глубже, тем больше придётся переделать при разрыве.', 'How many layers of the stack the dependency touches: the deeper it goes, the more has to be rebuilt if it breaks.')} />
           )}
           {sub && (
-            <Gauge label="Замена" value={100 - edge.substitutability}
+            <Gauge label={t('Замена', 'Substitution')} value={100 - edge.substitutability}
               read={sub.label} color={sub.color}
-              foot={`${edge.substitutability} из 100 по обратной шкале`}
-              title="Обратная шкала: 0 — заменить нечем, 100 — меняется свободно. Полоса показана «наоборот», чтобы длиннее означало крепче." />
+              foot={t(`${edge.substitutability} из 100 по обратной шкале`, `${edge.substitutability} out of 100 on the inverted scale`)}
+              title={t('Обратная шкала: 0 — заменить нечем, 100 — меняется свободно. Полоса показана «наоборот», чтобы длиннее означало крепче.', 'An inverted scale: 0 means nothing can replace it, 100 means it swaps freely. The bar is drawn inverted so that longer means stronger.')} />
           )}
         </div>
       )}
@@ -144,8 +146,8 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
           background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 8,
           fontSize: 11.5, color: 'var(--cf-text3)', lineHeight: 1.5,
         }}>
-          <b style={{ color: 'var(--cf-text1)' }}>Связь не отыгрывается назад.</b>{' '}
-          Однажды принятое здесь решение переписывает всё, что построено поверх, — выход стоит не переключения, а перестройки.
+          <b style={{ color: 'var(--cf-text1)' }}>{t('Связь не отыгрывается назад.', 'The link does not unwind.')}</b>{' '}
+          {t('Однажды принятое здесь решение переписывает всё, что построено поверх, — выход стоит не переключения, а перестройки.', 'A decision taken here rewrites everything built on top of it — leaving costs a rebuild, not a switch.')}
         </div>
       )}
 
@@ -169,20 +171,20 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
               textTransform: 'uppercase', letterSpacing: '0.07em',
             }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: edge.riskMeta?.color }} />
-              риск {edge.riskMeta?.label}
+              {t('риск', 'risk')} {edge.riskMeta?.label}
             </span>
             {edge.riskTypeLabel && (
               <span style={{ fontSize: 10.5, color: 'var(--cf-text4)' }}>{edge.riskTypeLabel}</span>
             )}
             {edge.riskTimelineLabel && (
               <span style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text6)' }}>
-                горизонт: {edge.riskTimelineLabel}
+                {t('горизонт', 'horizon')}: {edge.riskTimelineLabel}
               </span>
             )}
           </div>
           {risk.mitigation && (
             <div style={{ marginTop: 6, fontSize: 11.5, color: 'var(--cf-text3)', lineHeight: 1.5 }}>
-              <span style={{ color: 'var(--cf-text6)' }}>Чем крыть: </span>{risk.mitigation}
+              <span style={{ color: 'var(--cf-text6)' }}>{t('Чем крыть', 'How to cover it')}: </span>{risk.mitigation}
             </div>
           )}
         </div>
@@ -196,12 +198,12 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
         <Chip color={edge.spineMeta?.color} title={edge.spineMeta?.blurb}>{edge.spineMeta?.label}</Chip>
         <Chip color={edge.statusMeta?.color} title={edge.statusMeta?.blurb}>{edge.statusMeta?.label}</Chip>
         <Chip color={edge.tierMeta?.color} title={edge.tierMeta?.blurb}>{edge.tierMeta?.label}</Chip>
-        <Chip title="Сколько независимых источников подтверждают эту связь">
-          {edge.confirmedSources} {plural(edge.confirmedSources, ['источник', 'источника', 'источников'])}
+        <Chip title={t('Сколько независимых источников подтверждают эту связь', 'How many independent sources confirm this link')}>
+          {edge.confirmedSources} {plural(edge.confirmedSources, ['источник', 'источника', 'источников'], ['source', 'sources'])}
         </Chip>
-        {edge.formed && <Chip title="Год возникновения связи">с {edge.formed}</Chip>}
-        {edge.strengthened && <Chip title="Год, когда связь резко углубилась">углубилась {edge.strengthened}</Chip>}
-        {edge.lastConfirmed && <Chip title="Когда связь подтверждалась в последний раз">подтв. {edge.lastConfirmed}</Chip>}
+        {edge.formed && <Chip title={t('Год возникновения связи', 'The year the link formed')}>с {edge.formed}</Chip>}
+        {edge.strengthened && <Chip title={t('Год, когда связь резко углубилась', 'The year the link deepened sharply')}>углубилась {edge.strengthened}</Chip>}
+        {edge.lastConfirmed && <Chip title={t('Когда связь подтверждалась в последний раз', 'When the link was last confirmed')}>подтв. {edge.lastConfirmed}</Chip>}
       </div>
 
       {/* ── Цитаты — за одной кнопкой, чтобы карточка оставалась лёгкой ─ */}
@@ -215,7 +217,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
               textTransform: 'uppercase', letterSpacing: '0.12em', textAlign: 'left',
             }}>
             {sourcesOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-            Источники и цитаты
+            {t('Источники и цитаты', 'Sources and quotes')}
             <span style={{ color: 'var(--cf-text8)' }}>· {ev.length}</span>
           </button>
 
@@ -242,13 +244,13 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
                       <span style={{ fontSize: 9, fontFamily: MONO, color: 'var(--cf-text7)' }}>{q.published}</span>
                     )}
                     {q.alive === false && (
-                      <span style={{ fontSize: 9, fontFamily: MONO, color: '#E5484D' }}>ссылка не отвечает</span>
+                      <span style={{ fontSize: 9, fontFamily: MONO, color: '#E5484D' }}>{t('ссылка не отвечает', 'link does not respond')}</span>
                     )}
                     {isFixture && (
-                      <span title="Данные пока черновые — настоящие цитаты придут с первым прогоном движка" style={{
+                      <span title={t('Данные пока черновые — настоящие цитаты придут с первым прогоном движка', 'The data is still a draft — real quotes arrive with the first engine run')} style={{
                         fontSize: 8.5, color: 'var(--cf-warn)', fontFamily: MONO, fontWeight: 700,
                         textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'help',
-                      }}>черновик</span>
+                      }}>{t('черновик', 'draft')}</span>
                     )}
                   </div>
                 </div>
@@ -350,7 +352,8 @@ function Chip({ children, color, title, dashed }) {
 }
 
 function hostOf(url) {
-  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'источник'; }
+  try { return new URL(url).hostname.replace(/^www\./, ''); }
+  catch { return getLang() === 'en' ? 'source' : 'источник'; }
 }
 
 function plural(n, [one, few, many]) {

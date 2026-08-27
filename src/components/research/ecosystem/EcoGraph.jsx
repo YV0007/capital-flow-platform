@@ -33,6 +33,7 @@ import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useThemeMode, canvasTokens, tone } from '../capitalflow/canvasTheme.js';
 import { criticalityBand } from '../../../data/aiEcosystemNetwork.js';
+import { getLang } from '../../../lib/i18n.jsx';
 
 export default function EcoGraph({
   graphData, regions, techNodes,
@@ -592,7 +593,7 @@ export default function EcoGraph({
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:7px">
         <span style="font-weight:700;font-size:12px;color:${T.tipText};letter-spacing:-0.01em">${esc(n.name)}</span>
         ${n.ticker ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${esc(n.ticker)}</span>` : ''}
-        ${n.faded ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">УСТАР.</span>` : ''}
+        ${n.faded ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${getLang() === 'en' ? 'STALE' : 'УСТАР.'}</span>` : ''}
       </div>
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
         <span style="width:7px;height:7px;border-radius:2px;background:${tone(n.color, mode)};flex:none"></span>
@@ -602,18 +603,18 @@ export default function EcoGraph({
       </div>
       ${(n.isAnchor || n.isPivotal) ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
         <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
-        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">${n.isAnchor ? 'Якорь экосистемы' : 'Ключевой узел сети'}</span>
+        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">${n.isAnchor ? (getLang() === 'en' ? 'Ecosystem anchor' : 'Якорь экосистемы') : (getLang() === 'en' ? 'Key network node' : 'Ключевой узел сети')}</span>
       </div>` : ''}
       <div style="color:${T.tipText2};margin-bottom:9px;line-height:1.45">${esc(n.oneLiner || '')}</div>
       <div style="border-top:1px solid ${T.tipBorder};padding-top:9px;display:grid;grid-template-columns:auto 1fr;gap:5px 16px">
-        ${row('Критичность', `${n.criticality} · ${esc(cb.label)}`, tone(cb.color, mode))}
+        ${row(getLang() === 'en' ? 'Criticality' : 'Критичность', `${n.criticality} · ${esc(cb.label)}`, tone(cb.color, mode))}
         ${n.centrality?.pagerank != null
-          ? row('Влияние в сети', `${(n.centrality.pagerank * graphData.nodes.length).toFixed(1)}× среднего`, T.tipText3)
+          ? row(getLang() === 'en' ? 'Network influence' : 'Влияние в сети', `${(n.centrality.pagerank * graphData.nodes.length).toFixed(1)}× ${getLang() === 'en' ? 'average' : 'среднего'}`, T.tipText3)
           : ''}
-        ${row('Зависит от / кормит', `${n.upCount} / ${n.downCount}`, T.tipText3)}
-        ${n.multiLayer ? row('Ещё в слоях', esc(n.segments.filter(s2 => s2.layer !== n.primaryLayer).map(s2 => s2.layerLabel || s2.layer).join(' · ')), T.tipText3) : ''}
+        ${row(getLang() === 'en' ? 'Depends on / feeds' : 'Зависит от / кормит', `${n.upCount} / ${n.downCount}`, T.tipText3)}
+        ${n.multiLayer ? row(getLang() === 'en' ? 'Also in layers' : 'Ещё в слоях', esc(n.segments.filter(s2 => s2.layer !== n.primaryLayer).map(s2 => s2.layerLabel || s2.layer).join(' · ')), T.tipText3) : ''}
       </div>
-      <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">Клик → цепочка по стеку</div>
+      <div style="margin-top:9px;color:${T.tipText4};font-size:8.5px">${getLang() === 'en' ? 'Click → the chain through the stack' : 'Клик → цепочка по стеку'}</div>
     `);
   }, [mode, T, graphData]);
 
@@ -628,17 +629,17 @@ export default function EcoGraph({
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
         <span style="color:${tone(e.spineMeta?.color || '#94A3B8', mode)}">${esc(e.spineMeta?.label || '')}</span>
         <span style="color:${T.tipRule}">·</span>
-        <span style="color:${T.tipText3}">существенность ${e.strength}</span>
-        ${e.lockInDepth != null ? `<span style="color:${T.tipRule}">·</span><span style="color:${T.tipText4}">замок ${e.lockInDepth}</span>` : ''}
+        <span style="color:${T.tipText3}">${getLang() === 'en' ? 'materiality' : 'существенность'} ${e.strength}</span>
+        ${e.lockInDepth != null ? `<span style="color:${T.tipRule}">·</span><span style="color:${T.tipText4}">${getLang() === 'en' ? 'lock-in' : 'замок'} ${e.lockInDepth}</span>` : ''}
         ${e.techMeta ? `<span style="color:${T.tipRule}">·</span><span style="color:${T.tipText3}">${esc(e.techMeta.label)}</span>` : ''}
       </div>
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:5px">
         <span style="color:${tone(e.statusMeta?.color || '#94A3B8', mode)}">${esc(e.statusMeta?.label || '')}</span>
         <span style="color:${T.tipRule}">·</span>
-        <span style="color:${T.tipText4}">${e.confirmedSources} ист. · ${esc(e.tierMeta?.short || '')}</span>
-        ${e.riskMeta && e.risk?.level !== 'low' ? `<span style="color:${T.tipRule}">·</span><span style="color:${tone(e.riskMeta.color, mode)}">риск ${esc(e.riskMeta.label.toLowerCase())}</span>` : ''}
+        <span style="color:${T.tipText4}">${e.confirmedSources} ${getLang() === 'en' ? 'src' : 'ист.'} · ${esc(e.tierMeta?.short || '')}</span>
+        ${e.riskMeta && e.risk?.level !== 'low' ? `<span style="color:${T.tipRule}">·</span><span style="color:${tone(e.riskMeta.color, mode)}">${getLang() === 'en' ? 'risk' : 'риск'} ${esc(e.riskMeta.label.toLowerCase())}</span>` : ''}
       </div>
-      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">Клик → разбор связи и цитаты</div>
+      <div style="margin-top:7px;color:${T.tipText4};font-size:9px">${getLang() === 'en' ? 'Click → the link breakdown and its quotes' : 'Клик → разбор связи и цитаты'}</div>
     `);
   }, [mode, T]);
 

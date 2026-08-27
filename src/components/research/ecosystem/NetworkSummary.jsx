@@ -14,6 +14,7 @@
 
 import { X, Waypoints, AlertTriangle } from 'lucide-react';
 import { NETWORK_META } from '../../../data/aiEcosystemNetwork.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -29,6 +30,7 @@ const FIELDS = [
 ];
 
 export default function NetworkSummary({ network, version, onOpenEntity, onOpenSubgraph, onClose }) {
+  const t = useT();
   if (!network) return null;
   const spof = network.spof || [];
 
@@ -48,12 +50,12 @@ export default function NetworkSummary({ network, version, onOpenEntity, onOpenS
         <span style={{
           fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
-        }}>Сводка сети</span>
+        }}>{t('Сводка сети', 'Network summary')}</span>
         {version && (
           <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text7)' }}>{version}</span>
         )}
         <div style={{ flex: 1 }} />
-        <button onClick={onClose} title="Закрыть (Esc)"
+        <button onClick={onClose} title={t('Закрыть (Esc)', 'Close (Esc)')}
           style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 2, lineHeight: 0 }}
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -91,10 +93,10 @@ export default function NetworkSummary({ network, version, onOpenEntity, onOpenS
             fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
             textTransform: 'uppercase', letterSpacing: '0.1em',
           }}>
-            <AlertTriangle size={11} /> Точки отказа <span style={{ color: 'var(--cf-text8)' }}>· {spof.length}</span>
+            <AlertTriangle size={11} /> {t('Точки отказа', 'Points of failure')} <span style={{ color: 'var(--cf-text8)' }}>· {spof.length}</span>
           </div>
           <div style={{ fontSize: 9.5, color: 'var(--cf-text6)', lineHeight: 1.45, marginBottom: 8 }}>
-            Не самые критичные, а самые «узкие»: убери — и сеть распадается на куски. Считается по посредничеству, а не по важности.
+            {t('Не самые критичные, а самые «узкие»: убери — и сеть распадается на куски. Считается по посредничеству, а не по важности.', 'Not the most critical but the narrowest: remove one and the network falls apart. Measured by betweenness, not by importance.')}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             {spof.map(s => (
@@ -125,7 +127,7 @@ export default function NetworkSummary({ network, version, onOpenEntity, onOpenS
           <div style={{
             padding: '9px 0 7px', fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
             textTransform: 'uppercase', letterSpacing: '0.1em',
-          }}>Подграфы</div>
+          }}>{t('Подграфы', 'Subgraphs')}</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {network.subgraphs.map(sg => (
               <button key={sg.id} onClick={() => onOpenSubgraph?.(sg.id)}
@@ -137,7 +139,7 @@ export default function NetworkSummary({ network, version, onOpenEntity, onOpenS
                 <span style={{ width: 7, height: 7, borderRadius: 2, background: sg.color, flexShrink: 0 }} />
                 <span style={{ fontSize: 10.5, color: 'var(--cf-text2)', fontWeight: 600 }}>{sg.label}</span>
                 <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text7)' }}>{sg.nodeCount}</span>
-                {sg.degenerate && <span title="Вырожден" style={{ fontSize: 8, color: 'var(--cf-warn)', fontFamily: MONO }}>!</span>}
+                {sg.degenerate && <span title={t('Вырожден', 'Degenerate')} style={{ fontSize: 8, color: 'var(--cf-warn)', fontFamily: MONO }}>!</span>}
               </button>
             ))}
           </div>

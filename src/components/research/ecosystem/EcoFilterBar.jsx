@@ -88,9 +88,9 @@ export default function EcoFilterBar({
         background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)',
         fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text4)', lineHeight: 1.6,
       }}>
-        Показано <b style={{ color: 'var(--cf-text1)' }}>{shownEntities}</b> из {totalEntities} сущностей
+        {t('Показано', 'Showing')} <b style={{ color: 'var(--cf-text1)' }}>{shownEntities}</b> {t('из', 'of')} {totalEntities} {t('сущностей', 'entities')}
         <br />
-        Показано <b style={{ color: 'var(--cf-text1)' }}>{shownEdges}</b> из {totalEdges} связей
+        {t('Показано', 'Showing')} <b style={{ color: 'var(--cf-text1)' }}>{shownEdges}</b> {t('из', 'of')} {totalEdges} {t('связей', 'links')}
       </div>
 
       {/* ── Охват сети — ключевые узлы или всё ──────────────────────────── */}

@@ -25,6 +25,7 @@
 
 import { X, ChevronRight, Layers, AlertTriangle, GitBranch, History, ShieldAlert } from 'lucide-react';
 import { critIn } from '../../../data/aiEcosystemNetwork.js';
+import { useT, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 export const LAYER_REPORT_W = 430;
@@ -32,6 +33,7 @@ export const LAYER_REPORT_W = 430;
 export default function LayerReport({
   layer, entityById, edges, changelog, onOpenEntity, onClose, topInset = 0,
 }) {
+  const t = useT();
   if (!layer) return null;
 
   const isGate = layer.plane === 'control';
@@ -84,7 +86,7 @@ export default function LayerReport({
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
               <span style={{ fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.12em' }}>
-                СЛОЙ {layer.id}
+                {t('СЛОЙ', 'LAYER')} {layer.id}
               </span>
               {layer.planeMeta && (
                 <span title={layer.planeMeta.blurb} style={{
@@ -98,7 +100,7 @@ export default function LayerReport({
             </div>
             <div style={{ fontSize: 11, color: 'var(--cf-text5)', marginTop: 3 }}>{layer.caption}</div>
           </div>
-          <button onClick={onClose} title="Закрыть отчёт"
+          <button onClick={onClose} title={t('Закрыть отчёт', 'Close the report')}
             style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0 }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -112,17 +114,18 @@ export default function LayerReport({
         {/* ══ CONTROL PLANE: what does this gate actually gate ══ */}
         {isGate && (
           <>
-            <Section title="Что этот шлюз гейтит" icon={<ShieldAlert size={11} />} count={gated.length}
-              caption="Слои внешней дуги не стоят в стеке — они решают, что через него вообще может пройти. Поэтому отчёт начинается не с того, кто здесь сидит, а с того, на что они влияют.">
-              {!gated.length && <Note>Из этого слоя не выходит ни одной связи контроля.</Note>}
+            <Section title={t('Что этот шлюз гейтит', 'What this gate gates')} icon={<ShieldAlert size={11} />} count={gated.length}
+              caption={t('Слои внешней дуги не стоят в стеке — они решают, что через него вообще может пройти. Поэтому отчёт начинается не с того, кто здесь сидит, а с того, на что они влияют.',
+                         'The outer-arc layers do not sit in the stack — they decide what may pass through it at all. So the report opens not with who sits here but with what they affect.')}>
+              {!gated.length && <Note>{t('Из этого слоя не выходит ни одной связи контроля.', 'No control link leaves this layer.')}</Note>}
               {gated.map(e => (
                 <GateRow key={e.id} e={e} entityById={entityById} onOpenEntity={onOpenEntity} side="target" />
               ))}
             </Section>
 
             {hangingOn.length > 0 && (
-              <Section title="Кто на этот шлюз завязан" icon={<ShieldAlert size={11} />} count={hangingOn.length}
-                caption="Связи контроля, направленные внутрь слоя: другая сторона сама называет эту юрисдикцию или ведомство тем, от чего зависит.">
+              <Section title={t('Кто на этот шлюз завязан', 'Who is tied to this gate')} icon={<ShieldAlert size={11} />} count={hangingOn.length}
+                caption={t('Связи контроля, направленные внутрь слоя: другая сторона сама называет эту юрисдикцию или ведомство тем, от чего зависит.', 'Control links pointing into the layer: the other side itself names this jurisdiction or agency as something it depends on.')}>
                 {hangingOn.map(e => (
                   <GateRow key={e.id} e={e} entityById={entityById} onOpenEntity={onOpenEntity} side="source" />
                 ))}
@@ -133,7 +136,7 @@ export default function LayerReport({
 
         {/* ══ ORBIT / NUCLEUS: concentration first ══ */}
         {!isGate && (
-          <Section title="Концентрация" icon={<Layers size={11} />}>
+          <Section title={t('Концентрация', 'Concentration')} icon={<Layers size={11} />}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px' }}>
               <span style={{
                 padding: '4px 10px', borderRadius: 6, background: conc.color + '18',
@@ -141,7 +144,7 @@ export default function LayerReport({
                 fontSize: 11, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.05em',
               }}>{conc.label}</span>
               <span style={{ fontSize: 11, color: 'var(--cf-text5)', fontFamily: MONO }}>
-                HHI {layer.concentration?.hhi ?? '—'} · {members.length} {plural(members.length, ['участник', 'участника', 'участников'])}
+                HHI {layer.concentration?.hhi ?? '—'} · {members.length} {plural(members.length, ['участник', 'участника', 'участников'], ['member', 'members'])}
               </span>
             </div>
             <Note>{conc.blurb}</Note>
@@ -149,9 +152,9 @@ export default function LayerReport({
         )}
 
         {/* Who is in this layer — on both planes, but worded differently */}
-        <Section title={isGate ? 'Кто стоит на этом шлюзе' : 'Кто контролирует слой'}
+        <Section title={isGate ? t('Кто стоит на этом шлюзе', 'Who stands on this gate') : t('Кто контролирует слой', 'Who controls the layer')}
           icon={<Layers size={11} />} count={members.length}>
-          {!members.length && <Note>В этом слое пока нет сущностей — движок его ещё не наполнил.</Note>}
+          {!members.length && <Note>{t('В этом слое пока нет сущностей — движок его ещё не наполнил.', 'No entities in this layer yet — the engine has not populated it.')}</Note>}
           {members.map(({ n, c }) => (
             <button key={n.id} onClick={() => onOpenEntity(n.id)}
               style={{
@@ -166,7 +169,7 @@ export default function LayerReport({
               <span style={{ flex: 1, minWidth: 0, fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {n.name}
                 {n.multiLayer && (
-                  <span title="Сущность живёт и в других слоях — на карте это одна плитка"
+                  <span title={t('Сущность живёт и в других слоях — на карте это одна плитка', 'The entity lives in other layers too — on the map it is a single tile')}
                     style={{ marginLeft: 6, fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700 }}>
                     {n.segments.filter(s => s.layer !== layer.id).map(s => s.layerLabel || s.layer).join(' · ')}
                   </span>
@@ -177,7 +180,7 @@ export default function LayerReport({
                   times over), so it separates nothing; the sector is exactly what
                   distinguishes them — «ИИ для бизнеса» vs «Отраслевой ИИ». The role
                   stays on the hover title, where it costs no width. */}
-              <span title={n.roleMeta?.label ? `Роль: ${n.roleMeta.label}` : undefined}
+              <span title={n.roleMeta?.label ? t(`Роль: ${n.roleMeta.label}`, `Role: ${n.roleMeta.label}`) : undefined}
                 style={{
                   maxWidth: 108, fontSize: 9.5, color: 'var(--cf-text6)',
                   flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
@@ -199,17 +202,18 @@ export default function LayerReport({
 
         {/* Bottleneck and second source — only meaningful for a market */}
         {!isGate && lead && (
-          <Section title="Узкое место" icon={<AlertTriangle size={11} />}>
+          <Section title={t('Узкое место', 'The bottleneck')} icon={<AlertTriangle size={11} />}>
             <div style={{ padding: '0 16px', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
-              <b style={{ color: 'var(--cf-text0)' }}>{lead.n.name}</b> — критичность {lead.c} в этом слое
+              <b style={{ color: 'var(--cf-text0)' }}>{lead.n.name}</b> — {t('критичность', 'criticality')} {lead.c} {t('в этом слое', 'in this layer')}
               {gap != null && second
-                ? `, следующий (${second.n.name}) отстаёт на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])}.`
-                : ' — единственная сущность слоя.'}
+                ? t(`, следующий (${second.n.name}) отстаёт на ${gap} ${plural(gap, ['пункт', 'пункта', 'пунктов'])}.`,
+                     `, the next one (${second.n.name}) trails by ${gap} ${gap === 1 ? 'point' : 'points'}.`)
+                : t(' — единственная сущность слоя.', ' — the only entity in the layer.')}
               {lead.n.whatBreaksIt && (
                 <div style={{ marginTop: 8, fontSize: 11.5, color: 'var(--cf-text4)' }}>
                   {/* Only the FIRST letter is lowered — `toLowerCase()` on the
                       whole sentence turned "HBM у NVIDIA" into "hbm у nvidia". */}
-                  Сломает позицию: {uncapitalise(lead.n.whatBreaksIt)}
+                  {t('Сломает позицию', 'What breaks the position')}: {uncapitalise(lead.n.whatBreaksIt)}
                 </div>
               )}
             </div>
@@ -217,32 +221,34 @@ export default function LayerReport({
         )}
 
         {!isGate && (
-          <Section title="Есть ли второй источник" icon={<GitBranch size={11} />}>
+          <Section title={t('Есть ли второй источник', 'Is there a second source')} icon={<GitBranch size={11} />}>
             {secondSource ? (
               <div style={{ padding: '0 16px', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
-                Да — <button onClick={() => onOpenEntity(secondSource.entity.id)} style={inlineBtn}>{secondSource.entity.name}</button>
-                {' '}работает с{' '}
+                {t('Да', 'Yes')} — <button onClick={() => onOpenEntity(secondSource.entity.id)} style={inlineBtn}>{secondSource.entity.name}</button>
+                {' '}{t('работает с', 'works with')}{' '}
                 {secondSource.shared.map((c, i) => (
                   <span key={c.id}>
                     {i > 0 && ', '}
                     <button onClick={() => onOpenEntity(c.id)} style={inlineBtn}>{c.name}</button>
                   </span>
                 ))}
-                {' '}— теми же контрагентами, что и лидер слоя. Переключение возможно, но по цене времени, а не мгновенно.
+                {' '}{t('— теми же контрагентами, что и лидер слоя. Переключение возможно, но по цене времени, а не мгновенно.',
+                         '— the same counterparties as the layer leader. Switching is possible, but it costs time rather than happening instantly.')}
               </div>
             ) : (
               <Note>
                 {lead
-                  ? 'Нет: ни одна другая сущность слоя не работает с теми же контрагентами. Отказ лидера останавливает всё, что выше.'
-                  : 'Слой пуст — вопрос не имеет смысла.'}
+                  ? t('Нет: ни одна другая сущность слоя не работает с теми же контрагентами. Отказ лидера останавливает всё, что выше.',
+                       'No: no other entity in the layer works with the same counterparties. If the leader fails, everything above it stops.')
+                  : t('Слой пуст — вопрос не имеет смысла.', 'The layer is empty — the question does not apply.')}
               </Note>
             )}
           </Section>
         )}
 
         {/* What changed */}
-        <Section title="Что изменилось за месяц" icon={<History size={11} />}>
-          {!changes.length && <Note>За этот прогон в слое ничего не менялось.</Note>}
+        <Section title={t('Что изменилось за месяц', 'What changed this month')} icon={<History size={11} />}>
+          {!changes.length && <Note>{t('За этот прогон в слое ничего не менялось.', 'Nothing in the layer changed in this run.')}</Note>}
           {changes.map((c, i) => (
             <div key={i} style={{ padding: '6px 16px', borderTop: '1px solid var(--cf-border-hair)' }}>
               <span style={{
@@ -260,6 +266,7 @@ export default function LayerReport({
 
 /** One gated relation: who is shut out of what, how hard, and with what risk. */
 function GateRow({ e, entityById, onOpenEntity, side }) {
+  const t = useT();
   const other = entityById.get(side === 'target' ? e.targetId : e.sourceId);
   if (!other) return null;
   return (
@@ -272,7 +279,7 @@ function GateRow({ e, entityById, onOpenEntity, side }) {
           {other.name}
         </button>
         {e.riskMeta && e.risk?.level !== 'low' && (
-          <span title={e.risk?.mitigation ? `Чем крыть: ${e.risk.mitigation}` : e.riskMeta.blurb} style={{
+          <span title={e.risk?.mitigation ? t(`Чем крыть: ${e.risk.mitigation}`, `How to cover it: ${e.risk.mitigation}`) : e.riskMeta.blurb} style={{
             display: 'inline-flex', alignItems: 'center', gap: 4,
             fontSize: 8.5, fontFamily: MONO, color: e.riskMeta.color, cursor: 'help', flexShrink: 0,
           }}>
@@ -329,7 +336,9 @@ function collectChanges(changelog, layer, entityById) {
     const n = entityById.get(id);
     return n ? n.segments.some(s => s.layer === layer.id) : false;
   };
-  const LABEL = { added: 'ПОЯВИЛОСЬ', removed: 'УБРАНО', changed: 'ИЗМЕНИЛОСЬ' };
+  const LABEL = () => (getLang() === 'en'
+  ? { added: 'ADDED', removed: 'REMOVED', changed: 'CHANGED' }
+  : { added: 'ПОЯВИЛОСЬ', removed: 'УБРАНО', changed: 'ИЗМЕНИЛОСЬ' });
   ['added', 'removed', 'changed'].forEach(kind => {
     (changelog[kind] || []).forEach(item => {
       const name = entityById.get(item.id)?.name;
@@ -340,7 +349,7 @@ function collectChanges(changelog, layer, entityById) {
         : String(item.id).split('__').slice(0, 2).some(touches);
       if (!relevant) return;
       out.push({
-        kind, kindLabel: LABEL[kind],
+        kind, kindLabel: LABEL()[kind],
         text: kind === 'changed'
           ? `${name || item.id}: ${item.field} ${item.from} → ${item.to}`
           : `${name || item.id} — ${item.why || ''}`,

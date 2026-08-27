@@ -1,4 +1,5 @@
-// ══════════════════════════════════════════════════════════════════════════
+
+import { bi } from '../../../data/capitalMap.js';// ══════════════════════════════════════════════════════════════════════════
 // "Цепочка" — the map's main interaction, as pure data.
 //
 // Clicking a company does NOT light a halo around it. It lights its ROUTE
@@ -22,26 +23,38 @@
 // ══════════════════════════════════════════════════════════════════════════
 
 export const CHAIN_KINDS = {
-  all:     { label: 'Все связи',           short: 'ВСЁ',      spines: null,
-             blurb: 'Ходить по всему сразу — физика, деньги, замки, шлюзы и соперники.' },
-  supply:  { label: 'Что физически движется', short: 'ФИЗИКА', spines: ['physical'],
-             blurb: 'Материалы, станки, чипы, память, ток, стойки — путь вещи по стеку.' },
-  control: { label: 'Кто владеет и шлюзует', short: 'КОНТРОЛЬ', spines: ['capital', 'control'],
-             blurb: 'Деньги, доли, контракты — и правила, которые решают, что вообще можно продать.' },
-  moat:    { label: 'Что запирает и откусывает', short: 'БАРЬЕР', spines: ['moat', 'rivalry'],
-             blurb: 'Замки, доказательства спроса и те, кто готовит замену.' },
+  all: bi({
+    label: ['Все связи', 'All links'], short: ['ВСЁ', 'ALL'],
+    blurb: ['Ходить по всему сразу — физика, деньги, замки, шлюзы и соперники.',
+            'Walk everything at once — physics, money, moats, gates and rivals.'],
+  }, { spines: null }),
+  supply: bi({
+    label: ['Что физически движется', 'What physically moves'], short: ['ФИЗИКА', 'PHYSICAL'],
+    blurb: ['Материалы, станки, чипы, память, ток, стойки — путь вещи по стеку.',
+            'Materials, tools, chips, memory, power, racks — a thing\'s path up the stack.'],
+  }, { spines: ['physical'] }),
+  control: bi({
+    label: ['Кто владеет и шлюзует', 'Who owns and gates'], short: ['КОНТРОЛЬ', 'CONTROL'],
+    blurb: ['Деньги, доли, контракты — и правила, которые решают, что вообще можно продать.',
+            'Money, stakes, contracts — and the rules that decide what may be sold at all.'],
+  }, { spines: ['capital', 'control'] }),
+  moat: bi({
+    label: ['Что запирает и откусывает', 'What locks in and bites'], short: ['БАРЬЕР', 'MOAT'],
+    blurb: ['Замки, доказательства спроса и те, кто готовит замену.',
+            'Locks, proof of demand, and whoever is preparing the replacement.'],
+  }, { spines: ['moat', 'rivalry'] }),
 };
 
 export const CHAIN_DIRECTIONS = {
-  both: { label: 'В обе стороны', short: 'ОБЕ' },
-  up:   { label: 'От кого зависит', short: 'ВВЕРХ' },
-  down: { label: 'Кто зависит',     short: 'ВНИЗ' },
+  both: bi({ label: ['В обе стороны', 'Both ways'], short: ['ОБЕ', 'BOTH'] }),
+  up:   bi({ label: ['От кого зависит', 'What it depends on'], short: ['ВВЕРХ', 'UP'] }),
+  down: bi({ label: ['Кто зависит', 'What depends on it'], short: ['ВНИЗ', 'DOWN'] }),
 };
 
 export const CHAIN_DEPTHS = [
-  { value: 1,        label: '1 шаг' },
-  { value: 2,        label: '2 шага' },
-  { value: Infinity, label: 'Вся цепочка' },
+  bi({ label: ['1 шаг', '1 step'] },      { value: 1 }),
+  bi({ label: ['2 шага', '2 steps'] },    { value: 2 }),
+  bi({ label: ['Вся цепочка', 'Whole chain'] }, { value: Infinity }),
 ];
 
 export const DEFAULT_BRANCH = 5;

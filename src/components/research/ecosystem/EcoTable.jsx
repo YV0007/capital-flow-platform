@@ -18,25 +18,26 @@
 import { useState, useMemo } from 'react';
 import { ChevronDown, ChevronUp, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { criticalityBand, CRITICALITY_FACTORS } from '../../../data/aiEcosystemNetwork.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
 const COLUMNS = [
-  { key: 'name',        label: 'Сущность',  w: '1.3fr', align: 'left'  },
-  { key: 'role',        label: 'Роль',      w: '76px',  align: 'left'  },
-  { key: 'sector',      label: 'Функция',   w: '1fr',   align: 'left'  },
-  { key: 'layers',      label: 'Слои',      w: '86px',  align: 'left'  },
-  { key: 'criticality', label: 'Критичн.',  w: '86px',  align: 'right', num: true },
+  { key: 'name',        label: t('Сущность', 'Entity'),  w: '1.3fr', align: 'left'  },
+  { key: 'role',        label: t('Роль', 'Role'),      w: '76px',  align: 'left'  },
+  { key: 'sector',      label: t('Функция', 'Function'),   w: '1fr',   align: 'left'  },
+  { key: 'layers',      label: t('Слои', 'Layers'),      w: '86px',  align: 'left'  },
+  { key: 'criticality', label: t('Критичн.', 'Critical.'),  w: '86px',  align: 'right', num: true },
   // The rubric, opened up. Short headers on purpose — the full question is in
   // the column's tooltip, taken from CRITICALITY_FACTORS.
-  { key: 'irreplaceability', label: 'Незам.',  w: '52px', align: 'right', num: true, factor: 'irreplaceability' },
-  { key: 'lockInDepth',      label: 'Замок',   w: '52px', align: 'right', num: true, factor: 'lockInDepth' },
-  { key: 'timeToReplace',    label: 'Срок',    w: '52px', align: 'right', num: true, factor: 'timeToReplace' },
-  { key: 'strategicControl', label: 'Рычаг',   w: '52px', align: 'right', num: true, factor: 'strategicControl' },
-  { key: 'gravity',     label: 'Гравит.',   w: '62px',  align: 'right', num: true },
-  { key: 'phase',       label: 'Фаза',      w: '78px',  align: 'left'  },
-  { key: 'risk',        label: 'Риск',      w: '74px',  align: 'left'  },
-  { key: 'links',       label: 'Связей',    w: '82px',  align: 'right', num: true },
+  { key: 'irreplaceability', label: t('Незам.', 'Irrepl.'),  w: '52px', align: 'right', num: true, factor: 'irreplaceability' },
+  { key: 'lockInDepth',      label: t('Замок', 'Lock'),   w: '52px', align: 'right', num: true, factor: 'lockInDepth' },
+  { key: 'timeToReplace',    label: t('Срок', 'Time'),    w: '52px', align: 'right', num: true, factor: 'timeToReplace' },
+  { key: 'strategicControl', label: t('Рычаг', 'Leverage'),   w: '52px', align: 'right', num: true, factor: 'strategicControl' },
+  { key: 'gravity',     label: t('Гравит.', 'Gravity'),   w: '62px',  align: 'right', num: true },
+  { key: 'phase',       label: t('Фаза', 'Phase'),      w: '78px',  align: 'left'  },
+  { key: 'risk',        label: t('Риск', 'Risk'),      w: '74px',  align: 'left'  },
+  { key: 'links',       label: t('Связей', 'Links'),    w: '82px',  align: 'right', num: true },
 ];
 const GRID = COLUMNS.map(c => c.w).join(' ');
 const FACTOR_BY_KEY = Object.fromEntries(CRITICALITY_FACTORS.map(f => [f.key, f]));
@@ -66,6 +67,7 @@ const valueOf = (n, key) => {
 export default function EcoTable({
   entities, layers, layerById, query, visibleEntities, onOpenEntity, topInset = 0,
 }) {
+  const t = useT();
   const [sort, setSort] = useState({ key: 'criticality', dir: -1 });
   const [grouped, setGrouped] = useState(true);
   const [onlyVisible, setOnlyVisible] = useState(false);
@@ -128,16 +130,16 @@ export default function EcoTable({
           fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
         }}>
-          {rows.length} {plural(rows.length, ['сущность', 'сущности', 'сущностей'])}
+          {rows.length} {plural(rows.length, ['сущность', 'сущности', 'сущностей'], ['entity', 'entities'])}
         </span>
         <div style={{ flex: 1 }} />
         <Toggle on={grouped} onClick={() => setGrouped(g => !g)}
-          title="Сгруппировать по слоям стека или показать одним ранжированным списком">
-          {grouped ? 'По слоям' : 'Единый список'}
+          title={t('Сгруппировать по слоям стека или показать одним ранжированным списком', 'Group by stack layer, or show one ranked list')}>
+          {grouped ? t('По слоям', 'By layer') : t('Единый список', 'One list')}
         </Toggle>
         <Toggle on={onlyVisible} onClick={() => setOnlyVisible(v => !v)}
-          title="Показывать только то, что сейчас не скрыто фильтрами карты">
-          Как на карте
+          title={t('Показывать только то, что сейчас не скрыто фильтрами карты', 'Show only what the map filters are not currently hiding')}>
+          {t('Как на карте', 'As on the map')}
         </Toggle>
       </div>
 
@@ -152,7 +154,7 @@ export default function EcoTable({
           const f = c.factor ? FACTOR_BY_KEY[c.factor] : null;
           return (
             <button key={c.key} onClick={() => toggleSort(c.key)}
-              title={f ? `${f.label} · ${f.question} · вес ${Math.round(f.weight * 100)}%` : undefined}
+              title={f ? t(`${f.label} · ${f.question} · вес ${Math.round(f.weight * 100)}%`, `${f.label} · ${f.question} · weight ${Math.round(f.weight * 100)}%`) : undefined}
               style={{
                 display: 'flex', alignItems: 'center', gap: 3,
                 justifyContent: c.align === 'right' ? 'flex-end' : 'flex-start',
@@ -173,7 +175,7 @@ export default function EcoTable({
       <div style={{ flex: 1, overflowY: 'auto', padding: '0 0 60px' }}>
         {!rows.length && (
           <div style={{ padding: '40px 18px', textAlign: 'center', fontSize: 12, color: 'var(--cf-text5)', fontFamily: MONO }}>
-            Ничего не найдено.
+            {t('Ничего не найдено.', 'Nothing found.')}
           </div>
         )}
         {groups.map(g => (
@@ -214,6 +216,7 @@ export default function EcoTable({
 }
 
 function Row({ n, layerById, onOpen }) {
+  const t = useT();
   const cb = criticalityBand(n.criticality);
   return (
     <button onClick={() => onOpen(n.id)}
@@ -235,13 +238,13 @@ function Row({ n, layerById, onOpen }) {
             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
           }}>{n.name}</span>
           {n.isAnchor && (
-            <span title="Якорь экосистемы" style={{
+            <span title={t('Якорь экосистемы', 'The ecosystem anchor')} style={{
               fontSize: 8, color: 'var(--cf-accent)', fontFamily: MONO, fontWeight: 700, flexShrink: 0,
-            }}>ЯКОРЬ</span>
+            }}>{t('ЯКОРЬ', 'ANCHOR')}</span>
           )}
           {n.faded && (
-            <span title={`Данные не подтверждались с ${n.lastConfirmed || '—'}`}
-              style={{ fontSize: 8, color: 'var(--cf-muted)', fontFamily: MONO, flexShrink: 0 }}>устар.</span>
+            <span title={t(`Данные не подтверждались с ${n.lastConfirmed || '—'}`, `Not re-confirmed since ${n.lastConfirmed || '—'}`)}
+              style={{ fontSize: 8, color: 'var(--cf-muted)', fontFamily: MONO, flexShrink: 0 }}>{t('устар.', 'stale')}</span>
           )}
         </span>
       </Cell>
@@ -306,10 +309,10 @@ function Row({ n, layerById, onOpen }) {
 
       <Cell mono dim align="right">
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end' }}>
-          <span title={`Зависит от ${n.upCount}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+          <span title={t(`Зависит от ${n.upCount}`, `Depends on ${n.upCount}`)} style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
             <ArrowDownLeft size={9} />{n.upCount}
           </span>
-          <span title={`Кормит ${n.downCount}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+          <span title={t(`Кормит ${n.downCount}`, `Feeds ${n.downCount}`)} style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
             <ArrowUpRight size={9} />{n.downCount}
           </span>
         </span>
@@ -319,12 +322,14 @@ function Row({ n, layerById, onOpen }) {
 }
 
 function FactorCell({ n, k }) {
+  const t = useT();
   const v = n.criticalityFactors?.[k];
   const f = FACTOR_BY_KEY[k];
   return (
     <Cell mono align="right">
       {v == null ? '' : (
-        <span title={`${f.label}: ${v} из 100 · вес ${Math.round(f.weight * 100)}%${n.criticalityWhy?.[k] ? `\n${n.criticalityWhy[k]}` : ''}`}
+        <span title={t(`${f.label}: ${v} из 100 · вес ${Math.round(f.weight * 100)}%${n.criticalityWhy?.[k] ? `\n${n.criticalityWhy[k]}` : ''}`,
+                          `${f.label}: ${v} out of 100 · weight ${Math.round(f.weight * 100)}%${n.criticalityWhy?.[k] ? `\n${n.criticalityWhy[k]}` : ''}`)}
           style={{ cursor: 'help', color: v >= 85 ? 'var(--cf-text2)' : 'var(--cf-text6)' }}>
           {v}
         </span>

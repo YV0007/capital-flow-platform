@@ -79,7 +79,7 @@ export default function ChainCrumbs({ crumbs, rootId, counts, onOpenEntity, onCl
         fontSize: 9.5, color: 'var(--cf-text6)', lineHeight: 1.45, marginBottom: 9,
       }}>
         {t(
-          'Слева — от кого зависит, справа — кто зависит от него. Ярче выделены ключевые узлы — с них и читайте.',
+          t('Слева — от кого зависит, справа — кто зависит от него. Ярче выделены ключевые узлы — с них и читайте.', 'Left is what it depends on, right is what depends on it. The key nodes are brighter — start there.'),
           'Left — what it depends on; right — what depends on it. The brighter tiles are the key nodes — read from those.',
         )}
       </div>
