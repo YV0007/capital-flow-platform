@@ -19,12 +19,14 @@ import {
 } from '../../../data/capitalMap.js';
 import { subsectorLabel } from './subsectors.js';
 import { humanizeSourceUrl } from './format.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 const W = 560;
 const TOP_N = 20;
 
 export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onClose, topInset = 0 }) {
+  const t = useT();
   const [showAll, setShowAll] = useState(false);
   if (!node) return null;
   const cls = CLASS_META[node.cls];
@@ -65,7 +67,7 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
       {/* Header */}
       <div style={{ padding: '14px 16px 12px', borderBottom: '1px solid var(--cf-border-soft)', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <button onClick={onBack} title="Назад к панели объекта"
+          <button onClick={onBack} title={t('Назад к панели объекта', 'Back to the entity panel')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 3, padding: '5px 9px 5px 5px',
               background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)', borderRadius: 7,
@@ -73,7 +75,7 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text0)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text3)')}>
-            <ChevronLeft size={12} /> Назад
+            <ChevronLeft size={12} /> {t('Назад', 'Back')}
           </button>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, minWidth: 0 }}>
@@ -81,16 +83,16 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
                 {node.name}
               </span>
               <span style={{ fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
-                ПОРТФЕЛЬ ФОНДА
+                {t('ПОРТФЕЛЬ ФОНДА', 'FUND PORTFOLIO')}
               </span>
             </div>
             <div style={{ fontSize: 9.5, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 2 }}>
               {cls?.label || node.cls}
               {node.sector ? <> · {sectorLabel(node.sector)}</> : null}
-              {asOf ? <> · собрано {asOf}</> : null}
+              {asOf ? <> · {t('собрано', 'compiled')} {asOf}</> : null}
             </div>
           </div>
-          <button onClick={onClose} title="Закрыть"
+          <button onClick={onClose} title={t('Закрыть', 'Close')}
             style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -112,7 +114,7 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
             }}
             onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cf-link-hover)')}
             onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border)')}>
-            <Briefcase size={12} /> Страница портфеля фонда <ExternalLink size={11} style={{ opacity: 0.6 }} />
+            <Briefcase size={12} /> {t('Страница портфеля фонда', 'The fund\'s portfolio page')} <ExternalLink size={11} style={{ opacity: 0.6 }} />
           </a>
         )}
         {holdings.length === 0 ? (
@@ -120,9 +122,9 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
         ) : (
           <>
             <div style={{ fontSize: 10.5, color: 'var(--cf-text4)', fontFamily: MONO, marginBottom: 14 }}>
-              {showAll ? `Все ${holdings.length}` : `Топ ${Math.min(TOP_N, holdings.length)}`} из {total}
-              {' '}{plural(total, ['компании портфеля', 'компаний портфеля', 'компаний портфеля'])}
-              {total > holdings.length ? ` · движок прислал ${holdings.length}` : ''}
+              {showAll ? t(`Все ${holdings.length}`, `All ${holdings.length}`) : t(`Топ ${Math.min(TOP_N, holdings.length)}`, `Top ${Math.min(TOP_N, holdings.length)}`)} {t('из', 'of')} {total}
+              {' '}{t('компаний портфеля', 'portfolio companies')}
+              {total > holdings.length ? t(` · движок прислал ${holdings.length}`, ` · the engine shipped ${holdings.length}`) : ''}
             </div>
 
             {groups.map((g) => {
@@ -135,7 +137,7 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
                       fontSize: 9, color: 'var(--cf-text5)', fontFamily: MONO, fontWeight: 700,
                       textTransform: 'uppercase', letterSpacing: '0.1em',
                     }}>
-                      {g.key === '_none' ? 'Без сектора' : sectorLabel(g.key)}
+                      {g.key === '_none' ? t('Без сектора', 'No sector') : sectorLabel(g.key)}
                     </span>
                     <span style={{ flex: 1, height: 1, background: 'var(--cf-border-soft)' }} />
                     <span style={{ fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO }}>{g.list.length}</span>
@@ -156,13 +158,15 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
                   borderRadius: 9, color: 'var(--cf-accent)', fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer',
                 }}>
-                Показать все {holdings.length}
+                {t('Показать все', 'Show all')} {holdings.length}
               </button>
             )}
 
             <div style={{ marginTop: 14, fontSize: 9, color: 'var(--cf-text8)', fontFamily: MONO, lineHeight: 1.6 }}>
-              Портфель собран движком из публичных источников (заявки Form D/ADV, 13F, релизы, сайт фонда) и показан как есть.
-              Ссылка на каждой строке ведёт к источнику. Ничего не додумано на стороне дашборда.
+              {t(`Портфель собран движком из публичных источников (заявки Form D/ADV, 13F, релизы, сайт фонда) и показан как есть.
+              Ссылка на каждой строке ведёт к источнику. Ничего не додумано на стороне дашборда.`,
+                 `The portfolio is compiled by the engine from public sources (Form D/ADV filings, 13F, releases, the fund's own site) and rendered as-is.
+              Every row links to its source. Nothing is inferred on the dashboard side.`)}
             </div>
           </>
         )}
@@ -174,13 +178,14 @@ export default function FundHoldings({ node, nodeById, onOpenEntity, onBack, onC
 // One portfolio company: name (clickable if it's on the map), a sector/sub-sector
 // tag, a one-line note, and the source link. All engine-supplied.
 function HoldingRow({ h, openId, onOpenEntity }) {
+  const t = useT();
   const sec = h.sector ? SECTOR_META[h.sector] : null;
   const sub = h.subsector ? subsectorLabel(h.subsector) : null;
   const clickable = !!openId;
   return (
     <div
       onClick={() => clickable && onOpenEntity(openId)}
-      title={clickable ? `Открыть ${h.name}` : ''}
+      title={clickable ? t(`Открыть ${h.name}`, `Open ${h.name}`) : ''}
       style={{
         padding: '8px 10px', borderRadius: 8,
         background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)',
@@ -221,16 +226,19 @@ function plural(n, [one, few, many]) {
 }
 
 function NoData() {
+  const t = useT();
   return (
     <div style={{
       padding: '14px 16px', background: 'var(--cf-surface1)', border: '1px dashed var(--cf-border)', borderRadius: 10,
       fontSize: 12, color: 'var(--cf-text5)', fontFamily: MONO, lineHeight: 1.6,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 6, color: 'var(--cf-text4)' }}>
-        <Briefcase size={13} /> Портфель ещё не собран
+        <Briefcase size={13} /> {t('Портфель ещё не собран', 'Portfolio not compiled yet')}
       </div>
-      Движок пока не прислал список компаний этого фонда. Это пробел покрытия на стороне движка —
-      мы не заполняем его вручную. Появится в данных — отобразится здесь автоматически.
+      {t(`Движок пока не прислал список компаний этого фонда. Это пробел покрытия на стороне движка —
+      мы не заполняем его вручную. Появится в данных — отобразится здесь автоматически.`,
+         `The engine has not shipped this fund's company list yet. That is a coverage gap on the engine side —
+      not one we fill by hand. When it lands in the data it appears here automatically.`)}
     </div>
   );
 }

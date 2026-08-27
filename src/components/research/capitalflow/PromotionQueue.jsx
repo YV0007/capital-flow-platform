@@ -18,6 +18,8 @@
 
 import { useMemo, useState } from 'react';
 import { X, Download, Copy, Check, Users } from 'lucide-react';
+import { useT } from '../../../lib/i18n.jsx';
+import { biMap } from '../../../data/capitalMap.js';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -42,13 +44,21 @@ export function currentWeekKey() { return isoWeekKey(); }
 // Math.random, or the list would reshuffle on every render / Yes-No click.
 function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-function seededShuffle(list, seed) { const r = mulberry32(seed); const a = [...list]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function seededShuffle(list, seed) {
+  const r = mulberry32(seed); const a = [...list]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
-const CLASS_RU = {
-  corporate: 'Корпорация', vc: 'Венчурный фонд', alt_manager: 'Управляющий активами',
-  sovereign: 'Суверенный фонд', individual: 'Частное лицо', fund: 'Фонд',
-  private: 'Частная компания', public: 'Публичная компания',
-};
+// A module-level table: it is evaluated once, at import time, with no React
+// context around it — so it uses the getter-based `biMap`, never the hook.
+const CLASS_RU = biMap({
+  corporate:   ['Корпорация', 'Corporate'],
+  vc:          ['Венчурный фонд', 'Venture fund'],
+  alt_manager: ['Управляющий активами', 'Asset manager'],
+  sovereign:   ['Суверенный фонд', 'Sovereign fund'],
+  individual:  ['Частное лицо', 'Individual'],
+  fund:        ['Фонд', 'Fund'],
+  private:     ['Частная компания', 'Private company'],
+  public:      ['Публичная компания', 'Public company'],
+});
 const classLabel = (c) => CLASS_RU[c] || c || '—';
 
 // Should the pop-up auto-open? At most once per ISO week (the weekly flow-review
@@ -74,6 +84,7 @@ function Pill({ children, color = 'var(--cf-text6)' }) {
 }
 
 function YesNo({ value, onChange }) {
+  const t = useT();
   const btn = (val, label, on, offColor, onColor) => (
     <button
       onClick={() => onChange(value === val ? undefined : val)}
@@ -91,8 +102,8 @@ function YesNo({ value, onChange }) {
   );
   return (
     <div style={{ display: 'inline-flex', flexShrink: 0 }}>
-      {btn('yes', 'Да', value === 'yes', null, '#34D399')}
-      {btn('no', 'Нет', value === 'no', null, '#F87171')}
+      {btn('yes', t('Да', 'Yes'), value === 'yes', null, '#34D399')}
+      {btn('no', t('Нет', 'No'), value === 'no', null, '#F87171')}
     </div>
   );
 }
@@ -105,6 +116,7 @@ function YesNo({ value, onChange }) {
 const MAX_SHOWN = 12;
 
 export default function PromotionQueue({ queue, onClose }) {
+  const t = useT();
   const [picks, setPicks] = useState({});     // candidate_id → 'yes' | 'no'
   const [copied, setCopied] = useState(false);
 
@@ -195,20 +207,20 @@ export default function PromotionQueue({ queue, onClose }) {
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
             <div style={{ minWidth: 0, flex: 1 }}>
               <div style={{ fontSize: 8.5, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.14em', color: 'var(--cf-accent, #8E9BE6)', textTransform: 'uppercase' }}>
-                Понедельник · кандидаты на добавление
+                {t('Понедельник · кандидаты на добавление', 'Monday · candidates for promotion')}
               </div>
               <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--cf-text0)', marginTop: 4, letterSpacing: '-0.01em' }}>
-                {ranked.length} {plural(ranked.length, ['со-инвестор', 'со-инвестора', 'со-инвесторов'])} на ревью
+                {ranked.length} {plural(ranked.length, ['со-инвестор', 'со-инвестора', 'со-инвесторов'], ['co-investor', 'co-investors'])} {t('на ревью', 'to review')}
               </div>
             </div>
-            <button onClick={later} title="Позже" style={iconBtn}><X size={16} /></button>
+            <button onClick={later} title={t('Позже', 'Later')} style={iconBtn}><X size={16} /></button>
           </div>
           <div style={{ fontSize: 11, color: 'var(--cf-text5)', lineHeight: 1.5, marginTop: 8 }}>
-            Движок нашёл этих со-инвесторов, но никогда не добавляет их сам — решаете вы.
-            Отметьте «Да / Нет», затем экспортируйте <code style={{ fontFamily: MONO, color: 'var(--cf-text3)' }}>decisions.json</code> для понедельничного прогона движка.
+            {t('Движок нашёл этих со-инвесторов, но никогда не добавляет их сам — решаете вы.', 'The engine found these co-investors but never promotes them itself — that call is yours.')}
+            {t('Отметьте «Да / Нет», затем экспортируйте', 'Mark Yes / No, then export')} <code style={{ fontFamily: MONO, color: 'var(--cf-text3)' }}>decisions.json</code> {t('для понедельничного прогона движка.', "for the engine's Monday run.")}
             {hiddenCount > 0 && (
-              <> Показаны самые заметные — по числу совместных сделок с уже отслеживаемыми игроками;
-              ещё {hiddenCount} вернутся на следующей неделе.</>
+              <>{t(` Показаны самые заметные — по числу совместных сделок с уже отслеживаемыми игроками; ещё ${hiddenCount} вернутся на следующей неделе.`,
+                    ` Showing the most visible ones — by count of shared deals with already-tracked players; another ${hiddenCount} return next week.`)}</>
             )}
           </div>
         </div>
@@ -225,7 +237,7 @@ export default function PromotionQueue({ queue, onClose }) {
                   <span style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--cf-text0)' }}>{item.name}</span>
                   <Pill color="var(--cf-text4)">{classLabel(item.suggested_class)}</Pill>
                   {Array.isArray(item.seen_with) && item.seen_with.length > 1 && (
-                    <Pill color="#8E9BE6"><Users size={9} /> {item.seen_with.length} совместных</Pill>
+                    <Pill color="#8E9BE6"><Users size={9} /> {item.seen_with.length} {t('совместных', 'shared')}</Pill>
                   )}
                 </div>
                 {item.description && (
@@ -253,15 +265,15 @@ export default function PromotionQueue({ queue, onClose }) {
           background: 'var(--cf-surface1)',
         }}>
           <div style={{ fontSize: 10.5, fontFamily: MONO, color: 'var(--cf-text6)', flex: 1 }}>
-            <span style={{ color: '#34D399', fontWeight: 700 }}>{promoteN}</span> добавить ·{' '}
-            <span style={{ color: '#F87171', fontWeight: 700 }}>{dismissN}</span> отклонить
+            <span style={{ color: '#34D399', fontWeight: 700 }}>{promoteN}</span> {t('добавить', 'to add')} ·{' '}
+            <span style={{ color: '#F87171', fontWeight: 700 }}>{dismissN}</span> {t('отклонить', 'to dismiss')}
           </div>
-          <button onClick={later} style={ghostBtn}>Позже</button>
+          <button onClick={later} style={ghostBtn}>{t('Позже', 'Later')}</button>
           <button onClick={copy} disabled={!decided} style={{ ...ghostBtn, opacity: decided ? 1 : 0.45, cursor: decided ? 'pointer' : 'default' }}>
-            {copied ? <Check size={12} /> : <Copy size={12} />} {copied ? 'Скопировано' : 'Копировать'}
+            {copied ? <Check size={12} /> : <Copy size={12} />} {copied ? t('Скопировано', 'Copied') : t('Копировать', 'Copy')}
           </button>
           <button onClick={download} disabled={!decided} style={{ ...primaryBtn, opacity: decided ? 1 : 0.45, cursor: decided ? 'pointer' : 'default' }}>
-            <Download size={12} /> Скачать decisions.json
+            <Download size={12} /> {t('Скачать', 'Download')} decisions.json
           </button>
         </div>
       </div>

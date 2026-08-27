@@ -17,6 +17,7 @@ import {
   EVENT_TYPE_META, STATUS_META, SOURCE_TIER_LABEL, SECTOR_META,
   GRADE_LETTER, GRADE_DIGIT, confidenceBand, composeRead, META,
 } from '../../../data/capitalMap.js';
+import { useT, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -31,6 +32,7 @@ function ageDays(date, generated) {
 }
 
 export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, onOpenEntity, rightInset = 0 }) {
+  const t = useT();
   const [readOpen, setReadOpen] = useState(false);
   if (!flow) return null;
 
@@ -48,7 +50,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
   // forward-compat. We never synthesise one — an unsourced flow says so.
   const links = Array.isArray(flow.sources) ? flow.sources.filter(s => s && s.url).map(s => ({ ...s, url: humanizeSourceUrl(s.url) }))
     : flow.source_url ? [{ url: humanizeSourceUrl(flow.source_url), label: hostLabel(humanizeSourceUrl(flow.source_url)) }]
-    : flow.url ? [{ url: humanizeSourceUrl(flow.url), label: 'Источник' }] : [];
+    : flow.url ? [{ url: humanizeSourceUrl(flow.url), label: t('Источник', 'Source') }] : [];
 
   // The grade decoded into plain English, joined with the status — one line
   // that carries what used to be two boxes.
@@ -80,7 +82,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           fontSize: 22, fontWeight: 700, color: flow.disclosed ? 'var(--cf-text0)' : 'var(--cf-text5)',
           letterSpacing: '-0.02em', fontFamily: MONO, flexShrink: 0, lineHeight: 1,
         }}>
-          {flow.disclosed ? fmtUSD(flow.amount) : 'Не раскрыто'}
+          {flow.disclosed ? fmtUSD(flow.amount) : t('Не раскрыто', 'Undisclosed')}
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0, flex: 1 }}>
@@ -89,7 +91,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           <EntityChip node={targetNode} fallback={tgt} onClick={onOpenEntity} />
         </div>
 
-        <button onClick={onClose} title="Закрыть"
+        <button onClick={onClose} title={t('Закрыть', 'Close')}
           style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 3, lineHeight: 0, flexShrink: 0 }}
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text7)')}>
@@ -105,8 +107,8 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
         <Tag color={flow.color}>{et.label}</Tag>
         {sec && <Tag color={sec.color}>{sec.label}</Tag>}
         <Tag color="#8b95a8"
-          title={age != null ? `За ${age} дн до даты выгрузки (${META.generated})` : undefined}>
-          {flow.date}{age != null ? ` · ${age} дн` : ''}
+          title={age != null ? t(`За ${age} дн до даты выгрузки (${META.generated})`, `${age} days before the delivery date (${META.generated})`) : undefined}>
+          {flow.date}{age != null ? ` · ${age}${t(' дн', 'd')}` : ''}
         </Tag>
       </div>
 
@@ -119,7 +121,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
                 fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
                 textTransform: 'uppercase', letterSpacing: '0.12em', flexShrink: 0,
               }}>
-                Надёжность
+                {t('Надёжность', 'Confidence')}
               </span>
               <span style={{ flex: 1, height: 4, borderRadius: 3, background: 'var(--cf-border-soft)', overflow: 'hidden', minWidth: 40 }}>
                 <span style={{ display: 'block', height: '100%', width: `${flow.confidence}%`, background: band.color, borderRadius: 3 }} />
@@ -143,14 +145,14 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           </>
         ) : (
           <div style={{ fontSize: 11, color: 'var(--cf-text6)', fontFamily: MONO, fontStyle: 'italic' }}>
-            Движок не оценил надёжность — считайте вес нулевым.
+            {t('Движок не оценил надёжность — считайте вес нулевым.', 'The engine did not score confidence — treat the weight as zero.')}
           </div>
         )}
 
         {/* Where it came from + the link, when the payload carries one. */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 9 }}>
           <span style={{ fontSize: 10.5, color: 'var(--cf-text5)', fontFamily: MONO }}>
-            {SOURCE_TIER_LABEL[flow.sourceTier] || `Уровень источника ${flow.sourceTier}`}
+            {SOURCE_TIER_LABEL[flow.sourceTier] || t(`Уровень источника ${flow.sourceTier}`, `Source tier ${flow.sourceTier}`)}
           </span>
           <span style={{ flex: 1 }} />
           {links.length > 0
@@ -165,13 +167,13 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cf-link-hover)')}
                   onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--cf-border)')}>
-                  {l.label || 'Источник'} <ExternalLink size={9} style={{ opacity: 0.6 }} />
+                  {l.label || t('Источник', 'Source')} <ExternalLink size={9} style={{ opacity: 0.6 }} />
                 </a>
               ))
             : (
-              <span title="Движок оценивает источники каждого потока, но пока не присылает ссылки. Показано как пропуск, а не угадано."
+              <span title={t('Движок оценивает источники каждого потока, но пока не присылает ссылки. Показано как пропуск, а не угадано.', 'The engine scores each flow\'s sources but does not ship links yet. Shown as a gap rather than guessed.')}
                 style={{ fontSize: 10, color: 'var(--cf-text8)', fontFamily: MONO, cursor: 'help' }}>
-                в данных нет ссылки на источник
+                {t('в данных нет ссылки на источник', 'no source link in the data')}
               </span>
             )}
         </div>
@@ -180,7 +182,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
       {/* ── Our read — commentary, so it stays folded by default ───────── */}
       <div style={{ borderTop: '1px solid var(--cf-border-soft)' }}>
         <button onClick={() => setReadOpen(o => !o)}
-          title={readOpen ? 'Скрыть комментарий' : 'Наш разбор — почему двинулся этот капитал'}
+          title={readOpen ? t('Скрыть комментарий', 'Hide the commentary') : t('Наш разбор — почему двинулся этот капитал', 'Our read — why this capital moved')}
           style={{
             display: 'flex', alignItems: 'center', gap: 7, width: '100%',
             padding: '9px 14px', background: 'transparent', border: 'none',
@@ -193,7 +195,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = readOpen ? 'var(--cf-text2)' : 'var(--cf-text4)')}>
           {readOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-          Комментарий
+          {t('Комментарий', 'Commentary')}
           {note?.angle && !readOpen && (
             <span style={{
               color: flow.color, fontWeight: 600, textTransform: 'none', letterSpacing: 0,
@@ -228,7 +230,7 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
                 display: 'flex', alignItems: 'center', gap: 5, marginTop: 9,
                 fontSize: 8.5, color: 'var(--cf-text8)', fontFamily: MONO, letterSpacing: '0.06em', textTransform: 'uppercase',
               }}>
-                <Quote size={9} /> Наша трактовка · не данные движка и не цитата
+                <Quote size={9} /> {t('Наша трактовка · не данные движка и не цитата', 'Our reading · not engine data, not a quote')}
               </div>
             </div>
           </div>
@@ -240,16 +242,19 @@ export default function FlowDetailCard({ flow, sourceNode, targetNode, onClose, 
 
 // Bare host as the link label ("aligneddc.com") — the publication/domain reads
 // better than a generic "Источник" and hints at the source's tier at a glance.
+// A plain helper, not a component — reads the module mirror instead of a hook.
 function hostLabel(url) {
-  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'Источник'; }
+  try { return new URL(url).hostname.replace(/^www\./, ''); }
+  catch { return getLang() === 'en' ? 'Source' : 'Источник'; }
 }
 
 function EntityChip({ node, fallback, onClick }) {
+  const t = useT();
   const name = node?.name || fallback;
   if (!name) return null;
   const color = node?.color || 'var(--cf-text5)';
   return (
-    <button onClick={() => node && onClick(node.id)} title={node ? `Открыть ${node.name}` : ''}
+    <button onClick={() => node && onClick(node.id)} title={node ? t(`Открыть ${node.name}`, `Open ${node.name}`) : ''}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
         padding: '4px 9px', background: 'var(--cf-surface2)',
