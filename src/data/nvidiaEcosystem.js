@@ -272,7 +272,7 @@ export const EDGE_TYPE_META = {
     label: ['доказывает окупаемость', 'proves the returns'],
     verb:  ['доказывает окупаемость', 'proves the returns on'],
     up:    ['доказывает окупаемость', 'proves the returns'],
-    down:  ['выигрывает от окупаемости', 'benefits from proven returns'],
+    down:  ['на нём зарабатывают', 'customers earn on it'],
     blurb: ['Показывает, что на этом зарабатывает не только продавец.',
             'Shows that someone other than the seller is making money on it.'],
   }, { spine: 'moat', color: '#4FC49A', order: 21 }),
@@ -410,9 +410,14 @@ export const SPINE_META = {
     blurb: ['Кто платит и кто владеет: доли, долг, контракты, места в советах.',
             'Who pays and who owns: stakes, debt, contracts, board seats.'],
   }, { color: '#E0A340', order: 1 }),
+  // «Ров» was a literal translation of "moat" — nobody says it in Russian
+  // business prose, and it stopped the sentence dead for anyone who had not
+  // read the English. «Барьер» is the plain word for the same idea, and it
+  // matches the lexicon that rewrites the engine's own prose
+  // (aiEcosystemNetwork.js § RU_PLAIN), so the map speaks one vocabulary.
   moat: bi({
-    label: ['Ров', 'Moat'],
-    short: ['РОВ', 'MOAT'],
+    label: ['Барьер', 'Moat'],
+    short: ['БАРЬЕР', 'MOAT'],
     blurb: ['Что запирает и что доказывает спрос: код, привычка, окупаемость.',
             'What locks in and what proves demand: code, habit, returns.'],
   }, { color: '#3FB984', order: 2 }),
@@ -669,12 +674,32 @@ export const CONCENTRATION_META = {
 };
 
 // ── Entity types — what kind of thing this is at all ─────────────────────
+// `shape` decides the silhouette on the canvas, and it answers ONE question:
+// is this entity an ACTOR or a THING? An actor — a company, a state, an agency
+// — can decide, buy and retaliate; a thing — a runtime, a framework, a law —
+// cannot, it only gets adopted or applied. Both were drawn as the same tile, so
+// CUDA read as a company sitting next to NVIDIA at a glance. Things are drawn
+// as circles and carry a short tag next to the name.
+//
+// `tag` is deliberately absent for a plain company: 86 of 107 entities are
+// companies, and tagging the default is noise.
 export const TYPE_META = {
-  company:        bi({ label: ['Компания', 'Company'] }),
-  geopolitical:   bi({ label: ['Юрисдикция', 'Jurisdiction'] }),
-  agency:         bi({ label: ['Ведомство', 'Agency'] }),
-  research_org:   bi({ label: ['Исследовательская организация', 'Research organisation'] }),
-  standards_body: bi({ label: ['Консорциум стандартов', 'Standards body'] }),
+  company:        bi({ label: ['Компания', 'Company'] }, { shape: 'tile' }),
+  geopolitical:   bi({ label: ['Юрисдикция', 'Jurisdiction'],
+                       tag: ['ЮРИСД.', 'JURIS.'] }, { shape: 'tile' }),
+  agency:         bi({ label: ['Ведомство', 'Agency'],
+                       tag: ['ВЕДОМСТВО', 'AGENCY'] }, { shape: 'tile' }),
+  research_org:   bi({ label: ['Исследовательская организация', 'Research organisation'],
+                       tag: ['ПРОЕКТ', 'PROJECT'] }, { shape: 'round' }),
+  standards_body: bi({ label: ['Консорциум стандартов', 'Standards body'],
+                       tag: ['СТАНДАРТ', 'STANDARD'] }, { shape: 'round' }),
+  // Accepted ahead of the payload: the engine types CUDA as a `company` today,
+  // so it still draws as a tile. The moment a delivery calls it `technology`
+  // it becomes a circle here with no further change.
+  technology:     bi({ label: ['Технология', 'Technology'],
+                       tag: ['ТЕХ', 'TECH'] }, { shape: 'round' }),
+  regulation:     bi({ label: ['Регулирование', 'Regulation'],
+                       tag: ['ЗАКОН', 'LAW'] }, { shape: 'round' }),
 };
 
 export const PUBLIC_PRIVATE_META = {
@@ -963,7 +988,7 @@ export function buildGraphFrom(raw) {
       faded: !!e.stale || (ageMonths != null && ageMonths > STALE_MONTHS),
       logoUrls: logoUrlsFor(e),
       monogram: monogramOf(e.name),
-      searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(e.name || '')}`,
+      searchUrl: `https://www.google.com/search?q=${encodeURIComponent(e.name || '')}`,
       // The logo side-car is `id -> domain`, and that domain is also the
       // entity's own site — so the panel gets a real website link for free,
       // with no contract field and no guessed URL. Where there is no entry

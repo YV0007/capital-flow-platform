@@ -792,7 +792,7 @@ export function buildGraph(data = raw) {
       sectorsFallback: L(allocNote?.sectorsFallback) || null,
       thesisFallback: L(allocNote?.thesisFallback) || null,
       monogram: monogramOf(displayName),
-      searchUrl: `https://duckduckgo.com/?q=${encodeURIComponent(displayName)}`,
+      searchUrl: `https://www.google.com/search?q=${encodeURIComponent(displayName)}`,
       // FlowGraph role encoding: 'player' deploys · 'target' receives.
       type: isAllocator ? 'player' : 'target',
       color,

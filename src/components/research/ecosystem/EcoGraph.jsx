@@ -163,25 +163,28 @@ export default function EcoGraph({
 
   const nodeLit = useCallback((n) => {
     if (!visibleNodes.has(n.id)) return false;
-    // The subgraph lens narrows exactly like the chain and cycle lenses: what
-    // is not in the subgraph leaves the render entirely, same "remove, don't
-    // dim" rule the README fixes for company selection.
+    // A chain answers a MORE specific question than "what's in this
+    // subgraph" — and by construction (chainAdjacency in EcosystemMap) it
+    // can never reach outside an active subgraph lens anyway. So a chain, if
+    // one is up, wins outright: same "a chain is an answer, the question
+    // doesn't stay greyed out behind it" rule this file already applies
+    // everywhere else. With no chain picked yet, the lens alone decides.
+    if (hasChain) return chain.nodes.has(n.id);
     if (subgraphLens) return subgraphLens.nodeSet.has(n.id);
     // A specific circuit chosen → only its own path lights, not every entity
     // that happens to sit on ANY of the 140 circuits (n.onCycle). Nothing
     // chosen yet → cycleNodeSet is empty, so the lens shows nothing until the
     // picker gives it one to show.
     if (cycleMode) return !!cycleNodeSet && cycleNodeSet.has(n.id);
-    if (!hasChain) return true;
-    return chain.nodes.has(n.id);
+    return true;
   }, [visibleNodes, hasChain, chain, cycleMode, cycleNodeSet, subgraphLens]);
 
   const edgeLit = useCallback((e) => {
     if (!visibleEdges.has(e.id)) return false;
+    if (hasChain) return chain.edges.has(e.id);
     if (subgraphLens) return subgraphLens.edgeSet.has(e.id);
     if (cycleMode) return cycleEdges.has(e.id);
-    if (!hasChain) return true;
-    return chain.edges.has(e.id);
+    return true;
   }, [visibleEdges, hasChain, chain, cycleMode, cycleEdges, subgraphLens]);
 
   // Anything not lit leaves the render ENTIRELY — line, arrowhead, particles,
@@ -388,7 +391,11 @@ export default function EcoGraph({
     const S = R * 1.85;
     const half = S / 2;
     const x = cx - half, y = cy - half;
-    const corner = S * 0.26;
+    // Silhouette answers "actor or thing". A rounded rect with radius S/2 IS a
+    // circle, so the whole tile pipeline below — shadow, logo clip, rim, glow,
+    // brackets — follows from this one number with no branching.
+    const round = node.typeMeta?.shape === 'round';
+    const corner = round ? S / 2 : S * 0.26;
 
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -451,38 +458,9 @@ export default function EcoGraph({
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Pivot mark — a thin corner bracket, NOT a new colour (colour is already
-    // spent on the band). Two small L-brackets, top-left and bottom-right, in
-    // the band colour: reads as "this one is a network pivot" without competing
-    // with the tile's own encoding. In v2 exactly one node (the anchor) was
-    // special; here 26 are, so the mark has to be quiet enough to repeat.
-    if (node.isPivotal) {
-      const b = S * 0.30, off = 3, lw = Math.max(1, S * 0.045);
-      ctx.strokeStyle = hexA(col, 0.9);
-      ctx.lineWidth = lw;
-      ctx.beginPath();
-      // top-left
-      ctx.moveTo(x - off, y - off + b); ctx.lineTo(x - off, y - off); ctx.lineTo(x - off + b, y - off);
-      // bottom-right
-      ctx.moveTo(x + S + off, y + S + off - b); ctx.lineTo(x + S + off, y + S + off); ctx.lineTo(x + S + off - b, y + S + off);
-      ctx.stroke();
-    }
-
-    // Single-point-of-failure ring — a NEUTRAL dashed contour, no fill and no
-    // hue of its own: red is spent on the control spine, green on moat, so a
-    // structural chokepoint gets a colourless ring instead. Only the nodes the
-    // engine flagged in network.singlePointsOfFailure.
-    if (spofById && spofById.has(node.id)) {
-      const rr = half + 6;
-      ctx.save();
-      ctx.setLineDash([4, 3]);
-      ctx.lineWidth = 1.4;
-      ctx.strokeStyle = hexA('#94A3B8', mode === 'light' ? 0.6 : 0.72);
-      ctx.beginPath();
-      ctx.arc(cx, cy, rr, 0, 2 * Math.PI);
-      ctx.stroke();
-      ctx.restore();
-    }
+    // Pivot mark (corner-bracket) and single-point-of-failure ring (dashed
+    // contour) are retired for now — pending a redesign. Do not reintroduce
+    // either without a fresh design pass.
 
     // Multi-layer badge — a small stack of bars in the corner. This is what
     // replaces the old radial capsule: one company, one tile, and a mark that
@@ -506,6 +484,22 @@ export default function EcoGraph({
       ctx.font = `${big ? 700 : 600} ${Math.max(11, R * 0.62)}px -apple-system, "Segoe UI", sans-serif`;
       ctx.fillStyle = selected || hovered || isRoot ? T.labelStrong : hexA(T.label, big ? 0.96 : 0.78);
       ctx.fillText(node.atomLabel, lx, cy);
+      // Type tag — says «this is a runtime, not a vendor» without another
+      // colour. Only types that declare a tag get one; a plain company is the
+      // default and marking the default would be noise.
+      const tag = node.typeMeta?.tag;
+      if (tag) {
+        const nameW = ctx.measureText(node.atomLabel).width;
+        ctx.font = `700 ${Math.max(7.5, R * 0.34)}px ui-monospace, monospace`;
+        const tw = ctx.measureText(tag).width;
+        const th = Math.max(9, R * 0.46);
+        const tx = lx + nameW + 5;
+        roundRect(ctx, tx, cy - th / 2, tw + 7, th, th / 2);
+        ctx.fillStyle = hexA(col, mode === 'light' ? 0.14 : 0.20);
+        ctx.fill();
+        ctx.fillStyle = hexA(col, 0.95);
+        ctx.fillText(tag, tx + 3.5, cy + 0.5);
+      }
       // A company in several layers says so under its name — the badge alone
       // is a hint, this is the answer.
       if (node.multiLayer && (selected || hovered || isRoot || gs > 1.1)) {
@@ -516,13 +510,14 @@ export default function EcoGraph({
     }
 
     ctx.restore();
-  }, [nodeLit, selectedNodeId, hoverNodeId, chainRoot, showLabels, getLogo, logoTick, mode, T, spofById]);
+  }, [nodeLit, selectedNodeId, hoverNodeId, chainRoot, showLabels, getLogo, logoTick, mode, T]);
 
   const paintPointerArea = useCallback((node, colour, ctx) => {
     if (!nodeLit(node)) return;
     const S = (node.r || 12) * 1.85, half = S / 2;
     ctx.fillStyle = colour;
-    roundRect(ctx, node.x - half, node.y - half, S, S, S * 0.26);
+    roundRect(ctx, node.x - half, node.y - half, S, S,
+      node.typeMeta?.shape === 'round' ? S / 2 : S * 0.26);
     ctx.fill();
   }, [nodeLit]);
 
@@ -543,10 +538,12 @@ export default function EcoGraph({
     // rubric and a standing dependency that made it onto the map usually
     // scores high — the same curve pinned nearly every bond near full opacity
     // and the idle map read as a wall of colour. Same shape, much narrower
-    // band (0.26-0.54 rather than 0.55-1.05); hover, selection and a lit chain
-    // still lift a bond clear of the field, which is when you want to see it.
-    const base = mode === 'light' ? 0.26 : 0.20;
-    const a = (base + 0.28 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
+    // band (0.32-0.64 light, 0.26-0.58 dark, rather than 0.55-1.05); hover,
+    // selection and a lit chain still lift a bond clear of the field, which is
+    // when you want to see it. The band was lifted once off its first setting:
+    // the idle field read as too faint to trace a line across the map.
+    const base = mode === 'light' ? 0.32 : 0.26;
+    const a = (base + 0.32 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
     const lc = tone(e.color, mode);
     if (e.id === hoverEdgeId) return hexA(lc, Math.min(1, a + 0.45));
     // With a node selected the field is already down to its own chain, so the
