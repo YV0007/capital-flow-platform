@@ -9,6 +9,7 @@
 import { useMemo, useState } from 'react';
 import { Search, ArrowUpRight } from 'lucide-react';
 import ycCompaniesData from '../../data/yc-companies.json';
+import { useT, getLang } from '../../lib/i18n.jsx';
 
 // Descriptor per tracker — kept tiny and inline since there are only
 // three; if we add more, lift into src/data/tracker-meta.json.
@@ -19,11 +20,11 @@ const TRACKERS = [
     initials: 'Z',
     domain: 'zeely.ai',
     accent: '#22D3EE',
-    typeLabel: 'Активная позиция',
-    subtitle: 'Активный мониторинг сид-позиции в Zeely.ai — наблюдения, скоринг, синдикат.',
+    typeLabel: t('Активная позиция', 'Active position'),
+    subtitle: t('Активный мониторинг сид-позиции в Zeely.ai — наблюдения, скоринг, синдикат.', 'Live monitoring of the seed position in Zeely.ai — observations, scoring, syndicate.'),
     stats: [
-      { label: 'Стадия',     value: 'Seed' },
-      { label: 'Меморандум', value: 'Apr 2026' },
+      { label: t('Стадия', 'Stage'),     value: 'Seed' },
+      { label: t('Меморандум', 'Memo'), value: 'Apr 2026' },
     ],
     lifecycle: { status: 'active' },
   },
@@ -33,11 +34,11 @@ const TRACKERS = [
     initials: 'C',
     domain: 'cursor.com',
     accent: '#f59e0b',
-    typeLabel: 'Активная позиция',
-    subtitle: 'Мониторинг позиции в Anysphere — ARR, бенчмарки, конкурентная динамика.',
+    typeLabel: t('Активная позиция', 'Active position'),
+    subtitle: t('Мониторинг позиции в Anysphere — ARR, бенчмарки, конкурентная динамика.', 'Monitoring the Anysphere position — ARR, benchmarks, competitive dynamics.'),
     stats: [
-      { label: 'Стадия',     value: 'Series C' },
-      { label: 'Меморандум', value: 'Feb 2026' },
+      { label: t('Стадия', 'Stage'),     value: 'Series C' },
+      { label: t('Меморандум', 'Memo'), value: 'Feb 2026' },
     ],
     // SpaceX закрыл сделку на $60B — позиция реализована, продолжаем
     // держать карточку для истории и финального отчёта.
@@ -54,11 +55,11 @@ const TRACKERS = [
     initials: 'YC',
     domain: 'ycombinator.com',
     accent: '#FF6600',
-    typeLabel: 'Батч YC',
-    subtitle: 'Y Combinator Spring 2026 — каталог стартапов с картой по инвесторам и research.',
+    typeLabel: t('Батч YC', 'YC batch'),
+    subtitle: t('Y Combinator Spring 2026 — каталог стартапов с картой по инвесторам и research.', 'Y Combinator Spring 2026 — a startup catalogue with an investor map and research.'),
     stats: [
-      { label: 'Батч',     value: 'Spring 2026' },
-      { label: 'Компаний', value: String(ycCompaniesData.length) },
+      { label: t('Батч', 'Batch'),     value: 'Spring 2026' },
+      { label: t('Компаний', 'Companies'), value: String(ycCompaniesData.length) },
     ],
     lifecycle: { status: 'active' },
   },
@@ -76,12 +77,12 @@ const LIFECYCLE_STYLES = {
   },
   acquired: {
     accentOverride: '#10b981',
-    pillLabel: (lc) => `Выход · ${lc.buyer}`,
+  pillLabel: (lc) => `${getLang() === 'en' ? 'Exit' : 'Выход'} · ${lc.buyer}`,
     ribbonLabel: 'EXITED',
     desaturate: true,
     statsOverride: (lc) => [
-      { label: 'Выход',  value: lc.amount || 'realised' },
-      { label: 'Сделка', value: lc.date   || '—'        },
+      { label: t('Выход', 'Exit'),  value: lc.amount || 'realised' },
+      { label: t('Сделка', 'Deal'), value: lc.date   || '—'        },
     ],
   },
   ipo: {
@@ -90,13 +91,13 @@ const LIFECYCLE_STYLES = {
     ribbonLabel: 'IPO',
     desaturate: false,
     statsOverride: (lc) => [
-      { label: 'IPO цена', value: lc.amount || '—' },
-      { label: 'Дата',     value: lc.date   || '—' },
+      { label: t('IPO цена', 'IPO price'), value: lc.amount || '—' },
+      { label: t('Дата', 'Date'),     value: lc.date   || '—' },
     ],
   },
   shutdown: {
     accentOverride: 'var(--hm-text5)',
-    pillLabel: () => 'Закрыта',
+    pillLabel: () => t('Закрыта', 'Closed'),
     ribbonLabel: 'CLOSED',
     desaturate: true,
     statsOverride: () => [],
@@ -109,6 +110,7 @@ function lifecycleStyle(tracker) {
 }
 
 export default function TrackerLanding({ onOpen }) {
+  const t = useT();
   const [query, setQuery] = useState('');
 
   const visible = useMemo(() => {
@@ -139,12 +141,13 @@ export default function TrackerLanding({ onOpen }) {
           fontSize: 28, fontWeight: 700, color: 'var(--hm-text)',
           letterSpacing: '-0.02em', lineHeight: 1.15,
         }}>
-          Трекеры и портфолио
+          {t('Трекеры и портфолио', 'Trackers and portfolios')}
         </div>
         <div style={{
           fontSize: 14, color: 'var(--hm-text3)', marginTop: 10, maxWidth: 640, lineHeight: 1.55,
         }}>
-          Активный мониторинг прямых VC-позиций и наблюдаемых портфолио. Выберите трекер, чтобы открыть наблюдения, скоринг и синдикатные коммуникации.
+          {t('Активный мониторинг прямых VC-позиций и наблюдаемых портфолио. Выберите трекер, чтобы открыть наблюдения, скоринг и синдикатные коммуникации.',
+             'Live monitoring of direct VC positions and watched portfolios. Pick a tracker to open its observations, scoring and syndicate log.')}
         </div>
 
         {/* Search */}
@@ -164,7 +167,7 @@ export default function TrackerLanding({ onOpen }) {
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="Поиск трекеров..."
+            placeholder={t('Поиск трекеров...', 'Search trackers…')}
             style={{
               width: '100%',
               padding: '12px 16px 12px 40px',
@@ -192,7 +195,7 @@ export default function TrackerLanding({ onOpen }) {
           background: 'var(--hm-bg2)', border: '1px solid var(--hm-border)',
           borderRadius: 12,
         }}>
-          Ничего не найдено
+            {t('Ничего не найдено', 'Nothing found')}
         </div>
       ) : (
         <div style={{
