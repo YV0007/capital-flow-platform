@@ -8,6 +8,7 @@ import { useMemo, useState } from 'react';
 import holdingsData from '../../data/holdings.json';
 
 import { C } from './holdingsC.js';
+import { useT } from '../../lib/i18n.jsx';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Sankey — SVG, no library. Bars on both sides sized by total,
@@ -16,6 +17,7 @@ import { C } from './holdingsC.js';
 // ─────────────────────────────────────────────────────────────────────────
 
 function Sankey({ sankey }) {
+  const t = useT();
   const [hover, setHover] = useState(null); // flow index
 
   const layout = useMemo(() => {
@@ -79,8 +81,8 @@ function Sankey({ sankey }) {
     <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 12, padding: '16px 18px' }}>
       <style>{`@keyframes flowwave{to{stroke-dashoffset:-24;}} .flowwave{animation:flowwave 2.2s linear infinite;}`}</style>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 6, fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint }}>
-        <span>Откуда</span>
-        <span>Куда</span>
+        <span>{t('Откуда', 'From')}</span>
+        <span>{t('Куда', 'To')}</span>
       </div>
       <div style={{ position: 'relative' }}>
         <svg viewBox={`0 0 ${layout.W} ${layout.H}`} style={{ width: '100%', height: 'auto', display: 'block' }} onMouseLeave={() => setHover(null)}>
@@ -119,13 +121,13 @@ function Sankey({ sankey }) {
         </svg>
         {activeFlow && (
           <div style={{ position: 'absolute', top: 12, left: '50%', transform: 'translateX(-50%)', background: '#000', border: `1px solid ${activeFlow.color}`, borderRadius: 8, padding: '10px 14px', maxWidth: 380, boxShadow: '0 10px 30px rgba(0,0,0,.6)', pointerEvents: 'none' }}>
-            <div style={{ fontSize: 10.5, letterSpacing: '.08em', textTransform: 'uppercase', color: activeFlow.color, marginBottom: 4 }}>Поток</div>
+            <div style={{ fontSize: 10.5, letterSpacing: '.08em', textTransform: 'uppercase', color: activeFlow.color, marginBottom: 4 }}>{t('Поток', 'Flow')}</div>
             <div style={{ fontFamily: 'var(--mono)', fontSize: 20, fontWeight: 500, color: '#fff', marginBottom: 4 }}>${activeFlow.value} млрд</div>
             <div style={{ fontSize: 12, color: 'rgba(255,255,255,.85)', lineHeight: 1.4 }}>{activeFlow.label}</div>
           </div>
         )}
       </div>
-      <div style={{ marginTop: 34, fontSize: 11, color: C.inkFaint, fontStyle: 'italic', textAlign: 'right' }}>Наведи курсор на поток — покажет объём и назначение. Ширина = размер потока.</div>
+      <div style={{ marginTop: 34, fontSize: 11, color: C.inkFaint, fontStyle: 'italic', textAlign: 'right' }}>{t('Наведи курсор на поток — покажет объём и назначение. Ширина = размер потока.', 'Hover a flow to see its size and destination. Width = flow size.')}</div>
     </div>
   );
 }
@@ -135,35 +137,36 @@ function Sankey({ sankey }) {
 // ─────────────────────────────────────────────────────────────────────────
 
 const TYPE_META = {
-  acquisition: { label: 'Покупка',        color: C.teal },
-  divestment:  { label: 'Продажа',        color: C.gold },
-  deal:        { label: 'Контракт',       color: C.teal },
-  program:     { label: 'Программа',      color: C.violet },
-  internal:    { label: 'Корп-действие',  color: C.blue },
-  earnings:    { label: 'Отчёт',          color: C.inkSoft },
+  acquisition: { label: t('Покупка', 'Purchase'),        color: C.teal },
+  divestment:  { label: t('Продажа', 'Sale'),        color: C.gold },
+  deal:        { label: t('Контракт', 'Contract'),       color: C.teal },
+  program:     { label: t('Программа', 'Programme'),      color: C.violet },
+  internal:    { label: t('Корп-действие', 'Corporate action'),  color: C.blue },
+  earnings:    { label: t('Отчёт', 'Report'),          color: C.inkSoft },
   ipo:         { label: 'IPO',            color: C.teal },
 };
 
 function TimelineItem({ ev, forward }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
-  const t = TYPE_META[ev.type] || { label: ev.type, color: C.inkSoft };
+  const meta = TYPE_META[ev.type] || { label: ev.type, color: C.inkSoft };
   const isHigh = ev.importance === 'high';
   const det = ev.detail && typeof ev.detail === 'object' ? ev.detail : null;
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: 20, position: 'relative', paddingLeft: 12 }}>
       {/* rail dot */}
-      <div style={{ position: 'absolute', left: -6, top: 20, width: 12, height: 12, borderRadius: 6, background: isHigh ? t.color : C.card, border: `2px solid ${t.color}` }} />
+      <div style={{ position: 'absolute', left: -6, top: 20, width: 12, height: 12, borderRadius: 6, background: isHigh ? meta.color : C.card, border: `2px solid ${meta.color}` }} />
       <div style={{ paddingTop: 14 }}>
         <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: C.inkSoft }}>{ev.date}</div>
-        <div style={{ marginTop: 6, fontSize: 9.5, padding: '2px 8px', borderRadius: 10, background: `color-mix(in srgb, ${t.color} 13%, transparent)`, color: t.color, border: `1px solid color-mix(in srgb, ${t.color} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em', display: 'inline-block' }}>{t.label.toUpperCase()}</div>
+        <div style={{ marginTop: 6, fontSize: 9.5, padding: '2px 8px', borderRadius: 10, background: `color-mix(in srgb, ${meta.color} 13%, transparent)`, color: meta.color, border: `1px solid color-mix(in srgb, ${meta.color} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em', display: 'inline-block' }}>{meta.label.toUpperCase()}</div>
       </div>
       <div onClick={() => det && setOpen(!open)}
-        style={{ background: C.card, border: `1px solid ${open ? `color-mix(in srgb, ${t.color} 40%, transparent)` : C.line}`, borderLeft: `3px solid ${isHigh ? t.color : C.line}`, borderRadius: 10, padding: '14px 16px', marginBottom: 12, cursor: det ? 'pointer' : 'default', transition: 'border-color .18s' }}>
+        style={{ background: C.card, border: `1px solid ${open ? `color-mix(in srgb, ${meta.color} 40%, transparent)` : C.line}`, borderLeft: `3px solid ${isHigh ? meta.color : C.line}`, borderRadius: 10, padding: '14px 16px', marginBottom: 12, cursor: det ? 'pointer' : 'default', transition: 'border-color .18s' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginBottom: 6 }}>
           <span style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, flex: 1, lineHeight: 1.3 }}>{ev.title}</span>
           {ev.ai && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: `color-mix(in srgb, ${C.violet} 13%, transparent)`, color: C.violet, border: `1px solid color-mix(in srgb, ${C.violet} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>AI</span>}
-          {forward && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: `color-mix(in srgb, ${C.clay} 13%, transparent)`, color: C.clay, border: `1px solid color-mix(in srgb, ${C.clay} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>ОБЪЯВЛЕНО</span>}
-          {det && <span style={{ fontSize: 11, color: open ? t.color : C.inkFaint, whiteSpace: 'nowrap' }}>{open ? '▾ свернуть' : '▸ подробнее'}</span>}
+          {forward && <span style={{ fontSize: 9, padding: '2px 7px', borderRadius: 10, background: `color-mix(in srgb, ${C.clay} 13%, transparent)`, color: C.clay, border: `1px solid color-mix(in srgb, ${C.clay} 33%, transparent)`, fontWeight: 600, letterSpacing: '.06em' }}>{t('ОБЪЯВЛЕНО', 'ANNOUNCED')}</span>}
+          {det && <span style={{ fontSize: 11, color: open ? meta.color : C.inkFaint, whiteSpace: 'nowrap' }}>{open ? t('▾ свернуть', '▾ collapse') : t('▸ подробнее', '▸ details')}</span>}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 20px', marginBottom: 10, fontSize: 12 }}>
           {ev.value && <span><span style={{ color: C.inkFaint }}>Сумма: </span><span style={{ fontFamily: 'var(--mono)', color: C.ink, fontWeight: 500 }}>{ev.value}</span></span>}
@@ -185,8 +188,8 @@ function TimelineItem({ ev, forward }) {
               </div>
             )}
             {det.read && (
-              <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.6, borderLeft: `3px solid ${t.color}`, paddingLeft: 12 }}>
-                <span style={{ fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: t.color, fontWeight: 600, marginRight: 8 }}>Стратегический смысл</span>
+              <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.6, borderLeft: `3px solid ${meta.color}`, paddingLeft: 12 }}>
+                <span style={{ fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: meta.color, fontWeight: 600, marginRight: 8 }}>{t('Стратегический смысл', 'Strategic meaning')}</span>
                 {det.read}
               </div>
             )}
@@ -200,6 +203,7 @@ function TimelineItem({ ev, forward }) {
 
 // ─────────────────────────────────────────────────────────────────────────
 export default function ChangesDeep({ data }) {
+  const t = useT();
   const cd = data;
   if (!cd) return null;
 
@@ -223,8 +227,8 @@ export default function ChangesDeep({ data }) {
         <div style={{ marginBottom: 30 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 10 }}>
             <div>
-              <div style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: C.ink, letterSpacing: '-.01em' }}>Куда текут деньги</div>
-              <div style={{ fontSize: 12, color: C.inkFaint, marginTop: 2 }}>Источник → назначение, объём в $ млрд</div>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: C.ink, letterSpacing: '-.01em' }}>{t('Куда текут деньги', 'Where the money flows')}</div>
+              <div style={{ fontSize: 12, color: C.inkFaint, marginTop: 2 }}>{t('Источник → назначение, объём в $ млрд', 'Source → destination, size in $bn')}</div>
             </div>
           </div>
           <Sankey sankey={cd.sankey} />
@@ -234,8 +238,8 @@ export default function ChangesDeep({ data }) {
       {/* Timeline: past + pipeline merged — reading column for readability */}
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
-          <div style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: C.ink, letterSpacing: '-.01em' }}>Ключевые ходы</div>
-          <div style={{ fontSize: 12, color: C.inkFaint }}>красный кружок = крупная сделка</div>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: C.ink, letterSpacing: '-.01em' }}>{t('Ключевые ходы', 'Key moves')}</div>
+          <div style={{ fontSize: 12, color: C.inkFaint }}>{t('красный кружок = крупная сделка', 'a red dot = a large deal')}</div>
         </div>
         <div style={{ position: 'relative', paddingLeft: 122 }}>
           {/* vertical rail */}
@@ -245,7 +249,7 @@ export default function ChangesDeep({ data }) {
             <>
               <div style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: 20, margin: '20px 0 10px' }}>
                 <div />
-                <div style={{ fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.clay, fontWeight: 600 }}>Впереди — объявлено, не закрыто</div>
+                <div style={{ fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.clay, fontWeight: 600 }}>{t('Впереди — объявлено, не закрыто', 'Ahead — announced, not closed')}</div>
               </div>
               {cd.pipeline.map((ev, i) => <TimelineItem key={'p' + i} ev={ev} forward />)}
             </>

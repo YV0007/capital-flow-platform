@@ -190,8 +190,8 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     if (!cycleWasOn.current) return;
     // Late enough to be after the panel's own layout shift, which otherwise
     // re-centres the camera on top of this.
-    const t = setTimeout(() => fgRef.current?.zoomToFit(700, 80), 450);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => fgRef.current?.zoomToFit(700, 80), 450);
+    return () => clearTimeout(timer);
   }, [cycleMode, cycleNodeSet, fgRef]);
 
   // ── The chain ──────────────────────────────────────────────────────────

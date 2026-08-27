@@ -8,6 +8,7 @@ import { useState, useContext, createContext } from 'react';
 import holdingsData from '../../data/holdings.json';
 
 import { C } from './holdingsC.js';
+import { useT } from '../../lib/i18n.jsx';
 const col = (name) => C[name] || name || C.teal;
 const isNeg = (s) => typeof s === 'string' && /^[−-]/.test(s.trim());
 
@@ -16,13 +17,14 @@ const isNeg = (s) => typeof s === 'string' && /^[−-]/.test(s.trim());
 // handler; blocks declare links via an item's `links: [{text, company}]`.
 const OpenCompanyCtx = createContext(null);
 function withLinks(text, links, openCompany) {
+  const t = useT();
   if (!text || !links || !links.length || !openCompany) return text;
   const map = {};
   links.forEach((l) => { map[l.text] = l.company; });
   const escaped = links.map((l) => l.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).sort((a, b) => b.length - a.length);
   const re = new RegExp('(' + escaped.join('|') + ')', 'g');
   return text.split(re).map((p, i) => map[p]
-    ? <span key={i} onClick={() => openCompany(map[p])} title="Открыть в портфеле"
+    ? <span key={i} onClick={() => openCompany(map[p])} title={t('Открыть в портфеле', 'Open in the portfolio')}
         style={{ color: C.teal, cursor: 'pointer', borderBottom: `1px dashed color-mix(in srgb, ${C.teal} 53%, transparent)`, fontWeight: 500 }}>{p}</span>
     : p);
 }
@@ -129,6 +131,7 @@ function Cards({ b }) {
 // ── bets: strategy bet cards — labelled headline number + vehicles (business
 //    models + named companies + scale) + management outlook + quote ──────────
 function Bets({ b }) {
+  const t = useT();
   const openCompany = useContext(OpenCompanyCtx);
   return (
     <div>
@@ -155,7 +158,7 @@ function Bets({ b }) {
               {/* vehicles: business model + named companies + scale */}
               {c.vehicles && c.vehicles.length > 0 && (
                 <div style={{ marginBottom: c.outlook || c.quote ? 14 : 0 }}>
-                  <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: C.inkFaint, fontWeight: 600, marginBottom: 9 }}>Через что вкладывают</div>
+                  <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: C.inkFaint, fontWeight: 600, marginBottom: 9 }}>{t('Через что вкладывают', 'What they invest through')}</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
                     {c.vehicles.map((v, vi) => (
                       <div key={vi} style={{ display: 'flex', gap: 9, alignItems: 'flex-start' }}>
@@ -171,7 +174,7 @@ function Bets({ b }) {
               {/* management outlook / projection */}
               {(c.outlook || c.embodies) && (
                 <div style={{ background: `color-mix(in srgb, ${cc} 6%, transparent)`, border: `1px solid color-mix(in srgb, ${cc} 20%, transparent)`, borderRadius: 8, padding: '10px 12px', marginBottom: c.quote ? 12 : 0 }}>
-                  <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: cc, fontWeight: 600, marginBottom: 5 }}>{c.outlook ? 'Куда идёт — взгляд менеджмента' : 'Что воплощает'}</div>
+                  <div style={{ fontSize: 9, letterSpacing: '.09em', textTransform: 'uppercase', color: cc, fontWeight: 600, marginBottom: 5 }}>{c.outlook ? t('Куда идёт — взгляд менеджмента', 'Where it is going — management’s view') : t('Что воплощает', 'What it embodies')}</div>
                   <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.5 }}>{c.outlook || c.embodies}</div>
                 </div>
               )}
@@ -192,6 +195,7 @@ function Bets({ b }) {
 
 // ── pie: interactive SVG donut with hover + labels ─────────────────────────
 function Pie({ b }) {
+  const t = useT();
   const [hov, setHov] = useState(null);
   const total = b.items.reduce((s, it) => s + (it.pct || 0), 0) || 1;
   const sz = 280, cx = sz / 2, cy = sz / 2, r = 110, ir = 68;
@@ -232,7 +236,7 @@ function Pie({ b }) {
           )}
           {!active && (
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', textAlign: 'center', pointerEvents: 'none' }}>
-              <div style={{ fontSize: 10, color: C.inkFaint, textTransform: 'uppercase', letterSpacing: '.05em' }}>Наведите</div>
+              <div style={{ fontSize: 10, color: C.inkFaint, textTransform: 'uppercase', letterSpacing: '.05em' }}>{t('Наведите', 'Hover')}</div>
             </div>
           )}
         </div>
@@ -260,6 +264,7 @@ function Pie({ b }) {
 // scale comparison (buyback vs sells vs buys) plus a diverging monthly bar
 // chart of individual insider trades (sells down, buys up around a zero line).
 function Flows({ b }) {
+  const t = useT();
   const [hov, setHov] = useState(null);
   const sells = b.sells || [], buys = b.buys || [], axis = b.axis || [];
   const maxAbs = Math.max(...sells, ...buys, 1);
@@ -276,7 +281,7 @@ function Flows({ b }) {
       {/* scale comparison: buyback vs sells vs buys */}
       {b.totals && (
         <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px', marginBottom: 14 }}>
-          <div style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 13, fontWeight: 600 }}>Масштаб действий · 12 мес</div>
+          <div style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 13, fontWeight: 600 }}>{t('Масштаб действий · 12 мес', 'Scale of activity · 12 months')}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
             {b.totals.map((t, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -299,8 +304,8 @@ function Flows({ b }) {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
             <div style={{ fontSize: 10, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>Сделки инсайдеров помесячно · {b.unit || 'CA$ млн'}</div>
             <div style={{ display: 'flex', gap: 16 }}>
-              <span style={{ fontSize: 10.5, color: C.inkSoft, display: 'flex', alignItems: 'center', gap: 5 }}><span style={{ width: 9, height: 9, borderRadius: 2, background: col('teal'), display: 'inline-block' }} />покупки</span>
-              <span style={{ fontSize: 10.5, color: C.inkSoft, display: 'flex', alignItems: 'center', gap: 5 }}><span style={{ width: 9, height: 9, borderRadius: 2, background: col('clay'), display: 'inline-block' }} />продажи</span>
+              <span style={{ fontSize: 10.5, color: C.inkSoft, display: 'flex', alignItems: 'center', gap: 5 }}><span style={{ width: 9, height: 9, borderRadius: 2, background: col('teal'), display: 'inline-block' }} />{t('покупки', 'purchases')}</span>
+              <span style={{ fontSize: 10.5, color: C.inkSoft, display: 'flex', alignItems: 'center', gap: 5 }}><span style={{ width: 9, height: 9, borderRadius: 2, background: col('clay'), display: 'inline-block' }} />{t('продажи', 'sales')}</span>
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'stretch', gap: 4 }}>
@@ -597,6 +602,7 @@ function Quadrant({ b }) {
 
 // ── mix: per-company segment-composition mini-bars ──────────────────────────
 function Mix({ b }) {
+  const t = useT();
   return (
     <div>
       <Title note={b.note}>{b.title}</Title>
@@ -635,12 +641,13 @@ function Mix({ b }) {
 // Shows at a glance where each manager leads vs lags across asset classes —
 // the real "moat map". Optional catalysts strip highlights the unique edge.
 const POS_LEVELS = {
-  lead:    { label: 'Лидер',   bg: C.teal,         fg: '#0b0b0c', bd: C.teal },
-  strong:  { label: 'Сильный', bg: `color-mix(in srgb, ${C.teal} 18%, transparent)`,  fg: C.teal,    bd: `color-mix(in srgb, ${C.teal} 33%, transparent)` },
-  present: { label: 'Есть',    bg: C.track,        fg: C.inkSoft, bd: C.line },
-  lag:     { label: 'Слабо',   bg: 'transparent',  fg: C.clay,    bd: `color-mix(in srgb, ${C.clay} 33%, transparent)` },
+  lead:    { label: t('Лидер', 'Leader'),   bg: C.teal,         fg: '#0b0b0c', bd: C.teal },
+  strong:  { label: t('Сильный', 'Strong'), bg: `color-mix(in srgb, ${C.teal} 18%, transparent)`,  fg: C.teal,    bd: `color-mix(in srgb, ${C.teal} 33%, transparent)` },
+  present: { label: t('Есть', 'Present'),    bg: C.track,        fg: C.inkSoft, bd: C.line },
+  lag:     { label: t('Слабо', 'Weak'),   bg: 'transparent',  fg: C.clay,    bd: `color-mix(in srgb, ${C.clay} 33%, transparent)` },
 };
 function PosGrid({ b }) {
+  const t = useT();
   const [hov, setHov] = useState(null);
   const players = b.players || [];
   const hl = b.highlight ?? 0;
@@ -655,7 +662,7 @@ function PosGrid({ b }) {
         <div style={{ minWidth: 560 }}>
           {/* header */}
           <div style={{ display: 'grid', gridTemplateColumns: gridCols, background: C.cardAlt, borderBottom: `1px solid ${C.line}` }}>
-            <div style={{ padding: '11px 14px', fontSize: 10, letterSpacing: '.05em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>Сегмент</div>
+            <div style={{ padding: '11px 14px', fontSize: 10, letterSpacing: '.05em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>{t('Сегмент', 'Segment')}</div>
             {players.map((p, i) => (
               <div key={i} style={{ padding: '11px 8px', textAlign: 'center', fontSize: 11.5, fontWeight: i === hl ? 700 : 500, color: i === hl ? C.teal : C.inkSoft, background: i === hl ? `color-mix(in srgb, ${C.teal} 7%, transparent)` : 'transparent', borderLeft: `1px solid ${C.lineSoft}` }}>{p}</div>
             ))}
@@ -696,7 +703,7 @@ function PosGrid({ b }) {
             <span style={{ fontSize: 10.5, color: C.inkSoft }}>{POS_LEVELS[k].label}</span>
           </div>
         ))}
-        <span style={{ fontSize: 10.5, color: C.inkFaint, fontStyle: 'italic' }}>наведите на ячейку — детали</span>
+        <span style={{ fontSize: 10.5, color: C.inkFaint, fontStyle: 'italic' }}>{t('наведите на ячейку — детали', 'hover a cell for details')}</span>
       </div>
       {/* catalysts strip */}
       {b.catalysts && (
@@ -720,6 +727,7 @@ function PosGrid({ b }) {
 }
 
 function Moat({ b }) {
+  const t = useT();
   const [hov, setHov] = useState(null);
   const renderCol = (items, side, accent, heading) => (
     <div style={{ flex: 1, minWidth: 280 }}>
@@ -758,13 +766,13 @@ function Moat({ b }) {
       <Title note={b.note}>{b.title}</Title>
       {b.verdict && (
         <div style={{ background: C.cardAlt, borderLeft: `3px solid ${C.teal}`, borderRadius: 8, padding: '14px 18px', marginBottom: 18 }}>
-          <div style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: C.teal, fontWeight: 700, marginBottom: 6 }}>Тезис для решения</div>
+          <div style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: C.teal, fontWeight: 700, marginBottom: 6 }}>{t('Тезис для решения', 'The thesis for a decision')}</div>
           <div style={{ fontSize: 14, color: C.ink, lineHeight: 1.6 }}>{b.verdict}</div>
         </div>
       )}
       <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-        {renderCol(b.wins, 'w', C.teal, b.winsLabel || 'Устойчивый moat — где выигрывает')}
-        {renderCol(b.gaps, 'g', C.gold, b.gapsLabel || 'Где догоняет или отстаёт')}
+        {renderCol(b.wins, 'w', C.teal, b.winsLabel || t('Устойчивый moat — где выигрывает', 'A durable moat — where it wins'))}
+        {renderCol(b.gaps, 'g', C.gold, b.gapsLabel || t('Где догоняет или отстаёт', 'Where it is catching up or falling behind'))}
       </div>
     </div>
   );
@@ -772,9 +780,9 @@ function Moat({ b }) {
 
 // ── heat: risk rows with level chip + trigger ───────────────────────────────
 const LEVELS = {
-  high: { label: 'ВЫСОКИЙ', color: C.clay },
-  med: { label: 'СРЕДНИЙ', color: C.gold },
-  low: { label: 'НИЗКИЙ', color: C.teal },
+  high: { label: t('ВЫСОКИЙ', 'HIGH'), color: C.clay },
+  med: { label: t('СРЕДНИЙ', 'MEDIUM'), color: C.gold },
+  low: { label: t('НИЗКИЙ', 'LOW'), color: C.teal },
 };
 
 // ── risksplit: the risk map — two origins, side by side ─────────────────────
@@ -841,6 +849,7 @@ function RiskSplit({ b }) {
 // event that starts it, the causal chain in ordered steps, the effect on value
 // per share, and the single observable that tells you it's happening.
 function Scenarios({ b }) {
+  const t = useT();
   return (
     <div>
       <Title note={b.note}>{b.title}</Title>
@@ -861,13 +870,13 @@ function Scenarios({ b }) {
               )}
               {s.trigger && (
                 <div style={{ marginBottom: 11 }}>
-                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.gold, fontWeight: 700, marginBottom: 4 }}>Что запускает</div>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.gold, fontWeight: 700, marginBottom: 4 }}>{t('Что запускает', 'What triggers it')}</div>
                   <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.5 }}>{s.trigger}</div>
                 </div>
               )}
               {s.chain && (
                 <div style={{ marginBottom: 11 }}>
-                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 700, marginBottom: 6 }}>Как разворачивается</div>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 700, marginBottom: 6 }}>{t('Как разворачивается', 'How it unfolds')}</div>
                   {s.chain.map((step, si) => (
                     <div key={si} style={{ display: 'flex', gap: 8, marginBottom: si < s.chain.length - 1 ? 6 : 0 }}>
                       <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: c, flexShrink: 0, marginTop: 2, width: 12 }}>{si + 1}</span>
@@ -878,13 +887,13 @@ function Scenarios({ b }) {
               )}
               {s.track && (
                 <div style={{ marginTop: 'auto', paddingTop: 11, borderTop: `1px solid ${C.lineSoft}` }}>
-                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.teal, fontWeight: 700, marginBottom: 4 }}>Что отслеживать</div>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: C.teal, fontWeight: 700, marginBottom: 4 }}>{t('Что отслеживать', 'What to watch')}</div>
                   <div style={{ fontSize: 12, color: C.inkSoft, lineHeight: 1.5 }}>{s.track}</div>
                 </div>
               )}
               {s.action && (
                 <div style={{ marginTop: 10, background: `color-mix(in srgb, ${c} 8%, transparent)`, border: `1px solid color-mix(in srgb, ${c} 27%, transparent)`, borderRadius: 7, padding: '9px 11px' }}>
-                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: c, fontWeight: 700, marginBottom: 3 }}>Решение</div>
+                  <div style={{ fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: c, fontWeight: 700, marginBottom: 3 }}>{t('Решение', 'Decision')}</div>
                   <div style={{ fontSize: 12, color: C.ink, lineHeight: 1.5 }}>{s.action}</div>
                 </div>
               )}
@@ -1104,8 +1113,9 @@ function MatrixCell({ it, cc }) {
 }
 
 function Matrix({ b }) {
-  const X = b.x || ['Низкая', 'Средняя', 'Высокая'];
-  const Y = b.y || ['Высокое', 'Среднее', 'Низкое'];
+  const t = useT();
+  const X = b.x || [t('Низкая', 'Low'), t('Средняя', 'Medium'), t('Высокая', 'High')];
+  const Y = b.y || [t('Высокое', 'High'), t('Среднее', 'Medium'), t('Низкое', 'Low')];
   const sevCol = (px, iy) => { const s = px + (Y.length - 1 - iy); return s >= 3 ? C.clay : s === 2 ? C.gold : C.teal; };
   return (
     <div>
@@ -1116,7 +1126,7 @@ function Matrix({ b }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: `30px 56px repeat(${X.length}, 1fr)`, gap: 6, minWidth: 560 }}>
           <div style={{ gridRow: `1 / ${Y.length + 2}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>Влияние ↑</span>
+            <span style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, fontWeight: 600 }}>{t('Влияние ↑', 'Impact ↑')}</span>
           </div>
           <div />
           {X.map((x, i) => <div key={i} style={{ textAlign: 'center', fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: C.inkSoft, padding: '4px 0' }}>{x}</div>)}
@@ -1135,9 +1145,9 @@ function Matrix({ b }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: `86px repeat(${X.length}, 1fr)`, gap: 6, marginTop: 8 }}>
           <div />
-          <div style={{ fontSize: 9.5, color: `color-mix(in srgb, ${C.teal} 73%, transparent)`, textAlign: 'center' }}>↙ меньше риск</div>
+          <div style={{ fontSize: 9.5, color: `color-mix(in srgb, ${C.teal} 73%, transparent)`, textAlign: 'center' }}>{t('↙ меньше риск', '↙ lower risk')}</div>
           <div />
-          <div style={{ fontSize: 9.5, color: `color-mix(in srgb, ${C.clay} 73%, transparent)`, textAlign: 'center' }}>↗ больше риск</div>
+          <div style={{ fontSize: 9.5, color: `color-mix(in srgb, ${C.clay} 73%, transparent)`, textAlign: 'center' }}>{t('↗ больше риск', '↗ higher risk')}</div>
         </div>
       </div>
     </div>

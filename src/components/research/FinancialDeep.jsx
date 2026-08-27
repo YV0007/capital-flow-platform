@@ -7,6 +7,7 @@ import { useState } from 'react';
 import holdingsData from '../../data/holdings.json';
 
 import { C } from './holdingsC.js';
+import { useT } from '../../lib/i18n.jsx';
 
 const fmtNum = (val, fmt) => {
   if (val === null || val === undefined) return '–';
@@ -111,11 +112,12 @@ function PeriodTable({ periods, rows }) {
 }
 
 export default function FinancialDeep({ data }) {
+  const t = useT();
   const seriesOpts = [
-    { key: 'Total Equity', label: 'Собственный капитал' },
-    { key: 'Sales / Revenue', label: 'Выручка' },
-    { key: 'Net Income, GAAP', label: 'Чистая прибыль' },
-    { key: 'Book Value per Share', label: 'Book value / акция' },
+    { key: 'Total Equity', label: t('Собственный капитал', 'Shareholders’ equity') },
+    { key: 'Sales / Revenue', label: t('Выручка', 'Revenue') },
+    { key: 'Net Income, GAAP', label: t('Чистая прибыль', 'Net income') },
+    { key: 'Book Value per Share', label: t('Book value / акция', 'Book value / share') },
   ].filter((o) => data.rows.some((r) => r.label === o.key));
   const [chartKey, setChartKey] = useState((seriesOpts[0] || {}).key);
   const chartRowObj = data.rows.find((r) => r.label === chartKey);
@@ -144,11 +146,11 @@ export default function FinancialDeep({ data }) {
         </div>
 
         <div style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: '16px 18px' }}>
-          <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 12 }}>Доходность vs S&P 500</div>
+          <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 12 }}>{t('Доходность vs S&P 500', 'Return vs S&P 500')}</div>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead><tr>
-              <th style={{ textAlign: 'left', padding: '0 0 8px', fontSize: 10.5, color: C.inkFaint, fontWeight: 500 }}>Период</th>
-              <th style={{ textAlign: 'right', padding: '0 0 8px', fontSize: 10.5, color: C.inkFaint, fontWeight: 500 }}>Акция</th>
+              <th style={{ textAlign: 'left', padding: '0 0 8px', fontSize: 10.5, color: C.inkFaint, fontWeight: 500 }}>{t('Период', 'Period')}</th>
+              <th style={{ textAlign: 'right', padding: '0 0 8px', fontSize: 10.5, color: C.inkFaint, fontWeight: 500 }}>{t('Акция', 'Share')}</th>
               <th style={{ textAlign: 'right', padding: '0 0 8px', fontSize: 10.5, color: C.inkFaint, fontWeight: 500 }}>S&P 500</th>
             </tr></thead>
             <tbody>{data.returns.map((r, i) => (
@@ -164,11 +166,11 @@ export default function FinancialDeep({ data }) {
 
       {/* ── Multi-year financials table ── */}
       <div style={{ marginBottom: 28 }}>
-        <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 10 }}>Финансовые показатели по годам <span style={{ color: C.inkFaint, textTransform: 'none', letterSpacing: 0 }}>· {data.unit || '$млн'}, если не на акцию / %</span></div>
+        <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.inkSoft, marginBottom: 10 }}>Финансовые показатели по годам <span style={{ color: C.inkFaint, textTransform: 'none', letterSpacing: 0 }}>· {data.unit || t('$млн', '$m')}, если не на акцию / %</span></div>
         <div style={{ overflowX: 'auto', border: `1px solid ${C.line}`, borderRadius: 10 }}>
           <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 1000 }}>
             <thead><tr>
-              <th style={{ position: 'sticky', left: 0, zIndex: 1, background: C.cardAlt, textAlign: 'left', padding: '10px 14px', fontSize: 10.5, color: C.inkSoft, fontWeight: 600, borderBottom: `1px solid ${C.line}` }}>Показатель</th>
+              <th style={{ position: 'sticky', left: 0, zIndex: 1, background: C.cardAlt, textAlign: 'left', padding: '10px 14px', fontSize: 10.5, color: C.inkSoft, fontWeight: 600, borderBottom: `1px solid ${C.line}` }}>{t('Показатель', 'Metric')}</th>
               {data.years.map((yr, i) => <th key={i} style={{ textAlign: 'right', padding: '10px 12px', fontSize: 10.5, color: yr === 'TTM' ? C.teal : C.inkSoft, fontWeight: 600, borderBottom: `1px solid ${C.line}`, whiteSpace: 'nowrap', background: C.cardAlt }}>{yr}</th>)}
             </tr></thead>
             <tbody>{data.rows.map((r, ri) => (
@@ -184,9 +186,9 @@ export default function FinancialDeep({ data }) {
       {/* ── Description + Capital structure ── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 18, marginBottom: 18 }}>
         {data.description && (
-          <MiniCard title="О компании">
+          <MiniCard title={t('О компании', 'About the company')}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 16px' }}>
-              {[['CEO', data.description.ceo], ['Сотрудников', data.description.employees], ['Сектор', data.description.sector], ['Индустрия', data.description.industry], ['IPO', data.description.ipo], ['Сайт', data.description.website], ['Адрес', data.description.address], ['CIK', data.description.cik]].map(([k, v], i) => (
+              {[['CEO', data.description.ceo], [t('Сотрудников', 'Employees'), data.description.employees], [t('Сектор', 'Sector'), data.description.sector], [t('Индустрия', 'Industry'), data.description.industry], ['IPO', data.description.ipo], [t('Сайт', 'Website'), data.description.website], [t('Адрес', 'Address'), data.description.address], ['CIK', data.description.cik]].map(([k, v], i) => (
                 <div key={i}>
                   <div style={{ fontSize: 9.5, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 3 }}>{k}</div>
                   <div style={{ fontSize: 12.5, color: C.ink, lineHeight: 1.4 }}>{v}</div>
@@ -195,7 +197,7 @@ export default function FinancialDeep({ data }) {
             </div>
             {data.description.peers && data.description.peers.length > 0 && (
               <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${C.line}` }}>
-                <div style={{ fontSize: 9.5, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 7 }}>Похожие компании</div>
+                <div style={{ fontSize: 9.5, letterSpacing: '.06em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 7 }}>{t('Похожие компании', 'Comparable companies')}</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {data.description.peers.map((p, i) => <span key={i} style={{ fontSize: 11.5, padding: '4px 10px', borderRadius: 14, border: `1px solid ${C.line}`, color: C.inkSoft }}>{p}</span>)}
                 </div>
@@ -204,7 +206,7 @@ export default function FinancialDeep({ data }) {
           </MiniCard>
         )}
         {data.capitalStructure && (
-          <MiniCard title="Структура капитала" note={data.unit || '$млн'}>
+          <MiniCard title={t('Структура капитала', 'Capital structure')} note={data.unit || t('$млн', '$m')}>
             <PeriodTable periods={data.capitalStructure.periods} rows={data.capitalStructure.rows} />
           </MiniCard>
         )}
@@ -213,7 +215,7 @@ export default function FinancialDeep({ data }) {
       {/* ── Working capital + Growth rates ── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 18, marginBottom: 18 }}>
         {data.workingCapital && (
-          <MiniCard title="Оборотный капитал" note={data.unit || '$млн'}>
+          <MiniCard title={t('Оборотный капитал', 'Working capital')} note={data.unit || t('$млн', '$m')}>
             <PeriodTable periods={data.workingCapital.periods} rows={data.workingCapital.groups.flatMap((g) => [
               { label: g.label, v: g.total, bold: true },
               ...g.items.map((it) => ({ label: it.label, v: it.v, indent: true })),
@@ -221,7 +223,7 @@ export default function FinancialDeep({ data }) {
           </MiniCard>
         )}
         {data.growthRates && (
-          <MiniCard title="Темпы роста" note="ср. рост в год">
+          <MiniCard title={t('Темпы роста', 'Growth rates')} note={t('ср. рост в год', 'avg growth per year')}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5 }}>
               <thead><tr>
                 <th />
@@ -240,10 +242,10 @@ export default function FinancialDeep({ data }) {
 
       {/* ── Quarterly revenue ── */}
       {data.quarterlyRevenue && (
-        <MiniCard title="Выручка по кварталам" note={data.unit || '$млн'}>
+        <MiniCard title={t('Выручка по кварталам', 'Revenue by quarter')} note={data.unit || t('$млн', '$m')}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5 }}>
             <thead><tr>
-              {['Год', 'Q1', 'Q2', 'Q3', 'Q4', 'FY'].map((h, i) => <th key={i} style={{ textAlign: i ? 'right' : 'left', padding: '0 0 8px', fontSize: 10.5, color: C.inkFaint, fontWeight: 500 }}>{h}</th>)}
+              {[t('Год', 'Year'), 'Q1', 'Q2', 'Q3', 'Q4', 'FY'].map((h, i) => <th key={i} style={{ textAlign: i ? 'right' : 'left', padding: '0 0 8px', fontSize: 10.5, color: C.inkFaint, fontWeight: 500 }}>{h}</th>)}
             </tr></thead>
             <tbody>{data.quarterlyRevenue.years.map((yr, ri) => (
               <tr key={ri}>

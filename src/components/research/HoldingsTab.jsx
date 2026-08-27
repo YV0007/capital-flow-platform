@@ -253,12 +253,12 @@ function CompareView({ C, META, dim, setDim, excluded, toggle, included }) {
                     <td style={{ padding: "5px 12px 5px 0" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 9 }}>{mono(c)}<span style={{ fontSize: 13, color: C.ink, fontWeight: 500, whiteSpace: "nowrap" }}>{c.name}</span></div>
                     </td>
-                    {HEATMAP_THEMES.map((t) => {
-                      const v = c.compare.themes[t.id];
+                    {HEATMAP_THEMES.map((th) => {
+                      const v = c.compare.themes[th.id];
                       const map = { in: { bg: C.teal, tx: C.isDark ? "#0B130F" : "#fff", lab: t('В фокусе', 'In focus') }, neutral: { bg: C.track, tx: C.inkSoft, lab: t('Нейтрально', 'Neutral') }, avoid: { bg: C.clay, tx: "#fff", lab: t('Избегает', 'Avoiding') } };
                       const cell = v ? map[v] : { bg: "transparent", tx: C.inkFaint, lab: "—" };
                       return (
-                        <td key={t.id} style={{ padding: 4, textAlign: "center" }}>
+                        <td key={th.id} style={{ padding: 4, textAlign: "center" }}>
                           <div style={{ height: 38, borderRadius: 6, background: cell.bg, border: v ? "none" : `1px dashed ${C.line}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 500, color: cell.tx }}>{cell.lab}</div>
                         </td>
                       );
