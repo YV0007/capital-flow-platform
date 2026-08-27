@@ -22,6 +22,7 @@ import { X, RotateCcw } from 'lucide-react';
 import {
   ROLE_META, SPINE_META, EDGE_TYPE_META, PHASE_META, RISK_META, DEFAULT_MIN_STRENGTH,
 } from '../../../data/aiEcosystemNetwork.js';
+import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -38,6 +39,7 @@ export default function EcoFilterBar({
   shownEntities, totalEntities, shownEdges, totalEdges,
   activeCount, onReset, onClose,
 }) {
+  const t = useT();
   // Type chips are offered only for the spines currently in play — otherwise
   // the section is thirty-one chips long and nobody reads it.
   const typeEntries = Object.entries(EDGE_TYPE_META)
@@ -61,19 +63,19 @@ export default function EcoFilterBar({
         <span style={{
           fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
-        }}>Фильтры{activeCount ? ` · ${activeCount}` : ''}</span>
+        }}>{t('Фильтры', 'Filters')}{activeCount ? ` · ${activeCount}` : ''}</span>
         <div style={{ flex: 1 }} />
         {activeCount > 0 && (
-          <button onClick={onReset} title="Сбросить фильтры"
+          <button onClick={onReset} title={t('Сбросить фильтры', 'Reset the filters')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 4, padding: '3px 7px',
               background: 'var(--cf-surface2)', border: '1px solid var(--cf-border)', borderRadius: 5,
               color: 'var(--cf-text4)', fontSize: 9, fontFamily: MONO, fontWeight: 600, cursor: 'pointer',
             }}>
-            <RotateCcw size={9} /> Сброс
+            <RotateCcw size={9} /> {t('Сброс', 'Reset')}
           </button>
         )}
-        <button onClick={onClose} title="Закрыть"
+        <button onClick={onClose} title={t('Закрыть', 'Close')}
           style={{ background: 'none', border: 'none', color: 'var(--cf-text7)', cursor: 'pointer', padding: 2, lineHeight: 0 }}>
           <X size={14} />
         </button>
@@ -93,20 +95,20 @@ export default function EcoFilterBar({
 
       {/* ── Охват сети — ключевые узлы или всё ──────────────────────────── */}
       {onTogglePivotsOnly && (
-        <Group title="Охват сети" hint="Ключевые узлы — центры, вокруг которых собрана сеть, — или вся сеть целиком, вместе с остальными участниками.">
+        <Group title={t('Охват сети', 'Network scope')} hint={t('Ключевые узлы — центры, вокруг которых собрана сеть, — или вся сеть целиком, вместе с остальными участниками.', 'The key nodes the network is built around, or the whole network including everyone else.')}>
           <Chip on={!pivotsOnly} color="#8E9BE6" onClick={() => pivotsOnly && onTogglePivotsOnly()}
-            title="Показать всю сеть — ключевые узлы и всех остальных" wide>
-            Вся сеть
+            title={t('Показать всю сеть — ключевые узлы и всех остальных', 'Show the whole network — key nodes and everyone else')} wide>
+            {t('Вся сеть', 'Whole network')}
           </Chip>
           <Chip on={pivotsOnly} color="#FDE047" onClick={() => !pivotsOnly && onTogglePivotsOnly()}
-            title="Оставить только ключевые узлы — центры сети" wide>
-            Только ключевые{pivotCount ? <Count>{pivotCount}</Count> : null}
+            title={t('Оставить только ключевые узлы — центры сети', 'Keep only the key nodes — the centres of the network')} wide>
+            {t('Только ключевые', 'Key only')}{pivotCount ? <Count>{pivotCount}</Count> : null}
           </Chip>
         </Group>
       )}
 
       {/* ── Хребет — ПЕРВИЧНЫЙ переключатель ────────────────────────────── */}
-      <Group title="Хребет" hint="Пять механик власти. Это первый вопрос к карте: физика, деньги, барьер, шлюз или соперничество.">
+      <Group title={t('Хребет', 'Spine')} hint={t('Пять механик власти. Это первый вопрос к карте: физика, деньги, барьер, шлюз или соперничество.', 'Five mechanics of power. This is the first question to ask the map: physics, money, moat, gate or rivalry.')}>
         {Object.entries(SPINE_META)
           .sort((a, b) => a[1].order - b[1].order)
           .map(([k, v]) => (
@@ -117,18 +119,18 @@ export default function EcoFilterBar({
       </Group>
 
       {/* ── Тип связи — ВТОРИЧНЫЙ, внутри выбранных хребтов ─────────────── */}
-      <Group title="Тип связи"
-        hint={spines.size ? 'Внутри выбранных хребтов.' : 'Все типы карты. Выберите хребет выше, чтобы список стал коротким.'}>
+      <Group title={t('Тип связи', 'Link type')}
+        hint={spines.size ? t('Внутри выбранных хребтов.', 'Within the selected spines.') : t('Все типы карты. Выберите хребет выше, чтобы список стал коротким.', 'Every type on the map. Pick a spine above to shorten the list.')}>
         {typeEntries.map(([k, v]) => (
           <Chip key={k} on={types.has(k)} color={v.color} onClick={() => onToggleType(k)} title={v.blurb}>
             {v.label} <Count>{typesPresent[k]}</Count>
           </Chip>
         ))}
-        {!typeEntries.length && <Empty>Под выбранные хребты типов не нашлось.</Empty>}
+        {!typeEntries.length && <Empty>{t('Под выбранные хребты типов не нашлось.', 'No types match the selected spines.')}</Empty>}
       </Group>
 
       {/* ── Риск связи ──────────────────────────────────────────────────── */}
-      <Group title="Риск связи" hint="Что случится, если зависимость порвётся, и насколько это фатально.">
+      <Group title={t('Риск связи', 'Link risk')} hint={t('Что случится, если зависимость порвётся, и насколько это фатально.', 'What happens if the dependency breaks, and how fatal that is.')}>
         {Object.entries(RISK_META)
           .sort((a, b) => a[1].order - b[1].order)
           .filter(([k]) => risksPresent?.[k])
@@ -140,7 +142,7 @@ export default function EcoFilterBar({
       </Group>
 
       {/* ── Роль ────────────────────────────────────────────────────────── */}
-      <Group title="Роль" hint="Кто это в отрасли: производитель, платформа, оператор, спрос, капитал или государство.">
+      <Group title={t('Роль', 'Role')} hint={t('Кто это в отрасли: производитель, платформа, оператор, спрос, капитал или государство.', 'What this is in the industry: a maker, a platform, an operator, demand, capital or the state.')}>
         {Object.entries(ROLE_META)
           .sort((a, b) => a[1].order - b[1].order)
           .map(([k, v]) => (
@@ -151,7 +153,7 @@ export default function EcoFilterBar({
       </Group>
 
       {/* ── Фаза ────────────────────────────────────────────────────────── */}
-      <Group title="Фаза" hint="Где позиция в своей собственной жизни — складывается, держится или уходит.">
+      <Group title={t('Фаза', 'Phase')} hint={t('Где позиция в своей собственной жизни — складывается, держится или уходит.', 'Where the position sits in its own life — forming, holding or fading.')}>
         {Object.entries(PHASE_META)
           .sort((a, b) => a[1].order - b[1].order)
           .filter(([k]) => phasesPresent?.[k])
@@ -163,7 +165,7 @@ export default function EcoFilterBar({
       </Group>
 
       {/* ── Слой ────────────────────────────────────────────────────────── */}
-      <Group title="Слой" hint="Место в стеке. Сущность в нескольких слоях проходит по любому из них.">
+      <Group title={t('Слой', 'Layer')} hint={t('Место в стеке. Сущность в нескольких слоях проходит по любому из них.', 'Its place in the stack. An entity spanning several layers passes on any of them.')}>
         {layers.map(l => (
           <Chip key={l.id} on={layerSel.has(l.id)} color={l.bandColor} onClick={() => onToggleLayer(l.id)}
             title={`${l.label} · ${l.caption} · ${l.planeMeta?.blurb || ''}`} dim={!l.entityCount}>
@@ -178,7 +180,7 @@ export default function EcoFilterBar({
           fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.1em',
         }}>
-          Порог существенности
+          {t('Порог существенности', 'Materiality threshold')}
           <span style={{ color: 'var(--cf-accent)', fontWeight: 700 }}>{minStrength}</span>
           {minStrength !== DEFAULT_MIN_STRENGTH && (
             <button onClick={() => onMinStrength(DEFAULT_MIN_STRENGTH)}
@@ -191,8 +193,10 @@ export default function EcoFilterBar({
           value={minStrength} onChange={(e) => onMinStrength(Number(e.target.value))}
           style={{ width: '100%', accentColor: 'var(--cf-accent)' }} />
         <div style={{ fontSize: 9.5, color: 'var(--cf-text7)', lineHeight: 1.5, marginTop: 5 }}>
-          Существенность — насколько связь важна ДЛЯ ПОЛУЧАТЕЛЯ, 0–100. На карте по умолчанию видно
-          от {DEFAULT_MIN_STRENGTH}; в панели сущности список связей всегда полный.
+          {t(`Существенность — насколько связь важна ДЛЯ ПОЛУЧАТЕЛЯ, 0–100. На карте по умолчанию видно
+          от ${DEFAULT_MIN_STRENGTH}; в панели сущности список связей всегда полный.`,
+             `Materiality is how much a link matters TO THE RECIPIENT, 0–100. The map shows ${DEFAULT_MIN_STRENGTH}
+          and above by default; the entity panel always lists every link.`)}
         </div>
       </div>
     </div>

@@ -17,10 +17,12 @@ import {
   ROLE_META, EDGE_TYPE_META, SPINE_META, TIER_META, STATUS_META,
   PHASE_META, CONCENTRATION_META, BAND_META, PLANE_META,
 } from '../../../data/aiEcosystemNetwork.js';
+import { useT, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
 export default function EcoLegend({ counts }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
 
   return (
@@ -42,14 +44,14 @@ export default function EcoLegend({ counts }) {
           fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '0.12em',
         }}>
-        Легенда
+        {t('Легенда', 'Legend')}
         {open ? <ChevronDown size={12} color="var(--cf-text7)" /> : <ChevronUp size={12} color="var(--cf-text7)" />}
       </button>
 
       {open && (
         <div style={{ padding: '10px 11px 12px', maxHeight: 'min(520px, calc(100vh - 260px))', overflowY: 'auto' }}>
           {/* The five spines lead: this is the map's first question. */}
-          <Section title="Цвет связи = хребет">
+          <Section title={t('Цвет связи = хребет', 'Link colour = spine')}>
             {Object.entries(SPINE_META)
               .sort((a, b) => a[1].order - b[1].order)
               .map(([k, v]) => (
@@ -59,7 +61,7 @@ export default function EcoLegend({ counts }) {
               ))}
           </Section>
 
-          <Section title="Три плана карты">
+          <Section title={t('Три плана карты', 'The map\'s three planes')}>
             {Object.entries(PLANE_META)
               .sort((a, b) => a[1].order - b[1].order)
               .map(([k, v]) => (
@@ -73,16 +75,16 @@ export default function EcoLegend({ counts }) {
               ))}
           </Section>
 
-          <Section title="Размер плитки = критичность">
-            <Row label="Критично — 90 и выше"><Tile s={15} /></Row>
-            <Row label="Высоко — 75–89"><Tile s={12} /></Row>
-            <Row label="Средне — 60–74"><Tile s={9} /></Row>
-            <Row label="Низко — ниже 45"><Tile s={6} /></Row>
+          <Section title={t('Размер плитки = критичность', 'Tile size = criticality')}>
+            <Row label={t('Критично — 90 и выше', 'Critical — 90 and above')}><Tile s={15} /></Row>
+            <Row label={t('Высоко — 75–89', 'High — 75–89')}><Tile s={12} /></Row>
+            <Row label={t('Средне — 60–74', 'Medium — 60–74')}><Tile s={9} /></Row>
+            <Row label={t('Низко — ниже 45', 'Low — below 45')}><Tile s={6} /></Row>
           </Section>
 
           {/* Roles are told apart by SHAPE as well as colour, so the map still
               reads for a colour-blind eye: colour alone carries the band. */}
-          <Section title="Форма и обводка = роль">
+          <Section title={t('Форма и обводка = роль', 'Shape and outline = role')}>
             {Object.entries(ROLE_META)
               .sort((a, b) => a[1].order - b[1].order)
               .map(([k, v]) => (
@@ -92,7 +94,7 @@ export default function EcoLegend({ counts }) {
               ))}
           </Section>
 
-          <Section title="Цвет плитки = полоса слоя">
+          <Section title={t('Цвет плитки = полоса слоя', 'Tile colour = layer band')}>
             {Object.entries(BAND_META).map(([k, v]) => (
               <Row key={k} label={v.label} count={counts?.band?.[k]}>
                 <span style={{ width: 11, height: 11, borderRadius: 3, background: v.color }} />
@@ -100,7 +102,7 @@ export default function EcoLegend({ counts }) {
             ))}
           </Section>
 
-          <Section title="Фаза сущности">
+          <Section title={t('Фаза сущности', 'Entity phase')}>
             {Object.entries(PHASE_META)
               .sort((a, b) => a[1].order - b[1].order)
               .map(([k, v]) => (
@@ -110,7 +112,7 @@ export default function EcoLegend({ counts }) {
               ))}
           </Section>
 
-          <Section title="Тип связи">
+          <Section title={t('Тип связи', 'Link type')}>
             {Object.entries(EDGE_TYPE_META)
               .filter(([k]) => counts?.type?.[k])
               .sort((a, b) => a[1].order - b[1].order)
@@ -121,7 +123,7 @@ export default function EcoLegend({ counts }) {
               ))}
           </Section>
 
-          <Section title="Яркость связи = насколько доказана">
+          <Section title={t('Яркость связи = насколько доказана', 'Link brightness = how well evidenced')}>
             {Object.entries(STATUS_META)
               .sort((a, b) => a[1].rank - b[1].rank)
               .map(([k, v]) => (
@@ -132,13 +134,13 @@ export default function EcoLegend({ counts }) {
                   }} />
                 </Row>
               ))}
-            <Row label="Пунктира нет: различие несёт яркость, точная формулировка — тултип и панель"
+            <Row label={t('Пунктира нет: различие несёт яркость, точная формулировка — тултип и панель', 'No dashes: brightness carries the distinction, and the exact wording lives in the tooltip and the panel')}
               title="Контракт говорит «один источник → пунктир». Пунктирные волосяные линии на карте с сотней связей читаются как шум и ломают семейное сходство с картой потоков, поэтому различие перенесено в яркость. Данные не тронуты — только их подача." />
           </Section>
 
           {/* Tiers as sentences. The contract numbers them 1-6; a number on
               screen would tell nobody anything. */}
-          <Section title="Насколько твёрд источник">
+          <Section title={t('Насколько твёрд источник', 'How solid the source is')}>
             {Object.entries(TIER_META)
               .sort((a, b) => a[1].rank - b[1].rank)
               .map(([k, v]) => (
@@ -148,7 +150,7 @@ export default function EcoLegend({ counts }) {
               ))}
           </Section>
 
-          <Section title="Концентрация слоя">
+          <Section title={t('Концентрация слоя', 'Layer concentration')}>
             {Object.entries(CONCENTRATION_META)
               .sort((a, b) => a[1].order - b[1].order)
               .map(([k, v]) => (
@@ -156,16 +158,16 @@ export default function EcoLegend({ counts }) {
                   <span style={{ width: 11, height: 11, borderRadius: '50%', background: v.color + '33', border: `1.5px solid ${v.color}` }} />
                 </Row>
               ))}
-            <Row label="Монопольный слой обведён и помечен ✦" />
+            <Row label={t('Монопольный слой обведён и помечен ✦', 'A monopoly layer is outlined and marked ✦')} />
           </Section>
 
           <div style={{
             marginTop: 10, paddingTop: 9, borderTop: '1px solid var(--cf-border-soft)',
             fontSize: 9, color: 'var(--cf-text7)', fontFamily: MONO, lineHeight: 1.6,
           }}>
-            Клик по сущности → цепочка по стеку<br />
-            Клик по названию острова → отчёт по слою<br />
-            Esc → сбросить
+            {t('Клик по сущности → цепочка по стеку', 'Click an entity → the chain through the stack')}<br />
+            {t('Клик по названию острова → отчёт по слою', 'Click an island title → the layer report')}<br />
+            {t('Esc → сбросить', 'Esc → clear')}
           </div>
         </div>
       )}
@@ -174,13 +176,15 @@ export default function EcoLegend({ counts }) {
 }
 
 /** One phrase per spine — the whole defence against a five-colour traffic light. */
+// A plain helper, not a component — reads the module mirror rather than a hook.
 function spineLine(k) {
+  const en = getLang() === 'en';
   return {
-    physical: 'Физика — что движется',
-    capital:  'Капитал — кто платит',
-    moat:     'Барьер — что запирает',
-    control:  'Контроль — кто шлюзует',
-    rivalry:  'Соперничество — кто откусывает',
+    physical: en ? 'Physical — what moves'        : 'Физика — что движется',
+    capital:  en ? 'Capital — who pays'           : 'Капитал — кто платит',
+    moat:     en ? 'Moat — what locks in'         : 'Барьер — что запирает',
+    control:  en ? 'Control — who gates'          : 'Контроль — кто шлюзует',
+    rivalry:  en ? 'Rivalry — who takes a bite'   : 'Соперничество — кто откусывает',
   }[k] || k;
 }
 
