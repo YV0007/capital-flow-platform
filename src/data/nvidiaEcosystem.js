@@ -829,6 +829,11 @@ const manifestByName = (() => {
 function logoUrlsFor(e) {
   const out = [];
   const push = (u) => { if (u && !out.includes(u)) out.push(u); };
+  // BY ID first. `npm run logos` now walks this map too and writes its marks
+  // under the entity's own id, which is exact — the name match below is a
+  // fallback for entities that share a brand with the flow map ("NVIDIA"), and
+  // it cannot see an id like `astera-labs` whose name is "Astera Labs".
+  push(logoManifest[e.id]);
   push(manifestByName.get(String(e.name || '').trim().toLowerCase()));
   (e.aliases || []).forEach(a => push(manifestByName.get(String(a).trim().toLowerCase())));
   const dom = logoDomains[e.id];

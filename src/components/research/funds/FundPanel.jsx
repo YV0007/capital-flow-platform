@@ -269,10 +269,10 @@ function Activity({ fund, onOpenSecurity }) {
               ? <div style={{ fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text8)' }}>—</div>
               : (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  {g.list.map(t => {
-                    const p = byTicker[t];
+                  {g.list.map(tk => {
+                    const p = byTicker[tk];
                     return (
-                      <button key={t} onClick={() => onOpenSecurity?.(t)}
+                      <button key={tk} onClick={() => onOpenSecurity?.(tk)}
                         title={p ? t(`${p.issuer}\nВес ${fmtPct(p.weight)}${p.deltaShown && p.share_delta_pct != null ? ` · по акциям ${fmtPct(p.share_delta_pct, 1)}` : ''}`,
                              `${p.issuer}\nWeight ${fmtPct(p.weight)}${p.deltaShown && p.share_delta_pct != null ? ` · by shares ${fmtPct(p.share_delta_pct, 1)}` : ''}`) : ''}
                         style={{
@@ -280,7 +280,7 @@ function Activity({ fund, onOpenSecurity }) {
                           border: `1px solid ${hexA(g.meta.color, 0.28)}`, borderRadius: 4,
                           color: 'var(--cf-text2)', fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
                           cursor: 'pointer',
-                        }}>{t}</button>
+                        }}>{tk}</button>
                     );
                   })}
                 </div>
@@ -380,10 +380,10 @@ function Conviction({ fund, onOpenSecurity }) {
             </div>
           : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              {weak.map(t => {
-                const p = byTicker[t];
+              {weak.map(tk => {
+                const p = byTicker[tk];
                 return (
-                  <button key={`w-${t}`} onClick={() => onOpenSecurity?.(t)}
+                  <button key={`w-${tk}`} onClick={() => onOpenSecurity?.(tk)}
                     style={{
                       display: 'grid', gridTemplateColumns: '58px 1fr 62px 58px',
                       alignItems: 'center', gap: 8, padding: '5px 6px', width: '100%',
@@ -392,7 +392,7 @@ function Conviction({ fund, onOpenSecurity }) {
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--cf-hover)')}
                     onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}>
-                    <span style={{ fontSize: 10.5, fontFamily: MONO, fontWeight: 800, color: 'var(--cf-text1)' }}>{t}</span>
+                    <span style={{ fontSize: 10.5, fontFamily: MONO, fontWeight: 800, color: 'var(--cf-text1)' }}>{tk}</span>
                     <span style={{
                       fontSize: 10, color: 'var(--cf-text5)', overflow: 'hidden',
                       textOverflow: 'ellipsis', whiteSpace: 'nowrap',

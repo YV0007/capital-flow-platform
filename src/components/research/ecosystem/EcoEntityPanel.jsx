@@ -484,26 +484,54 @@ function RelationList({
   selectedEdgeId, onSelectEdge, openEvidence, onToggleEvidence,
   onOpenEntity, glossary, isFixture,
 }) {
-  const TOP = 5;
-  const list = showAll ? edges : edges.slice(0, TOP);
-  const hidden = edges.length - list.length;
   // Who performs the verb flips with the direction of the list, and that was
   // the whole confusion: «ПРОИЗВОДИТ» next to TSMC on NVIDIA's panel could be
   // read either way round. Said once, in words, per row's tooltip.
   const up = side === 'source';
 
-  return (
-    <Section title={title} icon={icon} count={edges.length}>
-      {!edges.length && <Note>{empty}</Note>}
-      {!!edges.length && <ColHeads left="Контрагент" right="Связь · существенность" />}
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {list.map(e => {
-          const otherId = side === 'source' ? e.sourceId : e.targetId;
-          const other = entityById.get(otherId);
-          if (!other) return null;
-          const open = openEvidence === e.id;
-          const sub = substitutabilityRead(e.substitutability);
-          return (
+  // ── Grouped by RELATION KIND ────────────────────────────────────────────
+  // A hub like NVIDIA has a dozen incoming relations and four of them are the
+  // same verb. Flat and sorted by strength, those four land at ranks 1, 4, 7
+  // and 11 with unrelated kinds in between, and the panel reads as a list of
+  // unrelated facts. Grouping puts every «покупает здесь» together, so the
+  // question the reader actually has — "who supplies it, and who owns it" —
+  // is answered by the shape of the list.
+  //
+  // The per-group cap replaces the old global top-5: cutting a flat list at
+  // five hid whole KINDS of relation, which is exactly the information the
+  // grouping exists to show.
+  const PER_GROUP = 4;
+  const [openGroups, setOpenGroups] = useState(() => new Set());
+  const groups = useMemo(() => {
+    const by = new Map();
+    edges.forEach(e => {
+      const key = e.type || 'other';
+      const g = by.get(key);
+      if (g) g.rows.push(e);
+      else by.set(key, {
+        key,
+        label: (up ? e.typeMeta?.up : e.typeMeta?.down) || e.verb || e.typeLabel || key,
+        color: e.color,
+        spine: e.spineMeta,
+        rows: [e],
+      });
+    });
+    // Heaviest kind first — by summed strength, not by count, so one decisive
+    // dependency outranks three marginal ones.
+    return [...by.values()]
+      .map(g => ({ ...g, weight: g.rows.reduce((s, e) => s + (e.strength || 0), 0) }))
+      .sort((a, b) => b.weight - a.weight);
+  }, [edges, up]);
+  // One kind only? Then the group header would just restate the section title.
+  const showHeaders = groups.length > 1;
+
+  const renderRow = (e) => {
+    const otherId = side === 'source' ? e.sourceId : e.targetId;
+    const other = entityById.get(otherId);
+    if (!other) return null;
+    const open = openEvidence === e.id;
+    const sub = substitutabilityRead(e.substitutability);
+    return (
             <div key={e.id} style={{
               borderTop: '1px solid var(--cf-border-hair)',
               background: e.id === selectedEdgeId ? 'var(--cf-hover)' : 'transparent',
@@ -598,20 +626,60 @@ function RelationList({
                 </div>
               )}
             </div>
-          );
-        })}
-      </div>
-      {hidden > 0 && (
-        <button onClick={onShowAll} style={{
-          display: 'block', width: 'calc(100% - 24px)', margin: '7px 12px 0',
-          padding: '6px 0', background: 'var(--cf-surface2)',
-          border: '1px solid var(--cf-border)', borderRadius: 6, cursor: 'pointer',
-          color: 'var(--cf-text4)', fontSize: 10, fontFamily: MONO, fontWeight: 600,
-          textTransform: 'uppercase', letterSpacing: '0.07em',
-        }}>
-          Ещё {hidden}
-        </button>
-      )}
+    );
+  };
+
+  return (
+    <Section title={title} icon={icon} count={edges.length}>
+      {!edges.length && <Note>{empty}</Note>}
+      {!!edges.length && !showHeaders && <ColHeads left="Контрагент" right="Связь · существенность" />}
+      {groups.map(g => {
+        const open = openGroups.has(g.key);
+        const rows = open ? g.rows : g.rows.slice(0, PER_GROUP);
+        const hidden = g.rows.length - rows.length;
+        return (
+          <div key={g.key}>
+            {showHeaders && (
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: 7,
+                padding: '9px 16px 4px',
+              }}>
+                <span title={g.spine?.blurb} style={{
+                  width: 3, height: 11, borderRadius: 2, marginLeft: -6,
+                  background: g.spine?.color, flexShrink: 0, cursor: 'help',
+                }} />
+                <span style={{
+                  fontSize: 9, fontFamily: MONO, fontWeight: 700, color: g.color,
+                  textTransform: 'uppercase', letterSpacing: '0.07em',
+                }}>{g.label}</span>
+                <span style={{ fontSize: 9, fontFamily: MONO, color: 'var(--cf-text8)' }}>
+                  {g.rows.length}
+                </span>
+                <div style={{ flex: 1 }} />
+                <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text8)' }}>
+                  СУЩЕСТВ.
+                </span>
+              </div>
+            )}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {rows.map(renderRow)}
+            </div>
+            {hidden > 0 && (
+              <button
+                onClick={() => setOpenGroups(prev => new Set(prev).add(g.key))}
+                style={{
+                  display: 'block', width: 'calc(100% - 24px)', margin: '6px 12px 0',
+                  padding: '5px 0', background: 'var(--cf-surface2)',
+                  border: '1px solid var(--cf-border)', borderRadius: 6, cursor: 'pointer',
+                  color: 'var(--cf-text4)', fontSize: 9.5, fontFamily: MONO, fontWeight: 600,
+                  textTransform: 'uppercase', letterSpacing: '0.07em',
+                }}>
+                Ещё {hidden} · {g.label.toLowerCase()}
+              </button>
+            )}
+          </div>
+        );
+      })}
     </Section>
   );
 }
