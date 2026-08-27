@@ -30,6 +30,30 @@ Stages 1, 2a, 2b complete. Stage 3 (Tracker migration) is next.
   entities (the engine's `deliver.py` already does this automatically). See
   `src/components/research/capitalflow/README.md` § Logo pipeline.
 
+## Языки (RU | EN)
+
+Весь дашборд двуязычный, переключатель — в шапке (`app:lang` в localStorage).
+Ядро: `src/lib/i18n.jsx`.
+
+- **Копия в компонентах** — `const t = useT()`, затем `t('Фильтры', 'Filters')`.
+  Русский первым: он оригинал. Каталога ключей нет — пара и есть ключ.
+- **Таксономии в data-модулях** — `bi()` / `biMap()` из `src/data/capitalMap.js`
+  отдают ГЕТТЕРЫ, поэтому сотни мест вида `META[k].label` читают обычную строку.
+- **Проза из движка** — приходит парами `{ ru, en }`, резолвится через `useL()`.
+  Русский сайд-кар `capitalMapRu.json` в английском режиме просто не подключается.
+- **Не в компоненте** (хелпер, канвас, компаратор) — `getLang()`, не хук.
+
+Три правила, нарушение которых видно только в рантайме, поэтому их держат ворота
+сборки (`npm run i18n:check` + `npm run i18n:lint`, оба в `prebuild`):
+
+1. **Никогда не вызывать `t()` на уровне модуля.** Он выполняется при импорте,
+   когда переводчика ещё нет: ReferenceError роняет бандл, и пользователь видит
+   белый экран. Таблица должна быть функцией от `t` либо на геттерах `bi()`.
+2. **Не затенять `t`.** `t` как переменная цикла, таймер или мета-объект
+   превращает `t('…','…')` в вызов строки.
+3. **Spread замораживает геттер.** `{ ...node }` читает `label` один раз, в
+   момент копирования. Геттер надо переприсоединить (см. `layoutNodes()`).
+
 ## Token budget rules
 - NEVER read full data JSONs (`src/data/*.json`, `src/data/holdings-v2/**/*.json`) — they are 200–400 KB each and burn 50–100K tokens per read.
   Use `grep` or `Bash` to find the relevant key/section first, then `Read` with `offset` + `limit` to grab only what you need.
