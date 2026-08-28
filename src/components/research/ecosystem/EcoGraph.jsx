@@ -35,6 +35,10 @@ import { useThemeMode, canvasTokens, tone } from '../capitalflow/canvasTheme.js'
 import { criticalityBand, weightBand } from '../../../data/aiEcosystemNetwork.js';
 import { getLang } from '../../../lib/i18n.jsx';
 
+// Every bond is painted by paintBond and nothing else. A module constant keeps
+// the accessor identity stable across renders.
+const LINK_REPLACE = () => 'replace';
+
 export default function EcoGraph({
   graphData, regions, techNodes,
   visibleNodes, visibleEdges,
@@ -551,10 +555,19 @@ export default function EcoGraph({
     // selection and a lit chain still lift a bond clear of the field, which is
     // when you want to see it. The band was lifted once off its first setting:
     // the idle field read as too faint to trace a line across the map.
-    const base = mode === 'light' ? 0.32 : 0.26;
-    const a = (base + 0.32 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
-    const lc = tone(e.color, mode);
+    // Band pulled down once more when the bonds became streams: the dash
+    // rhythm and the desaturation already carry the line, so the old band read
+    // as loud under them. (0.32-0.64 / 0.26-0.58 → 0.26-0.54 / 0.21-0.49.)
+    const base = mode === 'light' ? 0.26 : 0.21;
+    const a = (base + 0.28 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
+
+    // Chroma is a signal, not a texture: a bond at rest is pulled most of the
+    // way toward grey, and gets its colour back the moment it is the one you
+    // are looking at. See desat().
+    const focused = e.id === hoverEdgeId || (hasChain && chain.edges.has(e.id));
+    const lc = tone(desat(e.color, focused ? 0.10 : 0.34), mode);
     if (e.id === hoverEdgeId) return hexA(lc, Math.min(1, a + 0.45));
+
     // With a node selected the field is already down to its own chain, so the
     // surviving bonds can be pushed well clear of the idle band — that is the
     // whole point of having clicked. Only the chain is on screen, so a strong
@@ -584,6 +597,83 @@ export default function EcoGraph({
     if (hasChain) return w + 0.3;
     return w;
   }, [edgeLit, selectedEdgeId, hoverEdgeId, cycleMode, cycleEdges, hasChain]);
+
+  // ── The bond as a STREAM ───────────────────────────────────────────────
+  //
+  // Ported from the home page's capital streams, which read as flowing rather
+  // than as drawn: a wide faint BED under a thinner DASHED CURRENT on top. The
+  // dash is what does the work — a dashed hairline puts about a third less ink
+  // on the canvas than a solid one of the same weight, so 260 bonds in one
+  // frame stop reading as a wall while each individual bond stays traceable.
+  //
+  // Painted here rather than left to force-graph's own renderer because that
+  // one strokes a single line per bond and resets the dash offset every frame,
+  // so neither the two layers nor the drift are expressible through it. Mode
+  // is 'replace'; arrows and particles are separate passes and still run, and
+  // link hover is unaffected — the shadow canvas takes its geometry from
+  // `linkPointerAreaPaint`, never from this. (Verified in force-graph 1.29.)
+  //
+  // MOTION IS EARNED, NOT AMBIENT. The current drifts only where a chain, a
+  // circuit or the pointer has already narrowed the map to a handful of bonds.
+  // On the full map every dash stands still: 260 bonds all crawling at once is
+  // exactly the crowding this design was meant to cure.
+  const scaleRef = useRef(1);
+  const BOND_DASH_PX = 5;      // the home stream's 5/11 rhythm, in screen px
+  const BOND_GAP_PX = 11;
+  // The bed has to stay UNDER the perception threshold of a continuous line.
+  // First pass had it at 2.2x width / 0.30 alpha and the map got busier, not
+  // calmer: a solid bed that wide simply fills the dash gaps, so every bond
+  // reads as an unbroken line with a brighter dash painted on top — more ink
+  // than the solid bond it replaced. It exists to hint at the path between
+  // dashes, not to draw it.
+  const BOND_BED_MULT = 1.5;
+  const BOND_BED_ALPHA = 0.13;
+  const DRIFT_PX_PER_S = 26;
+
+  const paintBond = useCallback((e, ctx, globalScale) => {
+    scaleRef.current = globalScale;
+    const stroke = linkColor(e);
+    if (!stroke || stroke === 'rgba(0,0,0,0)') return;
+    const w = linkW(e);
+    if (!w) return;
+    const s = e.source, t2 = e.target;
+    if (!s || !t2 || typeof s.x !== 'number' || typeof t2.x !== 'number') return;
+
+    // force-graph has already solved the curve for this frame and left the
+    // control point on the link; re-deriving it here would risk drawing a
+    // different line than the one the arrows and particles ride.
+    const cp = e.__controlPoints;
+    const trace = () => {
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      if (!cp) ctx.lineTo(t2.x, t2.y);
+      else if (cp.length === 2) ctx.quadraticCurveTo(cp[0], cp[1], t2.x, t2.y);
+      else ctx.bezierCurveTo(cp[0], cp[1], cp[2], cp[3], t2.x, t2.y);
+    };
+
+    // Widths and dashes are authored in SCREEN pixels and divided by the zoom,
+    // so the stream keeps its rhythm whether you are looking at the whole map
+    // or at one chain — the same reason force-graph divides linkWidth itself.
+    ctx.save();
+    ctx.lineCap = 'round';
+
+    trace();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = withA(stroke, BOND_BED_ALPHA);
+    ctx.lineWidth = (w * BOND_BED_MULT) / globalScale;
+    ctx.stroke();
+
+    const moving = hasChain || cycleMode || e.id === hoverEdgeId || e.id === selectedEdgeId;
+    trace();
+    ctx.setLineDash([BOND_DASH_PX / globalScale, BOND_GAP_PX / globalScale]);
+    ctx.lineDashOffset = moving
+      ? -((performance.now() / 1000) * DRIFT_PX_PER_S) / globalScale
+      : 0;
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = w / globalScale;
+    ctx.stroke();
+    ctx.restore();
+  }, [linkColor, linkW, hasChain, cycleMode, hoverEdgeId, selectedEdgeId]);
 
   const particles = useCallback((e) => {
     // Motion only on focus, so the map is still when idle — movement is a
@@ -668,8 +758,33 @@ export default function EcoGraph({
           linkColor={linkColor}
           linkWidth={linkW}
           linkCurvature="curvature"
-          linkDirectionalArrowLength={(e) => (hasChain ? 2.5 : 1.9) + 1.2 * Math.sqrt((e.strength || 0) / 100)}
+          linkCanvasObject={paintBond}
+          linkCanvasObjectMode={LINK_REPLACE}
+          // Arrowheads are drawn by force-graph in GRAPH units, so the old
+          // constant 1.9-3.7 was ~0.4 screen px at whole-map zoom — a direction
+          // marker nobody could see, on a map whose whole subject is which way
+          // the dependency runs. Sized in screen px instead and divided by the
+          // live zoom, so the head stays the same readable size at every scale.
+          // `scaleRef` is filled by paintBond, which force-graph runs on every
+          // visible link immediately before this pass, every frame.
+          linkDirectionalArrowLength={(e) => {
+            // Small at rest — 260 heads in one frame is its own kind of noise —
+            // and full size the moment the map is down to one chain or circuit.
+            const px = (hasChain || cycleMode) ? 7 : 4;
+            return (px + 1.6 * Math.sqrt((e.strength || 0) / 100)) / (scaleRef.current || 1);
+          }}
           linkDirectionalArrowRelPos={0.92}
+          // The head carries the direction, so it keeps more chroma and more
+          // opacity than the line it sits on — otherwise it desaturates into
+          // the bond and stops answering the one question it is there for.
+          linkDirectionalArrowColor={(e) => {
+            const cyc = cycleMode ? cycleEdges.get(e.id) : null;
+            if (cyc) return hexA(tone(cyc.color, mode), 0.95);
+            const lit = e.id === hoverEdgeId || e.id === selectedEdgeId
+              || (hasChain && chain.edges.has(e.id));
+            return hexA(tone(desat(e.color, lit ? 0.06 : 0.24), mode), lit ? 0.95 : 0.6);
+          }}
+
           linkDirectionalParticles={particles}
           // Bigger and faster than the first pass — a hairline edge with a
           // 1-2px dot crawling along it at 0.004/frame read as "maybe
@@ -738,6 +853,31 @@ function hexA(hex, a) {
   if (!/^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$/.test(h)) return hex;
   const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
   return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+}
+
+/** Re-scale the alpha of an `rgba()` string (what linkColor returns). */
+function withA(rgba, mult) {
+  const m = /^rgba?\(([^)]+)\)$/.exec(String(rgba));
+  if (!m) return rgba;
+  const [r, g, b, a = '1'] = m[1].split(',').map(v => v.trim());
+  return `rgba(${r},${g},${b},${Math.max(0, Math.min(1, Number(a) * mult))})`;
+}
+
+/**
+ * Pull a colour toward its own grey. The bonds carry five spine hues at once
+ * and 260 of them share one frame — at full chroma the idle map reads as a
+ * plaid, and the thing you actually clicked has to shout over it. Desaturated
+ * at rest, near-full chroma the moment a bond is hovered, selected or lit by a
+ * chain, so colour becomes a signal again instead of the background.
+ */
+function desat(hex, amount) {
+  const h = String(hex).replace('#', '');
+  if (!/^[0-9a-fA-F]{6}$/.test(h)) return hex;
+  const n = parseInt(h, 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  const grey = 0.299 * r + 0.587 * g + 0.114 * b;
+  const f = (c) => Math.round(c + (grey - c) * amount);
+  return `#${[f(r), f(g), f(b)].map(v => v.toString(16).padStart(2, '0')).join('')}`;
 }
 
 function mix(a, b, t) {
