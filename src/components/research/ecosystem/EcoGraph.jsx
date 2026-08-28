@@ -136,19 +136,29 @@ export default function EcoGraph({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Any filter at all is up: fewer tiles on the board than the map holds.
+  const hasFilter = visibleNodes.size < graphData.nodes.length;
+
   // …and stop trying the moment a lens takes over the camera. That interval can
   // stay alive for up to fifteen seconds, because every layout change (a panel
   // opening, a drawer sliding) bumps lastResizeRef and defers its next attempt.
   // A late whole-map fit then lands ON TOP of the framing a lens just did and
   // silently undoes it — the symptom being a circuit that is lit, correct, and
   // three pixels wide because the camera snapped back out.
+  //
+  // A FILTER counts here too. It is not a lens, but it owns the camera for the
+  // same reason: once the board is down to the nine entities a link type
+  // touches, EcosystemMap fits to those nine, and a whole-map fit arriving half
+  // a second later throws that away — the filter then reads as an empty canvas.
+  // Opening the filter drawer is itself a layout change, so this interval is
+  // always still alive at exactly the wrong moment.
   useEffect(() => {
-    if (!cycleMode && !subgraphLens && !chainRoot) return;
+    if (!cycleMode && !subgraphLens && !chainRoot && !hasFilter) return;
     if (fitIntervalRef.current) {
       clearInterval(fitIntervalRef.current);
       fitIntervalRef.current = null;
     }
-  }, [cycleMode, subgraphLens, chainRoot]);
+  }, [cycleMode, subgraphLens, chainRoot, hasFilter]);
 
   // ── Kill every force — the layout is fixed ─────────────────────────────
   useEffect(() => {
@@ -159,8 +169,6 @@ export default function EcoGraph({
     fg.d3Force('link', null);
   }, [fgRef, graphData]);
 
-
-  const hasFilter = visibleNodes.size < graphData.nodes.length;
 
   const nodeLit = useCallback((n) => {
     if (!visibleNodes.has(n.id)) return false;

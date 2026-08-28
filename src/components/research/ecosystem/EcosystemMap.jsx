@@ -125,21 +125,46 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   const [expanded, setExpanded] = useState(() => new Set());
 
   // ── Visibility — a plain filter, applied before any lens ───────────────
+  //
+  // Two kinds of filter meet here and they narrow different things. ENTITY
+  // filters (role, phase, pivots, layer) pick nodes directly. EDGE filters
+  // (spine, type, risk, materiality) pick links — and an entity survives one
+  // only by still holding a link that did.
+  //
+  // That second half used to be missing: filtering to «затачивает под» left 7
+  // links drawn across all 107 tiles, so the answer was seven hairlines lost
+  // in a field of a hundred entities that had nothing to do with the question.
+  // Now an edge filter carries its endpoints with it and drops the rest.
+  //
+  // Gated on an edge filter actually being ACTIVE, because `minStrength` sits
+  // at DEFAULT_MIN_STRENGTH out of the box and already hides the weakest
+  // links: narrowing unconditionally would quietly delete entities from the
+  // default view, which is a map, not an answer to anything.
   const { visibleNodes, visibleEdges } = useMemo(() => {
     const entityOk = (n) => (!roles.size || roles.has(n.role))
       && (!phases.size || phases.has(n.phase))
       && (!pivotsOnly || n.isPivotal)
       && (!layerSel.size || n.segments.some(s => layerSel.has(s.layer)));
     const nodes = new Set(graph.entities.filter(entityOk).map(n => n.id));
-    const edges = new Set(
-      graph.edges.filter(e =>
-        (e.strength || 0) >= minStrength
-        && (!spines.size || spines.has(e.spine))
-        && (!types.size || types.has(e.type))
-        && (!risks.size || risks.has(e.risk?.level))
-        && nodes.has(e.sourceId) && nodes.has(e.targetId)
-      ).map(e => e.id)
+    const kept = graph.edges.filter(e =>
+      (e.strength || 0) >= minStrength
+      && (!spines.size || spines.has(e.spine))
+      && (!types.size || types.has(e.type))
+      && (!risks.size || risks.has(e.risk?.level))
+      && nodes.has(e.sourceId) && nodes.has(e.targetId)
     );
+    const edges = new Set(kept.map(e => e.id));
+
+    const edgeFilterOn = !!(spines.size || types.size || risks.size
+      || minStrength !== DEFAULT_MIN_STRENGTH);
+    if (edgeFilterOn) {
+      const touched = new Set();
+      kept.forEach(e => { touched.add(e.sourceId); touched.add(e.targetId); });
+      // Intersect rather than replace — an entity filter that is also up still
+      // has the last word, and every kept edge already has both ends inside
+      // `nodes`, so the surviving edge set stays exactly as computed.
+      nodes.forEach(id => { if (!touched.has(id)) nodes.delete(id); });
+    }
     return { visibleNodes: nodes, visibleEdges: edges };
   }, [graph, roles, phases, pivotsOnly, layerSel, spines, types, risks, minStrength]);
 
@@ -193,6 +218,35 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     const timer = setTimeout(() => fgRef.current?.zoomToFit(700, 80), 450);
     return () => clearTimeout(timer);
   }, [cycleMode, cycleNodeSet, fgRef]);
+
+  // Re-frame when a filter changes what is on the board. Narrowing 107 tiles
+  // to the 9 that a link type actually touches leaves those 9 scattered across
+  // the full layout, most of them outside whatever the camera happened to be
+  // looking at — the filter reads as "everything disappeared" rather than as an
+  // answer. So the camera fits itself to the survivors.
+  //
+  // INSTANT (duration 0), and that is the whole trick. The cycle lens above
+  // documents why an ANIMATED filtered fit does not work: force-graph drives
+  // centerAt and zoom as two d3 transitions on one zoom behaviour, so the pan
+  // is cancelled by the zoom and the result lands off-screen. With no duration
+  // there are no transitions to cancel, which is also why EcoGraph's first
+  // framing is instant.
+  //
+  // The other lenses own the camera while they are up, and the first run is
+  // skipped because EcoGraph frames the map on mount.
+  const filterFitReady = useRef(false);
+  useEffect(() => {
+    if (view !== 'map') return;
+    if (!filterFitReady.current) { filterFitReady.current = true; return; }
+    if (chainRoot || cycleMode || subgraphId) return;
+    if (!visibleNodes.size) return;
+    // After the drawer's own layout shift, which otherwise re-centres on top.
+    const timer = setTimeout(
+      () => fgRef.current?.zoomToFit(0, 80, (n) => visibleNodes.has(n.id)),
+      120,
+    );
+    return () => clearTimeout(timer);
+  }, [visibleNodes, view, chainRoot, cycleMode, subgraphId, fgRef]);
 
   // ── The chain ──────────────────────────────────────────────────────────
   // A subgraph lens is a boundary, not a dimmer: while one is active, the
