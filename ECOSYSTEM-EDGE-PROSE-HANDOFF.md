@@ -3,7 +3,7 @@
 **To:** the Capital Flow engine session (monthly `run_network.py`).
 **Scope:** EVERY user-facing prose field in the ecosystem payload — `oneLiner`
 (107), `edges[].note` (262), `whyIrreplaceable`, `whatBreaksIt`, `criticalityWhy`,
-`risk.note`, `risk.mitigation`, `detail`. The vocabulary rules in §1 are a sweep,
+`risk.note`, `risk.mitigation`, `detail`. The rules in §1 and §2 are a sweep,
 not a sample.
 **Date:** 2026-08-28.
 
@@ -25,9 +25,56 @@ is sized for it. Raise information per character, not character count.
 
 ---
 
-## 1. Banned vocabulary — replace every instance
+## 1. THE GOVERNING RULE — a note describes THIS relationship
 
-### 1.1 «якорь» — 126 instances across the payload, 43 in edge notes
+**48 of 262 notes (18%) are about a third party instead of the two companies the
+edge actually connects.** This is a more serious problem than any word choice,
+and fixing it should be the organising principle of the pass.
+
+### The case that makes it obvious
+
+Click the **AMD → TSMC** edge. It is a manufacturing relationship: AMD designs
+accelerators, TSMC fabricates them. The card says:
+
+> «Конкурент якоря делает свои чипы на той же фабрике: узкое место общее для
+> обоих.»
+
+The subject of that sentence is **NVIDIA** — a company that is not on either end
+of this edge. A reader who clicked AMD → TSMC asked "what happens between AMD and
+TSMC" and was answered with a fact about someone else. Nothing in the sentence
+tells them what AMD actually orders, on what process, in what volume, or on what
+terms.
+
+> **Target:** «AMD проектирует ускорители Instinct, а печатает их TSMC — на том
+> же 3-нм процессе, что и заказы NVIDIA. Своих фабрик у AMD нет с 2009 года.»
+
+Now the sentence is about AMD and TSMC. It says what is made, where, on which
+process, and — the load-bearing fact — that AMD has no fab of its own, which is
+*why* this edge exists at all.
+
+### Where the competitor fact belongs
+
+It is not lost. **AMD → NVIDIA already exists as an edge**, labelled «прямой
+конкурент» in the entity panel. That is where "AMD is NVIDIA's main rival, and
+both print at the same fab" belongs — because there the two endpoints *are* the
+two companies being compared.
+
+**Rule: every note's subject is one of the two endpoints. A third party appears
+only as an object in the sentence, never as what the sentence is about. If the
+fact is really about A and C, it belongs on the A → C edge.**
+
+### Why this matters more than it looks
+
+Each edge is a slot for one specific fact. When notes drift onto third parties,
+the same NVIDIA comparison gets repeated across a dozen edges while the actual
+relationships — what AMD buys from TSMC, on what terms — go unrecorded anywhere.
+The map ends up with 262 slots and far fewer than 262 facts.
+
+---
+
+## 2. Banned vocabulary — replace every instance
+
+### 2.1 «якорь» — 126 instances across the payload, 43 in edge notes
 
 **This is the biggest single problem.** The map no longer has one anchor — v3
 generalised to 27 co-equal pivots — so «якорь» is now both jargon *and* factually
@@ -45,7 +92,7 @@ Distribution to fix: `edges[].note` 43 · `criticalityWhy.strategicControl` 56 �
 `whyIrreplaceable` 11 · `oneLiner` 7 · `whatBreaksIt` 2 · `risk.mitigation` 4 ·
 `risk.note` 1 · `criticalityWhy.irreplaceability` 1 · `detail` 1.
 
-### 1.2 Ordinals with no referent — «второй», «первый» — 20 of 107 `oneLiner`s
+### 2.2 Ordinals with no referent — «второй», «первый» — 20 of 107 `oneLiner`s
 
 **This is the clearest example of the whole problem, and it is worth reading
 carefully.** Open AMD as your first click on the map. The panel says, in full:
@@ -75,7 +122,7 @@ All 20 affected: Amazon, AMD, Amkor, Anthropic, Cadence, Китай, Cisco, Digi
 Realty, Fabrinet, HPE, JAX, NVIDIA NIM, NVIDIA Ventures, NVIDIA, Schneider
 Electric, SGLang, Siemens Energy, TensorRT, США, Wistron.
 
-### 1.3 The same rule applies to ALL periphrasis — 51 notes
+### 2.3 The same rule applies to ALL periphrasis — 51 notes
 
 «якорь» is the worst case of a broader habit: describing an entity instead of
 naming it. Every one of these makes the reader decode before they can read.
@@ -91,7 +138,7 @@ already shows `TSMC —делает возможным→ CUDA`. Naming a **thir
 right; re-naming the two endpoints is only right when the sentence needs the
 grammar.
 
-### 1.4 «ров» — 6 instances
+### 2.4 «ров» — 6 instances
 
 A literal translation of "moat" that reads as a ditch in Russian. The map already
 owns a better word: `lockInDepth` is rendered as **«глубина замка»**, so
@@ -102,7 +149,7 @@ owns a better word: `lockInDepth` is rendered as **«глубина замка»
 | «её главный ров» | «её главный замок» |
 | «ров якоря обесценится» | «замок NVIDIA обесценится» |
 
-### 1.5 «узкое место» — 9 instances
+### 2.5 «узкое место» — 9 instances
 
 Banned. It is vague where the map should be specific: it names a *category* of
 problem instead of the actual constraint. Replace with **what is actually
@@ -114,7 +161,7 @@ scarce**, which is more informative anyway.
 | «Упаковка — отдельное узкое место» | «Упаковку такого класса делают два-три подрядчика, все на Тайване» |
 | «энергия — узкое место» | «энергия ограничивает ввод площадок» |
 
-### 1.6 «движок» / «открытый движок» — 12 instances
+### 2.6 «движок» / «открытый движок» — 12 instances
 
 Opaque. In every case it means **vLLM**, an open inference server. Name it, or
 say what it is in plain words: «открытая система запуска моделей».
@@ -129,7 +176,7 @@ Note how the rewrite is the same length and says considerably more.
 
 ---
 
-## 2. Make them more informative
+## 3. Make them more informative
 
 ### 2.1 Put a number in — only 9 of 262 notes contain one
 
@@ -159,7 +206,7 @@ A reader hovering an edge wants three things, in this order:
 
 The best existing notes already do two of the three, and show the target shape —
 though note that even this one says «облако» where it should say «Amazon», which
-is how pervasive §1.3 is:
+is how pervasive §2.3 is:
 
 > Now: «Конвертируемые займы, часть которых превращена в неголосующие акции:
 > облако финансирует собственного клиента.»
@@ -183,7 +230,7 @@ removed. That is the whole point of a dependency map.
 
 ---
 
-## 3. Worked rewrites — the standard expected
+## 4. Worked rewrites — the standard expected
 
 | Edge | Now | Target |
 |---|---|---|
@@ -197,33 +244,52 @@ Same length. No jargon. Every one names its subject and ends on a consequence.
 
 ---
 
-## 4. `edges[].detail` — 20 of 262
+## 5. `edges[].detail` — how the relationship actually runs. 20 of 262.
 
-The deep card behind the hover is nearly empty. `detail` is the place for the
-sourced long-form (median 328 chars where present, which is the right size), and
-it is where a number that will not fit in `note` belongs.
+**Wanted, explicitly.** The `note` is the one-line answer on hover; `detail` is
+what a reader wants immediately after: *what are the actual orders, what is
+contracted, how does this relationship run in practice.*
 
-Not urgent relative to §1–§3, but worth filling for the highest-`strength` edges:
-those are the ones a reader clicks after hovering.
+For AMD → TSMC that means: which process nodes AMD books, roughly what share of
+TSMC's leading-edge capacity that is, whether capacity is pre-paid or reserved,
+how long the commitments run, and how the arrangement has changed. The kind of
+thing a reader would otherwise go and look up — which is the whole reason the
+panel exists.
+
+242 of 262 edges have none at all. Median length where present is 328 characters,
+which is the right size — keep it.
+
+**Fill in `strength` order.** The strongest edges are the ones people hover, and
+then click. Start there and work down; this does not have to be complete in one
+run to be useful.
 
 ---
 
-## 5. Acceptance
+## 6. Acceptance
 
-1. Zero occurrences of «якорь», «ров», «узкое место», «движок» in any
+1. **Every note's subject is one of its two endpoints.** The count of notes whose
+   subject is a third party goes from 48 to 0. Facts about A and C move to the
+   A → C edge rather than being deleted.
+2. Zero occurrences of «якорь», «ров», «узкое место», «движок» in any
    user-facing Russian prose field. The English side gets the same treatment —
    no "anchor", no "moat", no "bottleneck", no "engine".
-2. No prose refers to an entity by description where a name would do, and no
+3. No prose refers to an entity by description where a name would do, and no
    bare ordinal («второй», «первая») survives without the thing it ranks against
    named in the same sentence.
-3. Materially more than 9 of 262 notes carry a number.
-4. Median note length stays near 85 characters. **This is a density pass, not an
+4. Materially more than 9 of 262 notes carry a number.
+5. Median note length stays near 85 characters. **This is a density pass, not an
    expansion pass.**
-5. Every note still ends on why the relationship matters.
+6. Every note still ends on why the relationship matters.
+7. `detail` filled for the top edges by `strength`, saying what is actually
+   ordered and on what terms.
+
+**This is the standard for the whole ecosystem map, not a list of individual
+fixes.** Apply it to all 262 notes, all 107 `oneLiner`s, and every other prose
+field in the payload.
 
 ---
 
-## 6. Dashboard side
+## 7. Dashboard side
 
 Nothing to do — `note` and `detail` render already, and `resolveProse` handles the
 `{ru, en}` pairs. Three dashboard-owned strings used the banned words and are
