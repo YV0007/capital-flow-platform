@@ -29,53 +29,82 @@ The dashboard side is already built and waiting for both fields (§5).
 
 ---
 
-## TASK A — `entities[].description`: the paragraph behind the one-liner
+## TASK A — `entities[].description`: what this thing actually IS
 
-Add a second, longer prose field per entity. **`oneLiner` stays exactly as it
-is** — it is the lede, it works, and it is used in tooltips where length would
-break the layout.
+**Status: 0 of 107 delivered.** This is the single biggest gap in the map. The
+panel renders `description` the moment it arrives and looks sparse without it —
+a reader clicks Crusoe, gets one line, and still cannot tell what the business
+is or how it makes money.
+
+`oneLiner` stays exactly as it is — it is the lede, ≤110 chars, used in tooltips
+where length breaks the layout. `description` is the paragraph behind it.
 
 ```jsonc
 {
-  "id": "databricks",
-  "oneLiner": { "ru": "…", "en": "…" },   // unchanged — one sentence, ≤110 chars
-  "description": {                         // NEW — 3–6 sentences
-    "ru": "…",
-    "en": "…"
-  }
+  "id": "crusoe",
+  "oneLiner":    { "ru": "…", "en": "…" },   // unchanged
+  "description": { "ru": "…", "en": "…" }    // NEW — 4–7 sentences
 }
 ```
 
-**What belongs in it.** Enough that nobody has to leave the page to follow the
-map:
+### What it must answer, in this order
 
-- who they are — founded when, by whom, where;
-- how big — revenue, valuation, headcount, share, whichever is the meaningful
-  measure for this kind of entity;
-- where they sit in their market — who they compete with, what they are known
-  for;
-- what they have recently done that matters to this map.
+The reader's question is not "who founded it" — it is **"what is this thing and
+how does it make money"**. Answer, in order, and stop:
 
-**Reference for register and depth** — the Capital Flow map's own allocator
-descriptions are exactly right, e.g. Thrive Capital: *"New York venture firm,
-founded by Josh Kushner in 2010. Built its reputation on repeat concentrated bets
-in generation-defining private companies — OpenAI, Stripe, SpaceX — and in
-February 2026 closed its largest fund, Thrive Capital Partners X, at $10B, heavily
-oversubscribed. Also builds companies itself."* Four sentences, every one a fact,
-no adjectives doing work a number should do.
+1. **What it sells.** The actual product or service, named. Not the category —
+   the thing a customer receives and pays for.
+2. **Business model.** How the money arrives: hardware margin, licence per
+   unit, per-token, subscription per seat, take-rate, tolling, long-term
+   contract, fees on assets under management. Say which.
+3. **Role in the stack.** What it consumes from below and what it hands up.
+   This is the sentence that ties the entity to this map rather than to a
+   generic company profile.
+4. **Scale, in numbers.** The two or three figures that actually size it —
+   whichever are meaningful for THIS kind of entity: revenue and its growth,
+   unit volumes, capacity, market share, install base, headcount, AUM. A stat
+   like «85% of the Fortune 500 run it» is exactly the register wanted: it
+   tells the reader the position in one number.
+5. **What changed recently** that matters to this map.
 
-**Rules:**
-- Same zero-fabrication discipline as everything else. Sourced, or it does not
-  ship.
-- Do **not** duplicate `whyIrreplaceable` or `whatBreaksIt` — those answer
-  different questions and are already rendered directly beneath.
-- Language without jargon, as the README already mandates for `oneLiner`: written
-  so that someone who does not know the stack can follow it.
-- Applies to every entity kind. A jurisdiction, an agency and a standards body
-  each need this as much as a company — arguably more, since they are the ones a
-  reader is least likely to recognise.
+### The register — this is the part that keeps being got wrong
 
-**Priority if it cannot all be done in one run:** pivots first, then by
+**Facts, densely packed. No adjectives doing a number's job. No throat-clearing.**
+
+- Every sentence carries at least one fact a reader did not already have.
+- No sentence may survive the test "would this still be true if I pasted it
+  under a different company". «Лидер рынка с сильными позициями» fails it.
+- No jargon, per the README rule that already governs `oneLiner`: written for
+  someone who does not know the stack. If a term is unavoidable, the sentence
+  explains it in passing rather than linking away.
+- Do **not** restate `whyIrreplaceable` or `whatBreaksIt` — both are rendered
+  directly underneath and answer different questions.
+- Do not restate the structured fields either. `revenueUsdB`, `founded`,
+  `ticker`, `geo` are already shown as chips beside the paragraph; the
+  description adds what a chip cannot hold.
+
+### Worked example — the depth expected
+
+> **ServiceNow.** Продаёт компаниям единую систему для рабочих процессов:
+> заявки в ИТ, кадровые операции, обслуживание клиентов — всё в одном контуре.
+> Деньги приходят подпиской за рабочее место в год, с многолетними договорами;
+> выручка почти целиком повторяющаяся. В этой карте стоит на стороне спроса:
+> закупает вычисления у облаков и встраивает модели в процессы, за которые
+> компании уже платят. Систему используют около 85% компаний из Fortune 500,
+> годовая выручка порядка $11 млрд при росте ~22%. С 2025 года продаёт ИИ-
+> функции отдельным тарифом — именно этот тариф превращает ИИ в строку
+> выручки, а не в статью расходов.
+
+Five sentences: what it sells, how it earns, where it sits, how big, what
+changed. Every clause is checkable.
+
+### Zero fabrication
+
+Sourced or it does not ship — the same rule as every other field. A figure with
+no source is worse than no figure: this panel is read as data. Where a number
+cannot be confirmed, drop the number and keep the sentence.
+
+**Priority if it cannot all be done in one run:** the 27 pivots first, then by
 criticality descending. Those are the tiles people actually click.
 
 ---
