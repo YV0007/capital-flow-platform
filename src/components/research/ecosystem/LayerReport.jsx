@@ -202,7 +202,7 @@ export default function LayerReport({
 
         {/* Bottleneck and second source — only meaningful for a market */}
         {!isGate && lead && (
-          <Section title={t('Узкое место', 'The bottleneck')} icon={<AlertTriangle size={11} />}>
+          <Section title={t('На ком держится слой', 'What the layer rests on')} icon={<AlertTriangle size={11} />}>
             <div style={{ padding: '0 16px', fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
               <b style={{ color: 'var(--cf-text0)' }}>{lead.n.name}</b> — {t('критичность', 'criticality')} {lead.c} {t('в этом слое', 'in this layer')}
               {gap != null && second

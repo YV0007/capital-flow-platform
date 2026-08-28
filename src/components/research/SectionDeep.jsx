@@ -9,6 +9,7 @@ import holdingsData from '../../data/holdings.json';
 
 import { C } from './holdingsC.js';
 import { useT } from '../../lib/i18n.jsx';
+import { bi } from '../../lib/bi.js';
 const col = (name) => C[name] || name || C.teal;
 const isNeg = (s) => typeof s === 'string' && /^[−-]/.test(s.trim());
 
@@ -16,15 +17,25 @@ const isNeg = (s) => typeof s === 'string' && /^[−-]/.test(s.trim());
 // jump to the Portfolio section and open that company. HoldingsV2 supplies the
 // handler; blocks declare links via an item's `links: [{text, company}]`.
 const OpenCompanyCtx = createContext(null);
+// NOT a component — a plain helper, called from inside `.map()` in Facts and
+// Cards. It must therefore never call a hook: every `useT()` here was appended
+// to the HOOK LIST OF THE CALLING COMPONENT, once per item, so a holding with
+// a different number of facts rendered a different number of hooks and React
+// threw «Rendered more hooks than during the previous render» — a black screen
+// on Berkshire's section tabs while Brookfield's worked. (2026-08-28.)
+//
+// The hint is a fixed bilingual literal, so it belongs in a module-level `bi()`
+// getter, which resolves the language at ACCESS time with no hook at all.
+const LINK_HINT = bi({ title: ['Открыть в портфеле', 'Open in the portfolio'] });
+
 function withLinks(text, links, openCompany) {
-  const t = useT();
   if (!text || !links || !links.length || !openCompany) return text;
   const map = {};
   links.forEach((l) => { map[l.text] = l.company; });
   const escaped = links.map((l) => l.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).sort((a, b) => b.length - a.length);
   const re = new RegExp('(' + escaped.join('|') + ')', 'g');
   return text.split(re).map((p, i) => map[p]
-    ? <span key={i} onClick={() => openCompany(map[p])} title={t('Открыть в портфеле', 'Open in the portfolio')}
+    ? <span key={i} onClick={() => openCompany(map[p])} title={LINK_HINT.title}
         style={{ color: C.teal, cursor: 'pointer', borderBottom: `1px dashed color-mix(in srgb, ${C.teal} 53%, transparent)`, fontWeight: 500 }}>{p}</span>
     : p);
 }

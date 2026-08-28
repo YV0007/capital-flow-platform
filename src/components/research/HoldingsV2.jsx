@@ -40,13 +40,25 @@ for (const p in finModules) { const d = finModules[p].default || finModules[p]; 
 // A function of `t`, not a frozen const: t() at module scope runs at import
 // time, before any component can supply it, and the ReferenceError takes the
 // whole bundle down — a blank page, not a missing label.
+// The COLOUR of a tier is not language-bound, so it does not travel through
+// the translator. It used to: `tierColor(t)` looked like it took the same `t`
+// as `tiers(t)` and was called as `tierColor(sec.tier)` — which handed the
+// string 'substance' into the translator slot and called it as a function.
+// Every section tab on every holding was a black screen. Keeping the colours
+// in their own table makes the mistake unstateable.
+const TIER_COLOR = {
+  substance: C.teal,
+  context: C.blue,
+  voice: C.gold,
+  signals: C.violet,
+};
 const tiers = (t) => ([
-  { id: 'substance', label: t('Факты', 'Facts'), color: C.teal },
-  { id: 'context', label: t('Проверки и риски', 'Checks and risks'), color: C.blue },
-  { id: 'voice', label: t('Что говорит менеджмент', 'What management says'), color: C.gold },
-  { id: 'signals', label: t('Выводы и наблюдение', 'Conclusions and watch'), color: C.violet },
+  { id: 'substance', label: t('Факты', 'Facts'), color: TIER_COLOR.substance },
+  { id: 'context', label: t('Проверки и риски', 'Checks and risks'), color: TIER_COLOR.context },
+  { id: 'voice', label: t('Что говорит менеджмент', 'What management says'), color: TIER_COLOR.voice },
+  { id: 'signals', label: t('Выводы и наблюдение', 'Conclusions and watch'), color: TIER_COLOR.signals },
 ]);
-const tierColor = (t) => (tiers(t).find((x) => x.id === t) || {}).color || C.teal;
+const tierColor = (tierId) => TIER_COLOR[tierId] || C.teal;
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Lightweight markdown renderer (headers, bold, code, links, lists, tables,
@@ -463,7 +475,7 @@ function DeepView({ data, idx, setIdx, onBack, portfolio, financial, wide, onOpe
         <span style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: C.inkFaint }}>{idx + 1} / {secs.length}</span>
       </div>
 
-      <div style={{ marginBottom: 8, fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: col }}>{sec.n} · {(tiers(t).find((t) => t.id === sec.tier) || {}).label}</div>
+      <div style={{ marginBottom: 8, fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: col }}>{sec.n} · {(tiers(t).find((x) => x.id === sec.tier) || {}).label}</div>
       <h1 style={{ fontFamily: 'var(--serif)', fontSize: 34, fontWeight: 500, lineHeight: 1.1, letterSpacing: '-.02em', margin: '0 0 6px', color: C.ink }}>{sec.title}</h1>
       {sec.sub && <p style={{ fontSize: 14, color: C.inkSoft, fontStyle: 'italic', margin: '0 0 22px' }}>{sec.sub}</p>}
       <div style={{ height: 1, background: C.line, margin: '0 0 22px' }} />
@@ -903,7 +915,7 @@ export default function HoldingsV2({ onBack }) {
             {data.sections.map((sec) => {
               const cfg = bentoLayout[sec.id] || { span: 'col-span-1', accent: C.teal, preview: 'number' };
               if (cfg.span === 'hidden') return null;
-              const tier = tiers(t).find((t) => t.id === sec.tier);
+              const tier = tiers(t).find((x) => x.id === sec.tier);
               const idx = data.sections.indexOf(sec);
               return (
                 <div key={sec.id} className={`tile ${cfg.span}`} onClick={() => setDeepIdx(idx)} style={{ background: C.card, border: `1px solid ${C.line}`, borderTop: `2px solid ${cfg.accent}`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', minHeight: 140 }}>

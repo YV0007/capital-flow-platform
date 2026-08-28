@@ -2154,7 +2154,7 @@ function MoatBreakdownBlock({ d, c }) {
   return (
     <Block id="moat" takeaway={d.takeaway} accent={c} kicker={t('04 · ИЗ ЧЕГО СОСТОИТ ЗАЩИТА', '04 · WHAT THE MOAT IS MADE OF')}>
       <div style={{ fontSize: 10.5, color: 'var(--hm-text5)', lineHeight: 1.55, marginBottom: 14 }}>
-        {t('Один балл «рва» ничего не говорит. Разбираем защиту по составляющим: где 9–10 – почти неприступно, где ниже – уязвимо. Стрелка – крепнет источник преимущества или слабеет.',
+        {t('Один балл защиты ничего не говорит. Разбираем её по составляющим: где 9–10 – почти неприступно, где ниже – уязвимо. Стрелка – крепнет источник преимущества или слабеет.',
            'A single moat score says nothing. We break the defence into its parts: 9–10 is close to impregnable, lower is exposed. The arrow shows whether the source of advantage is strengthening or weakening.')}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

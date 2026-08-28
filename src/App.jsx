@@ -41,6 +41,7 @@ import ObservationLogView from './components/tracker/ObservationLogView.jsx';
 import SyndicateCommsView from './components/tracker/SyndicateCommsView.jsx';
 import SettingsView from './components/tracker/SettingsView.jsx';
 import YCombinator from './components/tracker/yc/YCombinator.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 
 import {
   severityFromImportance,
@@ -421,7 +422,9 @@ export default function App() {
       }}>
         <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
         <div key={lang}>
-          <HomeLanding onChoose={updateMode} onOpenResearch={openResearchPage} theme={uiTheme} />
+          <ErrorBoundary label="home" resetKey={lang}>
+            <HomeLanding onChoose={updateMode} onOpenResearch={openResearchPage} theme={uiTheme} />
+          </ErrorBoundary>
         </div>
       </div>
     );
@@ -432,6 +435,9 @@ export default function App() {
       <div style={{ minHeight: '100vh', background: 'var(--hm-bg)', color: 'var(--hm-text)', transition: 'background 300ms' }}>
         <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
         <div key={lang}>
+        {/* Keyed on the open research page: crash one report, walk to the next
+            one, and the boundary re-arms instead of following you around. */}
+        <ErrorBoundary label={`research:${activeResearchId || 'library'}`} resetKey={`${lang}:${activeResearchId || ''}`}>
         {activeResearchId
           ? <ResearchDetail
               researchId={activeResearchId}
@@ -452,6 +458,7 @@ export default function App() {
                 setResearchContext(null);
               }} />
           : <ResearchLanding onOpen={(id) => setActiveResearchId(id)} />}
+        </ErrorBoundary>
         </div>
       </div>
     );
@@ -464,7 +471,11 @@ export default function App() {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--hm-bg)', color: 'var(--hm-text)', transition: 'background 300ms' }}>
         <Header mode={mode} onChangeMode={updateMode} theme={uiTheme} onToggleTheme={toggleTheme} />
-        <div key={lang}><TrackerLanding onOpen={openTrackerFor} /></div>
+        <div key={lang}>
+          <ErrorBoundary label="tracker-landing" resetKey={lang}>
+            <TrackerLanding onOpen={openTrackerFor} />
+          </ErrorBoundary>
+        </div>
       </div>
     );
   }
@@ -491,6 +502,10 @@ export default function App() {
   ];
 
   return (
+    // Tracker mode draws its own top bar instead of <Header>, so a crash here
+    // would take the navigation down with it — hence `onHome`, which is the
+    // way out when retrying the same broken render is pointless.
+    <ErrorBoundary label={`tracker:${companyId}`} resetKey={`${lang}:${companyId}`} onHome={() => updateMode('home')}>
     <div key={lang} className="min-h-screen text-zinc-200" style={{ background: 'var(--hm-bg)' }}>
       {/* App-level focus modal — listens for window event from any Open button */}
       {appFocusedItem && (() => {
@@ -769,5 +784,6 @@ export default function App() {
         <SyndicateCommForm onSave={addSyndicateComm} onCancel={() => setSynModalOpen(false)} />
       </Modal>
     </div>
+    </ErrorBoundary>
   );
 }

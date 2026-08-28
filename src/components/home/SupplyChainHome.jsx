@@ -151,7 +151,7 @@ export default function SupplyChainHome({ onOpen }) {
           eyebrow={t('Дата-центры · цепочка поставок', 'Data centers · supply chain')}
           title={t('AI-инфраструктура, слой за слоем', 'AI infrastructure, layer by layer')}
           sub={t(
-            'Девять слоёв — от электроэнергии до софта, который всё это окупает. Откройте карточку, чтобы увидеть полный разбор: компании, зависимости, узкие места.',
+            'Девять слоёв — от электроэнергии до софта, который всё это окупает. Откройте карточку, чтобы увидеть полный разбор: компании, зависимости, ограничения.',
             'Nine layers, from the electricity to the software that pays for all of it. Open a card for the full breakdown: companies, dependencies, bottlenecks.')}
           accent="#22D3EE"
           actionLabel={t('Открыть цепочку поставок', 'Open the supply chain')}

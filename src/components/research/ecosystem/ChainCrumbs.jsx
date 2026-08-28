@@ -73,16 +73,10 @@ export default function ChainCrumbs({ crumbs, rootId, counts, onOpenEntity, onCl
         </button>
       </div>
 
-      {/* The reading key — one line, so the chain is legible before it is
-          studied: which way it runs, and which crumbs are the ones to weigh. */}
-      <div style={{
-        fontSize: 9.5, color: 'var(--cf-text6)', lineHeight: 1.45, marginBottom: 9,
-      }}>
-        {t(
-          t('Слева — от кого зависит, справа — кто зависит от него. Ярче выделены ключевые узлы — с них и читайте.', 'Left is what it depends on, right is what depends on it. The key nodes are brighter — start there.'),
-          'Left — what it depends on; right — what depends on it. The brighter tiles are the key nodes — read from those.',
-        )}
-      </div>
+      {/* No reading key here on purpose. The header already says «N вверх ·
+          N вниз», the arrows show the direction, and the brighter tiles read as
+          more important without being told to. A line explaining a legible
+          layout is a line the reader has to skip every single time. */}
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, flexWrap: 'wrap', rowGap: 6 }}>
         {crumbs.map((c, i) => {

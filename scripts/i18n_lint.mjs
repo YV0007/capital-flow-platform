@@ -15,6 +15,24 @@
 //      `t(t('ru','en'), 'en')`. It renders, in Russian, forever — a silent
 //      failure rather than a loud one.
 //
+//   3. MIS-PASSED HELPERS. The fix for (1) is `const table = (t) => […]`, a
+//      helper whose first parameter IS the translator. Nothing stops a caller
+//      from passing something else into that slot — `tierColor(sec.tier)`
+//      against `const tierColor = (t) => tiers(t)…` reads perfectly and calls
+//      the string 'substance' as a function. Same "t is not a function", same
+//      black screen, and the two rules above see nothing wrong: no shadowing,
+//      no module-scope call. Found in HoldingsV2 on 2026-08-28, where it took
+//      down every holding's section tabs.
+//
+//   4. HOOKS IN HELPERS. `useT()` is a hook. Calling it from a plain helper —
+//      `withLinks(text, links)`, invoked inside a `.map()` — appends a pair of
+//      hooks to the CALLING component's hook list, once per item. Change the
+//      number of items between renders and React throws «Rendered more hooks
+//      than during the previous render» and unmounts the tree. Berkshire's
+//      section tabs were a black screen this way while Brookfield's, with a
+//      different fact count, were fine. A helper takes a `bi()` getter or
+//      `getLang()`, never a hook.
+//
 // Both are cheap to detect and impossible to argue with, so they gate the
 // build alongside the audit.
 // ══════════════════════════════════════════════════════════════════════════
@@ -120,6 +138,183 @@ for (const file of walk(ROOT)) {
     if (re) {
       problems.push([rel, `line ${s.slice(0, m.index).split('\n').length}: a second "const t =" shadows the translator`]);
     }
+  }
+}
+
+// ── Rule 3: a translator-taking helper called with something else ────────
+//
+// Two passes. First, collect the helpers whose first parameter is `t` and whose
+// body actually uses it as the translator — either calling `t('ru','en')`
+// directly, or handing `t` to a helper already known to be one (`tierColor`
+// never calls t itself; it passes it to `tiers`). Repeat until nothing new is
+// found, because the chain can be any length. Then check every call site: the
+// first argument has to be `t`, and anything else is the bug.
+function helperBody(src, from) {
+  let i = from, depth = 0, started = false;
+  while (i < src.length) {
+    const c = src[i];
+    if (c === '\'' || c === '"' || c === '`') {
+      const q = c; i++;
+      while (i < src.length && src[i] !== q) { if (src[i] === '\\') i++; i++; }
+    } else if ('{[('.includes(c)) { depth++; started = true; }
+    else if ('}])'.includes(c)) { depth--; if (started && depth <= 0) { i++; break; } }
+    else if (c === ';' && depth <= 0 && started) break;
+    i++;
+  }
+  return src.slice(from, i);
+}
+
+const DECL = /(?:^|\n)\s*(?:export\s+)?(?:const\s+([A-Za-z_$][\w$]*)\s*=\s*\(?\s*t\s*[,)]|function\s+([A-Za-z_$][\w$]*)\s*\(\s*t\s*[,)])/g;
+
+for (const file of walk(ROOT)) {
+  const s = readFileSync(file, 'utf8');
+  const rel = file.slice(ROOT.length - 3);
+
+  const helpers = new Map();            // name → { body, line }
+  for (const m of s.matchAll(DECL)) {
+    const name = m[1] || m[2];
+    const at = m.index + m[0].length;
+    helpers.set(name, { body: helperBody(s, at), line: s.slice(0, m.index).split('\n').length + 1 });
+  }
+  if (!helpers.size) continue;
+
+  const takesT = new Set();
+  for (let pass = 0; pass < 8; pass++) {
+    const before = takesT.size;
+    for (const [name, h] of helpers) {
+      if (takesT.has(name)) continue;
+      const direct = /[^A-Za-z0-9_.$]t\(['"`]/.test(' ' + h.body);
+      const relayed = [...takesT].some(k => new RegExp(`\\b${k}\\s*\\(\\s*t\\s*[,)]`).test(h.body));
+      if (direct || relayed) takesT.add(name);
+    }
+    if (takesT.size === before) break;
+  }
+
+  for (const name of takesT) {
+    const decl = helpers.get(name);
+    for (const call of s.matchAll(new RegExp(`(?<![A-Za-z0-9_$.])${name}\\s*\\(`, 'g'))) {
+      const line = s.slice(0, call.index).split('\n').length + 1;
+      if (line === decl.line) continue;                       // the declaration
+      const arg = s.slice(call.index + call[0].length, call.index + call[0].length + 40);
+      if (/^\s*t\s*[,)]/.test(arg)) continue;                 // correct
+      if (/^\s*\)/.test(arg)) continue;                        // no-arg call, a different helper
+      problems.push([rel, `line ${line}: ${name}(…) takes the translator as its first argument (declared line ${decl.line}), but is called with \`${arg.split(/[,)]/)[0].trim()}\` — that value gets called as a function at runtime`]);
+    }
+  }
+}
+
+// ── Rule 4: a hook called from something that is not a component ─────────
+//
+// React's own rule, checked here because this repo has no eslint pass and the
+// failure is invisible until a specific data shape hits a specific screen.
+// A component is Capitalised; a custom hook starts with `use`. Anything else
+// that calls `useT()`/`useState()`/… is a helper, and the hooks it calls
+// silently belong to whoever called it.
+const HOOK = /\buse(?:T|L|Lang|Locale|Plural|State|Effect|Memo|Ref|Callback|Context|LayoutEffect|Reducer)\s*\(/;
+
+/**
+ * Blank out everything that is not code — comments, strings, template literals
+ * and REGEX LITERALS — keeping every offset and line break in place, so line
+ * numbers stay honest and the brace matcher below never has to reason about
+ * them. Regex literals matter more than they look: `/(?:[a-z]{2,})/` carries an
+ * unbalanced `{`, which sent the first cut of this rule scanning to the end of
+ * the file and blaming an innocent helper for a hook three functions away.
+ */
+function stripNoise(src) {
+  const out = src.split('');
+  const blank = (a, b) => { for (let k = a; k < b && k < out.length; k++) if (out[k] !== '\n') out[k] = ' '; };
+  // A `/` starts a regex — rather than a division — only where a value cannot
+  // legally have just ended.
+  const REGEX_OK = /[(,=:[!&|?{};+\-*%~^]$|\b(?:return|typeof|case|in|of|new|delete|void|do|else)$/;
+  let i = 0, prev = '';
+  while (i < src.length) {
+    const c = src[i];
+    if (c === '/' && src[i + 1] === '/') { const e = src.indexOf('\n', i); const end = e === -1 ? src.length : e; blank(i, end); i = end; continue; }
+    if (c === '/' && src[i + 1] === '*') { const e = src.indexOf('*/', i + 2); const end = e === -1 ? src.length : e + 2; blank(i, end); i = end; continue; }
+    if (c === '"' || c === "'" || c === '`') {
+      let j = i + 1;
+      while (j < src.length && src[j] !== c) { if (src[j] === '\\') j++; j++; }
+      blank(i + 1, j); i = j + 1; prev = c; continue;
+    }
+    if (c === '/' && REGEX_OK.test(prev ? src.slice(0, i).replace(/\s+$/, '') : '')) {
+      let j = i + 1, cls = false;
+      while (j < src.length && src[j] !== '\n') {
+        if (src[j] === '\\') { j += 2; continue; }
+        if (src[j] === '[') cls = true;
+        else if (src[j] === ']') cls = false;
+        else if (src[j] === '/' && !cls) break;
+        j++;
+      }
+      if (src[j] === '/') { blank(i + 1, j); i = j + 1; prev = '/'; continue; }
+    }
+    if (!/\s/.test(c)) prev = c;
+    i++;
+  }
+  return out.join('');
+}
+
+/** Skip a quoted run starting at `i` (which points at the quote). */
+function skipString(src, i) {
+  const q = src[i]; i++;
+  while (i < src.length && src[i] !== q) { if (src[i] === '\\') i++; i++; }
+  return i + 1;
+}
+
+/**
+ * The body of ONE function, brace-matched — not "everything up to the next
+ * declaration", which is what made the first cut of this rule blame `isNeg`
+ * for a hook in the function below it.
+ */
+function functionBody(src, from, isArrow) {
+  let i = from;
+  if (!isArrow) {                                   // step over the parameters
+    let d = 0;
+    while (i < src.length) {
+      const c = src[i];
+      if (c === '"' || c === "'" || c === '`') { i = skipString(src, i); continue; }
+      if (c === '(') d++;
+      else if (c === ')') { d--; if (d === 0) { i++; break; } }
+      i++;
+    }
+  }
+  while (i < src.length && /\s/.test(src[i])) i++;
+  const start = i;
+  let d = 0;
+  const braced = src[i] === '{';
+  while (i < src.length) {
+    const c = src[i];
+    if (c === '"' || c === "'" || c === '`') { i = skipString(src, i); continue; }
+    if ('{[('.includes(c)) d++;
+    else if ('}])'.includes(c)) { d--; if (d <= 0) { i++; break; } }
+    else if (!braced && c === ';' && d === 0) break;
+    i++;
+  }
+  return src.slice(start, i);
+}
+
+for (const file of walk(ROOT)) {
+  const src = stripNoise(readFileSync(file, 'utf8'));
+  const rel = file.slice(ROOT.length - 3);
+  const seen = new Set();
+
+  const decls = [];
+  for (const m of src.matchAll(/(?:^|\n)(?:export\s+)?(?:default\s+)?function\s+([A-Za-z_$][\w$]*)\s*(\()/g)) {
+    decls.push({ name: m[1], at: m.index + m[0].length - 1, arrow: false, i: m.index });
+  }
+  for (const m of src.matchAll(/(?:^|\n)(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*=\s*(?:\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>/g)) {
+    decls.push({ name: m[1], at: m.index + m[0].length, arrow: true, i: m.index });
+  }
+
+  for (const d of decls) {
+    // A Capitalised name is a component; `useThing` is a custom hook. Both may
+    // call hooks. Everything else may not.
+    if (/^[A-Z]/.test(d.name) || /^use[A-Z]/.test(d.name)) continue;
+    const body = functionBody(src, d.at, d.arrow);
+    const hit = HOOK.exec(body);
+    if (!hit || seen.has(d.name)) continue;
+    seen.add(d.name);
+    const line = src.slice(0, d.i).split('\n').length + 1;
+    problems.push([rel, `line ${line}: ${d.name}() is a helper, not a component, but calls ${hit[0].replace(/\s*\($/, '()')} — those hooks join the hook list of whichever component calls it, and the count changes with the data. Use a bi() getter or getLang().`]);
   }
 }
 
