@@ -211,10 +211,14 @@ export const META = bi({
 });
 
 // ══════════════════════════════════════════════════════════════════════════
-// BILINGUAL PROSE — contract ai-ecosystem-network/2.
+// BILINGUAL PROSE — contract ai-ecosystem-network/2 and /3.
 //
 // From /2 the engine ships every prose field as { ru, en } instead of a bare
-// string. Both shapes are accepted on purpose: a bare string is read as "the
+// string. /3 only ADDS fields — entities[].description, edges[].detail — and
+// they arrive as pairs like the rest, so they are resolved here for free and
+// no render site had to learn a new shape. Nothing in the dashboard compares
+// the schema string, so a version bump needs no code: `schema` is carried
+// through to `graph.schema` and displayed, never branched on. Both shapes are accepted on purpose: a bare string is read as "the
 // same text in both languages", so a payload can be converted field by field
 // without the live map going dark in between.
 //

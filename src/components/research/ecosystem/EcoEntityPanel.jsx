@@ -874,12 +874,14 @@ function ProfileBlock({ entity, gloss }) {
             {gloss(more)}
           </div>
         ) : (
-          // The engine has not shipped `description` for anything yet, so this
-          // card is one line and LOOKS like the map has nothing to say. It is
-          // not the same thing as "there is nothing here", and a reader cannot
-          // tell the difference — so the panel says which it is. The note
-          // disappears entity by entity as coverage arrives; nothing else
-          // changes. Spec: ECOSYSTEM-PROSE-HANDOFF.md § TASK A.
+          // Coverage is PARTIAL and stays that way for a while: contract /3
+          // brought `description` for 27 of 107 entities (every pivot), so 80
+          // still land here. Without this line the card is one line and LOOKS
+          // like the map has nothing to say — which is a different claim from
+          // "the engine has not written this one yet", and a reader cannot
+          // tell the two apart. It disappears entity by entity as coverage
+          // arrives; nothing else changes. Spec: ECOSYSTEM-PROSE-HANDOFF.md
+          // § TASK A.
           <div style={{
             fontSize: 10.5, lineHeight: 1.5, color: 'var(--cf-text6)',
             marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)',
