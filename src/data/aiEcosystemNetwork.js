@@ -248,8 +248,12 @@ export const META = bi({
 // No lookbehind: Safari < 16.4 has none, and this repo avoids it elsewhere —
 // the leading character is captured and put back instead.
 //
-// The durable fix is upstream, in the agents' style rules. This keeps the map
-// readable until then.
+// UPSTREAM CAUGHT UP (2026-08-28). The engine's own style rules now forbid
+// «ров», «якорь», «узкое место» and «движок» in user-facing fields and fail
+// the run on them, and the /3 delivery scans clean: 78 occurrences of «якорь»,
+// 6 of «ров», 13 of «узкое место» went to zero. So this table no longer fixes
+// anything — it stays as a GUARD, cheap and inert, for the day a style rule
+// lapses or an older payload is re-read. Do not treat a hit here as normal.
 const RU_PLAIN = [
   [/(^|[^А-Яа-яЁё])ров(?![А-Яа-яЁё-])/g, '$1барьер'],
   [/(^|[^А-Яа-яЁё])рва(?![А-Яа-яЁё-])/g, '$1барьера'],
