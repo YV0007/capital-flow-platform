@@ -808,6 +808,7 @@ const levels = (t) => ({
 // from how the holdco earns and values itself. Each row is severity + sector +
 // size of exposure + one plain sentence on what actually breaks.
 function RiskSplit({ b }) {
+  const t = useT();
   const [hov, setHov] = useState(null);
   const renderGroup = (g, gi) => {
     const accent = col(g.accent || 'clay');
@@ -923,6 +924,7 @@ function Scenarios({ b }) {
   );
 }
 function Heat({ b }) {
+  const t = useT();
   return (
     <div>
       <Title note={b.note}>{b.title}</Title>
@@ -1172,6 +1174,7 @@ function Matrix({ b }) {
 }
 
 function RadarHeat({ b }) {
+  const t = useT();
   const max = b.max || 5;
   const radar = b.radarItems || [];
   return (

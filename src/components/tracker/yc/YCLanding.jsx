@@ -7,6 +7,9 @@ import YCBatchStats from './YCBatchStats.jsx';
 import investmentData from '../../../data/yc-investment.json';
 import { useT, plural } from '../../../lib/i18n.jsx';
 
+// The value yc-investment.json uses when a company's cap was never fixed.
+const CAP_NOT_RECORDED = 'не зафиксирована';
+
 // Roll up the investment layer into headline numbers for the strip.
 function computeInvestorStats() {
   const companies = Object.values(investmentData.companies || {});
@@ -18,7 +21,11 @@ function computeInvestorStats() {
     const ext = (c.external_investors || []);
     const hasExt = c.tier === 'external' && ext.length > 0;
     if (hasExt) withExternal++; else ycOnly++;
-    if (c.cap === t('не зафиксирована', 'not recorded')) mfn++;
+    // The sentinel as it is spelled IN THE DATA — never a translated string.
+    // This ran through t() before, which threw «t is not defined» here (the
+    // helper has no hook to bind) and, once bound, would have compared the
+    // Russian data against an English literal and counted zero. (2026-08-28.)
+    if (c.cap === CAP_NOT_RECORDED) mfn++;
     ext.forEach(inv => {
       investorCount[inv.name] = (investorCount[inv.name] || 0) + 1;
     });

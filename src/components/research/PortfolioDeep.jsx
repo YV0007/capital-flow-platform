@@ -264,6 +264,7 @@ function FlatSectorBlock({ b, filtering, focus }) {
 
 // ── left rail: one selectable sector ────────────────────────────────────────
 function RailItem({ b, active, onClick, filtering }) {
+  const t = useT();
   return (
     <button onClick={onClick} style={{
       width: '100%', textAlign: 'left', cursor: 'pointer', display: 'block',

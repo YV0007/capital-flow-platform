@@ -98,6 +98,7 @@ function Row({ C, company, horizonDays }) {
 }
 
 export default function WindowBlock({ C, subLabel }) {
+  const t = useT();
   return (
     <div>
       <div style={subLabel}>{t('Горизонт', 'Horizon')} {windowData.horizonDays} {t('дней · окно дисконта по компаниям', 'days · the discount window by company')}</div>

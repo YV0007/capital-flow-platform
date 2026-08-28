@@ -12,6 +12,7 @@ import projection from '../../../data/proxy-projection.json';
 import { useT } from '../../../lib/i18n.jsx';
 
 function CustomTooltip({ active, payload, label, C }) {
+  const t = useT();
   if (!active || !payload || !payload.length) return null;
   const item = projection.scenarios.find((s) => s.openaiGrowth === label);
   return (

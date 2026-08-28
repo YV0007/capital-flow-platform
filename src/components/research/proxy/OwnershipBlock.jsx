@@ -60,6 +60,7 @@ function renderActiveShape(props) {
 }
 
 function Donut({ C, company }) {
+  const t = useT();
   const tints = tintMap(C);
   const data = company.slices.map((s) => ({ name: s.label, value: s.value, fill: tints[s.tint] || C.inkFaint }));
   const total = data.reduce((a, b) => a + b.value, 0);
@@ -169,6 +170,7 @@ function Donut({ C, company }) {
 // #1 — emerald (зелёный), #2 — accent (янтарный), #3 — blue (синий).
 // Фон-полоса слева пропорциональна размеру стейка относительно #1.
 function Top3List({ C, items }) {
+  const t = useT();
   if (!items || !items.length) return null;
   const max = items[0].stakeUsdNum || 1;
   const rankColors = [C.emerald, C.teal, C.blue];

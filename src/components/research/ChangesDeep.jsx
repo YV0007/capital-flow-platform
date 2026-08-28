@@ -24,14 +24,36 @@ function Sankey({ sankey }) {
     const W = 1500, H = 720, gap = 22, barW = 10, labelPad = 330;
     const leftX = labelPad, rightX = W - labelPad - barW;
 
+    // Two node shapes live in the holdings files. Six holdings ship the full
+    // one — { id, name, value, color, note } — and three (SoftBank, Berkshire,
+    // Constellation) ship { name, value } only, with their flows keyed on the
+    // NAME. Reading `n.id` on those gave `bySrc[undefined]`, then `s.sum` on
+    // undefined, and the whole section went black. Both shapes resolve through
+    // one key, and a colour missing from the short shape falls back to the
+    // palette by position. (2026-08-28.)
+    const keyOf = (n) => n.id ?? n.name;
+    const PALETTE = [C.teal, C.gold, C.violet, C.blue, C.clay, C.inkSoft];
+    const colorOf = (n, i) => n.color || PALETTE[i % PALETTE.length];
+
     // Node height = sum of connected flows (not the declared value), so bars
     // always match the ribbons that meet them. Both columns share one scale so
     // left and right totals align vertically. min-height clamp is removed —
     // we rescale to the tallest column so all bars fit inside H.
     const flowSum = { src: {}, dst: {} };
-    sankey.sources.forEach((s) => { flowSum.src[s.id] = 0; });
-    sankey.destinations.forEach((n) => { flowSum.dst[n.id] = 0; });
-    sankey.flows.forEach((f) => { flowSum.src[f.from] += f.value; flowSum.dst[f.to] += f.value; });
+    sankey.sources.forEach((s) => { flowSum.src[keyOf(s)] = 0; });
+    sankey.destinations.forEach((n) => { flowSum.dst[keyOf(n)] = 0; });
+
+    // A flow naming a node that was never declared is a data bug, and it used
+    // to be a crash. Drop it — loudly, the way buildGraphFrom drops a dangling
+    // edge — so one bad row costs one ribbon instead of the whole page.
+    const flowList = (sankey.flows || []).filter((f) => {
+      const ok = f.from in flowSum.src && f.to in flowSum.dst;
+      if (!ok && typeof console !== 'undefined') {
+        console.warn(`[ChangesDeep] поток с висячей ссылкой пропущен: ${f.from} → ${f.to}`);
+      }
+      return ok;
+    });
+    flowList.forEach((f) => { flowSum.src[f.from] += f.value; flowSum.dst[f.to] += f.value; });
 
     const totalSrc = Object.values(flowSum.src).reduce((a, b) => a + b, 0);
     const totalDst = Object.values(flowSum.dst).reduce((a, b) => a + b, 0);
@@ -41,11 +63,11 @@ function Sankey({ sankey }) {
 
     const layoutCol = (nodes, sumMap) => {
       // vertically center the column when one side has fewer flows
-      const totalH = nodes.reduce((a, n) => a + sumMap[n.id] * scale, 0) + gap * (nodes.length - 1);
+      const totalH = nodes.reduce((a, n) => a + sumMap[keyOf(n)] * scale, 0) + gap * (nodes.length - 1);
       let y = (H - totalH) / 2;
-      return nodes.map((n) => {
-        const h = sumMap[n.id] * scale;
-        const rec = { ...n, y, h };
+      return nodes.map((n, i) => {
+        const h = sumMap[keyOf(n)] * scale;
+        const rec = { ...n, id: keyOf(n), color: colorOf(n, i), y, h };
         y += h + gap;
         return rec;
       });
@@ -58,7 +80,7 @@ function Sankey({ sankey }) {
     sources.forEach((s) => { bySrc[s.id] = { ...s, used: 0, sum: flowSum.src[s.id] }; });
     dests.forEach((d) => { byDest[d.id] = { ...d, used: 0, sum: flowSum.dst[d.id] }; });
 
-    const flows = sankey.flows.map((f, i) => {
+    const flows = flowList.map((f, i) => {
       const s = bySrc[f.from], d = byDest[f.to];
       const sH = (f.value / s.sum) * s.h;
       const dH = (f.value / d.sum) * d.h;

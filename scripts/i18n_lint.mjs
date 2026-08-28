@@ -33,6 +33,12 @@
 //      different fact count, were fine. A helper takes a `bi()` getter or
 //      `getLang()`, never a hook.
 //
+//   5. MISSING TRANSLATOR. The mirror image of (1): a component that USES `t`
+//      and never binds it. `RiskSplit` called `levels(t)` with no
+//      `const t = useT()` anywhere above it — a bare ReferenceError, «t is not
+//      defined», the moment that one block appeared in a section. It survived
+//      the migration because no holding rendered that block until one did.
+//
 // Both are cheap to detect and impossible to argue with, so they gate the
 // build alongside the audit.
 // ══════════════════════════════════════════════════════════════════════════
@@ -315,6 +321,40 @@ for (const file of walk(ROOT)) {
     seen.add(d.name);
     const line = src.slice(0, d.i).split('\n').length + 1;
     problems.push([rel, `line ${line}: ${d.name}() is a helper, not a component, but calls ${hit[0].replace(/\s*\($/, '()')} — those hooks join the hook list of whichever component calls it, and the count changes with the data. Use a bi() getter or getLang().`]);
+  }
+}
+
+// ── Rule 5: a function that uses `t` without ever binding it ─────────────
+//
+// Reuses rule 4's declaration scan and brace-matched bodies, so a nested
+// helper that closes over its component's `t` is not reported — only a
+// top-level function that references `t` with nothing to reference.
+for (const file of walk(ROOT)) {
+  const src = stripNoise(readFileSync(file, 'utf8'));
+  if (!/useT\(\)/.test(src)) continue;                    // not a translated file
+  const rel = file.slice(ROOT.length - 3);
+
+  const decls = [];
+  for (const m of src.matchAll(/(?:^|\n)(?:export\s+)?(?:default\s+)?function\s+([A-Za-z_$][\w$]*)\s*(\()/g)) {
+    decls.push({ name: m[1], at: m.index + m[0].length - 1, arrow: false, i: m.index });
+  }
+  for (const m of src.matchAll(/(?:^|\n)(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*=\s*(\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>/g)) {
+    decls.push({ name: m[1], at: m.index + m[0].length, arrow: true, i: m.index, params: m[2] });
+  }
+
+  for (const d of decls) {
+    const body = functionBody(src, d.at, d.arrow);
+    // `t(…)` called, or `t` handed to a helper — `levels(t)`, `tiers(t)`.
+    const used = /[^A-Za-z0-9_.$]t\s*\(/.test(' ' + body)
+      || /[^A-Za-z0-9_.$][A-Za-z_$][\w$]*\(\s*t\s*[,)]/.test(' ' + body);
+    if (!used) continue;
+    if (/const\s+t\s*=\s*useT\(\)/.test(body)) continue;         // binds it
+    // A parameter named `t` is the deliberate helper form (rule 3 guards its
+    // call sites), so it counts as bound here.
+    const params = d.arrow ? (d.params || '') : src.slice(d.at, src.indexOf(')', d.at) + 1);
+    if (/[(,]\s*t\s*[,)]/.test(params)) continue;
+    const line = src.slice(0, d.i).split('\n').length + 1;
+    problems.push([rel, `line ${line}: ${d.name}() uses \`t\` but never binds it — add \`const t = useT();\`, or the render throws «t is not defined» the first time this block appears`]);
   }
 }
 

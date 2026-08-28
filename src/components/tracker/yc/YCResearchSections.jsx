@@ -465,6 +465,7 @@ function IconLink({ href, icon: Icon }) {
 // LAUNCH — the YC "Company Launch" post.
 // ─────────────────────────────────────────────────────────────────────────
 function LaunchSection({ launch }) {
+  const t = useT();
   const title = launch.title_ru || launch.title;
   const tldr = launch.tldr_ru || launch.tldr;
   return (
@@ -520,6 +521,7 @@ function LaunchSection({ launch }) {
 // ACTIVITY — redesigned as a compact card feed (was a bare dotted list).
 // ─────────────────────────────────────────────────────────────────────────
 function MomentumSection({ events }) {
+  const t = useT();
   const sorted = [...events].sort((a, b) => (b.date || '').localeCompare(a.date || '')); // newest first
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

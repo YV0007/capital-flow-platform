@@ -2434,6 +2434,7 @@ function NarrativeEl({ el, c, onJump }) {
 // Highlighter-pen mark: sweeps in from the left over the text line, settles to a persistent
 // low-opacity marker (doesn't disappear), and reveals a "back to origin" button on hover.
 function HighlightWrap({ on, c, originLabel, onBackOrigin, style, innerRef, children }) {
+  const t = useT();
   const [hover, setHover] = useState(false);
   return (
     <div ref={innerRef}
