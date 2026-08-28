@@ -289,7 +289,9 @@ const resolveProse = (v) => {
 // ══════════════════════════════════════════════════════════════════════════
 export function buildGraph() {
   const src = resolveProse(raw);
-  const graph = buildGraphFrom(src);
+  // Pass the EXTENDED table: the v2 builder must know the two types this
+  // contract adds, or they silently become «поставляет» on the map.
+  const graph = buildGraphFrom(src, EDGE_TYPE_META);
 
   // Generalize the anchor: v2 gave exactly one entity the centre privilege;
   // here every pivot gets it, and no single entity is "the" anchor.

@@ -928,7 +928,13 @@ export function buildGraph() {
   return buildGraphFrom(raw);
 }
 
-export function buildGraphFrom(raw) {
+// `edgeTypes` lets a caller extend the frozen v2 table. The network map adds two
+// types (is_alternative_to, enables_interop); without this they fell through the
+// `? e.type : 'supplies'` fallback below and rendered as «поставляет» — the map
+// stated that AMD SUPPLIES CUDA when AMD is an ALTERNATIVE to it, and painted it
+// on the physical spine instead of rivalry. A silent fallback that changes the
+// meaning of a relationship is worse than a missing one.
+export function buildGraphFrom(raw, edgeTypes = EDGE_TYPE_META) {
   const asOf = raw.asOf || null;
   const anchorId = raw.anchor || null;
 
@@ -1024,8 +1030,8 @@ export function buildGraphFrom(raw) {
   const edges = [];
   (raw.edges || []).forEach(e => {
     if (!entityById.has(e.source) || !entityById.has(e.target)) { dropped.push(e.id); return; }
-    const type = EDGE_TYPE_META[e.type] ? e.type : 'supplies';
-    const meta = EDGE_TYPE_META[type];
+    const type = edgeTypes[e.type] ? e.type : 'supplies';
+    const meta = edgeTypes[type];
     // Spine comes from the engine — it is DERIVED FROM TYPE upstream and we
     // only paint it. The type's own spine is a fallback for a malformed row.
     const spine = SPINE_META[e.spine] ? e.spine : meta.spine;
