@@ -535,7 +535,6 @@ function RelationList({
     const other = entityById.get(otherId);
     if (!other) return null;
     const open = openEvidence === e.id;
-    const sub = substitutabilityRead(e.substitutability);
     return (
             <div key={e.id} style={{
               borderTop: '1px solid var(--cf-border-hair)',
@@ -605,40 +604,23 @@ function RelationList({
                       <Glossed text={e.note} glossary={glossary} selfId={entity.id} onOpenEntity={onOpenEntity} />
                     </div>
                   )}
-                  {/* The three numbers that describe HOW the dependency holds */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 8 }}>
-                    {e.lockInDepth != null && (
-                      <StatRow label={t('Глубина замка', 'Lock-in depth')} value={e.lockInDepth} unit={t('из 100', 'out of 100')} />
-                    )}
-                    {sub && (
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, fontSize: 10.5 }}>
-                        <span style={{ color: 'var(--cf-text5)' }}>{t('Замена', 'Substitution')}</span>
-                        <span style={{ flex: 1 }} />
-                        <span style={{ color: sub.color, fontWeight: 600 }}>{sub.label}</span>
-                        <span title={t('Обратная шкала: 0 — заменить нечем, 100 — меняется свободно', 'An inverted scale: 0 means nothing can replace it, 100 means it swaps freely')} style={{
-                          fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text7)', cursor: 'help',
-                        }}>{e.substitutability} {t('из 100', 'out of 100')}</span>
-                      </div>
-                    )}
-                    {e.isReversible === false && (
-                      <div style={{ fontSize: 10.5, color: 'var(--cf-text5)' }}>
-                        {t('Связь не отыгрывается назад: один раз принятое решение переписывает всё, что построено поверх.', 'The link does not unwind: once the decision is taken it rewrites everything built on top of it.')}
-                      </div>
-                    )}
-                  </div>
-                  <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 8 }}>
-                    <Chip color={e.spineMeta?.color} title={e.spineMeta?.blurb}>{e.spineMeta?.label}</Chip>
-                    <Chip color={e.statusMeta?.color} title={e.statusMeta?.blurb}>
-                      {e.confirmedSources} {plural(e.confirmedSources, [t('источник', 'source'), 'источника', 'источников'])} · {e.tierMeta?.short}
-                    </Chip>
-                    {e.riskMeta && e.risk?.level !== 'low' && (
-                      <Chip color={e.riskMeta.color} title={riskSentence(e)}>
-                        {t('риск', 'risk')} {e.riskMeta.label.toLowerCase()}
-                      </Chip>
-                    )}
-                    {e.formed && <Chip title={t('Год возникновения связи', 'The year the link formed')}>с {e.formed}</Chip>}
-                    {e.strengthened && <Chip title={t('Год, когда связь резко углубилась', 'The year the link deepened sharply')}>углубилась {e.strengthened}</Chip>}
-                  </div>
+                  {/* Same edit as the edge card, for the same reason: lock-in
+                      depth and substitutability are two more 0-100 scores
+                      stacked on the materiality already shown in the row above,
+                      and the chip row is taxonomy about the RECORD (spine,
+                      tier, status, dates) rather than a fact about the
+                      relationship. What belongs here is how the cooperation
+                      actually works — `detail`, once the engine ships it. */}
+                  {e.detail && (
+                    <div style={{ fontSize: 11, color: 'var(--cf-text2)', lineHeight: 1.55, marginBottom: 8 }}>
+                      <Glossed text={e.detail} glossary={glossary} selfId={entity.id} onOpenEntity={onOpenEntity} />
+                    </div>
+                  )}
+                  {e.isReversible === false && (
+                    <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', marginBottom: 8 }}>
+                      {t('Связь не отыгрывается назад: один раз принятое решение переписывает всё, что построено поверх.', 'The link does not unwind: once the decision is taken it rewrites everything built on top of it.')}
+                    </div>
+                  )}
                   {(e.evidence || []).map((ev, i) => (
                     <Evidence key={i} ev={ev} accent={e.color} isFixture={isFixture} />
                   ))}
@@ -802,12 +784,26 @@ function ProfileBlock({ entity, gloss }) {
         }}>
           {what ? gloss(what) : t('Описания в данных пока нет — найдите через поиск ниже.', 'No description in the data yet — use the search below.')}
         </div>
-        {more && (
+        {more ? (
           <div style={{
             fontSize: 12, lineHeight: 1.62, fontWeight: 400, color: 'var(--cf-text2)',
             marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)',
           }}>
             {gloss(more)}
+          </div>
+        ) : (
+          // The engine has not shipped `description` for anything yet, so this
+          // card is one line and LOOKS like the map has nothing to say. It is
+          // not the same thing as "there is nothing here", and a reader cannot
+          // tell the difference — so the panel says which it is. The note
+          // disappears entity by entity as coverage arrives; nothing else
+          // changes. Spec: ECOSYSTEM-PROSE-HANDOFF.md § TASK A.
+          <div style={{
+            fontSize: 10.5, lineHeight: 1.5, color: 'var(--cf-text6)',
+            marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)',
+          }}>
+            {t('Развёрнутое описание — что продаёт, на чём зарабатывает, какого размера — движок пока не прислал.',
+               'The full description — what it sells, how it earns, how big it is — has not been delivered by the engine yet.')}
           </div>
         )}
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginTop: 10 }}>

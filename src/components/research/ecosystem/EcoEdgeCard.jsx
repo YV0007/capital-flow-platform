@@ -10,16 +10,20 @@
 //
 //   who does what to whom  ← the verb, coloured by its SPINE
 //   what moves along it    ← the tech node (EUV · CoWoS · HBM3E · CUDA)
-//   how hard it holds      ← strength, lock-in depth, substitutability
+//   how much it matters    ← strength, the one score the card keeps
+//   HOW THE COOPERATION WORKS ← `edge.detail`: contracts and their term,
+//                            backlog, purchase volume, loans and their terms,
+//                            stakes, capacity commitments. The point of the
+//                            card — a drawn line says two firms are connected,
+//                            this says what the connection actually IS.
 //
-// Then: whether it can be undone, what could break it and on what horizon,
-// when it formed and when it deepened, how well it is proven, and every source
-// quote behind one disclosure so the default state stays scannable.
+// Then: whether it can be undone, and every source quote behind one disclosure
+// so the default state stays scannable.
 //
-// `substitutability` is an INVERSE scale and the single most misreadable
-// number on this map — «заменимость 5» reads as the exact opposite of what it
-// means. It is never printed bare: `substitutabilityRead` turns it into
-// «заменить почти нечем», and the raw digit follows as a footnote.
+// Deliberately NOT here: lock-in depth and substitutability (two more 0-100
+// scores next to strength read as a dashboard, not as an answer), the risk
+// block, and the provenance chip row. Tier, status, spine and dates are
+// taxonomy about the RECORD, not facts about the relationship.
 //
 // `rightInset` = px of canvas covered by the entity panel; the card centres
 // itself in the REMAINING space so the two never overlap.
@@ -27,7 +31,7 @@
 
 import { useState } from 'react';
 import { X, ChevronDown, ChevronRight, ExternalLink, Quote } from 'lucide-react';
-import { strengthBand, substitutabilityRead } from '../../../data/aiEcosystemNetwork.js';
+import { strengthBand } from '../../../data/aiEcosystemNetwork.js';
 import { useT, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
@@ -38,15 +42,12 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
   if (!edge) return null;
 
   const sb = strengthBand(edge.strength);
-  const sub = substitutabilityRead(edge.substitutability);
   const ev = edge.evidence || [];
   const verb = edge.verb || edge.typeLabel;
   // The arrow carries the relation now that the capsed verb between the two
   // names is gone, so the sentence it used to say out loud lives in the
   // arrow's tooltip instead — in the direction the edge actually runs.
   const sentence = [source?.name, verb, target?.name].filter(Boolean).join(' ');
-  const risk = edge.risk || null;
-  const showRisk = !!(risk && risk.level && risk.level !== 'low');
 
   return (
     <div style={{
@@ -126,20 +127,21 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
         </span>
       </div>
 
-      {/* ── Чем именно держит: глубина замка и чем заменить ───────────── */}
-      {(edge.lockInDepth != null || sub) && (
-        <div style={{ padding: '0 14px 10px', display: 'flex', gap: 18, flexWrap: 'wrap' }}>
-          {edge.lockInDepth != null && (
-            <Gauge label={t('Глубина замка', 'Lock-in depth')} value={edge.lockInDepth}
-              read={t(`${edge.lockInDepth} из 100`, `${edge.lockInDepth} out of 100`)} color={edge.color}
-              title={t('Сколько слоёв стека задевает зависимость: чем глубже, тем больше придётся переделать при разрыве.', 'How many layers of the stack the dependency touches: the deeper it goes, the more has to be rebuilt if it breaks.')} />
-          )}
-          {sub && (
-            <Gauge label={t('Замена', 'Substitution')} value={100 - edge.substitutability}
-              read={sub.label} color={sub.color}
-              foot={t(`${edge.substitutability} из 100 по обратной шкале`, `${edge.substitutability} out of 100 on the inverted scale`)}
-              title={t('Обратная шкала: 0 — заменить нечем, 100 — меняется свободно. Полоса показана «наоборот», чтобы длиннее означало крепче.', 'An inverted scale: 0 means nothing can replace it, 100 means it swaps freely. The bar is drawn inverted so that longer means stronger.')} />
-          )}
+      {/* ── Как эта связь устроена в цифрах ───────────────────────────────
+             Ради этого блока карточка и существует. `note` наверху говорит
+             ОДНО предложение о сути — кто кого кормит; здесь идёт разбор:
+             контракты и на сколько лет, бэклог, объём закупки, заём и его
+             условия, доли, обязательства по мощности. Поле движковое
+             (`edge.detail`) и приходит парой { ru, en }, как и остальная
+             проза контракта. Пока его нет в поставке — блока просто нет,
+             пустой заголовок хуже отсутствия. ────────────────────────── */}
+      {edge.detail && (
+        <div style={{ padding: '0 14px 12px' }}>
+          <div style={{
+            fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.11em', marginBottom: 6,
+          }}>{t('Как устроено сотрудничество', 'How the cooperation works')}</div>
+          <div style={{ fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.6 }}>{edge.detail}</div>
         </div>
       )}
 
@@ -154,61 +156,6 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
           {t('Однажды принятое здесь решение переписывает всё, что построено поверх, — выход стоит не переключения, а перестройки.', 'A decision taken here rewrites everything built on top of it — leaving costs a rebuild, not a switch.')}
         </div>
       )}
-
-      {/* ── Комментарий: одна строка о том, что это за отношения ──────── */}
-      {edge.note && (
-        <div style={{ padding: '0 14px 11px', fontSize: 12.5, color: 'var(--cf-text2)', lineHeight: 1.5 }}>
-          {edge.note}
-        </div>
-      )}
-
-      {/* ── Риск: уровень, вид, горизонт, чем крыть ───────────────────── */}
-      {showRisk && (
-        <div style={{
-          margin: '0 14px 11px', padding: '8px 10px',
-          border: `1px solid ${edge.riskMeta?.color || 'var(--cf-border)'}44`, borderRadius: 8,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <span style={{
-              display: 'inline-flex', alignItems: 'center', gap: 5,
-              color: edge.riskMeta?.color, fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.07em',
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: edge.riskMeta?.color }} />
-              {t('риск', 'risk')} {edge.riskMeta?.label}
-            </span>
-            {edge.riskTypeLabel && (
-              <span style={{ fontSize: 10.5, color: 'var(--cf-text4)' }}>{edge.riskTypeLabel}</span>
-            )}
-            {edge.riskTimelineLabel && (
-              <span style={{ fontSize: 10, fontFamily: MONO, color: 'var(--cf-text6)' }}>
-                {t('горизонт', 'horizon')}: {edge.riskTimelineLabel}
-              </span>
-            )}
-          </div>
-          {risk.mitigation && (
-            <div style={{ marginTop: 6, fontSize: 11.5, color: 'var(--cf-text3)', lineHeight: 1.5 }}>
-              <span style={{ color: 'var(--cf-text6)' }}>{t('Чем крыть', 'How to cover it')}: </span>{risk.mitigation}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── Происхождение факта ───────────────────────────────────────── */}
-      <div style={{
-        display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center',
-        padding: '0 14px 12px',
-      }}>
-        <Chip color={edge.spineMeta?.color} title={edge.spineMeta?.blurb}>{edge.spineMeta?.label}</Chip>
-        <Chip color={edge.statusMeta?.color} title={edge.statusMeta?.blurb}>{edge.statusMeta?.label}</Chip>
-        <Chip color={edge.tierMeta?.color} title={edge.tierMeta?.blurb}>{edge.tierMeta?.label}</Chip>
-        <Chip title={t('Сколько независимых источников подтверждают эту связь', 'How many independent sources confirm this link')}>
-          {edge.confirmedSources} {plural(edge.confirmedSources, ['источник', 'источника', 'источников'], ['source', 'sources'])}
-        </Chip>
-        {edge.formed && <Chip title={t('Год возникновения связи', 'The year the link formed')}>с {edge.formed}</Chip>}
-        {edge.strengthened && <Chip title={t('Год, когда связь резко углубилась', 'The year the link deepened sharply')}>углубилась {edge.strengthened}</Chip>}
-        {edge.lastConfirmed && <Chip title={t('Когда связь подтверждалась в последний раз', 'When the link was last confirmed')}>подтв. {edge.lastConfirmed}</Chip>}
-      </div>
 
       {/* ── Цитаты — за одной кнопкой, чтобы карточка оставалась лёгкой ─ */}
       {ev.length > 0 && (
@@ -312,59 +259,7 @@ function Arrow({ color, title }) {
   );
 }
 
-/**
- * A 0-100 with its meaning attached. `value` is what the bar draws and `read`
- * is what the reader gets — the two are deliberately allowed to differ, which
- * is the whole point for substitutability: the number runs backwards, so the
- * bar is inverted and LONGER always means "holds tighter".
- */
-function Gauge({ label, value, read, foot, color, title }) {
-  return (
-    <div style={{ flex: '1 1 200px', minWidth: 160 }}>
-      <div title={title} style={{
-        fontSize: 8.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
-        textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5, cursor: 'help',
-      }}>{label}</div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ flex: 1, height: 4, borderRadius: 2, background: 'var(--cf-surface2)', overflow: 'hidden' }}>
-          <span style={{
-            display: 'block', height: '100%', borderRadius: 2, background: color,
-            width: `${Math.max(0, Math.min(100, value))}%`,
-          }} />
-        </span>
-        <span style={{ fontSize: 10.5, color, fontWeight: 600, whiteSpace: 'nowrap' }}>{read}</span>
-      </div>
-      {foot && (
-        <div style={{ marginTop: 3, fontSize: 9, fontFamily: MONO, color: 'var(--cf-text7)' }}>{foot}</div>
-      )}
-    </div>
-  );
-}
-
-function Chip({ children, color, title, dashed }) {
-  return (
-    <span title={title} style={{
-      display: 'inline-block', padding: '3px 7px',
-      background: color ? color + '14' : 'var(--cf-surface2)',
-      border: `1px ${dashed ? 'dashed' : 'solid'} ${color ? color + '44' : 'var(--cf-border)'}`,
-      borderRadius: 5,
-      fontSize: 8.5, color: color || 'var(--cf-text3)', fontFamily: MONO, fontWeight: 700,
-      textTransform: 'uppercase', letterSpacing: '0.06em',
-      cursor: title ? 'help' : 'default', whiteSpace: 'nowrap',
-    }}>{children}</span>
-  );
-}
-
 function hostOf(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); }
   catch { return getLang() === 'en' ? 'source' : 'источник'; }
-}
-
-function plural(n, [one, few, many]) {
-  const a = Math.abs(Math.round(n));
-  const d = a % 10, dd = a % 100;
-  if (dd >= 11 && dd <= 14) return many;
-  if (d === 1) return one;
-  if (d >= 2 && d <= 4) return few;
-  return many;
 }
