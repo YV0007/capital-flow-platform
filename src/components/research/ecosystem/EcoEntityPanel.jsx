@@ -874,14 +874,14 @@ function ProfileBlock({ entity, gloss }) {
             {gloss(more)}
           </div>
         ) : (
-          // Coverage is PARTIAL and stays that way for a while: contract /3
-          // brought `description` for 27 of 107 entities (every pivot), so 80
-          // still land here. Without this line the card is one line and LOOKS
-          // like the map has nothing to say — which is a different claim from
-          // "the engine has not written this one yet", and a reader cannot
-          // tell the two apart. It disappears entity by entity as coverage
-          // arrives; nothing else changes. Spec: ECOSYSTEM-PROSE-HANDOFF.md
-          // § TASK A.
+          // UNREACHABLE ON THE NETWORK MAP, AND KEPT ANYWAY. Coverage went
+          // 0 → 27 → 107 of 107 over three deliveries, so nothing on this map
+          // lands here today. It stays for two live cases: the reserve NVIDIA
+          // map still runs contract /2, which has no `description` at all, and
+          // a future delivery can always regress a field. Without this line a
+          // gap renders as a one-line card that LOOKS like the map has nothing
+          // to say — a different claim from "not written yet", and a reader
+          // cannot tell them apart. Spec: ECOSYSTEM-PROSE-HANDOFF.md § TASK A.
           <div style={{
             fontSize: 10.5, lineHeight: 1.5, color: 'var(--cf-text6)',
             marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)',
