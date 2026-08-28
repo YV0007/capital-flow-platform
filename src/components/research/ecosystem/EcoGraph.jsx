@@ -551,7 +551,12 @@ export default function EcoGraph({
     // surviving bonds can be pushed well clear of the idle band — that is the
     // whole point of having clicked. Only the chain is on screen, so a strong
     // lift reads as focus, not as clutter.
-    return hexA(lc, hasChain ? Math.min(1, a + 0.55) : a);
+    // Pulled back from +0.55. Opacity, width and particle density all lift at
+    // once when a chain is up, and the three compounded into a wall of colour —
+    // a lit chain is still a dozen-odd bonds, not two, so a strong lift on all
+    // three reads as "too much happening" rather than as focus. The lift now
+    // sits closer to the idle band and lets width and motion carry the rest.
+    return hexA(lc, hasChain ? Math.min(1, a + 0.34) : a);
   }, [edgeLit, selectedEdgeId, hoverEdgeId, hasChain, cycleMode, cycleEdges, mode, T]);
 
   const linkW = useCallback((e) => {
@@ -568,7 +573,7 @@ export default function EcoGraph({
     if (cycleMode && cycleEdges.has(e.id)) return w + 0.65;
     // Same reasoning as the opacity lift: a lit chain is a handful of bonds in
     // an otherwise empty frame, so a modest bump is legible without going fat.
-    if (hasChain) return w + 0.5;
+    if (hasChain) return w + 0.3;
     return w;
   }, [edgeLit, selectedEdgeId, hoverEdgeId, cycleMode, cycleEdges, hasChain]);
 
@@ -578,10 +583,13 @@ export default function EcoGraph({
     // first pass: at the old 4-6 the flow was too sparse to read as motion
     // at a glance, and reading the flow's direction is the whole point of a
     // lit chain — a thin trickle of dots undersold it.
-    if (e.id === selectedEdgeId) return 8;
-    if (e.id === hoverEdgeId) return 5;
-    if (cycleMode) return cycleEdges.has(e.id) ? 7 : 0;
-    if (hasChain) return chain.edges.has(e.id) ? 7 : 0;
+    if (e.id === selectedEdgeId) return 6;
+    if (e.id === hoverEdgeId) return 4;
+    if (cycleMode) return cycleEdges.has(e.id) ? 5 : 0;
+    // Softened with the opacity lift: seven dots per bond across a whole chain
+    // is a lot of moving parts at once, and the motion competes with the lines
+    // it is meant to describe.
+    if (hasChain) return chain.edges.has(e.id) ? 5 : 0;
     return 0;
   }, [selectedEdgeId, hoverEdgeId, hasChain, chain, cycleMode, cycleEdges]);
 
@@ -664,7 +672,7 @@ export default function EcoGraph({
           linkColor={linkColor}
           linkWidth={linkW}
           linkCurvature="curvature"
-          linkDirectionalArrowLength={(e) => (hasChain ? 3.2 : 1.9) + 1.2 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalArrowLength={(e) => (hasChain ? 2.5 : 1.9) + 1.2 * Math.sqrt((e.strength || 0) / 100)}
           linkDirectionalArrowRelPos={0.92}
           linkDirectionalParticles={particles}
           // Bigger and faster than the first pass — a hairline edge with a
@@ -673,7 +681,7 @@ export default function EcoGraph({
           // direction and pace of dependency IS what this animation is for,
           // so it gets to be the loudest moving thing on an otherwise static
           // canvas, not a barely-there accent.
-          linkDirectionalParticleWidth={(e) => (hasChain ? 3.4 : 2.4) + 1.8 * Math.sqrt((e.strength || 0) / 100)}
+          linkDirectionalParticleWidth={(e) => (hasChain ? 2.8 : 2.4) + 1.8 * Math.sqrt((e.strength || 0) / 100)}
           linkDirectionalParticleSpeed={() => 0.008}
           linkDirectionalParticleColor={(e) => {
             const cyc = cycleMode ? cycleEdges.get(e.id) : null;
