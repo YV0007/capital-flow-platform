@@ -53,8 +53,6 @@ export default function EcoEntityPanel({
   const pl = usePlural();
   const [openEvidence, setOpenEvidence] = useState(null);   // edge id
   const [openCrit, setOpenCrit] = useState(false);
-  const [showAllUp, setShowAllUp] = useState(false);
-  const [showAllDown, setShowAllDown] = useState(false);
 
   // React reuses this panel's DOM across entities, so the scroll position of
   // the previous one survives — you click a company and land halfway down its
@@ -65,8 +63,6 @@ export default function EcoEntityPanel({
     if (bodyRef.current) bodyRef.current.scrollTop = 0;
     setOpenEvidence(null);
     setOpenCrit(false);
-    setShowAllUp(false);
-    setShowAllDown(false);
   }, [entity?.id]);
 
   // Every piece of prose in this panel runs through <Glossed>: a term the map
@@ -222,7 +218,6 @@ export default function EcoEntityPanel({
           icon={<ArrowDownLeft size={11} />}
           empty={t('Ни одной входящей зависимости в карте.', 'No inbound dependency in the map.')}
           edges={up} entity={entity} entityById={entityById} side="source"
-          showAll={showAllUp} onShowAll={() => setShowAllUp(true)}
           selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
           openEvidence={openEvidence} onToggleEvidence={(id) => setOpenEvidence(p => (p === id ? null : id))}
           onOpenEntity={onOpenEntity} glossary={glossary} isFixture={isFixture}
@@ -232,7 +227,6 @@ export default function EcoEntityPanel({
           icon={<ArrowUpRight size={11} />}
           empty={t('Никто в карте не зависит от этой сущности напрямую.', 'Nothing in the map depends on this entity directly.')}
           edges={down} entity={entity} entityById={entityById} side="target"
-          showAll={showAllDown} onShowAll={() => setShowAllDown(true)}
           selectedEdgeId={selectedEdgeId} onSelectEdge={onSelectEdge}
           openEvidence={openEvidence} onToggleEvidence={(id) => setOpenEvidence(p => (p === id ? null : id))}
           onOpenEntity={onOpenEntity} glossary={glossary} isFixture={isFixture}
@@ -539,7 +533,7 @@ export default function EcoEntityPanel({
 
 // ── Relation list — the full set, with sources per edge ──────────────────
 function RelationList({
-  title, icon, empty, edges, entity, entityById, side, showAll, onShowAll,
+  title, icon, empty, edges, entity, entityById, side,
   selectedEdgeId, onSelectEdge, openEvidence, onToggleEvidence,
   onOpenEntity, glossary, isFixture,
 }) {
@@ -561,7 +555,6 @@ function RelationList({
   // five hid whole KINDS of relation, which is exactly the information the
   // grouping exists to show.
   const PER_GROUP = 4;
-  const [openGroups, setOpenGroups] = useState(() => new Set());
   const groups = useMemo(() => {
     const by = new Map();
     edges.forEach(e => {
@@ -584,6 +577,29 @@ function RelationList({
   }, [edges, up]);
   // One kind only? Then the group header would just restate the section title.
   const showHeaders = groups.length > 1;
+
+  // Every KIND folds on its own, and the panel does not open fully unfolded:
+  // only the heaviest kind is open, the rest are one click away. Eighty-one
+  // relations printed at once is a wall — the same eighty-one behind six named
+  // counters is a table of contents, and the reader picks the row they came
+  // for. The section header still says how many there are in total, so folding
+  // hides the rows, never the fact.
+  //
+  // State is derived per entity rather than reset in an effect: React reuses
+  // this panel's DOM across entities, so a Set left alone would carry NVIDIA's
+  // open groups into Foxconn's panel.
+  const [gs, setGs] = useState({ id: null, open: new Set(), all: new Set() });
+  const st = gs.id === entity.id ? gs
+    : { id: entity.id, open: new Set(groups.length ? [groups[0].key] : []), all: new Set() };
+  const isOpen = (key) => !showHeaders || st.open.has(key);
+  const toggleGroup = (key) => setGs(() => {
+    const open = new Set(st.open);
+    if (open.has(key)) open.delete(key); else open.add(key);
+    return { id: entity.id, open, all: st.all };
+  });
+  const showAllIn = (key) => setGs(() => ({
+    id: entity.id, open: new Set(st.open).add(key), all: new Set(st.all).add(key),
+  }));
 
   const renderRow = (e) => {
     const otherId = side === 'source' ? e.sourceId : e.targetId;
@@ -686,23 +702,29 @@ function RelationList({
   };
 
   return (
-    <Section title={title} icon={icon} count={edges.length}>
+    <Section title={title} icon={icon} count={edges.length} collapsible>
       {!edges.length && <Note>{empty}</Note>}
       {!!edges.length && !showHeaders && <ColHeads left={t('Контрагент', 'Counterparty')} right={t('Связь · существенность', 'Link · materiality')} />}
       {groups.map(g => {
-        const open = openGroups.has(g.key);
-        const rows = open ? g.rows : g.rows.slice(0, PER_GROUP);
+        const open = isOpen(g.key);
+        const rows = !open ? [] : st.all.has(g.key) ? g.rows : g.rows.slice(0, PER_GROUP);
         const hidden = g.rows.length - rows.length;
         return (
           <div key={g.key}>
             {showHeaders && (
-              <div style={{
-                display: 'flex', alignItems: 'center', gap: 7,
-                padding: '9px 16px 4px',
-              }}>
-                <span title={g.spine?.blurb} style={{
+              <button
+                onClick={() => toggleGroup(g.key)}
+                title={open
+                  ? t(`Свернуть «${g.label.toLowerCase()}»`, `Collapse "${g.label.toLowerCase()}"`)
+                  : t(`Развернуть «${g.label.toLowerCase()}» — ${g.rows.length}`, `Expand "${g.label.toLowerCase()}" — ${g.rows.length}`)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 7, width: '100%',
+                  padding: '9px 16px 4px', background: 'none', border: 'none',
+                  cursor: 'pointer', textAlign: 'left',
+                }}>
+                <span style={{
                   width: 3, height: 11, borderRadius: 2, marginLeft: -6,
-                  background: g.spine?.color, flexShrink: 0, cursor: 'help',
+                  background: g.spine?.color, flexShrink: 0,
                 }} />
                 <span style={{
                   fontSize: 9, fontFamily: MONO, fontWeight: 700, color: g.color,
@@ -712,17 +734,22 @@ function RelationList({
                   {g.rows.length}
                 </span>
                 <div style={{ flex: 1 }} />
-                <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text8)' }}>
-                  {t('СУЩЕСТВ.', 'MATERIAL.')}
+                {open && (
+                  <span style={{ fontSize: 8.5, fontFamily: MONO, color: 'var(--cf-text8)' }}>
+                    {t('СУЩЕСТВ.', 'MATERIAL.')}
+                  </span>
+                )}
+                <span style={{ color: 'var(--cf-text8)', lineHeight: 0, flexShrink: 0 }}>
+                  {open ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
                 </span>
-              </div>
+              </button>
             )}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {rows.map(renderRow)}
             </div>
-            {hidden > 0 && (
+            {open && hidden > 0 && (
               <button
-                onClick={() => setOpenGroups(prev => new Set(prev).add(g.key))}
+                onClick={() => showAllIn(g.key)}
                 style={{
                   display: 'block', width: 'calc(100% - 24px)', margin: '6px 12px 0',
                   padding: '5px 0', background: 'var(--cf-surface2)',
@@ -943,24 +970,54 @@ const rowBtn = {
 // panel shows a 0-100 score of some kind, and a bare number with a bar next to
 // it is unreadable — you cannot tell criticality-in-a-layer from strength-of-a-
 // link from the headline score.
-function Section({ title, icon, count, caption, children }) {
+//
+// A section can also FOLD. A hub like NVIDIA prints eighty-one relations, and
+// the reader arrives with ONE question, not eight — so the sections that can
+// run metres long carry a chevron and keep their own state. Everything else
+// keeps the plain header it always had: a toggle on a three-line block is
+// noise, not control.
+function Section({ title, icon, count, caption, children, collapsible = false, defaultOpen = true }) {
+  const t = useT();
+  const [open, setOpen] = useState(defaultOpen);
+  const shown = !collapsible || open;
+  const headStyle = {
+    display: 'flex', alignItems: 'center', gap: 6,
+    padding: `0 ${PAD}px ${shown && caption ? 5 : 9}px`,
+    fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
+    textTransform: 'uppercase', letterSpacing: '0.12em',
+  };
+  const head = (
+    <>
+      {icon}
+      {title}
+      {count != null && <span style={{ color: 'var(--cf-text8)' }}>· {count}</span>}
+    </>
+  );
   return (
     <div style={{ padding: '13px 0 3px', borderBottom: '1px solid var(--cf-border-hair)' }}>
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: 6, padding: `0 ${PAD}px ${caption ? 5 : 9}px`,
-        fontSize: 9, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
-        textTransform: 'uppercase', letterSpacing: '0.12em',
-      }}>
-        {icon}
-        {title}
-        {count != null && <span style={{ color: 'var(--cf-text8)' }}>· {count}</span>}
-      </div>
-      {caption && (
+      {collapsible ? (
+        <button
+          onClick={() => setOpen(o => !o)}
+          title={open ? t('Свернуть раздел', 'Collapse the section') : t('Развернуть раздел', 'Expand the section')}
+          style={{
+            ...headStyle, width: '100%', background: 'none', border: 'none',
+            cursor: 'pointer', textAlign: 'left',
+          }}>
+          {head}
+          <div style={{ flex: 1 }} />
+          <span style={{ color: 'var(--cf-text8)', lineHeight: 0 }}>
+            {open ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
+          </span>
+        </button>
+      ) : (
+        <div style={headStyle}>{head}</div>
+      )}
+      {shown && caption && (
         <div style={{ padding: `0 ${PAD}px 9px`, fontSize: 10.5, color: 'var(--cf-text6)', lineHeight: 1.5 }}>
           {caption}
         </div>
       )}
-      {children}
+      {shown && children}
     </div>
   );
 }
