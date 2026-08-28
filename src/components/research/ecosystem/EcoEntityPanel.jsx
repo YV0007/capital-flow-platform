@@ -30,13 +30,14 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import {
   X, ArrowDownLeft, ArrowUpRight, ExternalLink, Search, Globe, ChevronDown, ChevronRight,
-  Layers, Quote, CircleDot, Users, AlertTriangle, ShieldAlert, Orbit, Lock,
+  Layers, Quote, Gauge, Users, AlertTriangle, ShieldAlert, Lock,
 } from 'lucide-react';
 import {
   CRITICALITY_FACTORS, criticalityBand, substitutabilityRead, critIn,
+  WEIGHT_FACTORS, weightBand, pointsOf,
 } from '../../../data/aiEcosystemNetwork.js';
 import Glossed from './Glossed.jsx';
-import { useT, getLang } from '../../../lib/i18n.jsx';
+import { useT, usePlural, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 export const ECO_PANEL_W = 400;
@@ -49,7 +50,9 @@ export default function EcoEntityPanel({
   topInset = 0,
 }) {
   const t = useT();
+  const pl = usePlural();
   const [openEvidence, setOpenEvidence] = useState(null);   // edge id
+  const [openCrit, setOpenCrit] = useState(false);
   const [showAllUp, setShowAllUp] = useState(false);
   const [showAllDown, setShowAllDown] = useState(false);
 
@@ -61,6 +64,7 @@ export default function EcoEntityPanel({
   useEffect(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = 0;
     setOpenEvidence(null);
+    setOpenCrit(false);
     setShowAllUp(false);
     setShowAllDown(false);
   }, [entity?.id]);
@@ -102,7 +106,48 @@ export default function EcoEntityPanel({
   const rank = rivals.filter(r => r.c > ownScore).length + 1;
   const risk = entity.risk || null;
   const hasRisk = !!(risk && (risk.geopolitical || risk.note || risk.exportRegime || risk.concentration != null));
-  const g = entity.gravity || null;
+
+  // ── The one number. `gravity` and `centrality` still arrive in the payload
+  // and are still read — by ecoWeight.js, as two of the four ingredients —
+  // but nothing prints them raw any more. ─────────────────────────────────
+  const w = entity.weight || null;
+  const wb = weightBand(w?.score);
+
+  // The line under each factor: the fact behind the multiple, in words. Every
+  // number in it comes from the payload or from the metric's own working —
+  // never a percentage that looks like a market share but isn't one.
+  const factorRead = (key) => {
+    if (!w) return null;
+    if (key === 'influence') {
+      if (!w.dependents) {
+        return t('В карте на неё никто не опирается — вес держится на её собственной незаменимости.',
+                 'Nothing on the map leans on it — its weight rests on its own irreplaceability.');
+      }
+      const names = w.topDependents.map(d => d.name).join(', ');
+      const noun = pl(w.dependents, ['сущность', 'сущности', 'сущностей'], ['entity', 'entities']);
+      return t(`На неё опираются ${w.dependents} ${noun} — тяжелее всего ${names}.`,
+               `${w.dependents} ${noun} ${w.dependents === 1 ? 'leans' : 'lean'} on it — most heavily ${names}.`);
+    }
+    if (key === 'irreplaceability') {
+      return t(`Критичность ${entity.criticality} из 100 по рубрике из четырёх факторов.`,
+               `Criticality ${entity.criticality} out of 100 on the four-factor rubric.`);
+    }
+    if (key === 'reach') {
+      if (!w.layersTouched) return t('Зависимостей внутрь нет.', 'Nothing depends on it.');
+      const noun = pl(w.layersTouched, ['слоя', 'слоёв', 'слоёв'], ['layer', 'layers']);
+      return t(`Зависимость приходит из ${w.layersTouched} ${noun} стека, эффективно ${w.reachLayers.toFixed(1)}.`,
+               `The dependence comes from ${w.layersTouched} ${noun} of the stack, effectively ${w.reachLayers.toFixed(1)}.`);
+    }
+    if (key === 'bridge') {
+      if (!w.betweenness) {
+        return t('Не единственная дорога: убрать — сеть не разорвётся.',
+                 'Not the only road: removing it does not tear the network.');
+      }
+      return t(`Через неё проходит ${(w.betweenness * 100).toFixed(1)}% кратчайших путей карты.`,
+               `${(w.betweenness * 100).toFixed(1)}% of the map's shortest paths run through it.`);
+    }
+    return null;
+  };
 
   return (
     <aside style={{
@@ -193,51 +238,117 @@ export default function EcoEntityPanel({
           onOpenEntity={onOpenEntity} glossary={glossary} isFixture={isFixture}
         />
 
-        {/* 3. Criticality — the score AND the reasoning behind each input */}
-        <Section title={t('Критичность', 'Criticality')} icon={<CircleDot size={11} />}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 12, padding: `0 ${PAD}px` }}>
-            <span style={{ fontSize: 30, fontWeight: 700, color: cb.color, lineHeight: 1, fontFamily: MONO }}>
-              {entity.criticality}
-            </span>
-            <span style={{ fontSize: 11.5, color: 'var(--cf-text3)', fontWeight: 600 }}>{cb.label}</span>
-            <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>
-              {t('из 100 · насколько трудно заменить', 'out of 100 · how hard it is to replace')}
-            </span>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: `0 ${PAD}px` }}>
-            {CRITICALITY_FACTORS.map(f => {
-              const v = entity.criticalityFactors?.[f.key];
-              if (v == null) return null;
-              const why = entity.criticalityWhy?.[f.key];
-              return (
-                <div key={f.key}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span title={f.question} style={{ fontSize: 10.5, color: 'var(--cf-text3)', cursor: 'help', flexShrink: 0 }}>
-                      {f.label}
-                    </span>
-                    <span title={t(`Вес этого фактора в итоговой оценке — ${Math.round(f.weight * 100)}%`, `This factor's weight in the final score — ${Math.round(f.weight * 100)}%`)} style={{
-                      fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, cursor: 'help', flexShrink: 0,
-                    }}>×{f.weight.toFixed(2)}</span>
-                    <span style={{ flex: 1 }} />
-                    <Meter value={v} color={cb.color} width={52} />
-                    <span title={f.blurb} style={{
-                      width: 24, fontSize: 11, fontFamily: MONO, fontWeight: 700,
-                      color: 'var(--cf-text2)', textAlign: 'right', cursor: 'help', flexShrink: 0,
-                    }}>{v}</span>
-                  </div>
-                  {/* The line that makes the digit an argument instead of a
-                      verdict. Without it every factor is a bar nobody can
-                      dispute, which is the opposite of useful. */}
-                  {why && (
-                    <div style={{ marginTop: 3, fontSize: 10.5, color: 'var(--cf-text5)', lineHeight: 1.5 }}>
-                      {gloss(why)}
+        {/* 3. ВЕС В СИСТЕМЕ — the one number.
+            It replaces the three this panel used to print. Criticality,
+            gravity and centrality did not disappear: they are the ingredients
+            of this score, and each is a row below it with its own exponent
+            and its own line of plain language. The criticality rubric keeps
+            its four factors and its `criticalityWhy` prose — the best writing
+            on the panel — but folds UNDER the «незаменимость» row it belongs
+            to, so exactly one number here is a headline. See ecoWeight.js. */}
+        {w && (
+          <Section title={t('Вес в системе', 'Systemic weight')} icon={<Gauge size={11} />}
+            caption={t('Сколько отрасли стоит на этой сущности. Считается по графу зависимостей: важна та, на кого опираются важные.',
+                       'How much of the industry rests on this entity. Computed over the dependency graph: you are important if important things lean on you.')}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 12, padding: `0 ${PAD}px` }}>
+              <span title={t('50 — среднее по сети. Каждое удвоение веса — плюс 17 пунктов.',
+                             '50 is the network average. Every doubling of weight is another 17 points.')} style={{
+                fontSize: 30, fontWeight: 700, color: wb.color, lineHeight: 1, fontFamily: MONO, cursor: 'help',
+              }}>{w.score}</span>
+              <span style={{ flex: 1 }} />
+              <span title={t(`${w.rank}-е место по весу среди ${w.of} сущностей карты`,
+                             `Ranked ${w.rank} by weight among the ${w.of} entities on the map`)} style={{
+                fontSize: 11, color: 'var(--cf-text3)', fontFamily: MONO, fontWeight: 700, cursor: 'help',
+              }}>#{w.rank}</span>
+              <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>
+                {t(`из ${w.of}`, `of ${w.of}`)}
+              </span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: `0 ${PAD}px` }}>
+              {WEIGHT_FACTORS.map(f => {
+                const m = w[f.key];
+                if (m == null) return null;
+                // Every factor is a MULTIPLE of the network average, which is
+                // unreadable on its own — so the bar behind it is that multiple
+                // put on the same 0-100 scale as the headline, and the number
+                // stays «×среднего» where it can be argued with.
+                return (
+                  <div key={f.key}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span title={f.question} style={{ fontSize: 10.5, color: 'var(--cf-text3)', cursor: 'help', flexShrink: 0 }}>
+                        {f.label}
+                      </span>
+                      <span title={t(`Вес этого фактора в итоговой оценке — ${Math.round(f.weight * 100)}%`,
+                                     `This factor's weight in the final score — ${Math.round(f.weight * 100)}%`)} style={{
+                        fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, cursor: 'help', flexShrink: 0,
+                      }}>×{f.weight.toFixed(2)}</span>
+                      <span style={{ flex: 1 }} />
+                      <Meter value={pointsOf(m)} color={wb.color} width={52} />
+                      <span title={f.blurb} style={{
+                        width: 34, fontSize: 11, fontFamily: MONO, fontWeight: 700,
+                        color: 'var(--cf-text2)', textAlign: 'right', cursor: 'help', flexShrink: 0,
+                      }}>{m.toFixed(1)}×</span>
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </Section>
+                    <div style={{ marginTop: 3, fontSize: 10.5, color: 'var(--cf-text5)', lineHeight: 1.5 }}>
+                      {factorRead(f.key)}
+                    </div>
+                    {/* The rubric, folded under the factor it IS. Same four
+                        rows and the same one-line arguments as before — they
+                        just no longer compete with the headline for the eye. */}
+                    {f.key === 'irreplaceability' && (
+                      <>
+                        <button onClick={() => setOpenCrit(v => !v)} style={{
+                          marginTop: 4, display: 'flex', alignItems: 'center', gap: 4,
+                          background: 'transparent', border: 'none', padding: 0, cursor: 'pointer',
+                          fontSize: 9.5, color: 'var(--cf-text6)', fontFamily: MONO, fontWeight: 700,
+                          textTransform: 'uppercase', letterSpacing: '0.08em',
+                        }}>
+                          {openCrit ? <ChevronDown size={10} /> : <ChevronRight size={10} />}
+                          {t('разбор критичности', 'criticality breakdown')}
+                        </button>
+                        {openCrit && (
+                          <div style={{
+                            marginTop: 7, paddingLeft: 9, display: 'flex', flexDirection: 'column', gap: 9,
+                            borderLeft: '1px solid var(--cf-border-hair)',
+                          }}>
+                            {CRITICALITY_FACTORS.map(cf => {
+                              const v = entity.criticalityFactors?.[cf.key];
+                              if (v == null) return null;
+                              const why = entity.criticalityWhy?.[cf.key];
+                              return (
+                                <div key={cf.key}>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <span title={cf.question} style={{ fontSize: 10, color: 'var(--cf-text4)', cursor: 'help', flexShrink: 0 }}>
+                                      {cf.label}
+                                    </span>
+                                    <span style={{ fontSize: 8.5, color: 'var(--cf-text8)', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>
+                                      ×{cf.weight.toFixed(2)}
+                                    </span>
+                                    <span style={{ flex: 1 }} />
+                                    <Meter value={v} color={cb.color} width={40} />
+                                    <span title={cf.blurb} style={{
+                                      width: 22, fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
+                                      color: 'var(--cf-text3)', textAlign: 'right', cursor: 'help', flexShrink: 0,
+                                    }}>{v}</span>
+                                  </div>
+                                  {why && (
+                                    <div style={{ marginTop: 2, fontSize: 10, color: 'var(--cf-text6)', lineHeight: 1.5 }}>
+                                      {gloss(why)}
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </Section>
+        )}
 
         {/* 4. Why it cannot be replaced */}
         {entity.whyIrreplaceable && (
@@ -296,62 +407,6 @@ export default function EcoEntityPanel({
             <div style={{ padding: `0 ${PAD}px`, fontSize: 12, color: 'var(--cf-text2)', lineHeight: 1.55 }}>
               {gloss(entity.whatBreaksIt)}
             </div>
-          </Section>
-        )}
-
-        {/* 7. Gravity — structural weight, straight from the engine */}
-        {g && (
-          <Section title={t('Гравитация', 'Gravity')} icon={<Orbit size={11} />}
-            caption={t('Насколько сущность вплетена в граф: со сколькими связана, сколько слоёв задевает, сколько разных механик власти на ней сходится.',
-                       'How woven into the graph the entity is: how many it links to, how many layers it touches, how many distinct mechanics of power meet on it.')}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 10, padding: `0 ${PAD}px` }}>
-              <span style={{ fontSize: 24, fontWeight: 700, color: 'var(--cf-text1)', lineHeight: 1, fontFamily: MONO }}>
-                {g.score}
-              </span>
-              <span style={{ fontSize: 9.5, color: 'var(--cf-text7)', fontFamily: MONO }}>{t('из 100', 'out of 100')}</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5, padding: `0 ${PAD}px` }}>
-              <StatRow label={t('Связана с', 'Linked to')} value={g.reach} unit={t('сущностями', 'entities')} />
-              <StatRow label={t('Задевает', 'Touches')} value={g.layers} unit={t('слоёв', 'layers')} />
-              <StatRow label={t('Разных типов связи', 'Distinct link types')} value={g.edgeTypes} />
-              {g.cycles > 0 && <StatRow label={t('Стоит на контурах', 'Sits on loops')} value={g.cycles} accent="#E5484D" />}
-            </div>
-            {/* Network centrality — the v3 addition. Engine-computed measures
-                over the whole graph: how "crowded" the node is (degree), how
-                much "passes through" it (betweenness), and — once the engine
-                ships it — how much important things depend on it (pagerank).
-                Sits in the gravity block because all answer the same family of
-                question: how load-bearing is this node structurally. Each row
-                renders only if its number arrived. */}
-            {entity.centrality && (
-              <div style={{ marginTop: 9, paddingTop: 9, borderTop: '1px solid var(--cf-border-hair)', display: 'flex', flexDirection: 'column', gap: 5, padding: `9px ${PAD}px 0` }}>
-                <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>
-                  {t('Центральность в сети', 'Centrality in the network')}
-                </div>
-                {entity.centrality.degree != null && (
-                  <StatRow label={t('Степень', 'Degree')} value={entity.centrality.degree} unit={t('прямых связей', 'direct links')}
-                    hint={t('Со сколькими сущностями есть прямое ребро. Насколько узел «людный».', 'How many entities it shares a direct edge with. How busy the node is.')} />
-                )}
-                {entity.centrality.betweenness != null && (
-                  <StatRow label={t('Посредничество', 'Betweenness')} value={entity.centrality.betweenness}
-                    hint={t('Доля кратчайших путей между другими, проходящих через эту сущность. Насколько через неё «всё идёт».', 'The share of shortest paths between others that run through this entity. How much passes through it.')} />
-                )}
-                {/* PageRank — engine-computed, present only once the engine ships
-                    it. Raw pagerank (≈1/N average) is meaningless to read, so it
-                    is shown as a MULTIPLE of the network average — pagerank × N,
-                    where N is the node count. 1.0× = average pull; higher means
-                    important things depend on it. Multiplying by N is display
-                    arithmetic, not metric computation — the number itself is the
-                    engine's. */}
-                {entity.centrality.pagerank != null && entityById.size > 0 && (
-                  <StatRow label={t('Влияние', 'Influence')}
-                    value={`${(entity.centrality.pagerank * entityById.size).toFixed(1)}×`}
-                    unit={t('среднего', 'of average')}
-                    hint={t('PageRank: важность тем выше, чем больше на неё опираются ВАЖНЫЕ узлы — как ранг страницы у Google. Показано в разах от среднего влияния по сети (1× — среднее).',
-                            'PageRank: importance rises the more IMPORTANT nodes lean on it — the same idea as a page rank at Google. Shown as a multiple of the network-average influence (1× is the average).')} />
-                )}
-              </div>
-            )}
           </Section>
         )}
 

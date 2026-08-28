@@ -17,7 +17,7 @@
 
 import { useState, useMemo } from 'react';
 import { ChevronDown, ChevronUp, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
-import { criticalityBand, CRITICALITY_FACTORS } from '../../../data/aiEcosystemNetwork.js';
+import { criticalityBand, CRITICALITY_FACTORS, weightBand } from '../../../data/aiEcosystemNetwork.js';
 import { useT } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
@@ -36,7 +36,9 @@ const columns = (t) => [
   { key: 'lockInDepth',      label: t('Замок', 'Lock'),   w: '52px', align: 'right', num: true, factor: 'lockInDepth' },
   { key: 'timeToReplace',    label: t('Срок', 'Time'),    w: '52px', align: 'right', num: true, factor: 'timeToReplace' },
   { key: 'strategicControl', label: t('Рычаг', 'Leverage'),   w: '52px', align: 'right', num: true, factor: 'strategicControl' },
-  { key: 'gravity',     label: t('Гравит.', 'Gravity'),   w: '62px',  align: 'right', num: true },
+  // The one number the panel leads with. Gravity's column is gone — it is an
+  // ingredient of this one now, not a rival verdict.
+  { key: 'weight',      label: t('Вес', 'Weight'),      w: '62px',  align: 'right', num: true },
   { key: 'phase',       label: t('Фаза', 'Phase'),      w: '78px',  align: 'left'  },
   { key: 'risk',        label: t('Риск', 'Risk'),      w: '74px',  align: 'left'  },
   { key: 'links',       label: t('Связей', 'Links'),    w: '82px',  align: 'right', num: true },
@@ -53,7 +55,7 @@ const valueOf = (n, key) => {
     case 'sector': return n.sectorLabel || '';
     case 'layers': return n.primaryOrder ?? 0;
     case 'criticality': return n.criticality || 0;
-    case 'gravity': return n.gravity?.score || 0;
+    case 'weight': return n.weight?.score || 0;
     case 'phase': return n.phaseMeta?.order ?? 99;
     case 'risk': return RISK_ORDER[n.risk?.geopolitical] ?? -1;
     case 'links': return (n.upCount || 0) + (n.downCount || 0);
@@ -72,7 +74,7 @@ export default function EcoTable({
   const t = useT();
   const COLS = useMemo(() => columns(t), [t]);
   const GRID = useMemo(() => COLS.map(c => c.w).join(' '), [COLS]);
-  const [sort, setSort] = useState({ key: 'criticality', dir: -1 });
+  const [sort, setSort] = useState({ key: 'weight', dir: -1 });
   const [grouped, setGrouped] = useState(true);
   const [onlyVisible, setOnlyVisible] = useState(false);
 
@@ -288,7 +290,15 @@ function Row({ n, grid, layerById, onOpen }) {
       <FactorCell n={n} k="timeToReplace" />
       <FactorCell n={n} k="strategicControl" />
 
-      <Cell mono align="right">{n.gravity?.score ?? '—'}</Cell>
+      <Cell mono align="right">
+        {n.weight ? (
+          <span title={t(`Вес в системе ${n.weight.score} из 100 — ${n.weight.rank}-е место из ${n.weight.of}. 50 — среднее по сети.`,
+                         `Systemic weight ${n.weight.score} of 100 — ranked ${n.weight.rank} of ${n.weight.of}. 50 is the network average.`)}
+            style={{ cursor: 'help', color: weightBand(n.weight.score).color, fontWeight: 700 }}>
+            {n.weight.score}
+          </span>
+        ) : '—'}
+      </Cell>
 
       <Cell>
         {n.phaseMeta ? (

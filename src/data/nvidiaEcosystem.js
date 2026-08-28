@@ -64,6 +64,10 @@ import logoManifest from './logoManifest.json';
 // call sites keep reading a plain `.label`. `npm run i18n:check` fails the
 // build if a pair is ever left half-filled.
 import { bi, biMap } from '../lib/bi.js';
+import { computeWeights } from './ecoWeight.js';
+// The systemic-weight display taxonomy travels with the rest of the frozen
+// taxonomy: components import it from whichever adapter they render.
+export { WEIGHT_FACTORS, weightBand, pointsOf } from './ecoWeight.js';
 
 // ── Roles — the second dimension, orthogonal to the layer ────────────────
 // Told apart by SHAPE as well as colour (colour alone carries the layer band),
@@ -1101,6 +1105,13 @@ export function buildGraphFrom(raw) {
     entityById.get(e.target).upCount += 1;      // who this entity depends ON
     entityById.get(e.source).downCount += 1;    // who depends on this entity
   });
+
+  // ── Systemic weight. ONE number that replaces criticality + gravity +
+  // centrality in the panel, computed here rather than upstream because every
+  // input already exists in the payload. Both maps run through this function,
+  // so both get `entity.weight`. See ecoWeight.js. ──────────────────────────
+  const weights = computeWeights(entities, edges);
+  entities.forEach(e => { e.weight = weights.get(e.id) || null; });
 
   const stats = {
     entityCount: entities.length,
