@@ -79,7 +79,10 @@
    "ru": "Оборонные технологии",
    "en": "Defence tech"
   },
-  "thesisFallback": "Оборонка не может позволить себе отставать в AI — переносит опыт Oculus на автономные системы."
+  "thesisFallback": {
+   "ru": "Оборонка не может позволить себе отставать в AI — переносит опыт Oculus на автономные системы.",
+   "en": "Defence cannot afford to fall behind on AI — carrying the Oculus playbook into autonomous systems."
+  }
  },
  "David Sacks": {
   "knownAs": {
@@ -220,14 +223,20 @@
    "ru": "Частный кредит, Private equity",
    "en": "Private credit, Private equity"
   },
-  "thesisFallback": "Ищет предсказуемый обеспеченный доход — частный кредит под дата-центры и энергоинфраструктуру."
+  "thesisFallback": {
+   "ru": "Ищет предсказуемый обеспеченный доход — частный кредит под дата-центры и энергоинфраструктуру.",
+   "en": "Chasing predictable secured yield — private credit against data centres and power infrastructure."
+  }
  },
  "Goldman Sachs": {
   "sectorsFallback": {
    "ru": "Private equity, Частный кредит",
    "en": "Private equity, Private credit"
   },
-  "thesisFallback": "Клиентский спрос на AI-инфраструктуру как класс активов — размещает капитал клиентов и с баланса."
+  "thesisFallback": {
+   "ru": "Клиентский спрос на AI-инфраструктуру как класс активов — размещает капитал клиентов и с баланса.",
+   "en": "Client demand for AI infrastructure as an asset class — deploying client money and its own balance sheet."
+  }
  },
  "Korea Investment Corporation": {
   "sectorsFallback": {

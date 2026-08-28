@@ -78,6 +78,14 @@ const SKIP_KEYS = new Set([
   'source', 'sources', 'source_url', 'sourceUrl', 'evidence', 'domain',
   'aliases', 'candidate_id', 'entity_id', 'target_id', 'sourceId', 'targetId',
   'co_investors', 'seen_with', 'top', 'members', 'nodeIds', 'edgeIds',
+  // A DEDUP FINGERPRINT, never a label. capitalMap.js stringifies a signal's
+  // raw evidence to merge same-rule signals on one entity, and strips the key
+  // again in that merge — but the merge returns early for an entity with only
+  // ONE signal, so the key survives there and the audit met it as prose. It is
+  // read by nothing: `grep -r evidenceKey src/components` is empty. It used to
+  // be silenced by a baseline entry pinned to a node INDEX, which the next
+  // engine delivery would have shifted straight back into a red build.
+  'evidenceKey',
 ]);
 
 /** Is this a `{ ru, en }` translation pair rather than a container of prose? */
