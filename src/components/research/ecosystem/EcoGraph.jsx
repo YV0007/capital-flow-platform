@@ -152,10 +152,10 @@ export default function EcoGraph({
   //
   // A FILTER counts here too. It is not a lens, but it owns the camera for the
   // same reason: once the board is down to the nine entities a link type
-  // touches, EcosystemMap fits to those nine, and a whole-map fit arriving half
-  // a second later throws that away — the filter then reads as an empty canvas.
-  // Opening the filter drawer is itself a layout change, so this interval is
-  // always still alive at exactly the wrong moment.
+  // touches, EcosystemMap fits to those nine, and a whole-map fit arriving
+  // half a second later throws that away — the filter then reads as an empty
+  // canvas. Opening the filter drawer is itself a layout change, so this
+  // interval is always still alive at exactly the wrong moment.
   useEffect(() => {
     if (!cycleMode && !subgraphLens && !chainRoot && !hasFilter) return;
     if (fitIntervalRef.current) {
@@ -172,6 +172,7 @@ export default function EcoGraph({
     fg.d3Force('charge', null);
     fg.d3Force('link', null);
   }, [fgRef, graphData]);
+
 
 
   const nodeLit = useCallback((n) => {
@@ -221,8 +222,14 @@ export default function EcoGraph({
 
   // ── Cells: soft glow pools + a clickable title ─────────────────────────
   const paintRegions = useCallback((ctx, globalScale) => {
-    const padX = 10 / (globalScale || 1);
-    const padY = 9 / (globalScale || 1);
+    // Padding for the title HIT BOX, in the same space as the title itself.
+    // It used to be `10 / globalScale`, i.e. constant on SCREEN — but the font
+    // is sized in world units, so the two disagreed: at whole-map zoom (~0.12)
+    // a 10px pad became ~83 world units and the invisible box ballooned to
+    // several times the text, swallowing clicks on the nodes underneath. That
+    // is why a node sometimes needed two or three clicks to open.
+    const padX = 12;
+    const padY = 8;
     regions.forEach(r => {
       const core = r.type === 'nucleus';
       const faded = !!activeRegionKeys && !activeRegionKeys.has(r.key);
@@ -346,10 +353,21 @@ export default function EcoGraph({
     if (!Number.isFinite(sx) || !Number.isFinite(sy)) return null;
     const p = fg.screen2GraphCoords(sx, sy);
     if (!p) return null;
+    // A NODE ALWAYS WINS. The capture handler below stops the event dead when
+    // it reports a region, so anything this returns is a click force-graph will
+    // never see. A title box overlapping a tile must therefore yield: opening a
+    // layer report instead of the company you aimed at is the worse failure,
+    // and it is indistinguishable from a dead click.
+    const overNode = graphData.nodes.some(n => {
+      if (!Number.isFinite(n.x) || !nodeLit(n)) return false;
+      const half = ((n.r || 12) * 1.85) / 2;
+      return Math.abs(p.x - n.x) <= half && Math.abs(p.y - n.y) <= half;
+    });
+    if (overNode) return null;
     return regions.find(r => r._hit
       && p.x >= r._hit.x0 && p.x <= r._hit.x1
       && p.y >= r._hit.y0 && p.y <= r._hit.y1) || null;
-  }, [regions, fgRef]);
+  }, [regions, fgRef, graphData, nodeLit]);
 
   const handleMove = useCallback((ev) => {
     if (!onRegionClick) return;
@@ -413,16 +431,29 @@ export default function EcoGraph({
     ctx.save();
     ctx.globalAlpha = alpha;
 
-    // NO attention bloom. The flow map blooms its "pivotal" nodes in red, and
-    // the obvious port was anchors + anything on a closed loop — but that lit
-    // roughly half the map, so the red stopped meaning anything and only
-    // competed with the cell glows. Until there is a criterion sharp enough to
-    // earn it, importance is carried by tile SIZE (criticality) alone. The
-    // cycles lens is where loop membership belongs, on demand.
-
-    if (lit && (selected || hovered || isRoot)) {
+    // No BLANKET importance bloom — the flow map's red-on-every-pivotal port lit
+    // half the map and stopped meaning anything, so tile SIZE still carries
+    // criticality. But the ONE node you clicked to study its chain earns a
+    // marker, because there is exactly one and it is the subject of everything
+    // on screen: a soft PURPLE cloud behind it. Purple, not red — red is spent
+    // on the control spine, the «критично» band and the cycles lens, so a red
+    // halo here would read as danger. The cloud is drawn first, so it sits
+    // behind the tile and reads as "this node, lit from behind".
+    if (lit && (selected || isRoot)) {
+      const glow = mode === 'light' ? '#9333EA' : '#A855F7';
+      const gr = S * 1.9;
+      const g = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, gr);
+      g.addColorStop(0, hexA(glow, mode === 'light' ? 0.40 : 0.5));
+      g.addColorStop(0.55, hexA(glow, 0.16));
+      g.addColorStop(1, hexA(glow, 0));
+      ctx.beginPath();
+      ctx.arc(cx, cy, gr, 0, 2 * Math.PI);
+      ctx.fillStyle = g;
+      ctx.fill();
+    } else if (lit && hovered) {
+      // Plain hover keeps the quiet layer-colour box it always had.
       roundRect(ctx, x - 5, y - 5, S + 10, S + 10, corner + 4);
-      ctx.fillStyle = hexA(col, selected || isRoot ? 0.28 : 0.15); ctx.fill();
+      ctx.fillStyle = hexA(col, 0.15); ctx.fill();
     }
 
     // Cheap flat drop shadow, then the tile.
@@ -560,14 +591,12 @@ export default function EcoGraph({
     // as loud under them. (0.32-0.64 / 0.26-0.58 → 0.26-0.54 / 0.21-0.49.)
     const base = mode === 'light' ? 0.26 : 0.21;
     const a = (base + 0.28 * Math.sqrt((e.strength || 0) / 100)) * conf * (e.faded ? 0.5 : 1);
-
     // Chroma is a signal, not a texture: a bond at rest is pulled most of the
     // way toward grey, and gets its colour back the moment it is the one you
     // are looking at. See desat().
     const focused = e.id === hoverEdgeId || (hasChain && chain.edges.has(e.id));
     const lc = tone(desat(e.color, focused ? 0.10 : 0.34), mode);
     if (e.id === hoverEdgeId) return hexA(lc, Math.min(1, a + 0.45));
-
     // With a node selected the field is already down to its own chain, so the
     // surviving bonds can be pushed well clear of the idle band — that is the
     // whole point of having clicked. Only the chain is on screen, so a strong
@@ -784,7 +813,6 @@ export default function EcoGraph({
               || (hasChain && chain.edges.has(e.id));
             return hexA(tone(desat(e.color, lit ? 0.06 : 0.24), mode), lit ? 0.95 : 0.6);
           }}
-
           linkDirectionalParticles={particles}
           // Bigger and faster than the first pass — a hairline edge with a
           // 1-2px dot crawling along it at 0.004/frame read as "maybe
