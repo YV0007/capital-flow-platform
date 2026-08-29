@@ -26,16 +26,23 @@ const { DC_BUCKETS } = dcBucketsData;
 // time. A key the sidecar has not reached yet falls through to Russian, so a
 // half-filled sidecar degrades to "some Russian left" instead of blanking a
 // page — the same bargain `useT()` strikes for UI copy.
-const overlayEn = (ru, en) => {
-  if (en === undefined || en === null) return ru;
-  if (Array.isArray(ru)) return Array.isArray(en) ? ru.map((v, i) => overlayEn(v, en[i])) : ru;
+// The sidecar is keyed by DOT PATH into the payload — `hbm.thesis.stream.3.t`
+// — not by a mirrored object tree. Mirroring meant re-typing every wrapper
+// object and array index just to reach one sentence, which tripled the file
+// and made a half-finished node unreadable. A flat path map holds only the
+// strings that actually needed translating.
+const overlayEn = (ru, dict, prefix = '') => {
+  if (typeof ru === 'string') {
+    const hit = dict[prefix];
+    return typeof hit === 'string' && hit !== '' ? hit : ru;
+  }
+  if (Array.isArray(ru)) return ru.map((v, i) => overlayEn(v, dict, prefix + '.' + i));
   if (ru && typeof ru === 'object') {
-    if (typeof en !== 'object' || Array.isArray(en)) return ru;
     const out = {};
-    for (const k of Object.keys(ru)) out[k] = overlayEn(ru[k], en[k]);
+    for (const k of Object.keys(ru)) out[k] = overlayEn(ru[k], dict, prefix ? prefix + '.' + k : k);
     return out;
   }
-  return typeof en === 'string' && en !== '' ? en : ru;
+  return ru;
 };
 // Merged once, lazily — the payload is ~2 MB and the merge is pure, so paying
 // for it on every render of a 2700-line section would be visible.
