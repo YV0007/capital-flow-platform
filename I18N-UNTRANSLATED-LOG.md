@@ -95,7 +95,6 @@ and `fabric` were the worst.
 ## Progress — DC deep-dives
 
 ```
-· server            0/335    0%
 ✓ pkg             463/463  100%
 ✓ asic            448/448  100%
 ✓ litho           440/440  100%
@@ -109,6 +108,7 @@ and `fabric` were the worst.
 ✓ hbm             349/349  100%
 ✓ nand            348/348  100%
 ✓ inference       346/346  100%
+✓ server          335/335  100%
 ✓ netsilicon      319/319  100%
 ✓ pcb             314/314  100%
 ✓ darkfiber       308/308  100%
@@ -124,7 +124,7 @@ and `fabric` were the worst.
 ✓ ip              162/162  100%
 ✓ test             89/89   100%
 
-  8250/8585 (96%) переведено
+  8585/8585 (100%) переведено
 ```
 
 ## KNOWN TOOLING BLIND SPOT — affects the Russian side
