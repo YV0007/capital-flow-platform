@@ -9,6 +9,7 @@ import React, { useMemo, useState, useEffect, useRef } from 'react';
 import dcCompaniesData from '../../../data/dc-companies.json';
 import dcBucketsData from '../../../data/dc-buckets.json';
 import dcDetailsData from '../../../data/dc-details.json';
+import dcDetailsEn from '../../../data/dc-details.en.json';
 import dcCompanyProfilesData from '../../../data/dc-company-profiles.json';
 import { useT, getLang } from '../../../lib/i18n.jsx';
 import { bi, biMap } from '../../../data/capitalMap.js';
@@ -18,7 +19,32 @@ const DC_PROFILES = dcCompanyProfilesData; // rich company overviews keyed by ti
 const { DC_BUCKETS } = dcBucketsData;
 // Deep-dive content keyed by node id (keys starting with "_" are ignored). Empty
 // for most nodes today – the detail page falls back to a placeholder + base copy.
-const DC_DETAILS = dcDetailsData;
+//
+// The Russian file is canonical: it is what the research is written in, and it
+// is the one that keeps growing. English lives in a sidecar of the SAME shape
+// carrying only the keys that have been translated so far, overlaid at read
+// time. A key the sidecar has not reached yet falls through to Russian, so a
+// half-filled sidecar degrades to "some Russian left" instead of blanking a
+// page — the same bargain `useT()` strikes for UI copy.
+const overlayEn = (ru, en) => {
+  if (en === undefined || en === null) return ru;
+  if (Array.isArray(ru)) return Array.isArray(en) ? ru.map((v, i) => overlayEn(v, en[i])) : ru;
+  if (ru && typeof ru === 'object') {
+    if (typeof en !== 'object' || Array.isArray(en)) return ru;
+    const out = {};
+    for (const k of Object.keys(ru)) out[k] = overlayEn(ru[k], en[k]);
+    return out;
+  }
+  return typeof en === 'string' && en !== '' ? en : ru;
+};
+// Merged once, lazily — the payload is ~2 MB and the merge is pure, so paying
+// for it on every render of a 2700-line section would be visible.
+let _dcMerged = null;
+const dcDetails = () => {
+  if (getLang() !== 'en') return dcDetailsData;
+  if (!_dcMerged) _dcMerged = overlayEn(dcDetailsData, dcDetailsEn);
+  return _dcMerged;
+};
 
 // ─ Canvas geometry ────────────────────────────────────────────────────────
 const CANVAS_W       = 1180;
@@ -460,7 +486,7 @@ function searchDC(query) {
   const s = String(query || '').trim().toLowerCase();
   if (s.length < 2) return [];
   const results = [];
-  for (const [id, det] of Object.entries(DC_DETAILS)) {
+  for (const [id, det] of Object.entries(dcDetails())) {
     if (id.startsWith('_') || !det || !det.thesis) continue;
     const node = NODES[id];
     if (!node) continue;
@@ -1221,7 +1247,7 @@ function ChainPill({ node, onClick }) {
 
 // ══════════════════════════════════════════════════════════════════════════
 // NodeDetail – full-page INVESTMENT deep-dive for a sub-sector.
-// Rendered as a decision-grade research memo, data-driven from DC_DETAILS[id].
+// Rendered as a decision-grade research memo, data-driven from dcDetails()[id].
 // 12 optional blocks (verdict, TL;DR, market, value-capture, competition,
 // demand, supply, unit-econ, roadmap, dependencies, risk, universe, monitor,
 // scenarios). A node with no data shows a placeholder.
@@ -2475,7 +2501,8 @@ function NodeDetail({ node, onBack, onJump, jumpTarget, scrollRestore, originLab
   const layer = LAYERS[node.layer];
   const layerIdx = node.layer;
   const totalLayers = LAYERS.length;
-  const detail = (DC_DETAILS[node.id] && !node.id.startsWith('_')) ? DC_DETAILS[node.id] : null;
+  const DD = dcDetails();
+  const detail = (DD[node.id] && !node.id.startsWith('_')) ? DD[node.id] : null;
 
   // Deep-link landing: scroll to (and flash-highlight) the paragraph a cross-link/search points at;
   // or restore the origin's scroll position when the reader clicks "back".
