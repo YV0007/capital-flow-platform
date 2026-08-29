@@ -151,45 +151,29 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
         <span style={{ fontSize: 10.5, color: 'var(--cf-text4)', whiteSpace: 'nowrap' }}>
           {t('существенность', 'materiality')} {sb.label}
         </span>
+        {/* Метка «обе стороны» — единственное, что осталось от блока про
+            sidedness. Она сообщает НАЛИЧИЕ: оба конца описали связь в
+            собственных документах, а это сильнее статуса `confirmed`,
+            который может стоять на двух отчётах одной стороны. На `single`
+            не рисуется ничего: отсутствие второй стороны — не факт. */}
+        {edge.sidedness === 'bilateral' && sided && (
+          <span title={`${sided.blurb}${claimNames.length ? `\n${t('Заявили: ', 'Claimed by: ')}${claimNames.join(' · ')}` : ''}`}
+            style={{
+              padding: '2px 7px', borderRadius: 5, whiteSpace: 'nowrap', cursor: 'help',
+              background: sided.color + '1a', border: `1px solid ${sided.color}44`,
+              color: sided.color, fontSize: 9.5, fontFamily: MONO, fontWeight: 700,
+            }}>{t('ОБЕ СТОРОНЫ', 'BOTH SIDES')}</span>
+        )}
       </div>
 
-      {/* ── С чьих слов ───────────────────────────────────────────────────
-             Контракт /4. `status` отвечает «насколько твёрдо», это — «кто
-             сказал», и второе не выводится из первого: связь может быть
-             `confirmed` на двух отчётах ОДНОЙ стороны. `bilateral` — самое
-             сильное, что карта умеет утверждать об отношениях: оба конца
-             описали их в собственных документах. ────────────────────────── */}
-      {sided && (
-        <div style={{ padding: '0 14px 11px' }}>
-          <div style={{
-            display: 'flex', alignItems: 'flex-start', gap: 8,
-            padding: '8px 10px', borderRadius: 8,
-            background: edge.sidedness === 'bilateral' ? sided.color + '12' : 'var(--cf-surface1)',
-            border: `1px solid ${edge.sidedness === 'single' ? 'var(--cf-border-soft)' : sided.color + '44'}`,
-          }}>
-            <span style={{
-              width: 7, height: 7, borderRadius: '50%', background: sided.color,
-              flexShrink: 0, marginTop: 4,
-            }} />
-            <div style={{ minWidth: 0 }}>
-              <div style={{
-                fontSize: 10, fontFamily: MONO, fontWeight: 700, color: sided.color,
-                textTransform: 'uppercase', letterSpacing: '0.07em',
-              }}>{sided.label}</div>
-              <div style={{ fontSize: 11, color: 'var(--cf-text3)', lineHeight: 1.5, marginTop: 3 }}>
-                {sided.blurb}
-              </div>
-              {claimNames.length > 0 && (
-                <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', lineHeight: 1.5, marginTop: 4 }}>
-                  {t('Заявили своими документами: ', 'Claimed in their own documents: ')}
-                  <span style={{ color: 'var(--cf-text2)', fontWeight: 600 }}>{claimNames.join(' · ')}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
+      {/* ── С чьих слов ─────────────────────────────────────────────────
+             Отдельный блок про `sidedness` стоял здесь и убран. На `single`
+             он сообщал ОТСУТСТВИЕ факта — «второй конец не высказывался», —
+             занимая пятую часть карточки, и таких связей 244 из 314: место
+             уходило на пустоту в четырёх случаях из пяти. Наличие сообщать
+             стоит, отсутствие — нет. Осталась короткая метка `bilateral`
+             рядом со статусом (см. шапку), расхождение сторон по-прежнему
+             рисуется ниже открытым блоком. ─────────────────────────────── */}
       {/* ── Расхождение сторон ────────────────────────────────────────────
              Контракт /4 везёт `disputed` С ОБЕИМИ цитатами и никогда его не
              решает: две компании, по-разному описывающие собственные
@@ -237,18 +221,10 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
         </div>
       )}
 
-      {/* ── Отыгрывается ли назад ─────────────────────────────────────── */}
-      {edge.isReversible === false && (
-        <div style={{
-          margin: '0 14px 11px', padding: '7px 10px',
-          background: 'var(--cf-surface1)', border: '1px solid var(--cf-border-soft)', borderRadius: 8,
-          fontSize: 11.5, color: 'var(--cf-text3)', lineHeight: 1.5,
-        }}>
-          <b style={{ color: 'var(--cf-text1)' }}>{t('Связь не отыгрывается назад.', 'The link does not unwind.')}</b>{' '}
-          {t('Однажды принятое здесь решение переписывает всё, что построено поверх, — выход стоит не переключения, а перестройки.', 'A decision taken here rewrites everything built on top of it — leaving costs a rebuild, not a switch.')}
-        </div>
-      )}
-
+      {/* Шаблонная плашка «связь не отыгрывается назад» убрана: один и тот же
+          текст стоял на КАЖДОЙ связи с `isReversible === false` и не сообщал
+          ничего именно об этой. Необратимость читается из `substitutability`
+          и из разбора выше. */}
       {/* ── Цитаты — за одной кнопкой, чтобы карточка оставалась лёгкой ─ */}
       {ev.length > 0 && (
         <div style={{ borderTop: '1px solid var(--cf-border-hair)' }}>

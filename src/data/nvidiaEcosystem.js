@@ -849,23 +849,26 @@ export function criticalityBasisOf(entity) {
   return { factorsUsed: CRITICALITY_FACTORS.length, renormalized: false, factors: null };
 }
 
-/** Plain-Russian band for a 0–100 criticality score. Contract's own cuts. */
+/** Band for a 0–100 criticality score. Contract's own cuts, bilingual —
+ *  same leak as strengthBand. `bi()` returns a getter; do NOT spread it. */
 export function criticalityBand(c) {
-  if (c == null) return { label: 'Не оценено', color: '#94A3B8' };
-  if (c >= 90) return { label: 'Критично', color: '#E5484D' };
-  if (c >= 75) return { label: 'Высоко', color: '#E0A340' };
-  if (c >= 60) return { label: 'Средне', color: '#58ABCB' };
-  if (c >= 45) return { label: 'Ниже среднего', color: '#7FA8C4' };
-  return { label: 'Низко', color: '#49C2AE' };
+  if (c == null) return bi({ label: ['Не оценено', 'Not scored'] }, { color: '#94A3B8' });
+  if (c >= 90) return bi({ label: ['Критично', 'Critical'] }, { color: '#E5484D' });
+  if (c >= 75) return bi({ label: ['Высоко', 'High'] }, { color: '#E0A340' });
+  if (c >= 60) return bi({ label: ['Средне', 'Medium'] }, { color: '#58ABCB' });
+  if (c >= 45) return bi({ label: ['Ниже среднего', 'Below average'] }, { color: '#7FA8C4' });
+  return bi({ label: ['Низко', 'Low'] }, { color: '#49C2AE' });
 }
 
-/** Plain-Russian band for a 0–100 edge strength. */
+/** Band for a 0–100 edge strength. Bilingual: the label is rendered beside an
+ *  English word («materiality»), so a Russian-only string leaks straight into
+ *  the English UI. `bi()` returns a getter — do NOT spread the result. */
 export function strengthBand(s) {
-  if (s == null) return { label: 'не оценена', color: '#94A3B8' };
-  if (s >= 85) return { label: 'критическая', color: '#E5484D' };
-  if (s >= 65) return { label: 'высокая', color: '#E0A340' };
-  if (s >= 40) return { label: 'заметная', color: '#58ABCB' };
-  return { label: 'слабая', color: '#49C2AE' };
+  if (s == null) return bi({ label: ['не оценена', 'not scored'] }, { color: '#94A3B8' });
+  if (s >= 85) return bi({ label: ['критическая', 'critical'] }, { color: '#E5484D' });
+  if (s >= 65) return bi({ label: ['высокая', 'high'] }, { color: '#E0A340' });
+  if (s >= 40) return bi({ label: ['заметная', 'notable'] }, { color: '#58ABCB' });
+  return bi({ label: ['слабая', 'weak'] }, { color: '#49C2AE' });
 }
 
 /**
