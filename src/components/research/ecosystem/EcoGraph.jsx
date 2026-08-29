@@ -642,6 +642,7 @@ export default function EcoGraph({
         <span style="font-weight:700;font-size:12px;color:${T.tipText};letter-spacing:-0.01em">${esc(n.name)}</span>
         ${n.ticker ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${esc(n.ticker)}</span>` : ''}
         ${n.faded ? `<span style="color:${T.tipText4};font-size:8.5px;font-weight:700">${getLang() === 'en' ? 'STALE' : 'УСТАР.'}</span>` : ''}
+        ${n.pendingDossier ? `<span style="color:${T.warn || '#E0A340'};font-size:8.5px;font-weight:700">${getLang() === 'en' ? 'UNSTUDIED' : 'НЕ ИЗУЧЕН'}</span>` : ''}
       </div>
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
         <span style="width:7px;height:7px;border-radius:2px;background:${tone(n.color, mode)};flex:none"></span>
@@ -649,9 +650,9 @@ export default function EcoGraph({
         <span style="color:${T.tipRule}">·</span>
         <span style="color:${T.tipText4}">${esc(n.primaryLayerLabel || n.primaryLayer)}</span>
       </div>
-      ${(n.isAnchor || n.isPivotal) ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
+      ${n.isCore ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px">
         <span style="width:6px;height:6px;border-radius:50%;background:${T.pivotGlow};flex:none"></span>
-        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">${n.isAnchor ? (getLang() === 'en' ? 'Ecosystem anchor' : 'Якорь экосистемы') : (getLang() === 'en' ? 'Key network node' : 'Ключевой узел сети')}</span>
+        <span style="color:${T.pivotGlow};font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">${getLang() === 'en' ? 'In the map\'s core' : 'В ядре карты'}</span>
       </div>` : ''}
       <div style="color:${T.tipText2};margin-bottom:9px;line-height:1.45">${esc(n.oneLiner || '')}</div>
       <div style="border-top:1px solid ${T.tipBorder};padding-top:9px;display:grid;grid-template-columns:auto 1fr;gap:5px 16px">

@@ -11,14 +11,29 @@
 // replace and not just by the blended score. That is the one question the
 // blended score cannot answer — «кто держится на замке, а кто на сроке».
 //
+// v4 changes two of those columns and adds a third:
+//   · «Рычаг» (`strategicControl`, NVIDIA's leverage over you) became «Доля»
+//     (`concentration`, what share of your own function you hold). The old
+//     field is gone from the payload; keeping the column would have shipped an
+//     empty one to production.
+//   · «Свои» is `sourcing.selfSourced / total` — of all the documents behind
+//     this profile, how many the entity published itself. It is the most
+//     honest column on the map, because it separates «исследована» from
+//     «упомянута», and until /4 the map could not tell you which was which.
+//   · An entity whose dossier the rotation has not reached yet is MARKED at
+//     its name. A node that has never been researched must not read like one
+//     that has.
+//
 // Grouping is by LAYER by default — the stack order is the reading order —
 // with a flat mode for pure ranking. Clicking a row opens it on the map.
 // ══════════════════════════════════════════════════════════════════════════
 
 import { useState, useMemo } from 'react';
 import { ChevronDown, ChevronUp, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
-import { criticalityBand, CRITICALITY_FACTORS, weightBand } from '../../../data/aiEcosystemNetwork.js';
-import { useT } from '../../../lib/i18n.jsx';
+import {
+  criticalityBand, CRITICALITY_FACTORS, criticalityBasisOf, weightBand,
+} from '../../../data/aiEcosystemNetwork.js';
+import { useT, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
 
@@ -35,10 +50,12 @@ const columns = (t) => [
   { key: 'irreplaceability', label: t('Незам.', 'Irrepl.'),  w: '52px', align: 'right', num: true, factor: 'irreplaceability' },
   { key: 'lockInDepth',      label: t('Замок', 'Lock'),   w: '52px', align: 'right', num: true, factor: 'lockInDepth' },
   { key: 'timeToReplace',    label: t('Срок', 'Time'),    w: '52px', align: 'right', num: true, factor: 'timeToReplace' },
-  { key: 'strategicControl', label: t('Рычаг', 'Leverage'),   w: '52px', align: 'right', num: true, factor: 'strategicControl' },
+  { key: 'concentration',    label: t('Доля', 'Share'),   w: '52px', align: 'right', num: true, factor: 'concentration' },
   // The one number the panel leads with. Gravity's column is gone — it is an
   // ingredient of this one now, not a rival verdict.
   { key: 'weight',      label: t('Вес', 'Weight'),      w: '62px',  align: 'right', num: true },
+  // Of the sources behind this profile, how many the entity published itself.
+  { key: 'selfSourced', label: t('Свои', 'Own'),        w: '58px',  align: 'right', num: true },
   { key: 'phase',       label: t('Фаза', 'Phase'),      w: '78px',  align: 'left'  },
   { key: 'risk',        label: t('Риск', 'Risk'),      w: '74px',  align: 'left'  },
   { key: 'links',       label: t('Связей', 'Links'),    w: '82px',  align: 'right', num: true },
@@ -56,13 +73,21 @@ const valueOf = (n, key) => {
     case 'layers': return n.primaryOrder ?? 0;
     case 'criticality': return n.criticality || 0;
     case 'weight': return n.weight?.score || 0;
+    // Sorts on the SHARE, not on the raw count, so a profile with 9 of 10 own
+    // sources outranks one with 2 of 2. A profile with no sources at all sorts
+    // to the bottom rather than tying with a fully self-sourced one at 1.
+    case 'selfSourced': {
+      const s = n.sourcing;
+      if (!s || !s.total) return -1;
+      return (s.selfSourced || 0) / s.total + (s.selfSourced || 0) / 1000;
+    }
     case 'phase': return n.phaseMeta?.order ?? 99;
     case 'risk': return RISK_ORDER[n.risk?.geopolitical] ?? -1;
     case 'links': return (n.upCount || 0) + (n.downCount || 0);
     case 'irreplaceability':
     case 'lockInDepth':
     case 'timeToReplace':
-    case 'strategicControl':
+    case 'concentration':
       return n.criticalityFactors?.[key] ?? -1;
     default: return 0;
   }
@@ -243,10 +268,25 @@ function Row({ n, grid, layerById, onOpen }) {
             fontSize: 12, color: 'var(--cf-text1)', fontWeight: 600,
             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
           }}>{n.name}</span>
-          {n.isAnchor && (
-            <span title={t('Якорь экосистемы', 'The ecosystem anchor')} style={{
-              fontSize: 8, color: 'var(--cf-accent)', fontFamily: MONO, fontWeight: 700, flexShrink: 0,
-            }}>{t('ЯКОРЬ', 'ANCHOR')}</span>
+          {/* THE ONE MARK THAT MATTERS MOST ON THIS TABLE. Every other column
+              says how big the node is; this says whether anybody has looked at
+              it. 31 of 108 rows carry it, and without it they read exactly
+              like the 77 that were researched. */}
+          {n.pendingDossier && (
+            <span title={t('До этого узла ещё не дошла очередь исследования. Он показан, но собственное досье не собрано, и доля функции у него пуста.',
+                           'The research rotation has not reached this node yet. It is shown, but its own dossier has not been assembled and its share of the function is empty.')}
+              style={{
+                padding: '0 4px', borderRadius: 3, flexShrink: 0,
+                border: '1px dashed var(--cf-warn)', color: 'var(--cf-warn)',
+                fontSize: 7.5, fontFamily: MONO, fontWeight: 700, letterSpacing: '0.06em', cursor: 'help',
+              }}>{t('НЕ ИЗУЧЕН', 'UNSTUDIED')}</span>
+          )}
+          {!!(n.membershipFailing || []).length && (
+            <span title={t('Удержан связью: сам проверку членства не проходит, но назван в чужом подтверждённом досье, поэтому оставлен на карте помеченным.',
+                           "Held by a link: it does not pass the membership checks on its own, but it is named in somebody else's confirmed dossier, so it stays on the map, marked.")}
+              style={{ fontSize: 8, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700, flexShrink: 0, cursor: 'help' }}>
+              {t('удержан', 'held')}
+            </span>
           )}
           {n.faded && (
             <span title={t(`Данные не подтверждались с ${n.lastConfirmed || '—'}`, `Not re-confirmed since ${n.lastConfirmed || '—'}`)}
@@ -288,7 +328,7 @@ function Row({ n, grid, layerById, onOpen }) {
       <FactorCell n={n} k="irreplaceability" />
       <FactorCell n={n} k="lockInDepth" />
       <FactorCell n={n} k="timeToReplace" />
-      <FactorCell n={n} k="strategicControl" />
+      <FactorCell n={n} k="concentration" />
 
       <Cell mono align="right">
         {n.weight ? (
@@ -299,6 +339,8 @@ function Row({ n, grid, layerById, onOpen }) {
           </span>
         ) : '—'}
       </Cell>
+
+      <SelfSourcedCell n={n} />
 
       <Cell>
         {n.phaseMeta ? (
@@ -339,15 +381,64 @@ function FactorCell({ n, k }) {
   const t = useT();
   const v = n.criticalityFactors?.[k];
   const f = FACTOR_BY_KEY[k];
+  // A MISSING FACTOR IS NOT A ZERO AND NOT A BLANK. 32 entities have no
+  // `concentration` because their dossier has not been worked yet; the engine
+  // renormalized the other three weights and said so in `criticalityBasis`.
+  // A blank cell reads as «мы посмотрели и там ничего», which is a different
+  // claim. An em dash with the reason on hover is the honest rendering.
+  if (v == null) {
+    const basis = criticalityBasisOf(n);
+    return (
+      <Cell mono align="right">
+        <span title={f.pending
+          // `pending` is a bi() getter and already speaks the active language.
+          ? `${f.label} — ${f.pending}`
+          : t(`${f.label}: не оценена. Критичность посчитана по ${basis.factorsUsed} факторам.`,
+              `${f.label}: not scored. Criticality is computed on ${basis.factorsUsed} factors.`)}
+          style={{ cursor: 'help', color: 'var(--cf-text8)' }}>—</span>
+      </Cell>
+    );
+  }
   return (
     <Cell mono align="right">
-      {v == null ? '' : (
-        <span title={t(`${f.label}: ${v} из 100 · вес ${Math.round(f.weight * 100)}%${n.criticalityWhy?.[k] ? `\n${n.criticalityWhy[k]}` : ''}`,
-                          `${f.label}: ${v} out of 100 · weight ${Math.round(f.weight * 100)}%${n.criticalityWhy?.[k] ? `\n${n.criticalityWhy[k]}` : ''}`)}
-          style={{ cursor: 'help', color: v >= 85 ? 'var(--cf-text2)' : 'var(--cf-text6)' }}>
-          {v}
-        </span>
-      )}
+      <span title={t(`${f.label}: ${v} из 100 · вес ${Math.round(f.weight * 100)}%${n.criticalityWhy?.[k] ? `\n${n.criticalityWhy[k]}` : ''}`,
+                        `${f.label}: ${v} out of 100 · weight ${Math.round(f.weight * 100)}%${n.criticalityWhy?.[k] ? `\n${n.criticalityWhy[k]}` : ''}`)}
+        style={{ cursor: 'help', color: v >= 85 ? 'var(--cf-text2)' : 'var(--cf-text6)' }}>
+        {v}
+      </span>
+    </Cell>
+  );
+}
+
+/**
+ * «Свои» — of the sources behind this profile, how many the entity published
+ * itself. Written as `9/10`, with the SELF count carrying the colour, because
+ * that is the number the column exists for. Zero own sources is called out in
+ * warning colour: it means everything the map says about this entity is
+ * somebody else's account of it.
+ */
+function SelfSourcedCell({ n }) {
+  const t = useT();
+  const s = n.sourcing;
+  if (!s || typeof s.total !== 'number') return <Cell mono dim align="right">—</Cell>;
+  const self = s.selfSourced || 0;
+  const tiers = Object.entries(s.byTier || {})
+    .sort((a, b) => Number(a[0]) - Number(b[0]))
+    .map(([tier, count]) => `${t('тир', 'tier')} ${tier}: ${count}`)
+    .join(' · ');
+  const color = self === 0 ? 'var(--cf-warn)' : self === s.total ? 'var(--cf-text2)' : 'var(--cf-text4)';
+  return (
+    <Cell mono align="right">
+      <span title={t(
+        `${self} из ${s.total} источников профиля опубликовала сама эта сущность.`
+          + `${self === 0 ? ' Ни одного своего голоса — всё, что карта о ней говорит, сказано другими.' : ''}`
+          + `${tiers ? `\n${tiers}` : ''}`,
+        `${self} of the ${s.total} sources behind this profile were published by the entity itself.`
+          + `${self === 0 ? ' No voice of its own — everything the map says about it was said by somebody else.' : ''}`
+          + `${tiers ? `\n${tiers}` : ''}`)}
+        style={{ cursor: 'help', color, fontWeight: self === 0 ? 700 : 400 }}>
+        {self}<span style={{ color: 'var(--cf-text8)', fontWeight: 400 }}>/{s.total}</span>
+      </span>
     </Cell>
   );
 }
@@ -379,8 +470,13 @@ function Toggle({ children, on, onClick, title }) {
   );
 }
 
-function plural(n, [one, few, many]) {
+// Russian has three plural forms, English has two, and the call sites pass
+// both sets. The English pair was being dropped on the floor, so the count
+// above the table read «108 сущностей» in English mode. A plain helper, so it
+// reads the language mirror rather than the hook — rule 5 of the i18n lint.
+function plural(n, [one, few, many], en) {
   const a = Math.abs(Math.round(n));
+  if (en && getLang() === 'en') return a === 1 ? en[0] : en[1];
   const d = a % 10, dd = a % 100;
   if (dd >= 11 && dd <= 14) return many;
   if (d === 1) return one;

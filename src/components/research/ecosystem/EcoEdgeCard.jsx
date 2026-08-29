@@ -17,6 +17,16 @@
 //                            card — a drawn line says two firms are connected,
 //                            this says what the connection actually IS.
 //
+//   WHO SAYS SO           ← `sidedness` + `claimedBy`, new in contract /4.
+//                            The one exception to the "no taxonomy in the
+//                            header" rule below, and it earns it: `bilateral`
+//                            means BOTH ends state this relationship in their
+//                            OWN documents, which is a stronger claim than any
+//                            number of quotes from one side. It is a mark of
+//                            quality about the RELATIONSHIP, not a label about
+//                            the record. `disputed` is its opposite and ships
+//                            with both quotes; the engine never settles it.
+//
 // Then: whether it can be undone, and every source quote behind one disclosure
 // so the default state stays scannable.
 //
@@ -31,7 +41,7 @@
 
 import { useState } from 'react';
 import { X, ChevronDown, ChevronRight, ExternalLink, Quote } from 'lucide-react';
-import { strengthBand } from '../../../data/aiEcosystemNetwork.js';
+import { strengthBand, SIDEDNESS_META } from '../../../data/aiEcosystemNetwork.js';
 import { useT, getLang } from '../../../lib/i18n.jsx';
 
 const MONO = 'ui-monospace, monospace';
@@ -43,6 +53,22 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
 
   const sb = strengthBand(edge.strength);
   const ev = edge.evidence || [];
+  // A refutation can arrive in either of two places: the dedicated
+  // `counterEvidence[]` array, or inline in `evidence[]` flagged `counter`.
+  // Both are read, because the day the first `disputed` link ships is not the
+  // day to discover which one the engine chose.
+  const counter = [
+    ...(edge.counterEvidence || []),
+    ...ev.filter(q => q.counter),
+  ];
+  const claims = ev.filter(q => !q.counter);
+  const sided = SIDEDNESS_META[edge.sidedness] || null;
+  // The names behind `claimedBy` ids, so the line reads «заявили NVIDIA и TSMC»
+  // rather than «claimedBy: nvidia, tsmc». Only the two ends of THIS edge can
+  // appear there, so no wider lookup is needed.
+  const claimNames = (edge.claimedBy || [])
+    .map(id => (id === source?.id ? source?.name : id === target?.id ? target?.name : id))
+    .filter(Boolean);
   const verb = edge.verb || edge.typeLabel;
   // The arrow carries the relation now that the capsed verb between the two
   // names is gone, so the sentence it used to say out loud lives in the
@@ -127,6 +153,72 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
         </span>
       </div>
 
+      {/* ── С чьих слов ───────────────────────────────────────────────────
+             Контракт /4. `status` отвечает «насколько твёрдо», это — «кто
+             сказал», и второе не выводится из первого: связь может быть
+             `confirmed` на двух отчётах ОДНОЙ стороны. `bilateral` — самое
+             сильное, что карта умеет утверждать об отношениях: оба конца
+             описали их в собственных документах. ────────────────────────── */}
+      {sided && (
+        <div style={{ padding: '0 14px 11px' }}>
+          <div style={{
+            display: 'flex', alignItems: 'flex-start', gap: 8,
+            padding: '8px 10px', borderRadius: 8,
+            background: edge.sidedness === 'bilateral' ? sided.color + '12' : 'var(--cf-surface1)',
+            border: `1px solid ${edge.sidedness === 'single' ? 'var(--cf-border-soft)' : sided.color + '44'}`,
+          }}>
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%', background: sided.color,
+              flexShrink: 0, marginTop: 4,
+            }} />
+            <div style={{ minWidth: 0 }}>
+              <div style={{
+                fontSize: 10, fontFamily: MONO, fontWeight: 700, color: sided.color,
+                textTransform: 'uppercase', letterSpacing: '0.07em',
+              }}>{sided.label}</div>
+              <div style={{ fontSize: 11, color: 'var(--cf-text3)', lineHeight: 1.5, marginTop: 3 }}>
+                {sided.blurb}
+              </div>
+              {claimNames.length > 0 && (
+                <div style={{ fontSize: 10.5, color: 'var(--cf-text5)', lineHeight: 1.5, marginTop: 4 }}>
+                  {t('Заявили своими документами: ', 'Claimed in their own documents: ')}
+                  <span style={{ color: 'var(--cf-text2)', fontWeight: 600 }}>{claimNames.join(' · ')}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Расхождение сторон ────────────────────────────────────────────
+             Контракт /4 везёт `disputed` С ОБЕИМИ цитатами и никогда его не
+             решает: две компании, по-разному описывающие собственные
+             отношения, — это находка, а не дефект данных. Значит и рисуется
+             оно ОТКРЫТЫМ, а не за кнопкой «показать источники»: спрятать одну
+             из двух сторон здесь означало бы решить спор молча. В поставке
+             v4.0 таких связей ноль, и путь отрисовки всё равно готов — иначе
+             первый же случай приедет в прод невидимым. ─────────────────── */}
+      {counter.length > 0 && (
+        <div style={{ padding: '0 14px 12px' }}>
+          <div style={{
+            fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.11em', marginBottom: 7,
+          }}>{t('Стороны расходятся', 'The sides disagree')}</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <QuoteColumn
+              title={t('Утверждает', 'States it')}
+              color="#34D399"
+              quotes={claims}
+            />
+            <QuoteColumn
+              title={t('Опровергает', 'Denies it')}
+              color="#E0A340"
+              quotes={counter}
+            />
+          </div>
+        </div>
+      )}
+
       {/* ── Как эта связь устроена в цифрах ───────────────────────────────
              Ради этого блока карточка и существует. `note` наверху говорит
              ОДНО предложение о сути — кто кого кормит; здесь идёт разбор:
@@ -210,6 +302,42 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * One side of a `disputed` link. Both columns are rendered at the same size
+ * and in the same place, so neither reads as the map's own preferred answer.
+ */
+function QuoteColumn({ title, color, quotes }) {
+  return (
+    <div style={{ minWidth: 0 }}>
+      <div style={{
+        fontSize: 9, fontFamily: MONO, fontWeight: 700, color,
+        textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5,
+      }}>{title}</div>
+      {quotes.map((q, i) => (
+        <div key={i} style={{ borderLeft: `2px solid ${color}66`, paddingLeft: 8, marginBottom: 8 }}>
+          {q.quote && (
+            <div style={{ fontSize: 11, color: 'var(--cf-text2)', lineHeight: 1.5, fontStyle: 'italic' }}>
+              «{q.quote}»
+            </div>
+          )}
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4, flexWrap: 'wrap' }}>
+            {q.title && <span style={{ fontSize: 9, color: 'var(--cf-text5)' }}>{q.title}</span>}
+            {q.url && (
+              <a href={q.url} target="_blank" rel="noopener noreferrer" title={q.url}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 3,
+                  fontSize: 9, fontFamily: MONO, color: 'var(--cf-accent)', textDecoration: 'none',
+                }}>
+                {hostOf(q.url)} <ExternalLink size={8} />
+              </a>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

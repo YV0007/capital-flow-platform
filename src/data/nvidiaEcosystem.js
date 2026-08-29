@@ -443,18 +443,27 @@ export const SPINE_META = {
 // v1 had five named tiers (filing / company_pr / …). The contract now numbers
 // them, but a "тир 4" on screen tells a reader nothing, so the number is only
 // ever a sort key — what the panel shows is the sentence.
+//
+// CONTRACT /4 MOVED THE POINT OF REFERENCE. The ladder is still six rungs, but
+// it no longer measures distance from NVIDIA. Тир 1 used to mean «это сказала
+// NVIDIA»; it now means «это сказала САМА сущность, о которой идёт речь» — the
+// engine resolves the publisher against `entities[].domains` and `.cik`, so
+// each profile is graded against its own subject. Тир 2 is the OTHER END of
+// the relation speaking, not the counterparty-of-NVIDIA. That is why a profile
+// can now be «полностью на своих источниках» at all: see `sourcing` in the
+// panel, where tier 1 and `selfSourced` are the same claim counted twice.
 export const TIER_META = {
   1: bi({
-    label: ['Отчётность самой NVIDIA', "The company's own filings"],
+    label: ['Отчётность самой сущности', "The subject's own filings"],
     short: ['10-K · звонок · релиз', '10-K · call · release'],
-    blurb: ['Годовой и квартальный отчёт, стенограммы звонков, пресс-релизы, патенты, презентации для инвесторов.',
-            'Annual and quarterly reports, call transcripts, press releases, patents, investor decks.'],
+    blurb: ['Опубликовано самой сущностью, о которой идёт речь: годовой и квартальный отчёт, стенограммы звонков, пресс-релизы, патенты, презентации для инвесторов.',
+            'Published by the subject itself: annual and quarterly reports, call transcripts, press releases, patents, investor decks.'],
   }, { rank: 1, color: '#34D399' }),
   2: bi({
-    label: ['Официально от контрагента', 'Official, from the counterparty'],
+    label: ['Официально от второго конца', 'Official, from the other end'],
     short: ['релиз · документация', 'release · product docs'],
-    blurb: ['Пресс-релизы и звонки другой стороны, документация продукта, партнёрские каталоги.',
-            "The other side's releases and calls, product documentation, partner directories."],
+    blurb: ['Опубликовано второй стороной связи или другой сущностью карты: релизы и звонки, документация продукта, партнёрские каталоги.',
+            'Published by the other end of the link, or by another entity on the map: releases and calls, product documentation, partner directories.'],
   }, { rank: 2, color: '#7FD8A8' }),
   3: bi({
     label: ['Прямая речь руководителей', 'Executives on the record'],
@@ -483,25 +492,68 @@ export const TIER_META = {
 };
 
 // ── Confirmation status — the two-source rule, in words ──────────────────
+//
+// `bilateral` is the rung contract /4 added ON TOP of `confirmed`, and it is
+// the strongest claim the map can make about a relationship: BOTH ends state
+// it in their OWN documents. Two top-tier sources can both belong to one side;
+// bilateral cannot. `rank` is the sort key everywhere (0 = strongest), so
+// inserting a rung above `confirmed` renumbers the three below it.
 export const STATUS_META = {
+  bilateral: bi({
+    label: ['Подтверждено обеими сторонами', 'Confirmed by both sides'],
+    short: ['ОБЕ СТОРОНЫ', 'BOTH SIDES'],
+    blurb: ['Оба конца связи утверждают её в собственных документах. Сильнее, чем два источника высших тиров: те могут оказаться с одной стороны, эти — нет.',
+            'Both ends of the link state it in their own documents. Stronger than two top-tier sources: those can both belong to one side, these cannot.'],
+  }, { color: '#22C55E', rank: 0 }),
   confirmed: bi({
     label: ['Подтверждено', 'Confirmed'],
     short: ['ПОДТВ.', 'CONF.'],
     blurb: ['Два и более источника высших тиров, либо отчётность плюс прямая речь.',
             'Two or more top-tier sources, or a filing plus an on-the-record statement.'],
-  }, { color: '#34D399', rank: 0 }),
+  }, { color: '#34D399', rank: 1 }),
   high_confidence: bi({
     label: ['Высокая уверенность', 'High confidence'],
     short: ['ВЫС. УВ.', 'HIGH'],
     blurb: ['Один источник высшего тира, либо два источника второго и третьего.',
             'One top-tier source, or two second- and third-tier ones.'],
-  }, { color: '#A7D9BE', rank: 1 }),
+  }, { color: '#A7D9BE', rank: 2 }),
   signal: bi({
     label: ['Сигнал', 'Signal'],
     short: ['СИГНАЛ', 'SIGNAL'],
     blurb: ['Один источник четвёртого тира и ниже, либо только косвенные признаки.',
             'A single fourth-tier or lower source, or circumstantial evidence only.'],
-  }, { color: '#94A3B8', rank: 2 }),
+  }, { color: '#94A3B8', rank: 3 }),
+  // Ships with BOTH quotes and is never resolved by the engine — two companies
+  // describing their own relationship differently is a finding, not a defect.
+  // Zero cases in the v4.0 delivery; the rung exists so the first one renders.
+  disputed: bi({
+    label: ['Стороны расходятся', 'The sides disagree'],
+    short: ['СПОР', 'DISPUTED'],
+    blurb: ['Один конец утверждает связь, второй её опровергает. Обе цитаты показаны рядом, движок спор не решает.',
+            'One end states the link, the other denies it. Both quotes are shown side by side; the engine does not settle the dispute.'],
+  }, { color: '#E0A340', rank: 4 }),
+};
+
+// ── Sidedness — WHO said it, orthogonal to how well evidenced it is ──────
+// `status` answers «насколько твёрдо», `sidedness` answers «с чьих слов». They
+// correlate but are not the same field: a `single` link can still be
+// `confirmed` on two of the claiming side's own filings.
+export const SIDEDNESS_META = {
+  bilateral: bi({
+    label: ['Обе стороны', 'Both sides'],
+    blurb: ['Оба конца заявили связь своими документами.',
+            'Both ends claimed the link in their own documents.'],
+  }, { color: '#22C55E', order: 0 }),
+  single: bi({
+    label: ['Одна сторона', 'One side'],
+    blurb: ['Связь заявил один конец, второй о ней не высказывался. Везётся и помечается, а не выбрасывается.',
+            'One end claimed the link, the other has not spoken to it. Carried and marked, not dropped.'],
+  }, { color: '#94A3B8', order: 1 }),
+  disputed: bi({
+    label: ['Расхождение', 'Disagreement'],
+    blurb: ['Второй конец опровергает связь. Обе цитаты показаны рядом.',
+            'The other end denies the link. Both quotes are shown side by side.'],
+  }, { color: '#E0A340', order: 2 }),
 };
 
 // ── Entity phase — where in its own life the position sits ───────────────
@@ -715,7 +767,7 @@ export const PUBLIC_PRIVATE_META = {
 
 // ── Criticality rubric — four inputs, FIXED weights ──────────────────────
 //   criticality = round(0.30·irreplaceability + 0.30·lockInDepth
-//                     + 0.25·timeToReplace   + 0.15·strategicControl)
+//                     + 0.25·timeToReplace   + 0.15·concentration)
 //
 // The weights are frozen and the arithmetic is the engine's. This table only
 // names the axes so the number is never a black box: a "95" beside «ни одна
@@ -723,13 +775,31 @@ export const PUBLIC_PRIVATE_META = {
 // number nobody can argue with, which is the opposite of useful. The engine
 // ships one line of reasoning per factor in `criticalityWhy` and the panel
 // prints it right next to the digit.
+//
+// CONTRACT /4 REPLACED THE FOURTH AXIS. It used to be `strategicControl` —
+// «насколько NVIDIA может влиять на решения этой стороны» — which measured the
+// entity against the centre of the map rather than against its own job. With
+// the anchor gone the question has no subject, so the axis became
+// `concentration`: what share of ITS OWN FUNCTION the entity holds. ASML ≈100%
+// of EUV, TSMC ≈90% of leading-edge silicon. Same weight, same 0-100 scale,
+// and the number is now an argument about the industry instead of an argument
+// about one company's leverage.
+//
+// NOT EVERY ENTITY HAS THE FOURTH NUMBER. A node whose dossier has not been
+// worked yet carries `concentration: null`, and the engine renormalizes the
+// three remaining weights and says so in `criticalityBasis.factorsUsed`. A
+// three-factor score and a four-factor score sit in the same column and are
+// NOT comparable, so every surface that prints criticality has to print that
+// caveat too — see `criticalityBasis` in the panel and the table.
 export const CRITICALITY_FACTORS = [
   bi({
     label:    ['Незаменимость', 'Irreplaceability'],
-    question: ['Сколько компаний в мире реально могут сделать то же самое',
-               'How many companies in the world could genuinely do the same'],
-    blurb:    ['95+ монополия со рвом на семь лет и больше · 85+ дуополия · 75+ замены есть, но упираются во время и капитал · 50+ альтернативы ясны, преимущество в инерции · ниже 30 полные близнецы.',
-               '95+ a monopoly with a seven-year moat or longer · 85+ a duopoly · 75+ replacements exist but run into time and capital · 50+ alternatives are clear and the edge is inertia · below 30 outright twins.'],
+    // Anchor-free wording. The question used to be «может ли NVIDIA её
+    // заменить», which only had an answer while the map had a centre.
+    question: ['Может ли экосистема обойтись без неё — сколько в мире тех, кто реально сделает то же самое',
+               'Whether the ecosystem could do without it — how many in the world could genuinely do the same'],
+    blurb:    ['95+ монополия с барьером на семь лет и больше · 85+ дуополия · 75+ замены есть, но упираются во время и капитал · 50+ альтернативы ясны, преимущество в инерции · ниже 30 полные близнецы.',
+               '95+ a monopoly with a seven-year barrier or longer · 85+ a duopoly · 75+ replacements exist but run into time and capital · 50+ alternatives are clear and the edge is inertia · below 30 outright twins.'],
   }, { key: 'irreplaceability', weight: 0.30 }),
   bi({
     label:    ['Глубина замка', 'Lock-in depth'],
@@ -746,13 +816,38 @@ export const CRITICALITY_FACTORS = [
                '95+ seven years or more · 85+ five to seven · 75+ three to five · 65+ two to three · 50+ one to two · below 30 replacement is immediate.'],
   }, { key: 'timeToReplace', weight: 0.25 }),
   bi({
-    label:    ['Рычаг контроля', 'Control leverage'],
-    question: ['Насколько NVIDIA может влиять на решения этой стороны',
-               "How far NVIDIA can shape this side's decisions"],
-    blurb:    ['95+ дочерняя структура или место в совете плюс крупные вложения · 85+ вложения от миллиарда плюс соглашение · 75+ сотни миллионов плюс совместная разработка · 50+ публичное партнёрство без денег · ниже 30 отношений нет или они враждебны.',
-               '95+ a subsidiary, or a board seat plus major investment · 85+ a billion-plus stake plus an agreement · 75+ hundreds of millions plus joint development · 50+ a public partnership with no money · below 30 no relationship, or a hostile one.'],
-  }, { key: 'strategicControl', weight: 0.15 }),
+    label:    ['Доля функции', 'Share of the function'],
+    question: ['Какую долю своей собственной функции в стеке держит эта сущность',
+               'How much of its own function in the stack this entity holds'],
+    blurb:    ['95+ монополия, больше 90% функции · 85+ дуополия с явным лидером · 75+ три-четыре игрока, лидер больше половины · 65+ олигополия без доминирующего · 50+ конкурентный рынок с барьером входа · 30+ фрагментированный · ниже 30 коммодити.',
+               '95+ a monopoly, over 90% of the function · 85+ a duopoly with a clear leader · 75+ three or four players and the leader above half · 65+ an oligopoly with nobody dominant · 50+ a competitive market with a barrier to entry · 30+ fragmented · below 30 a commodity.'],
+    // Said out loud when the number is missing, because a blank in this column
+    // means «до узла не дошла очередь исследования», never «доли нет».
+    pending:  ['Доля функции ожидает досье — критичность посчитана по трём факторам с перенормировкой весов.',
+               'The share of the function is waiting for a dossier — criticality is computed on three factors with the weights renormalized.'],
+  }, { key: 'concentration', weight: 0.15 }),
 ];
+
+/**
+ * How many rubric factors a given entity's criticality actually rests on.
+ * `criticalityBasis` arrives from the engine as an object; older payloads and
+ * the reserve v2 map have no such field, and there every entity was scored on
+ * all four. Returns `{ factorsUsed, renormalized }` and never null, so a call
+ * site can print the caveat without a second guard.
+ */
+export function criticalityBasisOf(entity) {
+  const b = entity?.criticalityBasis;
+  if (b && typeof b === 'object') {
+    return {
+      factorsUsed: typeof b.factorsUsed === 'number' ? b.factorsUsed : CRITICALITY_FACTORS.length,
+      renormalized: !!b.renormalized,
+      factors: Array.isArray(b.factors) ? b.factors : null,
+    };
+  }
+  // A bare number is accepted too — the field is young and could arrive flat.
+  if (typeof b === 'number') return { factorsUsed: b, renormalized: b < CRITICALITY_FACTORS.length, factors: null };
+  return { factorsUsed: CRITICALITY_FACTORS.length, renormalized: false, factors: null };
+}
 
 /** Plain-Russian band for a 0–100 criticality score. Contract's own cuts. */
 export function criticalityBand(c) {
@@ -830,6 +925,37 @@ const manifestByName = (() => {
   return m;
 })();
 
+/**
+ * The entity's own web host, as a BARE hostname.
+ *
+ * CONTRACT /4 CARRIES THIS AND THE SIDE-CAR NO LONGER HAS TO. `domains[]` is
+ * the same registry the engine grades sources against — it is what decides
+ * whether a citation counts as SELF — so it is authoritative in a way a
+ * hand-kept `id → domain` map never was, and it is filled for 106 of the 108
+ * entities. The side-car (`nvidiaEcosystemLogos.json`) stays as the FALLBACK:
+ * it still answers for the two entities with no publisher of their own
+ * (`cfius`, `chips-act`) and for the reserve v2 map, whose payload has no
+ * `domains` field at all. So a new entity — `zeiss-smt` and everything the
+ * monthly rotation brings in — gets a brand mark and a website chip with no
+ * hand edit, and the accumulated exceptions are not thrown away.
+ *
+ * The engine's value is not guaranteed to be a bare host: `nventures` ships
+ * `nvidia.com/en-us/startups/nventures`, a path. Everything after the first
+ * slash is dropped, along with a scheme and a leading `www.`, because both the
+ * favicon services and the «Сайт» chip want a host and nothing else.
+ */
+export function domainOf(e) {
+  const raw = (e?.domains || []).find(Boolean) || logoDomains[e?.id] || null;
+  if (!raw) return null;
+  const host = String(raw)
+    .trim()
+    .replace(/^[a-z]+:\/\//i, '')
+    .split(/[/?#]/)[0]
+    .replace(/^www\./i, '')
+    .toLowerCase();
+  return /^[a-z0-9.-]+\.[a-z]{2,}$/.test(host) ? host : (logoDomains[e?.id] || null);
+}
+
 function logoUrlsFor(e) {
   const out = [];
   const push = (u) => { if (u && !out.includes(u)) out.push(u); };
@@ -840,7 +966,7 @@ function logoUrlsFor(e) {
   push(logoManifest[e.id]);
   push(manifestByName.get(String(e.name || '').trim().toLowerCase()));
   (e.aliases || []).forEach(a => push(manifestByName.get(String(a).trim().toLowerCase())));
-  const dom = logoDomains[e.id];
+  const dom = domainOf(e);
   if (dom) {
     push(`https://unavatar.io/${dom}?fallback=false`);
     push(`https://www.google.com/s2/favicons?sz=128&domain=${dom}`);
@@ -1004,11 +1130,9 @@ export function buildGraphFrom(raw, edgeTypes = EDGE_TYPE_META) {
       logoUrls: logoUrlsFor(e),
       monogram: monogramOf(e.name),
       searchUrl: `https://www.google.com/search?q=${encodeURIComponent(e.name || '')}`,
-      // The logo side-car is `id -> domain`, and that domain is also the
-      // entity's own site — so the panel gets a real website link for free,
-      // with no contract field and no guessed URL. Where there is no entry
-      // there is no chip, never a guess.
-      site: logoDomains[e.id] ? `https://${logoDomains[e.id]}` : null,
+      // The payload's own publisher registry, with the side-car behind it —
+      // see domainOf(). Where neither answers there is no chip, never a guess.
+      site: domainOf(e) ? `https://${domainOf(e)}` : null,
       // filled by the layout pass
       x: 0, y: 0,
     };

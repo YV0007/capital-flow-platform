@@ -6,6 +6,11 @@
 // layer count, not the anchor: drop in the engine's file and the map changes
 // with no code edit. That is the acceptance test.
 //
+// v4: the anchor is gone entirely. Membership is scope plus confirmed links,
+// evidence tiers are graded against each entity's OWN publishers, and «ядро»
+// is a COMPUTED top-30 by integration rather than a curated pivot list. The
+// map still carries the v3 network science underneath.
+//
 // v3: the map generalized from ONE anchor (NVIDIA) to a NETWORK of 26 co-equal
 // pivots — NVIDIA, Google, TSMC, OpenAI, … — with degree/betweenness
 // centrality, three subgraphs (GPU / TPU / infrastructure backbone) and the
@@ -495,7 +500,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           {mapSwitch}
           <div style={{ minWidth: 0, overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, minWidth: 0 }}>
-              <span title={t('Сеть ключевых узлов ИИ-инфраструктуры (в v2 карта была якорной на NVIDIA)', 'The network of key AI-infrastructure nodes (in v2 the map was anchored on NVIDIA)')}
+              <span title={t('Инфраструктура ИИ как сеть: карта определяется своим предметом, а не компанией в центре. Определение охвата, состав ядра и состояние членства — в сводке сети.', 'AI infrastructure as a network: the map is defined by its subject, not by a company at its centre. The scope definition, the core set and the membership state are in the network summary.')}
                 style={{ fontSize: 14, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
                 {t('Экосистема ИИ', 'AI Ecosystem')}
               </span>
@@ -531,7 +536,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
                 SPOF, density, degree, clustering) now lives ONLY in NetworkSummary
                 — this stays one short line that never wraps into the canvas. */}
             <button onClick={() => setSummaryOpen(o => !o)}
-              title={t('Сводка сети: ключевые узлы, подграфы, точки отказа, плотность, средняя степень, кластеризация', 'Network summary: key nodes, subgraphs, points of failure, density, average degree, clustering')}
+              title={t('Сводка сети: предмет карты, членство, ядро, подграфы, точки отказа, плотность, средняя степень, кластеризация', "Network summary: the map's subject, membership, the core set, subgraphs, points of failure, density, average degree, clustering")}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 4,
                 background: 'none', border: 'none', padding: 0, marginTop: 2, cursor: 'pointer', font: 'inherit',
@@ -841,6 +846,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
       {view === 'map' && summaryOpen && (
         <NetworkSummary
           network={graph.network}
+          entityById={graph.entityById}
           version={META.version}
           spofByEntity={graph.network.spof}
           onOpenEntity={focusEntity}

@@ -1,41 +1,69 @@
 // ══════════════════════════════════════════════════════════════════════════
-// AI ECOSYSTEM NETWORK — data adapter (v3)
+// AI ECOSYSTEM NETWORK — data adapter, contract `ai-ecosystem-network/4`
 //
 //   engine (monthly)  →  handoff/ai_ecosystem_network.json
 //        →  src/data/aiEcosystemNetwork.json
 //             →  here
 //                  →  components/research/ecosystem/  (the SAME components)
 //
-// v3 is not a new map. It is the v2 NVIDIA map with its ONE anchor
-// generalized into a SET of 26 co-equal pivots, plus the network-science the
-// blueprint asks for: degree/betweenness centrality, three subgraphs, and the
-// structural single-points-of-failure. The molecule, the orbit, the nucleus,
-// the outer arc, the tiles, the hairline edges, the chain mode and the table
-// are all unchanged.
+// THE ANCHOR IS GONE. /1 through /3 were the NVIDIA map widened: one centre,
+// then 26 co-equal "pivots", but membership was still «в двух шагах от
+// NVIDIA», tier 1 still meant «это сказала NVIDIA», and the fourth criticality
+// factor still measured NVIDIA's leverage over you. /4 unpicks those three
+// jobs from each other and none of the replacements needs a centre:
+//
+//   membership   — three checks against the SUBJECT (in scope · own dossier ·
+//                  two confirmed edges), not a distance. `hops` is deleted.
+//   evidence     — tier is graded against the entity's OWN publishers
+//                  (`domains[]`, `cik`); тир 1 = «сказала сама сущность».
+//   importance   — `concentration` (what share of its own function it holds)
+//                  replaces `strategicControl`, and `integration` arrives as a
+//                  computed graph rank alongside the authored `criticality`.
+//
+// «Ядро» replaces «пивоты» and is an OUTPUT, not a list: the top 30 by
+// `integration.score`, recomputed every run. `entities[].pivotal` still ships
+// as a mirror of `core` for this one release and is marked deprecated in
+// `meta.deprecated`; new code reads `core`.
+//
+// The molecule, the orbit, the nucleus, the outer arc, the tiles, the hairline
+// edges, the chain mode and the table are all unchanged.
 //
 // TAXONOMY IS SINGLE-SOURCED. The 16 layers, 5 spines, 6 roles, the criticality
 // rubric, the tiers, the confirmation statuses — all of it is frozen in
 // `nvidiaEcosystem.js` and RE-EXPORTED here verbatim, never re-typed. Editing a
 // layer label in one place changes both maps; there is no second copy to drift.
 // The graph itself is built by the same `buildGraphFrom(raw)`; this file only
-// hands it the network payload and decorates the result with pivots and the
-// `network` block.
+// hands it the network payload and decorates the result with the core set and
+// the `network` block.
 //
 // The reserve map (`nvidiaEcosystem.js` + `nvidiaEcosystem.json`, the NVIDIA
-// pilot) is NOT deleted — it is exactly the taxonomy source this file leans on,
-// and it still builds a valid single-anchor graph if ever remounted.
+// pilot at contract nvidia-ecosystem/2) is NOT deleted — it is exactly the
+// taxonomy source this file leans on, and it still builds a valid
+// single-anchor graph if ever remounted. Its payload has no `concentration`,
+// no `integration` and no `sourcing`, which is why every reader below treats
+// all three as optional.
 //
-// CONTRACT (ai_ecosystem_network.json, schema "ai-ecosystem-network/1") —
-// EXTENDS nvidia-ecosystem/2, does not replace it. New over v2:
-//   pivots[]                 — 26/27 co-equal centre ids (was: single `anchor`)
-//   entities[].pivotal       — true for a pivot
-//   entities[].centrality    — { degree, betweenness }  (engine-computed)
-//   two new edge types        — is_alternative_to (rivalry), enables_interop (physical)
-//   network{}                — totalNodes, totalEdges, pivotalNodes, secondaryNodes,
-//                              density, averageDegree, clusteringCoefficient,
-//                              singlePointsOfFailure[], subgraphs[]
-//   version, changelog{10 categories}
-// Everything else is the v2 contract, unchanged.
+// ── WHAT /4 REMOVED — nothing may reference these ────────────────────────
+//   entities[].hops                      distance from the centre
+//   criticalityFactors.strategicControl  NVIDIA's leverage → `concentration`
+//   ecosystem: "nvidia"                  the root-level anchor id
+//
+// ── WHAT /4 ADDED ───────────────────────────────────────────────────────
+//   entities[].integration{score,degree,betweenness,pagerank,
+//                          layersSpanned,edgeTypes,cycles}   108/108
+//   entities[].sourcing{total,selfSourced,byTier}            108/108
+//   entities[].core            computed top-30 by integration
+//   entities[].pivotal         mirror of core, deprecated, one release
+//   entities[].pendingDossier  shown but NOT researched yet   31 true
+//   entities[].membershipFailing[]  held by an edge, fails a check   34
+//   entities[].criticalityBasis{factorsUsed,factors,renormalized}
+//   entities[].domains[] · .cik      who counts as "self"    106 / 51
+//   criticalityFactors.concentration   share of own function  76 filled
+//   edges[].sidedness          bilateral | single | disputed  314/314
+//   edges[].claimedBy[]        which ends claim it             286/314
+//   edges[].counterEvidence[]  the other side's quotes when disputed  0 today
+//   meta.scope{ru,en} · meta.membership{…} · meta.coreRule
+//   status "bilateral"         a rung ABOVE confirmed          70 edges
 // ══════════════════════════════════════════════════════════════════════════
 
 import raw from './aiEcosystemNetwork.json';
@@ -44,10 +72,10 @@ import {
   buildGraphFrom, buildAdjacency, buildLayers, critIn, monthsSince,
   criticalityBand, strengthBand, substitutabilityRead,
   ROLE_META, SPINE_META, EDGE_TYPE_META as BASE_EDGE_TYPE_META,
-  TIER_META, STATUS_META, PHASE_META, RISK_META, RISK_TYPE_META, RISK_TIMELINE_META,
+  TIER_META, STATUS_META, SIDEDNESS_META, PHASE_META, RISK_META, RISK_TYPE_META, RISK_TIMELINE_META,
   DIRECTION_META, BAND_META, PLANE_META, CONCENTRATION_META, TYPE_META,
-  PUBLIC_PRIVATE_META, CRITICALITY_FACTORS, DEFAULT_MIN_STRENGTH,
-  WEIGHT_FACTORS, weightBand, pointsOf,
+  PUBLIC_PRIVATE_META, CRITICALITY_FACTORS, criticalityBasisOf, DEFAULT_MIN_STRENGTH,
+  WEIGHT_FACTORS, weightBand, pointsOf, domainOf,
 } from './nvidiaEcosystem.js';
 import { bi } from '../lib/bi.js';
 
@@ -59,10 +87,10 @@ export {
   buildAdjacency, buildLayers, critIn, monthsSince,
   criticalityBand, strengthBand, substitutabilityRead,
   ROLE_META, SPINE_META,
-  TIER_META, STATUS_META, PHASE_META, RISK_META, RISK_TYPE_META, RISK_TIMELINE_META,
+  TIER_META, STATUS_META, SIDEDNESS_META, PHASE_META, RISK_META, RISK_TYPE_META, RISK_TIMELINE_META,
   DIRECTION_META, BAND_META, PLANE_META, CONCENTRATION_META, TYPE_META,
-  PUBLIC_PRIVATE_META, CRITICALITY_FACTORS, DEFAULT_MIN_STRENGTH,
-  WEIGHT_FACTORS, weightBand, pointsOf,
+  PUBLIC_PRIVATE_META, CRITICALITY_FACTORS, criticalityBasisOf, DEFAULT_MIN_STRENGTH,
+  WEIGHT_FACTORS, weightBand, pointsOf, domainOf,
 };
 
 // ── Edge types — the v2 twenty-nine PLUS the two the network adds ─────────
@@ -96,13 +124,138 @@ export const EDGE_TYPE_META = {
 // NEW META — only the network additions. Everything above is v2, forwarded.
 // ══════════════════════════════════════════════════════════════════════════
 
-// The pivot set as it arrives in the file. Either `pivots[]` at the top level
-// or, failing that, the entities flagged `pivotal` — the contract allows both.
-export const PIVOTS = new Set(
-  Array.isArray(raw.pivots) && raw.pivots.length
-    ? raw.pivots
-    : (raw.entities || []).filter(e => e.pivotal).map(e => e.id)
+// ── ЯДРО. Computed, not curated ───────────────────────────────────────────
+// `meta.coreRule` says how: top-30 by `integration.score`, recomputed every
+// run, with entries and exits going into the changelog as their own category.
+// So this is not «кого мы считаем главным» — it is a reading, and it can be
+// wrong about a node the way any measurement can.
+//
+// Read order is deliberate: `entities[].core` is the /4 field and wins.
+// `raw.pivots[]` (top level) and `entities[].pivotal` are the /3 spelling; the
+// engine still emits both as a mirror for this one release and drops them in
+// /5, so they are the fallback and nothing new is written against them.
+const CORE_FROM_ENTITIES = (raw.entities || []).filter(e => e.core).map(e => e.id);
+export const CORE = new Set(
+  CORE_FROM_ENTITIES.length
+    ? CORE_FROM_ENTITIES
+    : (Array.isArray(raw.pivots) && raw.pivots.length
+        ? raw.pivots
+        : (raw.entities || []).filter(e => e.pivotal).map(e => e.id))
 );
+// The old name, kept as an alias so the canvas and the layout — which speak
+// `isPivotal` — did not have to be rewritten for a rename. The UI says «ядро».
+export const PIVOTS = CORE;
+
+// ── `integration` — the engine's own measure of how wired-in a node is ────
+//
+// WHY IT IS NOT THE HEADLINE NUMBER, EVEN THOUGH THE CONTRACT CALLS IT «the
+// map's primary rank». It is normalized against the MAXIMUM in the graph, and
+// on live data that maximum is NVIDIA at 100 with TSMC second at 31 — the
+// other 106 nodes are squeezed into 0–31, where a one-point difference is
+// noise and the eye reads «everything except NVIDIA is unimportant». The
+// dashboard's own «ВЕС В СИСТЕМЕ» (see ecoWeight.js) is anchored to the
+// network MEAN on a log₂ scale instead: 50 is exactly average and every
+// doubling is +16.6 points, which spreads the same information across the
+// range where the entities actually are.
+//
+// So: ВЕС leads and sorts, `integration` sits beside it as a second reading
+// with its ingredients shown. The recommendation to the engine is to move the
+// log₂-of-mean normalization into `nvnet_centrality`, after which the two
+// numbers collapse into one and this file becomes a passthrough.
+export const INTEGRATION_META = {
+  score: bi({
+    label: ['Интеграция', 'Integration'],
+    blurb: ['Насколько узел вшит в сеть по расчёту движка: степень, посредничество, PageRank, охват слоёв, разнообразие связей и участие в циклах, свёрнутые в одно число. Нормирован по максимуму сети, поэтому сжат — рядом с ним читайте ВЕС.',
+            'How wired into the network the node is, as the engine computes it: degree, betweenness, PageRank, layer span, variety of link types and participation in cycles, folded into one number. Normalized against the network maximum, so it is compressed — read it next to the systemic-weight score.'],
+  }, { weight: null }),
+  degree: bi({
+    label: ['Степень', 'Degree'],
+    blurb: ['Со сколькими сущностями есть прямая связь.', 'How many entities it is directly linked to.'],
+  }, { weight: 0.30, fmt: 'int' }),
+  betweenness: bi({
+    label: ['Посредничество', 'Betweenness'],
+    blurb: ['Доля кратчайших путей между другими, проходящих через неё.',
+            'The share of shortest paths between other entities that run through it.'],
+  }, { weight: 0.25, fmt: 'share' }),
+  pagerank: bi({
+    label: ['PageRank', 'PageRank'],
+    blurb: ['Вес по важности соседей: важна та, на кого ссылаются важные.',
+            "Weight by the importance of its neighbours: you matter if things that matter point at you."],
+  }, { weight: 0.15, fmt: 'share' }),
+  layersSpanned: bi({
+    label: ['Слоёв охвачено', 'Layers spanned'],
+    blurb: ['Сколько слоёв стека задевают её связи. Из 16.',
+            'How many layers of the stack its links touch. Out of 16.'],
+  }, { weight: 0.15, fmt: 'int' }),
+  edgeTypes: bi({
+    label: ['Типов связей', 'Link types'],
+    blurb: ['Сколько РАЗНЫХ видов отношений на ней сходится — поставка, капитал, стандарт, соперничество.',
+            'How many DIFFERENT kinds of relation meet on it — supply, capital, standard, rivalry.'],
+  }, { weight: 0.10, fmt: 'int' }),
+  cycles: bi({
+    label: ['Циклов', 'Cycles'],
+    blurb: ['В скольких замкнутых контурах зависимости она участвует.',
+            'How many closed dependency loops it takes part in.'],
+  }, { weight: 0.05, fmt: 'int' }),
+};
+
+// The six ingredients in the contract's own order, for the panel.
+export const INTEGRATION_PARTS = ['degree', 'betweenness', 'pagerank', 'layersSpanned', 'edgeTypes', 'cycles'];
+
+// ── `sourcing` — the honesty of the profile, as three numbers ─────────────
+// The campaign that produced /4 started from one finding: 75 of 107 entities
+// had no citation of their own, so their «profile» was whatever NVIDIA's 10-K
+// said about them. This block is how that stops being invisible.
+export const SOURCING_META = bi({
+  totalLabel: ['Источников', 'Sources'],
+  totalBlurb: ['Сколько документов стоит за профилем этой сущности.',
+               'How many documents stand behind this entity\'s profile.'],
+  selfLabel: ['Из них своих', 'Of them, its own'],
+  selfBlurb: ['Сколько из них опубликовала САМА эта сущность. Ноль означает, что сущность на карте описана чужими словами.',
+              'How many of them were published by the entity ITSELF. Zero means the entity is described on the map in somebody else\'s words.'],
+  tiersLabel: ['По твёрдости', 'By solidity'],
+});
+
+// ── `meta.membership` — the state of the map's own border ─────────────────
+// Three checks, all obligatory, none of them a distance from anything.
+export const MEMBERSHIP_CHECK_META = {
+  in_scope: bi({
+    label: ['вне охвата', 'out of scope'],
+    blurb: ['Не работает ни в одном из 16 слоёв предмета карты.',
+            'Does not operate in any of the 16 layers the map covers.'],
+  }),
+  min_sources: bi({
+    label: ['мало источников', 'too few sources'],
+    blurb: ['Собственное досье собрано меньше чем из трёх источников.',
+            'Its own dossier rests on fewer than three sources.'],
+  }),
+  min_self_sources: bi({
+    label: ['нет своего голоса', 'no voice of its own'],
+    blurb: ['Ни один источник профиля не опубликован ею самой.',
+            'Not one source in the profile was published by the entity itself.'],
+  }),
+  min_confirmed_edges: bi({
+    label: ['одна подтверждённая связь', 'only one confirmed link'],
+    blurb: ['Меньше двух подтверждённых связей с другими сущностями карты.',
+            'Fewer than two confirmed links to other entities on the map.'],
+  }),
+};
+
+export const MEMBERSHIP_META = bi({
+  admittedLabel: ['Принято', 'Admitted'],
+  admittedBlurb: ['Прошли все три проверки членства.', 'Passed all three membership checks.'],
+  heldLabel: ['Удержано связью', 'Held by a link'],
+  heldBlurb: ['Проверку членства не проходят, но названы в чужом подтверждённом досье и потому оставлены на карте — помеченными, а не выброшенными.',
+              'They fail a membership check but are named in somebody else\'s confirmed dossier, so they stay on the map — marked, not discarded.'],
+  retiredLabel: ['Ретировано', 'Retired'],
+  retiredBlurb: ['Ушли с карты в этом прогоне.', 'Left the map on this run.'],
+  pendingLabel: ['Ждут досье', 'Awaiting a dossier'],
+  pendingBlurb: ['До узла ещё не дошла очередь исследования. Он показан, но его профиль и доля функции не проработаны.',
+                 'The research rotation has not reached the node yet. It is shown, but its profile and its share of the function are not worked through.'],
+  queuedLabel: ['В очереди кандидатов', 'In the candidate queue'],
+  queuedBlurb: ['Названы чужими досье и берутся в работу следующим циклом.',
+                'Named by other dossiers and taken up on the next cycle.'],
+});
 
 // How to read the two centrality numbers, in plain Russian, for the panel.
 export const CENTRALITY_META = {
@@ -161,14 +314,14 @@ export const NETWORK_META = {
     blurb: ['Всего рёбер в сети.', 'Total edges in the network.'],
   }),
   pivotalNodes: bi({
-    label: ['Ключевых', 'Key nodes'],
-    blurb: ['Сущностей-центров, вокруг которых собрана сеть.',
-            'The centre entities the network is assembled around.'],
+    label: ['В ядре', 'In the core'],
+    blurb: ['Верхние по вычисленной интеграции. Состав СЧИТАЕТСЯ каждый прогон, а не ведётся списком, и вход-выход идёт в чейнджлог.',
+            'The top entities by computed integration. The set is COMPUTED every run rather than kept as a list, and entries and exits go into the changelog.'],
   }),
   secondaryNodes: bi({
-    label: ['Остальных', 'The rest'],
-    blurb: ['Попали в карту, потому что стоят в двух шагах от ключевого узла.',
-            'On the map because they sit within two steps of a key node.'],
+    label: ['Вне ядра', 'Outside the core'],
+    blurb: ['Не менее законные участники карты: членство даёт охват и подтверждённые связи, а не близость к ядру.',
+            'No less legitimate members of the map: membership comes from scope and confirmed links, not from proximity to the core.'],
   }),
   density: bi({
     label: ['Плотность', 'Density'],
@@ -192,20 +345,40 @@ export const NETWORK_META = {
 // ══════════════════════════════════════════════════════════════════════════
 export const META = bi({
   disclaimer: [
-      'Сеть показывает позиции и зависимости 26 равноправных центров ИИ-инфраструктуры, а не сделки. '
-        + 'Каждая связь подтверждена цитатой; центральность и точки отказа посчитаны движком по графу. Не является инвестиционной рекомендацией.',
-      'The network shows the positions and dependencies of 26 co-equal AI-infrastructure centres, not transactions. '
-        + 'Every link is backed by a quote; centrality and points of failure are computed by the engine over the graph. Not investment advice.',
+      'Сеть показывает позиции и зависимости в инфраструктуре ИИ, а не сделки. '
+        + 'Каждая связь подтверждена цитатой; интеграция, ядро и точки отказа посчитаны движком по графу. Не является инвестиционной рекомендацией.',
+      'The network shows positions and dependencies across AI infrastructure, not transactions. '
+        + 'Every link is backed by a quote; integration, the core set and the points of failure are computed by the engine over the graph. Not investment advice.',
     ],
+  // The map's SUBJECT, which is what replaced the anchor. It arrives as a
+  // { ru, en } pair like the rest of the engine's prose; META is built from
+  // `raw` rather than from the resolved copy, so the pair is bound here as a
+  // lazy getter instead of going through resolveProse().
+  scope: [
+    raw.meta?.scope?.ru || 'Инфраструктура ИИ.',
+    raw.meta?.scope?.en || 'AI infrastructure.',
+  ],
 }, {
   schema: raw.schema || null,
   generated: raw.generated || null,
   asOf: raw.asOf || null,
   version: raw.version || null,
   source: raw.source || 'fixture',
-  ecosystem: raw.ecosystem || null,
   isFixture: raw.source !== 'engine',
-  pivots: [...PIVOTS],
+  // `core` is the /4 name; `pivots` stays as the alias the canvas reads.
+  core: [...CORE],
+  pivots: [...CORE],
+  coreRule: raw.meta?.coreRule || null,
+  coreCount: raw.meta?.coreCount ?? CORE.size,
+  // { admitted, retired, retiredNodes[], held, heldNodes[{id,failed,heldBy}],
+  //   queued, pendingDossier, covered, checks{} } — see NetworkSummary.
+  membership: raw.meta?.membership || null,
+  // `meta.deprecated` is deliberately NOT forwarded. It is a note from the
+  // engine to the next contract reader («pivotal — зеркало core, удаляется в
+  // /5»), it ships as a bare Russian string rather than a { ru, en } pair, and
+  // nothing renders it. Exposing it would put untranslated engine bookkeeping
+  // into the translation audit's surface for no reader's benefit; the fact
+  // itself is recorded in this file's header instead.
   totals: raw.totals || null,
   changelog: raw.changelog || null,
 });
@@ -301,17 +474,29 @@ export function buildGraph() {
   // contract adds, or they silently become «поставляет» on the map.
   const graph = buildGraphFrom(src, EDGE_TYPE_META);
 
-  // Generalize the anchor: v2 gave exactly one entity the centre privilege;
-  // here every pivot gets it, and no single entity is "the" anchor.
+  // No anchor at all under /4. The one visual privilege the anchor used to
+  // hold — a label that never hides at any zoom — belongs to the CORE, whose
+  // membership the engine recomputes every run. `isPivotal` is the internal
+  // name the canvas and ecoLayout speak; the UI says «ядро».
   graph.entities.forEach(e => {
-    e.isPivotal = PIVOTS.has(e.id) || !!e.pivotal;
-    e.isAnchor = false;                 // the privilege is collective now
+    e.isCore = !!e.core || CORE.has(e.id);
+    e.isPivotal = e.isCore;
+    e.isAnchor = false;
   });
-  graph.pivots = PIVOTS;
-  graph.network = resolveNetwork(src.network, graph);
+  graph.core = CORE;
+  graph.pivots = CORE;
 
-  // One extra roll-up the summary line reads.
-  graph.stats.pivotalCount = graph.entities.filter(e => e.isPivotal).length;
+  // Roll-ups the summary line and the filter bar read. Counted BEFORE the
+  // network block is resolved — resolveNetwork falls back to `coreCount` when
+  // the payload does not carry its own totals.
+  graph.stats.coreCount = graph.entities.filter(e => e.isCore).length;
+  graph.stats.pivotalCount = graph.stats.coreCount;
+  // How much of the map is shown-but-not-yet-researched. The table and the
+  // panel mark each such node; this is the same fact as one number.
+  graph.stats.pendingDossierCount = graph.entities.filter(e => e.pendingDossier).length;
+  graph.stats.heldCount = graph.entities.filter(e => (e.membershipFailing || []).length).length;
+
+  graph.network = resolveNetwork(src.network, graph);
 
   return graph;
 }
@@ -324,7 +509,8 @@ function resolveNetwork(rawNet, graph) {
   if (!rawNet) {
     return {
       totalNodes: graph.stats.entityCount, totalEdges: graph.stats.edgeCount,
-      pivotalNodes: 0, secondaryNodes: graph.stats.entityCount,
+      pivotalNodes: graph.stats.coreCount ?? 0,
+      secondaryNodes: graph.stats.entityCount - (graph.stats.coreCount ?? 0),
       density: null, averageDegree: null, clusteringCoefficient: null,
       subgraphs: [], spof: [], spofById: new Map(), spofSet: new Set(),
     };
@@ -364,8 +550,8 @@ function resolveNetwork(rawNet, graph) {
   return {
     totalNodes: rawNet.totalNodes ?? graph.stats.entityCount,
     totalEdges: rawNet.totalEdges ?? graph.stats.edgeCount,
-    pivotalNodes: rawNet.pivotalNodes ?? 0,
-    secondaryNodes: rawNet.secondaryNodes ?? 0,
+    pivotalNodes: rawNet.pivotalNodes ?? graph.stats.coreCount ?? 0,
+    secondaryNodes: rawNet.secondaryNodes ?? Math.max(0, graph.stats.entityCount - (graph.stats.coreCount ?? 0)),
     density: rawNet.density ?? null,
     averageDegree: rawNet.averageDegree ?? null,
     clusteringCoefficient: rawNet.clusteringCoefficient ?? null,

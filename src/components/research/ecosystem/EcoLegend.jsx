@@ -6,6 +6,14 @@
 // numbers the contract ships. A reader who is told «тир 4» has learned
 // nothing; a reader who is told «исследования и данные» has.
 //
+// v4 adds three more blocks, and two of them are about the RECORD rather than
+// about the drawing: `sidedness` (with whose word the link rests on) and the
+// marks beside an entity's name. They are here because the alternative is
+// worse — an unstudied node is drawn exactly like a studied one, and the only
+// thing telling them apart is a mark whose meaning has to live somewhere.
+// The tier ladder's own meaning also moved: тир 1 is now «сказала сама
+// сущность», not «сказала NVIDIA». See TIER_META in nvidiaEcosystem.js.
+//
 // The spine block is deliberately the longest and sits high: with five colour
 // families the single most likely failure of this map is that it reads as a
 // traffic light, and the only defence is that each family means something the
@@ -14,7 +22,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import {
-  ROLE_META, EDGE_TYPE_META, SPINE_META, TIER_META, STATUS_META,
+  ROLE_META, EDGE_TYPE_META, SPINE_META, TIER_META, STATUS_META, SIDEDNESS_META,
   PHASE_META, CONCENTRATION_META, BAND_META, PLANE_META,
 } from '../../../data/aiEcosystemNetwork.js';
 import { useT, getLang } from '../../../lib/i18n.jsx';
@@ -123,6 +131,9 @@ export default function EcoLegend({ counts }) {
               ))}
           </Section>
 
+          {/* Contract /4 put a rung ABOVE «подтверждено»: `bilateral`, both
+              ends stating the link in their own documents. Rows are sorted by
+              the taxonomy's own `rank`, so it leads without a special case. */}
           <Section title={t('Яркость связи = насколько доказана', 'Link brightness = how well evidenced')}>
             {Object.entries(STATUS_META)
               .sort((a, b) => a[1].rank - b[1].rank)
@@ -130,12 +141,52 @@ export default function EcoLegend({ counts }) {
                 <Row key={k} label={v.label} count={counts?.status?.[k]} title={v.blurb}>
                   <span style={{
                     width: 16, height: 2, borderRadius: 1,
-                    background: k === 'confirmed' ? 'var(--cf-text2)' : k === 'high_confidence' ? 'var(--cf-text5)' : 'var(--cf-text8)',
+                    background: k === 'bilateral' ? 'var(--cf-text0)'
+                      : k === 'confirmed' ? 'var(--cf-text2)'
+                      : k === 'high_confidence' ? 'var(--cf-text5)' : 'var(--cf-text8)',
                   }} />
                 </Row>
               ))}
             <Row label={t('Пунктира нет: различие несёт яркость, точная формулировка — тултип и панель', 'No dashes: brightness carries the distinction, and the exact wording lives in the tooltip and the panel')}
               title="Контракт говорит «один источник → пунктир». Пунктирные волосяные линии на карте с сотней связей читаются как шум и ломают семейное сходство с картой потоков, поэтому различие перенесено в яркость. Данные не тронуты — только их подача." />
+          </Section>
+
+          {/* `status` и `sidedness` соотносятся, но это РАЗНЫЕ поля: первое —
+              насколько твёрдо, второе — с чьих слов. Связь может быть
+              подтверждена двумя отчётами одной и той же стороны. */}
+          <Section title={t('С чьих слов известна связь', 'Whose word the link rests on')}>
+            {Object.entries(SIDEDNESS_META)
+              .sort((a, b) => a[1].order - b[1].order)
+              .map(([k, v]) => (
+                <Row key={k} label={v.label} count={counts?.sidedness?.[k]} title={v.blurb}>
+                  <span style={{ width: 9, height: 9, borderRadius: 2, background: v.color }} />
+                </Row>
+              ))}
+            <Row label={t('Расхождение везётся с обеими цитатами и движком не решается', 'A disagreement is carried with both quotes and is never settled by the engine')} />
+          </Section>
+
+          {/* Не кодировка карты, а состояние записи — но читателю нужно там
+              же, где всё остальное: неисследованный узел рисуется точно так
+              же, как исследованный, и отличает их только эта пометка. */}
+          <Section title={t('Пометки у имени сущности', 'Marks beside an entity name')}>
+            <Row label={t('НЕ ИЗУЧЕН — до узла не дошла очередь исследования: собственного досье нет, доля функции пуста',
+                          'UNSTUDIED — the research rotation has not reached the node: it has no dossier of its own and its share of the function is empty')}
+              count={counts?.pendingDossier}>
+              <span style={{
+                width: 11, height: 8, borderRadius: 2,
+                border: '1px dashed var(--cf-warn)',
+              }} />
+            </Row>
+            <Row label={t('удержан — проверку членства не проходит, но назван в чужом подтверждённом досье',
+                          "held — it does not pass the membership checks, but it is named in somebody else's confirmed dossier")}
+              count={counts?.held}>
+              <span style={{ width: 11, height: 8, borderRadius: 2, border: '1px solid var(--cf-text8)' }} />
+            </Row>
+            <Row label={t('ядро — верхние 30 по вычисленной интеграции, состав пересчитывается каждый прогон',
+                          'core — the top 30 by computed integration, recomputed on every run')}
+              count={counts?.core}>
+              <span style={{ width: 9, height: 9, borderRadius: 2, background: '#FDE047' }} />
+            </Row>
           </Section>
 
           {/* Tiers as sentences. The contract numbers them 1-6; a number on

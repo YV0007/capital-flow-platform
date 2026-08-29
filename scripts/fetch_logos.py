@@ -29,9 +29,29 @@ RESOLUTION MATTERS: node tiles render up to ~90 CSS px on a retina canvas, so a
 16px favicon turns to mush. We fetch EVERY candidate and keep the sharpest —
 SVG always wins; among rasters the largest min(w,h) wins.
 """
-import json, os, re, subprocess, sys, tempfile, urllib.request, urllib.error
+import json, os, re, ssl, subprocess, sys, tempfile, urllib.request, urllib.error
 from html.parser import HTMLParser
 from urllib.parse import urlparse, urljoin
+
+# ── Trust store, or the whole run is a silent no-op ────────────────────────
+# A python.org build on macOS ships without a CA bundle until somebody runs
+# "Install Certificates.command", and until then EVERY https fetch here raises
+# CERTIFICATE_VERIFY_FAILED. That exception is caught per-domain by design —
+# one unreachable site must not stop the sweep — so the failure mode is not an
+# error but a clean run that resolves zero logos and reports every entity as a
+# monogram. Seen on 2026-08-29: 88 "missing", 0 resolved, exit 0.
+#
+# macOS always has the system bundle at /etc/ssl/cert.pem, so point the default
+# context at it when the interpreter has nothing of its own. `setdefault`, so
+# an SSL_CERT_FILE the caller already set still wins, and never a disabled
+# verification — an unverified fetch of a favicon is not worth the habit.
+if not os.environ.get("SSL_CERT_FILE"):
+    try:
+        _has_ca = bool(ssl.create_default_context().get_ca_certs())
+    except Exception:
+        _has_ca = False
+    if not _has_ca and os.path.exists("/etc/ssl/cert.pem"):
+        os.environ["SSL_CERT_FILE"] = "/etc/ssl/cert.pem"
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MAP = os.path.join(ROOT, "src/data/capitalMap.json")
@@ -373,7 +393,14 @@ def entities():
         e["store"] = "ref"
     eco_domains = json.load(open(ECO_DOMAINS)) if os.path.exists(ECO_DOMAINS) else {}
     for n in json.load(open(ECO_MAP)).get("entities", []):
-        dom = eco_domains.get(n["id"])
+        # Contract /4 carries the publisher registry the engine grades sources
+        # against (`domains[]`), filled for 106 of 108 entities. It leads; the
+        # hand-kept side-car answers only where the payload is silent, which is
+        # the two entities with no publisher of their own. `clean_domain` is
+        # needed because the payload's value is not always a bare host —
+        # `nventures` ships a path under nvidia.com.
+        dom = clean_domain(next((d for d in (n.get("domains") or []) if d), None)) \
+            or eco_domains.get(n["id"])
         out.append({
             "id": n["id"],
             "name": n.get("name") or n["id"],

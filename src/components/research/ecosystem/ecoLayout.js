@@ -42,6 +42,7 @@
 import { packRelative, hash01 } from '../capitalflow/layout.js';
 import { shortLabel } from '../capitalflow/format.js';
 import { PLANE_META, critIn } from '../../../data/aiEcosystemNetwork.js';
+import { getLang } from '../../../lib/i18n.jsx';
 
 // Companies on the outer arc are drawn smaller than the ring's: they frame the
 // stack rather than stand in it, and at equal size the frame competes with the
@@ -330,7 +331,7 @@ export function applyEcoLayout(graph) {
       label: `${key} · ${l?.label || key}`,
       // The one stat worth putting on the canvas: how concentrated the layer
       // is. Everything else lives in the layer report, so the map stays a map.
-      stats: `${(conc?.label || '').toUpperCase()} · ${mem.length} ${plural(mem.length, ['участник', 'участника', 'участников'])}`,
+      stats: `${(conc?.label || '').toUpperCase()} · ${mem.length} ${plural(mem.length, ['участник', 'участника', 'участников'], ['member', 'members'])}`,
       // A monopoly layer gets the accent ring — the flow map's "a signal fired
       // here" treatment, reused for the thing that matters on this map. The
       // outer arc never lights: it is the frame, and a lit frame is a distraction.
@@ -353,7 +354,7 @@ export function applyEcoLayout(graph) {
       cx: nucleusCx, cy: nucleusCy, r: nucleusR + 24,
       color: PLANE_META.nucleus.color,
       label: `${nucleusKeys[0]} · ${l?.label || PLANE_META.nucleus.label}`,
-      stats: `${nucleusMem.length} ${plural(nucleusMem.length, ['участник', 'участника', 'участников'])}`,
+      stats: `${nucleusMem.length} ${plural(nucleusMem.length, ['участник', 'участника', 'участников'], ['member', 'members'])}`,
       lit: false,
       concentration: l?.concentration,
       count: nucleusMem.length,
@@ -366,8 +367,13 @@ export function applyEcoLayout(graph) {
   return regions;
 }
 
-function plural(n, [one, few, many]) {
+// Russian has three plural forms, English two, and the English pair was being
+// dropped: every call site already passed it, the signature just never took
+// it. In English mode the island captions read «7 участников». A plain
+// helper — it reads the language mirror, never a hook (i18n lint, rule 5).
+function plural(n, [one, few, many], en) {
   const a = Math.abs(Math.round(n));
+  if (en && getLang() === 'en') return a === 1 ? en[0] : en[1];
   const d = a % 10, dd = a % 100;
   if (dd >= 11 && dd <= 14) return many;
   if (d === 1) return one;

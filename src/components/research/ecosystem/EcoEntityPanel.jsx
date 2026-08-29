@@ -15,6 +15,15 @@
 //      block. The level carries colour from RISK_META but RESTRAINED: a border
 //      and a dot, never a fill.
 //   6. ГРАВИТАЦИЯ — reach, layers, edge types, cycles, score.
+//   6b. ИНТЕГРАЦИЯ (contract /4) — the engine's own computed measure of how
+//      wired-in the node is, folded shut by default and standing BESIDE ВЕС
+//      rather than above it. The two answer the same question and disagree
+//      because they are normalized differently; see the block's own comment.
+//   6c. ИСТОЧНИКИ (contract /4) — how many documents stand behind this
+//      profile and how many of them the entity published ITSELF. The single
+//      most load-bearing addition of the release: it separates an entity that
+//      was researched from one that was merely mentioned, which the map could
+//      not express at all until now.
 //   7. Relations up and down — the list is ALWAYS COMPLETE. The strength
 //      slider is a canvas control, never a data control: a dependency you
 //      cannot see because a slider sits at 20 is a dependency you forget.
@@ -30,11 +39,12 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import {
   X, ArrowDownLeft, ArrowUpRight, ExternalLink, Search, Globe, ChevronDown, ChevronRight,
-  Layers, Quote, Gauge, Users, AlertTriangle, ShieldAlert, Lock,
+  Layers, Quote, Gauge, Users, AlertTriangle, ShieldAlert, Lock, Waypoints,
 } from 'lucide-react';
 import {
-  CRITICALITY_FACTORS, criticalityBand, substitutabilityRead, critIn,
+  CRITICALITY_FACTORS, criticalityBand, criticalityBasisOf, substitutabilityRead, critIn,
   WEIGHT_FACTORS, weightBand, pointsOf,
+  INTEGRATION_META, INTEGRATION_PARTS, SOURCING_META, MEMBERSHIP_CHECK_META, TIER_META,
 } from '../../../data/aiEcosystemNetwork.js';
 import Glossed from './Glossed.jsx';
 import { useT, usePlural, getLang } from '../../../lib/i18n.jsx';
@@ -103,6 +113,14 @@ export default function EcoEntityPanel({
   const risk = entity.risk || null;
   const hasRisk = !!(risk && (risk.geopolitical || risk.note || risk.exportRegime || risk.concentration != null));
 
+  // HOW MANY FACTORS THIS PARTICULAR CRITICALITY RESTS ON. 32 of the 108
+  // entities have no `concentration` yet, so the engine renormalized the other
+  // three weights for them. Two numbers in the same column computed on
+  // different bases are not comparable, and the panel has to say so where the
+  // number is, not in a footnote.
+  const basis = criticalityBasisOf(entity);
+  const partialBasis = basis.factorsUsed < CRITICALITY_FACTORS.length;
+
   // ── The one number. `gravity` and `centrality` still arrive in the payload
   // and are still read — by ecoWeight.js, as two of the four ingredients —
   // but nothing prints them raw any more. ─────────────────────────────────
@@ -125,8 +143,11 @@ export default function EcoEntityPanel({
                `${w.dependents} ${noun} ${w.dependents === 1 ? 'leans' : 'lean'} on it — most heavily ${names}.`);
     }
     if (key === 'irreplaceability') {
-      return t(`Критичность ${entity.criticality} из 100 по рубрике из четырёх факторов.`,
-               `Criticality ${entity.criticality} out of 100 on the four-factor rubric.`);
+      return partialBasis
+        ? t(`Критичность ${entity.criticality} из 100 — посчитана по ${basis.factorsUsed} факторам из ${CRITICALITY_FACTORS.length}, веса перенормированы.`,
+            `Criticality ${entity.criticality} out of 100 — computed on ${basis.factorsUsed} of the ${CRITICALITY_FACTORS.length} factors, with the weights renormalized.`)
+        : t(`Критичность ${entity.criticality} из 100 по рубрике из ${CRITICALITY_FACTORS.length} факторов.`,
+            `Criticality ${entity.criticality} out of 100 on the ${CRITICALITY_FACTORS.length}-factor rubric.`);
     }
     if (key === 'reach') {
       if (!w.layersTouched) return t('Зависимостей внутрь нет.', 'Nothing depends on it.');
@@ -167,17 +188,16 @@ export default function EcoEntityPanel({
               <span style={{ fontSize: 17, fontWeight: 700, color: 'var(--cf-text0)', letterSpacing: '-0.01em', lineHeight: 1.25 }}>
                 {entity.name}
               </span>
-              {entity.isAnchor && (
-                <span title={t('Якорь экосистемы — вопрос, вокруг которого построена вся карта', 'The ecosystem anchor — the question the whole map is built around')} style={{
-                  fontSize: 8.5, color: 'var(--cf-accent)', fontFamily: MONO, fontWeight: 700,
-                  textTransform: 'uppercase', letterSpacing: '0.09em', cursor: 'help',
-                }}>{t('якорь', 'anchor')}</span>
-              )}
-              {entity.isPivotal && !entity.isAnchor && (
-                <span title={t('Ключевой узел сети — один из центров, вокруг которых собрана вся карта', 'A key node of the network — one of the centres the whole map is built around')} style={{
+              {/* «ЯДРО», not «якорь» and not «ключевой». The set is an OUTPUT
+                  of the run — the top 30 by computed integration, recomputed
+                  monthly — so the badge says «вычислено», not «назначено».
+                  There is no anchor under contract /4 at all. */}
+              {entity.isCore && (
+                <span title={t('В ядре карты: верхние 30 по вычисленной интеграции. Состав пересчитывается каждый прогон, списка руками нет — узел может войти и выйти.',
+                               'In the core of the map: the top 30 by computed integration. The set is recomputed every run and is not a hand-kept list — a node can enter it and leave it.')} style={{
                   fontSize: 8.5, color: '#FDE047', fontFamily: MONO, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.09em', cursor: 'help',
-                }}>{t('ключевой', 'key')}</span>
+                }}>{t('ядро', 'core')}</span>
               )}
             </div>
             <div style={{ fontSize: 10, color: 'var(--cf-text5)', fontFamily: MONO, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
@@ -199,6 +219,23 @@ export default function EcoEntityPanel({
           {entity.faded && (
             <Chip dashed color="#E0A340" title={t(`Данные не подтверждались с ${entity.lastConfirmed || '—'}`, `Not re-confirmed since ${entity.lastConfirmed || '—'}`)}>
               {t('Данные устарели', 'Data is stale')} · {entity.lastConfirmed || '—'}
+            </Chip>
+          )}
+          {/* TWO STATES OF THE MAP'S OWN BORDER, spelled out rather than
+              implied. Both are conditions of the RECORD, not of the company,
+              so they sit with the chips and not in the profile. */}
+          {entity.pendingDossier && (
+            <Chip dashed color="var(--cf-warn)"
+              title={t('Ротация исследования до этого узла ещё не дошла. Он показан и связи у него настоящие, но собственное досье не собрано: описание опирается на чужие документы, а доля функции не оценена.',
+                       'The research rotation has not reached this node yet. It is shown and its links are real, but its own dossier has not been assembled: the description rests on other parties\' documents and the share of the function is unscored.')}>
+              {t('Досье не собрано', 'No dossier yet')}
+            </Chip>
+          )}
+          {!!(entity.membershipFailing || []).length && (
+            <Chip dashed
+              title={t(`Удержан связью. Проверку членства не проходит (${entity.membershipFailing.map(k => MEMBERSHIP_CHECK_META[k]?.label || k).join(', ')}), но назван в чужом подтверждённом досье, поэтому оставлен на карте помеченным, а не выброшен.`,
+                       `Held by a link. It fails a membership check (${entity.membershipFailing.map(k => MEMBERSHIP_CHECK_META[k]?.label || k).join(', ')}) but is named in somebody else's confirmed dossier, so it stays on the map, marked rather than discarded.`)}>
+              {t('Удержан связью', 'Held by a link')}
             </Chip>
           )}
         </div>
@@ -305,27 +342,50 @@ export default function EcoEntityPanel({
                             marginTop: 7, paddingLeft: 9, display: 'flex', flexDirection: 'column', gap: 9,
                             borderLeft: '1px solid var(--cf-border-hair)',
                           }}>
+                            {/* The caveat sits ABOVE the rows it applies to.
+                                A three-factor score and a four-factor score
+                                look identical in the column and are not
+                                comparable; saying so once here is cheaper than
+                                a reader silently comparing them. */}
+                            {partialBasis && (
+                              <div style={{
+                                fontSize: 10, color: 'var(--cf-warn)', lineHeight: 1.5,
+                              }}>
+                                {t(`Считано по ${basis.factorsUsed} факторам из ${CRITICALITY_FACTORS.length}: веса перенормированы, недостающий фактор ожидает досье. С четырёхфакторной оценкой это число сравнивать нельзя.`,
+                                   `Computed on ${basis.factorsUsed} of the ${CRITICALITY_FACTORS.length} factors: the weights were renormalized and the missing factor is waiting for a dossier. This number is not comparable with a four-factor score.`)}
+                              </div>
+                            )}
                             {CRITICALITY_FACTORS.map(cf => {
                               const v = entity.criticalityFactors?.[cf.key];
-                              if (v == null) return null;
                               const why = entity.criticalityWhy?.[cf.key];
                               return (
                                 <div key={cf.key}>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    <span title={cf.question} style={{ fontSize: 10, color: 'var(--cf-text4)', cursor: 'help', flexShrink: 0 }}>
+                                    <span title={cf.question} style={{
+                                      fontSize: 10, cursor: 'help', flexShrink: 0,
+                                      color: v == null ? 'var(--cf-text7)' : 'var(--cf-text4)',
+                                    }}>
                                       {cf.label}
                                     </span>
                                     <span style={{ fontSize: 8.5, color: 'var(--cf-text8)', fontFamily: MONO, fontWeight: 700, flexShrink: 0 }}>
                                       ×{cf.weight.toFixed(2)}
                                     </span>
                                     <span style={{ flex: 1 }} />
-                                    <Meter value={v} color={cb.color} width={40} />
-                                    <span title={cf.blurb} style={{
+                                    {v != null && <Meter value={v} color={cb.color} width={40} />}
+                                    <span title={v == null ? undefined : cf.blurb} style={{
                                       width: 22, fontSize: 10.5, fontFamily: MONO, fontWeight: 700,
-                                      color: 'var(--cf-text3)', textAlign: 'right', cursor: 'help', flexShrink: 0,
-                                    }}>{v}</span>
+                                      color: v == null ? 'var(--cf-text8)' : 'var(--cf-text3)',
+                                      textAlign: 'right', cursor: v == null ? 'default' : 'help', flexShrink: 0,
+                                    }}>{v == null ? '—' : v}</span>
                                   </div>
-                                  {why && (
+                                  {/* An unscored factor explains ITSELF rather
+                                      than leaving a dash the reader has to
+                                      interpret as a zero. */}
+                                  {v == null ? (
+                                    <div style={{ marginTop: 2, fontSize: 10, color: 'var(--cf-text7)', lineHeight: 1.5, fontStyle: 'italic' }}>
+                                      {cf.pending || t('Не оценена — фактор ожидает досье.', 'Not scored — the factor is waiting for a dossier.')}
+                                    </div>
+                                  ) : why && (
                                     <div style={{ marginTop: 2, fontSize: 10, color: 'var(--cf-text6)', lineHeight: 1.5 }}>
                                       {gloss(why)}
                                     </div>
@@ -343,6 +403,22 @@ export default function EcoEntityPanel({
             </div>
           </Section>
         )}
+
+        {/* 3b. ИНТЕГРАЦИЯ — the engine's own reading of the same question.
+            Deliberately BESIDE the weight and never above it. Both numbers
+            answer «насколько узел вшит в сеть»; they are computed from the
+            same graph and they disagree, because they are normalized
+            differently. ВЕС is anchored to the network MEAN on a log₂ scale —
+            50 is average, every doubling is +16.6 — so it spreads across the
+            range where the entities actually sit. `integration` is normalized
+            to the network MAXIMUM, and on this delivery that maximum is NVIDIA
+            at 100 with the second place at 31, which flattens 106 of the 108
+            nodes into the bottom third. That makes it a poor rank and a good
+            SET OF INGREDIENTS: degree, betweenness, PageRank, layer span, link
+            variety and cycle count were already printed here one by one, and
+            now they arrive as one block with the engine's own weights on them.
+            See ecoWeight.js for the recommendation to fold the two into one. */}
+        {entity.integration && <IntegrationBlock integration={entity.integration} />}
 
         {/* 4. Why it cannot be replaced */}
         {entity.whyIrreplaceable && (
@@ -508,9 +584,12 @@ export default function EcoEntityPanel({
           </Section>
         )}
 
-        {/* 11. Sources for the entity itself */}
-        {entity.sources?.length > 0 && (
-          <SourceList sources={entity.sources} isFixture={isFixture} accent={entity.color} />
+        {/* 11. Sources for the entity itself, and — new in /4 — the honest
+            accounting of them: how many there are, how many the entity
+            published ITSELF, and how they break down by tier. */}
+        {(entity.sources?.length > 0 || entity.sourcing) && (
+          <SourceList sources={entity.sources || []} sourcing={entity.sourcing}
+            pendingDossier={!!entity.pendingDossier} isFixture={isFixture} accent={entity.color} />
         )}
 
         {/* 12. Facts of record, only those that arrived */}
@@ -628,19 +707,28 @@ function RelationList({
                     fontSize: 11.5, color: 'var(--cf-text1)', fontWeight: 600,
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                   }}>{other.name}</span>
-                  {/* A pivot among the counterparties is the answer to "which
-                      of these actually matters" — the same mark the header puts
-                      on the entity itself, so «ключевой» means one thing
-                      everywhere on the map. Anchors outrank pivots. */}
-                  {(other.isAnchor || other.isPivotal) && (
-                    <span title={other.isAnchor
-                      ? t('Якорь экосистемы', 'The ecosystem anchor')
-                      : t('Ключевой узел сети — один из центров, вокруг которых собрана вся карта', 'A key node of the network — one of the centres the whole map is built around')}
+                  {/* A core node among the counterparties is the answer to
+                      "which of these actually matters" — the same mark the
+                      header puts on the entity itself, so «ядро» means one
+                      thing everywhere on the map. */}
+                  {other.isCore && (
+                    <span title={t('В ядре карты — верхние 30 по вычисленной интеграции, состав пересчитывается каждый прогон',
+                                   'In the core of the map — the top 30 by computed integration, recomputed every run')}
                       style={{
                         fontSize: 8, color: '#FDE047', fontFamily: MONO, fontWeight: 700,
                         textTransform: 'uppercase', letterSpacing: '0.07em',
                         flexShrink: 0, cursor: 'help',
-                      }}>{other.isAnchor ? t('якорь', 'anchor') : t('ключ', 'key')}</span>
+                      }}>{t('ядро', 'core')}</span>
+                  )}
+                  {/* And an UNSTUDIED counterparty must not read like a
+                      studied one, exactly as in the table. */}
+                  {other.pendingDossier && (
+                    <span title={t('До этого узла ещё не дошла очередь исследования — связь настоящая, но собственного досье у него нет.',
+                                   'The research rotation has not reached this node — the link is real, but it has no dossier of its own.')}
+                      style={{
+                        fontSize: 8, color: 'var(--cf-text8)', fontFamily: MONO, fontWeight: 700,
+                        flexShrink: 0, cursor: 'help',
+                      }}>{t('не изучен', 'unstudied')}</span>
                   )}
                   <span style={{
                     fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
@@ -767,12 +855,126 @@ function RelationList({
   );
 }
 
+/**
+ * The engine's `integration` block: one score and the six things it is made
+ * of. Nothing here is recomputed — the dashboard has no latitude over graph
+ * measures, the same rule that governs criticality, cycles and SPOF.
+ */
+function IntegrationBlock({ integration }) {
+  const t = useT();
+  const score = typeof integration.score === 'number' ? integration.score : null;
+  return (
+    <Section title={t('Интеграция по расчёту движка', "The engine's integration measure")} icon={<Waypoints size={11} />}
+      collapsible defaultOpen={false}
+      caption={t('Второе показание того же вопроса, что и ВЕС, и посчитано оно иначе: нормировка идёт по максимуму сети, а не по среднему. Из-за этого шкала сжата — первое место 100, второе 31, остальные внизу — и как ранг она не годится. Ценность здесь в слагаемых.',
+                 'A second reading of the same question the systemic weight answers, computed differently: it is normalized against the network maximum rather than its mean. That compresses the scale — first place 100, second 31, everything else below — so it is a poor rank. The value here is in the ingredients.')}>
+      {score != null && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 11, padding: `0 ${PAD}px` }}>
+          <span style={{ fontSize: 22, fontWeight: 700, color: 'var(--cf-text2)', lineHeight: 1, fontFamily: MONO }}>
+            {score}
+          </span>
+          <span style={{ fontSize: 9, fontFamily: MONO, color: 'var(--cf-text7)' }}>/100</span>
+          <Meter value={score} color="var(--cf-text5)" width={80} />
+        </div>
+      )}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 7, padding: `0 ${PAD}px` }}>
+        {INTEGRATION_PARTS.map(key => {
+          const meta = INTEGRATION_META[key];
+          const v = integration[key];
+          if (!meta || v == null) return null;
+          return (
+            <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span title={meta.blurb} style={{ fontSize: 10.5, color: 'var(--cf-text4)', cursor: 'help', flexShrink: 0 }}>
+                {meta.label}
+              </span>
+              <span title={t(`Вес этого слагаемого в интеграции — ${Math.round(meta.weight * 100)}%`,
+                             `This ingredient's weight in the integration score — ${Math.round(meta.weight * 100)}%`)} style={{
+                fontSize: 8.5, color: 'var(--cf-text8)', fontFamily: MONO, fontWeight: 700, cursor: 'help', flexShrink: 0,
+              }}>×{meta.weight.toFixed(2)}</span>
+              <span style={{ flex: 1 }} />
+              <span style={{ fontSize: 11, fontFamily: MONO, fontWeight: 700, color: 'var(--cf-text2)', flexShrink: 0 }}>
+                {meta.fmt === 'share' ? `${(v * 100).toFixed(1)}%` : v}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </Section>
+  );
+}
+
 /** Sources behind the ENTITY itself (edges carry their own, per relation). */
-function SourceList({ sources, isFixture, accent }) {
+function SourceList({ sources, sourcing, pendingDossier, isFixture, accent }) {
   const t = useT();
   const [open, setOpen] = useState(false);
+  const total = sourcing?.total ?? sources.length;
+  const self = sourcing?.selfSourced ?? null;
+  const byTier = Object.entries(sourcing?.byTier || {}).sort((a, b) => Number(a[0]) - Number(b[0]));
   return (
-    <Section title={t('Источники', 'Sources')} icon={<Quote size={11} />} count={sources.length}>
+    <Section title={t('Источники', 'Sources')} icon={<Quote size={11} />} count={total}>
+      {/* ── ЧЕСТНОСТЬ ПРОФИЛЯ ────────────────────────────────────────────
+          The campaign behind contract /4 began from a single measurement: 75
+          of 107 entities had no citation of their own, so their «profile» was
+          whatever somebody else's filing said about them. This is that
+          measurement, per entity, and it is the reason the tier ladder was
+          rebuilt — тир 1 no longer means «это сказала NVIDIA», it means «это
+          сказала САМА эта сущность», which is why «своих» and «тир 1» are the
+          same claim counted twice. */}
+      {sourcing && (
+        <div style={{ padding: `0 ${PAD}px 8px` }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+            <span title={SOURCING_META.selfBlurb} style={{ fontSize: 11, color: 'var(--cf-text3)', cursor: 'help' }}>
+              {SOURCING_META.selfLabel}
+            </span>
+            <span style={{ flex: 1 }} />
+            <span style={{
+              fontSize: 13, fontFamily: MONO, fontWeight: 700,
+              color: self === 0 ? 'var(--cf-warn)' : 'var(--cf-text1)',
+            }}>{self ?? '—'}</span>
+            <span style={{ fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text7)' }}>
+              {t(`из ${total}`, `of ${total}`)}
+            </span>
+          </div>
+          <div style={{ marginTop: 3, fontSize: 10, color: self === 0 ? 'var(--cf-warn)' : 'var(--cf-text6)', lineHeight: 1.5 }}>
+            {self === 0
+              ? t('Ни одного собственного документа. Всё, что карта говорит об этой сущности, сказано о ней другими — это профиль по чужим словам, а не исследование.',
+                  "Not one document of its own. Everything the map says about this entity was said about it by others — this is a profile assembled from other parties' words, not research.")
+              : self === total
+                ? t('Профиль целиком собран из документов, изданных самой этой сущностью.',
+                    "The profile is assembled entirely from documents published by the entity itself.")
+                : t('Тир 1 здесь означает «опубликовано самой этой сущностью», а не «опубликовано центром карты»: под контрактом /4 твёрдость источника меряется от предмета.',
+                    'Tier 1 here means «published by this entity itself», not «published by the centre of the map»: under contract /4 the solidity of a source is measured from the subject.')}
+          </div>
+          {pendingDossier && (
+            <div style={{ marginTop: 5, fontSize: 10, color: 'var(--cf-warn)', lineHeight: 1.5 }}>
+              {t('До узла не дошла очередь исследования — эти источники собраны попутно, отдельного досье по нему ещё не делали.',
+                 'The research rotation has not reached this node — these sources were picked up in passing, and no dossier of its own has been made yet.')}
+            </div>
+          )}
+          {byTier.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 7 }}>
+              {byTier.map(([tier, count]) => {
+                const tm = TIER_META[tier] || null;
+                return (
+                  <span key={tier} title={tm ? `${tm.label} — ${tm.blurb}` : undefined}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 5,
+                      padding: '2px 7px', borderRadius: 5,
+                      background: 'var(--cf-surface2)',
+                      border: `1px solid ${tm?.color ? tm.color + '55' : 'var(--cf-border)'}`,
+                      fontSize: 9.5, fontFamily: MONO, color: 'var(--cf-text4)', cursor: tm ? 'help' : 'default',
+                    }}>
+                    <span style={{ width: 5, height: 5, borderRadius: '50%', background: tm?.color || 'var(--cf-text7)' }} />
+                    {tm ? tm.label : `${t('тир', 'tier')} ${tier}`}
+                    <span style={{ color: 'var(--cf-text1)', fontWeight: 700 }}>{count}</span>
+                  </span>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+      {sources.length > 0 && (
       <button onClick={() => setOpen(o => !o)}
         style={{
           display: 'flex', alignItems: 'center', gap: 6, width: `calc(100% - ${PAD * 2}px)`,
@@ -782,6 +984,7 @@ function SourceList({ sources, isFixture, accent }) {
         {open ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
         {open ? t('Свернуть', 'Collapse') : t('Показать цитаты', 'Show the quotes')}
       </button>
+      )}
       {open && (
         <div style={{ padding: `4px ${PAD}px 0` }}>
           {sources.map((ev, i) => <Evidence key={i} ev={ev} accent={accent} isFixture={isFixture} />)}

@@ -34,59 +34,5 @@ target:Mexico private credit / infrastructure market	Mexico private credit / inf
 target:Akita AI Data Center (BitGrid / S2 JV)	Akita AI Data Center (BitGrid / S2 JV)
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
 target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure
-a16z	Andreessen Horowitz
-amazon	Amazon
-amkor	Amkor Technology
-ase	ASE Technology
-astera-labs	Astera Labs
-bis	Bureau of Industry and Security
-blackstone	Blackstone
-boyd	Boyd Corporation
 cfius	CFIUS
-china	Китай
 chips-act	CHIPS Act
-cisco	Cisco
-credo	Credo Technology
-cuda	CUDA
-deepseek	DeepSeek
-dell	Dell
-eaton	Eaton
-eu	Европейский союз
-eu-ai-act	Регламент ЕС об ИИ
-google	Google
-google-deepmind	Google DeepMind
-hpe	HPE
-intel	Intel
-japan	Япония
-jax	JAX
-kla	KLA
-lightspeed	Lightspeed Venture Partners
-lite-on	LiteOn Technology
-marvell	Marvell
-meta	Meta
-mgx	MGX
-mistral	Mistral AI
-nccl	NCCL
-netherlands	Нидерланды
-oklo	Oklo
-oracle	Oracle
-ray	Ray / Anyscale
-recursion	Recursion Pharmaceuticals
-samsung	Samsung
-sandisk	SanDisk
-schneider	Schneider Electric
-schrodinger	Schrödinger
-servicenow	ServiceNow
-sglang	SGLang
-siemens	Siemens
-singapore	Сингапур
-snowflake	Snowflake
-softbank	SoftBank
-south-korea	Южная Корея
-taiwan	Тайвань
-tensorrt	TensorRT
-thrive	Thrive Capital
-tokyo-electron	Tokyo Electron
-usa	США
-wistron	Wistron
-xai	xAI

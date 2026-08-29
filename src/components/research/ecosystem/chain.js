@@ -11,7 +11,7 @@ import { bi } from '../../../data/capitalMap.js';// ═════════�
 //   · BRANCHING CAP — at every step only the top N edges by `strength` are
 //     followed; the rest are COUNTED and reported in `more`, so the panel can
 //     say the chain is trimmed rather than pass a cut answer off as the whole
-//     one. Without this, three hops from NVIDIA is the entire map.
+//     one. Without this, three steps out of any core node is the entire map.
 //     There used to be a per-node "ещё N" control that lifted the cap for one
 //     branch. It was removed on 2026-08-29: expanding a branch spends exactly
 //     the focus that picking a node just bought, and after one or two clicks

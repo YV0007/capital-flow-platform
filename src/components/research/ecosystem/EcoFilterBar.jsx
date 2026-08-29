@@ -93,16 +93,16 @@ export default function EcoFilterBar({
         {t('Показано', 'Showing')} <b style={{ color: 'var(--cf-text1)' }}>{shownEdges}</b> {t('из', 'of')} {totalEdges} {t('связей', 'links')}
       </div>
 
-      {/* ── Охват сети — ключевые узлы или всё ──────────────────────────── */}
+      {/* ── Охват сети — ядро или всё ───────────────────────────────────── */}
       {onTogglePivotsOnly && (
-        <Group title={t('Охват сети', 'Network scope')} hint={t('Ключевые узлы — центры, вокруг которых собрана сеть, — или вся сеть целиком, вместе с остальными участниками.', 'The key nodes the network is built around, or the whole network including everyone else.')}>
+        <Group title={t('Охват сети', 'Network scope')} hint={t('Ядро — верхние по вычисленной интеграции, состав пересчитывается каждый прогон, — или вся сеть целиком. Быть вне ядра не значит быть менее законным участником: членство даёт охват и подтверждённые связи.', 'The core — the top entities by computed integration, recomputed every run — or the whole network. Being outside the core does not make an entity a lesser member: membership comes from scope and confirmed links.')}>
           <Chip on={!pivotsOnly} color="#8E9BE6" onClick={() => pivotsOnly && onTogglePivotsOnly()}
-            title={t('Показать всю сеть — ключевые узлы и всех остальных', 'Show the whole network — key nodes and everyone else')} wide>
+            title={t('Показать всю сеть — ядро и всех остальных', 'Show the whole network — the core and everyone else')} wide>
             {t('Вся сеть', 'Whole network')}
           </Chip>
           <Chip on={pivotsOnly} color="#FDE047" onClick={() => !pivotsOnly && onTogglePivotsOnly()}
-            title={t('Оставить только ключевые узлы — центры сети', 'Keep only the key nodes — the centres of the network')} wide>
-            {t('Только ключевые', 'Key only')}{pivotCount ? <Count>{pivotCount}</Count> : null}
+            title={t('Оставить только ядро — верхние по вычисленной интеграции', 'Keep only the core — the top entities by computed integration')} wide>
+            {t('Только ядро', 'Core only')}{pivotCount ? <Count>{pivotCount}</Count> : null}
           </Chip>
         </Group>
       )}

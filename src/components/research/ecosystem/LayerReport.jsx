@@ -394,8 +394,13 @@ function uncapitalise(text) {
   return t ? t[0].toLowerCase() + t.slice(1) : t;
 }
 
-function plural(n, [one, few, many]) {
+// Russian has three plural forms, English two, and the English pair was being
+// dropped: every call site already passed it, the signature just never took
+// it. In English mode the island captions read «7 участников». A plain
+// helper — it reads the language mirror, never a hook (i18n lint, rule 5).
+function plural(n, [one, few, many], en) {
   const a = Math.abs(Math.round(n));
+  if (en && getLang() === 'en') return a === 1 ? en[0] : en[1];
   const d = a % 10, dd = a % 100;
   if (dd >= 11 && dd <= 14) return many;
   if (d === 1) return one;
