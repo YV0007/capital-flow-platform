@@ -52,9 +52,6 @@ node scripts/dc_en_status.mjs pkg      # untranslated paths of one node, as JSON
 ## Progress — DC deep-dives
 
 ```
-· pkg               0/463    0%
-· asic              0/448    0%
-· litho             0/440    0%
 · rack              0/411    0%
 · photonics         0/405    0%
 · dram              0/389    0%
@@ -79,9 +76,12 @@ node scripts/dc_en_status.mjs pkg      # untranslated paths of one node, as JSON
 · silicon           0/163    0%
 · ip                0/162    0%
 · test              0/89     0%
+✓ pkg             463/463  100%
+✓ asic            448/448  100%
+✓ litho           440/440  100%
 ✓ hbm             349/349  100%
 
-  349/8585 (4%) переведено
+  1700/8585 (20%) переведено
 ```
 
 ## Still to do
