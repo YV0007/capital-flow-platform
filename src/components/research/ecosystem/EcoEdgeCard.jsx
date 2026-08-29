@@ -39,7 +39,7 @@
 // itself in the REMAINING space so the two never overlap.
 // ══════════════════════════════════════════════════════════════════════════
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, ChevronDown, ChevronRight, ExternalLink, Quote } from 'lucide-react';
 import { strengthBand, SIDEDNESS_META } from '../../../data/aiEcosystemNetwork.js';
 import { useT, getLang } from '../../../lib/i18n.jsx';
@@ -49,6 +49,18 @@ const MONO = 'ui-monospace, monospace';
 export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntity, isFixture, rightInset = 0 }) {
   const t = useT();
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  // The card opens SHUT. On a laptop the full card ran past half the viewport
+  // and the map underneath it was gone — you click a line to learn about it and
+  // lose the thing the line was drawn on. Closed, it answers the three
+  // questions the click asked (who, how much, and one sentence of what); the
+  // breakdown, the quotes and any disagreement are one click further in.
+  const [open, setOpen] = useState(false);
+  // React keeps this component mounted while you click from one line to the
+  // next, so without this the second card inherits the first one's expanded
+  // state — and the promise that a card opens shut holds only for the first
+  // click of a session. Reset lives before the null guard so the hook order
+  // never changes.
+  useEffect(() => { setOpen(false); setSourcesOpen(false); }, [edge?.id]);
   if (!edge) return null;
 
   const sb = strengthBand(edge.strength);
@@ -69,6 +81,11 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
   const claimNames = (edge.claimedBy || [])
     .map(id => (id === source?.id ? source?.name : id === target?.id ? target?.name : id))
     .filter(Boolean);
+  // What the collapsed card is holding back. `detail` is the paragraph, the
+  // quotes are the evidence, `counter` is a disagreement — a card with none of
+  // the three has nothing to expand and gets no button.
+  const moreCount = ev.length + counter.length;
+  const hasMore = !!edge.detail || moreCount > 0;
   const verb = edge.verb || edge.typeLabel;
   // The arrow carries the relation now that the capsed verb between the two
   // names is gone, so the sentence it used to say out loud lives in the
@@ -79,8 +96,13 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
     <div style={{
       position: 'absolute', left: `calc(50% - ${rightInset / 2}px)`, bottom: 16,
       transform: 'translateX(-50%)',
-      zIndex: 24, width: `min(620px, calc(100% - ${rightInset + 60}px))`, minWidth: 320,
+      zIndex: 24, width: `min(560px, calc(100% - ${rightInset + 60}px))`, minWidth: 300,
       boxSizing: 'border-box',
+      // NEVER TALLER THAN ROUGHLY HALF THE CANVAS. The card floats over the map
+      // and the map is the point. Opened, the body scrolls inside this cap
+      // instead of the card growing.
+      maxHeight: 'min(48vh, 460px)',
+      display: 'flex', flexDirection: 'column',
       background: 'var(--cf-panel)',
       border: `1px solid ${edge.color}44`,
       borderRadius: 12,
@@ -96,7 +118,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
              нарисованная стрелка, а не капсовый ярлык между слов. Тип связи
              ушёл вниз, к остальным чипам происхождения: он таксономия, а не
              заголовок. ────────────────────────────────────────────────── */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '14px 14px 10px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '14px 14px 10px', flexShrink: 0 }}>
         <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
           <Party entity={source} onOpenEntity={onOpenEntity} />
           <Arrow color={edge.color} title={sentence} />
@@ -110,6 +132,12 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
           <X size={15} />
         </button>
       </div>
+
+      {/* ── Тело. Свёрнутое — это шапка, одна фраза и существенность; больше
+             карточке над картой не положено. Развёрнутое доливает разбор,
+             расхождение сторон и цитаты и прокручивается ВНУТРИ потолка
+             высоты, а не растёт наружу. ──────────────────────────────── */}
+      <div style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto' }}>
 
       {/* ── Чем они связаны ПО СУЩЕСТВУ ──────────────────────────────────
              Здесь стояло описание ТИПА связи — «показывает, что на этом
@@ -182,7 +210,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
              из двух сторон здесь означало бы решить спор молча. В поставке
              v4.0 таких связей ноль, и путь отрисовки всё равно готов — иначе
              первый же случай приедет в прод невидимым. ─────────────────── */}
-      {counter.length > 0 && (
+      {open && counter.length > 0 && (
         <div style={{ padding: '0 14px 12px' }}>
           <div style={{
             fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
@@ -211,7 +239,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
              (`edge.detail`) и приходит парой { ru, en }, как и остальная
              проза контракта. Пока его нет в поставке — блока просто нет,
              пустой заголовок хуже отсутствия. ────────────────────────── */}
-      {edge.detail && (
+      {open && edge.detail && (
         <div style={{ padding: '0 14px 12px' }}>
           <div style={{
             fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, fontWeight: 700,
@@ -226,7 +254,7 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
           ничего именно об этой. Необратимость читается из `substitutability`
           и из разбора выше. */}
       {/* ── Цитаты — за одной кнопкой, чтобы карточка оставалась лёгкой ─ */}
-      {ev.length > 0 && (
+      {open && ev.length > 0 && (
         <div style={{ borderTop: '1px solid var(--cf-border-hair)' }}>
           <button onClick={() => setSourcesOpen(o => !o)}
             style={{
@@ -277,6 +305,29 @@ export default function EcoEdgeCard({ edge, source, target, onClose, onOpenEntit
             </div>
           )}
         </div>
+      )}
+      </div>
+
+      {/* ── Одна кнопка на всю ширину: развернуть / свернуть ─────────────
+             Считает, что именно прячет, чтобы «Подробнее» не было обещанием
+             вслепую. Если разворачивать нечего — ни разбора, ни цитат, ни
+             расхождения — кнопки нет вовсе. ──────────────────────────── */}
+      {hasMore && (
+        <button onClick={() => { setOpen(o => !o); if (open) setSourcesOpen(false); }}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            width: '100%', padding: '9px 14px', flexShrink: 0,
+            background: 'transparent', border: 'none', borderTop: '1px solid var(--cf-border-hair)',
+            cursor: 'pointer', color: 'var(--cf-text5)',
+            fontSize: 9, fontFamily: MONO, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.12em',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--cf-text2)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--cf-text5)')}>
+          {open ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+          {open ? t('Свернуть', 'Collapse') : t('Разбор связи', 'The full breakdown')}
+          {!open && moreCount > 0 && <span style={{ color: 'var(--cf-text8)' }}>· {moreCount}</span>}
+        </button>
       )}
     </div>
   );
