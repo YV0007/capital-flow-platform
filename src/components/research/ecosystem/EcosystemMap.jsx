@@ -26,7 +26,7 @@
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import {
-  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal, RefreshCw,
+  ChevronLeft, Search, X, Maximize2, Tag, SlidersHorizontal,
   Sparkles, Cpu, Table2, Share2, AlertTriangle, Network, Settings2, Waypoints,
 } from 'lucide-react';
 import EcoGraph from './EcoGraph.jsx';
@@ -122,7 +122,6 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   const [chainDepth, setChainDepth] = useState(2);
   const [chainDir, setChainDir] = useState('both');
   const [chainKind, setChainKind] = useState('all');
-  const [expanded, setExpanded] = useState(() => new Set());
 
   // ── Visibility — a plain filter, applied before any lens ───────────────
   //
@@ -270,8 +269,7 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     kind: chainKind,
     branch: DEFAULT_BRANCH,
     minStrength,
-    expanded,
-  }), [chainRoot, chainAdjacency, chainDepth, chainDir, chainKind, minStrength, expanded]);
+  }), [chainRoot, chainAdjacency, chainDepth, chainDir, chainKind, minStrength]);
 
   const crumbs = useMemo(() => (chainRoot ? principalPath(chainRoot, {
     adjacency: chainAdjacency, chain, entityById: graph.entityById, kind: chainKind, minStrength,
@@ -284,7 +282,6 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     setView('map');                    // a table row lands you on the map
     setSelectedNodeId(id);
     setChainRoot(id);
-    setExpanded(new Set());
     setOpenLayer(null);
     setSelectedEdgeId(null);
     setCycleMode(false);
@@ -325,7 +322,6 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
     setSelectedEdgeId(null);
     setChainRoot(null);
     setOpenLayer(null);
-    setExpanded(new Set());
     setSubgraphId(null);
   }, []);
 
@@ -739,8 +735,6 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
           dir={chainDir} onDir={setChainDir}
           kind={chainKind} onKind={setChainKind}
           more={chain.more}
-          entityById={graph.entityById}
-          onExpand={(key) => setExpanded(prev => new Set(prev).add(key))}
           top={TOPBAR_H + 10}
         />
       )}
@@ -903,8 +897,8 @@ export default function EcosystemMap({ onBack, onOpenResearch, mapSwitch }) {
   );
 }
 
-// ── Chain controls — depth · direction · relation kind, plus "ещё N" ─────
-function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, entityById, onExpand, top }) {
+// ── Chain controls — depth · direction · relation kind ──────────────────
+function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, top }) {
   const t = useT();
   return (
     <div style={{
@@ -926,23 +920,17 @@ function ChainControls({ depth, onDepth, dir, onDir, kind, onKind, more, entityB
       <Segmented label={t('Тип связи', 'Link type')} value={kind} onChange={onKind}
         options={Object.entries(CHAIN_KINDS).map(([k, v]) => ({ value: k, label: v.short, title: `${v.label} — ${v.blurb}` }))} />
 
+      {/* The cap is STATED, never offered as a thing to undo. A chain shows
+          the five strongest branches per node; saying so is the difference
+          between a deliberate answer and a silently cut one, and it costs a
+          single grey line. The per-branch "ещё N" buttons that used to sit
+          here were removed on 2026-08-29 — see chain.js. */}
       {more.length > 0 && (
-        <div style={{ marginTop: 9, paddingTop: 8, borderTop: '1px solid var(--cf-border-soft)' }}>
-          <div style={{ fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, marginBottom: 5 }}>
-            {t(`Ветвление обрезано до топ-${DEFAULT_BRANCH} по существенности`, `Branching trimmed to the top ${DEFAULT_BRANCH} by materiality`)}
-          </div>
-          {more.slice(0, 5).map(m => (
-            <button key={m.key} onClick={() => onExpand(m.key)}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 5, width: '100%', marginTop: 3,
-                padding: '4px 6px', background: 'var(--cf-surface2)',
-                border: '1px solid var(--cf-border)', borderRadius: 5, cursor: 'pointer',
-                color: 'var(--cf-text3)', fontSize: 9.5, fontFamily: MONO, textAlign: 'left',
-              }}>
-              <RefreshCw size={9} />
-              {entityById.get(m.nodeId)?.name || m.nodeId}: {t('ещё', 'plus')} {m.hidden} {m.dir === 'up' ? '↑' : '↓'}
-            </button>
-          ))}
+        <div style={{
+          marginTop: 9, paddingTop: 8, borderTop: '1px solid var(--cf-border-soft)',
+          fontSize: 8.5, color: 'var(--cf-text7)', fontFamily: MONO, lineHeight: 1.5,
+        }}>
+          {t(`Ветвление обрезано до топ-${DEFAULT_BRANCH} по существенности`, `Branching trimmed to the top ${DEFAULT_BRANCH} by materiality`)}
         </div>
       )}
     </div>

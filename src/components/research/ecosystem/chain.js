@@ -9,9 +9,14 @@ import { bi } from '../../../data/capitalMap.js';// ═════════�
 //
 // Two things keep it readable instead of setting the whole map on fire:
 //   · BRANCHING CAP — at every step only the top N edges by `strength` are
-//     followed; the rest are counted and offered as "ещё N", expandable per
-//     node and per direction. Without this, three hops from NVIDIA is the
-//     entire map.
+//     followed; the rest are COUNTED and reported in `more`, so the panel can
+//     say the chain is trimmed rather than pass a cut answer off as the whole
+//     one. Without this, three hops from NVIDIA is the entire map.
+//     There used to be a per-node "ещё N" control that lifted the cap for one
+//     branch. It was removed on 2026-08-29: expanding a branch spends exactly
+//     the focus that picking a node just bought, and after one or two clicks
+//     the chain is the map again — which is the thing this cap exists to
+//     prevent. The cap is now the answer, not a default to be argued with.
 //   · KIND FILTER — three chains, cut along the SPINES rather than along a
 //     hand-listed set of types. v1 named its edge types one by one; with 31
 //     types on 5 spines that list would be a maintenance trap and would go
@@ -65,7 +70,7 @@ export const DEFAULT_BRANCH = 5;
  * @returns {{
  *   nodes: Set<string>, edges: Set<string>,
  *   depthOf: Map<string, number>,          // hops from the root, signed by side
- *   more: Array<{ nodeId, dir, hidden, key }>,   // the "ещё N" offers
+ *   more: Array<{ nodeId, dir, hidden, key }>,   // what the cap left out
  *   counts: { up: number, down: number },
  * }}
  */
@@ -76,7 +81,6 @@ export function buildChain(rootId, {
   kind = 'all',
   branch = DEFAULT_BRANCH,
   minStrength = 0,
-  expanded = null,          // Set of "<nodeId>:<dir>" the user opened
 } = {}) {
   const empty = { nodes: new Set(), edges: new Set(), depthOf: new Map(), more: [], counts: { up: 0, down: 0 } };
   if (!rootId || !adjacency) return empty;
@@ -101,7 +105,7 @@ export function buildChain(rootId, {
       frontier.forEach(id => {
         const list = (dir === 'up' ? adjacency.up.get(id) : adjacency.down.get(id)) || [];
         const eligible = list.filter(passes);
-        const cap = expanded && expanded.has(`${id}:${dir}`) ? eligible.length : branch;
+        const cap = branch;
         const taken = eligible.slice(0, cap);
         const hidden = eligible.length - taken.length;
         if (hidden > 0) more.push({ nodeId: id, dir, hidden, key: `${id}:${dir}` });
