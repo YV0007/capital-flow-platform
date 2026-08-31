@@ -3,19 +3,35 @@
 # For any that IS a real company, add a website link to
 # src/data/entityReference.json and re-run `npm run logos`.
 
+target:SB Energy PORTS-Pike Technology Campus (Ohio)	SB Energy PORTS-Pike Technology Campus (Ohio)
 target:DOE Paducah Site AI data center campus (Western Kentucky)	DOE Paducah Site AI data center campus (Western Kentucky)
 target:KKR Global Infrastructure Investors V	KKR Global Infrastructure Investors V
+target:Hugging Face	Hugging Face
 target:Sturgeon County data center (Alberta, Canada)	Sturgeon County data center (Alberta, Canada)
+target:NAVER GAK Sejong AI Factory (South Korea)	NAVER GAK Sejong AI Factory (South Korea)
 target:Akita 500MW AI data center (Japan)	Akita 500MW AI data center (Japan)
 target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbourne (third campus)
 target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
+target:IREN Limited	IREN Limited
+target:SB Energy	SB Energy
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
+target:Machine Age Fund	Machine Age Fund
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
+target:Amazon	Amazon
 target:Flourish	Flourish
 target:Strategic Bauxite USA, LLC (SBX)	Strategic Bauxite USA, LLC (SBX)
 target:Strategic Bauxite USA	Strategic Bauxite USA
 target:Standard Bauxite	Standard Bauxite
+target:Vista Energy	Vista Energy
 alloc:Vinod Khosla	Vinod Khosla
+target:DOE Genesis Mission (SPARK)	DOE Genesis Mission (SPARK)
+target:Vistra	Vistra
+target:American Electric Power	American Electric Power
+target:DTE Energy	DTE Energy
+target:FirstEnergy	FirstEnergy
+target:CMS Energy	CMS Energy
+target:Preview	Preview
+target:X-Energy	X-Energy
 target:Nippon Gateway Infrastructure (NGI)	Nippon Gateway Infrastructure (NGI)
 target:SB Neo	SB Neo
 target:France sovereign AI infrastructure framework	France sovereign AI infrastructure framework
@@ -32,6 +48,13 @@ target:TotalEnergies European renewables portfolio (Germany/Spain/France/Poland)
 target:Paducah DOE Site AI Data Center Campus	Paducah DOE Site AI Data Center Campus
 target:Mexico private credit / infrastructure market	Mexico private credit / infrastructure market
 target:Akita AI Data Center (BitGrid / S2 JV)	Akita AI Data Center (BitGrid / S2 JV)
+target:SK Horizon	SK Horizon
+target:1X Technologies	1X Technologies
+target:DuckLabs	DuckLabs
+target:PLUS ES	PLUS ES
+alloc:Max Levchin	Max Levchin
+target:Dili	Dili
+target:Arrive Logistics	Arrive Logistics
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
 target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure
 cfius	CFIUS
