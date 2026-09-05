@@ -6,6 +6,7 @@
 //   · Capital Flows  — top-5 weekly flows + sector wave field → capital-flow-map
 //   · Holdings       — top-5 tracker + news feed              → holdings
 //   · Supply chain   — bucket carousel                        → data-centers-ai
+//   · Chip supply    — Nomura CSI cycle chart                 → data-centers-ai
 // plus a footer nav across Tracker / Research / Proxy.
 //
 // `onChoose(mode)` switches app mode; `onOpenResearch(id)` deep-links into a
@@ -16,6 +17,7 @@ import { useEffect, useState } from 'react';
 import CapitalFlowsHome from './home/CapitalFlowsHome.jsx';
 import HoldingsHome from './home/HoldingsHome.jsx';
 import SupplyChainHome from './home/SupplyChainHome.jsx';
+import ChipSupplyHome from './home/ChipSupplyHome.jsx';
 import { useT } from '../lib/i18n.jsx';
 import { WEEK_STATS } from './home/homeData.js';
 import { fmtUSD } from './research/capitalflow/format.js';
@@ -274,6 +276,10 @@ export default function HomeLanding({ onChoose, onOpenResearch, theme = 'dark' }
 
       <div style={{ marginTop: SECTION_GAP }}>
         <SupplyChainHome onOpen={() => openResearch('data-centers-ai')} />
+      </div>
+
+      <div style={{ marginTop: SECTION_GAP }}>
+        <ChipSupplyHome onOpen={() => openResearch('data-centers-ai')} />
       </div>
 
       {/* ── Footer nav ─────────────────────────────────────────────────── */}
