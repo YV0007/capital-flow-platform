@@ -88,6 +88,52 @@ const SKIP_KEYS = new Set([
   'evidenceKey',
 ]);
 
+// STABLE ARRAY PATHS. An engine payload is REGENERATED IN FULL every delivery
+// and its arrays come back in a different order, so `PROMOTION_QUEUE[8]` names
+// a different candidate each week. A baseline keyed positionally therefore
+// reported the SAME accepted debt as brand new every Monday and failed the
+// build, while claiming the entries it had displaced were "translated since
+// last time" — the W36 and W37 baseline commits are pure index churn, the same
+// gaps ping-ponging between two sets of ordinals. The `evidenceKey` note in
+// SKIP_KEYS above is the same bug met once and patched at one call site.
+//
+// So where an array's elements carry their own identity, the path uses it and
+// survives a reshuffle. Ordered most-stable first: engine ids before slugs,
+// slugs before display names.
+const ID_KEYS = [
+  'candidate_id', 'id', 'cluster_id', 'entity_id', 'flow_id', 'node_id',
+  'slug', 'key', 'ticker', 'name',
+];
+
+/** The stable id of an array element, or null if it carries none. */
+function identityOf(v) {
+  if (!v || typeof v !== 'object' || Array.isArray(v)) return null;
+  for (const k of ID_KEYS) {
+    let x;
+    try { x = v[k]; } catch { continue; }             // bi() getters can throw
+    if (typeof x === 'string' && x.trim()) return x.trim();
+    if (typeof x === 'number' && Number.isFinite(x)) return String(x);
+  }
+  return null;
+}
+
+/**
+ * Path segments for an array: stable ids when EVERY element has one and they
+ * are all distinct, ordinals otherwise.
+ *
+ * All-or-nothing on purpose. Two elements resolving to the same path would
+ * overwrite each other in the output map and hide a real gap, so a partial or
+ * duplicated id set disqualifies the whole array rather than half of it. An
+ * array of bare strings has no identity to speak of and stays ordinal.
+ */
+function arrayKeys(node) {
+  const ids = node.map(identityOf);
+  const stable = ids.length > 0
+    && ids.every(Boolean)
+    && new Set(ids).size === ids.length;
+  return stable ? ids.map(id => `#${id}`) : node.map((_, i) => String(i));
+}
+
 /** Is this a `{ ru, en }` translation pair rather than a container of prose? */
 function isPair(node) {
   if (!node || typeof node !== 'object' || Array.isArray(node)) return false;
@@ -122,7 +168,8 @@ function collect(node, path, out, seen, lang) {
   if (node instanceof Map) { collect([...node.values()], path, out, seen, lang); return; }
   if (node instanceof Set) return;                    // id sets — never prose
   if (Array.isArray(node)) {
-    node.forEach((v, i) => collect(v, `${path}[${i}]`, out, seen, lang));
+    const keys = arrayKeys(node);
+    node.forEach((v, i) => collect(v, `${path}[${keys[i]}]`, out, seen, lang));
     return;
   }
   for (const k of Object.keys(node)) {
