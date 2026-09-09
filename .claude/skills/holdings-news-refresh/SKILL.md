@@ -64,12 +64,27 @@ files like `_softbank_upgrade.json` are working scraps — ignore them.)
    {
      "date": "DD.MM.YYYY",
      "type": "news",
-     "title": "<concise Russian headline, <=90 chars, key figure ok>",
-     "text": "<2-4 Russian sentences, factual, with figures; gloss key finance/English terms in parens on first use — 'активы под управлением (AUM)', 'чистый приток (net inflows)', 'комбинированный коэффициент (combined ratio)'>",
+     "title": {
+       "ru": "<concise Russian headline, <=90 chars, key figure ok>",
+       "en": "<the same headline in English, <=90 chars>"
+     },
+     "text": {
+       "ru": "<2-4 Russian sentences, factual, with figures; gloss key finance/English terms in parens on first use — 'активы под управлением (AUM)', 'чистый приток (net inflows)', 'комбинированный коэффициент (combined ratio)'>",
+       "en": "<the same 2-4 sentences in natural English — written as English, not a calque of the Russian; drop the gloss where the English term needs none>"
+     },
      "url": "<REAL source URL you fetched>",
      "image": null
    }
    ```
+
+   **`title` and `text` are `{ ru, en }` pairs, and both sides are required.**
+   The dashboard is bilingual and `/src/data/holdingsV2.js` is an i18n audit
+   target, so an item with no English side fails `npm run build` — deliberately.
+   Write both at research time: the researcher has the source open and the
+   English is nearly free then, whereas a translation pass afterwards is a
+   second job. Figures, dates and proper nouns must be identical in both.
+   Older items are still bare strings; `L()` renders those unchanged, so do not
+   go back and convert anything you did not touch.
    - Required: `date`, `type`, `title`, `text`. Strongly include `url`. `image`
      is optional — leave `null` unless you have a stable image URL (the home feed
      ignores images; the full page shows them when present).
@@ -78,7 +93,7 @@ files like `_softbank_upgrade.json` are working scraps — ignore them.)
      "news" styling. Pick the closest: earnings/M&A → `news`, buyback/dividend →
      `dividend`, product/fund/partnership → `announcement`, stake add/exit →
      `insider`.
-   - Language: Russian, professional register, matching the existing items.
+   - Register: professional in both languages, matching the existing items.
 
 4. **Apply centrally.** Edit each `<id>.json`: insert the new items at the TOP of
    `news[]`, and set `"asOf"` to today (DD.MM.YYYY) for every holding you

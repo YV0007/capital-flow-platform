@@ -124,6 +124,10 @@ function HoldingRow({ h, index, onOpen }) {
 }
 
 function NewsItem({ n, onOpenHoldings }) {
+  // Holdings news is hand-written and bilingual: `title`/`text` arrive as
+  // { ru, en } pairs. `L()` passes a bare string straight through, so items
+  // written before the pairs existed still render.
+  const L = useL();
   const [hovered, setHovered] = useState(false);
   const clickable = !!n.url;
   return (
@@ -161,14 +165,14 @@ function NewsItem({ n, onOpenHoldings }) {
           display: 'block', fontSize: 12.5, fontWeight: 600, lineHeight: 1.4,
           color: hovered ? 'var(--hm-text)' : 'var(--hm-text2)', transition: 'color 180ms',
         }}>
-          {n.title}
+          {L(n.title)}
         </span>
         {n.text && (
           <span style={{
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
             fontSize: 11, color: 'var(--hm-text5)', lineHeight: 1.5, marginTop: 3,
           }}>
-            {n.text}
+            {L(n.text)}
           </span>
         )}
       </span>

@@ -13,15 +13,7 @@ import { fmtUSD } from '../research/capitalflow/format.js';
 import logoManifest from '../../data/logoManifest.json';
 import holdingsIndex from '../../data/holdings.json';
 
-import brookfield from '../../data/holdings-v2/brookfield.json';
-import softbank from '../../data/holdings-v2/softbank.json';
-import kkr from '../../data/holdings-v2/kkr.json';
-import blackrock from '../../data/holdings-v2/blackrock.json';
-import berkshire from '../../data/holdings-v2/berkshire.json';
-import pershing from '../../data/holdings-v2/pershing.json';
-import fairfax from '../../data/holdings-v2/fairfax.json';
-import tpg from '../../data/holdings-v2/tpg.json';
-import constellation from '../../data/holdings-v2/constellation.json';
+import { HOLDINGS_BY_ID } from '../../data/holdingsV2.js';
 
 import dcBuckets from '../../data/dc-buckets.json';
 import dcCompanies from '../../data/dc-companies.json';
@@ -280,11 +272,6 @@ export const WEEK_STATS = {
 };
 
 // ── Holdings — top 5 + merged news feed ──────────────────────────────────
-const HOLDINGS_BY_ID = {
-  brookfield, softbank, kkr, blackrock, berkshire,
-  pershing, fairfax, tpg, constellation,
-};
-
 export const HOLDING_ACCENTS = {
   brookfield: '#2FD9C4', softbank: '#8E9BE6', kkr: '#5A93DE',
   blackrock: '#4FA6E0', berkshire: '#C9985F', pershing: '#9A8FD2',

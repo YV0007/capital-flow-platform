@@ -20,7 +20,7 @@ import SectionDeep from './SectionDeep.jsx';
 const { META, GROUPS, HOLDING_COMPANIES_ORDER, companies: HOLD } = holdingsData;
 // Theme-reactive palette (CSS vars) — switches with the app-wide toggle.
 import { C } from './holdingsC.js';
-import { useT } from '../../lib/i18n.jsx';
+import { useT, useL } from '../../lib/i18n.jsx';
 
 // ── load migrated v2 dossiers ──────────────────────────────────────────────
 const modules = import.meta.glob('../../data/holdings-v2/*.json', { eager: true });
@@ -415,6 +415,8 @@ const newsMeta = (t) => ({
 
 function NewsBlock({ items }) {
   const t = useT();
+  // `title`/`text` are { ru, en } pairs; `L()` tolerates a legacy bare string.
+  const L = useL();
   return (
     <div style={{ marginBottom: 24 }}>
       <div style={{ fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: C.inkFaint, marginBottom: 12 }}>{t('Новости и события', 'News and events')}</div>
@@ -433,10 +435,10 @@ function NewsBlock({ items }) {
                   <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: m.color, background: `color-mix(in srgb, ${m.color} 10%, transparent)`, border: `1px solid color-mix(in srgb, ${m.color} 27%, transparent)`, borderRadius: 3, padding: '2px 7px' }}>{m.label}</span>
                   <span style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: C.inkFaint }}>{n.date}</span>
                 </div>
-                <div style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, lineHeight: 1.32, marginBottom: 7 }}>{n.title}</div>
-                <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: n.url ? 12 : 0 }}>{n.text}</div>
+                <div style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 500, color: C.ink, lineHeight: 1.32, marginBottom: 7 }}>{L(n.title)}</div>
+                <div style={{ fontSize: 12.5, color: C.inkSoft, lineHeight: 1.55, marginBottom: n.url ? 12 : 0 }}>{L(n.text)}</div>
                 {n.url && (
-                  <a href={n.url} target="_blank" rel="noopener noreferrer" style={{ marginTop: 'auto', alignSelf: 'flex-start', fontSize: 11.5, color: m.color, fontWeight: 600, textDecoration: 'none' }}>{t('Читать', 'Read')} подробнее →</a>
+                  <a href={n.url} target="_blank" rel="noopener noreferrer" style={{ marginTop: 'auto', alignSelf: 'flex-start', fontSize: 11.5, color: m.color, fontWeight: 600, textDecoration: 'none' }}>{t('Читать подробнее', 'Read more')} →</a>
                 )}
               </div>
             </div>
@@ -584,7 +586,7 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
       });
     }
 
-    (data.news || []).forEach((n) => push(n.title + ' — ' + (n.text || ''), null, t('Новости', 'News')));
+    (data.news || []).forEach((n) => push(L(n.title) + ' — ' + (L(n.text) || ''), null, t('Новости', 'News')));
     push(data.summary, null, t('О компании', 'About the company'));
     push(data.about, null, t('О компании', 'About the company'));
     return entries;
