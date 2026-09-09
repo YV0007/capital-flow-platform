@@ -54,9 +54,26 @@ read once per deal; unchanged deals are never re-worded.
 4. **Save + deploy:**
    ```bash
    node scripts/generate_reads.mjs save /tmp/cf_reads.json   # merges by flow.id
-   npm run build                                             # build-gate; do NOT commit if it fails
+   npm run build
    git add src/data/flowNotes.json && git commit -m "Capital Flow: generate deal reads (<week>)" && git push
    ```
+
+   **A red build is not automatically yours.** This step runs minutes after the
+   Capital Flow delivery, on whatever state that left behind, so `prebuild` can
+   fail for reasons that have nothing to do with your work. Discarding a week of
+   research over someone else's breakage is the worse error, so find out whose
+   failure it is before deciding:
+
+   ```bash
+   git stash --include-untracked && npm run build; git stash pop
+   ```
+
+   - **Still fails without your changes** — the tree arrived broken. Your work is
+     sound: commit and push it, then report the inherited failure by name so it
+     gets fixed at its source. Do NOT throw the refresh away.
+   - **Passes without your changes** — the breakage is yours. Fix it, or drop the
+     item that caused it. Never commit.
+
    Vercel auto-deploys on push. `save` is idempotent and preserves existing reads.
 
 ## Boundaries

@@ -113,9 +113,26 @@ files like `_softbank_upgrade.json` are working scraps — ignore them.)
 
 6. **Build + deploy:**
    ```bash
-   npm run build   # build-gate; do NOT commit if it fails
+   npm run build
    git add src/data/holdings-v2 && git commit -m "Holdings: weekly news + price refresh (<date>)" && git push
    ```
+
+   **A red build is not automatically yours.** This step runs minutes after the
+   Capital Flow delivery, on whatever state that left behind, so `prebuild` can
+   fail for reasons that have nothing to do with your work. Discarding a week of
+   research over someone else's breakage is the worse error, so find out whose
+   failure it is before deciding:
+
+   ```bash
+   git stash --include-untracked && npm run build; git stash pop
+   ```
+
+   - **Still fails without your changes** — the tree arrived broken. Your work is
+     sound: commit and push it, then report the inherited failure by name so it
+     gets fixed at its source. Do NOT throw the refresh away.
+   - **Passes without your changes** — the breakage is yours. Fix it, or drop the
+     item that caused it. Never commit.
+
    Vercel auto-deploys on push. The home-page feed and Holdings pages update with
    no code change — they derive from these files at build time.
 
