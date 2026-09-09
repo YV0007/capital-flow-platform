@@ -330,8 +330,12 @@ for (const file of walk(ROOT)) {
 // helper that closes over its component's `t` is not reported — only a
 // top-level function that references `t` with nothing to reference.
 for (const file of walk(ROOT)) {
+  // The i18n module is where `t` and `L` are DEFINED — `useL()` legitimately
+  // calls the module-scope `L(v, lang)`. It is the one file that is not a
+  // consumer of these bindings, so it cannot be missing them.
+  if (/[\\/]lib[\\/]i18n\.jsx$/.test(file)) continue;
   const src = stripNoise(readFileSync(file, 'utf8'));
-  if (!/useT\(\)/.test(src)) continue;                    // not a translated file
+  if (!/use[TL]\(\)/.test(src)) continue;                  // not a translated file
   const rel = file.slice(ROOT.length - 3);
 
   const decls = [];
@@ -342,19 +346,32 @@ for (const file of walk(ROOT)) {
     decls.push({ name: m[1], at: m.index + m[0].length, arrow: true, i: m.index, params: m[2] });
   }
 
+  // Both translator bindings are checked, not just `t`. `L` shipped this exact
+  // bug on 2026-09-09: `L(n.title)` was added to HoldingSearch's search index
+  // while `const L = useL()` went into a different component, and the Holdings
+  // section died with «L is not defined» — through a green build, because this
+  // check only knew about `t`.
+  const BINDINGS = [
+    { id: 't', hook: 'useT' },
+    { id: 'L', hook: 'useL' },
+  ];
+
   for (const d of decls) {
     const body = functionBody(src, d.at, d.arrow);
-    // `t(…)` called, or `t` handed to a helper — `levels(t)`, `tiers(t)`.
-    const used = /[^A-Za-z0-9_.$]t\s*\(/.test(' ' + body)
-      || /[^A-Za-z0-9_.$][A-Za-z_$][\w$]*\(\s*t\s*[,)]/.test(' ' + body);
-    if (!used) continue;
-    if (/const\s+t\s*=\s*useT\(\)/.test(body)) continue;         // binds it
-    // A parameter named `t` is the deliberate helper form (rule 3 guards its
-    // call sites), so it counts as bound here.
     const params = d.arrow ? (d.params || '') : src.slice(d.at, src.indexOf(')', d.at) + 1);
-    if (/[(,]\s*t\s*[,)]/.test(params)) continue;
-    const line = src.slice(0, d.i).split('\n').length + 1;
-    problems.push([rel, `line ${line}: ${d.name}() uses \`t\` but never binds it — add \`const t = useT();\`, or the render throws «t is not defined» the first time this block appears`]);
+
+    for (const { id, hook } of BINDINGS) {
+      // `t(…)` called, or `t` handed to a helper — `levels(t)`, `tiers(t)`.
+      const used = new RegExp(`[^A-Za-z0-9_.$]${id}\\s*\\(`).test(' ' + body)
+        || new RegExp(`[^A-Za-z0-9_.$][A-Za-z_$][\\w$]*\\(\\s*${id}\\s*[,)]`).test(' ' + body);
+      if (!used) continue;
+      if (new RegExp(`const\\s+${id}\\s*=\\s*${hook}\\(\\)`).test(body)) continue;   // binds it
+      // A parameter of that name is the deliberate helper form (rule 3 guards
+      // its call sites), so it counts as bound here.
+      if (new RegExp(`[(,]\\s*${id}\\s*[,)]`).test(params)) continue;
+      const line = src.slice(0, d.i).split('\n').length + 1;
+      problems.push([rel, `line ${line}: ${d.name}() uses \`${id}\` but never binds it — add \`const ${id} = ${hook}();\`, or the render throws «${id} is not defined» the first time this block appears`]);
+    }
   }
 }
 
