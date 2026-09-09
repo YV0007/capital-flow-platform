@@ -522,6 +522,10 @@ function blockTexts(block) {
 
 function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
   const t = useT();
+  // News titles/texts are { ru, en } pairs — the index must hold the ACTIVE
+  // language, or a search in English would match Russian text (and a pair
+  // would stringify as [object Object]).
+  const L = useL();
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
   const wrapRef = useRef(null);
@@ -590,7 +594,7 @@ function HoldingSearch({ data, portfolio, sections, onOpenSection, onGoHome }) {
     push(data.summary, null, t('О компании', 'About the company'));
     push(data.about, null, t('О компании', 'About the company'));
     return entries;
-  }, [data, portfolio, sections]);
+  }, [data, portfolio, sections, t, L]);
 
   const results = useMemo(() => {
     if (!query || query.length < 2) return [];
