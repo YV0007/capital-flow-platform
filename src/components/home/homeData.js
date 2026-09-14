@@ -11,7 +11,7 @@
 import { buildGraph, SECTOR_META } from '../../data/capitalMap.js';
 import { fmtUSD } from '../research/capitalflow/format.js';
 import logoManifest from '../../data/logoManifest.json';
-import holdingsIndex from '../../data/holdings.json';
+import holdingsIndex from '../../data/holdingsIndex.js';
 
 import { HOLDINGS_BY_ID } from '../../data/holdingsV2.js';
 

@@ -11,7 +11,7 @@
 // Dark mode only. Reuses theme tokens + META from holdings.json.
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import holdingsData from '../../data/holdings.json';
+import holdingsData from '../../data/holdingsIndex.js';
 import PortfolioDeep from './PortfolioDeep.jsx';
 import FinancialDeep from './FinancialDeep.jsx';
 import ChangesDeep from './ChangesDeep.jsx';
@@ -22,20 +22,11 @@ const { META, GROUPS, HOLDING_COMPANIES_ORDER, companies: HOLD } = holdingsData;
 import { C } from './holdingsC.js';
 import { useT, useL } from '../../lib/i18n.jsx';
 
-// ── load migrated v2 dossiers ──────────────────────────────────────────────
-const modules = import.meta.glob('../../data/holdings-v2/*.json', { eager: true });
-const V2 = {};
-for (const p in modules) { const d = modules[p].default || modules[p]; if (d && d.id) V2[d.id] = d; }
-
-// ── load deep portfolio breakdowns (section 01 bespoke component) ───────────
-const portModules = import.meta.glob('../../data/holdings-v2/portfolio/*.json', { eager: true });
-const PORT = {};
-for (const p in portModules) { const d = portModules[p].default || portModules[p]; if (d && d.id) PORT[d.id] = d; }
-
-// ── load deep financial pages (section 08 bespoke component) ────────────────
-const finModules = import.meta.glob('../../data/holdings-v2/financial/*.json', { eager: true });
-const FIN = {};
-for (const p in finModules) { const d = finModules[p].default || finModules[p]; if (d && d.id) FIN[d.id] = d; }
+// ── the migrated v2 dossiers, their deep portfolio and financial pages ─────
+// Globbed and language-resolved in `data/holdingsV2.js`, not here: a payload
+// reached only through a component is one the i18n audit cannot see, and all
+// three need the same English overlay applied in the same place.
+import { HOLDINGS_BY_ID as V2, PORTFOLIO_BY_ID as PORT, FINANCIAL_BY_ID as FIN } from '../../data/holdingsV2.js';
 
 // A function of `t`, not a frozen const: t() at module scope runs at import
 // time, before any component can supply it, and the ReferenceError takes the

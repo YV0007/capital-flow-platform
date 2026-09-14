@@ -4,7 +4,7 @@
 // Data: src/data/holdings-v2/financial/<id>.json. Dark mode only.
 
 import { useState } from 'react';
-import holdingsData from '../../data/holdings.json';
+import holdingsData from '../../data/holdingsIndex.js';
 
 import { C } from './holdingsC.js';
 import { useT } from '../../lib/i18n.jsx';

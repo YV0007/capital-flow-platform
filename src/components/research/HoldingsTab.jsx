@@ -6,7 +6,7 @@
 // fixed in dark mode to match the rest of the app.
 
 import { useState, useEffect, useRef } from 'react';
-import holdingsData from '../../data/holdings.json';
+import holdingsData from '../../data/holdingsIndex.js';
 import { useT } from '../../lib/i18n.jsx';
 
 // Reconstitute the named consts the original code expects. holdings.json was

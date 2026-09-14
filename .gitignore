@@ -6,3 +6,4 @@ node_modules/
 dist/
 src/data/holdings-v2/_*.json
 src/data/holdings-v2/portfolio/_*/
+src/data/.holdings-en.lock/

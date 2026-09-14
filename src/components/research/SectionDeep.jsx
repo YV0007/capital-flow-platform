@@ -5,7 +5,7 @@
 // blocks (sections[].deep in the company JSON). Dark mode only.
 
 import { useState, useContext, createContext } from 'react';
-import holdingsData from '../../data/holdings.json';
+import holdingsData from '../../data/holdingsIndex.js';
 
 import { C } from './holdingsC.js';
 import { useT } from '../../lib/i18n.jsx';

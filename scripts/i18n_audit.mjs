@@ -67,17 +67,20 @@ const TARGETS = [
   { file: '/src/data/aiEcosystemNetwork.js', build: 'buildGraph' },
   { file: '/src/data/capitalMap.js',         build: 'buildGraph' },
   { file: '/src/data/fundTracker.js' },
-  // Holdings has no engine: its prose is hand-written, and until now it was
-  // reached only through components, so the audit never saw it — an English
-  // reader was served Russian news and no gate noticed.
+  // Holdings has no engine: its prose is hand-written, and until the module
+  // surface existed it was reached only through components, so the audit never
+  // saw it — an English reader was served Russian news and no gate noticed.
   //
-  // `ALL_NEWS` is the audited surface. `HOLDINGS_BY_ID` is skipped on purpose:
-  // walking it would drag in `sections[]`, the deep research pages, which hold
-  // ~8,700 further Russian-only strings. That is a real debt and a DC-scale
-  // translation project of its own — baselining it wholesale here would bury
-  // the news gaps this target exists to catch. News is refreshed weekly and
-  // stays bilingual because the skill now writes both sides at research time.
-  { file: '/src/data/holdingsV2.js', skipExports: ['HOLDINGS_BY_ID'] },
+  // `HOLDINGS_BY_ID` used to be skipped here, because walking it dragged in
+  // `sections[]` — the deep research pages — and ~8,700 further Russian-only
+  // strings that were then a DC-scale translation project of its own. That
+  // project has since been done: the prose is translated through the flat
+  // sidecar `holdings.en.json` and overlaid by `holdingsEn.js`, so the whole
+  // section is audited, including the deep portfolio and financial pages.
+  { file: '/src/data/holdingsV2.js' },
+  // The comparison index — META, GROUPS, THEMES, DIMENSIONS and the nine
+  // company cards. Same sidecar, scope `holdings.*`.
+  { file: '/src/data/holdingsIndex.js' },
 ];
 
 // Keys whose value is a proper noun, an id, a URL or a verbatim source quote.

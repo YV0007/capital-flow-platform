@@ -1,0 +1,16 @@
+{
+ "fin.brookfield.description.ipo": "30 Dec 1983",
+ "fin.brookfield.growthRates.cols.0": "10Y",
+ "fin.brookfield.growthRates.cols.1": "5Y",
+ "fin.brookfield.growthRates.cols.2": "1Y",
+ "fin.brookfield.note": "Source: FRC / Roic.ai (BN, NYSE), in $m unless stated otherwise. Peers are real comparable companies (rather than an auto-picked fund set).",
+ "fin.brookfield.returns.1.period": "1Y",
+ "fin.brookfield.returns.2.period": "3Y",
+ "fin.brookfield.returns.3.period": "5Y",
+ "fin.brookfield.returns.4.period": "10Y",
+ "fin.softbank.description.ceo": "Masayoshi Son",
+ "fin.softbank.growthRates.cols.0": "1Y",
+ "fin.softbank.growthRates.rows.0.label": "Revenue",
+ "fin.softbank.note": "Source: SoftBank Group FY2025 (year to 31.03.2026), consolidated P&L (driver — Arm/SBKK); holdco metrics (NAV/LTV/debt) — SOTP page [3], Bloomberg [17]. All figures in ¥ bn unless stated otherwise. SoftBank Group is a holding company: the metric that matters is NAV and the discount to NAV (~49%), not the operating P&L. The full multi-year ROIC table (per-share, working capital, quarters, return vs S&P) is not filled in — it needs a ROIC export for SFTBY (US ADR). Figures for 9434.T (SoftBank Corp) are a separate telecom subsidiary and are NOT used here.",
+ "fin.softbank.unit": "¥ bn"
+}
