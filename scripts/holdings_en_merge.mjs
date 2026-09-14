@@ -9,6 +9,10 @@
 //   node scripts/holdings_en_merge.mjs patch.json          merge a flat patch
 //   node scripts/holdings_en_merge.mjs patch.json --force  allow overwriting
 //   node scripts/holdings_en_merge.mjs --check patch.json  validate, write nothing
+//   node scripts/holdings_en_merge.mjs patch.json --map work/b7.map.json
+//                                                         a NUMBERED patch —
+//                                                         see --batch in
+//                                                         holdings_en_status
 //
 // A patch is the skeleton `holdings_en_status.mjs <scope>` prints, with the
 // Russian values replaced by English. Keys are the same dotted paths.
@@ -31,8 +35,11 @@ const STALE_MS  = 120_000;
 const args  = process.argv.slice(2);
 const force = args.includes('--force');
 const check = args.includes('--check');
-const file  = args.find(a => !a.startsWith('--'));
-if (!file) { console.error('usage: holdings_en_merge.mjs <patch.json> [--force] [--check]'); process.exit(2); }
+const positional = args.filter((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1] === '--map'));
+const file = positional[0];
+const mapI = args.indexOf('--map');
+const mapF = mapI < 0 ? null : args[mapI + 1];
+if (!file) { console.error('usage: holdings_en_merge.mjs <patch.json> [--map m.json] [--force] [--check]'); process.exit(2); }
 
 // ── the set of legal keys, straight off the Russian sources ───────────────
 // Same walk the status report uses, so the two can never disagree: only a
@@ -41,7 +48,19 @@ if (!file) { console.error('usage: holdings_en_merge.mjs <patch.json> [--force] 
 const legal = new Set();
 for (const { scope, data } of sources()) for (const [p] of walk(data, scope)) legal.add(p);
 
-const patch = JSON.parse(readFileSync(file, 'utf8'));
+let patch = JSON.parse(readFileSync(file, 'utf8'));
+if (mapF) {
+  // A numbered patch. Every number must be in the map: a stray one means the
+  // translator invented a row, and silently dropping it would leave a gap the
+  // coverage report still counts as untranslated.
+  const map = JSON.parse(readFileSync(mapF, 'utf8'));
+  const orphan = Object.keys(patch).filter(n => !map[n]);
+  if (orphan.length) {
+    console.error(`✗ ${orphan.length} number${orphan.length > 1 ? 's' : ''} not in ${mapF}: ${orphan.slice(0, 12).join(', ')}`);
+    process.exit(1);
+  }
+  patch = Object.fromEntries(Object.entries(patch).map(([n, v]) => [map[n], v]));
+}
 const bad = [];
 for (const [k, v] of Object.entries(patch)) {
   if (!legal.has(k))                           bad.push([k, 'no such path in the Russian source']);

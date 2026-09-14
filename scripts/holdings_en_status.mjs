@@ -11,7 +11,19 @@
 //   node scripts/holdings_en_status.mjs <scope> --chars 20000 [--skip N]
 //                                                    a bite-sized slice of one
 //                                                    scope, in source order
+//   … --batch work/b7                                the same slice keyed by
+//                                                    NUMBER, with the paths
+//                                                    parked in work/b7.map.json
+//
+// WHY --batch EXISTS. A dotted path is 50–70 characters and the value it
+// carries is often shorter than that. Handing a translator 400 of them means
+// most of the page is bookkeeping, and the translation has to copy every path
+// back out again, doubling the chance of a typo that the merge gate then
+// rejects. `--batch` prints `{ "1": "…" }` and writes the number→path map next
+// to it; `holdings_en_merge.mjs --map` puts the paths back.
 // ══════════════════════════════════════════════════════════════════════════
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { dirname } from 'node:path';
 import { sources, walk, loadEn, done } from './holdings_en_common.mjs';
 
 const args  = process.argv.slice(2);
@@ -19,6 +31,8 @@ const only  = args.find(a => !a.startsWith('--'));
 const num   = (flag, dflt) => { const i = args.indexOf(flag); return i < 0 ? dflt : Number(args[i + 1]); };
 const LIMIT = num('--chars', 0);
 const SKIP  = num('--skip', 0);
+const str   = (flag) => { const i = args.indexOf(flag); return i < 0 ? null : args[i + 1]; };
+const BATCH = str('--batch');
 
 const en = loadEn();
 const all = sources();
@@ -34,7 +48,14 @@ if (only) {
     gaps = cut;
   }
   const skeleton = {};
-  for (const [p, v] of gaps) skeleton[p] = v;
+  if (BATCH) {
+    const map = {};
+    gaps.forEach(([p, v], i) => { skeleton[i + 1] = v; map[i + 1] = p; });
+    mkdirSync(dirname(BATCH), { recursive: true });
+    writeFileSync(`${BATCH}.map.json`, JSON.stringify(map, null, 1) + '\n', 'utf8');
+  } else {
+    for (const [p, v] of gaps) skeleton[p] = v;
+  }
   console.log(JSON.stringify(skeleton, null, 1));
   process.exit(0);
 }
