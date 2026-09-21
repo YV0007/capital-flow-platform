@@ -5,24 +5,40 @@
 
 target:SB Energy PORTS-Pike Technology Campus (Ohio)	SB Energy PORTS-Pike Technology Campus (Ohio)
 target:DOE Paducah Site AI data center campus (Western Kentucky)	DOE Paducah Site AI data center campus (Western Kentucky)
-target:KKR Global Infrastructure Investors V	KKR Global Infrastructure Investors V
 target:Hugging Face	Hugging Face
+target:KKR Global Infrastructure Investors V	KKR Global Infrastructure Investors V
+target:West Street Capital Partners IX	West Street Capital Partners IX
 target:Sturgeon County data center (Alberta, Canada)	Sturgeon County data center (Alberta, Canada)
 target:NAVER GAK Sejong AI Factory (South Korea)	NAVER GAK Sejong AI Factory (South Korea)
 target:Akita 500MW AI data center (Japan)	Akita 500MW AI data center (Japan)
+target:Akita AI Data Center (Bitgrit/S2)	Akita AI Data Center (Bitgrit/S2)
+target:Akita AI Data Center (Bitgrit / S2 Group, Japan)	Akita AI Data Center (Bitgrit / S2 Group, Japan)
 target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbourne (third campus)
+target:ST Telemedia Global Data Centres (STT GDC)	ST Telemedia Global Data Centres (STT GDC)
 target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
+target:El Paso AI Data Center Venture (with Meta)	El Paso AI Data Center Venture (with Meta)
+target:MediaTek	MediaTek
+target:HUMAIN Data Center Fund	HUMAIN Data Center Fund
+target:Humain Data Center Fund	Humain Data Center Fund
 target:IREN Limited	IREN Limited
+target:NextEra Energy (Duane Arnold Energy Center)	NextEra Energy (Duane Arnold Energy Center)
 target:SB Energy	SB Energy
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
 target:Machine Age Fund	Machine Age Fund
+target:Anderon (IBM subsidiary)	Anderon (IBM subsidiary)
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
 target:Amazon	Amazon
+target:D-Wave Quantum	D-Wave Quantum
+target:Quantinuum	Quantinuum
+target:PsiQuantum	PsiQuantum
 target:Flourish	Flourish
+target:Rigetti Computing	Rigetti Computing
 target:Strategic Bauxite USA, LLC (SBX)	Strategic Bauxite USA, LLC (SBX)
 target:Strategic Bauxite USA	Strategic Bauxite USA
 target:Standard Bauxite	Standard Bauxite
+alloc:Empery Digital	Empery Digital
 target:Vista Energy	Vista Energy
+target:Midwest AI Data Center Acquisition Entity (Hunt Properties JV)	Midwest AI Data Center Acquisition Entity (Hunt Properties JV)
 alloc:Vinod Khosla	Vinod Khosla
 target:DOE Genesis Mission (SPARK)	DOE Genesis Mission (SPARK)
 target:Vistra	Vistra
@@ -30,8 +46,31 @@ target:American Electric Power	American Electric Power
 target:DTE Energy	DTE Energy
 target:FirstEnergy	FirstEnergy
 target:CMS Energy	CMS Energy
+target:Trilogy Metals Inc	Trilogy Metals Inc
+target:Cardinal Data Power	Cardinal Data Power
 target:Preview	Preview
+target:AIR	AIR
 target:X-Energy	X-Energy
+target:SK Horizon	SK Horizon
+target:Mercor	Mercor
+target:EnduroSat	EnduroSat
+target:Stilla.ai	Stilla.ai
+target:Thinking Machines Lab	Thinking Machines Lab
+target:Perplexity	Perplexity
+target:Integral	Integral
+target:Ansaldo Energia	Ansaldo Energia
+target:Profound	Profound
+target:Nara Health	Nara Health
+target:Factory	Factory
+target:Mazama Energy	Mazama Energy
+target:Split Pay	Split Pay
+target:Voya Energy	Voya Energy
+target:REGENT Craft	REGENT Craft
+target:Crusoe	Crusoe
+target:SciFin	SciFin
+target:Highstock	Highstock
+target:Harvey	Harvey
+target:Savvy Wealth	Savvy Wealth
 target:Nippon Gateway Infrastructure (NGI)	Nippon Gateway Infrastructure (NGI)
 target:SB Neo	SB Neo
 target:France sovereign AI infrastructure framework	France sovereign AI infrastructure framework
@@ -48,13 +87,18 @@ target:TotalEnergies European renewables portfolio (Germany/Spain/France/Poland)
 target:Paducah DOE Site AI Data Center Campus	Paducah DOE Site AI Data Center Campus
 target:Mexico private credit / infrastructure market	Mexico private credit / infrastructure market
 target:Akita AI Data Center (BitGrid / S2 JV)	Akita AI Data Center (BitGrid / S2 JV)
-target:SK Horizon	SK Horizon
 target:1X Technologies	1X Technologies
 target:DuckLabs	DuckLabs
 target:PLUS ES	PLUS ES
 alloc:Max Levchin	Max Levchin
 target:Dili	Dili
 target:Arrive Logistics	Arrive Logistics
+target:Cloverleaf Infrastructure	Cloverleaf Infrastructure
+target:AWS HUMAIN AI Zone	AWS HUMAIN AI Zone
+target:NavigateAI	NavigateAI
+target:Gimlet Labs	Gimlet Labs
+target:Lightfield	Lightfield
+target:Cognition	Cognition
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
 target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure
 cfius	CFIUS
