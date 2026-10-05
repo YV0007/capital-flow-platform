@@ -17,26 +17,28 @@ target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbou
 target:ST Telemedia Global Data Centres (STT GDC)	ST Telemedia Global Data Centres (STT GDC)
 target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
 target:El Paso AI Data Center Venture (with Meta)	El Paso AI Data Center Venture (with Meta)
+target:Vistra Corp	Vistra Corp
 target:DigitalBridge	DigitalBridge
 target:MediaTek	MediaTek
+target:SB Energy	SB Energy
+target:Humain Data Center Fund (via BSF Capital)	Humain Data Center Fund (via BSF Capital)
 target:HUMAIN Data Center Fund	HUMAIN Data Center Fund
 target:Humain Data Center Fund	Humain Data Center Fund
 target:IREN Limited	IREN Limited
 target:NextEra Energy (Duane Arnold Energy Center)	NextEra Energy (Duane Arnold Energy Center)
 target:DOE SPARK grid transmission initiative (31 projects, 26 states)	DOE SPARK grid transmission initiative (31 projects, 26 states)
-target:SB Energy	SB Energy
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
 target:Machine Age Fund	Machine Age Fund
+target:Nscale	Nscale
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
 target:Anderon (IBM subsidiary)	Anderon (IBM subsidiary)
-target:Nscale	Nscale
 target:Cyera	Cyera
 target:Autonomous Solutions Inc. (ASI)	Autonomous Solutions Inc. (ASI)
+target:D-Wave Quantum	D-Wave Quantum
+target:Rigetti Computing	Rigetti Computing
+target:Quantinuum	Quantinuum
 target:Amazon	Amazon
 target:Flourish	Flourish
-target:Rigetti Computing	Rigetti Computing
-target:D-Wave Quantum	D-Wave Quantum
-target:Quantinuum	Quantinuum
 target:PsiQuantum	PsiQuantum
 target:Strategic Bauxite USA, LLC (SBX)	Strategic Bauxite USA, LLC (SBX)
 target:Strategic Bauxite USA	Strategic Bauxite USA
@@ -56,6 +58,22 @@ target:Cardinal Data Power	Cardinal Data Power
 target:Preview	Preview
 target:AIR	AIR
 target:X-Energy	X-Energy
+target:RHAELM Holdings / JERA / Dell Technologies AI data center project (Chiba, Japan)	RHAELM Holdings / JERA / Dell Technologies AI data center project (Chiba, Japan)
+target:EnduroSat	EnduroSat
+target:Snorkel AI	Snorkel AI
+target:HiddenLayer	HiddenLayer
+target:Gimlet Labs	Gimlet Labs
+target:Mantic Technologies	Mantic Technologies
+target:Stuut	Stuut
+target:Harvey	Harvey
+target:Pilgrim	Pilgrim
+alloc:Dylan Field	Dylan Field
+target:Cognition	Cognition
+target:Factory	Factory
+target:Profound	Profound
+target:EliseAI	EliseAI
+target:Fortell	Fortell
+target:Mazama Energy	Mazama Energy
 target:Nippon Gateway Infrastructure (NGI)	Nippon Gateway Infrastructure (NGI)
 target:SB Neo	SB Neo
 target:France sovereign AI infrastructure framework	France sovereign AI infrastructure framework
@@ -63,7 +81,6 @@ target:Cathedral	Cathedral
 alloc:Brian Singerman	Brian Singerman
 target:GPx TX LP	GPx TX LP
 target:Quiet Select TX LP	Quiet Select TX LP
-alloc:Dylan Field	Dylan Field
 alloc:Stanley Druckenmiller	Stanley Druckenmiller
 target:Paducah AI/HPC innovation campus	Paducah AI/HPC innovation campus
 target:Savannah River Site AI data center	Savannah River Site AI data center
@@ -83,30 +100,21 @@ target:Cloverleaf Infrastructure	Cloverleaf Infrastructure
 target:AWS HUMAIN AI Zone	AWS HUMAIN AI Zone
 target:Thinking Machines Lab	Thinking Machines Lab
 target:NavigateAI	NavigateAI
-target:Gimlet Labs	Gimlet Labs
 target:Lightfield	Lightfield
-target:Cognition	Cognition
 target:Mercor	Mercor
-target:EnduroSat	EnduroSat
 target:Stilla.ai	Stilla.ai
 target:Perplexity	Perplexity
 target:Integral	Integral
 target:Ansaldo Energia	Ansaldo Energia
-target:Profound	Profound
 target:Nara Health	Nara Health
-target:Factory	Factory
-target:Mazama Energy	Mazama Energy
 target:Split Pay	Split Pay
 target:Voya Energy	Voya Energy
 target:REGENT Craft	REGENT Craft
 target:Crusoe	Crusoe
 target:SciFin	SciFin
 target:Highstock	Highstock
-target:Harvey	Harvey
 target:Savvy Wealth	Savvy Wealth
 target:Robotics and AI Institute (RAI)	Robotics and AI Institute (RAI)
-target:Snorkel AI	Snorkel AI
-target:HiddenLayer	HiddenLayer
 target:Island	Island
 target:Rightway	Rightway
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
