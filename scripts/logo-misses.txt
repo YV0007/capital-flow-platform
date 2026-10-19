@@ -21,21 +21,27 @@ target:Vistra Corp	Vistra Corp
 target:DigitalBridge	DigitalBridge
 target:MediaTek	MediaTek
 target:SB Energy	SB Energy
-target:Humain Data Center Fund (via BSF Capital)	Humain Data Center Fund (via BSF Capital)
 target:HUMAIN Data Center Fund	HUMAIN Data Center Fund
+target:Thinking Machines Lab	Thinking Machines Lab
 target:Humain Data Center Fund	Humain Data Center Fund
+target:Humain Data Center Fund (via BSF Capital)	Humain Data Center Fund (via BSF Capital)
+target:HUMAIN AI Data Center Fund	HUMAIN AI Data Center Fund
+target:HUMAIN	HUMAIN
 target:IREN Limited	IREN Limited
 target:NextEra Energy (Duane Arnold Energy Center)	NextEra Energy (Duane Arnold Energy Center)
 target:DOE SPARK grid transmission initiative (31 projects, 26 states)	DOE SPARK grid transmission initiative (31 projects, 26 states)
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
 target:Machine Age Fund	Machine Age Fund
-target:Nscale	Nscale
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
 target:Anderon (IBM subsidiary)	Anderon (IBM subsidiary)
+target:Nscale	Nscale
+target:Figure AI	Figure AI
+target:U.S. universities / quantum computing & Genesis Mission research initiatives	U.S. universities / quantum computing & Genesis Mission research initiatives
 target:Cyera	Cyera
+target:UK agentic AI safety research (Oxford BOLD / UCL SOFAIR / Imperial College)	UK agentic AI safety research (Oxford BOLD / UCL SOFAIR / Imperial College)
 target:Autonomous Solutions Inc. (ASI)	Autonomous Solutions Inc. (ASI)
-target:D-Wave Quantum	D-Wave Quantum
 target:Rigetti Computing	Rigetti Computing
+target:D-Wave Quantum	D-Wave Quantum
 target:Quantinuum	Quantinuum
 target:Amazon	Amazon
 target:Flourish	Flourish
@@ -58,22 +64,6 @@ target:Cardinal Data Power	Cardinal Data Power
 target:Preview	Preview
 target:AIR	AIR
 target:X-Energy	X-Energy
-target:RHAELM Holdings / JERA / Dell Technologies AI data center project (Chiba, Japan)	RHAELM Holdings / JERA / Dell Technologies AI data center project (Chiba, Japan)
-target:EnduroSat	EnduroSat
-target:Snorkel AI	Snorkel AI
-target:HiddenLayer	HiddenLayer
-target:Gimlet Labs	Gimlet Labs
-target:Mantic Technologies	Mantic Technologies
-target:Stuut	Stuut
-target:Harvey	Harvey
-target:Pilgrim	Pilgrim
-alloc:Dylan Field	Dylan Field
-target:Cognition	Cognition
-target:Factory	Factory
-target:Profound	Profound
-target:EliseAI	EliseAI
-target:Fortell	Fortell
-target:Mazama Energy	Mazama Energy
 target:Nippon Gateway Infrastructure (NGI)	Nippon Gateway Infrastructure (NGI)
 target:SB Neo	SB Neo
 target:France sovereign AI infrastructure framework	France sovereign AI infrastructure framework
@@ -81,6 +71,7 @@ target:Cathedral	Cathedral
 alloc:Brian Singerman	Brian Singerman
 target:GPx TX LP	GPx TX LP
 target:Quiet Select TX LP	Quiet Select TX LP
+alloc:Dylan Field	Dylan Field
 alloc:Stanley Druckenmiller	Stanley Druckenmiller
 target:Paducah AI/HPC innovation campus	Paducah AI/HPC innovation campus
 target:Savannah River Site AI data center	Savannah River Site AI data center
@@ -98,25 +89,55 @@ target:Dili	Dili
 target:Arrive Logistics	Arrive Logistics
 target:Cloverleaf Infrastructure	Cloverleaf Infrastructure
 target:AWS HUMAIN AI Zone	AWS HUMAIN AI Zone
-target:Thinking Machines Lab	Thinking Machines Lab
 target:NavigateAI	NavigateAI
+target:Gimlet Labs	Gimlet Labs
 target:Lightfield	Lightfield
+target:Cognition	Cognition
 target:Mercor	Mercor
+target:EnduroSat	EnduroSat
 target:Stilla.ai	Stilla.ai
 target:Perplexity	Perplexity
 target:Integral	Integral
 target:Ansaldo Energia	Ansaldo Energia
+target:Profound	Profound
 target:Nara Health	Nara Health
+target:Factory	Factory
+target:Mazama Energy	Mazama Energy
 target:Split Pay	Split Pay
 target:Voya Energy	Voya Energy
 target:REGENT Craft	REGENT Craft
 target:Crusoe	Crusoe
 target:SciFin	SciFin
 target:Highstock	Highstock
+target:Harvey	Harvey
 target:Savvy Wealth	Savvy Wealth
 target:Robotics and AI Institute (RAI)	Robotics and AI Institute (RAI)
+target:Snorkel AI	Snorkel AI
+target:HiddenLayer	HiddenLayer
 target:Island	Island
 target:Rightway	Rightway
+target:RHAELM Holdings / JERA / Dell Technologies AI data center project (Chiba, Japan)	RHAELM Holdings / JERA / Dell Technologies AI data center project (Chiba, Japan)
+target:Mantic Technologies	Mantic Technologies
+target:Stuut	Stuut
+target:Pilgrim	Pilgrim
+target:EliseAI	EliseAI
+target:Fortell	Fortell
+target:Falcata (TSC + ASEI combination)	Falcata (TSC + ASEI combination)
+target:STT GDC (ST Telemedia Global Data Centres)	STT GDC (ST Telemedia Global Data Centres)
+target:Mecka	Mecka
+target:Catalyst	Catalyst
+target:TypeSafe AI	TypeSafe AI
+target:Instinct	Instinct
+target:SharonAI Holdings Inc.	SharonAI Holdings Inc.
+target:Doctolib	Doctolib
+target:Pigment	Pigment
+target:Genesis AI	Genesis AI
+target:Entalpic	Entalpic
+target:TBD -- additional European AI companies (unnamed)	TBD -- additional European AI companies (unnamed)
+target:Applied Compute	Applied Compute
+target:Commonwealth Fusion Systems	Commonwealth Fusion Systems
+target:Arena	Arena
+target:Stack Infrastructure (MEL02 campus, Melbourne)	Stack Infrastructure (MEL02 campus, Melbourne)
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
 target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure
 cfius	CFIUS
