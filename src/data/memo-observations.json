@@ -607,7 +607,7 @@
     "value": "200000000",
     "unit": "USD",
     "direction": "flat",
-    "notes": "Memo: pre-money up to $200M (5.1x ARR), tiered by total check size. Anton entered at the $120M tier (3.1x ARR) — favorable. Logged as deal-structure observation, not an inconsistency."
+    "notes": "Memo: pre-money up to $200M (5.1x ARR), tiered by total check size. Entered at the $120M tier (3.1x ARR) — favorable. Logged as deal-structure observation, not an inconsistency."
   },
   {
     "superseded": false,
@@ -624,11 +624,11 @@
     "id": "obs_memo_anton_tier",
     "date": "2026-04-09",
     "frameworkCategory": "fundraise",
-    "label": "Anton entry vs memo ceiling reconciliation",
+    "label": "Entry vs memo ceiling reconciliation",
     "value": "$120M tier (vs $200M ceiling)",
     "unit": "",
     "direction": "flat",
-    "notes": "Tiered valuation; Anton entered at $120M tier per subscription form. Implied multiple 3.1x ARR vs memo ceiling 5.1x ARR. Delta logged as deal-structure observation."
+    "notes": "Tiered valuation; Entered at $120M tier per subscription form. Implied multiple 3.1x ARR vs memo ceiling 5.1x ARR. Delta logged as deal-structure observation."
   },
   {
     "superseded": false,
@@ -837,13 +837,13 @@
     "date": "2026-05-09",
     "kind": "observation",
     "frameworkCategory": "fundraise",
-    "label": "Anton entry ARR multiple (derived)",
+    "label": "Entry ARR multiple (derived)",
     "value": "3.08",
     "unit": "x",
     "direction": "flat",
     "confidence": "med",
     "sourceTool": "Computed from Toloka Memo figures",
-    "notes": "Derived. Anton entered at 3.1x ARR (vs memo ceiling 5.1x ARR). Favorable tier — built-in margin of safety."
+    "notes": "Derived. Entered at 3.1x ARR (vs memo ceiling 5.1x ARR). Favorable tier — built-in margin of safety."
   },
   {
     "superseded": false,

@@ -15,6 +15,6 @@
     { "value": "material", "label": "Material", "color": "bg-amber-900 text-amber-300 border-amber-700" },
     { "value": "adverse",  "label": "Adverse",  "color": "bg-rose-900 text-rose-300 border-rose-700" }
   ],
-  "SYNDICATE_SOURCES": ["Toloka LLC / Shoifot Igor", "TOLOKA SYNDICATE LTD", "Zeely direct", "Other"],
+  "SYNDICATE_SOURCES": ["Syndicate lead", "Nominee SPV", "Company direct", "Other"],
   "SYNDICATE_CHANNELS": ["Email", "Call", "Portal", "WhatsApp", "Telegram", "In-person", "Other"]
 }

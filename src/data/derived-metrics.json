@@ -6,7 +6,7 @@
   "capital_efficiency_creatify":  { "value": 0.43,  "formula": "10 / 23",            "confidence": "med", "label": "Capital efficiency (Creatify)",   "note": "Comp benchmark" },
   "capital_efficiency_arcads":    { "value": 0.75,  "formula": "12 / 16",            "confidence": "med", "label": "Capital efficiency (Arcads)",     "note": "Comp benchmark" },
   "capital_efficiency_mirage":    { "value": 0.30,  "formula": "30 / 100",           "confidence": "med", "label": "Capital efficiency (Mirage)",     "note": "Comp benchmark" },
-  "anton_entry_arr_multiple":     { "value": 3.08,  "formula": "120 / 39",           "confidence": "med", "label": "Anton entry ARR multiple",        "note": "3.1x ARR vs memo ceiling 5.1x — favorable tier" },
+  "anton_entry_arr_multiple":     { "value": 3.08,  "formula": "120 / 39",           "confidence": "med", "label": "Entry ARR multiple",        "note": "3.1x ARR vs memo ceiling 5.1x — favorable tier" },
   "paid_conversion":              { "value": 0.05,  "formula": "50000 / 1000000",    "confidence": "med", "label": "Paid conversion",                 "note": "5% — plausible SMB SaaS rate" },
   "arpu_annual_usd":              { "value": 780,   "formula": "39000000 / 50000",   "confidence": "med", "label": "ARPU (annual)",                   "note": "$65/month average per paying user" },
   "arr_per_fte_usd":              { "value": 260000, "formula": "39000000 / 150",    "confidence": "med", "label": "ARR per FTE",                     "note": "$260K/FTE — top-quartile range for SaaS Series A" }

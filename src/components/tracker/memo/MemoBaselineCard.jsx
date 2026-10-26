@@ -32,7 +32,7 @@ export function MemoTile({ title, asOf, children, wide = false }) {
 export default function MemoBaselineCard({ cfg, mb, open, onToggle, onJumpTo }) {
   if (!mb) return null;
 
-  // Compute Anton net return at 6x base scenario for each tier.
+  // Compute net return at 6x base scenario for each tier.
   const antonReturns = mb.exit_scenarios.map(s => {
     const wf = computeCarryWaterfall(s.exit_6x_usd, cfg, 1.0);
     return {
@@ -205,7 +205,7 @@ export default function MemoBaselineCard({ cfg, mb, open, onToggle, onJumpTo }) 
               <div className="space-y-2 text-xs">
                 <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
                   <div>
-                    <div className={labelCls}>Anton's entry</div>
+                    <div className={labelCls}>Your entry</div>
                     <div className="text-emerald-400 font-mono text-base">$120M pre-money</div>
                     <div className="text-[10px] text-zinc-500">3.1× ARR — favorable tier</div>
                   </div>
@@ -219,7 +219,7 @@ export default function MemoBaselineCard({ cfg, mb, open, onToggle, onJumpTo }) 
                   </div>
                 </div>
                 <div className="bg-zinc-900 border border-zinc-800 rounded p-2 text-[10px] text-zinc-400">
-                  Tiered by total check size. Anton's $120M tier is logged as a deal-structure observation, not an inconsistency. Built-in margin of safety vs ceiling tier.
+                  Tiered by total check size. The $120M entry tier is logged as a deal-structure observation, not an inconsistency. Built-in margin of safety vs ceiling tier.
                 </div>
               </div>
               {tinyAttr}
@@ -228,15 +228,15 @@ export default function MemoBaselineCard({ cfg, mb, open, onToggle, onJumpTo }) 
           </div>
 
           {/* Exit scenarios — full width */}
-          <MemoTile title="Exit Scenarios — Anton's Net Return" asOf="2027 horizon" wide>
+          <MemoTile title="Exit Scenarios — Your Net Return" asOf="2027 horizon" wide>
             <table className="w-full text-xs">
               <thead>
                 <tr className="text-[10px] uppercase tracking-wider text-zinc-500 border-b border-zinc-800">
                   <th className="text-left py-1.5 font-normal">Tier</th>
                   <th className="text-right py-1.5 font-normal">2027 ARR</th>
                   <th className="text-right py-1.5 font-normal">Exit @ 6×</th>
-                  <th className="text-right py-1.5 font-normal">Anton gross</th>
-                  <th className="text-right py-1.5 font-normal">Anton net</th>
+                  <th className="text-right py-1.5 font-normal">Your gross</th>
+                  <th className="text-right py-1.5 font-normal">Your net</th>
                   <th className="text-right py-1.5 font-normal">Net multiple</th>
                 </tr>
               </thead>
@@ -253,7 +253,7 @@ export default function MemoBaselineCard({ cfg, mb, open, onToggle, onJumpTo }) 
                 ))}
               </tbody>
             </table>
-            <div className="text-[10px] text-zinc-500 mt-2">Computed at 6× exit multiple per memo (base case). Applies 10% carry on excess above 10% hurdle on Anton's gross investment of {fmtUSD(cfg.gross_investment_usd, { cents: true })}. Excludes post-entry dilution.</div>
+            <div className="text-[10px] text-zinc-500 mt-2">Computed at 6× exit multiple per memo (base case). Applies 10% carry on excess above 10% hurdle on the gross investment of {fmtUSD(cfg.gross_investment_usd, { cents: true })}. Excludes post-entry dilution.</div>
             {tinyAttr}
           </MemoTile>
 

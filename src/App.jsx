@@ -42,6 +42,7 @@ import SyndicateCommsView from './components/tracker/SyndicateCommsView.jsx';
 import SettingsView from './components/tracker/SettingsView.jsx';
 import YCombinator from './components/tracker/yc/YCombinator.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
+import optionsJson from './data/options.json';
 
 import {
   severityFromImportance,
@@ -50,6 +51,35 @@ import {
   deriveMetadataChips,
   BriefTileBody,
 } from './components/tracker/news/BriefStack.jsx';
+
+// Personal / contract details (signer, investor entity, syndicate entities,
+// signed PDFs) were taken out of the seed configs. Browsers that cached an
+// older config would keep showing them, so a cached copy that still carries
+// those fields gets them replaced from the seed before it renders.
+function scrubCachedCfg(c, seed) {
+  const sf = c.subscription_form || {};
+  const stale = sf.signed_by || sf.signed_email || sf.applicant?.investor_name
+    || sf.syndicate_legal?.nominee || (c.documents || []).length > 0;
+  if (!stale) return null;
+  return {
+    ...c,
+    syndicate_lead: seed.syndicate_lead,
+    nominee: seed.nominee,
+    documents: seed.documents,
+    subscription_form: seed.subscription_form,
+  };
+}
+
+function scrubCachedSynLog(log, seed) {
+  const known = new Set([...seed.map(x => x.source), ...optionsJson.SYNDICATE_SOURCES]);
+  let changed = false;
+  const next = log.map(x => {
+    if (!x || !x.source || known.has(x.source)) return x;
+    changed = true;
+    return { ...x, source: optionsJson.SYNDICATE_SOURCES[0] };
+  });
+  return changed ? next : null;
+}
 
 const MODE_KEY = 'app:mode';
 const THEME_KEY = 'app:theme';
@@ -241,8 +271,11 @@ export default function App() {
         loadKey(company.memoBaselineKey, null),
         loadKey(k('ui:memo-card-open'), true),
       ]);
-      if (c) setCfg(c);
-      else { setCfg(CFG_FOR_COMPANY); await saveKey(k('config'), CFG_FOR_COMPANY); }
+      if (c) {
+        const clean = scrubCachedCfg(c, CFG_FOR_COMPANY);
+        setCfg(clean || c);
+        if (clean) await saveKey(k('config'), clean);
+      } else { setCfg(CFG_FOR_COMPANY); await saveKey(k('config'), CFG_FOR_COMPANY); }
 
       if (o === null || o === undefined) {
         const initial = applyMemoReconciliation([...SEEDED_OBS_FOR_COMPANY, ...MEMO_OBS_FOR_COMPANY]);
@@ -270,6 +303,8 @@ export default function App() {
         await saveKey(k('syndicate-log'), SYNLOG_FOR_COMPANY);
       } else {
         let next = Array.isArray(sl) ? sl : [];
+        const cleanLog = scrubCachedSynLog(next, SYNLOG_FOR_COMPANY);
+        if (cleanLog) { next = cleanLog; await saveKey(k('syndicate-log'), next); }
         const memoEntryId = SYNLOG_FOR_COMPANY[0]?.id;
         const hasMemoEntry = memoEntryId ? next.some(x => x && x.id === memoEntryId) : true;
         if (!hasMemoEntry) {

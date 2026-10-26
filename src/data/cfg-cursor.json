@@ -3,10 +3,10 @@
   "company_brand_name": "Cursor",
   "position_type": "Secondary",
   "entry_date": "2026-05-04",
-  "gross_investment_usd": 50000.00,
+  "gross_investment_usd": 50000.0,
   "syndicate_lead_fee_pct": 5.5,
-  "syndicate_lead_fee_usd": 2750.00,
-  "net_deployed_usd": 47250.00,
+  "syndicate_lead_fee_usd": 2750.0,
+  "net_deployed_usd": 47250.0,
   "price_per_share_usd": 1131.58,
   "shares_held": 44.187,
   "round_size_usd": 2000000,
@@ -14,8 +14,8 @@
   "security_type": "Common/ordinary shares",
   "pre_money_valuation_usd": 45000000000,
   "implied_economic_interest_pct": 0.0001,
-  "syndicate_lead": "Shoifot Igor / Toloka LLC",
-  "nominee": "TOLOKA SYNDICATE LTD",
+  "syndicate_lead": "Syndicate lead",
+  "nominee": "Nominee SPV",
   "carry_on_exit_pct": 20,
   "hurdle_on_exit_pct": 10,
   "carry_on_distribution_pct": 20,
@@ -26,30 +26,19 @@
   "is_position": true,
   "news_query": "Cursor AI editor Anysphere",
   "news_youtube_api_key": "",
-  "news_reddit_subs": ["cursor", "MachineLearning", "programming", "ChatGPTCoding", "LocalLLaMA"],
-  "documents": [
-    {
-      "name": "Subscription Form (signed)",
-      "type": "subscription-form",
-      "date": "2026-05-04",
-      "signed_by": "Anton Bolshakov",
-      "size_bytes": 2314089,
-      "url": "docs/cursor-subscription-form.pdf",
-      "notes": "Schedule 2 · Anysphere Inc. · $50,000 · 44.187 shares @ $1,131.58 · includes investment receipt"
-    }
+  "news_reddit_subs": [
+    "cursor",
+    "MachineLearning",
+    "programming",
+    "ChatGPTCoding",
+    "LocalLLaMA"
   ],
+  "documents": [],
   "subscription_form": {
-    "document_ref": "DEAL_SUBSCRIPTION_FORM_AMENDED — AB_Fourstars_Holding_ltd (Cursor)",
     "schedule": "Schedule 2 — Subscription Form",
     "signed_date": "2026-05-04",
-    "signed_time": "08:29:39 GMT+0",
-    "signed_by": "Anton Bolshakov",
-    "signed_email": "anton.41060@gmail.com",
     "applicant": {
-      "investor_name": "AB Fourstars Holding ltd",
-      "investor_address": "Tzon Kennety Street, Iris House, Limassol, Cyprus, 3106",
-      "registration_number": "HE391741",
-      "individual_investment_amount_usd": 50000.00
+      "individual_investment_amount_usd": 50000.0
     },
     "deal_terms": {
       "issuer": "Anysphere, Inc",
@@ -65,14 +54,11 @@
       "proxy_appointment": "Syndicate lead(s)"
     },
     "syndicate_legal": {
-      "syndicate_title": "Cursor - Secondaries",
-      "syndicate_lead": "Shoifot Igor, Toloka LLC",
-      "carried_interest_recipient": "Toloka LLC (100%)",
-      "nominee": "TOLOKA SYNDICATE LTD"
+      "syndicate_title": "Cursor - Secondaries"
     },
     "syndicate_fees": {
       "syndicate_lead_fee_pct": 5.5,
-      "syndicate_lead_fee_usd": 2750.00,
+      "syndicate_lead_fee_usd": 2750.0,
       "carried_interest_on_exit_pct": 20,
       "hurdle_on_exit_pct": 10,
       "carried_interest_on_distribution_pct": 20,
@@ -80,11 +66,11 @@
     },
     "investment_receipt": {
       "date": "2026-04-28",
-      "original_received_usd": 52750.00,
+      "original_received_usd": 52750.0,
       "conversion_rate": 1,
       "conversion_fee_usd": 0,
       "total_after_conversion_usd": 0,
-      "total_received_usd": 52750.00
+      "total_received_usd": 52750.0
     }
   }
 }

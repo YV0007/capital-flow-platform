@@ -28,7 +28,7 @@ export default function MemoOverviewPage({ cfg, mb, capEvents, onJumpTo, company
 
   const isPosition = cfg.is_position !== false && cfg.gross_investment_usd > 0;
 
-  // Anton's current position math (only meaningful when isPosition)
+  // Current position math (only meaningful when isPosition)
   const ownership = isPosition ? (cfg.gross_investment_usd / cfg.pre_money_valuation_usd) : 0;
   const points = isPosition ? [
     { date: cfg.entry_date, preMoney: cfg.pre_money_valuation_usd, label: 'Entry', source: 'Subscription form' },

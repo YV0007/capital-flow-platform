@@ -613,7 +613,7 @@ export default function PositionView({ cfg, company, memoBaseline }) {
             <Shield className="w-4 h-4 flex-shrink-0" style={{ color: POS_COLORS.cyan }} />
             <span style={{ fontSize: 10, color: POS_COLORS.dim, textTransform: 'uppercase', letterSpacing: '0.1em', fontFamily: 'ui-monospace,monospace' }}>Held via</span>
             <span style={{ fontSize: 13, color: POS_COLORS.white, fontWeight: 600, fontFamily: 'ui-monospace,monospace' }}>{cfg.nominee}</span>
-            <span style={{ fontSize: 11, color: POS_COLORS.dim, fontFamily: 'ui-monospace,monospace' }}>(Cyprus nominee)</span>
+            <span style={{ fontSize: 11, color: POS_COLORS.dim, fontFamily: 'ui-monospace,monospace' }}>(nominee)</span>
             <Tip text={`Nominee structure: ${cfg.nominee} holds the shares on the issuer's cap table on your behalf. You hold an economic interest via the SPV, but your name does NOT appear on the issuer's official cap table. This means: (1) you have no direct voting rights at the company level; (2) information rights flow through the nominee; (3) any transfer or sale must go through the nominee; (4) in disputes with the issuer, you have indirect standing only.`} />
             <span style={{ flex: 1, minWidth: 0 }}></span>
             <span style={{ fontSize: 11, color: POS_COLORS.dim, fontStyle: 'italic' }}>You don't appear on the issuer's cap table directly</span>
@@ -645,7 +645,7 @@ export default function PositionView({ cfg, company, memoBaseline }) {
                   {100 - carryExitPct}% to you
                 </div>
                 <div style={{ width: `${carryExitPct}%`, background: POS_COLORS.yellow + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: POS_COLORS.yellow, fontFamily: 'ui-monospace,monospace', fontWeight: 600 }}>
-                  {carryExitPct}% Toloka
+                  {carryExitPct}% lead
                 </div>
               </div>
             </div>
@@ -660,7 +660,7 @@ export default function PositionView({ cfg, company, memoBaseline }) {
                   {100 - carryDistPct}% to you
                 </div>
                 <div style={{ width: `${carryDistPct}%`, background: POS_COLORS.red + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: POS_COLORS.red, fontFamily: 'ui-monospace,monospace', fontWeight: 600 }}>
-                  {carryDistPct}% Toloka
+                  {carryDistPct}% lead
                 </div>
               </div>
               {hurdleDistPct === 0 && <div style={{ fontSize: 10, color: POS_COLORS.red, fontFamily: 'ui-monospace,monospace', marginTop: 6, fontStyle: 'italic' }}>⚠ No hurdle means lead takes carry on first dollar.</div>}
@@ -670,7 +670,7 @@ export default function PositionView({ cfg, company, memoBaseline }) {
           <FieldGrid cols={2} items={[
             ['Syndicate title',    sub.syndicate_legal?.syndicate_title],
             ['Syndicate lead(s)',  sub.syndicate_legal?.syndicate_lead || cfg.syndicate_lead],
-            ['Nominee',            `${cfg.nominee} (Cyprus)`],
+            ['Nominee',            cfg.nominee],
             ['Platform',           '— custom SPV —'],
             ['Carry recipient',    sub.syndicate_legal?.carried_interest_recipient],
             ['Total syndicate size', null, { requestable: true, onRequest: () => toggleAsk('cap-table') }],

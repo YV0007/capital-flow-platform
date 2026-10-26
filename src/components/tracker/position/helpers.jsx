@@ -83,7 +83,7 @@ export function FieldGrid({ items, cols = 2 }) {
                   marginTop: 4, padding: '3px 8px', fontSize: 10, fontFamily: 'ui-monospace,monospace',
                   background: 'rgba(255,72,0,0.08)', border: '1px solid rgba(255,72,0,0.3)',
                   color: '#fb923c', borderRadius: 4, cursor: 'pointer',
-                }}>🔍 Request from Toloka</button>
+                }}>🔍 Request from lead</button>
             )}
           </div>
         );

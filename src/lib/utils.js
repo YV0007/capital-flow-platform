@@ -109,7 +109,7 @@ export const _mC = (n) => _o({
   createdAt: MEMO_TS_CURSOR,
   sourceType: 'I',
   sourceTool: 'Toloka Investment Memo — Cursor (Apr 2026)',
-  url: 'PDF on file: Cursor_memo_ua_v1__release_.pdf',
+  url: 'PDF on file',
   confidence: 'high',
   corrobBucket: 'funding',
   ...n,

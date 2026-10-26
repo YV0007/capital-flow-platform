@@ -96,7 +96,7 @@
     "commitment_window": "2 weeks",
     "anton_entry_pre_money_usd": 120000000,
     "anton_entry_arr_multiple": 3.1,
-    "anton_tier_note": "Tiered valuation; Anton entered at $120M tier — favorable vs $200M memo ceiling."
+    "anton_tier_note": "Tiered valuation; Entered at $120M tier — favorable vs $200M memo ceiling."
   },
   "exit_scenarios": [
     { "tier": "Conservative",          "arr_2027_usd": 69000000,  "exit_5x_usd": 343000000,   "exit_6x_usd": 412000000,   "exit_7x_usd": 480000000 },
