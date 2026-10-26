@@ -17,7 +17,8 @@
     "i18n:check": "node scripts/i18n_audit.mjs",
     "i18n:lint": "node scripts/i18n_lint.mjs",
     "holdings:en": "node scripts/holdings_en_status.mjs",
-    "holdings:en:merge": "node scripts/holdings_en_merge.mjs"
+    "holdings:en:merge": "node scripts/holdings_en_merge.mjs",
+    "holdings:trim": "node scripts/trim_news.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.396.0",

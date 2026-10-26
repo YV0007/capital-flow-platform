@@ -4,7 +4,7 @@ description: >
   Refresh the hand-maintained Holdings section — news AND stock prices. Run
   WEEKLY. For each of the 9 holdings in src/data/holdings-v2/, research genuinely
   NEW public news (dated after the holding's newest existing item), grounded in
-  real fetched sources only, append it to news[], bump asOf, and refresh every
+  real fetched sources only, append it to news[], trim news[] to the 4 newest, bump asOf, and refresh every
   priceChart from live quotes via scripts/refresh_prices.mjs. Feeds the full
   Holdings pages and the home-page cards and news feed. Use when: "refresh the
   holdings news", "update the holdings", "update the holdings prices", "the
@@ -102,6 +102,14 @@ files like `_softbank_upgrade.json` are working scraps — ignore them.)
    are 200–400 KB — edit only the `news[` region and the `asOf` line; never read
    or rewrite the whole file.
 
+   **Then cap the feed at the 4 newest items per holding:**
+   ```bash
+   npm run holdings:trim          # = node scripts/trim_news.mjs; --dry-run to preview
+   ```
+   Each holding keeps exactly its 4 most recent items (sorted by date, newest
+   first); everything older is deleted. This is deliberate — the section shows a
+   fresh window, not an archive. Run it every week, after the new items are in.
+
 5. **Prices — always, and by script, never by hand:**
    ```bash
    node scripts/refresh_prices.mjs          # add --dry-run to preview
@@ -154,7 +162,8 @@ files like `_softbank_upgrade.json` are working scraps — ignore them.)
 ## Boundaries
 - Web-grounded only. Every item carries a real, fetched source URL. No invention.
 - Never rewrite existing items or restyle old news — only append new, and bump
-  `asOf`. Preserve everything already in the file.
+  `asOf`. The only deletion is the 4-item cap from `trim_news.mjs`; preserve
+  everything else in the file.
 - If a source can't be confirmed, drop the item. Honest gap > fabricated news.
 - Prices come from `scripts/refresh_prices.mjs` and nowhere else. A price a model
   typed is a fabricated figure like any other, even when it happens to be right.
