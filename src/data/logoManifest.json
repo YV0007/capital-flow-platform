@@ -303,5 +303,8 @@
   "target:Crux AI (Blackstone / Alphabet cloud joint venture)": "/logos/alloc_Blackstone.png",
   "target:Blue Owl Data Center REIT (proposed)": "/logos/alloc_Blue_Owl.png",
   "target:Hugging Face, Inc.": "/logos/huggingface.ico",
-  "target:DigitalBridge Group, Inc.": "/logos/alloc_DigitalBridge.svg"
+  "target:DigitalBridge Group, Inc.": "/logos/alloc_DigitalBridge.svg",
+  "alloc:Saudi PIF (via HUMAIN)": "/logos/alloc_Saudi_PIF.png",
+  "target:Oklo / X-Energy (Project Prometheus / Genesis Mission)": "/logos/target_Prometheus.png",
+  "target:Idaho National Laboratory -- Project Prometheus (partners: NVIDIA, AWS, X-Energy)": "/logos/target_Prometheus.png"
 }
