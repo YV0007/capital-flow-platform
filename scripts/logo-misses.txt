@@ -13,7 +13,10 @@ target:NAVER GAK Sejong AI Factory (South Korea)	NAVER GAK Sejong AI Factory (So
 target:Akita 500MW AI data center (Japan)	Akita 500MW AI data center (Japan)
 target:Akita AI Data Center (Bitgrit/S2)	Akita AI Data Center (Bitgrit/S2)
 target:Akita AI Data Center (Bitgrit / S2 Group, Japan)	Akita AI Data Center (Bitgrit / S2 Group, Japan)
+target:Akita AI data center (developer: BitGrid / S2)	Akita AI data center (developer: BitGrid / S2)
+target:Stack Infrastructure	Stack Infrastructure
 target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbourne (third campus)
+target:HUMAIN data centers (Riyadh)	HUMAIN data centers (Riyadh)
 target:ST Telemedia Global Data Centres (STT GDC)	ST Telemedia Global Data Centres (STT GDC)
 target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
 target:El Paso AI Data Center Venture (with Meta)	El Paso AI Data Center Venture (with Meta)
@@ -30,6 +33,7 @@ target:HUMAIN	HUMAIN
 target:IREN Limited	IREN Limited
 target:NextEra Energy (Duane Arnold Energy Center)	NextEra Energy (Duane Arnold Energy Center)
 target:DOE SPARK grid transmission initiative (31 projects, 26 states)	DOE SPARK grid transmission initiative (31 projects, 26 states)
+target:NextEra Energy (Duane Arnold Energy Center restart)	NextEra Energy (Duane Arnold Energy Center restart)
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
 target:Machine Age Fund	Machine Age Fund
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
@@ -37,12 +41,16 @@ target:Anderon (IBM subsidiary)	Anderon (IBM subsidiary)
 target:Nscale	Nscale
 target:Figure AI	Figure AI
 target:U.S. universities / quantum computing & Genesis Mission research initiatives	U.S. universities / quantum computing & Genesis Mission research initiatives
+target:U.S. scientific research institutions / DOE Genesis Mission	U.S. scientific research institutions / DOE Genesis Mission
 target:Cyera	Cyera
+target:Grand Ming Group Holdings (iTech Tower 3.1 & 3.2, Fanling, Hong Kong -- via subsidiaries Regal Development Ltd & Golden Ford Ltd)	Grand Ming Group Holdings (iTech Tower 3.1 & 3.2, Fanling, Hong Kong -- via subsidiaries Regal Development Ltd & Golden Ford Ltd)
 target:UK agentic AI safety research (Oxford BOLD / UCL SOFAIR / Imperial College)	UK agentic AI safety research (Oxford BOLD / UCL SOFAIR / Imperial College)
+target:UK AI safety research (BOLD at Oxford; SOFAIR at UCL; Imperial College London)	UK AI safety research (BOLD at Oxford; SOFAIR at UCL; Imperial College London)
 target:Autonomous Solutions Inc. (ASI)	Autonomous Solutions Inc. (ASI)
 target:Rigetti Computing	Rigetti Computing
 target:D-Wave Quantum	D-Wave Quantum
 target:Quantinuum	Quantinuum
+target:Digi Power X	Digi Power X
 target:Amazon	Amazon
 target:Flourish	Flourish
 target:PsiQuantum	PsiQuantum
@@ -129,6 +137,7 @@ target:Catalyst	Catalyst
 target:TypeSafe AI	TypeSafe AI
 target:Instinct	Instinct
 target:SharonAI Holdings Inc.	SharonAI Holdings Inc.
+target:Stack Infrastructure (MEL02 campus, Melbourne)	Stack Infrastructure (MEL02 campus, Melbourne)
 target:Doctolib	Doctolib
 target:Pigment	Pigment
 target:Genesis AI	Genesis AI
@@ -137,7 +146,13 @@ target:TBD -- additional European AI companies (unnamed)	TBD -- additional Europ
 target:Applied Compute	Applied Compute
 target:Commonwealth Fusion Systems	Commonwealth Fusion Systems
 target:Arena	Arena
-target:Stack Infrastructure (MEL02 campus, Melbourne)	Stack Infrastructure (MEL02 campus, Melbourne)
+target:Isomorphic Labs	Isomorphic Labs
+target:DayOne (data center operator)	DayOne (data center operator)
+target:Preference Model	Preference Model
+target:doxxnet	doxxnet
+target:Eka Robotics	Eka Robotics
+target:Armadin	Armadin
+target:Conway Research	Conway Research
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
 target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure
 cfius	CFIUS
