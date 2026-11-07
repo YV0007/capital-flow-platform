@@ -1,0 +1,296 @@
+"""Ingest: agent CSVs -> validate -> dedupe -> SQLite.
+
+Reads runs/<week>/<agent>/{verified,candidate}_events.csv + source_log.csv,
+validates each row against the schema, resolves allocator names to ids (deriving
+class from the agent when the CSV omits it), and upserts into the events table.
+The UNIQUE(allocator_id, target, event_type, disclosed_date) constraint is the
+dedupe guard; a duplicate is merged keeping the stronger status and better tier.
+"""
+
+import csv
+import sqlite3
+import sys
+
+from . import db
+
+
+def _num(v):
+    v = (v or "").strip().replace(",", "").replace("$", "")
+    if v == "":
+        return None
+    return float(v)
+
+
+def is_search_url(url: str) -> bool:
+    """A search QUERY is not a citation. EDGAR full-text search (the efts JSON API
+    or the human search UI with a query) returns a noisy result set, not a resolved
+    document — for a common word it surfaces dozens of unrelated filers. Only a
+    specific filing (sec.gov/Archives/edgar/data/<CIK>/<accession>/...) counts."""
+    u = (url or "").lower()
+    if not u:
+        return False
+    return ("efts.sec.gov" in u or "search-index" in u
+            or ("sec.gov/cgi-bin/srqsb" in u)
+            or ("sec.gov/edgar/search" in u and ("?" in u or "#/q" in u or "q=" in u)))
+
+
+# Admiralty-style two-axis confidence (docs/ENHANCEMENT_STRATEGY.md §6).
+# reliability A–E from source tier; credibility 1–5 from the agent's status
+# (a corroboration proxy until C4 has agents supply it directly).
+# Non-canonical sector slugs seen from agents → canonical taxonomy.
+SECTOR_ALIASES = {
+    "ai-data-platform": "ai-data",
+    "ai-services-rollup": "ai-applications",
+    "ai-diversified": "ai-applications",
+    "ai-app": "ai-applications",
+    # 'gaming' was retired from the taxonomy (replaced by 'cybersecurity'); the one
+    # deal there (EA take-private) is really a PE buyout → diversified-pe.
+    "gaming": "diversified-pe",
+}
+
+_RELIABILITY = {1: "A", 2: "B", 3: "C", 4: "D", 5: "E"}
+_REL_WEIGHT = {"A": 100, "B": 80, "C": 60, "D": 40, "E": 20}
+_CRED_WEIGHT = {1: 100, 2: 85, 3: 65, 4: 40, 5: 20}
+
+
+def _grade(tier: int, status: str):
+    """Return (reliability_letter, credibility_1_5, confidence_score_0_100)."""
+    reliability = _RELIABILITY.get(tier, "E")
+    credibility = {"verified": 2, "verified_alpha": 3, "candidate": 4}.get(status, 4)
+    if status == "verified" and tier == 1:
+        credibility = 1                      # primary-confirmed
+    elif status == "candidate" and tier == 5:
+        credibility = 5                      # bare rumor
+    score = round(0.5 * _REL_WEIGHT[reliability] + 0.5 * _CRED_WEIGHT[credibility])
+    return reliability, credibility, score
+
+
+def _norm_subsector(v, aliases):
+    """Fold a free-text subsector into its canonical bucket (config subsector_aliases).
+    Normalizes to lower/hyphen first; passthrough if unknown."""
+    s = (v or "").strip().lower().replace(" ", "-")
+    if not s:
+        return None
+    return (aliases or {}).get(s, s)
+
+
+def _validate(row: dict, agent: str, sectors: set, themes: set = None,
+              theme_defaults: dict = None, subsector_aliases: dict = None):
+    """Return (clean|None, class|None, errors, warnings)."""
+    errors, warnings = [], []
+    disclosed = (row.get("disclosed_date") or "").strip()
+    allocator = (row.get("allocator") or "").strip()
+    target = (row.get("target") or "").strip()
+    sector = (row.get("sector") or "").strip()
+    etype = (row.get("event_type") or "").strip()
+    tier_raw = (row.get("source_tier") or "").strip()
+
+    for field, val in [("disclosed_date", disclosed), ("allocator", allocator),
+                       ("target", target), ("sector", sector), ("event_type", etype)]:
+        if not val:
+            errors.append(f"missing {field}")
+    if etype and etype not in db.EVENT_TYPES:
+        errors.append(f"bad event_type '{etype}'")
+    try:
+        tier = int(tier_raw)
+        if not 1 <= tier <= 5:
+            errors.append(f"source_tier {tier} out of range")
+    except ValueError:
+        errors.append(f"bad source_tier '{tier_raw}'")
+        tier = None
+
+    status = (row.get("status") or "candidate").strip() or "candidate"
+    if status not in db.STATUSES:
+        errors.append(f"bad status '{status}'")
+    ttype = (row.get("target_type") or "").strip() or None
+    if ttype and ttype not in db.TARGET_TYPES:
+        errors.append(f"bad target_type '{ttype}'")
+
+    try:
+        amount = _num(row.get("amount_usd"))
+    except ValueError:
+        errors.append(f"bad amount_usd '{row.get('amount_usd')}'")
+        amount = None
+
+    cls = (row.get("allocator_class") or "").strip() or db.AGENT_CLASS.get(agent)
+    if not cls:
+        errors.append(f"no allocator_class (agent '{agent}' can't derive one)")
+    elif cls not in db.CLASSES:
+        errors.append(f"bad allocator_class '{cls}'")
+
+    # Fold known non-canonical sector slugs agents have produced into the taxonomy.
+    sector = SECTOR_ALIASES.get(sector, sector)
+    if sectors and sector and sector not in sectors:
+        warnings.append(f"sector '{sector}' not in canonical taxonomy")
+
+    if errors:
+        return None, None, errors, warnings
+
+    # A search-query URL is not a citation — strip it so it can never ship as
+    # source_url. The row keeps its notes; a verified/verified_alpha row then has
+    # no source and the audit's E1 forces it to be re-sourced.
+    src = (row.get("source_url") or "").strip() or None
+    if src and is_search_url(src):
+        warnings.append("source_url is an EDGAR search query, not a filing citation "
+                        "— dropped")
+        src = None
+
+    clean = {
+        "event_date": (row.get("event_date") or "").strip() or None,
+        "disclosed_date": disclosed,
+        "target": target, "target_type": ttype, "sector": sector,
+        "subsector": _norm_subsector(row.get("subsector"), subsector_aliases),
+        "event_type": etype, "amount_usd": amount,
+        "amount_estimated": 1 if (row.get("amount_estimated") or "").strip() in ("1", "true", "yes") else 0,
+        "status": status, "source_tier": tier,
+        "source_url": src,
+        "notes": (row.get("notes") or "").strip() or None,
+        "origin_id": (row.get("origin_id") or "").strip() or None,
+        "allocator": allocator,
+    }
+    # Theme (WS5): agent-supplied if canonical, else defaulted from sector.
+    theme = (row.get("theme") or "").strip() or None
+    if theme and themes and theme not in themes:
+        warnings.append(f"theme '{theme}' not canonical")
+        theme = None
+    clean["theme"] = theme or (theme_defaults or {}).get(sector)
+    # Structured deal detail (C3) — optional; agents fill what the source supports.
+    for f in ("capital_role", "instrument", "stage", "co_investors"):
+        clean[f] = (row.get(f) or "").strip() or None
+    for f in ("round_total_usd", "ownership_pct", "valuation_usd"):
+        try:
+            clean[f] = _num(row.get(f))
+        except ValueError:
+            clean[f] = None
+    reliability, credibility, score = _grade(tier, status)
+    clean["source_reliability"] = reliability
+    clean["info_credibility"] = credibility
+    clean["confidence_score"] = score
+    return clean, cls, [], warnings
+
+
+def _upsert_event(con, e: dict, allocator_id: int, week: str, agent: str):
+    """Insert; on dedupe conflict keep the stronger status / better (lower) tier.
+    Returns 'inserted' | 'updated' | 'unchanged'."""
+    try:
+        con.execute(
+            """INSERT INTO events (event_date, disclosed_date, allocator_id, target,
+                 target_type, sector, subsector, theme, event_type, amount_usd,
+                 amount_estimated, status, source_tier, source_url, source_reliability,
+                 info_credibility, confidence_score, origin_id, capital_role, instrument,
+                 stage, round_total_usd, ownership_pct, valuation_usd, co_investors,
+                 run_week, agent, notes)
+               VALUES (:event_date,:disclosed_date,:aid,:target,:target_type,:sector,
+                 :subsector,:theme,:event_type,:amount_usd,:amount_estimated,:status,
+                 :source_tier,:source_url,:source_reliability,:info_credibility,
+                 :confidence_score,:origin_id,:capital_role,:instrument,:stage,
+                 :round_total_usd,:ownership_pct,:valuation_usd,:co_investors,
+                 :week,:agent,:notes)""",
+            {**e, "aid": allocator_id, "week": week, "agent": agent},
+        )
+        return "inserted"
+    except sqlite3.IntegrityError:
+        cur = con.execute(
+            """SELECT id, status, source_tier FROM events
+               WHERE allocator_id=? AND target=? AND event_type=? AND disclosed_date=?""",
+            (allocator_id, e["target"], e["event_type"], e["disclosed_date"]),
+        ).fetchone()
+        better_status = db.STATUS_RANK[e["status"]] > db.STATUS_RANK[cur["status"]]
+        better_tier = e["source_tier"] < cur["source_tier"]
+        if better_status or better_tier:
+            merged_status = e["status"] if better_status else cur["status"]
+            merged_tier = min(e["source_tier"], cur["source_tier"])
+            reliability, credibility, score = _grade(merged_tier, merged_status)
+            con.execute(
+                """UPDATE events SET
+                     status = ?, source_tier = ?,
+                     source_reliability = ?, info_credibility = ?, confidence_score = ?,
+                     amount_usd = COALESCE(amount_usd, ?),
+                     source_url = COALESCE(source_url, ?)
+                   WHERE id = ?""",
+                (merged_status, merged_tier, reliability, credibility, score,
+                 e["amount_usd"], e["source_url"], cur["id"]),
+            )
+            return "updated"
+        return "unchanged"
+
+
+def _ingest_discovered(con, week: str, agent: str, path):
+    """Load an agent's discovered_allocators.csv into universe_candidates."""
+    with path.open(newline="") as f:
+        for row in csv.DictReader(f):
+            name = (row.get("name") or "").strip()
+            if not name:
+                continue
+            con.execute(
+                """INSERT OR IGNORE INTO universe_candidates
+                     (name, suggested_class, seen_with, rationale, run_week, agent)
+                   VALUES (?,?,?,?,?,?)""",
+                (name, (row.get("suggested_class") or "").strip() or None,
+                 (row.get("seen_with") or "").strip() or None,
+                 (row.get("rationale") or "").strip() or None, week, agent))
+
+
+def _ingest_source_log(con, week: str, agent: str, path):
+    with path.open(newline="") as f:
+        for row in csv.DictReader(f):
+            con.execute(
+                """INSERT INTO source_log (run_week, agent, source_url, source_tier, yielded)
+                   VALUES (?,?,?,?,?)""",
+                (week, agent, (row.get("source_url") or row.get("url") or "").strip(),
+                 int(row["source_tier"]) if (row.get("source_tier") or "").strip().isdigit() else None,
+                 1 if (row.get("yielded") or "").strip() in ("1", "true", "yes") else 0),
+            )
+
+
+def ingest_week(week: str) -> dict:
+    """Load all agent outputs for a run week (e.g. '2026-W32'). Returns a summary."""
+    con = db.connect()
+    cfg = db.load_config()
+    db.sync_allocators(con, cfg)
+
+    week_dir = db.RUNS_DIR / week
+    stats = {"inserted": 0, "updated": 0, "unchanged": 0, "skipped": 0, "warnings": 0}
+    problems = []
+    if not week_dir.is_dir():
+        raise FileNotFoundError(f"no run directory: {week_dir}")
+
+    for agent_dir in sorted(p for p in week_dir.iterdir() if p.is_dir()):
+        agent = agent_dir.name
+        for fname in ("verified_events.csv", "candidate_events.csv"):
+            fpath = agent_dir / fname
+            if not fpath.exists():
+                continue
+            with fpath.open(newline="") as f:
+                for i, row in enumerate(csv.DictReader(f), start=2):
+                    clean, cls, errs, warns = _validate(
+                        row, agent, cfg["sectors"], cfg.get("themes"),
+                        cfg.get("theme_defaults"), cfg.get("subsector_aliases"))
+                    stats["warnings"] += len(warns)
+                    for w in warns:
+                        problems.append(f"{agent}/{fname}:{i} WARN {w}")
+                    if errs:
+                        stats["skipped"] += 1
+                        problems.append(f"{agent}/{fname}:{i} SKIP {'; '.join(errs)}")
+                        continue
+                    aid = db.get_or_create_allocator(con, clean.pop("allocator"), cls)
+                    stats[_upsert_event(con, clean, aid, week, agent)] += 1
+        slog = agent_dir / "source_log.csv"
+        if slog.exists():
+            _ingest_source_log(con, week, agent, slog)
+        disc = agent_dir / "discovered_allocators.csv"
+        if disc.exists():
+            _ingest_discovered(con, week, agent, disc)
+
+    con.commit()
+    con.close()
+    stats["problems"] = problems
+    return stats
+
+
+if __name__ == "__main__":
+    s = ingest_week(sys.argv[1])
+    print(f"ingest {sys.argv[1]}: +{s['inserted']} new, {s['updated']} updated, "
+          f"{s['unchanged']} unchanged, {s['skipped']} skipped, {s['warnings']} warnings")
+    for p in s["problems"]:
+        print("  ", p)

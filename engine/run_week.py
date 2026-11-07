@@ -1,0 +1,96 @@
+"""Weekly orchestrator.
+
+Usage: python run_week.py [YYYY-Www]   (defaults to the current ISO week)
+
+Pipeline: research agents (Claude Code, write into runs/<week>/) -> ingest ->
+themes -> beneficiaries -> report -> handoff.
+
+The agent stage is launched via Claude Code (agents/*.md briefs); the rest is
+deterministic Python. Scheduling (build step 3) will wrap this script.
+"""
+
+import sys
+from datetime import date
+
+from engine import (audit, beneficiaries, classify, db, deliver, handoff, holdings,
+                    ingest, profiles, references, report, themes, trends)
+
+
+def current_week() -> str:
+    y, w, _ = date.today().isocalendar()
+    return f"{y}-W{w:02d}"
+
+
+def main(week: str, do_deliver: bool = False, do_push: bool = False,
+         do_sweep: bool = False, do_logos: bool = True) -> None:
+    # Agent research stage runs before this script (or will be invoked here later).
+    print(f"== Capital Flow pipeline: {week} ==")
+    if do_sweep:  # network call — opt-in so offline runs stay deterministic
+        from engine import edgar
+        sw = edgar.sweep(week)
+        print(f"[edgar]   {sw['entities']} entities swept, {sw['leads_new']} new leads, "
+              f"{sw['errors']} errors")
+    s = ingest.ingest_week(week)
+    print(f"[ingest]  +{s['inserted']} new, {s['updated']} updated, "
+          f"{s['skipped']} skipped, {s['warnings']} warnings")
+    for p in s["problems"]:
+        print("          ", p)
+    # Persist row-level rejects so the next run can feed them back to the agents as
+    # "don't repeat these" (tools/make_research_batches.py, lever 3). Printed-only
+    # problems were invisible to the agent that caused them.
+    if s["problems"]:
+        (db.RUNS_DIR / week).mkdir(parents=True, exist_ok=True)
+        (db.RUNS_DIR / week / "ingest_problems.txt").write_text(
+            "\n".join(s["problems"]) + "\n")
+    b = beneficiaries.run(week)
+    print(f"[benefic] {b['linked']} linked, {b['unmatched']} unmatched")
+    p = profiles.ingest_week(week)  # allocator intelligence (§5), when batches exist
+    print(f"[profile] {p['profiles']} profiles, {p['track_rows']} track-record rows, "
+          f"{p['skipped']} skipped")
+    for w in p.get("warnings", []):
+        print("          WARN", w)
+    r = references.ingest_week(week)  # target "what this is" cards (engine-owned)
+    print(f"[refs]    {r['references']} target references, {r['skipped']} skipped")
+    for w in r.get("warnings", []):
+        print("          WARN", w)
+    hd = holdings.ingest_week(week)  # fund/firm portfolio holdings (the layer below LP flows)
+    print(f"[holding] {hd['entities']} portfolios, {hd['holdings']} holdings, "
+          f"{hd['skipped']} skipped")
+    for w in hd.get("warnings", []):
+        print("          WARN", w)
+    cl = classify.ingest_week(week)  # dated backers + per-target deep classification
+    print(f"[classfy] {cl['backers']} backer edges, {cl['targets']} classified "
+          f"targets, {cl['skipped']} skipped")
+    for w in cl.get("warnings", []):
+        print("          WARN", w)
+    tn = trends.ingest_week(week)  # Stage-A trend narratives (when batches exist)
+    print(f"[trends]  {tn['narratives']} narratives, {tn['skipped']} skipped")
+    t = themes.run(week)  # after beneficiaries so beneficiary_concentration can see them
+    print(f"[themes]  {len(t['fired'])} fired: {'; '.join(t['fired']) or '—'}")
+    rp = report.run(week)
+    print(f"[report]  {rp}")
+    v = audit.run(week)  # §6: periodic verification pass, gates delivery
+    print(f"[audit]   {'PASS' if v['passed'] else 'FAIL'} — {len(v['errors'])} errors, "
+          f"{len(v['warnings'])} warnings -> runs/{week}/audit_report.md")
+    for e in v["errors"]:
+        print("          ERR", e)
+    h = handoff.run(week, audit_verdict=v)
+    print(f"[handoff] {h['nodes']} nodes, {h['flows']} flows -> handoff/capital_map.json")
+    if (do_deliver or do_push) and not v["passed"]:
+        print("[deliver] BLOCKED: audit failed — fix errors and re-run")
+        sys.exit(1)
+    if do_deliver or do_push:
+        # deliver also refreshes dashboard logos for this cycle's new entities
+        # (network call, best-effort — see engine/deliver.py).
+        d = deliver.run(week, push=do_push, refresh_logos_first=do_logos)
+        print(f"[deliver] {d}")
+
+
+if __name__ == "__main__":
+    # Usage: python run_week.py [week] [--deliver] [--push] [--sweep] [--no-logos]
+    # --deliver copies capitalMap.json into ab-investment; --push also commits + pushes to main.
+    # --no-logos skips the dashboard logo refresh (offline / data-only runs).
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    week = args[0] if args else current_week()
+    main(week, do_deliver="--deliver" in sys.argv, do_push="--push" in sys.argv,
+         do_sweep="--sweep" in sys.argv, do_logos="--no-logos" not in sys.argv)

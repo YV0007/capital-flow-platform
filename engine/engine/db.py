@@ -1,0 +1,396 @@
+"""Shared DB + config helpers for the engine.
+
+Paths are repo-relative but overridable via env for testing:
+  CAPITAL_DB    -> path to the SQLite file (default db/capital.db)
+"""
+
+import os
+import sqlite3
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parent.parent
+DB_PATH = Path(os.environ.get("CAPITAL_DB", ROOT / "db" / "capital.db"))
+SCHEMA_PATH = ROOT / "db" / "schema.sql"
+# The monthly ecosystem pipeline lives in the SAME database file — entity identity
+# is shared (NVIDIA must be one NVIDIA on every map). Its tables are all nveco_*.
+# The v1 eco_* tables stay in the file as history; their schema now lives in
+# archive/ecosystem-v1/ and is no longer applied on connect.
+ECO_SCHEMA_PATH = ROOT / "db" / "schema_nveco.sql"
+CONFIG_DIR = ROOT / "config"
+RUNS_DIR = ROOT / "runs"
+HANDOFF_DIR = ROOT / "handoff"
+
+# CSV interchange contract (see agents/_TEMPLATE.md). allocator_class is optional.
+EVENT_COLUMNS = [
+    "event_date", "disclosed_date", "allocator", "allocator_class", "target",
+    "target_type", "sector", "subsector", "event_type", "amount_usd",
+    "amount_estimated", "status", "source_tier", "source_url", "origin_id", "theme",
+    # C3 structured detail (optional — fill what the source supports)
+    "capital_role", "instrument", "stage", "round_total_usd", "ownership_pct",
+    "valuation_usd", "co_investors", "notes",
+]
+
+EVENT_TYPES = {
+    "equity", "funding_round", "follow_on", "acquisition", "minority_stake",
+    "fund_launch", "spv", "grant", "project_finance", "corporate_investment",
+    "sovereign_investment",
+}
+TARGET_TYPES = {"private", "public", "fund", "project", "asset"}
+STATUSES = {"candidate", "verified", "verified_alpha"}
+STATUS_RANK = {"candidate": 0, "verified_alpha": 1, "verified": 2}
+CLASSES = {"corporate", "vc", "individual", "alt_manager", "sovereign"}
+
+# runs/<week>/<agent>/ dir name -> allocator class. filings has no fixed class.
+AGENT_CLASS = {
+    "corporate": "corporate", "vc": "vc", "individuals": "individual",
+    "alt-managers": "alt_manager", "alt_managers": "alt_manager",
+    "sovereigns": "sovereign", "filings": None,
+}
+
+
+def connect() -> sqlite3.Connection:
+    """Open the master DB, applying the schema if the file is new."""
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    con = sqlite3.connect(DB_PATH)
+    con.row_factory = sqlite3.Row
+    con.executescript(SCHEMA_PATH.read_text())
+    if ECO_SCHEMA_PATH.exists():
+        con.executescript(ECO_SCHEMA_PATH.read_text())
+    _migrate(con)
+    return con
+
+
+def _migrate(con: sqlite3.Connection) -> None:
+    """Add columns to existing tables that CREATE TABLE IF NOT EXISTS can't (the
+    file predates them). Idempotent — only adds what's missing."""
+    uc = {r[1] for r in con.execute("PRAGMA table_info(universe_candidates)")}
+    if "status" not in uc:
+        con.execute("ALTER TABLE universe_candidates ADD COLUMN status TEXT "
+                    "NOT NULL DEFAULT 'new'")
+    if "decided_at" not in uc:
+        con.execute("ALTER TABLE universe_candidates ADD COLUMN decided_at TEXT")
+    # Structured entity anchor on signals (target:/ticker:/alloc:) so a signal can
+    # be pinned to a company node, not just a sector zone.
+    th = {r[1] for r in con.execute("PRAGMA table_info(themes)")}
+    if "entity_id" not in th:
+        con.execute("ALTER TABLE themes ADD COLUMN entity_id TEXT")
+    # Who wrote this row. Without it the ingest cannot tell "the agent looked and
+    # dropped this" from "the agent did not run this month" — and so can never
+    # retire anything safely. See RUNBOOK, «молчание — не свидетельство».
+    for tbl in ("nveco_entity", "nveco_edge", "nvnet_entity", "nvnet_edge"):
+        cols = {r[1] for r in con.execute(f"PRAGMA table_info({tbl})")}
+        if cols and "owner_agent" not in cols:
+            con.execute(f"ALTER TABLE {tbl} ADD COLUMN owner_agent TEXT")
+    # Официальный домен сущности — заполняется только проверенный, см. схему.
+    ecols = {r[1] for r in con.execute("PRAGMA table_info(nveco_entity)")}
+    if ecols and "domain" not in ecols:
+        con.execute("ALTER TABLE nveco_entity ADD COLUMN domain TEXT")
+    _widen_entity_type(con)
+    _migrate_nveco_v4(con)
+    con.commit()
+
+
+# ── миграция контракта v4 ────────────────────────────────────────────────────
+# Четыре правки формы, которые CREATE TABLE IF NOT EXISTS сделать не может: снятие
+# колонки, два расширенных CHECK, две новые колонки и переименование колонки прогона.
+# Каждая идемпотентна и молчит, если уже применена, — connect() зовёт их на каждом
+# открытии базы.
+#
+# Почему не «снести и перезалить из CSV». Потому что first_seen тогда переставится на
+# текущий месяц у всех 107 сущностей, и карта потеряет собственную историю ради правки
+# схемы. Это ровно тот тихий обвал данных, который конвейер обязан отказываться делать.
+_V4_STEPS = (
+    # (таблица, признак «уже мигрировано» в её DDL)
+    ("nveco_entity_factor", "'concentration'"),
+    ("nvnet_entity_factor", "'concentration'"),
+    ("nveco_edge", "'bilateral'"),
+    ("nvnet_edge", "'bilateral'"),
+    ("nveco_source", "self_of"),
+    ("nveco_cycle", "scope_id"),
+    ("nveco_run", "scope_id"),
+)
+
+
+def _ddl(con, table):
+    r = con.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name=?",
+                    (table,)).fetchone()
+    return (r[0] if r else "") or ""
+
+
+def _table_ddl_from_schema(table: str) -> str:
+    # Достать один CREATE TABLE из файла схемы. Блок кончается на строке ');':
+    # первое ');' внутри текста лежит внутри CHECK (... IN (...)), поэтому ищется
+    # именно перевод строки перед скобкой.
+    for path in (ECO_SCHEMA_PATH, ROOT / "db" / "schema_nvnet.sql"):
+        if not path.exists():
+            continue
+        ddl = path.read_text()
+        marker = f"CREATE TABLE IF NOT EXISTS {table} ("
+        if marker not in ddl:
+            continue
+        start = ddl.index(marker)
+        return ddl[start:ddl.index("\n);", start) + 3]
+    raise KeyError(f"нет CREATE TABLE для {table} ни в одном файле схемы")
+
+
+def _migrate_nveco_v4(con: sqlite3.Connection) -> None:
+    # Перестроить таблицы карты под контракт v4, сохранив строки.
+    #
+    # Что переносится и что НЕТ:
+    #   * строки фактора strategic_control НЕ переносятся. Фактор измерял рычаг
+    #     центра карты над узлом; concentration измеряет долю собственной функции.
+    #     Механически одно в другое не переводится, и перелить старое число под
+    #     новым именем значило бы соврать дважды — цифрой и её обоснованием.
+    #   * hops снимается колонкой: понятия «расстояние от центра» больше нет.
+    #   * колонка прогона и контура, хранившая id центра, становится scope_id.
+    # Всё остальное переезжает как есть.
+    if not _ddl(con, "nveco_entity"):
+        return                                            # карты в этой базе нет
+    if "hops" in {r[1] for r in con.execute("PRAGMA table_info(nveco_entity)")}:
+        con.commit()
+        con.execute("ALTER TABLE nveco_entity DROP COLUMN hops")
+        con.commit()
+    for table, marker in _V4_STEPS:
+        ddl = _ddl(con, table)
+        if not ddl or marker in ddl:
+            continue
+        con.commit()
+        con.execute("PRAGMA foreign_keys=OFF")
+        con.execute("PRAGMA legacy_alter_table=ON")
+        con.execute(f"ALTER TABLE {table} RENAME TO {table}_v3old")
+        con.execute("PRAGMA legacy_alter_table=OFF")
+        con.execute(_table_ddl_from_schema(table))
+        old = [r[1] for r in con.execute(f"PRAGMA table_info({table}_v3old)")]
+        new = [r[1] for r in con.execute(f"PRAGMA table_info({table})")]
+        # Переименование колонки распознаётся ПО ФОРМЕ, а не по списку известных пар:
+        # ровно одна колонка исчезла и ровно одна появилась — значит это она и есть,
+        # и данные переезжают. Два и больше расхождений — это уже не переименование,
+        # и тогда переносится только пересечение, без догадок. Так миграция не знает
+        # ни одного имени наизусть и переживёт следующую такую правку без строчки
+        # кода, а грепу по репозиторию не за что зацепиться.
+        gone = [c for c in old if c not in set(new)]
+        came = [c for c in new if c not in set(old)]
+        renamed = dict(zip(gone, came)) if len(gone) == len(came) == 1 else {}
+        src = [c for c in old if c in set(new) or c in renamed]
+        dst = [renamed.get(c, c) for c in src]
+        where = " WHERE factor <> 'strategic_control'" if table.endswith("_entity_factor") else ""
+        con.execute(f"INSERT OR REPLACE INTO {table} ({', '.join(dst)}) "
+                    f"SELECT {', '.join(src)} FROM {table}_v3old{where}")
+        con.execute(f"DROP TABLE {table}_v3old")
+        con.commit()
+
+
+def _widen_entity_type(con: sqlite3.Connection) -> None:
+    """Let nveco_entity.type hold 'technology' and 'regulation'.
+
+    SQLite cannot ALTER a CHECK constraint, so the table is rebuilt: rename,
+    recreate from the schema file, copy the rows across, drop the old one. Rows
+    and their first_seen history survive — dropping and re-ingesting from the
+    CSVs would silently reset first_seen to the current month, which is exactly
+    the kind of quiet data loss this pipeline is supposed to refuse.
+
+    RESUMABLE. The steps are separate statements, so a crash between them leaves
+    the rows in nveco_entity_old. Any later connect detects that table and
+    finishes the job instead of losing 106 rows to a half-run migration.
+
+    `PRAGMA foreign_keys` is a NO-OP inside a transaction, and sqlite3 opens one
+    implicitly on the first write — hence the commit before it. Without that the
+    final DROP fails on the child tables (entity_layer, entity_factor,
+    entity_risk) and the copy rolls back.
+    """
+    have = {r[0] for r in con.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' "
+        "AND name IN ('nveco_entity','nveco_entity_old')")}
+    if "nveco_entity_old" not in have:
+        if "nveco_entity" not in have:
+            return                                        # таблицы нет вовсе
+        sql = con.execute("SELECT sql FROM sqlite_master WHERE type='table' "
+                          "AND name='nveco_entity'").fetchone()[0] or ""
+        if "'technology'" in sql:
+            return                                        # уже расширена
+        con.commit()
+        con.execute("PRAGMA foreign_keys=OFF")
+        # legacy_alter_table=ON is LOAD-BEARING. Since SQLite 3.25 a RENAME also
+        # rewrites every OTHER table's REFERENCES clause to follow the new name —
+        # so renaming nveco_entity away repoints five child tables at
+        # nveco_entity_old, and dropping it at the end leaves them referencing a
+        # table that no longer exists. The next write then dies with
+        # "no such table: main.nveco_entity_old". Legacy mode leaves the
+        # references pointing at the name we are about to recreate.
+        con.execute("PRAGMA legacy_alter_table=ON")
+        con.execute("ALTER TABLE nveco_entity RENAME TO nveco_entity_old")
+        con.execute("PRAGMA legacy_alter_table=OFF")
+        con.commit()
+    else:
+        con.commit()
+        con.execute("PRAGMA foreign_keys=OFF")
+
+    # Блок ИМЕННО nveco_entity: закрывающая скобка — та, что в начале строки.
+    # Первое ');' в тексте лежит внутри CHECK (type IN (...)).
+    ddl = ECO_SCHEMA_PATH.read_text()
+    start = ddl.index("CREATE TABLE IF NOT EXISTS nveco_entity (")
+    con.execute(ddl[start:ddl.index("\n);", start) + 3])
+
+    old_cols = [r[1] for r in con.execute("PRAGMA table_info(nveco_entity_old)")]
+    new_cols = {r[1] for r in con.execute("PRAGMA table_info(nveco_entity)")}
+    keep = ",".join(c for c in old_cols if c in new_cols)
+    con.execute(f"INSERT OR REPLACE INTO nveco_entity ({keep}) "
+                f"SELECT {keep} FROM nveco_entity_old")
+    con.execute("DROP TABLE nveco_entity_old")
+    con.commit()
+    con.execute("PRAGMA foreign_keys=ON")
+    con.executescript(ddl)          # индексы ушли с таблицей — вернуть
+
+
+def load_config() -> dict:
+    """Load the three config YAMLs into one dict."""
+    def _load(name):
+        p = CONFIG_DIR / name
+        return yaml.safe_load(p.read_text()) or {} if p.exists() else {}
+    rules = _load("rules.yaml")
+    return {
+        "allocators": _load("allocators.yaml"),
+        "sources": _load("sources.yaml"),
+        "rules": rules.get("rules", []),
+        "sectors": set(rules.get("sectors") or []),
+        "themes": set(rules.get("themes") or []),
+        "theme_defaults": rules.get("theme_defaults") or {},
+        "subsectors": rules.get("subsectors") or {},
+        "subsector_aliases": rules.get("subsector_aliases") or {},
+    }
+
+
+def _normalize(name: str) -> str:
+    return " ".join((name or "").lower().split())
+
+
+_ALIAS_CACHE = None
+
+
+def load_aliases() -> dict:
+    """{normalized_alias: canonical_name} from config/aliases.yaml (cached)."""
+    global _ALIAS_CACHE
+    if _ALIAS_CACHE is not None:
+        return _ALIAS_CACHE
+    p = CONFIG_DIR / "aliases.yaml"
+    out = {}
+    if p.exists():
+        for canonical, aliases in (yaml.safe_load(p.read_text()) or {}).items():
+            for a in (aliases or []):
+                out[_normalize(a)] = canonical
+            out[_normalize(canonical)] = canonical  # canonical maps to itself
+    _ALIAS_CACHE = out
+    return out
+
+
+def resolve_name(name: str) -> str:
+    """Route an alias to its canonical allocator name; passthrough if unknown."""
+    return load_aliases().get(_normalize(name), name)
+
+
+def load_promoted() -> list:
+    """config/promoted.yaml → [{name, class, tier, country, promoted_on}] (the
+    candidates the user accepted in the weekly review)."""
+    p = CONFIG_DIR / "promoted.yaml"
+    if not p.exists():
+        return []
+    return (yaml.safe_load(p.read_text()) or {}).get("promoted") or []
+
+
+def load_external_ids() -> dict:
+    """config/external_ids.yaml → {allocator_name: {cik, ticker}} (SEC-resolved by
+    tools/enrich_ids.py). Committed so a DB rebuild restores CIKs offline — without
+    this the EDGAR tool loses its deterministic pull-by-CIK path after every rebuild."""
+    p = CONFIG_DIR / "external_ids.yaml"
+    if not p.exists():
+        return {}
+    return (yaml.safe_load(p.read_text()) or {}).get("external_ids") or {}
+
+
+def load_networks() -> dict:
+    """Load config/networks.yaml → {members: [...], rules: [...]}."""
+    p = CONFIG_DIR / "networks.yaml"
+    if not p.exists():
+        return {"members": [], "rules": []}
+    d = yaml.safe_load(p.read_text()) or {}
+    return {"members": d.get("members") or [], "rules": d.get("network_signal_rules") or []}
+
+
+def _upsert_allocator(con, name, cls, tier, country, network):
+    con.execute(
+        """INSERT INTO allocators (name, class, tier, country, network) VALUES (?,?,?,?,?)
+           ON CONFLICT(name) DO UPDATE SET
+             class=excluded.class, tier=excluded.tier, country=excluded.country,
+             network=COALESCE(excluded.network, allocators.network)""",
+        (name, cls, tier, country, network),
+    )
+
+
+def sync_allocators(con: sqlite3.Connection, cfg: dict) -> None:
+    """Upsert the config watchlist into the allocators table (name is the key).
+    allocators.yaml first, then networks.yaml members (which enrich individuals
+    with a network tag and win on tier)."""
+    key_map = {"corporate": "corporate", "vc": "vc", "individuals": "individual",
+               "alt_managers": "alt_manager", "sovereigns": "sovereign"}
+    allocs = cfg.get("allocators") or {}
+    for cfg_class, rows in allocs.items():
+        cls = key_map.get(cfg_class)
+        if not cls or not rows:
+            continue
+        for r in rows:
+            _upsert_allocator(con, r["name"], cls, r.get("tier", "watch"),
+                              r.get("country"), None)
+    members = load_networks()["members"]
+    for m in members:
+        _upsert_allocator(con, m["name"], "individual", m.get("tier", "watch"),
+                          m.get("country"), m.get("network"))
+    # Promoted candidates (accepted in the weekly Monday review). Tracked from the
+    # next run, exactly like a seed-watchlist name — never auto-promoted.
+    for r in (load_promoted() or []):
+        if r.get("class") in CLASSES:
+            _upsert_allocator(con, r["name"], r["class"], r.get("tier", "watch"),
+                              r.get("country"), None)
+    # Restore SEC-resolved external ids (CIK/ticker) offline, so a rebuilt DB keeps
+    # the EDGAR tool's deterministic pull-by-CIK path.
+    for ename, ids in load_external_ids().items():
+        row = con.execute("SELECT id FROM allocators WHERE name = ?", (ename,)).fetchone()
+        if not row:
+            continue
+        for kind in ("cik", "ticker"):
+            if ids.get(kind):
+                con.execute(
+                    """INSERT OR IGNORE INTO entity_external_ids (allocator_id, kind, value)
+                       VALUES (?,?,?)""", (row["id"], kind, str(ids[kind])))
+    # Persist aliases (for inspection/audit) and seed principal -> vehicle links.
+    for norm_alias, canonical in load_aliases().items():
+        con.execute("INSERT OR REPLACE INTO entity_aliases (alias, canonical_name) VALUES (?,?)",
+                    (norm_alias, canonical))
+    for m in members:
+        vehicles = m.get("associated_vehicles") or []
+        if not vehicles:
+            continue
+        row = con.execute("SELECT id FROM allocators WHERE name = ?", (m["name"],)).fetchone()
+        if not row:
+            continue
+        for v in vehicles:
+            if v in ("personal_investments", "affiliated_corporate_vehicle",
+                     "personal_or_new_vehicle"):
+                continue
+            con.execute(
+                """INSERT OR IGNORE INTO entity_relationships (parent_id, child_name, kind)
+                   VALUES (?,?,?)""", (row["id"], v, "vehicle"))
+    con.commit()
+
+
+def get_or_create_allocator(con, name: str, cls: str, tier: str = "watch") -> int:
+    """Resolve an allocator name (through aliases) to an id, inserting if unseen."""
+    name = resolve_name(name)
+    row = con.execute("SELECT id FROM allocators WHERE name = ?", (name,)).fetchone()
+    if row:
+        return row["id"]
+    cur = con.execute(
+        "INSERT INTO allocators (name, class, tier) VALUES (?,?,?)", (name, cls, tier)
+    )
+    return cur.lastrowid

@@ -1,0 +1,435 @@
+"""Проверка, что связь БЕЗ источника в сеть не попадает.
+
+Правило контракта v2 «нет цитаты — нет ребра» действует и в v3. Заявить это в тексте
+дёшево; здесь оно проверяется на настоящем конвейере: в выдачу подкладывается ребро без
+единой строки в sources.csv, конвейер прогоняется, и ребро обязано быть отклонено с
+причиной, а не молча принято.
+
+Заодно проверяется валидатор файла: собранный вручную payload с пустым evidence,
+несуществующим пивотом и заглушкой вместо центральности не должен пройти.
+
+  python tools/nvnet_nosource_test.py [YYYY-MM]
+"""
+
+import copy
+import csv
+import shutil
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+from engine import nveco, nvnet_handoff, nvnet_ingest      # noqa: E402
+
+BAD = {"source": "openai", "target": "asml", "type": "customer_of",
+       "direction": "upstream", "strength": "90", "lock_in_depth": "70",
+       "substitutability": "20", "is_reversible": "true", "risk_level": "medium",
+       "risk_type": "market", "risk_timeline": "1-2y", "risk_mitigation": "",
+       "tech_node": "", "formed": "2025", "strengthened": "",
+       "note": "Выдуманная связь без единого источника — обязана быть отклонена.",
+       "origin": "TEST"}
+
+
+def _edge_with_evidence(d):
+    return next(e for e in d["edges"] if e.get("evidence"))
+
+
+def main(month):
+    edges = ROOT / "runs" / month / "nvnet-network" / "edges.csv"
+    if not edges.exists():
+        print(f"FAIL: нет {edges}")
+        return 1
+    backup = edges.with_suffix(".csv.bak")
+    shutil.copy(edges, backup)
+    try:
+        rows = list(csv.DictReader(backup.open(encoding="utf-8")))
+        hdr = list(rows[0].keys())
+        with edges.open("w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=hdr)
+            w.writeheader()
+            w.writerows(rows + [{k: BAD.get(k, "") for k in hdr}])
+
+        net = nvnet_ingest.build(month)
+        bad_id = f"{BAD['source']}__{BAD['target']}__{BAD['type']}"
+        if bad_id in net["edges"]:
+            print(f"FAIL: связь без источника {bad_id} ПРИНЯТА конвейером")
+            return 1
+        reason = next((r["reason"] for r in net["rejects"] if bad_id in r["row"]), None)
+        print(f"ok  связь без источника отклонена: {reason}")
+
+        payload = nvnet_handoff.build(month, net)
+        base = nvnet_handoff.validate(payload)
+        if base:
+            print("FAIL: чистый payload не проходит валидатор:", base[:5])
+            return 1
+        print(f"ok  чистый payload проходит валидатор "
+              f"({payload['totals']['entities']} сущностей, {payload['totals']['edges']} связей)")
+
+        cases = []
+
+        def case(name):
+            def deco(fn):
+                cases.append((name, fn))
+                return fn
+            return deco
+
+        @case("ребро с пустым evidence")
+        def _(d):
+            d["edges"][0]["evidence"] = []
+
+        @case("узел ядра, которого нет среди сущностей")
+        def _(d):
+            d["pivots"] = list(d["pivots"]) + ["no-such-pivot"]
+
+        @case("состав ядра разошёлся с флагом core")
+        def _(d):
+            d["pivots"] = d["pivots"][:-1]
+
+        @case("pivotal разошёлся с core")
+        def _(d):
+            e = next(x for x in d["entities"] if x["core"])
+            e["pivotal"] = False
+
+        @case("ядро не того размера, что велит правило")
+        def _(d):
+            e = next(x for x in d["entities"] if not x["core"])
+            e["core"] = e["pivotal"] = True
+            d["pivots"] = sorted(list(d["pivots"]) + [e["id"]])
+
+        @case("сущность без блока integration")
+        def _(d):
+            d["entities"][0].pop("integration", None)
+
+        @case("integration.score вне 0..100")
+        def _(d):
+            d["entities"][0]["integration"]["score"] = 140
+
+        @case("в integration нет слагаемого cycles")
+        def _(d):
+            d["entities"][0]["integration"].pop("cycles", None)
+
+        @case("сущность без блока sourcing")
+        def _(d):
+            d["entities"][0].pop("sourcing", None)
+
+        @case("sourcing.total не сходится с sources[]")
+        def _(d):
+            d["entities"][0]["sourcing"]["total"] += 3
+
+        @case("сущность без списка domains")
+        def _(d):
+            d["entities"][0].pop("domains", None)
+
+        @case("вернувшееся поле hops")
+        def _(d):
+            d["entities"][0]["hops"] = 2
+
+        @case("вернувшийся фактор strategicControl")
+        def _(d):
+            d["entities"][0]["criticalityFactors"]["strategicControl"] = 40
+
+        @case("вернувшийся корневой ecosystem")
+        def _(d):
+            d["ecosystem"] = "nvidia"
+
+        @case("карта без предмета в meta")
+        def _(d):
+            d["meta"]["scope"] = {"ru": "", "en": ""}
+
+        @case("meta без правила ядра")
+        def _(d):
+            d["meta"].pop("coreRule", None)
+
+        # ── ЛЕСТНИЦА ДОКАЗАТЕЛЬСТВА v4 ───────────────────────────────────────
+        # Три случая, ради которых лестница и переписана. Первый — про то, что
+        # `disputed` нельзя тихо повысить до подтверждённой связи. Второй — про то,
+        # что `bilateral` нельзя набрать, говоря сам за себя. Третий — про то, что
+        # контрцитата обязана иметь статус, а статус — контрцитату.
+
+        @case("disputed схлопнут в confirmed")
+        def _(d):
+            e = _edge_with_evidence(d)
+            e["counterEvidence"] = [dict(e["evidence"][0])]
+            e["status"] = "confirmed"
+            e["sidedness"] = "single"
+
+        @case("bilateral, когда обе цитаты с одного домена")
+        def _(d):
+            # Один и тот же издатель, названный дважды, — это по-прежнему одна
+            # сторона: claimedBy схлопывается в один id, и статус развалиться обязан.
+            e = _edge_with_evidence(d)
+            e["status"] = "bilateral"
+            e["sidedness"] = "bilateral"
+            e["claimedBy"] = [e["source"]]
+
+        @case("claimedBy называет сторону вне связи")
+        def _(d):
+            _edge_with_evidence(d)["claimedBy"] = ["постороннийузел"]
+
+        @case("выдуманный sidedness")
+        def _(d):
+            _edge_with_evidence(d)["sidedness"] = "как-то-так"
+
+        # ── РЕЕСТР ФАКТОВ ────────────────────────────────────────────────────
+        # Правило подкрепления включается ПО ОБЪЕКТУ: у кого есть реестр, тот
+        # проверяется по реестру и откатиться к цитатам не может. Проверяется именно
+        # это — и то, что расписка выписана на ту сумму, которая в ней стоит.
+
+        def _with_facts(d):
+            """Первая связь, у которой есть реестр фактов."""
+            return next(x for x in d["edges"] if x.get("facts"))
+
+        @case("число в тексте, которого нет в реестре фактов")
+        def _(d):
+            x = _with_facts(d)
+            x["detail"]["ru"] = x["detail"]["ru"] + " Доля выросла до 47.3%."
+
+        @case("объект с реестром откатился к цитатам")
+        def _(d):
+            # Величина есть в ЦИТАТЕ, но не в реестре. До /5 это прошло бы; у
+            # переписанного объекта — нет, иначе реестр ничего не значит.
+            x = _with_facts(d)
+            x["evidence"][0]["quote"] = "capacity reached 777 units in the quarter"
+            for lang in ("ru", "en"):
+                x["detail"][lang] = x["detail"][lang] + " Ещё величина: 777."
+
+        @case("числовой факт без verbatim")
+        def _(d):
+            # Именно ЧИСЛОВОЙ: у факта без цифры (условие договора, наличие
+            # программы) фрагмент необязателен, и это правило тоже проверяется —
+            # тем, что тест берёт не первый попавшийся факт.
+            num = next(f for x in d["edges"] for f in (x.get("facts") or [])
+                       if any(c.isdigit() for c in str(f.get("value") or "")))
+            num["verbatim"] = None
+
+        @case("величина не встречается в собственном фрагменте")
+        def _(d):
+            f = next(f for x in d["edges"] for f in (x.get("facts") or [])
+                     if f.get("verbatim") and any(c.isdigit() for c in str(f.get("value"))))
+            f["value"] = "999.9"
+
+        @case("факт связи о постороннем узле")
+        def _(d):
+            x = _with_facts(d)
+            outsider = next(e["id"] for e in d["entities"]
+                            if e["id"] not in (x["source"], x["target"]))
+            x["facts"][0]["about"] = outsider
+
+        @case("единица измерения не из списка")
+        def _(d):
+            _with_facts(d)["facts"][0]["unit"] = "попугаев"
+
+        @case("величина записана русской прозой")
+        def _(d):
+            _with_facts(d)["facts"][0]["value"] = "серийный выпуск"
+
+        @case("подпись величины на одном языке")
+        def _(d):
+            _with_facts(d)["facts"][0]["label"] = {"ru": "Выручка", "en": ""}
+
+        @case("переписанный объект говорит «one customer» вместо имени")
+        def _(d):
+            x = _with_facts(d)
+            x["detail"]["en"] = "Revenue is concentrated: one customer took most of it."
+
+        # ── ЦИФРА ИЗ ЦИТАТЫ, ТЕПЕРЬ И В ОБОСНОВАНИЯХ ─────────────────────────
+        # Правило «каждая цифра в прозе — из цитаты» распространено Фазой 1 на
+        # обоснования факторов. Повод — четвёртый фактор: доля функции без
+        # источника попала бы в каждую оценку карты с весом 0.15.
+
+        @case("обоснование concentration с цифрой ниоткуда")
+        def _(d):
+            e = next(x for x in d["entities"] if isinstance(
+                (x.get("criticalityWhy") or {}).get("concentration"), dict))
+            e["criticalityWhy"]["concentration"] = {
+                "ru": "Держит 93.7% своей функции",
+                "en": "Holds 93.7% of its function"}
+
+        @case("обоснование irreplaceability с цифрой ниоткуда")
+        def _(d):
+            e = next(x for x in d["entities"] if isinstance(
+                (x.get("criticalityWhy") or {}).get("irreplaceability"), dict))
+            e["criticalityWhy"]["irreplaceability"] = {
+                "ru": "Замену строят 47 лет", "en": "A replacement takes 47 years"}
+
+        @case("нет блока criticalityBasis")
+        def _(d):
+            d["entities"][0].pop("criticalityBasis", None)
+
+        @case("criticalityBasis обещает больше факторов, чем заполнено")
+        def _(d):
+            e = d["entities"][0]
+            e["criticalityBasis"] = {"factorsUsed": 9, "factors": [],
+                                     "renormalized": False}
+
+        @case("betweenness-заглушка вне 0..1")
+        def _(d):
+            d["entities"][0]["centrality"]["betweenness"] = 42
+
+        @case("pagerank отсутствует")
+        def _(d):
+            d["entities"][0]["centrality"].pop("pagerank", None)
+
+        @case("pagerank вне 0..1")
+        def _(d):
+            d["entities"][0]["centrality"]["pagerank"] = 1.5
+
+        @case("detail с невыдуманным числом — цифра не из цитаты")
+        def _(d):
+            x = next(e for e in d["edges"] if e.get("detail"))
+            x["detail"]["ru"] = x["detail"]["ru"] + " Объём достиг 999 гигаватт."
+
+        @case("detail только на одном языке")
+        def _(d):
+            next(e for e in d["edges"] if e.get("detail"))["detail"]["en"] = ""
+
+        @case("detail дословно повторяет note")
+        def _(d):
+            x = next(e for e in d["edges"] if e.get("detail"))
+            x["detail"] = dict(x["note"])
+
+        @case("detail строкой вместо пары {ru, en}")
+        def _(d):
+            next(e for e in d["edges"] if e.get("detail"))["detail"] = "просто строка"
+
+        # ── description: развёрнутое описание узла (контракт /3) ──────────
+        def _described(d):
+            return next(e for e in d["entities"] if e.get("description"))
+
+        @case("description только на одном языке")
+        def _(d):
+            _described(d)["description"]["en"] = ""
+
+        @case("description строкой вместо пары {ru, en}")
+        def _(d):
+            _described(d)["description"] = "просто строка"
+
+        @case("description из трёх предложений")
+        def _(d):
+            e = _described(d)
+            for lang in ("ru", "en"):
+                e["description"][lang] = ("Первое предложение достаточной длины для "
+                                          "порога знаков. " * 3).strip()
+
+        @case("description из восьми предложений")
+        def _(d):
+            e = _described(d)
+            for lang in ("ru", "en"):
+                e["description"][lang] = ("Предложение о продукте и его цене. " * 8).strip()
+
+        @case("description с числом не из цитаты")
+        def _(d):
+            e = _described(d)
+            e["description"]["ru"] += " Мощность площадок достигла 999 гигаватт."
+
+        @case("description дословно повторяет oneLiner")
+        def _(d):
+            e = _described(d)
+            e["description"]["ru"] = e["oneLiner"]["ru"] + " " + e["description"]["ru"]
+
+        @case("description с оборотом, верным под любой компанией")
+        def _(d):
+            e = _described(d)
+            e["description"]["en"] = "It is a market leader. " + e["description"]["en"]
+
+        @case("сумма pagerank не равна 1")
+        def _(d):
+            # Половина веса испаряется — так выглядит мера, посчитанная на другом
+            # множестве узлов или обрезанная после нормировки.
+            for e in d["entities"][:len(d["entities"]) // 2]:
+                e["centrality"]["pagerank"] = 0.0
+
+        @case("сущность без pivotal")
+        def _(d):
+            d["entities"][0].pop("pivotal", None)
+
+        @case("остался корневой anchor")
+        def _(d):
+            d["anchor"] = "nvidia"
+
+        @case("подграф ссылается на несуществующий узел")
+        def _(d):
+            d["network"]["subgraphs"][0]["nodeIds"] = ["no-such-entity"]
+
+        @case("точка отказа без обоснования")
+        def _(d):
+            if d["network"]["singlePointsOfFailure"]:
+                d["network"]["singlePointsOfFailure"][0]["reason"] = ""
+            else:
+                d["network"]["singlePointsOfFailure"] = [{"id": "nvidia", "reason": ""}]
+
+        @case("totalNodes не сходится")
+        def _(d):
+            d["network"]["totalNodes"] = 999
+
+        @case("хребет разошёлся с типом связи")
+        def _(d):
+            # Дашборд красит ребро по хребту. Разошёлся с типом — механизм
+            # прочитан неверно: соперничество нарисовано как поставка.
+            for x in d["edges"]:
+                if x["type"] == "is_alternative_to":
+                    x["spine"] = "physical"
+                    break
+
+        @case("тип связи выпал из edgeTypes выдачи")
+        def _(d):
+            # Ровно тот случай, что случился у дашборда: таблица типов отстала
+            # на два типа v3, и его фолбэк молча нарисовал их «поставляет».
+            d["edgeTypes"].pop("is_alternative_to", None)
+
+        @case("цитата в 40 слов")
+        def _(d):
+            d["edges"][0]["evidence"][0]["quote"] = " ".join(["слово"] * 40)
+
+        # ── ЧЛЕНСТВО ПО ПОКРЫТИЮ (Фаза 3) ────────────────────────────────────
+        # Правило легко объявить и трудно удержать: достаточно один раз забыть
+        # гейт, и карта начнёт снимать узлы за то, что до них не дошла ротация.
+        # Эти пять случаев держат его формой выдачи, а не обещанием.
+
+        @case("узел без pendingDossier")
+        def _(d):
+            d["entities"][0].pop("pendingDossier", None)
+
+        @case("membershipFailing не список")
+        def _(d):
+            d["entities"][0]["membershipFailing"] = "min_sources"
+
+        @case("непокрытый узел помечен провалом гейтированной проверки")
+        def _(d):
+            e = d["entities"][0]
+            e["pendingDossier"] = True
+            e["membershipFailing"] = ["min_sources"]
+
+        @case("meta.membership без held")
+        def _(d):
+            d["meta"]["membership"].pop("held", None)
+
+        @case("held не сходится со списком heldNodes")
+        def _(d):
+            d["meta"]["membership"]["held"] = 999
+
+        @case("снятый членством остался в entities[]")
+        def _(d):
+            d["meta"]["membership"]["retiredNodes"] = [
+                {"id": d["entities"][0]["id"], "failed": "min_confirmed_edges"}]
+            d["meta"]["membership"]["retired"] = 1
+
+        failures = 0
+        for name, corrupt in cases:
+            d = copy.deepcopy(payload)
+            corrupt(d)
+            errs = nvnet_handoff.validate(d)
+            if errs:
+                print(f"  ok   {name}: отвергнуто — {errs[0][:90]}")
+            else:
+                print(f"  FAIL {name}: ПРОПУЩЕНО валидатором")
+                failures += 1
+        print(f"\n{'PASS' if not failures else 'FAIL'}: "
+              f"{len(cases) - failures}/{len(cases)} видов порчи пойманы")
+        return 1 if failures else 0
+    finally:
+        shutil.move(backup, edges)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else nveco.current_month()))

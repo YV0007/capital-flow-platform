@@ -1,0 +1,629 @@
+# OPERATIONS — how this system actually works
+
+**What this file is.** The one place that explains *how the whole thing operates*:
+where every number originates, what has to be true before it is allowed to exist,
+who computes it, how often, and which rules govern it. Not an index of other
+files — the explanation itself.
+
+**How it stays current.** A weekly scheduled pass reconciles this file against
+reality (§11). Between passes, anyone changing a source, cadence, contract,
+ownership boundary or rule appends a dated line to the Changelog (§12). A rule
+that lives only in a chat is a rule that will be broken next month.
+
+**Scope.** Both repos. The engine is the source of truth for most data, but the
+dashboard owns some content outright, and splitting the registry would defeat the
+purpose.
+
+---
+
+## 1. The shape of the system in one page
+
+```
+                    RESEARCH (autonomous, non-deterministic)
+   Claude Code agents ── read the web under a source-tier ladder
+        │                write CSV/JSON into runs/<period>/<agent>/
+        ▼
+                    ENGINE (deterministic, Python + SQL)
+   validate → resolve entity ids → dedupe → SQLite (db/capital.db)
+   → verify every link → score → run signal rules → audit gate
+        │
+        ▼
+                    HANDOFF (one file per map, a contract)
+   handoff/*.json ── validated before write; refuses to overwrite good with broken
+        │           deliver.py copies into ab-investment/src/data/
+        ▼
+                    DASHBOARD (render only)
+   adapters reshape the payload → React components → Vercel on push to main
+```
+
+**The division that matters:** *search is autonomous, output is deterministic.*
+Agents may be creative about finding things. Nothing they find becomes a fact
+until Python and SQL have validated it. **The database is the single source of
+truth** — not the agent output, not the payload, not the dashboard.
+
+### The two repos
+
+| | Engine | Dashboard |
+|---|---|---|
+| Path | `~/Desktop/Capital Flow` | `~/Desktop/BASE/Code/ab-investment` |
+| Repo | `github.com/YV0007/Capital-Flow` | `github.com/YV0007/ab-investment` |
+| Job | research, verify, compute, deliver | render |
+| Stack | Python + SQLite + agent briefs | React 18 + Vite 5 |
+| Output | `handoff/*.json` | Vercel deploy on push to `main` |
+
+**The connection is a handoff, not a live feed.** There is no API between them.
+The engine writes a file; `deliver.py` copies it in.
+
+### The zero-latitude rule
+
+**The dashboard computes nothing the engine can compute.** Criticality, gravity,
+centrality, concentration, cycles, spine, staleness, SPOF, classification scores
+and every aggregate arrive already calculated. The dashboard styles what the file
+says; it never overrides a status or invents an entity. Where the dashboard *does*
+own content it is named explicitly in §6, and that is the exception.
+
+---
+
+## 2. Four pipelines, one database
+
+`db/capital.db` is shared because **entity identity is shared** — NVIDIA must be
+one NVIDIA on every map. `config/aliases.yaml` plus the `entity_aliases` table
+guarantee that.
+
+| | **Weekly — Потоки** | **Monthly — Экосистема** | **Registry — Фонды** | **Dashboard-owned** |
+|---|---|---|---|---|
+| Question | Where did money go this week | Who is structurally irreplaceable, who is locked in, who gates whom | What do the ~14 funds we respect hold right now | Interpretation, and the sections with no engine |
+| Unit | A dated **event** | An undated standing **dependency** | A **position / stake / delta** | A read, a news item, a price |
+| Universe | Discovery-shaped — agents hunt leads | Scope-shaped — 16 layers plus three membership checks | **Closed and curated**, never auto-extended | Fixed list |
+| Agents | 6, by allocator class | 8, by stack layer | **none** — fully deterministic | 3 skills |
+| Orchestrator | `run_week.py` | `run_network.py` (v3) · `run_nvidia.py` (v2) | `run_funds.py` | npm scripts + skills |
+| Tables | `events`, `allocators`, … | `nveco_*` | `fund_*` | — |
+| Handoff | `handoff/capital_map.json` | `handoff/ai_ecosystem_network.json` | `handoff/fund_tracker.json` | — |
+
+Shared across all: entity resolution, the source registry, the
+`runs/<period>/<agent>/` audit-trail pattern, the handoff pattern, the audit gate.
+Separate: tables, agents, rules, schedule. On the dashboard they are unconnected
+sections sharing only the shell.
+
+---
+
+## 3. How a claim becomes a fact
+
+The core mechanic of the whole system. Nothing skips it.
+
+### Step 1 — the source-tier ladder
+
+**Two different ladders. Do not confuse them.**
+
+**Weekly pipeline (`config/sources.yaml`) — ranks by officialness:**
+
+| Tier | What | Role |
+|---|---|---|
+| 1 | SEC EDGAR, company IR, official PRs, portfolio pages, government DBs | **Confirms.** Mandatory to check. |
+| 2 | PitchBook, Preqin, AlphaSense, FactSet, Capital IQ, Bloomberg, Dealroom, Crunchbase, Harmonic | Data platforms |
+| 3 | Reuters, FT, WSJ, Bloomberg News, The Information | Quality press |
+| 4 | SemiAnalysis, Stratechery, conference talks | Specialist analysis |
+| 5 | Podcasts, YouTube, X, LinkedIn, blogs | **Lead discovery only.** Never stored as verified. |
+
+**Ecosystem pipeline (`nveco_tiers`) — ranks by closeness to the SUBJECT of the claim.** A
+partner's press release about NVIDIA is **tier 2 here, not tier 1**, because it is
+not NVIDIA speaking about NVIDIA. Same document, different ladder.
+
+*Tier 5 discovers; Tier 1 confirms.*
+
+### Step 2 — the status ladder
+
+Every event carries an honest confidence grade:
+
+| Status | Bar |
+|---|---|
+| `verified` | A primary source states it. |
+| `verified_alpha` | ≥2 **independent** Tier 2–4 sources agree, no Tier 1 yet. |
+| `candidate` | A single source, or a Tier-5 lead. |
+
+**Grade honestly, never drop silently.** An unconfirmable item is filed as
+`candidate` with the reason in `notes`. *A documented candidate is data; a silent
+drop is a miss.* Money that is not firmly committed is at most a `candidate`.
+
+### Step 3 — what the map is allowed to show
+
+Only nodes with **≥1 `verified` or `verified_alpha` flow** reach the visual map;
+candidate-only entities live in a watch list. One exception: an entity a fired
+signal points at is always included, however small.
+
+### Step 4 — the iron rule (ecosystem map)
+
+An edge exists **only if a verbatim quote of ≤15 words from a resolved document
+states the relationship.** No quote, no edge. `nveco_verify` re-fetches *every*
+link each run; a dead link costs the edge a confirmation.
+
+### Step 5 — the audit gate
+
+`engine/audit.py` runs on every pass. **Errors block `--deliver` and `--push`.**
+Warnings do not — a known weakness: W7 (funds with no holdings) warned for weeks
+while runs shipped green. See §10.
+
+### Step 6 — the handoff validator
+
+`*_handoff.py` runs the contract's hard rules before writing and **refuses to
+overwrite a good file with a broken one.** Yesterday's truth beats today's lie.
+`tools/nveco_corrupt_test.py` proves the validator still bites, and
+`tools/nveco_retire_test.py` proves the ingest deletes what disappeared from the
+CSVs instead of leaving a second, contradicting copy of a corrected row.
+
+---
+
+## 4. What each pipeline actually does
+
+### 4a. Weekly — Потоки (`run_week.py`, `run.sh`)
+
+Tracks **only capital-allocation events**: equity, funding rounds, follow-ons,
+acquisitions, minority stakes, fund launches, SPVs, government grants, project
+finance, corporate and sovereign investments. Not news.
+
+```
+6 agents by allocator class      corporate · vc · individuals ·
+(agents/*.md + CONTEXT.md)       alt-managers · sovereigns · filings
+   → runs/<week>/<agent>/{verified_events,candidate_events,source_log}.csv
+   → engine/ingest.py        validate → resolve ids → dedupe → SQLite
+   → engine/themes.py        signal rules (below)
+   → engine/trends.py        windowed sub-sector clustering
+   → engine/beneficiaries.py private flows → public tickers
+   → engine/classify.py      round_backers + target_classification
+   → engine/profiles.py      allocator profiles + track records
+   → engine/holdings.py      fund portfolios (the layer below LP flows)
+   → engine/aggregates.py    top sector / top company / thesis shares
+   → engine/audit.py         gate
+   → engine/handoff.py       handoff/capital_map.json + CHANGELOG.md
+```
+
+`run.sh` runs the deterministic half only and **build-gates the deploy**: if the
+dashboard does not compile, nothing is pushed.
+
+**The signal rules** (`config/rules.yaml`) — what makes a week interesting:
+
+| Rule | Fires when |
+|---|---|
+| `sector_swarm` | ≥3 distinct **key** allocators put confirmed capital into one sector within 30d. Candidates don't count. |
+| `subsector_swarm` | ≥2 key/core allocators converge on one (sector, subsector) — lower bar, 400d lookback, re-checked per window |
+| `theme_swarm` | ≥4 key allocators converge on one **theme** across sectors within 30d |
+| `capital_acceleration` | A sector's rolling 90d capital ≥2× the prior 90d |
+| `first_entry` | A key allocator enters a sector it had no events in for 365d |
+| `smart_money_follow` | A key/core allocator enters, then ≥2 others follow within 21d |
+| `stealth_accumulation` | ≥3 stakes into one target within 90d |
+| `beneficiary_concentration` | ≥3 private flows map to one public ticker |
+
+### 4b. Monthly — Экосистема (`run_nvidia.py` + `run_network.py`)
+
+Answers a structural question, not a dated one: who holds a function the stack
+cannot run without, how deeply they are wired in, and what breaks if they go.
+
+```
+ROTATION decides who is researched this month
+  tools/make_dossier_batches.py <month> --tier=due
+      core (top 30)  monthly · mid  quarterly · tail  on trigger or 6 months stale
+      ~40 dossiers in batches of 8; what does not fit the budget is PRINTED
+
+eco-dossier agent (agents/eco-dossier.md)  one node, done properly
+   → runs/<month>/nveco-dossier-NN/dossier.json
+   → tools/dossier_split.py  → {entities,factors,edges,sources,translations}.csv
+
+eco-prose agent (agents/eco-prose.md)  one edge or node, its text rewritten
+   tools/make_prose_batches.py <month> --queue=one-doc|core|all
+   → runs/<month>/nvnet-prose-NN/{facts,details,notes}.csv
+
+8 layer agents (agents/nveco-*.md)  narrowed mandate: find what is NOT on the map
+   → runs/<month>/nveco-*/{entities,factors,edges,sources}.csv
+
+   → nveco_ingest.py     validate against configs, resolve ids, scope + MEMBERSHIP
+                         (rejects → _rejected/ AND the nveco_rejection ledger)
+   → nveco_verify.py     re-fetch EVERY link
+   → nveco_reconcile.py  tier relative to the SUBJECT, sides of each edge, disputes
+   → nveco_score.py      4-factor rubric, spine, status, gravity
+   → nveco_cycles.py     closed loops 3–5 long: sales / financing / lockin
+   → nveco_score.py      again — gravity counts the cycles an entity stands on
+   → nveco_handoff.py    handoff/nvidia_ecosystem.json + changelog
+   → run_network.py      centrality, integration, core, subgraphs, SPOF, payload
+```
+
+**The map has no centre — since contract /4.** It has a subject: the 16 layers. An
+entity is admitted by three checks that name no company (in scope · own dossier ·
+confirmed edges), and the core is the top 30 by computed `integration`, recomputed
+every run. The rule that was replaced — "no further than 2 hops from the anchor" —
+did two jobs badly at once: it admitted whatever NVIDIA happened to name in its own
+filings, and it kept out Carl Zeiss SMT, sole supplier of EUV optics, three hops
+away. See `docs/ECOSYSTEM-ENGINE.md` §12 and `handoff/AI-ECOSYSTEM-V4-BUILD-LOG.md`.
+
+**Membership is gated by coverage.** `min_sources` and `min_self_sources` apply to
+an entity only after rotation has worked its dossier; until then it carries
+`pendingDossier`, is shown, is marked and is not retired. `in_scope` and
+`min_confirmed_edges` apply to everyone. What fails an applicable check is retired
+**with a named reason** — and only if no edge holds it, because a membership
+failure of a node is not evidence against an edge that has its own citation and its
+own owner (`membership.on_fail` in `config/nveco_scope.yaml`).
+
+**The map hunts for what it does not have.** Rejections answer "what did we refuse";
+the candidate queue answers "which node are we missing"; the hunt (`nveco_gap`,
+`config/nveco_gaps.yaml`) answers the third question — **which edge are we missing
+between two nodes that are both already here.** Its reasons come from the corpus: a
+node's own quote disclosing a counterparty without naming it, or a taxonomy rule
+promising an edge the node has with nobody. A task closes as `found` or as
+`not_found` with a reason that goes to `nvnet_not_found`; silence is not a third way.
+
+**Feedback is consumed, not accumulated.** Rejections live in `nveco_rejection`
+until fixed or explicitly decided; a rejection about an entity becomes a
+candidate-queue row; the queue is worked through in full, every row accepted or
+rejected with a reason. `python tools/feedback_check.py` exits 1 while anything is
+unconsumed. This exists because it once did not: `Carl Zeiss SMT` sat rejected in a
+committed CSV that no step was obliged to open.
+
+**Prose is written from research, not around a quote.** Until 2026-08-29 the agent
+built sentences around whatever `evidence` happened to hold, so a read was exactly as
+deep as its quotes: **101 of 262 edges** stood on a single document, usually a
+boilerplate risk paragraph — and the quote's language moved into the text with it
+(«one customer») on a map that exists in order to name. The order is now **research →
+registry of quantities → free text**. Every figure is entered in `facts[]`
+(`engine/nveco_facts.py`: `value` · `unit` from a closed list · `as_of` · `about` ·
+url · `verbatim`); the quote sits a layer below the sentence as a receipt, and the
+engine checks each number against it. Three checks bite offline, without a single
+network call: a number in the prose that is in no fact, a numeric fact whose `value`
+does not occur in its own `verbatim` — a receipt written for a different sum — and
+Cyrillic in `value`. A quantity is a number, a date or a name from the source and is
+never translated; the bilingual side of a fact is `label`. Batches come from
+`tools/make_prose_batches.py`: both ends whole, the neighbourhood of each, and what
+the neighbours already say.
+
+**The backing rule is per object; the rest is counted debt.** An object that has
+`facts[]` has been researched again — its numbers are checked against the registry,
+falling back to `evidence` is refused, and a paraphrase in place of a name fails the
+release. An object without `facts[]` keeps the old `evidence` check and is printed by
+name in the run report. The alternative — demanding the registry from all 150 objects
+at once — would have meant not shipping the map until the last paragraph was
+rewritten, so the rule would never have been switched on at all.
+
+**A fresh pair beats the translation store.** Edge `detail` and entity `description`
+arrive as `{ru, en}` on one CSV row. The store used to win, so the first rewritten
+read would have shipped Russian prose about the new figures next to English about the
+old ones. Now the fresh pair wins, as it already did for `note` and `oneLiner`.
+
+**Five spines, not two:** `physical` · `capital` · `moat` · `control` · `rivalry`.
+A moat and a gate are not kinds of supply and not kinds of money — they are
+separate mechanics of power. The spine is **derived from the edge type**; neither
+the agent nor the dashboard computes it.
+
+**Two measures of importance, deliberately not merged.** `criticality` is authored
+from the node's own dossier — irreplaceability 0.30 · lock-in depth 0.30 ·
+time-to-replace 0.25 · **concentration** 0.15, weights frozen by contract, with one
+line of reasoning per factor. `integration` is computed from the graph and is the
+map's primary rank. Nodes where the two diverge are the interesting ones: high
+criticality with low integration is a hidden chokepoint, the reverse is a hub.
+
+**Source tier is relative to the subject, not to a company.** Tier 1 is the
+entity's own word about itself, tier 2 the other end of the edge. The registry is
+`config/entity_domains.yaml` (`id → {domains, cik}`); the engine computes the tier
+and the agent may not set it. `bilateral` — a SELF quote from both ends — is the
+new top of the status ladder.
+
+**Taxonomy is frozen and single-sourced.** 16 layers, 33 edge types → 5 spines,
+6 roles, tiers and statuses live in `config/nveco_*.yaml` / `config/nvnet_*.yaml`,
+and on the dashboard in `nvidiaEcosystem.js`, re-exported by the network adapter
+and never re-typed. Layers are variable-length; nothing is hard-coded. **That is
+the acceptance test** — drop in a new payload and the map changes with no code edit.
+
+### 4c. Registry — Фонды (`run_funds.py`)
+
+Shaped unlike the others: a **closed, curated** list of ~14 managers whose
+positions are held as a standing book. **No research agents at all** — every row
+traces to a mandated filing or an official register download. No news, no
+socials, no aggregators.
+
+```
+config/fund_managers.yaml → fund.seed()   every CIK re-verified against EDGAR's own
+                                          name for it; a mismatch HALTS the run
+   → fund_ingest.poll   diff each CIK's submissions JSON; new accession = ingest
+   → fund_13f           information table → positions; value units detected per filing
+   → fund_fast          13D/G + verbatim Item 4, Form 3/4/5, material 8-K
+   → fund_ark           the daily full book — zero disclosure lag
+   → fund_shorts        NAMED shorts from FCA/EU registers (the only attributed shorts)
+   → fund_watch         triggers for the four multi-strats (no standing book)
+   → fund_deltas        SHARE-based deltas + conviction scores
+   → fund_audit         errors block delivery
+   → fund_handoff       payload + contract validator
+```
+
+**Two problems define this design.**
+
+*Latency.* A 13F is up to 4.5 months stale, so **it is the backbone, never the
+heartbeat**. A ladder of faster layers fills the gap — ARK daily · registers
+daily · Form 4 ~T+2 · 13D ~T+5 · 8-K live — and `latency_days` is a first-class
+field on every dated row. The handoff **refuses to write** an event that lacks it;
+a "new position" without its latency is actively misleading.
+
+*Conviction vs noise.* A 13F is a legal aggregation, not a statement of belief.
+Handled structurally (`style_tag` / `conviction_weight`; multi-strat 0.0, quant
+never ingested) and analytically (`config/fund_conviction.yaml`). **Deltas are
+computed on share count, never on value** — a value-based delta invents adds that
+never happened.
+
+**The multi-strat carve-out.** There is no separate CIK for a "conviction sleeve"
+inside Citadel, and a 13F carries no strategy attribution. Citadel, Millennium,
+Point72 and Balyasny are `watch_only`: their 13F is never read. They surface only
+on a 13D, a >5% 13G, a Form 3/4, a named short-register entry, or a cap-table
+appearance.
+
+**Entity resolution is mandatory, not optional.** Point72 files under six CIKs;
+Greenlight under three (its live 13F filer is *DME Capital Management*).
+`fund_manager_entities` rolls children to a parent — without it one fund appears
+three times at a third of its real size and every conviction score is wrong.
+
+---
+
+## 5. Goals — what each surface is for
+
+Worth stating, because it decides what belongs in each and what does not.
+
+| Surface | The question it answers | Deliberately NOT |
+|---|---|---|
+| **Потоки** (flow map) | Where did money actually go, who moved first, who followed | A news feed. Only dated allocation events. |
+| **Экосистема** (network) | Who is structurally irreplaceable; what breaks if one node fails | A market-share chart. Dependencies, not revenue. |
+| **Трекер фондов** | What do respected managers hold with conviction, right now | A trade tape. No churn, no derivatives. |
+| **Холдинги** | What is in the portfolio, what moved this week | A recommendation engine. |
+| **Fund portfolios** (in the flow map) | Follow smart money down to the exact companies | An index of everything a fund ever touched. |
+| **Reads** | Why this deal matters, in one paragraph | New facts. Interpretation of the payload only. |
+
+Platform mission, from `ARCHITECTURE.md`: *discover real capital allocation before
+consensus, and map private flows to public beneficiaries.* A Capital Allocation
+Intelligence Platform, not a news aggregator.
+
+---
+
+## 6. Data provenance — every feature, every source
+
+### Engine-owned
+
+| Feature | File in dashboard | Contract | Ultimate source | Cadence |
+|---|---|---|---|---|
+| Capital Flow map | `src/data/capitalMap.json` | — | Agent research over the tier ladder | Weekly |
+| Ecosystem map | `src/data/aiEcosystemNetwork.json` | `ai-ecosystem-network/4` | dossiers per node + 8 `nveco_*` layer agents, subject-relative tiers | Monthly |
+| Fund Tracker | `src/data/fundTracker.json` | `fund-tracker/1` | SEC EDGAR 13F-HR / 13D / 13G, FCA/EU short registers | Per filing |
+| NVIDIA ecosystem (reserve) | `src/data/nvidiaEcosystem.json` | `nvidia-ecosystem/2` | v2 pilot; **also the frozen taxonomy source** | Frozen |
+| Fund portfolios (private book) | `capitalMap.json` → `nodes[].holdings[]` | `agents/holdings-profiler.md` | Fund portfolio pages, Form D, ADV, press releases | **Monthly (planned)** |
+
+> `fundTracker.json` currently carries `fixture: true` — a shape-accurate
+> stand-in, not delivered data. **Do not cite its numbers.**
+
+> The ecosystem map's delivered payload lags the engine between runs: `--deliver`
+> copies it, and until then the dashboard holds the previous release's content on
+> the same contract. That is content drift, not contract drift, and
+> `tools/ops_check.py` deliberately does not flag it.
+
+### Dashboard-owned
+
+No engine stands behind these. The dashboard researches, computes or writes them
+itself, and the same tier ladder and no-fabrication mandate apply.
+
+| Feature | File in dashboard | Owner | Ultimate source | Cadence |
+|---|---|---|---|---|
+| Holdings news | `src/data/holdings-v2/*.json` → `news[]` | skill `holdings-news-refresh` | Web research, fetched sources only | Weekly |
+| Holdings prices | same → `priceChart` | `scripts/refresh_prices.mjs` | Yahoo Finance, 1-year weekly closes | Weekly |
+| Deal reads | `src/data/flowNotes.json` | skill `capital-flow-reads` | The delivered `capitalMap.json` **only** — never the web | Weekly, after delivery |
+| Nomura Chip Supply Index | `src/data/chipSupplyIndex.json` | skill `chip-supply-index-refresh` | Nomura Global Economics, **public channels only** | Monthly |
+| Holdings English | `src/data/holdings.en.json` | `scripts/holdings_en_*.mjs` | Translation of the Russian payload | On new Russian prose |
+| DC roadmap English | `src/data/dc-details.en.json` | `scripts/dc_en_*.mjs` | same | On new Russian prose |
+
+> **The CSI has no feed and never will.** The index is Nomura's own construction
+> and the full series is subscription-only, so every point carries a `p` flag —
+> `published` (Nomura stated the figure openly) or `chart_read` (digitised off a
+> published Nomura chart, ±0.1 pt). A number Nomura has not published does not go
+> in the file. This is mandate 1 applied to a series that cannot be fetched.
+
+> **The English sidecars are a getter overlay, not a copy.** `holdings.en.json`
+> and `dc-details.en.json` mirror the Russian payload by path; the consuming data
+> module re-attaches them as getters so `node.label` stays a plain string. Spread
+> (`{ ...node }`) freezes the getter — mandate 10's third trap. Anything already
+> shipped as a `{ ru, en }` pair (all of `news[]`) stays out of the sidecar: two
+> sources for one sentence is how the sides go mismatched.
+
+---
+
+## 7. Standing mandates
+
+1. **No fabrication, ever.** Every fact carries a source that was actually
+   fetched. No source → it does not ship. An honest gap beats an invented figure.
+2. **Quotes are verbatim and ≤15 words.**
+3. **IDs are stable across runs.** Renaming an id loses history.
+4. **The map is cumulative memory, not a snapshot.** Stale entities are
+   de-emphasised, not deleted; two consecutive stale handoffs with no verified
+   flow before anything drops.
+5. **Empty ≠ zero.** A field that did not arrive is not drawn at all — no label,
+   no em dash. An empty block reads as "we found nothing" when it usually means
+   "this field does not apply".
+6. **`npm run build` gates every deploy.** If it fails, nothing is pushed.
+7. **Never read a full data JSON into context** — 200 KB to 2 MB each. Grep
+   first, then read with offset/limit.
+8. **Prices are computed, never typed.** A price a model wrote is a fabricated
+   figure even when it happens to be right.
+9. **Never commit `index_slim.html`** — the gitignored source monolith.
+10. **Bilingual UI:** strings go through `t(ru, en)`. **Never call `t()` at module
+    scope** — it runs at import time before any component supplies it, throws a
+    `ReferenceError`, and takes the whole bundle down (blank page, 2026-08-24).
+
+---
+
+## 8. Feature-specific rules
+
+### Fund portfolios — conviction holdings only
+
+The block answers one question: **what does this fund own and believe in right
+now?**
+
+- **Not trades.** `shares > 0` is a hard gate; an `exited` position is not a
+  holding. Trade flow, if wanted, gets its own array.
+- **Not derivatives.** Owned shares only — no puts, calls, warrants, rights,
+  convertible notes, SPAC units, or anything reported as `PRN`. ADRs count as real
+  ownership. 13F reports options at the **notional value of the underlying**, so
+  one call can poison `total_value_usd` and every weight derived from it.
+- **Ranked by weight** — size is the conviction signal.
+- **13F cannot serve VC funds.** Thrive, Sequoia, Founders Fund and Khosla hold
+  private companies that appear in no 13F. Portfolio pages are the source.
+- **Depth floor:** ≥25 holdings where the true total exceeds 25.
+
+### Holdings prices
+
+`current`, `change` and `points[]` are **one coupled object** — `change` is
+measured from the first weekly close to the displayed price, and the chart's last
+point *is* that price. Editing one by hand desyncs all three. Only
+`scripts/refresh_prices.mjs` touches them. Symbols are pinned in its `SYMBOLS` map
+so the figure stays comparable week to week: Brookfield tracks **BN** not BAM;
+SoftBank the **US ADR** so the card stays in dollars; Pershing the **USD line**
+because `PSH.L` quotes in pence. Series are split-adjusted, so occasional large
+but correct jumps against old hand-entered values are expected.
+
+### Signals and prose
+
+The engine owns Russian signal prose, structured `rule_params` and resolved
+evidence. Route signal-shape requests upstream rather than reshaping them in the
+dashboard.
+
+---
+
+## 9. Cadences at a glance
+
+| When | What | Trigger |
+|---|---|---|
+| Weekly | Capital Flow map — agents, ingest, signals, handoff, deploy | Cloud routine + `run.sh` |
+| Weekly | Holdings news + prices; deal reads; RU gap check | Skills, Mon 08:00 UTC |
+| Monthly | Nomura Chip Supply Index — research pass over Nomura's public channels | Skill `chip-supply-index-refresh` |
+| Weekly | **This file** — reconcile against reality (§11) | Scheduled ops pass |
+| Monthly | Ecosystem map — core tier (top 30) dossiers, ~40 nodes in batches of 8 | `tools/make_dossier_batches.py --tier=due`, then `run_nvidia.py` + `run_network.py` |
+| Quarterly | Ecosystem map — mid tier dossiers | same, `--tier=due` picks them up by cadence |
+| On trigger | Ecosystem map — tail: an edge touched the node, or 6 months without confirmation | same |
+| Every ecosystem run | Candidate queue, rejection ledger and hunt tasks worked through in full | `tools/queue_review.py`, `tools/gap_review.py`, gate `tools/feedback_check.py` |
+| Every ecosystem run | Prose debt printed by name: numbers still on quotes, paraphrase instead of a name, reads standing on one document | `run_network.py` run report |
+| Monthly (planned) | Fund portfolios | `run_holdings.py`, 20th or later |
+| Per filing | Fund Tracker — poll EDGAR submissions, ingest on new accession | `run_funds.py` |
+| After each new map | Logo pipeline for new entities | `npm run logos` |
+
+---
+
+## 10. Known gaps
+
+| Gap | Detail | Owner |
+|---|---|---|
+| Fund portfolios: 36 of 43 empty | Collection step is manual and was skipped — batches generated W33 (0 run), W34 (3 of 4), W35 none. See `CAPITAL-FLOW-FUND-PORTFOLIOS.md` | Engine |
+| Fund portfolios: the 7 that work are thin | Coatue 16/250, a16z 49/1458 — below the mandated 25 | Engine |
+| **Warnings do not block** | The audit gate blocks on errors only. W7 warned for weeks while runs shipped green — that is how the above stayed invisible | Engine |
+| `fundTracker.json` is a fixture | Real payload pending | Engine |
+| i18n incomplete | **Data is done** — every data module passes `npm run i18n:check`, Holdings at 15,429/15,429. What is left is **component copy**: 617 bare Cyrillic string literals across 66 files in `src/components` (was «~1,400 across ~68»). Worst: `dc/Roadmap.jsx` 153 (half-translated — 166 already in `t()`), `home/homeData.js` 72, `capitalflow/digest.js` 44 (a helper, so it needs `getLang()` not `useT()`). **Nothing gates this number** — `i18n:check` audits data modules, `i18n:lint` audits rules; neither counts component copy | Dashboard |
+| Ecosystem cycle-lens camera | Lit circuit can land off-screen on lens open; «Восстановить вид» fixes it | Dashboard |
+| Ecosystem: 10 of 108 profiles have no citation of their own | 2 have no publisher at all (`cfius`, `chips-act`) and never can; 8 are behind bot protection on their own sites | Engine |
+| Ecosystem: 34 of 108 nodes fail `min_confirmed_edges` | All held by an edge and marked, none retired. Half are simply nodes rotation has not reached | Engine |
+| Ecosystem: `disputed` is 0 across 314 edges | Machinery complete and tested; 77 dossiers found no case of a party denying what is written about it | Engine |
+| Ecosystem: 150 objects' numbers rest on quotes, not the registry | They predate `facts[]`, so the backing rule cannot apply to them; counted by name in every run report until rewritten | Engine |
+| Ecosystem: 23 objects paraphrase instead of naming | «one customer», «its main rival» — the exact defect the inverted order exists to remove. Only objects with `facts[]` are gated on it | Engine |
+| Ecosystem: 39 of 44 core↔core reads stand on one document | Queue `nvnet-prose-01…06` is built; 5 rewritten so far, `tsmc → broadcom` among them | Engine |
+| Ecosystem: `facts[]` is not rendered | The registry ships in the payload and nothing shows it. Planned as a «по цифрам» block on the edge card and node panel, each quantity linked to its source | Dashboard |
+| Ecosystem: 8 jurisdiction monograms fail the build | The dashboard derives a monogram from the first letters of the displayed name; on the `/4` payload that name is Russian and `i18n_audit` fails. **Not a regression** — the payload committed before the prose pass fails identically. Belongs to the `/3` → `/4` dashboard pass | Dashboard |
+
+---
+
+## 11. How this file stays accurate
+
+**Weekly, not per-change.** Updating after every edit would be noise; a week is
+short enough that nothing important goes unrecorded and long enough to be worth a
+pass.
+
+**Weekly is accurate enough only because the pass is evidence-derived, not
+recalled.** The sections split into two kinds:
+
+- **Machine-checkable** — §6 provenance (contract, source, fixture flag,
+  generated date), §9 cadences, §10 gaps. `python tools/ops_check.py` reads the
+  real payload headers, the real audit warnings and both repos' git logs, and
+  prints any line in this file that no longer matches reality. The weekly pass
+  fixes exactly what it flags.
+- **Judgement** — §3 the fact ladder, §5 goals, §7 mandates, §8 rules. These
+  change only when a person decides they change. The weekly pass never rewrites
+  them; it *proposes* a diff from the week's commits and asks.
+
+**The changelog is append-only.** The pass never edits a past entry — a wrong old
+line is corrected by a new line saying so, so the history of how we operated stays
+readable.
+
+---
+
+## 12. Changelog
+
+Append a dated line for every change to a source, cadence, contract, ownership
+boundary or rule. Newest last. Never edit a past entry.
+
+- **2026-08-24** — Fixed a site-wide blank page: `t()` called in module-level
+  constants ran at import time and threw. Mandate 10 added.
+- **2026-08-25** — Holdings prices moved from hand-maintained to
+  `scripts/refresh_prices.mjs` (Yahoo Finance, 1-year weekly). Promoted from
+  "optional, leave alone" to a required weekly step.
+- **2026-08-25** — Copy: «миноритарная доля» → «доля без контроля» in
+  `capitalMap.js` `EVENT_TYPE_META` and the home-page labels.
+- **2026-08-25** — Fund portfolios: diagnosed why 36 of 43 allocators are empty.
+  Specified a monthly `run_holdings.py` that launches the profiler agents itself.
+  Added the conviction-holdings and no-derivatives mandates. Handoff:
+  `CAPITAL-FLOW-FUND-PORTFOLIOS.md`.
+- **2026-08-27** — Rewritten from an index of pointers into an explanation of the
+  operating model: the six-step "how a claim becomes a fact" ladder, all four
+  pipelines with their real stages, the signal-rule table, the goals table, and
+  the two source ladders and why they differ. Added §11 and a weekly reconcile
+  pass backed by `tools/ops_check.py`.
+- **2026-08-29** — Ecosystem map, campaign v4 phases 2–3. Rotation now decides who
+  is researched: core monthly, mid quarterly, tail on trigger, tier taken from the
+  better of two ranks (integration or criticality) so that hidden chokepoints stop
+  being researched least often. Membership checks are **on**, gated by coverage —
+  `min_sources` / `min_self_sources` apply only after a node's dossier has been
+  worked. Retirement of a node that an edge still holds is refused by default
+  (`membership.on_fail: retire_unheld`) and the held node is marked and named.
+  Rejections and the candidate queue moved into the database with a consumption
+  gate (`tools/feedback_check.py`) after the old file-based loop was found dead.
+  §4b and §9 rewritten; §6 now states the emitted and the delivered contract
+  separately, because the engine is on `/4` and the dashboard is still on `/3`.
+- **2026-08-29** — Ecosystem map, campaign v4 phase 4. Added the hunt for missing
+  edges after TSMC was found with six customers, every one of them discovered from
+  the customer's side. Two generators, both fed by the corpus: a node's own quote
+  disclosing an unnamed counterparty, and a taxonomy rule promising an edge the node
+  has with nobody. Answers are `found` / `not_found` (which now finally populates
+  `nvnet_not_found`) / `dismissed`; `tools/feedback_check.py` gates on them. Rejection
+  and hunt counters now measure months rather than runs. Taxonomy gained a 39th
+  sector, `fabless_silicon`. Payload gained `nameEn`, filled for the 11 entities whose
+  name is genuinely translatable.
+- **2026-09-01** — Ecosystem map, campaign v5 (prose). The order of work is inverted:
+  research → registry of quantities (`facts[]`, `engine/nveco_facts.py`) → free text,
+  with the quote a receipt under the sentence instead of the frame around it. New agent
+  `agents/eco-prose.md` and batcher `tools/make_prose_batches.py`; the default queue is
+  core edges whose read stands on one document. Backing is enforced **per object** — an
+  object with `facts[]` may not fall back to `evidence` and may not paraphrase instead
+  of naming, and everyone else is counted debt printed by name in the run report.
+  `value` is never translated: Cyrillic in it fails the release. A fresh `{ru, en}` pair
+  now beats the translation store for edge `detail` and entity `description`, which it
+  did not before — the first rewritten read would have shipped mismatched sides. The
+  contract **stays `/4`**: `facts[]` is additive, and `/5` is already promised to the
+  removal of `pivotal`, which the dashboard on `/3` still reads. §4b, §9 and §10 updated.
+
+- **2026-09-05** — New dashboard-owned source: the **Nomura Chip Supply Index** on
+  the home landing (`src/data/chipSupplyIndex.json`, schema `chip-supply-index/1`),
+  refreshed monthly by the skill `chip-supply-index-refresh`. There is no feed and
+  there will not be one — the index is Nomura Global Economics' own construction
+  and the full series is subscription-only, so the refresh is a research pass over
+  Nomura's public channels. Every point carries a provenance flag, `published` or
+  `chart_read`; anything Nomura has not published openly does not go in the file.
+  §6 gained a **Dashboard-owned** table — the chip index had nowhere to live,
+  and neither did holdings news, prices or the deal reads, which had been
+  dashboard-owned in §2 and undocumented in §6 since the file was written.
+- **2026-09-14** — **Holdings is bilingual: 15,429/15,429 strings.** News went
+  bilingual on 09-09 (`news[]` ships `{ru, en}` pairs, gated), and the dossiers,
+  portfolios, financials and comparison index followed on 09-14 through a new
+  sidecar `src/data/holdings.en.json` re-attached as a getter overlay — the same
+  pattern as `dc-details.en.json`, with `scripts/holdings_en_{common,status,merge}.mjs`
+  behind `npm run holdings:en` and `holdings:en:merge`. `i18n_audit` now gates
+  `holdingsV2.js` and `holdingsIndex.js` with an empty baseline, so Russian cannot
+  re-enter the English build. Closes the §10 gap «Holdings news is Russian-only».
+- **2026-09-14** — i18n gap re-measured. The data side is finished; what remains is
+  component copy, counted honestly for the first time: **617 bare Cyrillic literals
+  across 66 files**, down from the recalled «~1,400 across ~68». No build gate
+  counts it — recorded in §10 as an unmeasured surface, not a solved one.

@@ -1,0 +1,102 @@
+# Source registry by tier. Tier 5 discovers leads; Tier 1 confirms.
+# Agents must check every source marked mandatory: true for their class.
+
+tier1:  # confirms — official
+  - { name: SEC EDGAR, url: "https://www.sec.gov/cgi-bin/browse-edgar", mandatory: true }
+  # company IR pages, official PRs, portfolio pages, government DBs
+
+tier2:  # data platforms
+  - { name: Crunchbase, url: "https://www.crunchbase.com" }
+  - { name: Dealroom, url: "https://dealroom.co" }
+  # PitchBook, Preqin, AlphaSense, FactSet, Capital IQ, Bloomberg, Harmonic
+
+tier3:  # quality press
+  - { name: Reuters, url: "https://www.reuters.com" }
+  # FT, WSJ, Bloomberg News, The Information
+
+tier4:  # specialist analysis
+  - { name: SemiAnalysis, url: "https://semianalysis.com" }
+  # Stratechery, conference talks
+
+tier5:  # lead discovery only — never store unverified as verified
+  []
+  # podcasts, YouTube, X, LinkedIn, blogs
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Шкала тиров ЭКОСИСТЕМНОГО конвейера (nveco_*). Она ДРУГАЯ, чем тиры 1–5 выше: та
+# шкала ранжирует источники по «официальности вообще», эта — по ОТНОШЕНИЮ ИСТОЧНИКА К
+# ПРЕДМЕТУ утверждения. Не путать; недельный конвейер продолжает читать блок
+# tier1..tier5, и он здесь не менялся ни строкой.
+#
+# ЧТО ИЗМЕНИЛОСЬ В v4. До неё шкала называлась «близость к NVIDIA»: тир 1 значил
+# «сказала NVIDIA», и пресс-релиз TSMC про TSMC получал у себя же дома тир 2. Точка
+# отсчёта переехала на предмет: тир 1 — это когда о сущности говорит она сама, кем бы
+# она ни была. Кто чей издатель, знает config/entity_domains.yaml; решает
+# nveco.source_tier(url, subject_id, counterparty_id).
+nveco_tiers:
+  1:
+    name: "Слово самого предмета"
+    what: "его отчётность и его CIK в EDGAR, его звонки, пресс-релизы, вайтпейперы, документация, репозиторий"
+    confidence: [0.95, 1.00]
+  2:
+    name: "Слово второго конца связи или другой сущности карты"
+    what: "документы контрагента об этой связи; официальные публикации любой другой сущности, стоящей на карте"
+    confidence: [0.90, 0.95]
+  3:
+    name: "Прямая речь принципалов"
+    what: "выступления руководителей, конференции, показания, официальные публикации регуляторов и компаний вне карты"
+    confidence: [0.85, 0.90]
+  4:
+    name: "Исследования и данные"
+    what: "научные статьи, патенты, лидерборды, отчёты аналитиков, Crunchbase / PitchBook, реестры"
+    confidence: [0.75, 0.85]
+  5:
+    name: "Вторичная пресса"
+    what: "Bloomberg, Reuters, WSJ, The Information, отраслевые рассылки"
+    confidence: [0.65, 0.75]
+  6:
+    name: "Третичное и сигналы"
+    what: "подкасты без принципалов, соцсети, форумы, блоги, видео"
+    confidence: [0.40, 0.65]
+
+# ОБЩАЯ таблица издателей: «что это за издатель ПО РОДУ», а не «насколько он близок к
+# кому-то». Ни одной строки под конкретную компанию здесь больше нет — они переехали в
+# config/entity_domains.yaml и стали обычными данными своего узла, ничем не отличаясь
+# от строк любого другого. Из-за этого таблица короче вдвое и читается за один взгляд:
+# то, что в ней осталось, — это издатели, которые не принадлежат никому на карте.
+#
+# Порядок важен: правила проверяются СВЕРХУ ВНИЗ, побеждает первое совпадение.
+# Эта таблица — ПОСЛЕДНЯЯ инстанция. Сначала спрашивается реестр издателей, и только
+# URL, чей владелец в реестре не значится, доходит сюда.
+nveco_domain_tiers:
+  # Официальные публикации государства и регуляторов = прямая речь принципала.
+  # Тиром 1 они были, только пока «принципалом» считался один экспортный режим.
+  - { match: "federalregister.gov",        tier: 3, type: testimony }
+  - { match: "congress.gov",               tier: 3, type: testimony }
+  - { match: "home.treasury.gov",          tier: 3, type: testimony }
+  - { match: "youtube.com/watch",          tier: 3, type: interview }
+  # Пресс-контуры компаний, которых НЕТ на карте: официально, но о чужом предмете.
+  - { match: "investor.",                  tier: 3, type: company_pr }
+  - { match: "ir.",                        tier: 3, type: company_pr }
+  - { match: "press.",                     tier: 3, type: company_pr }
+  # Отчётность по CIK, которого нет в реестре: документ настоящий, но его издатель
+  # не сторона утверждения и вообще не на карте. sec.gov сам по себе ничей.
+  - { match: "sec.gov",                    tier: 4, type: sec_filing }
+  # Патент издаёт ведомство, а не правообладатель: из URL заявителя не видно.
+  - { match: "patents.google.com",         tier: 4, type: patent }
+  - { match: "arxiv.org",                  tier: 4, type: research }
+  - { match: "crunchbase.com",             tier: 4, type: database }
+  - { match: "pitchbook.com",              tier: 4, type: database }
+  - { match: "semianalysis.com",           tier: 4, type: analyst }
+  - { match: "trendforce.com",             tier: 4, type: analyst }
+  - { match: "github.com",                 tier: 4, type: product_doc }
+  - { match: "githubusercontent.com",      tier: 4, type: product_doc }
+  - { match: "bloomberg.com",              tier: 5, type: press }
+  - { match: "reuters.com",                tier: 5, type: press }
+  - { match: "wsj.com",                    tier: 5, type: press }
+  - { match: "ft.com",                     tier: 5, type: press }
+  - { match: "theinformation.com",         tier: 5, type: press }
+  - { match: "x.com",                      tier: 6, type: social }
+  - { match: "twitter.com",                tier: 6, type: social }
+  - { match: "linkedin.com",               tier: 6, type: social }
+  - { match: "reddit.com",                 tier: 6, type: social }

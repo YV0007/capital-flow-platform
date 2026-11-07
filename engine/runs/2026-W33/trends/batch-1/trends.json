@@ -1,0 +1,30 @@
+[
+  {
+    "cluster_id": "defense-tech::defense-manufacturing",
+    "title": "Physical production capacity as the scarce defense asset",
+    "narrative": "A pure-play US defense manufacturer clears a growth-equity valuation normally reserved for AI companies — late-stage capital is treating physical production capacity, not software, as the scarce asset in the defense stack. The tell is the cap table's split personality: allocators the map watches for early-stage bets (a16z, Founders Fund) sit alongside anchor growth money (JPMorganChase SIG, Baillie Gifford, T. Rowe Price), marking this as a pre-IPO story rather than a venture one. Watch whether the next Hadrian round — or a comparable Anduril/Senra-type extension — prints at AI-comp revenue multiples rather than defense-comp backlog multiples.",
+    "confidence": "medium",
+    "provisional": true
+  },
+  {
+    "cluster_id": "neocloud::gpu-cloud-financing",
+    "title": "Compute financed like infrastructure, not sold like a product",
+    "narrative": "A first-institutional-round GPU cloud priced against infrastructure comparables rather than software ones — the thesis, in the founders' framing, is that compute should be financed like power or fibre, backed by long-dated offtake, not sold like a product. The tell is the pairing: an early-stage venture lead (a16z) writing alongside a strategic chip supplier (NVIDIA) at Series A, a mix that usually appears only after demand is proven, not before, and here it arrives bundled with committed bank financing and a multi-year compute contract. Watch whether the Norway build with Bitdeer closes project financing at infrastructure spreads, and whether other stealth GPU-cloud entrants raise on committed megawatts and signed offtake rather than ARR.",
+    "confidence": "medium",
+    "provisional": true
+  },
+  {
+    "cluster_id": "power-energy::grid-storage",
+    "title": "Distributed home storage repriced as grid infrastructure",
+    "narrative": "Home batteries are being underwritten as an aggregated grid asset rather than a consumer hardware line — the valuation step reflects capital paying for a distributed-utility rollout, not a product margin. The signal is the composition of the money behind it: fintech-leaning names (Ribbit, Addition) and an energy-infrastructure investor (Energy Impact Partners) co-investing under a JPMorganChase SIG anchor, a structure that reads like financing a utility build rather than a device company, with several map-watched crossover funds re-upping at once. Watch whether the fleet begins monetizing in ERCOT grid-services markets, or whether a comparable virtual-power-plant aggregator raises at the same infrastructure-style multiple.",
+    "confidence": "medium",
+    "provisional": true
+  },
+  {
+    "cluster_id": "ai-applications::drug-discovery-ai",
+    "title": "Frontier-AI and family-office capital crossing into drug discovery",
+    "narrative": "AI-native drug discovery is pulling capital that normally sits in software and personal science bets, not traditional biotech syndicates — the pattern is a crossover of frontier-tech money into the therapeutics stack. The surprise is who shows up: an AI lab (OpenAI) on one molecular-design cap table and tech-founder family offices (Bezos, Gates) converging on another, the second such family-office pairing in this window, sitting next to specialist bio funds rather than replacing them. Watch whether the next AI-for-drug-discovery raise draws the same crossover — an AI lab or tech family office anchoring a therapeutics round would confirm AI-for-science as a distinct allocation lane rather than a one-off.",
+    "confidence": "medium",
+    "provisional": true
+  }
+]

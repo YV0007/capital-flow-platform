@@ -1,0 +1,140 @@
+"""Оркестратор сети ИИ-инфраструктуры (контракт ai-ecosystem-network/4).
+
+Usage: python run_network.py [YYYY-MM] [--deliver] [--offline]
+
+Однократная ДОСТРОЙКА поверх готового пилота, а не месячный цикл — поэтому здесь нет
+обязательного месячного параметра и нет стадии агентов. Месячный цикл начнётся со
+следующего реального обновления семени.
+
+    handoff/nvidia_ecosystem.json (семя: 106 сущностей, 243 связи)
+      + runs/<месяц>/nvnet-*/       (достройка: новая сущность и связи пивот↔пивот)
+      -> nvnet_ingest      достройка, прозрачность профиля, проверка новых строк
+      -> nvnet_centrality  degree, betweenness, pagerank, integration и ядро
+      -> nvnet_subgraphs   три подграфа ПРАВИЛОМ, вырожденность не скрывается
+      -> nvnet_spof        точки отказа: удалить узел и посчитать разрыв
+      -> nvnet_handoff     handoff/ai_ecosystem_network.json + чейнджлог, с валидатором
+"""
+
+import shutil
+import sys
+from pathlib import Path
+
+from engine import db, i18n, nveco, nvnet, nvnet_handoff, nvnet_ingest
+
+DELIVER_TO = Path.home() / "Desktop/BASE/Code/ab-investment/src/data/aiEcosystemNetwork.json"
+
+
+def main(month: str, do_deliver: bool = False, offline: bool = False) -> int:
+    print(f"== Сеть ИИ-инфраструктуры: {month} ==")
+
+    net = nvnet_ingest.build(month)
+    print(f"[ingest]  {len(net['entities'])} сущностей, {len(net['edges'])} связей "
+          f"(семя {len(net['seed']['entities'])}/{len(net['seed']['edges'])}, "
+          f"достройка +{net['newEntities']}/+{net['newEdges']})")
+    print(f"          прочитано описаний сущностей: {net['descriptions']}; "
+          f"величин в реестре: {net['facts']}"
+          + (f", отклонено {net['factsRejected']}" if net["factsRejected"] else ""))
+    for p in net["problems"][:15]:
+        print("          ", p)
+    if net["rejects"]:
+        print(f"          отклонено строк: {len(net['rejects'])}")
+        for r in net["rejects"][:10]:
+            print(f"           {r['file']}:{r['line']} {r['reason'][:110]}")
+    if net["dropped"]:
+        print(f"          вне сети: {', '.join(net['dropped'][:8])}")
+
+    if not offline:
+        n_facts = nvnet_ingest.persist_facts(month, net)
+        r = nvnet_ingest.persist(month, net)
+        print(f"[реестр]  в базе {n_facts} величин — ведомость для проверки значений")
+        print("[persist] достройка записана в nvnet_* (семя не дублируется)")
+        if r["entities"] or r["edges"] or r["pairs"]:
+            print(f"          снято с карты: {len(r['entities'])} сущностей, "
+                  f"{len(r['edges'])} связей, {len(r['pairs'])} пар без связи")
+            for i in (r["entities"] + r["edges"] + r["pairs"])[:10]:
+                print("           снято", i)
+        for a in r["broken"]:
+            print(f"          {a}: файл сдан, но не выжила ни одна строка — "
+                  f"строки этого каталога НЕ сняты")
+        for i in r["held"]:
+            print(f"          сущность '{i}' больше не заявлена, но на неё ссылается "
+                  f"связь — оставлена")
+
+    # Переводы: файлы runs/<месяц>/_i18n/*.csv и runs/<месяц>/*/translations.csv.
+    # Грузятся ДО сборки выдачи, потому что валидатор контракта уронит выпуск,
+    # если у любого поля прозы окажется пустая сторона.
+    con = nveco.connect()
+    i18n.ensure(con)
+    # Файлы перевода — манифест, а не приращение: сначала снимаем то, что пришло
+    # из них в прошлый раз, потом грузим заново. Иначе строка, удалённая из
+    # файла, живёт в складе вечно и продолжает уезжать в дашборд.
+    dropped = i18n.reset_csv_scope(con, "nveco")
+    loaded, bad = 0, []
+    for path in sorted(list((db.RUNS_DIR / month).glob("_i18n/*.csv"))
+                       + list((db.RUNS_DIR / month).glob("*/translations.csv"))):
+        s = i18n.load_csv(con, path, "nveco")
+        loaded += s["written"]; bad += s["bad"]
+    cov = i18n.coverage(con, "nveco")
+    print(f"[i18n]    {loaded} строк перевода загружено (снято прошлых {dropped}); "
+          f"в складе ru={cov['ru']} en={cov['en']}")
+    for b in bad[:8]:
+        print("           ОТКЛОНЕНО", b)
+
+    h = nvnet_handoff.run(month, net)
+    if not h["ok"]:
+        print(f"[handoff] КОНТРАКТ НАРУШЕН — файл НЕ записан ({len(h['errors'])} ошибок):")
+        for e in h["errors"][:25]:
+            print("           ", e)
+        return 1
+    n = h["network"]
+    print(f"[metrics] плотность {n['density']}, средняя степень {n['averageDegree']}, "
+          f"кластеризация {n['clusteringCoefficient']}")
+    print(f"[ядро]    {h['coreRule']}: " + ", ".join(
+        f"{e['id']}({e['integration']['score']})" for e in h["coreTop"]))
+    mm = h["membership"]
+    print(f"[членство] впустило бы {mm['admitted']}, в очереди {mm['queued']}, "
+          f"снято {mm['retired']}; проверки "
+          f"{'ВКЛЮЧЕНЫ' if mm['enforced'] else 'выключены (Фаза 0)'}")
+    print(f"[spof]    {len(n['singlePointsOfFailure'])} точек отказа: " +
+          ", ".join(f"{s['id']}({s['betweenness']})"
+                    for s in n["singlePointsOfFailure"][:6]))
+    for s in n["subgraphs"]:
+        mark = " ВЫРОЖДЕН" if s.get("degenerate") else ""
+        print(f"[subgraph] {s['id']}: {len(s['nodeIds'])} узлов, "
+              f"{len(s['edgeIds'])} связей{mark}")
+    for note in n.get("subgraphNotes", []):
+        print("           ", note)
+    pr = h["prose"]
+    print(f"[реестр]  величины лежат у {len(pr['rewritten'])} объектов; "
+          f"числа на цитатах, а не в реестре, ещё у {len(pr['debt'])} — это долг")
+    if pr["faceless"]:
+        print(f"          перифраз вместо имени ещё у {len(pr['faceless'])}: "
+              + ", ".join(pr["faceless"][:6]))
+    if pr["oneDocument"]:
+        print(f"          все расписки одного документа у {len(pr['oneDocument'])}: "
+              + ", ".join(pr["oneDocument"][:6]))
+
+    dc = h["descriptions"]
+    print(f"[описания] description есть у {dc['have']} из {dc['total']} сущностей; "
+          f"пивотов {dc['pivots_have']}/{dc['pivots']}")
+    if dc["pivots_missing"]:
+        # Названы поимённо, а не числом: порядок работы — сначала пивоты, и список
+        # того, что осталось, и есть задание на следующий прогон.
+        print("           без описания пивоты: " + ", ".join(dc["pivots_missing"]))
+    print(f"[handoff] {h['entities']} сущностей, {h['edges']} связей, версия "
+          f"{h['version']} -> {h['path']}")
+
+    if do_deliver:
+        if not DELIVER_TO.parent.is_dir():
+            print(f"[deliver] ПРОПУЩЕНО — нет директории {DELIVER_TO.parent}")
+        else:
+            shutil.copy(h["path"], DELIVER_TO)
+            print(f"[deliver] -> {DELIVER_TO}")
+    return 0
+
+
+if __name__ == "__main__":
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    month = args[0] if args else nveco.current_month()
+    sys.exit(main(month, do_deliver="--deliver" in sys.argv,
+                  offline="--offline" in sys.argv))
