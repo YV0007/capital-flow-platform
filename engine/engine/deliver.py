@@ -32,8 +32,9 @@ from pathlib import Path
 
 from . import db
 
+# The engine lives at <repo>/engine; the dashboard is the repo root above it.
 AB_PATH = Path(os.environ.get(
-    "AB_INVESTMENT_PATH", "/Users/macbook/Desktop/BASE/Code/ab-investment"))
+    "AB_INVESTMENT_PATH", Path(__file__).resolve().parents[2]))
 DEST_REL = "src/data/capitalMap.json"
 LOGO_SCRIPT = "scripts/fetch_logos.py"
 # Everything a delivery is allowed to touch in the dashboard repo.

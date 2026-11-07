@@ -170,7 +170,9 @@ def main(month: str, do_deliver: bool = False,
     print(f"          чейнджлог: +{h['added']} / -{h['removed']} / ~{h['changed']}")
 
     if do_deliver:
-        dest = Path(nveco.scope_cfg()["deliver_to"]).expanduser()
+        # relative paths resolve against the engine root, not the shell CWD
+        dest = Path(__file__).resolve().parent / nveco.scope_cfg()["deliver_to"]
+        dest = Path(str(dest)).expanduser().resolve()
         if not dest.parent.is_dir():
             print(f"[deliver] ПРОПУЩЕНО — нет директории {dest.parent}")
         else:

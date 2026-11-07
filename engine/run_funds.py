@@ -36,7 +36,7 @@ from engine import (fund, fund_13f, fund_ark, fund_audit, fund_crosscheck,
                     fund_ingest, fund_sec, fund_sectors, fund_shorts, fund_vehicles,
                     fund_watch)
 
-DELIVER_TO = (fund.db.ROOT.parent / "BASE/Code/ab-investment/src/data/fundTracker.json")
+DELIVER_TO = (fund.db.ROOT.parent / "src/data/fundTracker.json")
 
 
 # A daily run should stay quick. The fast-layer queue drains newest-first, so a

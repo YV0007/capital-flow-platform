@@ -17,7 +17,8 @@ set -euo pipefail
 # --- activate the workspace: resolve to this script's folder no matter where you run it ---
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-AB="${AB_INVESTMENT_PATH:-/Users/macbook/Desktop/BASE/Code/ab-investment}"
+# engine/ sits inside the dashboard repo; the dashboard is the directory above.
+AB="${AB_INVESTMENT_PATH:-$(dirname "$PWD")}"
 WEEK="${1:-$(python3 -c 'import datetime;y,w,_=datetime.date.today().isocalendar();print(f"{y}-W{w:02d}")')}"
 
 echo "== Capital Flow: $WEEK =="

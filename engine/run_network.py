@@ -21,7 +21,8 @@ from pathlib import Path
 
 from engine import db, i18n, nveco, nvnet, nvnet_handoff, nvnet_ingest
 
-DELIVER_TO = Path.home() / "Desktop/BASE/Code/ab-investment/src/data/aiEcosystemNetwork.json"
+DELIVER_TO = (Path(__file__).resolve().parent.parent
+              / "src/data/aiEcosystemNetwork.json")
 
 
 def main(month: str, do_deliver: bool = False, offline: bool = False) -> int:

@@ -77,7 +77,7 @@ core:
 
 # Куда едет карта. Раньше эти три строки лежали в записи центра и уезжали вместе с ним.
 handoff: handoff/nvidia_ecosystem.json
-deliver_to: "~/Desktop/BASE/Code/ab-investment/src/data/nvidiaEcosystem.json"
+deliver_to: "../src/data/nvidiaEcosystem.json"   # относительно корня движка
 question:
   ru: >-
     Кто держит функцию, без которой стек не работает; насколько глубоко он в него вшит;

@@ -21,7 +21,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DASH = Path("/Users/macbook/Desktop/BASE/Code/ab-investment")
+DASH = Path(__file__).resolve().parents[2]
 OPS = ROOT / "OPERATIONS.md"
 
 # Payloads the doc makes claims about: dashboard file -> what §6 says about it.
