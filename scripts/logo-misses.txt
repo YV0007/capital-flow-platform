@@ -3,79 +3,24 @@
 # For any that IS a real company, add a website link to
 # src/data/entityReference.json and re-run `npm run logos`.
 
-target:SB Energy PORTS-Pike Technology Campus (Ohio)	SB Energy PORTS-Pike Technology Campus (Ohio)
 target:DOE Paducah Site AI data center campus (Western Kentucky)	DOE Paducah Site AI data center campus (Western Kentucky)
-target:Hugging Face	Hugging Face
-target:KKR Global Infrastructure Investors V	KKR Global Infrastructure Investors V
 target:West Street Capital Partners IX	West Street Capital Partners IX
 target:Sturgeon County data center (Alberta, Canada)	Sturgeon County data center (Alberta, Canada)
-target:NAVER GAK Sejong AI Factory (South Korea)	NAVER GAK Sejong AI Factory (South Korea)
-target:DigitalBridge	DigitalBridge
 target:Akita 500MW AI data center (Japan)	Akita 500MW AI data center (Japan)
 target:Akita AI Data Center (Bitgrit/S2)	Akita AI Data Center (Bitgrit/S2)
-target:Akita AI Data Center (Bitgrit / S2 Group, Japan)	Akita AI Data Center (Bitgrit / S2 Group, Japan)
 target:Akita AI data center (developer: BitGrid / S2)	Akita AI data center (developer: BitGrid / S2)
-target:Stack Infrastructure	Stack Infrastructure
-target:STACK Infrastructure Melbourne (third campus)	STACK Infrastructure Melbourne (third campus)
-target:HUMAIN data centers (Riyadh)	HUMAIN data centers (Riyadh)
-target:ST Telemedia Global Data Centres (STT GDC)	ST Telemedia Global Data Centres (STT GDC)
-target:Alliant Energy	Alliant Energy
-target:Constellation Energy	Constellation Energy
 target:Project Sopaipilla Holdings (Meta El Paso data center JV)	Project Sopaipilla Holdings (Meta El Paso data center JV)
 target:El Paso AI Data Center Venture (with Meta)	El Paso AI Data Center Venture (with Meta)
-target:Vistra Corp	Vistra Corp
-target:MediaTek	MediaTek
-target:SB Energy	SB Energy
-target:Meta Platforms	Meta Platforms
-target:HUMAIN Data Center Fund	HUMAIN Data Center Fund
-target:Thinking Machines Lab	Thinking Machines Lab
-target:Humain Data Center Fund	Humain Data Center Fund
-target:Humain Data Center Fund (via BSF Capital)	Humain Data Center Fund (via BSF Capital)
-target:HUMAIN AI Data Center Fund	HUMAIN AI Data Center Fund
-target:HUMAIN	HUMAIN
-target:IREN Limited	IREN Limited
-target:NextEra Energy (Duane Arnold Energy Center)	NextEra Energy (Duane Arnold Energy Center)
-target:DOE SPARK grid transmission initiative (31 projects, 26 states)	DOE SPARK grid transmission initiative (31 projects, 26 states)
-target:NextEra Energy (Duane Arnold Energy Center restart)	NextEra Energy (Duane Arnold Energy Center restart)
 target:SK-KKR Korea renewable energy platform	SK-KKR Korea renewable energy platform
-target:Machine Age Fund	Machine Age Fund
 target:U.S. semiconductor fabrication facility (unnamed)	U.S. semiconductor fabrication facility (unnamed)
-target:Anderon (IBM subsidiary)	Anderon (IBM subsidiary)
-target:Nscale	Nscale
-target:Figure AI	Figure AI
 target:U.S. universities / quantum computing & Genesis Mission research initiatives	U.S. universities / quantum computing & Genesis Mission research initiatives
-target:U.S. scientific research institutions / DOE Genesis Mission	U.S. scientific research institutions / DOE Genesis Mission
-target:Cyera	Cyera
-target:Grand Ming Group Holdings (iTech Tower 3.1 & 3.2, Fanling, Hong Kong -- via subsidiaries Regal Development Ltd & Golden Ford Ltd)	Grand Ming Group Holdings (iTech Tower 3.1 & 3.2, Fanling, Hong Kong -- via subsidiaries Regal Development Ltd & Golden Ford Ltd)
 target:Grand Ming Group Holdings (iTech Tower 3.1 / 3.2)	Grand Ming Group Holdings (iTech Tower 3.1 / 3.2)
 target:UK agentic AI safety research (Oxford BOLD / UCL SOFAIR / Imperial College)	UK agentic AI safety research (Oxford BOLD / UCL SOFAIR / Imperial College)
 target:UK AI safety research (BOLD at Oxford; SOFAIR at UCL; Imperial College London)	UK AI safety research (BOLD at Oxford; SOFAIR at UCL; Imperial College London)
-target:Autonomous Solutions Inc. (ASI)	Autonomous Solutions Inc. (ASI)
-target:Rigetti Computing	Rigetti Computing
-target:D-Wave Quantum	D-Wave Quantum
-target:Quantinuum	Quantinuum
-target:Digi Power X	Digi Power X
-target:Amazon	Amazon
 target:Flourish	Flourish
-target:PsiQuantum	PsiQuantum
-target:Strategic Bauxite USA, LLC (SBX)	Strategic Bauxite USA, LLC (SBX)
-target:Strategic Bauxite USA	Strategic Bauxite USA
 target:Standard Bauxite	Standard Bauxite
-alloc:Empery Digital	Empery Digital
-target:Vista Energy	Vista Energy
 target:Midwest AI Data Center Acquisition Entity (Hunt Properties JV)	Midwest AI Data Center Acquisition Entity (Hunt Properties JV)
 alloc:Vinod Khosla	Vinod Khosla
-target:DOE Genesis Mission (SPARK)	DOE Genesis Mission (SPARK)
-target:Vistra	Vistra
-target:American Electric Power	American Electric Power
-target:DTE Energy	DTE Energy
-target:FirstEnergy	FirstEnergy
-target:CMS Energy	CMS Energy
-target:Trilogy Metals Inc	Trilogy Metals Inc
-target:Cardinal Data Power	Cardinal Data Power
-target:Preview	Preview
-target:AIR	AIR
-target:X-Energy	X-Energy
 target:Nippon Gateway Infrastructure (NGI)	Nippon Gateway Infrastructure (NGI)
 target:SB Neo	SB Neo
 target:France sovereign AI infrastructure framework	France sovereign AI infrastructure framework
@@ -93,77 +38,11 @@ target:Paducah DOE Site AI Data Center Campus	Paducah DOE Site AI Data Center Ca
 target:Mexico private credit / infrastructure market	Mexico private credit / infrastructure market
 target:Akita AI Data Center (BitGrid / S2 JV)	Akita AI Data Center (BitGrid / S2 JV)
 target:SK Horizon	SK Horizon
-target:1X Technologies	1X Technologies
-target:DuckLabs	DuckLabs
-target:PLUS ES	PLUS ES
 alloc:Max Levchin	Max Levchin
-target:Dili	Dili
-target:Arrive Logistics	Arrive Logistics
-target:Cloverleaf Infrastructure	Cloverleaf Infrastructure
-target:AWS HUMAIN AI Zone	AWS HUMAIN AI Zone
-target:NavigateAI	NavigateAI
-target:Gimlet Labs	Gimlet Labs
-target:Lightfield	Lightfield
-target:Cognition	Cognition
-target:Mercor	Mercor
-target:EnduroSat	EnduroSat
-target:Stilla.ai	Stilla.ai
-target:Perplexity	Perplexity
-target:Integral	Integral
-target:Ansaldo Energia	Ansaldo Energia
-target:Profound	Profound
-target:Nara Health	Nara Health
-target:Factory	Factory
-target:Mazama Energy	Mazama Energy
-target:Split Pay	Split Pay
-target:Voya Energy	Voya Energy
-target:REGENT Craft	REGENT Craft
-target:Crusoe	Crusoe
-target:SciFin	SciFin
-target:Highstock	Highstock
-target:Harvey	Harvey
-target:Savvy Wealth	Savvy Wealth
-target:Robotics and AI Institute (RAI)	Robotics and AI Institute (RAI)
-target:Snorkel AI	Snorkel AI
-target:HiddenLayer	HiddenLayer
-target:Island	Island
-target:Rightway	Rightway
-target:RHAELM Holdings / JERA / Dell Technologies AI data center project (Chiba, Japan)	RHAELM Holdings / JERA / Dell Technologies AI data center project (Chiba, Japan)
-target:Mantic Technologies	Mantic Technologies
-target:Stuut	Stuut
-target:Pilgrim	Pilgrim
-target:EliseAI	EliseAI
-target:Fortell	Fortell
 target:Falcata (TSC + ASEI combination)	Falcata (TSC + ASEI combination)
-target:STT GDC (ST Telemedia Global Data Centres)	STT GDC (ST Telemedia Global Data Centres)
-target:Mecka	Mecka
-target:Catalyst	Catalyst
-target:TypeSafe AI	TypeSafe AI
 target:Instinct	Instinct
-target:SharonAI Holdings Inc.	SharonAI Holdings Inc.
-target:Stack Infrastructure (MEL02 campus, Melbourne)	Stack Infrastructure (MEL02 campus, Melbourne)
-target:Doctolib	Doctolib
-target:Pigment	Pigment
-target:Genesis AI	Genesis AI
-target:Entalpic	Entalpic
 target:TBD -- additional European AI companies (unnamed)	TBD -- additional European AI companies (unnamed)
-target:Applied Compute	Applied Compute
-target:Commonwealth Fusion Systems	Commonwealth Fusion Systems
-target:Arena	Arena
-target:Isomorphic Labs	Isomorphic Labs
 target:DayOne (data center operator)	DayOne (data center operator)
-target:Preference Model	Preference Model
-target:doxxnet	doxxnet
-target:Eka Robotics	Eka Robotics
-target:Armadin	Armadin
-target:Conway Research	Conway Research
-target:Prima Mente	Prima Mente
-target:Boltz	Boltz
-target:Foresight	Foresight
-target:Hiverge	Hiverge
-target:Riverlane	Riverlane
-target:Serval	Serval
-target:Kalshi	Kalshi
 target:Meta El Paso data center JV (Project Sopaipilla)	Meta El Paso data center JV (Project Sopaipilla)
 target:Nippon Gateway Infrastructure	Nippon Gateway Infrastructure
 cfius	CFIUS
