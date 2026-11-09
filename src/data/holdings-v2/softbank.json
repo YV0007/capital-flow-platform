@@ -3,7 +3,7 @@
   "name": "SoftBank Group",
   "ticker": "9984.T · SFTBY",
   "type": "vision-fund holdco",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "SBG — инвестиционный холдинг, чья equity value of holdings на ~76% сосредоточена в Arm (¥19.15T, консолидирован) и Vision Fund 2 (¥17.19T, внутри доминирует OpenAI); акция торгуется с дисконтом ~49% к raw NAV/share ¥7,029, а возможный перенос OpenAI IPO на 2027 — live-катализатор, склоняющий решение к hold до прояснения сроков IPO и рефинанса $40B bridge loan.",
   "kpis": [
     {
@@ -3173,59 +3173,59 @@
   },
   "news": [
     {
-      "date": "08.09.2026",
+      "date": "06.11.2026",
       "type": "news",
       "title": {
-        "ru": "SoftBank прощупывает рынок под выпуск бондов на $10–20 млрд для ИИ",
-        "en": "SoftBank sounds out a $10-20bn junk bond sale to fund AI bets"
+        "ru": "Китай заблокировал покупку китайского бизнеса робототехники ABB",
+        "en": "China blocks SoftBank's acquisition of ABB's robotics business in China"
       },
       "text": {
-        "ru": "SoftBank Group изучает возможность привлечь от $10 до $20 млрд через выпуск высокодоходных облигаций (junk bonds), не исключая транш в евро. Финансовый директор Ёсимицу Гото и другие руководители проведут встречи с квалифицированными инвесторами в Нью-Йорке 14–17 сентября в офисе Citigroup; организаторами выступают Citigroup, Goldman Sachs, JPMorgan Chase и Morgan Stanley, размещение рассматривается в формате Rule 144A. Ранее в этом году компания привлекла бридж-кредит на $40 млрд под инвестиции в OpenAI, и новый выпуск призван рефинансировать долг, накопленный из-за агрессивных вложений в ИИ.",
-        "en": "SoftBank Group is weighing a $10-20 billion junk bond sale that may also include a euro-denominated tranche. Chief Financial Officer Yoshimitsu Goto and other executives will meet qualified investors in New York from 14 to 17 September at Citigroup's office, with Citigroup, Goldman Sachs, JPMorgan Chase and Morgan Stanley organising the potential Rule 144A offering. The group took a $40 billion bridge loan earlier this year to help fund its OpenAI investments, and the new deal is aimed at refinancing debt built up through its aggressive AI spending."
+        "ru": "4 ноября 2026 года SoftBank Group получила уведомление китайского Управления механизма проверки безопасности иностранных инвестиций о запрете приобретения китайского бизнеса робототехники ABB; компания раскрыла это 6 ноября. Сделка по покупке подразделения робототехники ABB была объявлена 8 октября 2025 года и оценивается примерно в $5,4 млрд. SoftBank сообщила, что продолжает тесный диалог с ABB, управляет процессом получения остальных регуляторных одобрений и объявит о решениях, требующих раскрытия.",
+        "en": "On November 4, 2026 SoftBank Group was notified by China's Office of the Working Mechanism for Foreign Investment Security Review that its acquisition of ABB's robotics business in China had been prohibited; SoftBank disclosed this on November 6. The purchase of ABB's robotics division, agreed on October 8, 2025, values the business at roughly $5.4 billion. SoftBank said it remains in close dialogue with ABB, is managing the remaining regulatory approvals and will announce any decisions requiring disclosure."
       },
-      "url": "https://ng.investing.com/news/stock-market-news/softbank-eyes-jumbo-bond-sale-to-fund-ai-investments--bloomberg-93CH-2688028",
+      "url": "https://group.softbank/en/news/press/20261106",
       "image": null
     },
     {
-      "date": "04.09.2026",
+      "date": "06.11.2026",
       "type": "news",
       "title": {
-        "ru": "SoftBank разместил розничные бонды на ¥1 трлн под 4,75% годовых",
-        "en": "SoftBank prices ¥1trn retail bond at a 4.75% coupon"
+        "ru": "CDS на долг SoftBank — максимум за 4 года, акции в Токио −10,8%",
+        "en": "SoftBank credit risk hits four-year high as shares close down 10.8%"
       },
       "text": {
-        "ru": "SoftBank Group определила условия 70-го необеспеченного корпоративного выпуска: ¥1 трлн (около $6,5 млрд) на семь лет с купоном 4,75% годовых и погашением 16 сентября 2033 года. Бумаги размещаются по номиналу среди частных инвесторов в Японии, период подписки — 7–16 сентября, дата выпуска — 17 сентября 2026 года. Рейтинг выпуска — A от Japan Credit Rating Agency. Привлечённые средства пойдут на погашение внутренних облигаций и частичное финансирование покупки робототехнического бизнеса ABB Ltd.",
-        "en": "SoftBank Group set the terms of its 70th unsecured straight corporate bond: ¥1 trillion (about $6.5 billion) over seven years, carrying a 4.75% annual coupon and maturing on 16 September 2033. The notes are sold at par to retail investors in Japan, with a 7-16 September subscription window and a 17 September 2026 issue date, and are rated A by Japan Credit Rating Agency. Proceeds are earmarked for redeeming domestic bonds and partly funding the acquisition of ABB Ltd's robotics business."
+        "ru": "6 ноября пятилетние кредитно-дефолтные свопы (CDS) на долг SoftBank Group расширились до 466 базисных пунктов — максимума с октября 2022 года; к 06:53 GMT спред составлял 457,5 б.п., что по данным Markit отражает вероятность дефолта 30,6%. Акции в Токио закрылись падением на 10,8% и с начала сентября потеряли почти половину стоимости. Давление объясняют сомнениями в окупаемости искусственного интеллекта, ростом заимствований под рекордные доходности для финансирования доли в OpenAI на $64,6 млрд и переносом IPO OpenAI на 2027 год.",
+        "en": "On November 6 SoftBank Group's five-year credit default swap spread widened to as much as 466 basis points, the widest since October 2022; it stood at 457.5 bps at 0653 GMT, implying a 30.6% probability of default according to Markit. The shares ended the Tokyo session down 10.8% and have fallen by almost half since the start of September. The pressure is attributed to doubts over AI profitability, heavier borrowing at record yields to fund the $64.6 billion OpenAI stake, and OpenAI's listing being pushed back to 2027."
       },
-      "url": "https://group.softbank/en/news/press/20260904",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/11/06/softbank-credit-risk-jumps-to-4-year-high-as-ai-fears-roil-market",
       "image": null
     },
     {
-      "date": "02.09.2026",
-      "type": "announcement",
+      "date": "01.10.2026",
+      "type": "insider",
       "title": {
-        "ru": "SB Energy подала публичную заявку на IPO в США под тикером SBE",
-        "en": "SB Energy files publicly for a US IPO under the ticker SBE"
+        "ru": "SoftBank закрыла третий транш инвестиций в OpenAI на $10 млрд",
+        "en": "SoftBank completes final $10bn tranche of its OpenAI follow-on investment"
       },
       "text": {
-        "ru": "Дочерняя SB Energy 1 сентября по времени США публично подала регистрационное заявление в Комиссию по ценным бумагам (SEC) на первичное размещение акций. Листинг планируется на Nasdaq Global Select Market и Nasdaq Texas под тикером SBE; объём размещения и ценовой диапазон пока не определены. Совместными ведущими букраннерами выступают J.P. Morgan, Goldman Sachs, Morgan Stanley, Citigroup и Mizuho, параллельно планируется розничное предложение в Великобритании через Marex Financial. Сделка зависит от рыночных условий и вступления регистрационного заявления в силу.",
-        "en": "SoftBank subsidiary SB Energy publicly filed a registration statement with the SEC for an initial public offering on 1 September, US time. The shares are slated to list on the Nasdaq Global Select Market and Nasdaq Texas under the ticker SBE, with the deal size and price range still undetermined. J.P. Morgan, Goldman Sachs, Morgan Stanley, Citigroup and Mizuho are joint lead book-running managers, and a parallel UK retail offering is planned through Marex Financial. The offering remains subject to market conditions and to the registration statement becoming effective."
+        "ru": "1 октября 2026 года SoftBank Group через фонд SoftBank Vision Fund 2 исполнила третий и последний транш дополнительных инвестиций в OpenAI Group PBC на $10,0 млрд (1 579,6 млрд иен по курсу 157,96 иены за доллар), завершив объявленную 27 февраля 2026 года программу на $30,0 млрд. Совокупные инвестиции в OpenAI достигли $64,6 млрд, что соответствует доле около 13%. Транш оплачен из средств размещения валютных старших нот от 24 сентября, а неиспользованный остаток бридж-линии на $10,0 млрд аннулирован с 30 сентября 2026 года.",
+        "en": "On October 1, 2026 SoftBank Group, through SoftBank Vision Fund 2, executed the third and final $10.0 billion tranche (JPY 1,579.6 billion at 157.96 yen to the dollar) of its follow-on investment in OpenAI Group PBC, completing the $30.0 billion programme announced on February 27, 2026. Cumulative investment in OpenAI now stands at $64.6 billion, equivalent to an ownership interest of roughly 13%. The tranche was funded from the foreign currency senior notes priced on September 24, and the remaining $10.0 billion of undrawn bridge facility capacity was cancelled effective September 30, 2026."
       },
-      "url": "https://group.softbank/en/news/press/20260902",
+      "url": "https://group.softbank/en/news/press/20261001",
       "image": null
     },
     {
-      "date": "28.08.2026",
+      "date": "24.09.2026",
       "type": "news",
       "title": {
-        "ru": "SoftBank требует от Moody's отозвать незапрошенные рейтинги",
-        "en": "SoftBank demands Moody's withdraw its unsolicited ratings"
+        "ru": "SoftBank разместила старшие ноты на $11,1 млрд под 7,125–9,75%",
+        "en": "SoftBank raises $11.1bn in senior notes at coupons of 7.125%-9.75%"
       },
       "text": {
-        "ru": "SoftBank Group публично отреагировала на очередной периодический пересмотр Moody's, повторив, что не получала от агентства никаких кредитных рейтингов и не контактировала с ним с момента отзыва заявки 25 марта 2020 года — более шести лет. Компания называет оценки Moody's основанными исключительно на субъективных допущениях без разумной фактической базы и указывает на фактические ошибки в анализе. SoftBank вновь потребовала отозвать незапрошенные рейтинги (unsolicited ratings) и заявила, что рассматривает все доступные варианты, включая судебный иск и обращение к регулятору. Официальные рейтинговые отношения группа поддерживает только с S&P Global Ratings и Japan Credit Rating Agency.",
-        "en": "SoftBank Group publicly pushed back on Moody's latest periodic review, repeating that it has obtained no credit ratings from the agency and has had no contact with it since withdrawing its rating request on 25 March 2020 — more than six years ago. The company calls Moody's opinions purely subjective assumptions with no reasonable factual basis and points to factual errors in the analysis. SoftBank again demanded that the unsolicited ratings be removed and said it is exploring all available options, including legal action and consultation with the regulatory authority. Its only formal rating relationships are with S&P Global Ratings and Japan Credit Rating Agency."
+        "ru": "24 сентября 2026 года SoftBank Group объявила об эмиссии валютных старших нот (senior notes) на сумму около $11,1 млрд (1 763,2 млрд иен): $10 млрд тремя траншами с погашением в 2030, 2032 и 2034 годах и купонами 8,625%, 9,25% и 9,75%, а также €1 млрд двумя траншами по €500 млн под 7,125% и 8,0%. Все транши размещены по номиналу, дата расчётов — 29 сентября 2026 года, купон выплачивается раз в полгода. Средства направлены на оплату последнего транша инвестиций в OpenAI на $10 млрд и на общекорпоративные цели, при одновременной отмене неиспользованных $10 млрд из бридж-линии на $40 млрд.",
+        "en": "On September 24, 2026 SoftBank Group announced an issue of foreign currency-denominated senior notes totalling about $11.1 billion (JPY 1,763.2 billion): $10 billion across three tranches due 2030, 2032 and 2034 with coupons of 8.625%, 9.25% and 9.75%, plus EUR 1 billion in two EUR 500 million tranches at 7.125% and 8.0%. All tranches priced at par, with settlement on September 29, 2026 and semi-annual interest payments. Proceeds fund the $10 billion final tranche of the OpenAI investment and general corporate purposes, alongside the cancellation of the remaining $10 billion of undrawn capacity under the $40 billion bridge facility."
       },
-      "url": "https://group.softbank/en/news/press/20260828_0",
+      "url": "https://group.softbank/en/news/press/20260924",
       "image": null
     }
   ],

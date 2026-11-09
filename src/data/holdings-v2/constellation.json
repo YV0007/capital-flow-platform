@@ -3,7 +3,7 @@
   "name": "Constellation Software",
   "ticker": "CSU.TO",
   "type": "serial acquirer",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "Constellation скупает и держит навсегда нишевые vertical market software (VMS) бизнесы, управляя ими децентрализованно; машина работает на собственном денежном потоке — FCFA2S +44% г/г и ~$1,6 млрд развёрнуто за H1'26 на фоне де-рейтинга акции (−42,6% за год) и переходного риска после ухода основателя Mark Leonard.",
   "kpis": [
     {
@@ -2289,6 +2289,48 @@
   },
   "news": [
     {
+      "date": "06.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Constellation Software: выручка Q3 +19%, FCFA2S −16%",
+        "en": "Constellation Software Q3 2026: revenue up 19%, FCFA2S down 16%"
+      },
+      "text": {
+        "ru": "6 ноября Constellation Software опубликовала результаты за третий квартал 2026 года: выручка выросла на 19% до $3 512 млн, однако органический рост (organic growth) составил лишь 2%. Свободный денежный поток, доступный акционерам (FCFA2S), сократился на 16% до $443 млн при росте операционного денежного потока на 5% до $717 млн; чистая прибыль, приходящаяся на владельцев обыкновенных акций, прибавила 1% до $212 млн, или $10,01 на разводнённую акцию. За квартал закрыты поглощения на $484 млн денежными средствами ($609 млн с учётом отложенных платежей), а после 30 сентября — ещё на $589 млн совокупной стоимости. Совет директоров объявил дивиденд $1,00 на акцию с выплатой 12 января 2027 года акционерам на учёте 18 декабря 2026 года.",
+        "en": "On 6 November Constellation Software reported third-quarter 2026 results: revenue rose 19% to $3,512 million, but organic growth was only 2%. Free cash flow available to shareholders (FCFA2S) fell 16% to $443 million even as cash flow from operations climbed 5% to $717 million, while net income attributable to common shareholders edged up 1% to $212 million, or $10.01 per diluted share. The group closed acquisitions for $484 million of cash consideration in the quarter ($609 million including deferred payments), and a further $589 million of total consideration after 30 September. The board declared a $1.00 per share dividend payable on 12 January 2027 to holders of record on 18 December 2026."
+      },
+      "url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-third-quarter-ended-september-30-2026-and-declares-quarterly-dividend/",
+      "image": null
+    },
+    {
+      "date": "04.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Topicus.com в Q3: выручка €445,1 млн, органический рост 5%",
+        "en": "Topicus.com Q3: revenue of €445.1m, organic growth of 5%"
+      },
+      "text": {
+        "ru": "Topicus.com, результаты которой Constellation публикует совместным релизом, отчиталась за третий квартал 2026 года: выручка выросла на 15% (на €57,2 млн) до €445,1 млн, органический рост (organic growth) составил 5%. Чистая прибыль достигла €46,5 млн, или €0,34 на разводнённую акцию, против убытка €120,9 млн годом ранее, когда группа отразила расход €221,7 млн по учёту инвестиции в Asseco. Свободный денежный поток, доступный акционерам (FCFA2S), за квартал снизился на 16% до €18,8 млн, но за девять месяцев вырос на 19% до €199,1 млн. На поглощения в квартале направлено €47,1 млн денежными средствами, или €64,0 млн с учётом отложенных платежей.",
+        "en": "Topicus.com, whose results Constellation co-announces, reported third-quarter 2026 revenue up 15% (by €57.2 million) to €445.1 million, with organic growth of 5%. Net income came in at €46.5 million, or €0.34 per diluted share, against a €120.9 million loss a year earlier, when the group booked a €221.7 million expense on its Asseco investment. FCFA2S fell 16% to €18.8 million for the quarter but rose 19% to €199.1 million over nine months. Acquisitions in the quarter took €47.1 million of cash consideration, or €64.0 million including deferred payments."
+      },
+      "url": "https://cdn.topicusplatform.nl/__/topicuscom/q3-2026/topicus-mda-q326-final.pdf",
+      "image": null
+    },
+    {
+      "date": "21.10.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "Constellation назначила Даана Дейкхёйзена директором по ИИ",
+        "en": "Constellation appoints Daan Dijkhuizen as Chief AI Officer"
+      },
+      "text": {
+        "ru": "21 октября Constellation Software сообщила о назначении Даана Дейкхёйзена директором по искусственному интеллекту (Chief AI Officer) и членом руководящей команды группы. Главный приоритет роли — развитие VMS Ventures, инвестиционного подразделения Constellation для вложений в AI-native компании вертикального рынка ПО. Дейкхёйзен также будет поддерживать бизнес-единицы при внедрении ИИ в продукты и внутренние процессы, задавая контуры качества, безопасности и комплаенса, и распространять лучшие практики между операционными группами. При этом он сохраняет посты CEO операционной группы Topicus и управляющего партнёра VMS Ventures.",
+        "en": "On 21 October Constellation Software announced the appointment of Daan Dijkhuizen as Chief AI Officer and a member of its leadership team. The role's main focus is growing VMS Ventures, Constellation's vehicle for investing in AI-native vertical market software businesses. Dijkhuizen will also support business units as they apply AI in their products and internal operations, setting controls for quality, safety and compliance, and will spread best practice across the operating groups. He retains his existing roles as CEO of the Topicus Operating Group and Managing Partner of VMS Ventures."
+      },
+      "url": "https://www.csisoftware.com/constellation-software-inc-announces-appointment-of-daan-dijkhuizen-as-chief-ai-officer/",
+      "image": null
+    },
+    {
       "date": "31.08.2026",
       "type": "news",
       "title": {
@@ -2301,48 +2343,6 @@
       },
       "url": "https://www.csisoftware.com/constellation-software-inc-announces-claire-kennedys-resignation-from-the-board-of-directors/",
       "image": null
-    },
-    {
-      "date": "11.08.2026",
-      "type": "dividend",
-      "title": {
-        "ru": "Constellation Software объявила квартальный дивиденд $1,00 на акцию",
-        "en": "Constellation Software declares quarterly dividend of $1.00 per share"
-      },
-      "text": {
-        "ru": "Совет директоров Constellation Software объявил квартальный дивиденд в размере $1,00 на обыкновенную акцию. Выплата назначена на 9 октября 2026 года, дата закрытия реестра (record date) — 18 сентября 2026 года. Компания сохраняет неизменной свою многолетнюю практику фиксированной квартальной выплаты, направляя основную часть денежного потока на поглощения.",
-        "en": "Constellation Software's board declared a quarterly dividend of $1.00 per common share, payable on 9 October 2026 to shareholders of record at the close of business on 18 September 2026. The payout keeps the company's long-standing flat quarterly dividend intact, with the bulk of its cash flow still directed toward acquisitions."
-      },
-      "url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-second-quarter-ended-june-30-2026-and-declares-quarterly-dividend/",
-      "image": null
-    },
-    {
-      "date": "11.08.2026",
-      "type": "news",
-      "title": {
-        "ru": "Constellation Software: выручка Q2 +17% до $3,34 млрд, прибыль $274 млн",
-        "en": "Constellation Software Q2 revenue up 17% to $3.34bn, profit $274m"
-      },
-      "text": {
-        "ru": "Constellation Software отчиталась за второй квартал, закончившийся 30 июня 2026 года: выручка выросла на 17% до $3 335 млн против $2 844 млн годом ранее, органический рост (прирост без учёта поглощений) составил 3%, или 1% с поправкой на валютные курсы. Чистая прибыль, приходящаяся на держателей обыкновенных акций, увеличилась до $274 млн, или $12,93 на разводнённую акцию, против $56 млн ($2,66) в Q2 2025 — рост во многом обеспечен валютной переоценкой и переоценкой обязательств по IRGA. Операционный денежный поток вырос на 10% до $477 млн. За квартал компания закрыла ряд поглощений с денежным возмещением $732 млн и отложенными платежами на $160 млн, то есть на $893 млн совокупно.",
-        "en": "Constellation Software reported results for the quarter ended 30 June 2026: revenue rose 17% to $3,335 million from $2,844 million a year earlier, with organic growth (growth excluding acquisitions) of 3%, or 1% adjusted for currency moves. Net income attributable to common shareholders climbed to $274 million, or $12.93 per diluted share, from $56 million ($2.66) in Q2 2025, helped largely by foreign exchange and the revaluation of IRGA liabilities. Cash from operations was up 10% at $477 million. The company closed a number of acquisitions during the quarter for cash consideration of $732 million plus $160 million of deferred payments, $893 million in total."
-      },
-      "url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-second-quarter-ended-june-30-2026-and-declares-quarterly-dividend/",
-      "image": null
-    },
-    {
-      "date": "16.07.2026",
-      "type": "announcement",
-      "title": {
-        "ru": "Constellation назначила дату отчёта за 2-й квартал 2026 года",
-        "en": "Constellation sets the date for its second-quarter 2026 results"
-      },
-      "text": {
-        "ru": "Компания объявила, что результаты за 2-й квартал 2026 года (за период по 30 июня) будут опубликованы 11 августа 2026 года после закрытия торгов на Toronto Stock Exchange и размещены на SEDAR+. Конференц-звонок с руководством (President Марк Миллер, CFO Джамал Бакш, CIO Бернар Анзарут) назначен на 12 августа 2026 года, 8:00 по времени восточного побережья США (ET). На дату обзора (10.08.2026) результаты ещё не раскрыты.",
-        "en": "The company said results for the second quarter of 2026, covering the period to 30 June, will be released on 11 August 2026 after the close of trading on the Toronto Stock Exchange and filed on SEDAR+. A conference call with management — President Mark Miller, CFO Jamal Baksh and CIO Bernard Anzarouth — is scheduled for 12 August 2026 at 8:00 a.m. ET. As of the review date (10.08.2026) the results had not yet been disclosed."
-      },
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Exchange_Tower%2C_Toronto%2C_Ontario_%2829708714280%29.jpg/960px-Exchange_Tower%2C_Toronto%2C_Ontario_%2829708714280%29.jpg",
-      "url": "https://www.globenewswire.com/news-release/2026/07/16/3328857/0/en/constellation-software-inc-announces-conference-call-to-discuss-second-quarter-results.html"
     }
   ],
   "changesDeep": {

@@ -3,7 +3,7 @@
   "name": "Pershing Square",
   "ticker": "PSH LN / PSHD LN",
   "type": "true holdco / closed-end fund",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "Концентрированный активистский хедж-фонд Билла Экмана с бессрочным капиталом: 11 позиций, NAV $74/акц., цена $49 — устойчивый дисконт ~34%.",
   "kpis": [
     {
@@ -1934,59 +1934,59 @@
   },
   "news": [
     {
-      "date": "02.09.2026",
+      "date": "05.11.2026",
+      "type": "dividend",
+      "title": {
+        "ru": "PSH подтвердила дивиденд за IV квартал 2026 — $0,1837 на акцию",
+        "en": "PSH confirms fourth-quarter 2026 dividend of $0.1837 per share"
+      },
+      "text": {
+        "ru": "Pershing Square Holdings подтвердила квартальный дивиденд в размере $0,1837 на публичную акцию (Public Share). Дата закрытия реестра (record date) — 13 ноября 2026 года, выплата — 18 декабря 2026 года. Акционеры могут выбрать расчёт в фунтах стерлингов до крайнего срока валютного выбора 27 ноября 2026 года. Компания отдельно отмечает, что будущие выплаты не гарантированы.",
+        "en": "Pershing Square Holdings confirmed a quarterly dividend of $0.1837 per Public Share. The record date is 13 November 2026, with payment on 18 December 2026. Shareholders may elect sterling settlement up to the currency election deadline of 27 November 2026. The company notes that future dividends are not guaranteed."
+      },
+      "url": "https://pershingsquareholdings.com/pershing-square-holdings-ltd-confirms-fourth-quarter-2026-dividend-for-shareholders/",
+      "image": null
+    },
+    {
+      "date": "03.11.2026",
       "type": "news",
       "title": {
-        "ru": "NAV Pershing Square Holdings — $80,51 на акцию, дисконт к рынку около 33%",
-        "en": "Pershing Square Holdings NAV at $80.51 a share, discount near 33%"
+        "ru": "Акман требует вывода Fannie Mae и Freddie Mac из-под госопеки",
+        "en": "Ackman steps up push to free Fannie Mae and Freddie Mac from conservatorship"
       },
       "text": {
-        "ru": "Pershing Square Holdings опубликовала августовский отчёт: чистая стоимость активов (NAV) на акцию на 31 августа 2026 года составила $80,51 (£59,42). Август принёс +4,4%, однако с начала года результат остаётся отрицательным — минус 5,2%; за 12 месяцев минус 3,2%, за 5 лет плюс 70,9%. Котировка на Лондонской бирже в $53,60 означает дисконт к NAV около 33%. Фонд продолжает еженедельный выкуп собственных акций, публикуя отчёты о сделках по обратному выкупу каждую неделю.",
-        "en": "Pershing Square Holdings published its August report: net asset value per share stood at $80.51 (£59.42) as of 31 August 2026. August delivered a 4.4% gain, but the fund is still down 5.2% year to date, down 3.2% over twelve months and up 70.9% over five years. At an LSE price of $53.60 the shares trade at roughly a 33% discount to NAV. The fund continues to repurchase its own stock, publishing buyback transaction reports every week."
+        "ru": "3 ноября Билл Экман вновь публично настоял на выводе Fannie Mae и Freddie Mac из режима государственной опеки (conservatorship), заявив, что их акции способны вырасти в десять раз от текущих уровней. Отсрочку он объяснил предвыборным календарём: «Причина, по которой к этому сейчас не прикасаются, — это промежуточные выборы». С 14 октября по закрытие 2 ноября бумаги обеих компаний подорожали более чем на 60%, а 3 ноября прибавили около 3%. Доля Минфина США, оформленная через привилегированные бумаги и варранты, оценивается примерно в $388 млрд.",
+        "en": "On 3 November Bill Ackman renewed his public call for Fannie Mae and Freddie Mac to be released from conservatorship, arguing the shares could rise tenfold from current prices. He blamed the delay on the electoral calendar: \"The reason why it's not being touched right now is, you know, midterms.\" Both stocks had gained more than 60% between 14 October and the 2 November close, and added roughly 3% on 3 November. The US Treasury's stake, held through preferred securities and warrants, is put at around $388 billion."
       },
-      "url": "https://pershingsquareholdings.com/performance/nav/",
+      "url": "https://www.cnbc.com/2026/11/03/ackman-fannie-mae-freddie-mac-conservatorship.html",
       "image": null
     },
     {
-      "date": "20.08.2026",
-      "type": "insider",
+      "date": "02.11.2026",
+      "type": "news",
       "title": {
-        "ru": "Экман и Оксман передают 10 млн акций Pershing Square (~$400 млн) на институт мозга",
-        "en": "Ackman and Oxman give 10M Pershing Square shares (~$400M) to brain institute"
+        "ru": "Pershing Square: убыток $19,9 млн в III квартале, доходность NAV +3,5%",
+        "en": "Pershing Square posts $19.9m third-quarter loss as NAV returns 3.5%"
       },
       "text": {
-        "ru": "Билл Экман и его жена Нери Оксман через Pershing Square Foundation передают 10 млн акций Pershing Square Inc. стоимостью около $400 млн на создание Ackman Oxman Institute. Центр займётся исследованиями мозга, реабилитацией и восстановлением, а также темами работоспособности человека и долголетия. Институт разместится в здании площадью 400 тыс. кв. футов на Верхнем Вест-Сайде Манхэттена, дополнительно планируется приобрести соседний объект на 130 тыс. кв. футов.",
-        "en": "Bill Ackman and his wife Neri Oxman are donating 10 million shares of Pershing Square Inc., worth roughly $400m, through the Pershing Square Foundation to create the Ackman Oxman Institute. The centre will focus on brain research, rehabilitation and recovery alongside work on human performance and longevity. It will occupy a 400,000 square foot building on Manhattan's Upper West Side, with plans to acquire a further 130,000 square foot property nearby."
+        "ru": "2 ноября Pershing Square Inc. (NYSE: PS) раскрыла результаты III квартала 2026 года: чистый убыток $19,9 млн против прибыли $155,5 млн годом ранее при выручке $56,6 млн (−14,5%). Расходы выросли до $76,7 млн с $41,9 млн — сказалось падение вознаграждения за результат (performance fees) при росте издержек. Доходность стоимости чистых активов (NAV) за квартал составила 3,5% против 2,3% у индекса S&P 500, лидерами портфеля стали Microsoft и Meta Platforms. Фирма также сообщила о семи новых инвестициях за 2026 год и о начале формирования восьмой позиции уже после закрытия квартала.",
+        "en": "On 2 November Pershing Square Inc. (NYSE: PS) reported third-quarter 2026 results: a net loss of $19.9 million against net income of $155.5 million a year earlier, on revenue of $56.6 million, down 14.5%. Expenses rose to $76.7 million from $41.9 million as lower performance fees met higher costs. NAV returned 3.5% for the quarter versus 2.3% for the S&P 500, with Microsoft and Meta Platforms leading portfolio performance. The firm also disclosed seven new investments during 2026 and said it had begun building an eighth position after quarter-end."
       },
-      "url": "https://www.hedgeweek.com/ackman-donates-400m-pershing-square-take-to-fund-new-brain-institute/",
+      "url": "https://uk.investing.com/news/stock-market-news/ackmans-pershing-squareadds-seven-investments-in-2026-reports-q3-loss-4951060",
       "image": null
     },
     {
-      "date": "14.08.2026",
-      "type": "insider",
+      "date": "25.09.2026",
+      "type": "dividend",
       "title": {
-        "ru": "Pershing Square раскрыла новые позиции: Netflix, Visa, Mastercard, S&P Global",
-        "en": "Pershing Square discloses new stakes in Netflix, Visa, Mastercard and S&P Global"
+        "ru": "PSH объявила дополнительный выкуп акций на $100 млн",
+        "en": "PSH announces additional $100m share buyback programme"
       },
       "text": {
-        "ru": "В форме 13F за второй квартал 2026 года, поданной в SEC 14 августа, Pershing Square раскрыла четыре новые крупные позиции. На 30 июня фонд держал Visa на $1,12 млрд, Mastercard на $1,09 млрд, S&P Global на $1,06 млрд и Netflix на $934 млн — это возвращение в Netflix после убыточной инвестиции 2022 года. Крупнейшими вложениями остались Uber ($2,48 млрд), Brookfield ($2,45 млрд) и Microsoft ($2,32 млрд). Совокупно новые позиции превышают $4,2 млрд и представляют собой самую масштабную перестройку портфеля за несколько лет.",
-        "en": "Pershing Square's second-quarter 2026 Form 13F, filed with the SEC on 14 August, revealed four sizeable new positions. As of 30 June the firm held $1.12bn of Visa, $1.09bn of Mastercard, $1.06bn of S&P Global and $934m of Netflix — a return to the streaming company after a loss-making 2022 investment. Uber ($2.48bn), Brookfield ($2.45bn) and Microsoft ($2.32bn) remain the largest holdings. The new stakes total more than $4.2bn and mark the biggest reshaping of the portfolio in years."
+        "ru": "25 сентября Pershing Square Holdings объявила дополнительную программу выкупа публичных акций на Лондонской бирже объёмом до $100 млн и не более 5 млн акций. Единственным агентом выкупа остаётся Jefferies International, что позволяет покупать бумаги и в закрытые периоды; выкупленные акции зачисляются в казначейство (treasury). Компания указала, что программа должна увеличить стоимость чистых активов (NAV) на акцию и сократит капитал PSH. С момента запуска первой программы 2 мая 2017 года PSH выкупила 76 847 142 публичные акции примерно на $2,0 млрд по средней цене $25,66.",
+        "en": "On 25 September Pershing Square Holdings announced an additional programme to repurchase up to $100 million of its Public Shares on the London Stock Exchange, capped at 5 million shares. Jefferies International remains sole buyback agent, which allows purchases during closed periods, and repurchased shares are held in treasury. The company said the programme is expected to be accretive to NAV per share and will reduce PSH's capital. Since the first programme began on 2 May 2017, PSH has repurchased 76,847,142 Public Shares for about $2.0 billion at an average price of $25.66."
       },
-      "url": "https://www.sec.gov/Archives/edgar/data/2026053/000117266126003790/xslForm13F_X02/infotable.xml",
-      "image": null
-    },
-    {
-      "date": "13.08.2026",
-      "type": "announcement",
-      "title": {
-        "ru": "Pershing Square готовит фонд Ventures для доступа розницы к доIPO-компаниям",
-        "en": "Pershing Square prepares Ventures fund to open pre-IPO deals to retail"
-      },
-      "text": {
-        "ru": "Pershing Square Inc. запускает Pershing Square Ventures Ltd. — вечнозелёный фонд постоянного капитала (evergreen permanent capital vehicle), который сможет удерживать компании и после их выхода на биржу. Компания нацелена на запуск осенью или к концу 2026 года и намерена подать документы в SEC. Начальный портфель сформируют частные инвестиции, уже находящиеся на балансе Pershing Square, плюс отдельные вложения семейного офиса Билла Экмана; фокус — биотехнологии и искусственный интеллект, диапазон оценок целей от сотен миллионов долларов до декакорнов. По словам Экмана, идея в том, чтобы «дать эту возможность обычному человеку с улицы».",
-        "en": "Pershing Square Inc. is launching Pershing Square Ventures Ltd., an evergreen permanent capital vehicle that can keep owning companies after they list. The firm is targeting a launch in the autumn or by the end of 2026 and plans to file with the SEC. The initial portfolio will be seeded with private investments already sitting on Pershing Square's balance sheet plus selected holdings from Bill Ackman's family office, with an initial focus on biotechnology and artificial intelligence and targets valued from a few hundred million dollars up to decacorns. Ackman said the aim is to give that opportunity to the average person on the street."
-      },
-      "url": "https://www.fa-mag.com/news/bill-ackman-s-pershing-to-debut-venture-fund-for-pre-ipo-bets-88099.html",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/pershing-square-holdings-ltd-announces-145900133.html",
       "image": null
     }
   ],

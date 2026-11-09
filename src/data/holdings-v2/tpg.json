@@ -3,7 +3,7 @@
   "name": "TPG Inc",
   "ticker": "TPG",
   "type": "asset manager",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "> Публичный alternative asset manager с $306.2B AUM (31.03.2026); доход всё больше опирается на предсказуемые management fees — LTM FRE впервые перешёл $1B при FRE margin 44% за квартал. Решение по позиции опирается на устойчивость fee-базы в Credit ($95.2B, +30% г/г), исполнение fundraise-таргета >$50B/2026 и переход на нового CFO в момент жёсткого guidance.",
   "kpis": [
     {
@@ -2326,6 +2326,48 @@
   ],
   "news": [
     {
+      "date": "05.11.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "TPG GP Solutions заанкорила фонд продолжения Sumer Group на £1 млрд",
+        "en": "TPG GP Solutions anchors £1bn Sumer Group continuation vehicle"
+      },
+      "text": {
+        "ru": "TPG GP Solutions выступила единственным ведущим инвестором и анкором нового фонда продолжения с одним активом (single-asset continuation vehicle), через который Penta Capital Partners рекапитализировала британскую Sumer Group. Сделка оценивает компанию примерно в £1 млрд по стоимости предприятия (enterprise value). Penta Capital Partners остаётся действующим спонсором актива.",
+        "en": "TPG GP Solutions acted as sole lead investor and anchored a new single-asset continuation vehicle through which Penta Capital Partners recapitalised UK-based Sumer Group. The transaction values the company at approximately £1 billion enterprise value. Penta Capital Partners remains the asset's existing sponsor."
+      },
+      "url": "https://www.tpg.com/news-and-insights/penta-capital-partners-recapitalises-sumer-group-at-approximately-1-billion-valuation-through-single-asset-continuation-vehicle",
+      "image": null
+    },
+    {
+      "date": "30.10.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "TPG закрыла климатические фонды Rise Climate II и Global South на $10,4 млрд",
+        "en": "TPG closes Rise Climate II and Global South funds at $10.4 billion"
+      },
+      "text": {
+        "ru": "TPG объявила финальное закрытие второго климатического фонда Rise Climate II: совокупно с фондом Global South Initiative и связанными структурами привлечено $10,4 млрд. Стратегия Global South достигла целевого объёма $2,5 млрд, тогда как первый фонд Rise Climate был закрыт в 2022 году на $7,3 млрд. По данным TPG, 31% обязательств поступил от инвесторов, ранее не работавших с фирмой.",
+        "en": "TPG announced the final close of its second climate fund, Rise Climate II, bringing total capital raised across the fund, the Global South Initiative and affiliated vehicles to $10.4 billion. The Global South strategy reached its $2.5 billion target, against the $7.3 billion raised by the inaugural Rise Climate fund in 2022. TPG said 31% of the commitments came from investors new to the firm."
+      },
+      "url": "https://esgtoday.com/tpg-raises-10-4-billion-for-climate-funds-including-2-5-billion-for-global-south",
+      "image": null
+    },
+    {
+      "date": "29.10.2026",
+      "type": "news",
+      "title": {
+        "ru": "TPG в III квартале: прибыль от комиссий +43%, AUM $345,7 млрд",
+        "en": "TPG Q3: fee-related earnings up 43%, AUM at $345.7 billion"
+      },
+      "text": {
+        "ru": "TPG отчиталась за III квартал 2026 года: прибыль от комиссий (fee-related earnings, FRE) выросла на 43% год к году — с $225,0 млн до $321,4 млн. Чистая прибыль по US GAAP составила $263,8 млн, распределяемая прибыль после налогов (after-tax distributable earnings) — $264,8 млн, или $0,65 на акцию класса A. Активы под управлением (AUM) достигли $345,7 млрд, приносящие комиссии активы (fee-earning AUM) — $189,5 млрд; за квартал привлечено $15,2 млрд и почти $42 млрд с начала года, при этом фирма ожидает превысить годовой целевой показатель привлечения в $50 млрд. Объявлен дивиденд $0,55 на акцию класса A с выплатой 23 ноября 2026 года.",
+        "en": "TPG reported third-quarter 2026 results with fee-related earnings up 43% year over year, from $225.0 million to $321.4 million. GAAP net income was $263.8 million and after-tax distributable earnings $264.8 million, or $0.65 per Class A share. Assets under management reached $345.7 billion and fee-earning AUM $189.5 billion, with $15.2 billion raised in the quarter and nearly $42 billion year to date; the firm expects to exceed its $50 billion annual fundraising target. A dividend of $0.55 per Class A share was declared, payable on November 23, 2026."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000054/tpg3q26earningsrelease.htm",
+      "image": null
+    },
+    {
       "date": "08.09.2026",
       "type": "news",
       "title": {
@@ -2338,48 +2380,6 @@
       },
       "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000051/tpg-20260906.htm",
       "image": null
-    },
-    {
-      "date": "21.08.2026",
-      "type": "news",
-      "title": {
-        "ru": "BGH Capital перебила предложение TPG по EQT — A$24,75 за акцию",
-        "en": "BGH Capital tops TPG's EQT approach with A$24.75-a-share bid"
-      },
-      "text": {
-        "ru": "Через три дня после захода TPG австралийская BGH Capital направила EQT Holdings собственное незапрошенное предложение — A$24,75 за акцию денежными средствами, оценивая компанию в A$663 млн (около $472 млн). Это премия 22,4% к котировке закрытия четверга и на 0,8% выше цены TPG. BGH, в отличие от TPG, не потребовала эксклюзивности, оставив совету директоров EQT свободу вести переговоры с обоими претендентами. Оба предложения остаются необязывающими и зависят от due diligence и одобрения инвестиционных комитетов.",
-        "en": "Three days after TPG's approach, Australia's BGH Capital lodged a rival unsolicited proposal for EQT Holdings at A$24.75 a share in cash, valuing the company at A$663 million (about $472 million). That is a 22.4% premium to Thursday's close and 0.8% above TPG's price. Unlike TPG, BGH did not seek exclusivity, leaving EQT's board free to talk to both suitors. Both proposals remain non-binding and subject to due diligence and investment-committee approval."
-      },
-      "url": "https://uk.investing.com/news/stock-market-news/australias-eqt-receives-472-mln-bid-from-bgh-capital-just-days-after-tpg-approach-93CH-4842068",
-      "image": null
-    },
-    {
-      "date": "18.08.2026",
-      "type": "news",
-      "title": {
-        "ru": "TPG предложила A$658 млн за австралийскую EQT Holdings",
-        "en": "TPG bids A$658m for Australia's EQT Holdings at a 42% premium"
-      },
-      "text": {
-        "ru": "TPG Global направила незапрошенное индикативное предложение о покупке 100% акций австралийского управляющего EQT Holdings (Equity Trustees) по A$24,55 за акцию денежными средствами, что оценивает компанию в A$657,8 млн (около $467,6 млн). Цена предполагает премию 41,8% к котировке закрытия предыдущего дня. Предложение необязывающее и обусловлено успешным due diligence, финальным одобрением инвестиционного комитета TPG и единогласной рекомендацией совета директоров EQT; TPG запросила период эксклюзивности. Сделка обсуждается на фоне разбирательства австралийского регулятора ASIC вокруг фонда First Guardian.",
-        "en": "TPG Global made an unsolicited, indicative approach to buy all of Australian investment manager EQT Holdings (Equity Trustees) at A$24.55 a share in cash, valuing it at A$657.8 million (about $467.6 million). The price is a 41.8% premium to the prior day's close. The proposal is non-binding and conditional on due diligence, final sign-off from TPG's investment review committee and a unanimous recommendation from EQT's board; TPG asked for a period of exclusivity. The approach lands while EQT faces ASIC scrutiny over the failed First Guardian fund."
-      },
-      "url": "https://kfgo.com/2026/08/17/australias-eqt-holdings-gets-468-million-takeover-proposal-from-tpg-global/",
-      "image": null
-    },
-    {
-      "date": "10.08.2026",
-      "type": "news",
-      "title": {
-        "ru": "TPG Mortgage Investment Trust покупает Cherry Hill Mortgage за $117,5 млн",
-        "en": "TPG Mortgage Investment Trust to buy Cherry Hill Mortgage for $117.5m"
-      },
-      "text": {
-        "ru": "Ипотечный REIT под управлением TPG — TPG Mortgage Investment Trust (MITT) — договорился о слиянии с Cherry Hill Mortgage (CHMI). Сумма сделки оценивается в $117,5 млн, или $3,10 на акцию CHMI, что предполагает премию (premium) около 29% к цене закрытия 7 августа. Держатели CHMI получат 0,3063 акции MITT плюс $0,93 деньгами за акцию. После закрытия акционеры MITT будут владеть ~73% объединённой компании. Ожидается операционная экономия $7–9 млн в год и закрытие в IV квартале 2026 г.",
-        "en": "TPG-managed mortgage REIT TPG Mortgage Investment Trust (MITT) has agreed to merge with Cherry Hill Mortgage (CHMI). The deal is valued at $117.5m, or $3.10 per CHMI share, a premium of about 29% to the 7 August closing price. CHMI holders will receive 0.3063 MITT shares plus $0.93 in cash per share. On completion, MITT shareholders will own about 73% of the combined company. Annual operating savings of $7–9m are expected, with closing in the fourth quarter of 2026."
-      },
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Homes-subdivision-Walton-County-Georgia.jpg/960px-Homes-subdivision-Walton-County-Georgia.jpg",
-      "url": "https://www.stocktitan.net/news/TPG/tpg-mortgage-investment-trust-and-cherry-hill-mortgage-investment-y0fugozwrzkz.html"
     }
   ],
   "changesDeep": {

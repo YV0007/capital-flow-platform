@@ -3,7 +3,7 @@
   "name": "Fairfax Financial",
   "ticker": "FFH.TO",
   "type": "true holdco",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "Канадский страховой холдинг (страхование имущества и ответственности и перестрахование) с долгосрочным портфелем value-инвестиций; 2025 — рекордный год (net earnings $4.77B, combined ratio 93.0%, BVPS $1,260.19), но акция переоценилась с дисконта к book (0.74x в 2021) до премии ~1.4–1.5x USD — основной re-rating уже позади, при key-person риске (Watsa, 75 лет) и ускорившемся buyback.",
   "kpis": [
     {
@@ -2329,60 +2329,60 @@
   ],
   "news": [
     {
-      "date": "01.09.2026",
-      "type": "dividend",
+      "date": "03.11.2026",
+      "type": "news",
       "title": {
-        "ru": "Fairfax объявила квартальный дивиденд $0,315313 по привилегированным акциям серии K",
-        "en": "Fairfax declares $0.315313 quarterly dividend on Series K preferred shares"
+        "ru": "Fairfax Q3 2026: прибыль $929,6 млн, комбинированный коэффициент 92,5%",
+        "en": "Fairfax Q3 2026: net earnings $929.6M, combined ratio 92.5%"
       },
       "text": {
-        "ru": "1 сентября 2026 года Fairfax Financial объявила квартальный дивиденд в размере $0,315313 на каждую находящуюся в обращении привилегированную акцию серии K (Series K Preferred Shares). Выплата состоится 30 сентября 2026 года акционерам, зарегистрированным в реестре на 14 сентября 2026 года. К дивидендам в пользу нерезидентов Канады применяется канадский налог у источника (withholding tax).",
-        "en": "On 1 September 2026 Fairfax Financial declared a quarterly dividend of $0.315313 per outstanding Series K Preferred Share. The dividend is payable on 30 September 2026 to shareholders of record as of 14 September 2026. Canadian withholding tax applies to dividends paid to non-residents of Canada."
+        "ru": "Чистая прибыль, приходящаяся на акционеров, составила $929,6 млн ($43,32 на разводнённую акцию) против $1 151,7 млн ($52,04) годом ранее. Комбинированный коэффициент (combined ratio) без дисконтирования — 92,5% против 92,0% на фоне катастрофных убытков Northbridge, андеррайтинговая прибыль — $523,9 млн; валовые подписанные премии выросли на 9,3%, до $8 936,9 млн. Результат срезали убытки по инвестициям на $858,7 млн, прежде всего переоценка облигаций на $827,7 млн. Балансовая стоимость на базовую акцию (book value per share) — $1 349,15 против $1 260,19 на конец 2025 года, то есть +8,4% с поправкой на выплаченный дивиденд $15 на акцию.",
+        "en": "Net earnings attributable to shareholders were $929.6 million, or $43.32 per diluted share, down from $1,151.7 million ($52.04) a year earlier. The undiscounted combined ratio was 92.5% against 92.0%, reflecting higher catastrophe losses at Northbridge, with underwriting profit of $523.9 million, while gross premiums written rose 9.3% to $8,936.9 million. The quarter was held back by $858.7 million of net investment losses, mostly $827.7 million of mark-to-market losses on bonds. Book value per basic share reached $1,349.15 against $1,260.19 at year-end 2025, up 8.4% adjusted for the $15 per share dividend paid."
       },
-      "url": "https://www.fairfax.ca/press-releases/fairfax-announces-quarterly-dividend-on-series-k-preferred-shares-2026-09-01/",
+      "url": "https://www.fairfax.ca/press-releases/fairfax-financial-holdings-limited-financial-results-for-the-third-quarter/",
       "image": null
     },
     {
-      "date": "14.08.2026",
+      "date": "29.10.2026",
       "type": "news",
       "title": {
-        "ru": "Fairfax закрыла выкуп винодельческой Andrew Peller: $397 млн акционерной стоимости",
-        "en": "Fairfax closes Andrew Peller take-private at $397m equity value"
+        "ru": "Fairfax закрыла продажу life-бизнеса Eurolife банку Eurobank за €813 млн",
+        "en": "Fairfax completes €813M sale of Eurolife life operations to Eurobank"
       },
       "text": {
-        "ru": "14 августа 2026 года Fairfax Financial завершила сделку по выводу канадского винодельческого производителя Andrew Peller Limited с биржи (going-private transaction). Акционеры получили $8,00 за каждую неголосующую акцию класса A и $12,00 за голосующую акцию класса B; совокупная полностью разводнённая акционерная стоимость составила около $397 млн, а стоимость предприятия (enterprise value) — около $579 млн. Цена по классу A предполагала премию 41–42% к котировке и 20-дневной средневзвешенной цене на 12 июня 2026 года. Акции обоих классов были делистингованы с Toronto Stock Exchange примерно 17 августа 2026 года.",
-        "en": "On 14 August 2026 Fairfax Financial completed the going-private acquisition of Canadian winemaker Andrew Peller Limited. Shareholders received $8.00 per Class A non-voting share and $12.00 per Class B voting share, valuing the company at roughly $397 million on a fully diluted equity basis and about $579 million on an enterprise value basis. The Class A price represented a 41-42% premium to the closing price and 20-day VWAP as of 12 June 2026. Both share classes were delisted from the Toronto Stock Exchange on or about 17 August 2026."
+        "ru": "Fairfax сообщила о завершении ранее объявленной продажи 80% в компании, управляющей бизнесом страхования жизни Eurolife FFH Insurance Group Holdings S.A., банку Eurobank S.A. Денежное вознаграждение составило около €813 млн (порядка $906 млн). В отчёте за третий квартал Fairfax указала, что ожидает от сделки прибыль до налогообложения около $200 млн в четвёртом квартале 2026 года.",
+        "en": "Fairfax announced the completion of its previously announced sale of an 80% equity interest in the entity operating the life insurance business of Eurolife FFH Insurance Group Holdings S.A. to Eurobank S.A. Cash consideration was approximately €813 million, around $906 million. In its third-quarter report Fairfax said it expects the disposal to generate a pre-tax gain of roughly $200 million in the fourth quarter of 2026."
       },
-      "url": "https://www.globenewswire.com/news-release/2026/08/14/3345551/0/en/andrew-peller-limited-completes-going-private-transaction-with-fairfax-financial-holdings-limited.html",
+      "url": "https://www.fairfax.ca/press-releases/fairfax-announces-successful-completion-of-sale-of-eurolife-life-insurance-operations-to-eurobank-2026-10-29/",
       "image": null
     },
     {
-      "date": "30.07.2026",
+      "date": "14.10.2026",
       "type": "news",
       "title": {
-        "ru": "Fairfax: прибыль во II квартале 2026 — $1,39 млрд, рост балансовой стоимости",
-        "en": "Fairfax: Q2 2026 profit of $1.39bn and a higher book value"
+        "ru": "Fairfax — «стратегический покупатель» 60,72% IDBI Bank за $5,6 млрд",
+        "en": "Fairfax named strategic buyer of 60.72% of India's IDBI Bank for $5.6B"
       },
       "text": {
-        "ru": "Fairfax Financial отчиталась за II квартал 2026: чистая прибыль составила $1 392,7 млн ($63,38 на разводнённую акцию). Балансовая стоимость на акцию (book value per share) достигла $1 304,39 на 30.06.2026 против $1 260,19 на конец 2025 года — рост 4,8% с поправкой на дивиденд $15 на акцию. Комбинированный коэффициент (combined ratio) составил 93,1%, андеррайтинговая прибыль — $458,6 млн. Валовые премии (gross premiums written) выросли на 4,1% до $9 633,9 млн. За квартал компания выкупила 680 307 акций на $1 089,3 млн.",
-        "en": "Fairfax Financial reported second-quarter 2026 net earnings of $1,392.7 million, or $63.38 per diluted share. Book value per share reached $1,304.39 at 30 June 2026 against $1,260.19 at the end of 2025, a rise of 4.8% adjusted for the $15 per share dividend. The combined ratio was 93.1% and underwriting profit $458.6 million. Gross premiums written rose 4.1% to $9,633.9 million. During the quarter the company repurchased 680,307 shares for $1,089.3 million."
+        "ru": "Правительство Индии объявило дочернюю структуру Fairfax «стратегическим покупателем» 60,72% акций IDBI Bank по цене 81 рупия за акцию — около 528,78 млрд рупий, или $5,6 млрд, что примерно на 23% выше балансовой стоимости банка на 30 июня 2026 года. Fairfax намерена оплатить покупку из денежных средств, существующих кредитных линий и возможных продаж активов, а также предлагает внести в IDBI Bank по рыночным ценам доли в Go Digit General и Go Digit Life Insurance и долю Fairfax India в IIFL Capital Services. Обязывающие соглашения пока не подписаны, сделка требует одобрений RBI, SEBI и IRDAI. Прем Ватса назвал её «возможностью раз в жизни — купить контрольный пакет в банке».",
+        "en": "The Government of India designated a wholly-owned Fairfax subsidiary the strategic buyer of a 60.72% equity stake in IDBI Bank at INR 81 per share, about INR 528.78 billion or US$5.6 billion, roughly a 23% premium to the bank's book value at June 30, 2026. Fairfax plans to fund the purchase from cash on hand, existing credit sources and potential asset sales, and separately proposes to contribute its interests in Go Digit General and Go Digit Life Insurance, plus Fairfax India's stake in IIFL Capital Services, to IDBI Bank at market prices. No binding definitive agreements have been signed and the deal requires RBI, SEBI and IRDAI approvals. Prem Watsa called it \"a once-in-a-lifetime opportunity to purchase a majority interest in a bank.\""
       },
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Prem_Watsa.jpg/960px-Prem_Watsa.jpg",
-      "url": "https://www.theglobeandmail.com/investing/markets/markets-news/GlobeNewswire/3562750/fairfax-financial-holdings-limited-financial-results-for-the-second-quarter/"
+      "url": "https://www.fairfax.ca/press-releases/fairfax-declared-strategic-buyer-in-auction-to-acquire-interest-in-idbi-bank-plans-to-contribute-digit-insurance-and-iifl-capital-to-idbi-bank-2026-10-14/",
+      "image": null
     },
     {
-      "date": "16.06.2026",
-      "type": "announcement",
+      "date": "07.10.2026",
+      "type": "news",
       "title": {
-        "ru": "Завершена сделка по выкупу Kennedy-Wilson ($10.90/акция)",
-        "en": "Kennedy-Wilson take-private completed at $10.90 a share"
+        "ru": "Fairfax вложит до $2,3 млрд в выкуп Boots вместе с Wittington",
+        "en": "Fairfax commits up to $2.3B to Boots buyout alongside Wittington"
       },
       "text": {
-        "ru": "Take-private Kennedy-Wilson закрыт в рамках Q2 2026: $10.90 наличными за акцию, без условия финансирования. Fairfax направила до $1.65B (выкуп плюс погашение привилегированных). Контроль над платформой недвижимости и долговых стратегий переходит внутрь холдинга.",
-        "en": "The Kennedy-Wilson take-private closed within Q2 2026 at $10.90 in cash per share, with no financing condition. Fairfax committed up to $1.65B, covering the buyout plus redemption of the preferreds. Control of the real estate and debt-strategies platform moves inside the holding company."
+        "ru": "Fairfax договорилась с Wittington Investments — холдингом семьи Уэстон — о приобретении The Boots Group примерно за $8,9 млрд с учётом принимаемого долга. По письму об обязательстве предоставить капитал (equity commitment letter) Fairfax внесёт до около $2,3 млрд и рассчитывает получить 50% акционерного капитала Boots; операционный контроль остаётся за Wittington, а председателем совета станет Гэйлен Уэстон. В сделку входят розничные операции Boots в Великобритании и Ирландии, Boots Opticians, No7 Beauty Company, а также бизнес в Таиланде и франчайзинговые операции. Закрытие ожидается в первом квартале 2027 года.",
+        "en": "Fairfax has agreed to partner with Wittington Investments, the Weston family holding company, on the acquisition of The Boots Group for approximately US$8.9 billion including assumed debt. Under an equity commitment letter Fairfax will contribute up to roughly US$2.3 billion and expects to own 50% of Boots' equity, with Wittington holding operational control and Galen Weston serving as Chair. The transaction covers Boots' retail operations in the UK and Ireland, Boots Opticians, the No7 Beauty Company, and the Thailand and franchised businesses. Closing is expected in the first quarter of 2027."
       },
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Downtown_Toronto_skyline%2C_2013_02_10_-ac.JPG/960px-Downtown_Toronto_skyline%2C_2013_02_10_-ac.JPG",
-      "url": "https://www.fairfax.ca/news/press-releases/"
+      "url": "https://www.fairfax.ca/press-releases/fairfax-partners-with-wittington-investments-in-acquisition-of-boots-2026-10-07/",
+      "image": null
     }
   ],
   "changesDeep": {

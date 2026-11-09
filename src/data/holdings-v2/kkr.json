@@ -3,7 +3,7 @@
   "name": "KKR & Co",
   "ticker": "KKR",
   "type": "asset manager",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "Глобальный alternative asset manager (AUM $757.9B): комиссионная база растёт (FRE +14% LTM, margin 69%), но ANI вырос лишь +5% из-за переноса монетизаций — это проблема тайминга окна выходов, не базы; акция −41% от пика, оба Co-CEO докупали на просадке.",
   "kpis": [
     {
@@ -2619,6 +2619,48 @@
   },
   "news": [
     {
+      "date": "19.10.2026",
+      "type": "insider",
+      "title": {
+        "ru": "KKR продаёт Infinity Transportation фондам Ares за $2,9 млрд",
+        "en": "KKR to sell railcar lessor Infinity Transportation to Ares for $2.9bn"
+      },
+      "text": {
+        "ru": "19 октября KKR объявила о продаже Infinity Transportation — лизингодателя железнодорожных вагонов и интермодального оборудования — фондам Ares Infrastructure Equity и Ares Insurance Solutions при стоимости предприятия (enterprise value) около $2,9 млрд. Полностью принадлежащая KKR страховая структура Global Atlantic держала этот актив с 2016 года; с 2021 года Infinity выстроила самостоятельную операционную платформу, расширила парк и увеличила балансовую стоимость на 150%. Компания управляет примерно 50 тыс. вагонов, сданных в аренду более 350 арендаторам в США, Канаде и Мексике. Закрытие сделки ожидается в I квартале 2027 года.",
+        "en": "On 19 October KKR agreed to sell Infinity Transportation, a railcar and intermodal equipment lessor, to Ares Infrastructure Equity and Ares Insurance Solutions funds at an enterprise value of about $2.9 billion. Global Atlantic, KKR's wholly owned insurance arm, had been invested in Infinity since 2016; since 2021 the company built a standalone operating platform, expanded its fleet and grew book value by 150%. Infinity owns and manages roughly 50,000 railcars leased to more than 350 lessees across the US, Canada and Mexico. The transaction is expected to close in the first quarter of 2027."
+      },
+      "url": "https://www.stblaw.com/about-us/news/view/2026/10/19/kkr-to-sell-infinity-transportation-to-ares-for-$2.9-billion",
+      "image": null
+    },
+    {
+      "date": "05.10.2026",
+      "type": "news",
+      "title": {
+        "ru": "KKR покупает фондового администратора Gen II за $5,1 млрд",
+        "en": "KKR to buy fund administrator Gen II Fund Services for $5.1bn"
+      },
+      "text": {
+        "ru": "5 октября KKR согласилась приобрести Gen II Fund Services — администратора фондов частного капитала — у Hg, General Atlantic и прочих миноритариев при полной стоимости предприятия (enterprise value) $5,1 млрд; покупка идёт через стратегию Core Private Equity. Gen II обслуживает более 275 управляющих с активами свыше $2 трлн. Соучредитель и генеральный директор Стивен Милнер вместе с действующей командой сохраняют руководство, а KKR намерена расширять компанию в США и за рубежом, вкладываться в собственные технологии и решения на базе искусственного интеллекта и запустить программу широкого участия сотрудников в капитале. Закрытие ожидается в 2027 году при условии согласований регуляторов.",
+        "en": "On 5 October KKR agreed to acquire Gen II Fund Services, a private capital fund administrator, from Hg, General Atlantic and other minority investors at a total enterprise value of $5.1 billion, buying it through its Core Private Equity strategy. Gen II serves more than 275 investment managers representing over $2 trillion in assets. Co-founder and chief executive Steven Millner and the existing leadership team will stay on, while KKR plans to expand the business in the US and internationally, invest further in proprietary technology and AI-enabled solutions, and launch a broad-based employee ownership program. The deal is expected to close in 2027, subject to regulatory approvals."
+      },
+      "url": "https://www.generalatlantic.com/media-article/kkr-to-acquire-gen-ii-fund-services-for-more-than-5-billion-from-hg-and-general-atlantic/",
+      "image": null
+    },
+    {
+      "date": "29.09.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "Samsung вкладывает $1 млрд в ИИ-платформу Helix от KKR",
+        "en": "Samsung commits $1bn to KKR-backed Helix Digital Infrastructure"
+      },
+      "text": {
+        "ru": "29 сентября структуры Samsung объявили о вложении $1 млрд долгосрочного капитала в Helix Digital Infrastructure — платформу инфраструктуры для искусственного интеллекта, созданную KKR под запросы гиперскейлеров. Среди её учредителей, помимо самой KKR, — Kuwait Investment Authority, Nvidia и энергетическая Vistra; на старте платформа располагала более $10 млрд законтрактованного капитала, и взнос Samsung добавляется к этой базе. Helix инвестирует в дата-центры, генерацию и передачу электроэнергии, связь и смежную инфраструктуру. Платформа рассчитывает использовать компетенции Samsung в передовых технологиях, строительстве, накопителях энергии и системах охлаждения.",
+        "en": "On 29 September Samsung affiliates committed $1 billion of long-duration capital to Helix Digital Infrastructure, the AI infrastructure company KKR formed to serve hyperscalers' infrastructure needs. Its founding investors alongside KKR are the Kuwait Investment Authority, Nvidia and power producer Vistra, and more than $10 billion had been committed to the strategy at launch, with Samsung's money adding to that base. Helix invests in and delivers data centres, power, connectivity and related infrastructure. It also expects to draw on Samsung's capabilities in advanced technology, construction, energy storage and cooling."
+      },
+      "url": "https://irei.com/news/samsung-pledges-1b-to-kkrs-helix-digital-infrastructure-to-support-ai-infrastructure-buildout/",
+      "image": null
+    },
+    {
       "date": "02.09.2026",
       "type": "insider",
       "title": {
@@ -2630,48 +2672,6 @@
         "en": "On 2 September 2026 a KKR-led consortium with Singtel completed its acquisition of data-centre operator STT GDC. At closing the business had grown live capacity 25% since the end of 2025 to 780MW, lifted contracted capacity by 50% and annualised EBITDA by 30%. The platform spans India (34 data centres and more than 613MW of IT capacity), Indonesia, Singapore, the UK, Germany and Italy, with close to 2GW of powered land secured for assets under construction and in the pipeline."
       },
       "url": "https://www.sttgdc.com/newsroom/kkr-singtel-consortium-completes-acquisition-of-sttgdc-company-launches-refreshed-global-brand-next-phase-of-growth",
-      "image": null
-    },
-    {
-      "date": "31.08.2026",
-      "type": "insider",
-      "title": {
-        "ru": "KKR продаёт страхового брокера USI компании Aon за $17 млрд",
-        "en": "KKR to sell insurance broker USI to Aon in $17bn deal"
-      },
-      "text": {
-        "ru": "31 августа 2026 года KKR объявила о продаже страхового брокера USI компании Aon plc за $17 млрд денежными средствами. Сделка должна принести KKR около $3,3 млрд посленалоговых поступлений и порядка $2,0 млрд скорректированной чистой прибыли (Adjusted Net Income, ANI), то есть более $2,00 на акцию. Подразумеваемая стоимость капитала соответствует примерно 6,0x к акционерному капиталу, вложенному KKR в 2017 году, и 3,4x к совокупному капиталу, инвестированному с баланса фирмы за всё время владения. Закрытие ожидается в четвёртом квартале 2026 года при условии стандартных условий и регуляторных одобрений.",
-        "en": "On 31 August 2026 KKR agreed to sell insurance brokerage USI to Aon plc for $17 billion in cash. The exit is expected to hand KKR roughly $3.3 billion of after-tax proceeds and about $2.0 billion of Adjusted Net Income, or more than $2.00 per share. The implied equity value works out to roughly 6.0x the equity KKR put in when it bought USI in 2017, and 3.4x the total balance-sheet capital committed over the life of the investment. The deal is slated to close in the fourth quarter of 2026, subject to customary conditions and regulatory approvals."
-      },
-      "url": "https://ca.finance.yahoo.com/news/kkr-sell-usi-aon-plc-103000808.html",
-      "image": null
-    },
-    {
-      "date": "26.08.2026",
-      "type": "news",
-      "title": {
-        "ru": "KKR заплатит $250 млн — рекордный штраф за нарушения закона HSR",
-        "en": "KKR to pay a record $250m penalty over premerger filing violations"
-      },
-      "text": {
-        "ru": "26 августа 2026 года Министерство юстиции США объявило о мировом соглашении, по которому KKR выплатит $250 млн за систематические нарушения закона Харта–Скотта–Родино (HSR), обязывающего заранее уведомлять антимонопольные органы о крупных сделках. По версии ведомства, нарушения затронули не менее 16 транзакций 2021–2022 годов: документы изменялись как минимум в восьми заявках, по двум сделкам уведомления не подавались вовсе, а примерно в десяти случаях не были приложены требуемые материалы. Это крупнейший гражданский штраф за всю историю применения HSR — более чем в 20 раз выше предыдущего рекорда.",
-        "en": "On 26 August 2026 the US Department of Justice announced a settlement under which KKR will pay $250 million to resolve claims that it serially breached the Hart-Scott-Rodino Act, the law requiring antitrust regulators to be notified before large deals close. The DOJ said the conduct spanned at least 16 transactions in 2021 and 2022, including altered documents in at least eight filings, two deals never notified at all, and required documents omitted from roughly ten filings. It is the largest civil penalty ever imposed under HSR, more than 20 times the previous record."
-      },
-      "url": "https://www.justice.gov/opa/pr/kkr-agrees-pay-record-250m-penalty-serial-violations-federal-premerger-review-law",
-      "image": null
-    },
-    {
-      "date": "18.08.2026",
-      "type": "news",
-      "title": {
-        "ru": "KKR предложила около $9 млрд за коммунальную UGI — $42,50 за акцию",
-        "en": "KKR bids about $9bn for utility UGI at $42.50 a share, WSJ reports"
-      },
-      "text": {
-        "ru": "По сообщению The Wall Street Journal от 18 августа 2026 года, KKR направила UGI Corporation предложение о покупке по $42,50 за акцию, что оценивает газо- и электрораспределительную компанию примерно в $9 млрд и предполагает премию около 21% к цене закрытия $35,09. Акции UGI на этой новости выросли более чем на 9%. Подписанного соглашения нет, и готовность UGI обсуждать сделку не подтверждена. Интерес к газовым коммунальным активам подогревает спрос на надёжную электроэнергию со стороны дата-центров под искусственный интеллект.",
-        "en": "The Wall Street Journal reported on 18 August 2026 that KKR had approached UGI Corporation with an offer of $42.50 a share, valuing the gas and electricity distributor at roughly $9 billion and implying a premium of about 21% to its $35.09 close. UGI shares jumped more than 9% on the report. No agreement has been signed and it is not confirmed that UGI is receptive. The approach reflects how demand for firm power from AI data centres has turned long-overlooked gas utilities into takeover targets."
-      },
-      "url": "https://finance.yahoo.com/markets/stocks/articles/kkr-wants-buy-sleepy-utility-175115266.html",
       "image": null
     }
   ],

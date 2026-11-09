@@ -3,7 +3,7 @@
   "name": "Brookfield",
   "ticker": "BN / BAM",
   "type": "asset manager",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "BN — материнская холдинговая компания: доля в BAM плюс накопленная прибыль фондов дают ~59% стоимости активов; рынок держит её с ~35% дисконтом к оценке менеджмента ($66.37 vs ~$43).",
   "about": "Глобальный alt-asset manager: ~$1 трлн под управлением + реальные активы на $175 млрд на балансе.",
   "summary": "Brookfield Corporation (BN) — крупнейший в мире владелец реальной инфраструктуры. Управляет ~$1 трлн через фонды и владеет активами на $175 млрд: электростанции, порты, дата-центры, недвижимость, трубопроводы. 250 000 сотрудников управляют активами напрямую — это оператор, не просто фонд. Комиссии $3.1 млрд/год (+18%). Главные ставки: AI-инфраструктура ($200 млрд pipeline), ядерная энергия (Westinghouse), частный кредит (Oaktree). Торгуется с ~35% дисконтом к оценке менеджмента.",
@@ -3291,60 +3291,60 @@
   ],
   "news": [
     {
-      "date": "08.09.2026",
-      "type": "announcement",
-      "title": {
-        "ru": "Британский Nuclear Liabilities Fund доверил Brookfield мандат на $1 млрд",
-        "en": "UK's Nuclear Liabilities Fund awards Brookfield a $1bn multi-decade mandate"
-      },
-      "text": {
-        "ru": "Nuclear Liabilities Fund (NLF) — независимый фонд, покрывающий вывод из эксплуатации восьми британских АЭС, — выбрал Brookfield управляющим долгосрочного мультиактивного мандата с первоначальным обязательством в $1 млрд. Портфелем займётся Investment Solutions Group (ISG) под председательством сооснователя Oaktree Говарда Маркса и руководством Альпера Дагилоглу; средства будут распределены между инфраструктурой, энергетикой, прямыми инвестициями, недвижимостью и частным кредитом через обязательства в фонды, прямые и совместные инвестиции. NLF основан в 1996 году и уже оплатил около £3 млрд расходов на вывод из эксплуатации, а программа растянута до следующего столетия — под этот горизонт и выстроена структура мандата.",
-        "en": "The Nuclear Liabilities Fund, the ring-fenced UK fund that covers decommissioning of eight British nuclear power stations, has selected Brookfield to run a long-term multi-asset mandate with an initial $1 billion commitment. The portfolio will be managed by Brookfield's Investment Solutions Group, chaired by Oaktree co-chairman Howard Marks and led by Alper Daglioglu, and will invest across infrastructure, energy, private equity, real estate and private credit via fund commitments, direct investments and co-investments. Established in 1996, the NLF has already paid out roughly £3 billion of decommissioning costs and its programme runs into the next century — the horizon the mandate has been structured around."
-      },
-      "url": "https://www.globenewswire.com/news-release/2026/09/08/3357335/0/en/brookfield-selected-by-nuclear-liabilities-fund-for-multi-decade-investment-mandate.html",
-      "image": null
-    },
-    {
-      "date": "14.08.2026",
+      "date": "06.11.2026",
       "type": "news",
       "title": {
-        "ru": "Brookfield выходит на рынок жилья Японии: портфель за ¥100+ млрд ($627 млн)",
-        "en": "Brookfield enters Japan's rental housing market with a $627m portfolio"
+        "ru": "BAM: комиссионная прибыль +15% в III кв., капитал под комиссиями $682 млрд",
+        "en": "BAM Q3: fee-related earnings up 15%, fee-bearing capital $682bn"
       },
       "text": {
-        "ru": "Brookfield приобрела портфель арендных жилых домов в четырёх крупнейших городских агломерациях Японии более чем за ¥100 млрд ($627 млн). Это первая сделка группы в японском жилом сегменте — ранее её японские вложения ограничивались коммерческой недвижимостью в Токио. Сделка отражает продолжающийся приток глобального капитала на рынок жилья Японии.",
-        "en": "Brookfield has bought a portfolio of rental apartment buildings across four of Japan's largest urban centres for more than 100 billion yen ($627 million). It is the group's first move into Japanese residential property, having previously confined its Japanese exposure to commercial assets in Tokyo. The deal underlines the continuing flow of global investment capital into Japan's housing market."
+        "ru": "Brookfield Asset Management отчиталась за III квартал 2026 года: прибыль от комиссий (fee-related earnings) — $864 млн, или $0,54 на акцию, распределяемая прибыль (distributable earnings) — $763 млн, или $0,47 на акцию; оба показателя выросли на 15% год к году. Капитал, генерирующий комиссии (fee-bearing capital), достиг $682 млрд — плюс 13% за год; за квартал привлечено $25 млрд, с начала года — $123 млрд. Чистая прибыль квартала составила $3,0 млрд. Совет директоров объявил квартальный дивиденд $0,5025 на акцию с выплатой 31 декабря 2026 года, дата закрытия реестра — 30 ноября.",
+        "en": "Brookfield Asset Management reported third-quarter 2026 fee-related earnings of $864 million, or $0.54 per share, and distributable earnings of $763 million, or $0.47 per share, both up 15% year over year. Fee-bearing capital reached $682 billion, up 13% over twelve months, with $25 billion raised in the quarter and $123 billion year to date. Net income for the quarter was $3.0 billion. The board declared a quarterly dividend of $0.5025 per share, payable December 31, 2026 to holders of record on November 30."
       },
-      "url": "https://asia.nikkei.com/business/markets/property/brookfield-enters-japan-housing-market-with-627m-deal-in-4-urban-centers",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001937926/000117184326007210/exh_991.htm",
       "image": null
     },
     {
-      "date": "13.08.2026",
-      "type": "news",
-      "title": {
-        "ru": "Brookfield: прибыль на акцию +15%, рекордный капитал к размещению $210 млрд",
-        "en": "Brookfield posts 15% EPS growth, record $210bn of deployable capital"
-      },
-      "text": {
-        "ru": "За II квартал 2026 года Brookfield Corporation отчиталась о распределяемой прибыли до реализаций (distributable earnings before realizations) в $1,427 млрд, или $0,61 на акцию, что на 15% выше год к году; за последние двенадцать месяцев показатель составил $5,652 млрд. Совокупная распределяемая прибыль достигла $1,548 млрд ($0,66 на акцию) за квартал, чистая прибыль — $703 млн. Капитал, доступный к размещению (deployable capital), вырос до рекордных $210 млрд, а капитал под управлением, генерирующий комиссии (fee-bearing capital), — до $672 млрд на фоне рекордного квартального привлечения в $77 млрд. Совет директоров объявил квартальный дивиденд $0,07 на акцию.",
-        "en": "For the second quarter of 2026 Brookfield Corporation reported distributable earnings before realizations of $1.427 billion, or $0.61 per share, up 15% year over year, and $5.652 billion over the last twelve months. Total distributable earnings were $1.548 billion ($0.66 per share) for the quarter, with net income of $703 million. Deployable capital reached a record $210 billion, while fee-bearing capital rose to $672 billion on record quarterly fundraising of $77 billion. The board declared a quarterly dividend of $0.07 per share."
-      },
-      "url": "https://www.sec.gov/Archives/edgar/data/1001085/000117184326005474/exh_991.htm",
-      "image": null
-    },
-    {
-      "date": "11.08.2026",
+      "date": "03.11.2026",
       "type": "announcement",
       "title": {
-        "ru": "NVIDIA формирует с Brookfield и другими консорциум на $500+ млрд для финансирования AI-инфраструктуры",
-        "en": "NVIDIA forms $500bn+ consortium with Brookfield to fund AI infrastructure"
+        "ru": "Brookfield и Drax построят ИИ-ЦОД в Йоркшире: до £20 млрд инвестиций",
+        "en": "Brookfield and Drax to build £20bn+ AI data centre in Yorkshire"
       },
       "text": {
-        "ru": "CEO NVIDIA Дженсен Хуанг объявил о партнёрстве с Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs и KKR по созданию независимых финансовых платформ, нацеленных на мобилизацию свыше $500 млрд стороннего капитала для строительства AI-инфраструктуры. По словам Хуанга, отрасль переходит от точечных закупок чипов и строительства дата-центров проект за проектом к финансированию «AI-фабрик» как производительной инфраструктуры — с повторяемыми платформами, долгосрочным институциональным капиталом и широкой базой клиентов, монетизирующих вычисления. Для Brookfield это институционализирует роль одного из ключевых финансовых партнёров NVIDIA в буме дата-центров, наряду с уже реализуемыми AI-инфраструктурными сделками группы.",
-        "en": "NVIDIA CEO Jensen Huang announced a partnership with Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs and KKR to create independent financing platforms aimed at mobilising more than $500bn of third-party capital to build AI infrastructure. Huang said the industry is moving from one-off chip purchases and project-by-project data centre construction toward financing \"AI factories\" as productive infrastructure — with repeatable platforms, long-term institutional capital and a broad base of customers monetising compute. For Brookfield, it institutionalises its role as one of NVIDIA's key financial partners in the data centre boom, alongside the group's AI infrastructure deals already under way."
+        "ru": "Brookfield, её нейроклауд-платформа (neocloud platform) Radiant и Drax Group договорились совместно развивать центр обработки данных для искусственного интеллекта на территории электростанции Drax в Северном Йоркшире. Полный объём инвестиций с учётом полупроводников может превысить £20 млрд ($26,8 млрд); первая фаза — £2,5 млрд и до 100 МВт с вводом в эксплуатацию с I квартала 2028 года, далее ещё 500 МВт в 2028–2031 годах и цель свыше 1 ГВт на площадке в долгосрочной перспективе. Акции Drax подорожали примерно на 9%. Окончательное инвестиционное решение пока не принято: первая фаза зависит от согласований по планированию, регулированию и подключению к сети, а также от поиска арендатора.",
+        "en": "Brookfield, its neocloud platform Radiant and Drax Group agreed to jointly develop an AI data centre on the Drax Power Station estate in North Yorkshire. Total investment including semiconductors could exceed £20 billion ($26.8 billion), beginning with a £2.5 billion first phase of up to 100 MW operational from the first quarter of 2028, a further 500 MW between 2028 and 2031, and a long-term target of more than 1 GW at the site. Drax shares rose about 9%. No final investment decision has been taken, and phase one depends on planning, regulatory and grid approvals as well as securing a tenant."
       },
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Jensen_Huang_-_RTX_Blackwell_-_Nvidia_Keynote_-_CES_2025_Las_Vegas_%283%29.jpg/960px-Jensen_Huang_-_RTX_Blackwell_-_Nvidia_Keynote_-_CES_2025_Las_Vegas_%283%29.jpg",
-      "url": "https://x.com/jensenhuang/status/2086934705207959965?s=46"
+      "url": "https://www.cnbc.com/2026/11/03/brookfield-ai-data-center-yorkshire-drax.html",
+      "image": null
+    },
+    {
+      "date": "17.09.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "День инвестора: план удвоить прибыль и $140 плановой стоимости акции к 2031",
+        "en": "Investor Day: plan to double earnings, $140 plan value per share by 2031"
+      },
+      "text": {
+        "ru": "На дне инвестора 17 сентября Brookfield Corporation представила пятилетний план удвоения базовой прибыли: распределяемая прибыль до реализаций (distributable earnings before realizations) должна вырасти с $5,3 млрд в 2026 году до $11,6 млрд к 2031 году — среднегодовой темп 17%. С учётом вознаграждения за результат (carried interest) и распределения капитала совокупная распределяемая прибыль планируется на уровне $16,8 млрд против $5,9 млрд, то есть 24% в год. Плановая стоимость на акцию (plan value per share) — $140 к 2031 году против $67 сегодня, или 16% в год; менеджмент ориентирует на $54 млрд свободного денежного потока за пять лет и рост страховых активов Brookfield Wealth Solutions до $375 млрд.",
+        "en": "At its September 17 Investor Day, Brookfield Corporation laid out a five-year plan to double core earnings: distributable earnings before realizations are targeted to rise from $5.3 billion in 2026 to $11.6 billion by 2031, a 17% CAGR. Including carried interest and capital allocation, total distributable earnings are planned at $16.8 billion versus $5.9 billion, a 24% CAGR. Plan value per share is targeted at $140 by 2031 against $67 today, a 16% CAGR, with management guiding to $54 billion of free cash flow over the five years and growth in Brookfield Wealth Solutions insurance assets to $375 billion."
+      },
+      "url": "https://bn.brookfield.com/sites/brookfield-bn-v2/files/brookfield-bn/events-news/investor-day/bn-ir-day-presentation-2026.pdf",
+      "image": null
+    },
+    {
+      "date": "15.09.2026",
+      "type": "news",
+      "title": {
+        "ru": "Brookfield покупает Reliance Worldwide за $2,8 млрд",
+        "en": "Brookfield to acquire Reliance Worldwide for $2.8bn"
+      },
+      "text": {
+        "ru": "Brookfield договорилась о приобретении 100% Reliance Worldwide Corporation (ASX: RWC) — мирового производителя сантехнического и отопительного оборудования и лидера в сегменте быстросъёмных фитингов push-to-connect — по цене $3,38 за акцию наличными, что соответствует стоимости предприятия (enterprise value) около $2,8 млрд. Совет директоров Reliance единогласно рекомендовал предложение акционерам, которым предстоит голосование. Сделка финансируется через флагманскую стратегию прямых инвестиций Brookfield Capital Partners и аффилированную Brookfield Business Corporation (BBUC); закрытие ожидается в I квартале 2027 года при получении акционерных, регуляторных и государственных одобрений.",
+        "en": "Brookfield agreed to acquire 100% of ASX-listed Reliance Worldwide Corporation, a global maker of plumbing and heating products and the market leader in push-to-connect fittings, at $3.38 per share in cash — an enterprise value of roughly $2.8 billion. Reliance's board unanimously recommended the all-cash proposal, which goes to a shareholder vote. The investment is funded through Brookfield's flagship Brookfield Capital Partners private equity strategy and its affiliate Brookfield Business Corporation (BBUC), with closing expected in the first quarter of 2027 subject to shareholder, regulatory and government approvals."
+      },
+      "url": "https://bam.brookfield.com/press-releases/brookfield-agrees-acquire-reliance-worldwide-corporation",
+      "image": null
     }
   ],
   "topBets": {

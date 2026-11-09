@@ -3,7 +3,7 @@
   "name": "Berkshire Hathaway",
   "ticker": "BRK.A / BRK.B",
   "type": "true holdco",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "Berkshire оценён близко к собственной исторической норме (P/B ~1.45x против 10-летней медианы ~1.42x) при рекордном кэше $373.5 млрд и символическом buyback $235 млн — нейтральный по цене сигнал HOLD с покупкой на просадках; ключевые узлы решения — первый полный квартал Greg Abel как CEO, кэш-дрэг под падающую ставку и лучшее в peer-группе страховое ядро (combined ratio 87.1%).",
   "kpis": [
     {
@@ -2081,59 +2081,59 @@
   },
   "news": [
     {
-      "date": "03.09.2026",
+      "date": "07.11.2026",
       "type": "news",
       "title": {
-        "ru": "Абель в Токио: Berkshire намерена и дальше наращивать доли в пяти сого-сёся",
-        "en": "Abel in Tokyo: Berkshire aims to keep raising stakes in Japan's five trading houses"
+        "ru": "Berkshire: операционная прибыль в III квартале −5,8%, выкуп акций $9,6 млрд",
+        "en": "Berkshire Q3 operating earnings fall 5.8%; buybacks hit $9.6 billion"
       },
       "text": {
-        "ru": "В первой поездке в Японию с момента вступления в должность в январе Грег Абель заявил, что Berkshire рассматривает увеличение долей в пяти крупнейших торговых домах — Mitsubishi, Itochu, Mitsui & Co., Sumitomo и Marubeni, — которые уже превышают 10% в каждом. Он встретился с руководством компаний, чтобы обсудить результаты и совместные проекты. Помимо роста пакетов, Абель говорил о более активных совместных инвестициях и сделках слияний и поглощений (M&A) с этими партнёрами по всему миру.",
-        "en": "On his first trip to Japan since taking over in January, Greg Abel said Berkshire is considering raising its stakes in the country's five biggest trading houses — Mitsubishi, Itochu, Mitsui & Co., Sumitomo and Marubeni — each of which already exceeds 10%. He met the companies' management to review performance and discuss joint initiatives. Beyond larger holdings, Abel pointed to more joint investments and M&A alongside those partners around the world."
+        "ru": "7 ноября Berkshire Hathaway отчиталась за III квартал 2026 года: операционная прибыль снизилась на 5,8% до $12 705 млн, чистая прибыль составила $22,1 млрд. Основной удар нанесло страхование — результат андеррайтинга (underwriting) упал на 43% до $1 352 млн, а комбинированный коэффициент (combined ratio) GEICO ухудшился до 91,4% против 84,3% годом ранее. BNSF и Berkshire Hathaway Energy, напротив, прибавили — $1 729 млн и $1 612 млн соответственно. Выкуп собственных акций ускорился до $9,6 млрд за квартал ($14,4 млрд за девять месяцев), а денежные средства и казначейские векселя страхового сегмента составили $352,3 млрд.",
+        "en": "Berkshire Hathaway reported third-quarter 2026 results on November 7: operating earnings fell 5.8% to $12,705 million, while net earnings came in at $22.1 billion. Insurance did the damage — underwriting earnings dropped 43% to $1,352 million and GEICO's combined ratio deteriorated to 91.4% from 84.3% a year earlier. BNSF and Berkshire Hathaway Energy went the other way, at $1,729 million and $1,612 million respectively. Buybacks accelerated to $9.6 billion for the quarter ($14.4 billion over nine months), and cash and Treasury bills held by the insurance and other businesses stood at $352.3 billion."
       },
-      "url": "https://asia.nikkei.com/editor-s-picks/interview/berkshire-eyes-bigger-stakes-in-japan-trading-houses-ceo-abel",
+      "url": "https://www.berkshirehathaway.com/news/nov0726.pdf",
       "image": null
     },
     {
-      "date": "02.09.2026",
+      "date": "14.10.2026",
+      "type": "insider",
+      "title": {
+        "ru": "Berkshire доинвестировала $330 млн в Bending Spoons, доля выросла до 4%",
+        "en": "Berkshire adds $330 million to Bending Spoons, lifting stake to 4%"
+      },
+      "text": {
+        "ru": "14 октября Bending Spoons сообщила, что Berkshire Hathaway вложила дополнительные $330 млн в рамках частного размещения (private placement) — 10 млн обыкновенных акций по $33. Сделка довела долю Berkshire примерно до 4%; ранее конгломерат приобрёл бумаг на $600 млн при IPO компании в июле 2026 года. Гендиректор Лука Феррари назвал новое вложение укреплением партнёрства.",
+        "en": "On October 14 Bending Spoons disclosed that Berkshire Hathaway had put a further $330 million into the company through a private placement of 10 million ordinary shares at $33 each. The purchase lifted Berkshire's stake to about 4%, on top of the $600 million it committed at the company's July 2026 IPO. Chief executive Luca Ferrari said the fresh investment reinforced the partnership."
+      },
+      "url": "https://investors.bendingspoons.com/newsroom/berkshire-hathaway-invests-further-in-bending-spoons",
+      "image": null
+    },
+    {
+      "date": "03.10.2026",
+      "type": "insider",
+      "title": {
+        "ru": "Berkshire увеличила долю в Lennar до 11,2%, перейдя порог 10%",
+        "en": "Berkshire lifts Lennar stake to 11.2%, crossing the 10% threshold"
+      },
+      "text": {
+        "ru": "Berkshire Hathaway довела пакет в застройщике Lennar до 11,2%, или 26,6 млн акций на сумму около $2,1 млрд, против 5,4% (13,4 млн акций) на конец II квартала. В середине сентября доля превысила 10%, что обязало конгломерат раскрывать последующие сделки в течение двух рабочих дней. С 17 по 25 сентября Berkshire купила бумаг почти на $349 млн, однако в первые дни октября темп замедлился — около $53,6 млн за три сессии.",
+        "en": "Berkshire Hathaway has built its position in homebuilder Lennar to 11.2%, or 26.6 million shares worth roughly $2.1 billion, up from 5.4% (13.4 million shares) at the end of the second quarter. The stake passed 10% in mid-September, obliging the conglomerate to disclose subsequent trades within two business days. Berkshire bought almost $349 million of stock between September 17 and 25, but the pace slowed to about $53.6 million over the first three sessions of October."
+      },
+      "url": "https://www.cnbc.com/2026/10/03/berkshire-buys-more-lennar-shares-but-pace-of-purchases-slows.html",
+      "image": null
+    },
+    {
+      "date": "18.09.2026",
       "type": "news",
       "title": {
-        "ru": "Абель: спрос ЦОД на электроэнергию — «значимая возможность» для Berkshire Hathaway Energy",
-        "en": "Abel calls data-center power demand a 'significant opportunity' for Berkshire Energy"
+        "ru": "Уоррен Баффет стал почётным председателем, совет избрал Хауарда Баффета",
+        "en": "Warren Buffett becomes Chairman Emeritus; Howard Buffett elected Chairman"
       },
       "text": {
-        "ru": "Гендиректор Berkshire Грег Абель заявил, что строительство дата-центров под искусственный интеллект открывает существенные перспективы для энергетического бизнеса конгломерата. По его словам, в Айове, где базируется Berkshire Hathaway Energy, около 8% нагрузки в прошлом году приходилось на ЦОД: «Я всегда придерживался твёрдого мнения, что энергия станет ограничением». Абель также назвал Google «значимым игроком» в ИИ и отметил, что доля в Alphabet, купленная тремя месяцами ранее на $10 млрд, была приобретена с дисконтом 6,5% к рыночной цене.",
-        "en": "Berkshire CEO Greg Abel said the AI data-center buildout opens up substantial prospects for the conglomerate's energy business. In Iowa, where Berkshire Hathaway Energy is based, roughly 8% of load came from data centers last year, he noted: \"I've sort of always had the strong view that energy would be the constraint.\" Abel also described Google as a \"significant player\" in AI and said the $10 billion Alphabet stake bought three months earlier came at a 6.5% discount to the market price."
+        "ru": "18 сентября Berkshire Hathaway объявила, что Уоррен Баффет получил статус почётного председателя (Chairman Emeritus) с немедленным вступлением в силу и остаётся членом совета директоров. Председателем совета избран его сын Хауард Дж. Баффет, директор Berkshire с 1993 года; Сьюзан Л. Декер сохраняет роль ведущего независимого директора (Lead Independent Director). В письме акционерам 96-летний Баффет написал, что Грег Абель превзошёл его и без того высокие ожидания и уже давно принимает ключевые решения, поэтому «время для завершения перехода подходящее».",
+        "en": "On September 18 Berkshire Hathaway announced that Warren Buffett had been named Chairman Emeritus with immediate effect, while remaining a member of the board. The board elected his son Howard G. Buffett, a Berkshire director since 1993, as Chairman; Susan L. Decker stays on as Lead Independent Director. In an accompanying letter to shareholders, the 96-year-old Buffett wrote that Greg Abel had exceeded his already sky-high expectations and had been making the decisions that matter for some time, so \"the timing is right to complete the transition.\""
       },
-      "url": "https://www.bnnbloomberg.ca/business/artificial-intelligence/2026/09/02/berkshire-ceo-abel-sees-opportunity-for-energy-business-from-ai/",
-      "image": null
-    },
-    {
-      "date": "16.08.2026",
-      "type": "insider",
-      "title": {
-        "ru": "Berkshire добирает застройщиков, режет банки и полностью выходит из Constellation Brands",
-        "en": "Berkshire adds homebuilders, cuts banks and exits Constellation Brands"
-      },
-      "text": {
-        "ru": "Разбор квартальной отчётности показал смену акцентов в портфеле при новом CEO Греге Абеле: доля в Lennar выросла почти на 30%, появилась новая позиция в D.R. Horton, а в июле был закрыт выкуп застройщика Taylor Morrison на $6,8 млрд. Банковский блок, наоборот, сокращён: Bank of America примерно на 6%, Ally Financial на 6,9%, Capital One на 58%. Из Constellation Brands Berkshire вышла полностью, продав все 632 890 акций; также урезаны позиции в Kroger, Nucor и DaVita.",
-        "en": "The quarterly filing showed a clear shift in emphasis under new CEO Greg Abel: the Lennar stake grew by almost 30%, a new position in D.R. Horton appeared, and the $6.8 billion takeover of homebuilder Taylor Morrison closed in July. The bank book moved the other way — Bank of America down about 6%, Ally Financial down 6.9% and Capital One down 58%. Berkshire exited Constellation Brands outright, selling all 632,890 shares, and also trimmed Kroger, Nucor and DaVita."
-      },
-      "url": "https://fortune.com/2026/08/16/berkshire-hathaway-homebuilder-lennar-dr-horton-banks-shares/",
-      "image": null
-    },
-    {
-      "date": "14.08.2026",
-      "type": "insider",
-      "title": {
-        "ru": "13F за II квартал: Alphabet стала третьей по величине позицией Berkshire",
-        "en": "Q2 13F: Alphabet becomes Berkshire's third-largest equity holding"
-      },
-      "text": {
-        "ru": "В отчёте 13F, поданном в SEC 14 августа, Berkshire раскрыла покупку 48,1 млн акций Alphabet во II квартале — примерно 60% объёма (около $10 млрд) пришлось на прямое частное размещение (private placement), остальное куплено на открытом рынке. Общая позиция достигла около 106 млн акций и стала третьей по размеру после Apple ($69,7 млрд) и American Express ($51,9 млрд). Одновременно конгломерат нарастил долю в Delta Air Lines на 44%, до 57,3 млн акций, и сократил Bank of America на 5,9% и Capital One на 58%. Денежная подушка (cash pile) на 30 июня составила $365,5 млрд — на 8% меньше, чем на 31 марта.",
-        "en": "In the 13F filed with the SEC on August 14, Berkshire disclosed buying 48.1 million Alphabet shares during the second quarter — roughly 60% of it (about $10 billion) through a direct private placement, the rest on the open market. The full position now stands at around 106 million shares, ranking third behind Apple ($69.7 billion) and American Express ($51.9 billion). Berkshire also lifted Delta Air Lines by 44% to 57.3 million shares while cutting Bank of America by 5.9% and Capital One by 58%. Cash stood at $365.5 billion on June 30, down 8% from March 31."
-      },
-      "url": "https://finance.yahoo.com/markets/stocks/articles/berkshire-hathaway-adds-17-billion-111109454.html",
+      "url": "https://www.berkshirehathaway.com/news/sep1826.pdf",
       "image": null
     }
   ],

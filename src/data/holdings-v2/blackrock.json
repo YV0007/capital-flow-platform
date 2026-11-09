@@ -3,7 +3,7 @@
   "name": "BlackRock",
   "ticker": "BLK",
   "type": "asset manager",
-  "asOf": "09.09.2026",
+  "asOf": "09.11.2026",
   "tagline": "BlackRock — крупнейший в мире asset manager ($13.89 трлн AUM): доход — комиссии с управляемых активов, экономику делают iShares ETF (44% base fees) и высокомаржинальные private markets после GIP/HPS/Preqin. Решение hold/add/cut держится на конверсии рекордных притоков ($744 млрд LTM) в base/performance fees при as-adjusted марже >45%; акция при этом у 52-недельного минимума и ниже исторической forward P/E.",
   "kpis": [
     {
@@ -2690,6 +2690,48 @@
   },
   "news": [
     {
+      "date": "14.10.2026",
+      "type": "news",
+      "title": {
+        "ru": "BlackRock: рекордные $15,5 трлн AUM и приток $205 млрд в III квартале",
+        "en": "BlackRock Q3: record $15.5trn AUM and $205bn of net inflows"
+      },
+      "text": {
+        "ru": "14 октября BlackRock отчитался за III квартал 2026 года: активы под управлением (AUM) достигли рекордных $15,5 трлн, чистый приток (net inflows) составил $205 млрд за квартал и $869 млрд за последние двенадцать месяцев. Выручка выросла на 19% год к году, до $7,75 млрд; скорректированная прибыль на акцию (adjusted EPS) — $15,93 против $10,57 по GAAP. Органический рост базовых комиссий (organic base fee growth) составил 11% в годовом выражении. За квартал выплачен дивиденд $5,73 на акцию и выкуплено акций на $550 млн.",
+        "en": "BlackRock reported third-quarter 2026 results on 14 October: assets under management reached a record $15.5 trillion, with $205 billion of net inflows in the quarter and $869 billion over the trailing twelve months. Revenue rose 19% year on year to $7.75 billion, while adjusted diluted EPS came in at $15.93 against $10.57 on a GAAP basis. Annualized organic base fee growth was 11%. The firm paid a quarterly dividend of $5.73 per share and repurchased $550 million of stock."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/0002012383/000119312526420979/blk-ex99_1.htm",
+      "image": null
+    },
+    {
+      "date": "13.10.2026",
+      "type": "news",
+      "title": {
+        "ru": "HPS (BlackRock) выкупает контроль в сети клиник CenterWell за $2,8 млрд",
+        "en": "BlackRock's HPS takes majority of Humana's CenterWell clinics for $2.8bn"
+      },
+      "text": {
+        "ru": "13 октября Humana сообщила о новом совместном предприятии (joint venture) с фондами под управлением HPS Investment Partners, входящей в BlackRock. HPS выкупает долю Welsh, Carson, Anderson & Stowe, оценённую примерно в $2,8 млрд, и получает контрольный пакет в СП, объединяющем почти 150 клиник CenterWell Senior Primary Care; Humana остаётся миноритарием, а CenterWell продолжит управлять клиниками. Закрытие сделки планируется в IV квартале 2026 года при условии регуляторных одобрений. С 2028 года CenterWell сможет выкупать клиники из СП, а если к концу 2033 года выкуп не завершится, BlackRock вправе продать остаток.",
+        "en": "On 13 October Humana announced a new joint venture with funds and accounts managed by HPS Investment Partners, part of BlackRock. HPS is buying out Welsh, Carson, Anderson & Stowe's equity stake, valued at roughly $2.8 billion, taking majority ownership of a venture holding nearly 150 CenterWell Senior Primary Care clinics; Humana retains a minority interest and CenterWell continues to operate the clinics. The transaction is expected to close in the fourth quarter of 2026, subject to regulatory approval. CenterWell can begin buying clinics out of the venture from 2028, and if it has not acquired all of them by the end of 2033 BlackRock may exit by selling the remainder."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/0000049071/000004907126000060/blackrockstrategicjvpressr.htm",
+      "image": null
+    },
+    {
+      "date": "18.09.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "GIP вкладывает $1,8 млрд в африканскую инфраструктуру TotalEnergies",
+        "en": "BlackRock's GIP puts $1.8bn into TotalEnergies' African midstream assets"
+      },
+      "text": {
+        "ru": "18 сентября TotalEnergies объявила о партнёрском соглашении с Global Infrastructure Partners (GIP), входящей в BlackRock, по ряду нефтегазовых инфраструктурных активов в Африке. GIP вносит $1,8 млрд капитала, а TotalEnergies взамен будет платить тариф, привязанный к объёмам прокачки (throughput-based tariff), в течение периода до 15 лет. Финансовый директор TotalEnergies Жан-Пьер Сбрер отметил, что соглашение «кристаллизует стоимость» части midstream-активов компании в Африке. Конкретные активы и страны не раскрыты.",
+        "en": "On 18 September TotalEnergies announced a partnership agreement with Global Infrastructure Partners (GIP), part of BlackRock, covering interests in certain oil and gas infrastructure assets in Africa. GIP is making a $1.8 billion capital contribution, and in return TotalEnergies will pay GIP a throughput-based tariff over a period of up to 15 years. CFO Jean-Pierre Sbraire said the agreement crystallises the value of some of the company's African midstream infrastructure. The specific assets and countries were not disclosed."
+      },
+      "url": "https://www.energyconnects.com/news/oil/2026/september/totalenergies-and-blackrock-agree-on-18-billion-africa-asset-financing/",
+      "image": null
+    },
+    {
       "date": "02.09.2026",
       "type": "news",
       "title": {
@@ -2702,48 +2744,6 @@
       },
       "url": "https://www.sec.gov/Archives/edgar/data/0001370755/000114036126035674/ef20081602_8k.htm",
       "image": null
-    },
-    {
-      "date": "20.08.2026",
-      "type": "announcement",
-      "title": {
-        "ru": "Заявки на $900 млн в программе BlackRock Future Builders на $100 млн",
-        "en": "BlackRock Future Builders draws over $900 million in funding requests"
-      },
-      "text": {
-        "ru": "BlackRock 20 августа 2026 года сообщила, что первый конкурс заявок (RFP) программы Future Builders собрал более 1000 обращений из всех 50 штатов, округа Колумбия и территорий США на общую сумму свыше $900 млн. Программа — благотворительная инициатива на $100 млн, из которых Фонд BlackRock направит $25 млн двумя циклами грантов на обучение рабочим специальностям: электрики, сварщики, сантехники, специалисты по HVAC. Заявки принимались с 1 июня по 10 июля 2026 года; получателей грантов объявят в октябре. Инициатива увязана с дефицитом кадров, который к 2030 году оценивается в 2,1 млн незакрытых позиций в квалифицированных рабочих профессиях.",
-        "en": "BlackRock said on 20 August 2026 that the first request for proposals under its Future Builders program drew more than 1,000 applications from all 50 states, Washington D.C. and U.S. territories, seeking over $900 million in total. Future Builders is a $100 million philanthropic initiative, of which The BlackRock Foundation has committed $25 million across two funding cycles to support skilled trades training — electricians, welders, plumbers and HVAC technicians among them. Applications ran from 1 June to 10 July 2026, with grant recipients due to be named in October. The firm frames the effort against an estimated 2.1 million skilled trades positions expected to go unfilled by 2030."
-      },
-      "url": "https://www.blackrock.com/corporate/newsroom/media/press-releases/blackrock-future-builders-first-round-request-for-proposal",
-      "image": null
-    },
-    {
-      "date": "17.08.2026",
-      "type": "announcement",
-      "title": {
-        "ru": "JioBlackRock выходит на дистрибьюторов Индии с regular-планами фондов",
-        "en": "JioBlackRock opens distributor channel with regular mutual fund plans in India"
-      },
-      "text": {
-        "ru": "Совместное предприятие BlackRock и Jio Financial Services — JioBlackRock Asset Management — 17 августа 2026 года объявило о запуске regular-планов по подходящим схемам паевых фондов, которые можно будет купить через зарегистрированных дистрибьюторов. До сих пор фонды продавались только напрямую (direct plans), с более низким коэффициентом расходов, поскольку в regular-планах в него включается комиссия дистрибьютора. Примерно за год работы СП собрало около 180 млрд рупий активов под управлением. Ранее в августе оно запустило JioBlackRock Nifty 50 ETF, выйдя на индийский рынок биржевых фондов.",
-        "en": "JioBlackRock Asset Management, the joint venture between BlackRock and Jio Financial Services, said on 17 August 2026 that it will offer regular plans on eligible mutual fund schemes, making them available through registered distributors. Until now the venture sold only direct plans, which carry a lower expense ratio because regular plans embed a distributor commission. The business has gathered roughly 180 billion rupees in assets under management in about a year of operation. Earlier in August it launched the JioBlackRock Nifty 50 ETF, its first step into India's exchange-traded fund market."
-      },
-      "url": "https://sg.finance.yahoo.com/news/jio-blackrock-launch-regular-mutual-110811901.html",
-      "image": null
-    },
-    {
-      "date": "11.08.2026",
-      "type": "announcement",
-      "title": {
-        "ru": "NVIDIA формирует с BlackRock и другими консорциум на $500+ млрд для финансирования AI-инфраструктуры",
-        "en": "NVIDIA forms $500bn+ consortium with BlackRock to fund AI infrastructure"
-      },
-      "text": {
-        "ru": "CEO NVIDIA Дженсен Хуанг объявил о партнёрстве с Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs и KKR по созданию независимых финансовых платформ, нацеленных на мобилизацию свыше $500 млрд стороннего капитала для строительства AI-инфраструктуры. По словам Хуанга, отрасль переходит от точечных закупок чипов и строительства дата-центров проект за проектом к финансированию «AI-фабрик» как производительной инфраструктуры — с повторяемыми платформами, долгосрочным институциональным капиталом и широкой базой клиентов, монетизирующих вычисления. Для BlackRock это расширяет уже действующее партнёрство AIP с NVIDIA/Microsoft/MGX (цель до $100 млрд) до общей отраслевой платформы финансирования AI-capex.",
-        "en": "NVIDIA CEO Jensen Huang announced a partnership with Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs and KKR to create independent financing platforms aimed at mobilising more than $500bn of third-party capital to build AI infrastructure. Huang said the industry is moving from one-off chip purchases and project-by-project data centre construction toward financing \"AI factories\" as productive infrastructure — with repeatable platforms, long-term institutional capital and a broad base of customers monetising compute. For BlackRock, it extends its existing AIP partnership with NVIDIA, Microsoft and MGX (targeting up to $100bn) into an industry-wide platform for financing AI capex."
-      },
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Jensen_Huang_-_RTX_Blackwell_-_Nvidia_Keynote_-_CES_2025_Las_Vegas_%283%29.jpg/960px-Jensen_Huang_-_RTX_Blackwell_-_Nvidia_Keynote_-_CES_2025_Las_Vegas_%283%29.jpg",
-      "url": "https://x.com/jensenhuang/status/2086934705207959965?s=46"
     }
   ],
   "changesDeep": {
