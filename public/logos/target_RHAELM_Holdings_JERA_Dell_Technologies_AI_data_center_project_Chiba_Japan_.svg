@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g><g transform="matrix(2.100840336134454,0,0,2.100840336134454,0,79.8319327731092)"><svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2" viewBox="0 0 476 400" width="476" height="400"><g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path d="M0,230.77h153.54c42.34,0,76.77,34.5,76.77,76.92v92.31h15.35v-92.31c0-42.42,34.43-76.92,76.77-76.92h46.06v-15.38H0v15.38Z"></path>
+      <path d="M245.68,92.31V0h-15.35v92.31c0,42.42-34.43,76.92-76.77,76.92h-46.06v15.38h368.51v-15.38h-153.54c-42.34,0-76.77-34.5-76.77-76.92Z"></path>
+    </g>
+  </g></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g><g transform="matrix(2.100840336134454,0,0,2.100840336134454,0,79.8319327731092)"><svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2" viewBox="0 0 476 400" width="476" height="400"><defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs><g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-1" d="M0,230.77h153.54c42.34,0,76.77,34.5,76.77,76.92v92.31h15.35v-92.31c0-42.42,34.43-76.92,76.77-76.92h46.06v-15.38H0v15.38Z"></path>
+      <path class="cls-1" d="M245.68,92.31V0h-15.35v92.31c0,42.42-34.43,76.92-76.77,76.92h-46.06v15.38h368.51v-15.38h-153.54c-42.34,0-76.77-34.5-76.77-76.92Z"></path>
+    </g>
+  </g></svg></g></g></svg></g></svg>

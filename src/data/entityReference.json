@@ -1096,5 +1096,148 @@
       }
     ],
     "auto_resolved": true
+  },
+  "alloc:Alpha Dhabi Holding": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "alphadhabi.com",
+        "url": "https://alphadhabi.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Strategic Bauxite USA": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "strategicbauxiteusa.com",
+        "url": "https://strategicbauxiteusa.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "alloc:Empery Digital": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "emperydigital.com",
+        "url": "https://emperydigital.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Preview": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "preview.ai",
+        "url": "https://preview.ai"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:SciFin": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "scifin.com",
+        "url": "https://scifin.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Mecka": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "mecka.com",
+        "url": "https://mecka.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Catalyst": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "catalyst.com",
+        "url": "https://catalyst.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:TypeSafe AI": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "typesafe.ai",
+        "url": "https://typesafe.ai"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Applied Compute": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "appliedcompute.com",
+        "url": "https://appliedcompute.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Preference Model": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "preferencemodel.com",
+        "url": "https://preferencemodel.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Eka Robotics": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "ekarobotics.com",
+        "url": "https://ekarobotics.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Conway Research": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "conwayresearch.com",
+        "url": "https://conwayresearch.com"
+      }
+    ],
+    "auto_resolved": true
+  },
+  "target:Prima Mente": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "primamente.com",
+        "url": "https://primamente.com"
+      }
+    ],
+    "auto_resolved": true
   }
 }
