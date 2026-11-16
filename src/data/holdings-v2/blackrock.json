@@ -3,7 +3,7 @@
   "name": "BlackRock",
   "ticker": "BLK",
   "type": "asset manager",
-  "asOf": "09.11.2026",
+  "asOf": "16.11.2026",
   "tagline": "BlackRock — крупнейший в мире asset manager ($13.89 трлн AUM): доход — комиссии с управляемых активов, экономику делают iShares ETF (44% base fees) и высокомаржинальные private markets после GIP/HPS/Preqin. Решение hold/add/cut держится на конверсии рекордных притоков ($744 млрд LTM) в base/performance fees при as-adjusted марже >45%; акция при этом у 52-недельного минимума и ниже исторической forward P/E.",
   "kpis": [
     {

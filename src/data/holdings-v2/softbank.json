@@ -3,7 +3,7 @@
   "name": "SoftBank Group",
   "ticker": "9984.T · SFTBY",
   "type": "vision-fund holdco",
-  "asOf": "09.11.2026",
+  "asOf": "16.11.2026",
   "tagline": "SBG — инвестиционный холдинг, чья equity value of holdings на ~76% сосредоточена в Arm (¥19.15T, консолидирован) и Vision Fund 2 (¥17.19T, внутри доминирует OpenAI); акция торгуется с дисконтом ~49% к raw NAV/share ¥7,029, а возможный перенос OpenAI IPO на 2027 — live-катализатор, склоняющий решение к hold до прояснения сроков IPO и рефинанса $40B bridge loan.",
   "kpis": [
     {
@@ -3173,6 +3173,34 @@
   },
   "news": [
     {
+      "date": "10.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "SoftBank: чистый убыток ¥1,1 трлн во II финансовом квартале",
+        "en": "SoftBank swings to ¥1.1 trillion net loss in fiscal second quarter"
+      },
+      "text": {
+        "ru": "10 ноября SoftBank Group сообщила о чистом убытке (net loss) ¥1,1 трлн ($7 млрд) за июль–сентябрь 2026 года против прибыли ¥2,5 трлн годом ранее, обеспеченной переоценкой вложения в OpenAI. Результат оказался заметно хуже ожиданий: трое аналитиков, опрошенных LSEG, прогнозировали от прибыли ¥233 млрд до убытка ¥113 млрд. В собственной отчётности группа раскрыла убыток ¥597 248 млн ($3,73 млрд) от пересмотра планов закупки энергетического оборудования для проектов ИИ-дата-центров в США; прогноз годового дивиденда сохранён на уровне ¥11,00 на акцию.",
+        "en": "On November 10 SoftBank Group reported a net loss of ¥1.1 trillion ($7 billion) for the July–September 2026 quarter, against a ¥2.5 trillion profit a year earlier that had been driven by a gain on its OpenAI investment. The result came in well below expectations: three analysts polled by LSEG had forecast anything from a ¥233 billion profit to a ¥113 billion loss. In its own filing the group disclosed a ¥597,248 million ($3.73 billion) loss on the realignment of procurement plans for power-generation equipment for its US AI data-centre projects; the annual dividend forecast was left unchanged at ¥11.00 per share."
+      },
+      "url": "https://www.thestar.com.my/business/business-news/2026/11/10/softbank-swings-to-us7bil-net-loss-in-second-quarter",
+      "image": null
+    },
+    {
+      "date": "09.11.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "SoftBank, Grab и PETROS вложат $1 млрд в ИИ-инфраструктуру в Сараваке",
+        "en": "SoftBank, Grab and PETROS to invest $1 billion in AI infrastructure in Sarawak"
+      },
+      "text": {
+        "ru": "9 ноября SoftBank Group, Grab и малайзийская PETROS подписали соглашение о совместной разработке (JDA) ИИ-инфраструктуры в штате Саравак, Малайзия. Стартовый капитал — $1 млрд (около 4,07 млрд ринггитов): $800 млн от SoftBank, по $100 млн от Grab и PETROS; средства будут вноситься поэтапно по мере прохождения этапов проекта и подписания клиентских контрактов. Долгосрочная цель — 5 ГВт вычислительных мощностей для ИИ. Соглашение развивает рамочный договор, подписанный в Кучинге 8 октября 2026 г., и вписывается в Национальный план действий Малайзии по ИИ на 2026–2030 гг.",
+        "en": "On 9 November SoftBank Group, Grab and Malaysia's PETROS signed a joint development agreement to build AI infrastructure in the state of Sarawak, Malaysia. Seed capital totals $1 billion (about RM4.07 billion), with $800 million from SoftBank and $100 million each from Grab and PETROS, to be deployed in stages as development and customer-contract milestones are met. The long-term target is five gigawatts of AI compute capacity. The agreement builds on a framework agreement signed in Kuching on 8 October 2026 and supports Malaysia's National AI Action Plan 2026–2030."
+      },
+      "url": "https://group.softbank/en/news/press/20261109",
+      "image": null
+    },
+    {
       "date": "06.11.2026",
       "type": "news",
       "title": {
@@ -3198,34 +3226,6 @@
         "en": "On November 6 SoftBank Group's five-year credit default swap spread widened to as much as 466 basis points, the widest since October 2022; it stood at 457.5 bps at 0653 GMT, implying a 30.6% probability of default according to Markit. The shares ended the Tokyo session down 10.8% and have fallen by almost half since the start of September. The pressure is attributed to doubts over AI profitability, heavier borrowing at record yields to fund the $64.6 billion OpenAI stake, and OpenAI's listing being pushed back to 2027."
       },
       "url": "https://www.thestar.com.my/tech/tech-news/2026/11/06/softbank-credit-risk-jumps-to-4-year-high-as-ai-fears-roil-market",
-      "image": null
-    },
-    {
-      "date": "01.10.2026",
-      "type": "insider",
-      "title": {
-        "ru": "SoftBank закрыла третий транш инвестиций в OpenAI на $10 млрд",
-        "en": "SoftBank completes final $10bn tranche of its OpenAI follow-on investment"
-      },
-      "text": {
-        "ru": "1 октября 2026 года SoftBank Group через фонд SoftBank Vision Fund 2 исполнила третий и последний транш дополнительных инвестиций в OpenAI Group PBC на $10,0 млрд (1 579,6 млрд иен по курсу 157,96 иены за доллар), завершив объявленную 27 февраля 2026 года программу на $30,0 млрд. Совокупные инвестиции в OpenAI достигли $64,6 млрд, что соответствует доле около 13%. Транш оплачен из средств размещения валютных старших нот от 24 сентября, а неиспользованный остаток бридж-линии на $10,0 млрд аннулирован с 30 сентября 2026 года.",
-        "en": "On October 1, 2026 SoftBank Group, through SoftBank Vision Fund 2, executed the third and final $10.0 billion tranche (JPY 1,579.6 billion at 157.96 yen to the dollar) of its follow-on investment in OpenAI Group PBC, completing the $30.0 billion programme announced on February 27, 2026. Cumulative investment in OpenAI now stands at $64.6 billion, equivalent to an ownership interest of roughly 13%. The tranche was funded from the foreign currency senior notes priced on September 24, and the remaining $10.0 billion of undrawn bridge facility capacity was cancelled effective September 30, 2026."
-      },
-      "url": "https://group.softbank/en/news/press/20261001",
-      "image": null
-    },
-    {
-      "date": "24.09.2026",
-      "type": "news",
-      "title": {
-        "ru": "SoftBank разместила старшие ноты на $11,1 млрд под 7,125–9,75%",
-        "en": "SoftBank raises $11.1bn in senior notes at coupons of 7.125%-9.75%"
-      },
-      "text": {
-        "ru": "24 сентября 2026 года SoftBank Group объявила об эмиссии валютных старших нот (senior notes) на сумму около $11,1 млрд (1 763,2 млрд иен): $10 млрд тремя траншами с погашением в 2030, 2032 и 2034 годах и купонами 8,625%, 9,25% и 9,75%, а также €1 млрд двумя траншами по €500 млн под 7,125% и 8,0%. Все транши размещены по номиналу, дата расчётов — 29 сентября 2026 года, купон выплачивается раз в полгода. Средства направлены на оплату последнего транша инвестиций в OpenAI на $10 млрд и на общекорпоративные цели, при одновременной отмене неиспользованных $10 млрд из бридж-линии на $40 млрд.",
-        "en": "On September 24, 2026 SoftBank Group announced an issue of foreign currency-denominated senior notes totalling about $11.1 billion (JPY 1,763.2 billion): $10 billion across three tranches due 2030, 2032 and 2034 with coupons of 8.625%, 9.25% and 9.75%, plus EUR 1 billion in two EUR 500 million tranches at 7.125% and 8.0%. All tranches priced at par, with settlement on September 29, 2026 and semi-annual interest payments. Proceeds fund the $10 billion final tranche of the OpenAI investment and general corporate purposes, alongside the cancellation of the remaining $10 billion of undrawn capacity under the $40 billion bridge facility."
-      },
-      "url": "https://group.softbank/en/news/press/20260924",
       "image": null
     }
   ],

@@ -3,7 +3,7 @@
   "name": "Fairfax Financial",
   "ticker": "FFH.TO",
   "type": "true holdco",
-  "asOf": "09.11.2026",
+  "asOf": "16.11.2026",
   "tagline": "Канадский страховой холдинг (страхование имущества и ответственности и перестрахование) с долгосрочным портфелем value-инвестиций; 2025 — рекордный год (net earnings $4.77B, combined ratio 93.0%, BVPS $1,260.19), но акция переоценилась с дисконта к book (0.74x в 2021) до премии ~1.4–1.5x USD — основной re-rating уже позади, при key-person риске (Watsa, 75 лет) и ускорившемся buyback.",
   "kpis": [
     {
@@ -2329,6 +2329,34 @@
   ],
   "news": [
     {
+      "date": "10.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Fairfax закрыла выпуск старших нот на 650 млн канадских долларов",
+        "en": "Fairfax completes C$650 million senior notes offering"
+      },
+      "text": {
+        "ru": "Fairfax Financial Holdings завершила размещение необеспеченных старших нот (senior notes) на 650 млн канадских долларов двумя траншами: 350 млн по ставке 5,00% с погашением в 2037 году и 300 млн по ставке 5,65% с погашением в 2056 году. Выпуск был объявлен 5 ноября и закрыт 10 ноября 2026 года; при размещении ноты 2037 года оценены в 99,977 канадского доллара за 100 номинала, ноты 2056 года — в 99,328. Синдикат возглавили CIBC World Markets и TD Securities, совместными букраннерами выступили также National Bank Financial и Citigroup Global Markets Canada. Чистые поступления компания намерена направить на рефинансирование и погашение долговых, акционерных и иных обязательств Fairfax и её дочерних структур, на возможные приобретения и инвестиции, включая выкуп миноритарных долей в дочерних компаниях, а также на общекорпоративные цели; конкретные объекты пока не определены.",
+        "en": "Fairfax Financial Holdings closed a C$650 million offering of unsecured senior notes in two tranches: C$350 million of 5.00% notes due 2037 and C$300 million of 5.65% notes due 2056. The deal was launched on November 5 and completed on November 10, 2026, priced at C$99.977 per C$100 of principal for the 2037 notes and C$99.328 for the 2056 notes. CIBC World Markets and TD Securities led the syndicate, with National Bank Financial and Citigroup Global Markets Canada also acting as joint bookrunners. Fairfax intends to use the net proceeds to refinance, repay or redeem outstanding debt, equity and other obligations of Fairfax and its subsidiaries, to fund possible acquisitions and investments including minority interests in its subsidiaries, and for general corporate purposes; no specific targets have been determined."
+      },
+      "url": "https://www.fairfax.ca/press-releases/fairfax-completes-c650-million-senior-notes-offering-2026-11-10/",
+      "image": null
+    },
+    {
+      "date": "04.11.2026",
+      "type": "insider",
+      "title": {
+        "ru": "Fairfax India довела долю в IIFL Capital до 40,8% за 20 млрд рупий",
+        "en": "Fairfax India lifts IIFL Capital stake to 40.8% with INR 20 billion subscription"
+      },
+      "text": {
+        "ru": "Fairfax India Holdings через FIH Mauritius Investments завершила ранее объявленную подписку на акции IIFL Capital Services, увеличив долю на 11,2% за 20 млрд рупий (около $211 млн). Совокупное участие Fairfax India и аффилированного фонда HWIC Asia Fund достигло 40,8% — 38,0% у самой Fairfax India и 2,8% у HWIC Asia Fund. Следующим шагом станет обязательное предложение миноритариям (open offer) на выкуп до 26% капитала; если его объём окажется недостаточным, действующие промоутеры IIFL Capital продадут столько акций, чтобы группа вышла минимум на 51%. Ожидаемая дополнительная сумма — около 19,3 млрд рупий ($204 млн), закрытие сделки намечено на IV квартал 2026 года.",
+        "en": "Fairfax India Holdings, through FIH Mauritius Investments, completed its previously announced subscription for shares of IIFL Capital Services, raising its interest by 11.2% for INR 20 billion (about $211 million). The combined holding of Fairfax India and affiliate HWIC Asia Fund now stands at 40.8% — 38.0% held by Fairfax India and 2.8% by HWIC Asia Fund. Next comes a mandatory open offer to minority shareholders for up to 26% of the share capital; if it falls short, IIFL Capital's existing promoters have agreed to sell enough shares to take the group to at least 51%. The expected additional consideration is roughly INR 19.3 billion ($204 million), with closing targeted for the fourth quarter of 2026."
+      },
+      "url": "https://www.fairfaxindia.ca/press-releases/fairfax-india-completes-subscription-of-additional-equity-interest-in-iifl-capital-services-limited-2026-11-04/",
+      "image": null
+    },
+    {
       "date": "03.11.2026",
       "type": "news",
       "title": {
@@ -2354,34 +2382,6 @@
         "en": "Fairfax announced the completion of its previously announced sale of an 80% equity interest in the entity operating the life insurance business of Eurolife FFH Insurance Group Holdings S.A. to Eurobank S.A. Cash consideration was approximately €813 million, around $906 million. In its third-quarter report Fairfax said it expects the disposal to generate a pre-tax gain of roughly $200 million in the fourth quarter of 2026."
       },
       "url": "https://www.fairfax.ca/press-releases/fairfax-announces-successful-completion-of-sale-of-eurolife-life-insurance-operations-to-eurobank-2026-10-29/",
-      "image": null
-    },
-    {
-      "date": "14.10.2026",
-      "type": "news",
-      "title": {
-        "ru": "Fairfax — «стратегический покупатель» 60,72% IDBI Bank за $5,6 млрд",
-        "en": "Fairfax named strategic buyer of 60.72% of India's IDBI Bank for $5.6B"
-      },
-      "text": {
-        "ru": "Правительство Индии объявило дочернюю структуру Fairfax «стратегическим покупателем» 60,72% акций IDBI Bank по цене 81 рупия за акцию — около 528,78 млрд рупий, или $5,6 млрд, что примерно на 23% выше балансовой стоимости банка на 30 июня 2026 года. Fairfax намерена оплатить покупку из денежных средств, существующих кредитных линий и возможных продаж активов, а также предлагает внести в IDBI Bank по рыночным ценам доли в Go Digit General и Go Digit Life Insurance и долю Fairfax India в IIFL Capital Services. Обязывающие соглашения пока не подписаны, сделка требует одобрений RBI, SEBI и IRDAI. Прем Ватса назвал её «возможностью раз в жизни — купить контрольный пакет в банке».",
-        "en": "The Government of India designated a wholly-owned Fairfax subsidiary the strategic buyer of a 60.72% equity stake in IDBI Bank at INR 81 per share, about INR 528.78 billion or US$5.6 billion, roughly a 23% premium to the bank's book value at June 30, 2026. Fairfax plans to fund the purchase from cash on hand, existing credit sources and potential asset sales, and separately proposes to contribute its interests in Go Digit General and Go Digit Life Insurance, plus Fairfax India's stake in IIFL Capital Services, to IDBI Bank at market prices. No binding definitive agreements have been signed and the deal requires RBI, SEBI and IRDAI approvals. Prem Watsa called it \"a once-in-a-lifetime opportunity to purchase a majority interest in a bank.\""
-      },
-      "url": "https://www.fairfax.ca/press-releases/fairfax-declared-strategic-buyer-in-auction-to-acquire-interest-in-idbi-bank-plans-to-contribute-digit-insurance-and-iifl-capital-to-idbi-bank-2026-10-14/",
-      "image": null
-    },
-    {
-      "date": "07.10.2026",
-      "type": "news",
-      "title": {
-        "ru": "Fairfax вложит до $2,3 млрд в выкуп Boots вместе с Wittington",
-        "en": "Fairfax commits up to $2.3B to Boots buyout alongside Wittington"
-      },
-      "text": {
-        "ru": "Fairfax договорилась с Wittington Investments — холдингом семьи Уэстон — о приобретении The Boots Group примерно за $8,9 млрд с учётом принимаемого долга. По письму об обязательстве предоставить капитал (equity commitment letter) Fairfax внесёт до около $2,3 млрд и рассчитывает получить 50% акционерного капитала Boots; операционный контроль остаётся за Wittington, а председателем совета станет Гэйлен Уэстон. В сделку входят розничные операции Boots в Великобритании и Ирландии, Boots Opticians, No7 Beauty Company, а также бизнес в Таиланде и франчайзинговые операции. Закрытие ожидается в первом квартале 2027 года.",
-        "en": "Fairfax has agreed to partner with Wittington Investments, the Weston family holding company, on the acquisition of The Boots Group for approximately US$8.9 billion including assumed debt. Under an equity commitment letter Fairfax will contribute up to roughly US$2.3 billion and expects to own 50% of Boots' equity, with Wittington holding operational control and Galen Weston serving as Chair. The transaction covers Boots' retail operations in the UK and Ireland, Boots Opticians, the No7 Beauty Company, and the Thailand and franchised businesses. Closing is expected in the first quarter of 2027."
-      },
-      "url": "https://www.fairfax.ca/press-releases/fairfax-partners-with-wittington-investments-in-acquisition-of-boots-2026-10-07/",
       "image": null
     }
   ],

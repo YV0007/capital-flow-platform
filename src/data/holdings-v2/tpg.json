@@ -3,7 +3,7 @@
   "name": "TPG Inc",
   "ticker": "TPG",
   "type": "asset manager",
-  "asOf": "09.11.2026",
+  "asOf": "16.11.2026",
   "tagline": "> Публичный alternative asset manager с $306.2B AUM (31.03.2026); доход всё больше опирается на предсказуемые management fees — LTM FRE впервые перешёл $1B при FRE margin 44% за квартал. Решение по позиции опирается на устойчивость fee-базы в Credit ($95.2B, +30% г/г), исполнение fundraise-таргета >$50B/2026 и переход на нового CFO в момент жёсткого guidance.",
   "kpis": [
     {
@@ -2326,6 +2326,34 @@
   ],
   "news": [
     {
+      "date": "09.11.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "The Rise Funds от TPG вложит до ₹800 крор в индийскую Arka Fincap",
+        "en": "TPG's Rise Funds to invest up to ₹800 crore in India's Arka Fincap"
+      },
+      "text": {
+        "ru": "9 ноября 2026 года TPG сообщила, что её платформа импакт-инвестиций The Rise Funds вложит ₹525 крор в индийскую небанковскую финансовую компанию Arka Fincap, входящую в группу Kirloskar. Второй транш до ₹275 крор зависит от достижения бизнес-показателей и регуляторных одобрений, что доводит общую сумму до ₹800 крор. Средства пойдут на географическую экспансию и инвестиции в технологии и риск-менеджмент. Активы под управлением (AUM) Arka Fincap составляют около ₹8 000 крор, сеть насчитывает 146 отделений в десяти штатах, рейтинг — CRISIL AA/Stable.",
+        "en": "On 9 November 2026 TPG said its impact investing platform, The Rise Funds, will make an initial ₹525 crore investment in Arka Fincap, a Kirloskar Group non-banking financial company in India. A second tranche of up to ₹275 crore is contingent on business milestones and regulatory approvals, taking the total to ₹800 crore. The proceeds will fund geographic expansion and investment in technology and risk management. Arka Fincap has roughly ₹8,000 crore of assets under management, 146 branches across ten states and a CRISIL AA/Stable rating."
+      },
+      "url": "https://www.tpg.com/news-and-insights/kirloskar-backed-arka-fincap-secures-investment-from-tpg-to-accelerate-growth-and-retail-transformation",
+      "image": null
+    },
+    {
+      "date": "06.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "TPG выставила оферту на 831,7 млрд вон за оставшиеся акции Lotte Rental",
+        "en": "TPG launches 831.7 billion won tender offer for remaining Lotte Rental shares"
+      },
+      "text": {
+        "ru": "6 ноября 2026 года аффилированная с TPG структура Lexicon Korea Holdco объявила публичную оферту (tender offer) на 14 097 325 обыкновенных акций Lotte Rental — 38,83% капитала — по 59 000 вон за акцию, то есть примерно на 831,7 млрд вон. Оферта действует с 6 ноября по 3 декабря 2026 года, все предъявленные акции выкупаются за наличные, организатор — KB Securities. TPG намерена превратить Lotte Rental в стопроцентную дочернюю компанию и провести добровольный делистинг. Месяцем ранее фонд выкупил 61,2% акций у Hotel Lotte и Busan Lotte Hotel за 1,3105 трлн вон.",
+        "en": "On 6 November 2026 Lexicon Korea Holdco, a TPG affiliate, launched a tender offer for 14,097,325 common shares of Lotte Rental — 38.83% of the company — at 59,000 won per share, or roughly 831.7 billion won in total. The offer runs from 6 November to 3 December 2026, all tendered shares will be bought for cash, and KB Securities is lead manager. TPG intends to turn Lotte Rental into a wholly owned subsidiary and take it private through a voluntary delisting. A month earlier it had acquired a 61.2% stake from Hotel Lotte and Busan Lotte Hotel for 1.3105 trillion won."
+      },
+      "url": "https://biz.sbs.co.kr/amp/article/20000344677",
+      "image": null
+    },
+    {
       "date": "05.11.2026",
       "type": "announcement",
       "title": {
@@ -2351,34 +2379,6 @@
         "en": "TPG announced the final close of its second climate fund, Rise Climate II, bringing total capital raised across the fund, the Global South Initiative and affiliated vehicles to $10.4 billion. The Global South strategy reached its $2.5 billion target, against the $7.3 billion raised by the inaugural Rise Climate fund in 2022. TPG said 31% of the commitments came from investors new to the firm."
       },
       "url": "https://esgtoday.com/tpg-raises-10-4-billion-for-climate-funds-including-2-5-billion-for-global-south",
-      "image": null
-    },
-    {
-      "date": "29.10.2026",
-      "type": "news",
-      "title": {
-        "ru": "TPG в III квартале: прибыль от комиссий +43%, AUM $345,7 млрд",
-        "en": "TPG Q3: fee-related earnings up 43%, AUM at $345.7 billion"
-      },
-      "text": {
-        "ru": "TPG отчиталась за III квартал 2026 года: прибыль от комиссий (fee-related earnings, FRE) выросла на 43% год к году — с $225,0 млн до $321,4 млн. Чистая прибыль по US GAAP составила $263,8 млн, распределяемая прибыль после налогов (after-tax distributable earnings) — $264,8 млн, или $0,65 на акцию класса A. Активы под управлением (AUM) достигли $345,7 млрд, приносящие комиссии активы (fee-earning AUM) — $189,5 млрд; за квартал привлечено $15,2 млрд и почти $42 млрд с начала года, при этом фирма ожидает превысить годовой целевой показатель привлечения в $50 млрд. Объявлен дивиденд $0,55 на акцию класса A с выплатой 23 ноября 2026 года.",
-        "en": "TPG reported third-quarter 2026 results with fee-related earnings up 43% year over year, from $225.0 million to $321.4 million. GAAP net income was $263.8 million and after-tax distributable earnings $264.8 million, or $0.65 per Class A share. Assets under management reached $345.7 billion and fee-earning AUM $189.5 billion, with $15.2 billion raised in the quarter and nearly $42 billion year to date; the firm expects to exceed its $50 billion annual fundraising target. A dividend of $0.55 per Class A share was declared, payable on November 23, 2026."
-      },
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000054/tpg3q26earningsrelease.htm",
-      "image": null
-    },
-    {
-      "date": "08.09.2026",
-      "type": "news",
-      "title": {
-        "ru": "Президент TPG Тодд Сиситски ушёл в отставку и переходит в CVC",
-        "en": "TPG president Todd Sisitsky resigns, set to co-lead CVC"
-      },
-      "text": {
-        "ru": "6 сентября 2026 года Тодд Сиситски уведомил TPG о решении покинуть пост президента компании и выйти из совета директоров — с немедленным вступлением в силу; уведомление раскрыто в форме 8-K, поданной в SEC 8 сентября. Сиситски занимал пост президента TPG с 2021 года. В тот же день CVC Capital Partners объявила, что он вместе с Питером Ратлендом станет со-генеральным директором фирмы с первого квартала 2028 года, сменив Роба Лукаса. TPG не назвала преемника и не раскрыла причин ухода.",
-        "en": "On 6 September 2026 Todd Sisitsky notified TPG that he was stepping down as president and leaving the board, effective immediately, according to an 8-K filed with the SEC on 8 September. Sisitsky had been TPG's president since 2021. The same week CVC Capital Partners said he and Peter Rutland would become its co-chief executives from the first quarter of 2028, succeeding Rob Lucas. TPG named no successor and gave no reason for the departure."
-      },
-      "url": "https://www.sec.gov/Archives/edgar/data/1880661/000188066126000051/tpg-20260906.htm",
       "image": null
     }
   ],

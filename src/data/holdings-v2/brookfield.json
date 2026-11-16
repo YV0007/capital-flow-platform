@@ -3,7 +3,7 @@
   "name": "Brookfield",
   "ticker": "BN / BAM",
   "type": "asset manager",
-  "asOf": "09.11.2026",
+  "asOf": "16.11.2026",
   "tagline": "BN — материнская холдинговая компания: доля в BAM плюс накопленная прибыль фондов дают ~59% стоимости активов; рынок держит её с ~35% дисконтом к оценке менеджмента ($66.37 vs ~$43).",
   "about": "Глобальный alt-asset manager: ~$1 трлн под управлением + реальные активы на $175 млрд на балансе.",
   "summary": "Brookfield Corporation (BN) — крупнейший в мире владелец реальной инфраструктуры. Управляет ~$1 трлн через фонды и владеет активами на $175 млрд: электростанции, порты, дата-центры, недвижимость, трубопроводы. 250 000 сотрудников управляют активами напрямую — это оператор, не просто фонд. Комиссии $3.1 млрд/год (+18%). Главные ставки: AI-инфраструктура ($200 млрд pipeline), ядерная энергия (Westinghouse), частный кредит (Oaktree). Торгуется с ~35% дисконтом к оценке менеджмента.",
@@ -3291,6 +3291,34 @@
   ],
   "news": [
     {
+      "date": "12.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Brookfield Corporation: прибыль за III квартал выросла на 16%",
+        "en": "Brookfield Corporation: Q3 earnings up 16%"
+      },
+      "text": {
+        "ru": "12 ноября Brookfield Corporation отчиталась за III квартал 2026 года: распределяемая прибыль (distributable earnings) составила $1,7 млрд, или $0,73 на акцию, что на 16% больше в расчёте на акцию год к году. Распределяемая прибыль до реализаций (distributable earnings before realizations) выросла до $1,5 млрд, или $0,64 на акцию, против $1,33 млрд и $0,56 на акцию годом ранее. Консолидированная чистая прибыль за квартал составила $1,9 млрд против $284 млн год назад. С начала года компания выкупила собственных акций примерно на $889 млн и объявила дивиденд $0,07 на акцию с выплатой 31 декабря 2026 года.",
+        "en": "On November 12 Brookfield Corporation reported third-quarter 2026 results: distributable earnings of $1.7 billion, or $0.73 per share, up 16% per share year over year. Distributable earnings before realizations rose to $1.5 billion, or $0.64 per share, from $1.33 billion and $0.56 per share a year earlier. Consolidated net income for the quarter was $1.9 billion, against $284 million a year ago. Year to date the company has repurchased about $889 million of its own shares, and declared a dividend of $0.07 per share payable on December 31, 2026."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/0001001085/000117184326007374/exh_991.htm",
+      "image": null
+    },
+    {
+      "date": "09.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Brookfield продаёт 50% Enercare фонду PSP Investments за $1,6 млрд",
+        "en": "Brookfield to sell 50% of Enercare to PSP Investments for $1.6 billion"
+      },
+      "text": {
+        "ru": "9 ноября стало известно, что Brookfield и его институциональные партнёры договорились продать 50% канадской сервисной компании Enercare пенсионному фонду PSP Investments примерно за $1,6 млрд. Brookfield, который держит актив в своём инфраструктурном подразделении, сохранит оставшуюся долю, а PSP — соинвестор ещё по выкупу Enercare с биржи в 2018 году стоимостью $4,3 млрд с учётом долга — доведёт свою позицию до половины. Enercare обслуживает более 1,4 млн домохозяйств и предприятий в Канаде; закрытие сделки ожидается в первой половине 2027 года после регуляторных одобрений.",
+        "en": "On November 9 Brookfield and its institutional partners agreed to sell a 50% interest in Canadian home-services company Enercare to pension fund PSP Investments for roughly $1.6 billion. Brookfield, which holds the asset in its infrastructure arm, keeps the remaining stake, while PSP — a co-investor in the 2018 take-private of Enercare, a deal worth $4.3 billion including debt — moves up to half ownership. Enercare serves more than 1.4 million homes and businesses across Canada, and the transaction is expected to close in the first half of 2027 subject to regulatory approvals."
+      },
+      "url": "https://www.theglobeandmail.com/business/article-psp-investments-buys-50-stake-in-enercare-from-brookfield/",
+      "image": null
+    },
+    {
       "date": "06.11.2026",
       "type": "news",
       "title": {
@@ -3316,34 +3344,6 @@
         "en": "Brookfield, its neocloud platform Radiant and Drax Group agreed to jointly develop an AI data centre on the Drax Power Station estate in North Yorkshire. Total investment including semiconductors could exceed £20 billion ($26.8 billion), beginning with a £2.5 billion first phase of up to 100 MW operational from the first quarter of 2028, a further 500 MW between 2028 and 2031, and a long-term target of more than 1 GW at the site. Drax shares rose about 9%. No final investment decision has been taken, and phase one depends on planning, regulatory and grid approvals as well as securing a tenant."
       },
       "url": "https://www.cnbc.com/2026/11/03/brookfield-ai-data-center-yorkshire-drax.html",
-      "image": null
-    },
-    {
-      "date": "17.09.2026",
-      "type": "announcement",
-      "title": {
-        "ru": "День инвестора: план удвоить прибыль и $140 плановой стоимости акции к 2031",
-        "en": "Investor Day: plan to double earnings, $140 plan value per share by 2031"
-      },
-      "text": {
-        "ru": "На дне инвестора 17 сентября Brookfield Corporation представила пятилетний план удвоения базовой прибыли: распределяемая прибыль до реализаций (distributable earnings before realizations) должна вырасти с $5,3 млрд в 2026 году до $11,6 млрд к 2031 году — среднегодовой темп 17%. С учётом вознаграждения за результат (carried interest) и распределения капитала совокупная распределяемая прибыль планируется на уровне $16,8 млрд против $5,9 млрд, то есть 24% в год. Плановая стоимость на акцию (plan value per share) — $140 к 2031 году против $67 сегодня, или 16% в год; менеджмент ориентирует на $54 млрд свободного денежного потока за пять лет и рост страховых активов Brookfield Wealth Solutions до $375 млрд.",
-        "en": "At its September 17 Investor Day, Brookfield Corporation laid out a five-year plan to double core earnings: distributable earnings before realizations are targeted to rise from $5.3 billion in 2026 to $11.6 billion by 2031, a 17% CAGR. Including carried interest and capital allocation, total distributable earnings are planned at $16.8 billion versus $5.9 billion, a 24% CAGR. Plan value per share is targeted at $140 by 2031 against $67 today, a 16% CAGR, with management guiding to $54 billion of free cash flow over the five years and growth in Brookfield Wealth Solutions insurance assets to $375 billion."
-      },
-      "url": "https://bn.brookfield.com/sites/brookfield-bn-v2/files/brookfield-bn/events-news/investor-day/bn-ir-day-presentation-2026.pdf",
-      "image": null
-    },
-    {
-      "date": "15.09.2026",
-      "type": "news",
-      "title": {
-        "ru": "Brookfield покупает Reliance Worldwide за $2,8 млрд",
-        "en": "Brookfield to acquire Reliance Worldwide for $2.8bn"
-      },
-      "text": {
-        "ru": "Brookfield договорилась о приобретении 100% Reliance Worldwide Corporation (ASX: RWC) — мирового производителя сантехнического и отопительного оборудования и лидера в сегменте быстросъёмных фитингов push-to-connect — по цене $3,38 за акцию наличными, что соответствует стоимости предприятия (enterprise value) около $2,8 млрд. Совет директоров Reliance единогласно рекомендовал предложение акционерам, которым предстоит голосование. Сделка финансируется через флагманскую стратегию прямых инвестиций Brookfield Capital Partners и аффилированную Brookfield Business Corporation (BBUC); закрытие ожидается в I квартале 2027 года при получении акционерных, регуляторных и государственных одобрений.",
-        "en": "Brookfield agreed to acquire 100% of ASX-listed Reliance Worldwide Corporation, a global maker of plumbing and heating products and the market leader in push-to-connect fittings, at $3.38 per share in cash — an enterprise value of roughly $2.8 billion. Reliance's board unanimously recommended the all-cash proposal, which goes to a shareholder vote. The investment is funded through Brookfield's flagship Brookfield Capital Partners private equity strategy and its affiliate Brookfield Business Corporation (BBUC), with closing expected in the first quarter of 2027 subject to shareholder, regulatory and government approvals."
-      },
-      "url": "https://bam.brookfield.com/press-releases/brookfield-agrees-acquire-reliance-worldwide-corporation",
       "image": null
     }
   ],

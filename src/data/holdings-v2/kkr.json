@@ -3,7 +3,7 @@
   "name": "KKR & Co",
   "ticker": "KKR",
   "type": "asset manager",
-  "asOf": "09.11.2026",
+  "asOf": "16.11.2026",
   "tagline": "Глобальный alternative asset manager (AUM $757.9B): комиссионная база растёт (FRE +14% LTM, margin 69%), но ANI вырос лишь +5% из-за переноса монетизаций — это проблема тайминга окна выходов, не базы; акция −41% от пика, оба Co-CEO докупали на просадке.",
   "kpis": [
     {
@@ -2619,6 +2619,48 @@
   },
   "news": [
     {
+      "date": "12.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "KKR закрыла сделку по контрольному пакету Sempra Infrastructure Partners",
+        "en": "KKR-led consortium closes purchase of majority stake in Sempra Infrastructure"
+      },
+      "text": {
+        "ru": "12 ноября консорциум под руководством KKR завершил покупку 45% в Sempra Infrastructure Partners; непрямым соинвестором выступил Canada Pension Plan Investment Board. После закрытия сделки консорциуму принадлежит 65% платформы, Sempra сохраняет 25%, ещё 10% остаётся у структуры Abu Dhabi Investment Authority. Соглашение, объявленное в сентябре 2025 года, делает KKR контролирующим акционером одной из крупнейших энергетических инфраструктурных платформ Северной Америки.",
+        "en": "On November 12 a KKR-led consortium completed the purchase of a 45% equity interest in Sempra Infrastructure Partners, with Canada Pension Plan Investment Board as an indirect co-investor. Following the close the consortium owns 65% of the platform, Sempra retains 25%, and an affiliate of the Abu Dhabi Investment Authority holds the remaining 10%. The deal, agreed in September 2025, makes KKR the controlling shareholder of one of North America's largest energy infrastructure platforms."
+      },
+      "url": "https://media.kkr.com/news-details/?news_id=a99b2ebf-b228-462e-8a55-b8f92dd7df40",
+      "image": null
+    },
+    {
+      "date": "11.11.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "RWE и KKR построят в Великобритании 2,8 ГВт морской ветрогенерации за £12 млрд",
+        "en": "RWE and KKR to build 2.8 GW of UK offshore wind in a £12 billion investment"
+      },
+      "text": {
+        "ru": "11 ноября RWE и KKR объявили о создании совместного предприятия на паритетных началах для строительства морских ветропарков Vanguard West и Vanguard East у побережья Норфолка — по 1,4 ГВт каждый, суммарно около 2,8 ГВт. Общий объём инвестиций, включая сетевую инфраструктуру, составит около £12 млрд; KKR приобрела 50% в каждом проекте, реализацию ведёт RWE. Проектное финансирование без права регресса на £11,1 млрд предоставили 35 международных банков, ещё £1,7 млрд пришлось на вспомогательные линии; оба проекта получили 20-летние контракты на разницу (contract for difference, CfD) по цене £91,20 за МВт·ч в ценах 2024 года. Строительство в море начнётся в начале 2027 года, полный ввод в эксплуатацию запланирован на 2030 год.",
+        "en": "On November 11 RWE and KKR announced a 50:50 joint venture to build the Vanguard West and Vanguard East offshore wind farms off the Norfolk coast, 1.4 GW each for a combined 2.8 GW. Total investment, including the associated transmission infrastructure, is around £12 billion; KKR has acquired a 50% equity stake in each project, with RWE leading delivery. Non-recourse project financing of £11.1 billion in cash facilities, plus £1.7 billion of ancillary facilities, was provided by 35 international banks, and both projects secured 20-year contracts for difference at a strike price of £91.20 per MWh in 2024 prices. Offshore construction begins in early 2027, with full commissioning planned for 2030."
+      },
+      "url": "https://media.kkr.com/news-details/?news_id=a2cab498-e90d-402d-8c90-58190a850a66",
+      "image": null
+    },
+    {
+      "date": "09.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "KKR: рекордная комиссионная прибыль в III квартале, активы под управлением $804 млрд",
+        "en": "KKR posts record fee-related earnings in Q3; AUM reaches $804 billion"
+      },
+      "text": {
+        "ru": "9 ноября KKR опубликовала результаты за III квартал 2026 года. Скорректированная чистая прибыль (adjusted net income) составила $1,65 млрд, или $1,78 на акцию, чистая прибыль по GAAP, приходящаяся на держателей обыкновенных акций, — $1,12 млрд. Комиссионная прибыль (fee-related earnings, FRE) достигла рекордных $1,32 млрд, или $1,42 на акцию; активы под управлением (AUM) выросли до $804 млрд, из которых $648 млрд приносят комиссии, а приток нового капитала за квартал составил $25 млрд. Совет директоров объявил квартальный дивиденд $0,195 на акцию с выплатой 3 декабря 2026 года, а 6 ноября увеличил программу выкупа акций на $500 млн.",
+        "en": "On November 9 KKR reported its third-quarter 2026 results. Adjusted net income came to $1.65 billion, or $1.78 per adjusted share, while GAAP net income attributable to common stockholders was $1.12 billion. Fee-related earnings hit a record $1.32 billion, or $1.42 per adjusted share; assets under management rose to $804 billion, of which $648 billion is fee-paying, on $25 billion of new capital raised during the quarter. The board declared a quarterly dividend of $0.195 per share payable on December 3, 2026, and on November 6 approved a $500 million increase to the share repurchase programme."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/1404912/000140491226000030/q326earningsrelease_vf.htm",
+      "image": null
+    },
+    {
       "date": "19.10.2026",
       "type": "insider",
       "title": {
@@ -2630,48 +2672,6 @@
         "en": "On 19 October KKR agreed to sell Infinity Transportation, a railcar and intermodal equipment lessor, to Ares Infrastructure Equity and Ares Insurance Solutions funds at an enterprise value of about $2.9 billion. Global Atlantic, KKR's wholly owned insurance arm, had been invested in Infinity since 2016; since 2021 the company built a standalone operating platform, expanded its fleet and grew book value by 150%. Infinity owns and manages roughly 50,000 railcars leased to more than 350 lessees across the US, Canada and Mexico. The transaction is expected to close in the first quarter of 2027."
       },
       "url": "https://www.stblaw.com/about-us/news/view/2026/10/19/kkr-to-sell-infinity-transportation-to-ares-for-$2.9-billion",
-      "image": null
-    },
-    {
-      "date": "05.10.2026",
-      "type": "news",
-      "title": {
-        "ru": "KKR покупает фондового администратора Gen II за $5,1 млрд",
-        "en": "KKR to buy fund administrator Gen II Fund Services for $5.1bn"
-      },
-      "text": {
-        "ru": "5 октября KKR согласилась приобрести Gen II Fund Services — администратора фондов частного капитала — у Hg, General Atlantic и прочих миноритариев при полной стоимости предприятия (enterprise value) $5,1 млрд; покупка идёт через стратегию Core Private Equity. Gen II обслуживает более 275 управляющих с активами свыше $2 трлн. Соучредитель и генеральный директор Стивен Милнер вместе с действующей командой сохраняют руководство, а KKR намерена расширять компанию в США и за рубежом, вкладываться в собственные технологии и решения на базе искусственного интеллекта и запустить программу широкого участия сотрудников в капитале. Закрытие ожидается в 2027 году при условии согласований регуляторов.",
-        "en": "On 5 October KKR agreed to acquire Gen II Fund Services, a private capital fund administrator, from Hg, General Atlantic and other minority investors at a total enterprise value of $5.1 billion, buying it through its Core Private Equity strategy. Gen II serves more than 275 investment managers representing over $2 trillion in assets. Co-founder and chief executive Steven Millner and the existing leadership team will stay on, while KKR plans to expand the business in the US and internationally, invest further in proprietary technology and AI-enabled solutions, and launch a broad-based employee ownership program. The deal is expected to close in 2027, subject to regulatory approvals."
-      },
-      "url": "https://www.generalatlantic.com/media-article/kkr-to-acquire-gen-ii-fund-services-for-more-than-5-billion-from-hg-and-general-atlantic/",
-      "image": null
-    },
-    {
-      "date": "29.09.2026",
-      "type": "announcement",
-      "title": {
-        "ru": "Samsung вкладывает $1 млрд в ИИ-платформу Helix от KKR",
-        "en": "Samsung commits $1bn to KKR-backed Helix Digital Infrastructure"
-      },
-      "text": {
-        "ru": "29 сентября структуры Samsung объявили о вложении $1 млрд долгосрочного капитала в Helix Digital Infrastructure — платформу инфраструктуры для искусственного интеллекта, созданную KKR под запросы гиперскейлеров. Среди её учредителей, помимо самой KKR, — Kuwait Investment Authority, Nvidia и энергетическая Vistra; на старте платформа располагала более $10 млрд законтрактованного капитала, и взнос Samsung добавляется к этой базе. Helix инвестирует в дата-центры, генерацию и передачу электроэнергии, связь и смежную инфраструктуру. Платформа рассчитывает использовать компетенции Samsung в передовых технологиях, строительстве, накопителях энергии и системах охлаждения.",
-        "en": "On 29 September Samsung affiliates committed $1 billion of long-duration capital to Helix Digital Infrastructure, the AI infrastructure company KKR formed to serve hyperscalers' infrastructure needs. Its founding investors alongside KKR are the Kuwait Investment Authority, Nvidia and power producer Vistra, and more than $10 billion had been committed to the strategy at launch, with Samsung's money adding to that base. Helix invests in and delivers data centres, power, connectivity and related infrastructure. It also expects to draw on Samsung's capabilities in advanced technology, construction, energy storage and cooling."
-      },
-      "url": "https://irei.com/news/samsung-pledges-1b-to-kkrs-helix-digital-infrastructure-to-support-ai-infrastructure-buildout/",
-      "image": null
-    },
-    {
-      "date": "02.09.2026",
-      "type": "insider",
-      "title": {
-        "ru": "KKR закрыла покупку STT GDC — платформы ЦОД на 780 МВт",
-        "en": "KKR closes STT GDC buyout, adding a 780MW data-centre platform"
-      },
-      "text": {
-        "ru": "2 сентября 2026 года консорциум под управлением KKR совместно с Singtel завершил приобретение оператора дата-центров STT GDC. К моменту закрытия введённая мощность компании выросла на 25% с конца 2025 года и достигла 780 МВт, законтрактованная мощность прибавила 50%, а годовая EBITDA (прибыль до вычета процентов, налогов и амортизации) — 30%. Платформа охватывает Индию (34 дата-центра, свыше 613 МВт ИТ-мощности), Индонезию, Сингапур, Великобританию, Германию и Италию; под строящиеся и проектируемые объекты обеспечено около 2 ГВт подведённой мощности.",
-        "en": "On 2 September 2026 a KKR-led consortium with Singtel completed its acquisition of data-centre operator STT GDC. At closing the business had grown live capacity 25% since the end of 2025 to 780MW, lifted contracted capacity by 50% and annualised EBITDA by 30%. The platform spans India (34 data centres and more than 613MW of IT capacity), Indonesia, Singapore, the UK, Germany and Italy, with close to 2GW of powered land secured for assets under construction and in the pipeline."
-      },
-      "url": "https://www.sttgdc.com/newsroom/kkr-singtel-consortium-completes-acquisition-of-sttgdc-company-launches-refreshed-global-brand-next-phase-of-growth",
       "image": null
     }
   ],

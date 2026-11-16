@@ -3,7 +3,7 @@
   "name": "Berkshire Hathaway",
   "ticker": "BRK.A / BRK.B",
   "type": "true holdco",
-  "asOf": "09.11.2026",
+  "asOf": "16.11.2026",
   "tagline": "Berkshire оценён близко к собственной исторической норме (P/B ~1.45x против 10-летней медианы ~1.42x) при рекордном кэше $373.5 млрд и символическом buyback $235 млн — нейтральный по цене сигнал HOLD с покупкой на просадках; ключевые узлы решения — первый полный квартал Greg Abel как CEO, кэш-дрэг под падающую ставку и лучшее в peer-группе страховое ядро (combined ratio 87.1%).",
   "kpis": [
     {
@@ -2081,6 +2081,20 @@
   },
   "news": [
     {
+      "date": "13.11.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "Berkshire разместила иеновые облигации на ¥182,3 млрд пятью траншами",
+        "en": "Berkshire prices ¥182.3 billion yen bond sale across five tranches"
+      },
+      "text": {
+        "ru": "13 ноября 2026 года Berkshire Hathaway определила ценовые условия размещения старших необеспеченных облигаций (senior notes) в японских иенах на общую сумму ¥182,3 млрд. Выпуск разбит на пять траншей: ¥92,0 млрд под 2,624% с погашением в 2029 году, ¥57,3 млрд под 3,007% (2031), ¥16,1 млрд под 3,313% (2033), ¥2,7 млрд под 3,661% (2036) и ¥14,2 млрд под 4,571% (2056). Все транши размещены по номиналу, расчёты назначены на 19 ноября 2026 года, организаторами выступили Mizuho Securities USA и Merrill Lynch International. Поступления направляются на общекорпоративные цели, включая рефинансирование облигаций на ¥73,4 млрд со ставкой 0,955% и погашением 27 ноября 2026 года.",
+        "en": "On 13 November 2026 Berkshire Hathaway set pricing on ¥182.3 billion of yen-denominated senior unsecured notes. The deal came in five tranches: ¥92.0 billion at 2.624% due 2029, ¥57.3 billion at 3.007% due 2031, ¥16.1 billion at 3.313% due 2033, ¥2.7 billion at 3.661% due 2036 and ¥14.2 billion at 4.571% due 2056. All tranches priced at par, settlement is set for 19 November 2026, and Mizuho Securities USA and Merrill Lynch International acted as joint book-running managers. Proceeds go to general corporate purposes, including refinancing ¥73.4 billion of 0.955% notes maturing on 27 November 2026."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526459815/d127427dfwp.htm",
+      "image": null
+    },
+    {
       "date": "07.11.2026",
       "type": "news",
       "title": {
@@ -2120,20 +2134,6 @@
         "en": "Berkshire Hathaway has built its position in homebuilder Lennar to 11.2%, or 26.6 million shares worth roughly $2.1 billion, up from 5.4% (13.4 million shares) at the end of the second quarter. The stake passed 10% in mid-September, obliging the conglomerate to disclose subsequent trades within two business days. Berkshire bought almost $349 million of stock between September 17 and 25, but the pace slowed to about $53.6 million over the first three sessions of October."
       },
       "url": "https://www.cnbc.com/2026/10/03/berkshire-buys-more-lennar-shares-but-pace-of-purchases-slows.html",
-      "image": null
-    },
-    {
-      "date": "18.09.2026",
-      "type": "news",
-      "title": {
-        "ru": "Уоррен Баффет стал почётным председателем, совет избрал Хауарда Баффета",
-        "en": "Warren Buffett becomes Chairman Emeritus; Howard Buffett elected Chairman"
-      },
-      "text": {
-        "ru": "18 сентября Berkshire Hathaway объявила, что Уоррен Баффет получил статус почётного председателя (Chairman Emeritus) с немедленным вступлением в силу и остаётся членом совета директоров. Председателем совета избран его сын Хауард Дж. Баффет, директор Berkshire с 1993 года; Сьюзан Л. Декер сохраняет роль ведущего независимого директора (Lead Independent Director). В письме акционерам 96-летний Баффет написал, что Грег Абель превзошёл его и без того высокие ожидания и уже давно принимает ключевые решения, поэтому «время для завершения перехода подходящее».",
-        "en": "On September 18 Berkshire Hathaway announced that Warren Buffett had been named Chairman Emeritus with immediate effect, while remaining a member of the board. The board elected his son Howard G. Buffett, a Berkshire director since 1993, as Chairman; Susan L. Decker stays on as Lead Independent Director. In an accompanying letter to shareholders, the 96-year-old Buffett wrote that Greg Abel had exceeded his already sky-high expectations and had been making the decisions that matter for some time, so \"the timing is right to complete the transition.\""
-      },
-      "url": "https://www.berkshirehathaway.com/news/sep1826.pdf",
       "image": null
     }
   ],
