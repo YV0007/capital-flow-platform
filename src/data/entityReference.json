@@ -1239,5 +1239,16 @@
       }
     ],
     "auto_resolved": true
+  },
+  "alloc:SK Hynix": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "skhynix.com",
+        "url": "https://skhynix.com"
+      }
+    ],
+    "auto_resolved": true
   }
 }
