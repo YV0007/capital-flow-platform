@@ -3,7 +3,7 @@
   "name": "Pershing Square",
   "ticker": "PSH LN / PSHD LN",
   "type": "true holdco / closed-end fund",
-  "asOf": "16.11.2026",
+  "asOf": "23.11.2026",
   "tagline": "Концентрированный активистский хедж-фонд Билла Экмана с бессрочным капиталом: 11 позиций, NAV $74/акц., цена $49 — устойчивый дисконт ~34%.",
   "kpis": [
     {
@@ -1933,6 +1933,48 @@
     ]
   },
   "news": [
+    {
+      "date": "19.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Стоимость чистых активов PSH упала до $79,63, доходность с начала года −6,0%",
+        "en": "PSH net asset value falls to $79.63, year-to-date return now -6.0%"
+      },
+      "text": {
+        "ru": "19 ноября Pershing Square Holdings опубликовала еженедельную стоимость чистых активов (net asset value, NAV): на закрытие 17 ноября 2026 года она составила $79,63 (£60,28) на акцию. Доходность с начала года ушла в минус 6,0% против минус 1,7% неделей ранее. На закрытие 10 ноября 2026 года NAV равнялась $83,35 (£62,46) на акцию, так что за неделю показатель снизился примерно на 4,5%. NAV рассчитывается на закрытие каждого вторника и публикуется на следующий рабочий день.",
+        "en": "On 19 November Pershing Square Holdings released its weekly net asset value (NAV): $79.63 (£60.28) per share as of the close on 17 November 2026. The year-to-date return slipped to -6.0%, against -1.7% a week earlier. NAV stood at $83.35 (£62.46) per share at the close on 10 November 2026, so the figure fell roughly 4.5% over the week. NAV is struck at each Tuesday's close and published the following business day."
+      },
+      "url": "https://pershingsquareholdings.com/pershing-square-holdings-ltd-releases-regular-weekly-net-asset-value-and-year-to-date-return-as-of-17-november-2026/",
+      "image": null
+    },
+    {
+      "date": "19.11.2026",
+      "type": "dividend",
+      "title": {
+        "ru": "PSH продолжает выкуп: 22 406 акций по $50,38 при NAV $79,63",
+        "en": "PSH keeps buying back stock: 22,406 shares at $50.38 against NAV of $79.63"
+      },
+      "text": {
+        "ru": "18 ноября Pershing Square Holdings выкупила 22 406 собственных акций: 17 670 бумаг по тикеру PSH и 4736 по тикеру PSHD. Средняя цена составила $50,38 за акцию, диапазон по линии PSH — от $49,93 до $50,66. Это примерно на 37% ниже стоимости чистых активов (NAV) в $79,63 на акцию по состоянию на 17 ноября 2026 года. После сделки в обращении осталось 172 124 268 публичных акций, ещё 38 832 482 бумаги находятся в казначействе компании.",
+        "en": "On 18 November Pershing Square Holdings repurchased 22,406 of its own shares: 17,670 under the PSH ticker and 4,736 under PSHD. The average price was $50.38 per share, with the PSH line trading between $49.93 and $50.66. That is roughly 37% below the net asset value (NAV) of $79.63 per share as of 17 November 2026. After the trade 172,124,268 public shares remain outstanding, with a further 38,832,482 held in treasury."
+      },
+      "url": "https://pershingsquareholdings.com/pershing-square-holdings-ltd-announces-transactions-in-own-shares-and-weekly-summary-of-transactions-in-own-shares-18-november-2026/",
+      "image": null
+    },
+    {
+      "date": "16.11.2026",
+      "type": "insider",
+      "title": {
+        "ru": "Отчёт 13F за III квартал: новые пакеты Alcon и ICE, полный выход из Hertz",
+        "en": "Q3 13F: new Alcon and ICE stakes, Hertz position fully exited"
+      },
+      "text": {
+        "ru": "16 ноября Pershing Square Inc. подала в SEC форму 13F-HR за квартал, завершившийся 30 сентября 2026 года: 17 позиций совокупной заявленной стоимостью $30,80 млрд. Новыми вложениями стали Alcon (14 736 308 акций на $954,2 млн) и Intercontinental Exchange (6 635 899 акций на $1,01 млрд), тогда как пакет Hertz Global Holdings в 14 991 599 акций, числившийся на конец II квартала, закрыт полностью. Доля в Microsoft сокращена с 6 206 730 до 4 064 779 акций, а позиция в Netflix увеличена с 13 081 465 до 15 412 744 акций.",
+        "en": "On 16 November Pershing Square Inc. filed a Form 13F-HR with the SEC for the quarter ended 30 September 2026, listing 17 positions with a total reported value of $30.80 billion. Alcon (14,736,308 shares, $954.2 million) and Intercontinental Exchange (6,635,899 shares, $1.01 billion) are new holdings, while the 14,991,599-share Hertz Global Holdings position carried at the end of the second quarter has been exited in full. Microsoft was cut from 6,206,730 to 4,064,779 shares, and Netflix was increased from 13,081,465 to 15,412,744 shares."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/2026053/000117266126005427/0001172661-26-005427-index.htm",
+      "image": null
+    },
     {
       "date": "05.11.2026",
       "type": "dividend",

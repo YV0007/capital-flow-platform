@@ -3,7 +3,7 @@
   "name": "Brookfield",
   "ticker": "BN / BAM",
   "type": "asset manager",
-  "asOf": "16.11.2026",
+  "asOf": "23.11.2026",
   "tagline": "BN — материнская холдинговая компания: доля в BAM плюс накопленная прибыль фондов дают ~59% стоимости активов; рынок держит её с ~35% дисконтом к оценке менеджмента ($66.37 vs ~$43).",
   "about": "Глобальный alt-asset manager: ~$1 трлн под управлением + реальные активы на $175 млрд на балансе.",
   "summary": "Brookfield Corporation (BN) — крупнейший в мире владелец реальной инфраструктуры. Управляет ~$1 трлн через фонды и владеет активами на $175 млрд: электростанции, порты, дата-центры, недвижимость, трубопроводы. 250 000 сотрудников управляют активами напрямую — это оператор, не просто фонд. Комиссии $3.1 млрд/год (+18%). Главные ставки: AI-инфраструктура ($200 млрд pipeline), ядерная энергия (Westinghouse), частный кредит (Oaktree). Торгуется с ~35% дисконтом к оценке менеджмента.",
@@ -3290,6 +3290,48 @@
     }
   ],
   "news": [
+    {
+      "date": "23.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Brookfield покупает PGP Glass у Blackstone за $1,7 млрд",
+        "en": "Brookfield to acquire PGP Glass from Blackstone for $1.7 billion"
+      },
+      "text": {
+        "ru": "Brookfield и Blackstone объявили о соглашении, по которому Brookfield через свою флагманскую стратегию прямых инвестиций (private equity) приобретает PGP Glass — мирового производителя специальной стеклянной упаковки — у фондов под управлением Blackstone Private Equity за $1,7 млрд. PGP Glass выпускает тару для косметики и парфюмерии, специализированных продуктов питания и напитков, а также фармацевтики; у компании три производственные площадки в Индии и Шри-Ланке. Финансирование идёт через стратегию Brookfield Capital Partners и аффилированную структуру Brookfield Business Corporation. Закрытие ожидается в I квартале 2027 года после получения регуляторных и государственных одобрений.",
+        "en": "Brookfield and Blackstone announced an agreement under which Brookfield, through its flagship private equity strategy, will acquire PGP Glass, a leading global manufacturer of specialty glass packaging, from funds managed by Blackstone Private Equity for $1.7 billion. PGP Glass supplies containers to the cosmetics and perfumery, specialty food and beverage and pharmaceutical markets, and operates three manufacturing facilities across India and Sri Lanka. The investment is funded through the Brookfield Capital Partners strategy and its affiliate Brookfield Business Corporation. Closing is expected in the first quarter of 2027, subject to customary conditions including regulatory and government approvals."
+      },
+      "url": "https://www.theglobeandmail.com/investing/markets/markets-news/GlobeNewswire/8959065/brookfield-to-acquire-pgp-glass-a-leading-global-manufacturer-of-specialty-glass-packaging-from-blackstone-for-1-7-billion/",
+      "image": null
+    },
+    {
+      "date": "20.11.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "QIA и Brookfield: меморандум на €15 млрд в критические отрасли Германии",
+        "en": "QIA and Brookfield sign a €15 billion MoU for Germany's critical industries"
+      },
+      "text": {
+        "ru": "20 ноября Qatar Investment Authority (QIA, суверенный фонд Катара) и Brookfield Corporation объявили в Дохе о подписании меморандума о взаимопонимании (memorandum of understanding, MoU) об изучении потенциальных инвестиций в критические отрасли и оборонный сектор Германии. Совокупный целевой объём инвестиций двух сторон заявлен на уровне €15 млрд. QIA отмечает, что Германия отнесла оборону к приоритетным критическим отраслям с акцентом на наращивание внутренних производственных мощностей, технологический суверенитет и устойчивость. Глава QIA Мохаммед Сейф Аль Сувейди назвал соглашение отражением приверженности фонда долгосрочным инвестициям в стратегически значимые секторы.",
+        "en": "On 20 November the Qatar Investment Authority (QIA, Qatar's sovereign wealth fund) and Brookfield Corporation announced in Doha that they had signed a memorandum of understanding (MoU) to explore potential investments in Germany's critical industries and defence sector. The two parties set a combined aggregate investment target of €15 billion. QIA noted that Germany has identified defence as a priority critical industry, with an emphasis on strengthening domestic production capacity, technological sovereignty and resilience. QIA chief executive Mohammed Saif Al Sowaidi said the agreement reflects the fund's commitment to long-term investment in strategically important sectors."
+      },
+      "url": "https://thepeninsulaqatar.com/article/21/11/2026/qia-brookfield-corporation-announce-initiative-to-explore-investments-in-critical-industries",
+      "image": null
+    },
+    {
+      "date": "19.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Brookfield Infrastructure завершила упрощение структуры, торги BIP с 23.11.2026",
+        "en": "Brookfield Infrastructure completes its simplification; BIP trades from 23.11.2026"
+      },
+      "text": {
+        "ru": "19 ноября Brookfield Infrastructure завершила упрощение корпоративной структуры: Brookfield Infrastructure Partners L.P. и Brookfield Infrastructure Corporation объединены в единую компанию Brookfield Infrastructure Partners Inc. Держатели бумаг обеих прежних структур получили акции класса A с ограниченным правом голоса (Class A subordinate voting shares) в соотношении один к одному; торги под тикером BIP на NYSE и TSX начинаются 23 ноября 2026 года. Совет директоров объявил квартальный дивиденд $0,455 на акцию класса A с выплатой 31 декабря 2026 года держателям на закрытие 30 ноября 2026 года. Новая компания также приняла на себя программу обратного выкупа (normal course issuer bid) объёмом до 23 062 017 акций класса A.",
+        "en": "On 19 November Brookfield Infrastructure completed its corporate simplification, combining Brookfield Infrastructure Partners L.P. and Brookfield Infrastructure Corporation into a single entity, Brookfield Infrastructure Partners Inc. Securityholders of both predecessor entities received Class A subordinate voting shares on a one-for-one basis, and the shares begin trading under the symbol BIP on the NYSE and TSX on 23 November 2026. The board declared a quarterly dividend of US$0.455 per Class A share, payable on 31 December 2026 to shareholders of record at the close of business on 30 November 2026. The new company also assumed the existing normal course issuer bid, allowing it to repurchase up to 23,062,017 Class A shares."
+      },
+      "url": "https://www.manilatimes.net/2026/11/19/tmt-newswire/globenewswire/brookfield-infrastructure-announces-completion-of-corporate-simplification/2473996",
+      "image": null
+    },
     {
       "date": "12.11.2026",
       "type": "news",

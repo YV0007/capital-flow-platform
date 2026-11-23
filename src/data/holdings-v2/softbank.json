@@ -3,7 +3,7 @@
   "name": "SoftBank Group",
   "ticker": "9984.T · SFTBY",
   "type": "vision-fund holdco",
-  "asOf": "16.11.2026",
+  "asOf": "23.11.2026",
   "tagline": "SBG — инвестиционный холдинг, чья equity value of holdings на ~76% сосредоточена в Arm (¥19.15T, консолидирован) и Vision Fund 2 (¥17.19T, внутри доминирует OpenAI); акция торгуется с дисконтом ~49% к raw NAV/share ¥7,029, а возможный перенос OpenAI IPO на 2027 — live-катализатор, склоняющий решение к hold до прояснения сроков IPO и рефинанса $40B bridge loan.",
   "kpis": [
     {
@@ -3172,6 +3172,20 @@
     ]
   },
   "news": [
+    {
+      "date": "20.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Акции SoftBank рухнули на 14,48% — худший день с августа 2024 года",
+        "en": "SoftBank shares plunge 14.48% in their worst day since August 2024"
+      },
+      "text": {
+        "ru": "В пятницу, 20 ноября, акции SoftBank Group в Токио закрылись падением на 14,48% — это худший день для бумаги с августа 2024 года. Распродажа охватила весь азиатский технологический сектор после биржевого дебюта Anthropic: южнокорейский индекс Kospi потерял 5,21%, Tokyo Electron — 7,06%, SK Hynix — 5,92%, TSMC — 4,76%, а американский Nasdaq Composite накануне снизился более чем на 2%. По данным CNBC, бумаги SoftBank упали на 30% в октябре и ещё на 31% с начала ноября. Движение отражает сомнения инвесторов в том, окупятся ли многомиллиардные вложения группы в ИИ-инфраструктуру.",
+        "en": "SoftBank Group shares closed down 14.48% in Tokyo on Friday 20 November, the stock's worst day since August 2024. The sell-off ran across Asian tech after Anthropic's market debut: South Korea's Kospi fell 5.21%, Tokyo Electron 7.06%, SK Hynix 5.92% and TSMC 4.76%, while the Nasdaq Composite had dropped more than 2% overnight. CNBC reported the stock had already fallen 30% in October and was down a further 31% so far in November. The move reflects investor doubts over whether the group's multibillion-dollar AI infrastructure bets will pay off."
+      },
+      "url": "https://www.cnbc.com/2026/11/20/softbank-ai-tech-stocks-slide-anthropic-debut.html",
+      "image": null
+    },
     {
       "date": "10.11.2026",
       "type": "news",

@@ -3,7 +3,7 @@
   "name": "KKR & Co",
   "ticker": "KKR",
   "type": "asset manager",
-  "asOf": "16.11.2026",
+  "asOf": "23.11.2026",
   "tagline": "Глобальный alternative asset manager (AUM $757.9B): комиссионная база растёт (FRE +14% LTM, margin 69%), но ANI вырос лишь +5% из-за переноса монетизаций — это проблема тайминга окна выходов, не базы; акция −41% от пика, оба Co-CEO докупали на просадке.",
   "kpis": [
     {
@@ -2618,6 +2618,48 @@
     ]
   },
   "news": [
+    {
+      "date": "19.11.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "KKR вошла в индийскую платформу Gentari на 8 ГВт миноритарной долей",
+        "en": "KKR takes a minority stake in Gentari's 8 GW India renewables platform"
+      },
+      "text": {
+        "ru": "Счета капитала под управлением KKR осуществили миноритарную инвестицию в Gentari Renewables India Pte Ltd — структуру, на которой держится индийская платформа возобновляемой энергетики компании Gentari, входящей в малайзийскую PETRONAS Group. Портфель платформы — около 8 ГВт действующих, строящихся и законтрактованных мощностей: солнечная и ветровая генерация, гибридные проекты и системы накопления энергии (battery energy storage). Средства предоставлены как капитал роста и пойдут на дальнейшее расширение, при этом Gentari сохраняет стратегический надзор и операционный контроль. Условия сделки не раскрываются.",
+        "en": "Capital accounts advised by KKR have made a minority investment in Gentari Renewables India Pte Ltd, the entity holding the Indian renewables platform of Gentari, part of Malaysia's PETRONAS Group. The platform has roughly 8 GW of operating, under-construction and contracted capacity across solar, wind, hybrid and battery energy storage. The money is growth capital for further expansion, and Gentari retains strategic oversight and operational control of the platform. Financial terms were not disclosed."
+      },
+      "url": "https://www.stocktitan.net/news/KKR/kkr-invests-in-gentari-s-renewables-platform-in-40zbdhl83pa4.html",
+      "image": null
+    },
+    {
+      "date": "17.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "KKR закрыла выкуп Integer Holdings: $5,7 млрд, $127 за акцию",
+        "en": "KKR closes its $5.7bn take-private of Integer Holdings at $127 a share"
+      },
+      "text": {
+        "ru": "Integer Holdings объявила о завершении поглощения аффилированной структурой фондов под управлением KKR при стоимости предприятия (enterprise value) около $5,7 млрд. Акционеры Integer получают $127 за акцию денежными средствами; обыкновенные акции прекратили торговаться и будут исключены из листинга NYSE. Сделка была объявлена 3 августа 2026 года и одобрена акционерами 21 октября 2026 года. Партнёр KKR Макс Лин заявил, что фирма рада приветствовать Integer в своём портфеле.",
+        "en": "Integer Holdings announced the completion of its acquisition by an affiliate of KKR-managed funds at an enterprise value of about $5.7 billion. Integer stockholders receive $127 per share in cash, and the common stock has ceased trading and will be delisted from the NYSE. The transaction was announced on 3 August 2026 and approved by stockholders on 21 October 2026. KKR Partner Max Lin said the firm is pleased to welcome Integer to its portfolio."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/0001114483/000095010326017597/dp256691_ex9902.htm",
+      "image": null
+    },
+    {
+      "date": "16.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "KKR закрыла продажу USI компании Aon: $3,3 млрд поступлений после налогов",
+        "en": "KKR completes the sale of USI to Aon, with $3.3bn in after-tax proceeds"
+      },
+      "text": {
+        "ru": "KKR завершила ранее объявленную продажу USI Insurance Services компании Aon plc. Выход принёс KKR около $3,3 млрд поступлений после налогов. Компания ожидает, что сделка добавит порядка $2,0 млрд скорректированной чистой прибыли (Adjusted Net Income) — свыше $2,00 на скорректированную акцию — в результатах IV квартала 2026 года. Консультантами KKR выступили Goldman Sachs, Insurance Advisory Partners и Morgan Stanley, юридическим советником — Simpson Thacher & Bartlett.",
+        "en": "KKR has completed the previously announced sale of USI Insurance Services to Aon plc. The exit generated approximately $3.3 billion in after-tax proceeds for KKR. The firm expects the sale to contribute about $2.0 billion of Adjusted Net Income, or over $2.00 per adjusted share, to its fourth-quarter 2026 results. Goldman Sachs, Insurance Advisory Partners and Morgan Stanley advised KKR, with Simpson Thacher & Bartlett as legal counsel."
+      },
+      "url": "https://www.stocktitan.net/news/KKR/kkr-completes-sale-of-0gfqpdhogpyx.html",
+      "image": null
+    },
     {
       "date": "12.11.2026",
       "type": "news",

@@ -3,7 +3,7 @@
   "name": "TPG Inc",
   "ticker": "TPG",
   "type": "asset manager",
-  "asOf": "16.11.2026",
+  "asOf": "23.11.2026",
   "tagline": "> Публичный alternative asset manager с $306.2B AUM (31.03.2026); доход всё больше опирается на предсказуемые management fees — LTM FRE впервые перешёл $1B при FRE margin 44% за квартал. Решение по позиции опирается на устойчивость fee-базы в Credit ($95.2B, +30% г/г), исполнение fundraise-таргета >$50B/2026 и переход на нового CFO в момент жёсткого guidance.",
   "kpis": [
     {
@@ -2325,6 +2325,34 @@
     }
   ],
   "news": [
+    {
+      "date": "23.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "TPG требует свыше 1,5 трлн вон в арбитраже против Kakao из-за срыва листинга в США",
+        "en": "TPG seeks over KRW 1.5tn in arbitration against Kakao over blocked US listing"
+      },
+      "text": {
+        "ru": "TPG, второй по величине акционер Kakao Mobility, подала заявление о международном арбитраже против Kakao (035720) и Kakao Mobility 29 октября 2026 года; уведомление Kakao получила 10 ноября. Сумма требований, включая неденежные, превышает 1,5 трлн вон (около $1,1 млрд), что эквивалентно 9,85% собственного капитала Kakao на конец прошлого года. По утверждению TPG, Kakao нарушила закреплённое в акционерном соглашении обязательство добиваться листинга американских депозитарных расписок (ADR) Kakao Mobility в США: конфиденциальная форма F-1 была подана в SEC 2 июля, но 22 сентября совет директоров Kakao проголосовал против этого плана. Kakao называет цифру в 1,5 трлн вон односторонней оценкой TPG, полностью отрицает требования и намерена оспаривать их в арбитраже.",
+        "en": "TPG, the second-largest shareholder in Kakao Mobility, filed for international arbitration against Kakao (035720) and Kakao Mobility on 29 October 2026, with Kakao receiving notice on 10 November. The claims, including non-monetary relief, exceed KRW 1.5 trillion (about $1.1 billion), equal to 9.85% of Kakao's shareholders' equity at the end of last year. TPG alleges Kakao breached a shareholders' agreement obligation to pursue a US listing of American depositary receipts (ADRs) in Kakao Mobility: a confidential Form F-1 was submitted to the SEC on 2 July, but Kakao's board voted on 22 September to oppose the plan. Kakao says the KRW 1.5 trillion figure was estimated unilaterally by TPG, denies the claims in full and intends to contest them in the arbitration."
+      },
+      "url": "https://en.sedaily.com/business/2026/11/23/tpg-seeks-1-billion-in-arbitration-against-kakao-over",
+      "image": null
+    },
+    {
+      "date": "19.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "TPG вместе с Corpay выкупает BILL за $6 млрд и уводит компанию с биржи",
+        "en": "TPG, with Corpay, to take BILL private in $6 billion deal"
+      },
+      "text": {
+        "ru": "BILL (NYSE: BILL) согласилась на поглощение структурами TPG: платформа прямых инвестиций TPG Capital получит контрольную долю, Corpay (NYSE: CPAY) — миноритарную. Цена составляет $63,25 за акцию денежными средствами, что оценивает компанию примерно в $6,0 млрд по полностью разводнённому капиталу и предполагает премию 31% к средневзвешенной по объёму цене (VWAP) за 60 дней по состоянию на 16 ноября 2026 года. Совет директоров BILL одобрил сделку единогласно; крупнейший акционер Starboard Value и основатель и гендиректор Рене Ласерт обязались голосовать «за», Ласерт сохранит пост CEO. Закрытие ожидается в первом полугодии 2027 года при условии одобрения акционерами и регуляторами; условий о привлечении финансирования сделка не содержит.",
+        "en": "BILL (NYSE: BILL) has agreed to be acquired by TPG-affiliated entities, with TPG Capital, the firm's US and European private equity platform, taking a majority interest and Corpay (NYSE: CPAY) a minority one. The price is $63.25 per share in cash, valuing BILL at roughly $6.0 billion on a fully diluted equity basis and representing a 31% premium to the 60-day volume-weighted average price (VWAP) ending 16 November 2026. BILL's board approved the deal unanimously; largest shareholder Starboard Value and founder and CEO René Lacerte have agreed to vote in favour, and Lacerte will stay on as CEO. The transaction is expected to close in the first half of 2027, subject to stockholder and regulatory approvals, and carries no financing condition."
+      },
+      "url": "https://www.tpg.com/news/bill-agrees-to-be-acquired-by-tpg-in-partnership-with-corpay",
+      "image": null
+    },
     {
       "date": "09.11.2026",
       "type": "announcement",

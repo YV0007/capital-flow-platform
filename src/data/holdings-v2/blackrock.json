@@ -3,7 +3,7 @@
   "name": "BlackRock",
   "ticker": "BLK",
   "type": "asset manager",
-  "asOf": "16.11.2026",
+  "asOf": "23.11.2026",
   "tagline": "BlackRock — крупнейший в мире asset manager ($13.89 трлн AUM): доход — комиссии с управляемых активов, экономику делают iShares ETF (44% base fees) и высокомаржинальные private markets после GIP/HPS/Preqin. Решение hold/add/cut держится на конверсии рекордных притоков ($744 млрд LTM) в base/performance fees при as-adjusted марже >45%; акция при этом у 52-недельного минимума и ниже исторической forward P/E.",
   "kpis": [
     {
@@ -2689,6 +2689,48 @@
     ]
   },
   "news": [
+    {
+      "date": "18.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "BlackRock покупает бразильскую SulAmérica Investimentos с активами $17 млрд",
+        "en": "BlackRock to acquire Brazil's SulAmérica Investimentos, with $17bn in assets"
+      },
+      "text": {
+        "ru": "18 ноября BlackRock подписала окончательное соглашение о покупке бразильской управляющей компании SulAmérica Investimentos. По состоянию на сентябрь 2026 года её активы под управлением (assets under management, AUM) составляли около $17 млрд в стратегиях облигаций, частного кредита, акций и мультиактивных портфелей. У основанной в 1996 году компании более 25 соглашений с дистрибьюторами в сегменте управления капиталом Бразилии и отношения примерно с 200 ведущими пенсионными фондами страны. Сумма сделки не раскрыта; закрытие ожидается в 2027 году при условии регуляторных одобрений, до этого обе компании работают независимо.",
+        "en": "On 18 November BlackRock signed a definitive agreement to acquire SulAmérica Investimentos, a Brazilian asset management group. As of September 2026 it had roughly $17 billion in assets under management across fixed income, private credit, equities and multi-asset strategies. Founded in 1996, the firm holds more than 25 agreements with distribution partners across Brazil's wealth sector and relationships with about 200 of the country's leading pension funds. Terms were not disclosed; the deal is expected to close next year subject to regulatory approvals, with the two firms operating independently until then."
+      },
+      "url": "https://www.blackrock.com/corporate/newsroom/media/press-releases/blackrock-to-acquire-sulamerica-investimentos",
+      "image": null
+    },
+    {
+      "date": "17.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "FERC выдала финальное одобрение покупки AES консорциумом GIP и EQT",
+        "en": "FERC grants the final approval for the GIP and EQT takeover of AES"
+      },
+      "text": {
+        "ru": "17 ноября AES сообщила, что Федеральная комиссия по регулированию энергетики США (FERC) вынесла окончательное решение, одобряющее покупку компании консорциумом во главе с Global Infrastructure Partners (GIP, подразделение BlackRock) и фондом EQT Infrastructure VI. Это последнее приостанавливающее регуляторное одобрение, необходимое для завершения сделки: ранее её согласовали акционеры AES, Комитет по иностранным инвестициям в США (CFIUS) и Комиссия по коммунальным услугам Огайо (PUCO). Соандеррайтерами выступают Калифорнийская пенсионная система CalPERS и Qatar Investment Authority. Закрытие ожидается 2 декабря 2026 года при условии выполнения или отказа от оставшихся условий.",
+        "en": "On 17 November AES said the US Federal Energy Regulatory Commission (FERC) had issued a final order approving its acquisition by a consortium led by Global Infrastructure Partners (GIP, part of BlackRock) and the EQT Infrastructure VI fund. This is the final suspensory regulatory approval needed to complete the deal, which had already been cleared by AES stockholders, the Committee on Foreign Investment in the United States (CFIUS) and the Public Utilities Commission of Ohio (PUCO). The California Public Employees' Retirement System (CalPERS) and the Qatar Investment Authority are co-underwriters. Closing is expected on 2 December 2026, subject to the satisfaction or waiver of the remaining conditions."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/0000874761/000114036126044548/ny20085743x1_ex99-1.htm",
+      "image": null
+    },
+    {
+      "date": "16.11.2026",
+      "type": "announcement",
+      "title": {
+        "ru": "BlackRock подала в SEC заявку на новую структуру — биржевой интервальный фонд",
+        "en": "BlackRock files with the SEC for a new exchange-traded interval fund structure"
+      },
+      "text": {
+        "ru": "16 ноября BlackRock Advisors, BlackRock Fund Advisors, BlackRock Capital Investment Advisors и HPS Advisors подали в Комиссию по ценным бумагам и биржам США (SEC) заявление по форме 40-APP с просьбой об освобождении по разделам 6(c) и 23(c)(3) закона Investment Company Act. Документ описывает новый тип фонда — биржевой интервальный фонд (exchange-traded interval fund, ETIF): акции торгуются на национальной бирже, а выкуп проводится ежемесячно в объёме не менее 2% выпущенных акций вместо стандартных 5% по правилу 23c-3, при этом совокупный объём предложений за любые три подряд месяца не превысит 25%. Состав портфеля раскрывался бы на сайте фонда каждый рабочий день. По словам заявителей, структура позволит обеспечить «пропорционально больший» доступ к частным рынкам, чем ETF.",
+        "en": "On 16 November BlackRock Advisors, BlackRock Fund Advisors, BlackRock Capital Investment Advisors and HPS Advisors filed a Form 40-APP with the US Securities and Exchange Commission (SEC) seeking relief under Sections 6(c) and 23(c)(3) of the Investment Company Act. The application sets out a new fund type, the exchange-traded interval fund (ETIF): shares would be listed on a national securities exchange, with repurchase offers run monthly for not less than 2% of common stock outstanding rather than Rule 23c-3's standard 5% minimum, and combined offers over any three consecutive months capped at 25%. Portfolio holdings would be disclosed on the fund's website each business day. The applicants argue the structure could provide proportionally greater exposure to private markets than ETFs."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/0001086364/000119312526462163/d178417d40app.htm",
+      "image": null
+    },
     {
       "date": "14.10.2026",
       "type": "news",

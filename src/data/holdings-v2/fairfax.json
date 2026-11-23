@@ -3,7 +3,7 @@
   "name": "Fairfax Financial",
   "ticker": "FFH.TO",
   "type": "true holdco",
-  "asOf": "16.11.2026",
+  "asOf": "23.11.2026",
   "tagline": "Канадский страховой холдинг (страхование имущества и ответственности и перестрахование) с долгосрочным портфелем value-инвестиций; 2025 — рекордный год (net earnings $4.77B, combined ratio 93.0%, BVPS $1,260.19), но акция переоценилась с дисконта к book (0.74x в 2021) до премии ~1.4–1.5x USD — основной re-rating уже позади, при key-person риске (Watsa, 75 лет) и ускорившемся buyback.",
   "kpis": [
     {
@@ -2328,6 +2328,48 @@
     }
   ],
   "news": [
+    {
+      "date": "20.11.2026",
+      "type": "news",
+      "title": {
+        "ru": "Fairfax досрочно погашает ноты на C$650 млн под 4,25% со сроком до 2027 года",
+        "en": "Fairfax calls C$650 million of 4.25% senior notes due 2027 for early redemption"
+      },
+      "text": {
+        "ru": "Fairfax Financial Holdings объявила о досрочном погашении всех находящихся в обращении старших нот (senior notes) со ставкой 4,25% и сроком погашения 6 декабря 2027 года; объём выпуска — C$650 млн. Дата погашения назначена на 20 декабря 2026 года, цена выкупа — 100,375% от основной суммы плюс накопленный и невыплаченный процентный доход. После этой даты выпуск 2027 года полностью уйдёт из долгового портфеля компании.",
+        "en": "Fairfax Financial Holdings announced the early redemption of all of its outstanding 4.25% senior notes due December 6, 2027, a C$650 million issue. The redemption date is set for December 20, 2026, at a redemption price of 100.375% of the principal amount plus accrued and unpaid interest. After that date the 2027 notes will be fully retired from the company's debt stack."
+      },
+      "url": "https://www.fairfax.ca/press-releases/fairfax-announces-early-redemption-of-senior-notes-due-december-6-2027-2026-11-20/",
+      "image": null
+    },
+    {
+      "date": "19.11.2026",
+      "type": "insider",
+      "title": {
+        "ru": "Fairfax India довела долю в IIFL Capital до контрольных 51,22%",
+        "en": "Fairfax India lifts IIFL Capital stake to a controlling 51.22%"
+      },
+      "text": {
+        "ru": "В рамках обязательного предложения миноритариям (open offer) дочерняя FIH Mauritius Investments выкупила 12 058 525 акций IIFL Capital Services, увеличив долю на 2,97% за 4,2 млрд индийских рупий (около $45,4 млн). Дополнительно, по изменённому инвестиционному соглашению с действующими промоутерами и через покупку на индийской бирже, приобретено ещё 10,82% за 15,4 млрд рупий (около $164,7 млн). Совокупно Fairfax India и аффилированный фонд HWIC Asia Fund владеют 51,22% IIFL Capital — 48,67% и 2,55% соответственно.",
+        "en": "Through the mandatory open offer, subsidiary FIH Mauritius Investments bought 12,058,525 IIFL Capital Services shares from public shareholders, raising its stake by 2.97% for INR 4.2 billion (about $45.4 million). Under an amended investment agreement with the existing promoters and a purchase on the Indian stock exchange, it acquired a further 10.82% for INR 15.4 billion (about $164.7 million). Fairfax India and affiliate HWIC Asia Fund now hold a combined 51.22% of IIFL Capital — 48.67% and 2.55% respectively."
+      },
+      "url": "https://www.fairfaxindia.ca/press-releases/fairfax-india-completes-acquisition-of-additional-equity-interest-in-iifl-capital-services-limited/",
+      "image": null
+    },
+    {
+      "date": "18.11.2026",
+      "type": "insider",
+      "title": {
+        "ru": "Fairfax India продала весь пакет в IIFL Finance за $385 млн",
+        "en": "Fairfax India sells its entire 13.6% IIFL Finance stake for $385 million"
+      },
+      "text": {
+        "ru": "Дочерняя FIH Mauritius Investments продала на индийской бирже принадлежавшие ей 13,6% акций IIFL Finance Limited. Валовая выручка (gross proceeds) составила около $385 млн, или примерно 36 млрд индийских рупий по текущему курсу. После сделки Fairfax India не владеет долей в IIFL Finance. Около $250 млн компания направит на частичное погашение задолженности по возобновляемой кредитной линии (revolving credit facility).",
+        "en": "Subsidiary FIH Mauritius Investments sold its 13.6% equity interest in IIFL Finance Limited on the Indian stock exchange. Gross proceeds came to approximately $385 million, or about INR 36 billion at current exchange rates. Fairfax India no longer holds any equity interest in IIFL Finance. Around US$250 million will be used to repay part of the amount outstanding under its revolving credit facility."
+      },
+      "url": "https://www.fairfaxindia.ca/press-releases/fairfax-india-announces-intention-to-make-a-normal-course-issuer-bid-2026-09-28-2/",
+      "image": null
+    },
     {
       "date": "10.11.2026",
       "type": "news",

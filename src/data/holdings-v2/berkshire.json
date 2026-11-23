@@ -3,7 +3,7 @@
   "name": "Berkshire Hathaway",
   "ticker": "BRK.A / BRK.B",
   "type": "true holdco",
-  "asOf": "16.11.2026",
+  "asOf": "23.11.2026",
   "tagline": "Berkshire оценён близко к собственной исторической норме (P/B ~1.45x против 10-летней медианы ~1.42x) при рекордном кэше $373.5 млрд и символическом buyback $235 млн — нейтральный по цене сигнал HOLD с покупкой на просадках; ключевые узлы решения — первый полный квартал Greg Abel как CEO, кэш-дрэг под падающую ставку и лучшее в peer-группе страховое ядро (combined ratio 87.1%).",
   "kpis": [
     {
@@ -2080,6 +2080,34 @@
     ]
   },
   "news": [
+    {
+      "date": "16.11.2026",
+      "type": "insider",
+      "title": {
+        "ru": "Berkshire в III квартале сократила доли в Bank of America и Capital One",
+        "en": "Berkshire cut Bank of America and Capital One stakes in Q3, added Delta"
+      },
+      "text": {
+        "ru": "16 ноября Berkshire подала в SEC форму 13F за квартал, завершившийся 30 сентября: раскрытый портфель акций (13F-портфель) составил $304,2 млрд по 89 позициям. Компания сократила пакет Bank of America на 5,7%, до 455,9 млн акций, Capital One — на 61,7%, до 1,15 млн акций, и VeriSign — на 34,1%, до 5,92 млн акций; позиции в Kroger и Nucor уменьшены на 10,3% и 14,9% соответственно. Доля в Delta Air Lines увеличена на 12,4%, до 64,45 млн акций. Пакеты Apple (227,9 млн акций, $75,9 млрд — крупнейшая позиция) и Alphabet (106,0 млн акций, $36,4 млрд) остались без изменений.",
+        "en": "On 16 November Berkshire filed its SEC Form 13F for the quarter ended 30 September, showing a disclosed equity portfolio of $304.2 billion across 89 positions. It cut Bank of America by 5.7% to 455.9 million shares, Capital One by 61.7% to 1.15 million shares and VeriSign by 34.1% to 5.92 million shares, while Kroger and Nucor were trimmed by 10.3% and 14.9% respectively. The Delta Air Lines stake was raised 12.4% to 64.45 million shares. Apple (227.9 million shares, $75.9 billion — the largest position) and Alphabet (106.0 million shares, $36.4 billion) were left unchanged."
+      },
+      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526463399/0001193125-26-463399-index.htm",
+      "image": null
+    },
+    {
+      "date": "16.11.2026",
+      "type": "insider",
+      "title": {
+        "ru": "Баффет передал фондам 9 225 000 акций класса B на сумму около $5,5 млрд",
+        "en": "Buffett donates 9,225,000 Class B shares worth about $5.5 billion to foundations"
+      },
+      "text": {
+        "ru": "16 ноября почётный председатель совета директоров (Chairman Emeritus) Уоррен Баффет конвертировал 6150 акций класса A в 9 225 000 акций класса B и передал их четырём семейным фондам: 3 690 000 акций — The Susan Thompson Buffett Foundation и по 1 845 000 акций — The Sherwood Foundation, The Howard G. Buffett Foundation и NoVo Foundation. По оценке Associated Press, пакет стоил около $5,5 млрд. После передачи во владении Баффета остаются 182 140 акций класса A и 1162 акции класса B. В сопроводительном обращении он подтвердил, что все его акции Berkshire будут переданы этим четырём фондам.",
+        "en": "On 16 November Chairman Emeritus Warren Buffett converted 6,150 Class A shares into 9,225,000 Class B shares and donated them to four family foundations: 3,690,000 shares to The Susan Thompson Buffett Foundation and 1,845,000 shares each to The Sherwood Foundation, The Howard G. Buffett Foundation and NoVo Foundation. The Associated Press valued the gift at about $5.5 billion. After the donations Buffett retains 182,140 Class A shares and 1,162 Class B shares. In the accompanying message he reaffirmed that all of his Berkshire shares will go to those four foundations."
+      },
+      "url": "https://www.berkshirehathaway.com/news/nov1626.pdf",
+      "image": null
+    },
     {
       "date": "13.11.2026",
       "type": "announcement",
