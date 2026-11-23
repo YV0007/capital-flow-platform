@@ -1250,5 +1250,16 @@
       }
     ],
     "auto_resolved": true
+  },
+  "target:Edelbyte": {
+    "type": "org",
+    "links": [
+      {
+        "kind": "website",
+        "label": "edelbyte.io",
+        "url": "https://edelbyte.io"
+      }
+    ],
+    "auto_resolved": true
   }
 }
