@@ -1,0 +1,133 @@
+[
+  {
+    "target": "Drax Group plc",
+    "target_type": "public",
+    "sector": "datacenters",
+    "allocators": [
+      "Brookfield"
+    ],
+    "last_event": "2026-11-03",
+    "capital_usd": 26800000000.0,
+    "deal_source_urls": [
+      "https://www.investegate.co.uk/announcement/rns/drax-group--drx/strategic-partnership-for-gw-scale-data-centre/9854654"
+    ]
+  },
+  {
+    "target": "NAVER (GAK Sejong AI factory, via 'Asset Co' SPV)",
+    "target_type": "project",
+    "sector": "datacenters",
+    "allocators": [
+      "Brookfield"
+    ],
+    "last_event": "2026-10-27",
+    "capital_usd": 9000000000.0,
+    "deal_source_urls": [
+      "https://www.koreaherald.com/article/10916658"
+    ]
+  },
+  {
+    "target": "NAVER",
+    "target_type": "public",
+    "sector": "datacenters",
+    "allocators": [
+      "Brookfield"
+    ],
+    "last_event": "2026-11-06",
+    "capital_usd": 9000000000.0,
+    "deal_source_urls": [
+      "https://www.sec.gov/Archives/edgar/data/1937926/000117184326007210/exh_991.htm"
+    ]
+  },
+  {
+    "target": "Altimeter late-stage pre-IPO venture fund (unnamed vehicle) + companion early-stage fund",
+    "target_type": "fund",
+    "sector": "ai-labs",
+    "allocators": [
+      "Altimeter"
+    ],
+    "last_event": "2026-11-09",
+    "capital_usd": 2500000000.0,
+    "deal_source_urls": [
+      "https://cryptobriefing.com/altimeter-capital-3b-private-markets-funds/"
+    ]
+  },
+  {
+    "target": "Penguin Solutions",
+    "target_type": "public",
+    "sector": "semiconductors",
+    "allocators": [
+      "SK Hynix"
+    ],
+    "last_event": "2026-10-29",
+    "capital_usd": 377162666.0,
+    "deal_source_urls": [
+      "https://www.sec.gov/Archives/edgar/data/1616533/000119312526444399/primary_doc.xml"
+    ]
+  },
+  {
+    "target": "Genesis Mission Phase II cohort (12 projects)",
+    "target_type": "project",
+    "sector": "ai-labs",
+    "allocators": [
+      "US Government"
+    ],
+    "last_event": "2026-10-08",
+    "capital_usd": 159000000.0,
+    "deal_source_urls": [
+      "https://www.energy.gov/node/4860580"
+    ]
+  },
+  {
+    "target": "Trajectory",
+    "target_type": "private",
+    "sector": "ai-data",
+    "allocators": [
+      "Sequoia"
+    ],
+    "last_event": "2026-11-02",
+    "capital_usd": 45000000.0,
+    "deal_source_urls": [
+      "https://techcrunch.com/2026/11/02/trajectory-raises-45m-to-make-ai-model-training-accessible-to-nontechnical-experts/"
+    ]
+  },
+  {
+    "target": "d-Matrix",
+    "target_type": "private",
+    "sector": "semiconductors",
+    "allocators": [
+      "NVIDIA"
+    ],
+    "last_event": "2026-10-12",
+    "capital_usd": 0,
+    "deal_source_urls": [
+      "https://dealroom.co/news/161736-nvidia-to-invest-in-rival-chip-startup-d-matrix-at-5b-valuation/"
+    ]
+  },
+  {
+    "target": "Wajo",
+    "target_type": "private",
+    "sector": "ai-labs",
+    "allocators": [
+      "Vinod Khosla"
+    ],
+    "last_event": "2026-09-28",
+    "capital_usd": 0,
+    "deal_source_urls": [
+      "https://techcrunch.com/?p=3173682"
+    ]
+  },
+  {
+    "target": "Hex Technologies",
+    "target_type": "private",
+    "sector": "ai-data",
+    "allocators": [
+      "Sequoia",
+      "Andreessen Horowitz"
+    ],
+    "last_event": "2026-10-27",
+    "capital_usd": 0,
+    "deal_source_urls": [
+      "https://hex.tech/blog/hex-new-era/"
+    ]
+  }
+]

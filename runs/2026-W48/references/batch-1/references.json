@@ -1,0 +1,117 @@
+[
+  {
+    "target": "Drax Group plc",
+    "description": "UK-listed power generator operating Drax Power Station (North Yorkshire), with ~4GW of grid connection and 2.6GW of dispatchable (mostly biomass) generation. In Nov 2026 it partnered with Brookfield and Radiant to build a 1GW+ AI data centre on-site, phased from 100MW (2028) toward 600MW+ by 2031; Brookfield estimates total investment could exceed £20bn.",
+    "website": "https://www.drax.com",
+    "read_more": {"label": "Investegate (RNS)", "url": "https://www.investegate.co.uk/announcement/rns/drax-group--drx/strategic-partnership-for-gw-scale-data-centre/9854654"},
+    "sources": [
+      "https://www.investegate.co.uk/announcement/rns/drax-group--drx/strategic-partnership-for-gw-scale-data-centre/9854654",
+      "https://www.itv.com/news/2026-11-03/drax-and-brookfield-strike-investment-deal-of-up-to-20bn-for-data-centre",
+      "https://www.bloomberg.com/news/articles/2025-12-11/drax-targets-data-center-boom-with-1gw-plan-at-uk-power-plant"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "NAVER (GAK Sejong AI factory, via 'Asset Co' SPV)",
+    "description": "'Asset Co' is a Brookfield-owned special-purpose vehicle, consolidated into NAVER's accounts since NAVER controls it, set to invest up to $9B in GPUs and data-center infrastructure for the gigawatt-scale AI factory NAVER is building around GAK Sejong, its Sejong, South Korea hyperscale campus, with NVIDIA supplying the DSX compute platform.",
+    "website": "https://navercorp.com/en/service/datacenterGak",
+    "read_more": {"label": "The Korea Herald", "url": "https://www.koreaherald.com/article/10916658"},
+    "sources": [
+      "https://www.koreaherald.com/article/10916658",
+      "https://navercorp.com/en/media/pressReleasesDetail?seq=2315",
+      "https://biz.heraldcorp.com/article/10778108"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "NAVER",
+    "description": "South Korean internet and tech conglomerate (search, Naver Cloud, commerce, Line) that leads and operates the AI-factory business at its GAK Sejong data-center campus. In the deal reported here, Brookfield has agreed to invest up to $9B via its 'Asset Co' SPV into that infrastructure, with NVIDIA also taking a roughly $1B equity stake in NAVER.",
+    "website": "https://www.navercorp.com",
+    "read_more": {"label": "The Korea Herald", "url": "https://www.koreaherald.com/article/10916658"},
+    "sources": [
+      "https://www.sec.gov/Archives/edgar/data/1937926/000117184326007210/exh_991.htm",
+      "https://www.koreaherald.com/article/10916658",
+      "https://www.koreatimes.co.kr/amp/business/companies/20260608/naver-joins-hands-with-nvidia-to-expand-ai-infrastructure"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Altimeter late-stage pre-IPO venture fund (unnamed vehicle) + companion early-stage fund",
+    "description": "Altimeter Capital Management, the Brad Gerstner-founded tech-focused investment firm, is reportedly raising $3B across private-markets vehicles including a new late-stage, pre-IPO venture fund (unnamed as of this writing) plus a companion early-stage fund, per securities filings cited by Bloomberg. Likely purpose is deepening AI/enterprise-software exposure; the early-stage fund's own terms are unconfirmed.",
+    "website": "https://www.altimeter.com",
+    "read_more": {"label": "Crypto Briefing", "url": "https://cryptobriefing.com/altimeter-capital-3b-private-markets-funds/"},
+    "sources": [
+      "https://cryptobriefing.com/altimeter-capital-3b-private-markets-funds/",
+      "https://www.altimeter.com"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Penguin Solutions",
+    "description": "Nasdaq-listed (PENG) integrated-solutions provider (ex-SMART Global Holdings; HPC/AI servers, memory, optical) based in Fremont, CA. On Oct 29, 2026, SK hynix's US AI investment arm (via HYAICO/SHIFTIX1 LLC) paid $377.2M to buy a 9.1%, 200,000-share convertible-preferred stake from SK Telecom's Astra AI Infra LLC — a transfer of an existing 2024 stake, not new primary capital.",
+    "website": "https://www.penguinsolutions.com",
+    "read_more": {"label": "Dealroom", "url": "https://dealroom.co/news/170068-sk-hynix-affiliate-buys-377m-penguin-solutions-stake-from-sk-telecom/"},
+    "sources": [
+      "https://www.sec.gov/Archives/edgar/data/1616533/000119312526444399/primary_doc.xml",
+      "https://dealroom.co/news/170068-sk-hynix-affiliate-buys-377m-penguin-solutions-stake-from-sk-telecom/",
+      "https://www.businesswire.com/news/home/20241216906217/en/Penguin-Solutions-Announces-Closing-of-%24200-Million-Strategic-Investment-from-SK-Telecom"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Genesis Mission Phase II cohort (12 projects)",
+    "description": "12 research awards totaling $159M, announced Oct 8, 2026 by the US Department of Energy's Office of Science under the Genesis Mission (a Trump-administration initiative launched Nov 2025 applying AI/'Super Intelligence' to science). Recipients include Commonwealth Fusion Systems, MIT, Fermilab, Argonne, Oak Ridge and several universities, covering fusion, materials, quantum error correction and HPC software.",
+    "website": "https://www.energy.gov/genesis-mission",
+    "read_more": {"label": "U.S. Department of Energy", "url": "https://www.energy.gov/node/4860580"},
+    "sources": [
+      "https://www.energy.gov/node/4860580",
+      "https://www.energy.gov/genesis-mission"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Trajectory",
+    "description": "San Francisco AI startup founded by Stanford classmates Ronak Malde, Michael Elabd and Arjun Karanam (ex-Google DeepMind/Apple) building a 'continual learning' platform that post-trains large agentic models on real production usage. Raised a $45M Series A at a $300M valuation (announced Nov 2, 2026), led by Sequoia with NVIDIA, Bessemer and Bain Capital Ventures participating; customers include Harvey, Rogo and Decagon.",
+    "website": "https://www.trajectory.ai",
+    "read_more": {"label": "TechCrunch", "url": "https://techcrunch.com/2026/11/02/trajectory-raises-45m-to-make-ai-model-training-accessible-to-nontechnical-experts/"},
+    "sources": [
+      "https://techcrunch.com/2026/11/02/trajectory-raises-45m-to-make-ai-model-training-accessible-to-nontechnical-experts/",
+      "https://dealroom.co/companies/trajectory/"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "d-Matrix",
+    "description": "Santa Clara AI-chip startup (founded 2019) building in-memory-compute inference accelerators (Corsair) and a speculative-decoding architecture meant to pair with NVIDIA GPUs. NVIDIA is reported to be investing in d-Matrix at a ~$5B valuation, following a technical partnership announced three months earlier; deal size undisclosed. d-Matrix previously raised $275M in a Nov 2025 Series C ($2B valuation, $450M total raised).",
+    "website": "https://www.d-matrix.ai",
+    "read_more": {"label": "Dealroom", "url": "https://dealroom.co/news/161736-nvidia-to-invest-in-rival-chip-startup-d-matrix-at-5b-valuation/"},
+    "sources": [
+      "https://dealroom.co/news/161736-nvidia-to-invest-in-rival-chip-startup-d-matrix-at-5b-valuation/",
+      "https://siliconangle.com/2025/11/12/chip-startup-d-matrix-raises-275m-speed-inference-memory-compute/"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Wajo",
+    "description": "Consumer AI-agent startup (product name 'Fo', works over iMessage/WhatsApp/web) founded by ex-Google/DeepMind/Meta engineer Shivani Poddar; handles calls, bookings and a privacy-shielding virtual card on a user's behalf. Backed by angels including Jeff Dean and Gokul Rajaram, with Vinod Khosla publicly endorsing it in Oct 2026 TechCrunch coverage. No funding amount, round, or confirmed Khosla Ventures investment is disclosed in available sources.",
+    "website": "https://wajo.ai",
+    "read_more": {"label": "TechCrunch", "url": "https://techcrunch.com/2026/10/06/vinod-khosla-believes-ex-deepmind-engineers-wajo-will-win-agent-market-on-trust"},
+    "sources": [
+      "https://techcrunch.com/2026/10/06/vinod-khosla-believes-ex-deepmind-engineers-wajo-will-win-agent-market-on-trust",
+      "https://dealroom.co/news/160588-vinod-khosla-bets-on-ex-deepmind-engineers-agent-startup-wajo-citing-tru/"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Hex Technologies",
+    "description": "San Francisco data-analytics company (legal name Hex Technologies, Inc.; founded 2019) behind Hex, an AI/agentic-notebook platform for self-serve data exploration and apps, used by 2,500+ customers. Closed a $100M round at a $1.2B valuation led by PeakXV and 137 Ventures, with Sequoia and Andreessen Horowitz among other participants.",
+    "website": "https://hex.tech",
+    "read_more": {"label": "Hex", "url": "https://hex.tech/blog/hex-new-era/"},
+    "sources": [
+      "https://hex.tech/blog/hex-new-era/",
+      "https://www.citybiz.co/?p=927397",
+      "https://trademark.justia.com/owners/hex-technologies-inc-5516494"
+    ],
+    "as_of": "2026-11-23"
+  }
+]

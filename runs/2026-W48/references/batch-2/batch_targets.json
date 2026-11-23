@@ -1,0 +1,134 @@
+[
+  {
+    "target": "Anthropic, PBC",
+    "target_type": "public",
+    "sector": "ai-labs",
+    "allocators": [
+      "Microsoft",
+      "Alphabet",
+      "NVIDIA"
+    ],
+    "last_event": "2026-11-19",
+    "capital_usd": 21000000000.0,
+    "deal_source_urls": [
+      "https://www.sec.gov/Archives/edgar/data/2130357/000162828026074944/anthropicpbc-424b4.htm"
+    ]
+  },
+  {
+    "target": "Decart AI",
+    "target_type": "private",
+    "sector": "ai-compute",
+    "allocators": [
+      "Amazon"
+    ],
+    "last_event": "2026-10-12",
+    "capital_usd": 7000000000.0,
+    "deal_source_urls": [
+      "https://techstrong.ai/articles/amazon-in-advanced-talks-to-acquire-ai-startup-decart-for-7-billion-report/"
+    ]
+  },
+  {
+    "target": "Altimeter Capital (new venture vehicles; unnamed)",
+    "target_type": "fund",
+    "sector": "ai-labs",
+    "allocators": [
+      "Altimeter"
+    ],
+    "last_event": "2026-11-09",
+    "capital_usd": 3000000000.0,
+    "deal_source_urls": [
+      "https://cryptobriefing.com/altimeter-capital-3b-private-markets-funds/"
+    ]
+  },
+  {
+    "target": "Altimeter Premier Growth IX, L.P.",
+    "target_type": "fund",
+    "sector": "ai-labs",
+    "allocators": [
+      "Altimeter"
+    ],
+    "last_event": "2026-11-09",
+    "capital_usd": 2500000000.0,
+    "deal_source_urls": [
+      "https://www.sec.gov/Archives/edgar/data/2151688/000215168826000001/primary_doc.xml"
+    ]
+  },
+  {
+    "target": "Helion",
+    "target_type": "private",
+    "sector": "nuclear",
+    "allocators": [
+      "US Government"
+    ],
+    "last_event": "2026-10-22",
+    "capital_usd": 175000000.0,
+    "deal_source_urls": [
+      "https://nist.gov/news-events/news/2026/10/department-commerce-announces-letters-intent-4-companies-389-million-rd"
+    ]
+  },
+  {
+    "target": "Vertical Semiconductor",
+    "target_type": "private",
+    "sector": "semiconductors",
+    "allocators": [
+      "US Government"
+    ],
+    "last_event": "2026-10-22",
+    "capital_usd": 73000000.0,
+    "deal_source_urls": [
+      "https://nist.gov/news-events/news/2026/10/department-commerce-announces-letters-intent-4-companies-389-million-rd"
+    ]
+  },
+  {
+    "target": "Sequence Holdings",
+    "target_type": "private",
+    "sector": "ai-labs",
+    "allocators": [
+      "Sequoia"
+    ],
+    "last_event": "2026-11-??",
+    "capital_usd": 0,
+    "deal_source_urls": [
+      "https://www.theinformation.com/articles/sequoia-capital-invest-ai-holding-co-sequence"
+    ]
+  },
+  {
+    "target": "Isomorphic Labs",
+    "target_type": "private",
+    "sector": "ai-labs",
+    "allocators": [
+      "Alphabet"
+    ],
+    "last_event": "2026-11-17",
+    "capital_usd": 0,
+    "deal_source_urls": [
+      "https://www.isomorphiclabs.com/articles/isomorphic-labs-announces-series-c-investment-round"
+    ]
+  },
+  {
+    "target": "Genesis AI",
+    "target_type": "private",
+    "sector": "robotics",
+    "allocators": [
+      "Khosla Ventures"
+    ],
+    "last_event": "2026-11-17",
+    "capital_usd": 0,
+    "deal_source_urls": [
+      "https://techcrunch.com/2026/11/17/genesis-ai-raises-500-million-to-deploy-electric-glove-wearing-robots/"
+    ]
+  },
+  {
+    "target": "Edelbyte",
+    "target_type": "private",
+    "sector": "ai-labs",
+    "allocators": [
+      "Sequoia"
+    ],
+    "last_event": "2026-11-11",
+    "capital_usd": 0,
+    "deal_source_urls": [
+      "https://unite.ai/edelbyte-raises-70m-to-build-data-infrastructure-for-ai-agents"
+    ]
+  }
+]
