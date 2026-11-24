@@ -1,344 +1,318 @@
 # Capital Flow
 
-**Most market tools tell you what was announced. This one tracks what was actually funded —
-and automates the due diligence that separates the two.**
+Autonomous research pipeline for capital-allocation intelligence. LLM agents perform source
+discovery and due diligence; a deterministic Python/SQL engine decides what becomes a fact,
+detects convergence signals, and ships a validated payload to a React dashboard.
 
-Live: **[ab-investment.vercel.app](https://ab-investment.vercel.app)**
-
----
-
-## The problem
-
-If you want to know where serious money is moving in AI infrastructure, your options are bad.
-News tells you what was *announced* — and an announcement is not a cheque. PitchBook and
-Preqin tell you what closed, months later, behind a paywall. Neither answers the question
-that actually matters: **who moved first, who followed, and which companies the whole stack
-quietly depends on.**
-
-That research is doable by hand. One analyst, reading filings and investor pages all week,
-can hold a picture of maybe twenty allocators. The work is mechanical, it never ends, and it
-doesn't compound — stop for a month and the picture is stale.
-
-## What this does
-
-It runs that analyst's week as a pipeline, every week, without one.
-
-**Agents do the reading.** Six research agents work a watchlist of 69 allocators across SEC
-EDGAR, investor press pages, government databases and the specialist press, looking for one
-thing: capital that actually moved. Not opinions, not MOUs, not product launches — money
-committed, by whom, to whom, on what date.
-
-**Code decides what's true.** Nothing an agent finds is trusted on its own. Every claim must
-cite a resolved document, gets graded by how good that source is, and is checked against what
-the database already holds. What fails is rejected with a reason attached and fed back to the
-agent that caused it — never dropped quietly.
-
-**The result is a graph you can interrogate.** Not a feed. You can ask who else backed this
-company, which sub-sector just got crowded, what breaks if this supplier disappears — and
-every number has a document behind it.
-
-Across 14 weekly runs: **2,999 sources checked, 461 verified events, 127 documented
-candidates.** 59% of those sources yielded nothing and are logged anyway — that is what makes
-"we didn't miss it" a checkable claim rather than a hope.
-
-## What you actually see
-
-| | The question | A node is |
-|---|---|---|
-| **Capital flows** | Where did money go, who moved first, who followed | An allocator, or a company receiving capital |
-| **Ecosystem** | Who holds a function the AI stack can't run without | A company, technology or regulator the stack depends on |
-| **Fund tracker** | What do respected managers hold right now | A position in a fund's book |
-
-Today: **404 entities connected by 543 funded deals** across 18 sectors, **90 signals
-currently firing**, and a dependency graph of 108 entities and 314 relationships where
-removing NVIDIA costs 1,392 pairs of companies their connection entirely.
-
-## Why it's interesting as engineering
-
-The hard part isn't scraping. It's that **language models are excellent at finding things and
-dangerous at asserting them.** An agent asked to research a funding round will happily return
-a confident, well-formatted, entirely invented one.
-
-So the system is built around a single split: **search is autonomous, output is
-deterministic.** Agents may be creative about *finding*. They get no say in what becomes a
-fact. Between the two sits Python, SQL, and a set of gates that would rather ship nothing than
-ship something wrong.
-
-Everything below is how that split is enforced.
+**Live:** [ab-investment.vercel.app](https://ab-investment.vercel.app)
 
 ---
 
-# How a week of research actually runs
+## Overview
 
-## 1. The agent is told what it already knows
+The system tracks capital-allocation events — equity, funding rounds, acquisitions, project
+finance, sovereign investments — across a watchlist of 69 allocators, and maps private flows
+through to public-market beneficiaries. A second pipeline maps structural dependencies in the
+AI infrastructure stack. A third tracks disclosed fund positions from mandated filings.
 
-Before any agent starts, `tools/make_research_batches.py` writes it a context pack —
-`runs/<week>/<agent>/context.json`, built from the database. Three sections:
+Scope is restricted to committed capital. Announcements, MOUs, partnerships and product
+launches are explicitly out of scope and rejected at ingest.
 
-- **What you already have** — per allocator: last event date (*search forward from it, don't
-  re-find old deals*), active sectors, known vehicles, aliases (the same entity under another
-  name — never file it as new), CIK, recent targets. Plus `stale_candidates`: rows already on
-  file that still need a Tier-1 confirm. Chase those first.
-- **What worked** — the sources that actually produced events in recent runs. Check them
-  before searching broadly.
-- **What you got wrong** — real rejected rows from recent runs, each with its lesson and a
-  repeat count.
+**Current state** (2026-11-23, audit passing):
 
-This is memory in files. No fine-tuning, no embeddings, no hidden state — every "lesson" is
-plain text a human can read and argue with. An agent that repeats a mistake does so against a
-written record of having made it.
+| | |
+|---|---|
+| Flow graph | 404 entities, 543 events, 18 sectors |
+| Signals firing | 90 |
+| Dependency graph | 108 entities, 314 edges, 9 single points of failure |
+| Research volume | 2,999 sources checked across 14 weekly runs |
+| Yield | 461 verified events, 127 documented candidates |
+| Source-URL coverage | 1.00 |
 
-## 2. Deterministic lookup before fuzzy search
+---
 
-A known filer and a known form is not a search problem. It's a lookup, and fuzzy search on a
-company name is how you file a deal against the wrong entity.
+## System
+
+```
+RESEARCH          agents read the web under a tier ladder
+(non-deterministic)   → runs/<period>/<agent>/*.csv
+        │
+ENGINE            validate → resolve entities → dedupe/merge → grade → SQLite
+(deterministic)       → signal rules → beneficiaries → aggregates → audit gate
+        │
+HANDOFF           contract-validated JSON; write refused if contract fails
+        │
+DASHBOARD         render only — React 18 + Vite 5, static JSON, no backend
+```
+
+The separation is the core design constraint: LLM agents are used for retrieval and
+corroboration, never for assertion. No agent output reaches the payload without passing
+deterministic validation.
+
+Four invariants:
+
+1. **SQLite is the single source of truth.** Agent CSVs are an interchange format. The
+   payload and the dashboard are derived artifacts.
+2. **Entity resolution is mandatory.** Point72 files under six CIKs; Greenlight's active 13F
+   filer is *DME Capital Management*. Without alias resolution the same manager appears
+   multiple times at a fraction of its real size and every derived score is wrong. One alias
+   table serves all three pipelines.
+3. **Deduplication merges rather than rejects.** `UNIQUE(allocator, target, event_type,
+   disclosed_date)` catches the duplicate; the stronger status and better source tier win.
+   This is what allows the filings agent to upgrade another agent's `candidate` to `verified`
+   by re-emitting it with a Tier-1 filing attached.
+4. **The dashboard computes nothing the engine can compute.** Criticality, centrality,
+   aggregates, staleness and signal strength arrive precomputed. Single site of computation,
+   no divergence between codebases.
+
+---
+
+## Research layer
+
+Six agents, partitioned by allocator class (corporate, VC, individuals, alt-managers,
+sovereigns, filings). The filings agent runs last so it can confirm the others' candidates.
+
+### Context packs
+
+`tools/make_research_batches.py` writes `runs/<week>/<agent>/context.json` from the database
+before each run:
+
+| Section | Contents |
+|---|---|
+| `what_you_already_have` | Per allocator: `last_event_date` (search forward from it), active sectors, known vehicles, aliases, CIK, recent targets, `stale_candidates` awaiting Tier-1 confirmation |
+| `what_worked` | Sources that produced events in recent runs — checked before broad search |
+| `what_you_got_wrong` | Rejected rows from recent runs, each with its rejection reason and repeat count |
+
+State is plain text in version control. No fine-tuning, no embedding store, no opaque
+adaptation — each correction is auditable and reversible.
+
+### Deterministic resolution before search
+
+Known filer plus known form is a lookup, not a search. Fuzzy name matching is the primary
+cause of misattributed events.
 
 ```bash
-python -m engine.edgar cik "Blue Owl"                      # resolve the filer, or null
+python -m engine.edgar cik "Blue Owl"                      # resolve filer, or null
 python -m engine.edgar filings NVIDIA --forms 8-K,D --since 2026-08-01
 python -m engine.edgar exists --allocator NVIDIA --target "Nebius Group N.V."
 ```
 
-The third call is mandatory before writing any row. If the pair is already on file, the agent
-doesn't re-file it — it notes a stronger source if it has one, and the engine merges forward
-instead of creating churn.
+The third call is required before writing any row. `engine/edgar.py` additionally sweeps every
+tracked CIK's EDGAR submissions on a schedule. A filing is not an event — an 8-K may be an
+officer appointment — so the sweep emits `leads`, which an agent promotes or dismisses with a
+recorded reason.
 
-Running underneath, `engine/edgar.py` sweeps every tracked entity's EDGAR submissions on a
-schedule. **Agents search; this never misses.** But a filing's existence is not a capital
-event — an 8-K can be an officer appointment — so the sweep emits *leads*, not events. A lead
-is promoted by an agent who reads it, or dismissed with a reason. Nothing is silently dropped.
+### Due-diligence escalation
 
-## 3. A rumour is a lead, not a dead end
+A single-source claim is a lead. Before it can be discarded it runs a fixed sequence:
 
-The failure mode here is specific: an agent checks SEC, finds nothing, and quits — losing a
-real deal that simply wasn't filed yet. So a weak lead runs a fixed escalation loop before it
-can be dropped:
+1. **Origin resolution.** N outlets citing one origin count as one source, not N. The origin
+   URL is stored in `origin_id`, making circular reporting detectable rather than
+   indistinguishable from corroboration.
+2. **Primary documents.** Form D and related-persons schedule, 8-K items 1.01/2.01, 13D/G,
+   Form 4, issuer IR and press. Wayback for post-publication edits.
+3. **Registry and legal.** OpenCorporates entity and subsidiary/SPV formation, state filings,
+   UCC liens where the instrument is debt, court records, HSR/CFIUS for large or cross-border
+   transactions.
+4. **Indirect corroboration.** Headcount and role changes, job postings tied to the funded
+   initiative, domain and trademark registration, construction permits and procurement
+   records (datacenters, power), customs and shipping records (hardware). Counterparty
+   disclosure frequently precedes principal disclosure.
+5. **Triangulation.** Two independent confirmations for `verified_alpha`; a primary document
+   for `verified`. Competing explanations — prior round resurfacing, mark-to-market,
+   promotional disclosure — are evaluated against the evidence before a status is assigned.
+6. **Classification.** Unconfirmable claims are stored as `candidate` with the blocking reason
+   recorded, not discarded.
 
-1. **Find the origin.** Ten outlets citing one source count as **one** source, not ten. The
-   origin URL is recorded, so circular reporting can't masquerade as corroboration.
-2. **Primary hunt.** Form D and its related-persons list, 8-K items 1.01/2.01, 13D/G, Form 4,
-   the company's own PR and IR — plus Wayback, for pages quietly edited after publication.
-3. **Registry and legal.** OpenCorporates for new subsidiaries and SPVs, state filings, UCC
-   liens when the deal is debt, court records, HSR/CFIUS for large or cross-border deals.
-4. **Corroborating exhaust.** Headcount and role changes, job postings for the funded
-   initiative, domain and trademark registrations, construction permits and procurement
-   records for datacenters and power, customs and shipping for hardware. *The counterparty
-   routinely discloses what the principal won't.*
-5. **Triangulate and weigh alternatives.** Two independent confirmations for
-   `verified_alpha`; a primary document for `verified`. Then ask what else would explain the
-   evidence — an old round resurfacing, a mark-to-market, PR spin — and pick what the evidence
-   actually fits.
-6. **Grade honestly.** If it can't be confirmed, it's filed as a `candidate` with the reason
-   written down. **A documented candidate is data; a silent drop is a miss.**
-
-When the obvious routes fail, the brief names the non-obvious ones: work backwards from the
-beneficiary, check the *vehicle* rather than the person, find the debt behind the equity, diff
-consecutive 13Fs, read Form D *amendments*.
-
-## 4. The grade is computed, not claimed
-
-Sources are tiered 1–5 by how official they are. SEC filings, IR pages and government
-databases confirm; podcasts, X and blogs discover leads and are never stored as verified.
-*Tier 5 discovers; Tier 1 confirms.*
-
-Each row then gets a two-axis confidence grade — reliability A–E from the source tier,
-credibility 1–5 from corroboration, combined into a 0–100 score. **The agent never types
-these.** They're derived on ingest, which is the only reason they're comparable across rows
-and across weeks. Anything scoring under 60 stays off the main map and lives in a watch list.
-
-One rule exists purely because it was violated: **a citation must be a resolved document.**
-`efts.sec.gov/...?q=Cathedral` resolves to nothing and, for a common word, returns Cathedral
-Energy Services and a pile of CLOs. The engine drops a search-query URL and the audit blocks
-the release — error class E0.
+Secondary routes specified in the brief: reverse from the beneficiary, resolve the investment
+vehicle rather than the principal, locate the debt instrument behind an equity announcement,
+diff consecutive 13F filings, read Form D amendments.
 
 ---
 
-# What the engine does with it
+## Validation and grading
 
-```
-          RESEARCH — autonomous, non-deterministic
-   agents read the web under the tier ladder, write CSV into runs/<period>/<agent>/
-                            │
-                            ▼
-          ENGINE — deterministic, Python + SQL
-   validate → resolve entities → dedupe & merge → grade → SQLite
-          → signal rules → beneficiaries → aggregates → audit gate
-                            │
-                            ▼
-          HANDOFF — one validated file per map
-   contract-checked before write; refuses to overwrite good with broken
-                            │
-                            ▼
-          DASHBOARD — render only
-   React + Vite → Vercel
-```
+### Source tiers
 
-Four boundaries, each load-bearing:
-
-**The database is the single source of truth** — not the agent output, not the payload, not
-the dashboard. CSVs are an interchange format that has to pass validation to become data.
-
-**Entity resolution is mandatory, not optional.** Point72 files under six CIKs; Greenlight's
-live 13F filer is *DME Capital Management*. Without an alias table the same fund appears three
-times at a third of its real size and every downstream score is wrong. One alias table serves
-all three pipelines, because NVIDIA has to be one NVIDIA on every map.
-
-**Deduplication merges rather than rejects.** A unique constraint on
-`(allocator, target, event_type, disclosed_date)` catches the duplicate, and the stronger
-status and better tier win. That's what lets the filings agent re-emit another agent's
-`candidate` with a Tier-1 filing attached and have it *upgrade* the existing row.
-
-**The dashboard computes nothing the engine can compute.** Criticality, centrality,
-aggregates, staleness, signal strength all arrive calculated. The dashboard styles what the
-file says. One number, one place it is computed, no drift between two codebases.
-
-## Three money-hygiene rules, each from a real corruption
-
-These are the clearest illustration of why validation lives in code rather than in a brief —
-all three were requested of agents in writing, and all three still happened.
-
-| What arrived | Why it corrupts | The rule now |
+| Tier | Sources | Role |
 |---|---|---|
-| A $1.4B post-money round written as `amount_usd = 1400000000` | That's the company's price, not money that moved. It inflates every sector total it touches. | Amount is the allocator's slice, or blank. The round goes in `round_total_usd`, the valuation in `valuation_usd`. Never a silent zero. Audit **W2**. |
-| a16z and Sequoia co-led one $160M round; both rows carried the full $160M | The deal reads as $320M. Capital totals are the product; double-counting breaks the product. | Per-allocator slice when disclosed, else blank amount plus `round_total_usd` on each row and the co-leads named. |
-| "Atoms" filed from a shoe brand's page | A confidently wrong entity poisons every edge drawn from it. | Two plausible matches means `candidate`, with both named in notes. An honest ambiguity is data. |
+| 1 | SEC EDGAR, issuer IR, official PR, government databases | Confirms |
+| 2 | PitchBook, Preqin, Crunchbase, Dealroom, Capital IQ | Corroborates |
+| 3 | Reuters, FT, WSJ, Bloomberg, The Information | Corroborates |
+| 4 | SemiAnalysis, Stratechery, conference material | Corroborates |
+| 5 | Podcasts, social, blogs | Lead discovery only; never stored as verified |
 
-**A fourth rule is structural: deltas are computed on share count, never on value.** A
-value-based delta invents position changes that never happened, out of price movement alone.
+### Confidence
 
-Coverage is measured, not assumed. Three tables exist only to make absence provable:
-`source_log` records every source checked including the ones that yielded nothing; `coverage`
-reconciles what each agent checked against what it found, per allocator; `leads` holds raw
-signals until each is promoted or dismissed **with a reason**.
+Two-axis Admiralty grading, computed at ingest and never author-supplied: reliability A–E from
+source tier, credibility 1–5 from corroboration, combined into a 0–100 score. Rows scoring
+below 60 are excluded from the primary graph and routed to a watch list. Agent-supplied
+grades would not be comparable across rows or runs.
 
-## Three pipelines
+### Citation validity
 
-| | **Capital flows** | **Ecosystem** | **Fund tracker** |
-|---|---|---|---|
-| Unit | a dated **event** | an undated standing **dependency** | a **position / stake / delta** |
-| Universe | discovery-shaped — agents hunt leads | scope-shaped — 16 layers, 3 membership checks | closed and curated, never auto-extended |
-| Agents | 6, by allocator class | 1 dossier agent + 8 layer sweeps | **none** — mandated filings only |
-| Node size | capital | computed criticality | position weight |
-| Cadence | weekly | monthly | per filing |
+`source_url` must resolve to a document. EDGAR full-text search URLs
+(`efts.sec.gov/...?q=`) resolve to nothing and, for common tokens, return unrelated filers.
+Such URLs are stripped at ingest and block the release at audit (error class **E0**).
 
-The ecosystem map runs on a stricter evidentiary rule than the flow map, because it asserts
-structure rather than events: **no edge exists without a verbatim quote of ≤15 words from a
-resolved document.** Every link is re-fetched each run; a dead link costs the edge a
-confirmation. And it keeps two measures of importance deliberately unmerged — `criticality`
-authored from a node's own filings, `integration` computed from the graph. The interesting
-nodes are where they diverge: Carl Zeiss SMT ranks 8th by criticality and last of 108 by
-integration, because it holds the optics of every EUV tool on earth and the map has found it
-exactly one counterparty. A single blended score hides precisely that.
+### Measurement integrity
+
+Three corruption classes, each observed in production after being specified in the agent
+brief — which is why enforcement moved into code:
+
+| Observed | Effect | Enforcement |
+|---|---|---|
+| $1.4B post-money valuation written to `amount_usd` | Company price recorded as capital deployed; inflates every sector aggregate it touches | `amount_usd` is the allocator's slice or null. Round size → `round_total_usd`, valuation → `valuation_usd`. Null, never zero. Audit **W2** |
+| Co-led $160M round filed at full size by both participants | Deal aggregates to $320M | Per-allocator slice when disclosed, else null amount plus `round_total_usd` per row and `co_investors` populated |
+| Entity resolved from a same-name company in an unrelated sector | Incorrect edge propagates to every derived metric | Two plausible matches → `candidate` with both named in `notes` |
+
+Position deltas are computed on share count, never on value — a value-based delta synthesizes
+position changes from price movement.
+
+### Coverage instrumentation
+
+Three tables make absence provable rather than assumed:
+
+- `source_log` — every source consulted per run, including the 59% that yielded nothing
+- `coverage` — per run, per agent, per allocator: sources checked against events found
+- `leads` — raw signals held until promoted to an event or dismissed with a reason
 
 ---
 
-# From research to signal
+## Pipelines
 
-Verified events are the input, not the product. The product is what SQL finds in them —
-eight rules, parameters in config rather than code, evaluated over the event table every run.
+| | Capital flows | Ecosystem | Fund tracker |
+|---|---|---|---|
+| Unit | Dated event | Undated standing dependency | Position / stake / delta |
+| Universe | Discovery-driven | Scope-driven: 16 layers, 3 membership checks | Closed, curated, never auto-extended |
+| Agents | 6 by allocator class | 1 dossier agent + 8 layer sweeps | None — mandated filings only |
+| Node weight | Capital | Computed criticality | Position weight |
+| Cadence | Weekly | Monthly | Per filing |
+| Orchestrator | `run_week.py` | `run_nvidia.py` + `run_network.py` | `run_funds.py` |
 
-| Rule | Fires when |
+The ecosystem pipeline asserts structure rather than events and applies a stricter evidentiary
+rule: an edge requires a verbatim quote of ≤15 words from a resolved document. Every URL is
+re-fetched each run; a dead link removes a confirmation and may downgrade edge status.
+
+It maintains two independent importance measures. `criticality` is authored from a node's own
+filings against a four-factor rubric (irreplaceability 0.30, lock-in depth 0.30,
+time-to-replace 0.25, concentration 0.15). `integration` is computed from the graph
+(0.30·degree + 0.25·betweenness + 0.15·pagerank + 0.15·layers spanned + 0.10·edge types +
+0.05·cycles). Divergence between the two identifies hidden chokepoints: Carl Zeiss SMT ranks
+1st by criticality and 108th of 108 by integration — sole supplier of EUV optics, one mapped
+counterparty. A single blended score would not surface it.
+
+Degree and betweenness are computed on the undirected graph; PageRank on a directed
+dependence graph, since dependency is inherently directional. Undirected PageRank correlated
+0.9988 with degree. Single points of failure are identified by deletion: remove the node,
+count disconnected pairs. Removing NVIDIA disconnects 1,392 pairs (24.5% of connected pairs) and fragments the
+graph into 14 components.
+
+---
+
+## Signal detection
+
+Eight rules evaluated as SQL over the event table each run. Parameters in
+`config/rules.yaml`.
+
+| Rule | Condition |
 |---|---|
-| `sector_swarm` | ≥3 key allocators put **confirmed** capital into one sector within 30d. Candidates don't count. |
-| `subsector_swarm` | ≥2 key allocators converge on one (sector, sub-sector) narrative |
-| `theme_swarm` | ≥4 key allocators converge on one theme *across* sectors within 30d |
-| `capital_acceleration` | A sector's rolling 90d capital ≥2× the prior 90d |
-| `first_entry` | A key allocator enters a sector it had no events in for 365d |
-| `smart_money_follow` | One allocator enters, then ≥2 others follow within 21d |
-| `stealth_accumulation` | ≥3 separate stakes into one target within 90d |
+| `sector_swarm` | ≥3 key allocators, confirmed capital, one sector, 30d window |
+| `subsector_swarm` | ≥2 key allocators converge on one (sector, subsector) |
+| `theme_swarm` | ≥4 key allocators converge on one theme across sectors, 30d |
+| `capital_acceleration` | Sector rolling 90d capital ≥2× prior 90d |
+| `first_entry` | Key allocator enters a sector with no events in 365d |
+| `smart_money_follow` | Allocator enters, ≥2 others follow within 21d |
+| `stealth_accumulation` | ≥3 stakes into one target within 90d |
 | `beneficiary_concentration` | ≥3 private flows map to one public ticker |
 
-What that produces on the live data:
+Candidate-status events are excluded from rule evaluation.
 
-- **`smart_money_follow`** — Andreessen Horowitz led in `ai-applications`; **7 allocators
-  followed within 21 days**. The lead-time question, answered mechanically.
-- **`subsector_swarm`** — 8 key allocators converged on `enterprise-ai-agents`, 6 on
-  `legal-regulatory-ai`, 5 on `vertical-saas-ai`. Convergence on a *narrative*, not a sector,
-  which is why sub-sectors are a curated vocabulary instead of free text: free text never
-  clusters.
-- **`stealth_accumulation`** — Harvey: 4 separate stakes inside 90 days, no single round
-  large enough to make news.
-- **`beneficiary_concentration`** — the private-to-public bridge, and the reason the platform
-  exists. 77 tracked private flows read through to **NVDA**, 17 to **TSM**, 11 to **GOOGL**,
-  10 to **PWR** (substation and electrical construction for gigawatt campuses), 4 to **BWXT**
-  (nuclear fabrication a mass-production reactor programme must draw on). Each carries the
-  named private companies and the stated mechanism.
+Representative output from the current run:
 
-Sub-sector trends run in two stages, and the order matters. **Stage B is mechanical**: SQL
-clusters confirmed flows by (sector, sub-sector), then re-checks the bar inside each of three
-windows — 7d, 30d, all-time — so a cluster can't qualify once and coast. **Stage A is the
-narrative agent**, and it may only write about clusters Stage B already proved. It never finds
-a trend. A quiet window ships an empty list; a borderline cluster ships flagged `low`, never
-dressed up as certain.
+- `smart_money_follow` — Andreessen Horowitz entered `ai-applications`; 7 allocators followed
+  within 21 days.
+- `subsector_swarm` — 8 key allocators on `enterprise-ai-agents`, 6 on `legal-regulatory-ai`,
+  5 on `vertical-saas-ai`. Subsectors are a curated vocabulary rather than free text;
+  free-text labels do not cluster.
+- `stealth_accumulation` — Harvey: 4 discrete stakes within 90 days, no single round at
+  disclosure threshold.
+- `beneficiary_concentration` — 77 private flows resolve to NVDA, 17 to TSM, 11 to GOOGL, 10
+  to PWR, 4 to BWXT. Each carries the originating private targets and the stated transmission
+  mechanism.
 
-The current top cluster: *Hyperscale Campus* — 6 deals, **$112.5B**, 5 distinct allocators.
+Subsector trend clustering runs in two stages. Stage B is mechanical: SQL clusters confirmed
+flows by (sector, subsector), then re-evaluates the threshold independently inside each of
+three windows (7d, 30d, all-time), so a cluster cannot qualify once and persist. Stage A is a
+narrative agent restricted to clusters Stage B has already cleared; it cannot originate a
+trend. Empty windows ship as empty arrays; borderline clusters ship flagged `low` and
+`provisional`.
 
-## Why it refuses to ship
+---
 
-Trust is the product. A few visible errors and the whole dataset is suspect — so the pipeline
-is gated three times:
+## Quality gates
 
-- **An audit pass runs every cycle.** 7 error classes block delivery outright; 9 warning
-  classes ship but are listed. Current run: **audit passing, 0 errors, source-URL coverage
-  1.00.**
-- **A contract validator runs before every write** and refuses to overwrite a good file with a
-  broken one. *Yesterday's truth beats today's lie.* Four suites, **119 cases**, exist only to
-  prove the validator still bites — they corrupt a payload twenty ways and demand a rejection
-  each time.
-- **`npm run build` gates the deploy.** If the dashboard doesn't compile, nothing is pushed.
+**Audit pass** — runs every cycle. 7 error classes block delivery; 9 warning classes ship
+annotated. Errors cover unresolvable citations (E0), confirmed events without a source (E1),
+allocator slice exceeding round total (E2), missing confidence grade (E3), unsourced
+track-record rows (E4), current-period figures not flagged provisional (E5), and repeated
+unfulfilled holdings requests (E6).
 
-One warning class is worth naming, because it documents a failure of this design rather than a
-success: warnings don't block. W7 — funds with no holdings collected — warned for weeks while
-runs shipped green and 36 portfolios stayed empty. The fix wasn't to tune the warning; it was
-error class **E6**: a large fund asked for holdings twice in a row and given none is a step
-that isn't running, and it now blocks. *One miss is a quiet month. Two in a row is a broken
-pipeline.*
+**Contract validator** — runs before every handoff write and refuses to overwrite a valid file
+with an invalid one. Four test suites, 119 cases, exist to verify the validator still rejects
+malformed payloads: dangling references, edges without evidence, over-length quotes,
+out-of-scope entities, out-of-rubric criticality, `bilateral` status with one confirming side,
+`disputed` without counter-evidence, type violations.
+
+**Build gate** — `npm run build` must succeed or nothing is pushed.
+
+E6 documents a failure of the warning design. W7 (funds with no holdings collected) warned for
+multiple consecutive weeks while runs shipped green and 36 portfolios remained empty. The
+remediation was not threshold tuning: a large fund requested twice without delivery indicates
+a non-executing pipeline step, which now blocks delivery as an error.
 
 ---
 
 ## Layout
 
 ```
-├── src/                 the dashboard — React 18 + Vite 5, no backend
-│   ├── components/
-│   │   ├── research/capitalflow/   flow map: graph, entity panel, holdings, digest
-│   │   ├── research/ecosystem/     dependency map: layers, subgraphs, edge cards
-│   │   ├── research/funds/         fund tracker
-│   │   └── tracker/                positions, signals, memos
-│   └── data/            59 JSON files — the only data layer, no database, no API
+├── src/                 dashboard — React 18 + Vite 5, no backend
+│   ├── components/research/{capitalflow,ecosystem,funds}/
+│   ├── components/tracker/
+│   └── data/            59 JSON files — the only data layer
 │
-├── engine/              the research + data engine — Python 3.11 + SQLite
-│   ├── agents/          26 agent briefs: the non-deterministic layer
-│   ├── config/          taxonomies, watchlists, thresholds, signal rules
+├── engine/              Python 3.11 + SQLite
+│   ├── agents/          26 agent briefs — the non-deterministic layer
+│   ├── config/          taxonomies, watchlists, thresholds, rule parameters
 │   ├── engine/          52 deterministic modules
-│   ├── db/              schemas; one SQLite file, regenerable from runs/
-│   ├── runs/            raw agent output, committed — the audit trail
+│   ├── db/              schemas; single SQLite file, regenerable
+│   ├── runs/            raw agent output, committed — audit trail
 │   ├── tools/           batch builders, validators, feedback gates
-│   └── handoff/         the contract files the dashboard consumes
+│   └── handoff/         contract files consumed by the dashboard
 │
-└── docs/                specs and build logs, by area
+└── docs/                specifications and build logs
 ```
 
-**Thresholds live in config, not code** — moving the boundary of a map is a decision, and it
-has to be visible in a config diff rather than buried in a Python change.
+Thresholds are config, not code: changing a map boundary appears in a config diff rather than
+a Python change.
 
-**The database is regenerable.** `db/capital.db` is gitignored; `runs/` is the committed
-source of truth, and `tools/rebuild_db.py` replays the entire history from it. A fresh clone
-that skips the rebuild would hand the dashboard a map containing one week — so delivery blocks
-on that too.
+`db/capital.db` is gitignored and regenerable — `runs/` is the committed source of truth and
+`tools/rebuild_db.py` replays the full history. A clone that skips the rebuild produces a
+single-week map; delivery blocks on node-count regression to catch this.
 
-## Running it
+## Running
 
 ```bash
-npm install && npm run dev          # dashboard at localhost:5173
+npm install && npm run dev          # dashboard on :5173
 
 cd engine
-python tools/rebuild_db.py          # required once, from a fresh clone
-python tools/smoke_test.py          # end-to-end self-test on synthetic data
-python run_week.py 2026-W45         # the weekly deterministic pipeline
+python tools/rebuild_db.py          # required once on a fresh clone
+python tools/smoke_test.py          # end-to-end test on synthetic fixtures
+python run_week.py 2026-W45         # deterministic weekly pipeline
 ```
 
-Requires Python 3.11+, `pyyaml`, Node 18+. The research agents run inside Claude Code — no API
-service, no per-token billing to manage.
+Python 3.11+, `pyyaml`, Node 18+. Research agents execute inside Claude Code — no API service
+and no per-token billing.
 
-Full documentation: [`engine/docs/`](engine/docs/) · specs and build logs: [`docs/`](docs/)
+Documentation: [`engine/docs/`](engine/docs/) · specifications and build logs:
+[`docs/`](docs/)
