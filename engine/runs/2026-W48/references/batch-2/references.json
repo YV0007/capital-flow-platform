@@ -1,0 +1,124 @@
+[
+  {
+    "target": "Anthropic, PBC",
+    "description": "AI safety-focused foundation model lab (Claude), led by Dario Amodei. Went public on Nasdaq Nov 19, 2026 (ticker ANT), pricing at $83/share for an $81.3B raise. Alphabet and NVIDIA each committed $10B and Microsoft roughly $1B as anchor investors buying shares in a concurrent private placement alongside the IPO.",
+    "website": "https://www.anthropic.com",
+    "read_more": {"label": "Al Jazeera", "url": "https://www.aljazeera.com/economy/2026/11/19/anthropic-raises-81-3bn-in-biggest-ipo-of-all-time"},
+    "sources": [
+      "https://www.sec.gov/Archives/edgar/data/2130357/000162828026074944/anthropicpbc-424b4.htm",
+      "https://www.aljazeera.com/economy/2026/11/19/anthropic-raises-81-3bn-in-biggest-ipo-of-all-time",
+      "https://cryptobriefing.com/nvidia-alphabet-anthropic-ipo-private-placement/",
+      "https://stocktwits.com/news-articles/markets/equity/google-nvidia-amd-to-invest-26-b-in-anthropic-alongside-ipo/cNGu0BtR97U"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Decart AI",
+    "description": "Tel Aviv-based AI startup founded in 2023 by ex-Unit 8200 veterans Dean Leitersdorf and Moshe Shalev, building real-time 'world models' (Lucy video model, Oasis simulation model) for video generation and robot training. Previously backed by NVIDIA and Amazon at a ~$4B valuation; Amazon is reportedly in advanced talks to acquire it for around $7B, after Anthropic dropped earlier acquisition talks.",
+    "website": "https://decart.ai",
+    "read_more": {"label": "TechStrong.ai", "url": "https://techstrong.ai/articles/amazon-in-advanced-talks-to-acquire-ai-startup-decart-for-7-billion-report/"},
+    "sources": [
+      "https://techstrong.ai/articles/amazon-in-advanced-talks-to-acquire-ai-startup-decart-for-7-billion-report/",
+      "https://www.jewishnews.co.uk/israeli-unicorn-decart-raises-300m-in-funding-round-backed-by-nvidia-and-amazon/",
+      "https://sequoiacap.com/article/partnering-with-decart-the-future-of-ai-generated-experiences"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Altimeter Capital (new venture vehicles; unnamed)",
+    "description": "Umbrella description for a family of new private-markets vehicles Altimeter Capital (the growth/venture firm led by Brad Gerstner) is raising, reportedly totaling $3B+ as of Nov 2026 — including a ~$2.5B late-stage fund (filed as Altimeter Premier Growth IX, L.P.) plus a smaller early-stage fund, aimed at AI unicorns.",
+    "website": "https://www.altimeter.com",
+    "read_more": {"label": "CryptoBriefing", "url": "https://cryptobriefing.com/altimeter-capital-3b-private-markets-funds/"},
+    "sources": [
+      "https://cryptobriefing.com/altimeter-capital-3b-private-markets-funds/",
+      "https://www.techflowpost.com/en-US/newsletter/143826",
+      "https://www.altimeter.com"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Altimeter Premier Growth IX, L.P.",
+    "description": "A $2.5B late-stage venture fund vehicle of Altimeter Capital Management, per its SEC Form D (filed Nov 2026, CIK 2151688). General partner officers listed are Brad Gerstner (Altimeter's founder/CEO), CFO John Kiernan III and VP Matthew Tolve; aimed at pre-IPO AI/tech companies.",
+    "website": "https://www.altimeter.com",
+    "read_more": {"label": "SEC EDGAR (Form D)", "url": "https://www.sec.gov/Archives/edgar/data/2151688/000215168826000001/primary_doc.xml"},
+    "sources": [
+      "https://www.sec.gov/Archives/edgar/data/2151688/000215168826000001/primary_doc.xml",
+      "https://cryptobriefing.com/altimeter-capital-3b-private-markets-funds/"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Helion",
+    "description": "Helion Energy, an Everett, WA fusion-power company developing a pulsed magneto-inertial fusion generator; OpenAI CEO Sam Altman is its largest investor and executive chairman. On Oct 22, 2026 it signed a letter of intent with the Commerce Department's CHIPS R&D office for up to $175M toward high-voltage power semiconductors, with Commerce taking a non-voting equity stake priced off Helion's Series G.",
+    "website": "https://www.helionenergy.com",
+    "read_more": {"label": "DataCenterDynamics", "url": "https://datacenterdynamics.com/en/news/us-department-of-commerce-commits-up-to-389m-in-rd-funding-to-power-semiconductors-for-fusion-and-advanced-computing"},
+    "sources": [
+      "https://nist.gov/news-events/news/2026/10/department-commerce-announces-letters-intent-4-companies-389-million-rd",
+      "https://datacenterdynamics.com/en/news/us-department-of-commerce-commits-up-to-389m-in-rd-funding-to-power-semiconductors-for-fusion-and-advanced-computing",
+      "https://www.ans.org/news/2026-10-28/article-8528/fusion-companies-sign-lois-for-federal-rd-awards/",
+      "https://www.helionenergy.com/about"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Vertical Semiconductor",
+    "description": "Boston-area MIT spinout (founded 2024 by CEO Cynthia Liao, CTO Josh Perozek and Prof. Tomás Palacios) developing vertical gallium-nitride (vGaN) power transistors for AI data-center power infrastructure. Raised an $11M seed round in Oct 2025 led by Playground Global; on Oct 22, 2026 signed a letter of intent with the Commerce Department's CHIPS R&D office for up to $73M.",
+    "website": "https://www.verticalsemi.com",
+    "read_more": {"label": "Compound Semiconductor", "url": "https://compoundsemiconductor.net/article/125688/73m_CHIPS_funding_for_Vertical_Semiconductor"},
+    "sources": [
+      "https://nist.gov/news-events/news/2026/10/department-commerce-announces-letters-intent-4-companies-389-million-rd",
+      "https://compoundsemiconductor.net/article/125688/73m_CHIPS_funding_for_Vertical_Semiconductor",
+      "https://datacenterdynamics.com/en/news/vertical-semiconductor-awarded-73m-in-chips-act-funding-to-support-vgan-transistor-development"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Sequence Holdings",
+    "description": "New York-based permanent-capital holding company founded 2025, co-founded by Michael J. Lee and Alexander C. Rubin (team drawn from Scale, Palantir, Lone Pine, Silver Lake), that acquires established American service-sector businesses and rebuilds them around AI and engineering. Sequoia Capital is reportedly investing hundreds of millions alongside Sequence's ~$7.7B take-private of insurer Baldwin with Michael Dell's family office; terms of Sequoia's stake are not independently confirmed (The Information's report is paywalled).",
+    "website": "https://www.seqholdings.com",
+    "read_more": {"label": "The Information", "url": "https://www.theinformation.com/articles/sequoia-capital-invest-ai-holding-co-sequence"},
+    "sources": [
+      "https://www.theinformation.com/articles/sequoia-capital-invest-ai-holding-co-sequence",
+      "https://www.crowdfundinsider.com/?p=322983",
+      "https://fourweekmba.com/ai-sequoia-to-back-sequence-ai-holdco-in-7-7b-baldwin-deal/",
+      "https://jobs.8vc.com/companies/sequence-holdings"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Isomorphic Labs",
+    "description": "Alphabet/DeepMind-spinout (CEO Demis Hassabis) using AI for drug discovery and design. Announced a $5B Series C on Nov 17, 2026, co-led by Sequoia Capital and Greenoaks with a16z and others joining, plus a significant but undisclosed contribution from Alphabet; this follows a $2.1B round just six months earlier. Valuation undisclosed.",
+    "website": "https://www.isomorphiclabs.com",
+    "read_more": {"label": "Fierce Biotech", "url": "https://www.fiercebiotech.com/biotech/isomorphic-labs-raises-5b-series-c-months-after-21b-round"},
+    "sources": [
+      "https://www.isomorphiclabs.com/articles/isomorphic-labs-announces-series-c-investment-round",
+      "https://www.fiercebiotech.com/biotech/isomorphic-labs-raises-5b-series-c-months-after-21b-round",
+      "https://bloomberg.com/news/articles/2026-05-12/deepmind-spinout-isomorphic-labs-raises-2-1-billion-to-design-drugs-with-ai"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Genesis AI",
+    "description": "San Carlos, CA robotics startup founded by Zhou Xian, building general-purpose robots (its 'Eno' wheeled robot, unveiled June 2026) powered by its GENE foundation model, trained partly via a sensor-equipped data-capture glove. Announced a $500M Series A on Nov 17, 2026 at a $3.5B post-money valuation, led by Khosla Ventures, Premji Invest and Eclipse, with NVIDIA, AMD Ventures, Samsung Next and others participating; follows a $105M seed round in 2025.",
+    "website": "https://www.genesis.ai",
+    "read_more": {"label": "TechCrunch", "url": "https://techcrunch.com/2026/11/17/genesis-ai-raises-500-million-to-deploy-electric-glove-wearing-robots/"},
+    "sources": [
+      "https://techcrunch.com/2026/11/17/genesis-ai-raises-500-million-to-deploy-electric-glove-wearing-robots/",
+      "https://www.robotics247.com/article/genesis-ai-announces-500m-series-a-at-3.5b-valuation/technologies",
+      "https://www.therobotreport.com/genesis-ai-launches-eno-general-purpose-robot/"
+    ],
+    "as_of": "2026-11-23"
+  },
+  {
+    "target": "Edelbyte",
+    "description": "AI-infrastructure startup founded November 2025 by four ex-Microsoft engineers who built Kusto/Azure Data Explorer (incl. CEO Avner Aharoni, CTO Evgeney Ryzhyk), building a unified search/analytics engine (search, vector, graph, geospatial) for AI-agent query workloads. Emerged from stealth Nov 11, 2026 with a combined $70M seed + Series A led by Sequoia Capital and Quiet Capital, with Greenoaks and Swish Ventures participating. Company's own site could not be verified (returned a server error at research time).",
+    "website": null,
+    "read_more": {"label": "Unite.AI", "url": "https://unite.ai/edelbyte-raises-70m-to-build-data-infrastructure-for-ai-agents"},
+    "sources": [
+      "https://unite.ai/edelbyte-raises-70m-to-build-data-infrastructure-for-ai-agents",
+      "https://www.blocksandfiles.com/data-management/2026/11/13/startup-edelbyte-has-70-million-to-develop-big-data-analytics-for-ai-agents/5309783",
+      "https://aiweekly.co/alerts/edelbyte-exits-stealth-with-70m-seed-plus-series-a-from-sequoia-for-ai-agent"
+    ],
+    "as_of": "2026-11-23"
+  }
+]
